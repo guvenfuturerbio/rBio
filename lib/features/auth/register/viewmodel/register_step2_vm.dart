@@ -23,6 +23,12 @@ class RegisterStep2ScreenVm extends RbioVm {
   bool isTcCitizen = true;
   LoadingDialog? loadingDialog;
 
+  final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  AutovalidateMode? get autovalidateMode => _autovalidateMode;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState>? get formKey => _formKey;
+
   bool _clickedGeneralForm = false;
   bool get clickedGeneralForm => _clickedGeneralForm;
 

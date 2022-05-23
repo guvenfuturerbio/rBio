@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
+import 'package:onedosehealth/generated/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -114,356 +115,376 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
       child: KeyboardAvoider(
         autoScroll: true,
         duration: const Duration(seconds: 1),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5.0, left: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      LocaleProvider.current.btn_sign_up,
-                      style: context.xHeadline1
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Text(
-                    LocaleProvider.current.sign_up_text,
-                    style: context.xHeadline3,
-                  ),
-                ],
-              ),
-            ),
-
-            //
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //
-                Row(
+        child: Form(
+          key: vm.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5.0, left: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Checkbox(
-                      activeColor: getIt<IAppConfig>().theme.mainColor,
-                      value: vm.isTcCitizen,
-                      onChanged: (val) {
-                        vm.toggleCitizen();
-                      },
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Text(
+                        LocaleProvider.current.btn_sign_up,
+                        style: context.xHeadline1
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Text(
-                      LocaleProvider.current.tr_citizen,
+                      LocaleProvider.current.sign_up_text,
                       style: context.xHeadline3,
                     ),
                   ],
                 ),
-
-                //
-                Container(
-                  margin: const EdgeInsets.only(
-                    bottom: 10,
-                  ),
-                  child: RbioTextFormField(
-                    obscureText: false,
-                    focusNode: _identityFocusNode,
-                    controller: _identityEditingController,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: vm.isTcCitizen
-                        ? TextInputType.number
-                        : TextInputType.text,
-                    hintText: vm.isTcCitizen
-                        ? LocaleProvider.of(context).tc_identity_number
-                        : LocaleProvider.of(context).passport_number,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if ((value!.isNotEmpty &&
-                          value.length < 5 &&
-                          !vm.isTcCitizen)) {
-                        return LocaleProvider.current.passport_validation;
-                      }
-                      return null;
-                    },
-                    inputFormatters: <TextInputFormatter>[
-                      TabToNextFieldTextInputFormatter(
-                        context,
-                        _identityFocusNode,
-                        _emailFocusNode,
+              ),
+              //
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //
+                  Row(
+                    children: [
+                      Checkbox(
+                        activeColor: getIt<IAppConfig>().theme.mainColor,
+                        value: vm.isTcCitizen,
+                        onChanged: (val) {
+                          vm.toggleCitizen();
+                        },
+                      ),
+                      Text(
+                        LocaleProvider.current.tr_citizen,
+                        style: context.xHeadline3,
                       ),
                     ],
-                    onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
-                        context,
-                        _identityFocusNode,
-                        _emailFocusNode,
-                      );
-                    },
                   ),
-                ),
-              ],
-            ),
-
-            //
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 5),
-                  child: Text(
-                    LocaleProvider.current.email,
-                    style: context.xHeadline3,
-                  ),
-                ),
-
-                //
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: RbioTextFormField(
-                    focusNode: _emailFocusNode,
-                    controller: _emailEditingController,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.emailAddress,
-                    hintText: LocaleProvider.of(context).email_address,
-                    inputFormatters: <TextInputFormatter>[
-                      TabToNextFieldTextInputFormatter(
-                        context,
-                        _emailFocusNode,
-                        null,
-                      ),
-                    ],
-                    onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
-                        context,
-                        _emailFocusNode,
-                        null,
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-
-            //
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 5),
-                  child: Text(
-                    LocaleProvider.current.password,
-                    style: context.xHeadline3,
-                  ),
-                ),
-
-                //
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: RbioTextFormField(
-                    obscureText: true,
-                    focusNode: _passwordFocusNode,
-                    controller: _passwordEditingController,
-                    textInputAction: TextInputAction.next,
-                    hintText: LocaleProvider.of(context).hint_input_password,
-                    inputFormatters: <TextInputFormatter>[
-                      TabToNextFieldTextInputFormatter(
-                        context,
-                        _passwordFocusNode,
-                        _passwordAgainFocusNode,
-                      ),
-                    ],
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if ((value ?? '').isNotEmpty) {
-                        if (!vm.passwordFetcher(value!)) {
-                          return LocaleProvider.current.password_validation;
-                        }
-                      }
-
-                      return null;
-                    },
-                    onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
-                        context,
-                        _passwordFocusNode,
-                        _passwordAgainFocusNode,
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-
-            //
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 5),
-                  child: Text(
-                    LocaleProvider.current.password_again,
-                    style: context.xHeadline3,
-                  ),
-                ),
-
-                //
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: RbioTextFormField(
-                    obscureText: true,
-                    focusNode: _passwordAgainFocusNode,
-                    controller: _passwordAgainEditingController,
-                    textInputAction: TextInputAction.done,
-                    hintText: LocaleProvider.of(context).password_again,
-                    inputFormatters: <TextInputFormatter>[
-                      TabToNextFieldTextInputFormatter(
-                        context,
-                        _passwordAgainFocusNode,
-                        null,
-                      ),
-                    ],
-                    onChanged: (value) {
-                      vm.passwordAgainFetcher(value);
-                    },
-                    onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
-                        context,
-                        _passwordAgainFocusNode,
-                        null,
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-
-            //
-            Row(
-              children: [
-                //
-                Container(
-                  alignment: Alignment.bottomLeft,
-                  child: Checkbox(
-                    value: vm.clickedGeneralForm,
-                    onChanged: (newValue) {
-                      vm.showApplicationContestForm();
-                    },
-                    activeColor: getIt<IAppConfig>().theme.mainColor,
-                  ),
-                ),
-
-                //
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      vm.showApplicationContestForm();
-                    },
-                    child: Text(
-                      LocaleProvider.of(context)
-                          .accept_application_consent_form,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.xHeadline4.copyWith(
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            //
-            Container(
-              margin: const EdgeInsets.only(top: 5, bottom: 10),
-              child: Utils.instance.button(
-                text: LocaleProvider.of(context).btn_next.toUpperCase(),
-                onPressed: () {
-                  AddStep1Model userRegisterStep1 = AddStep1Model();
-                  userRegisterStep1.id = 0;
-                  userRegisterStep1.firstName = registerName;
-                  userRegisterStep1.lastName = registerSurname;
-                  userRegisterStep1.nationalityId = vm.isTcCitizen ? 213 : 38;
-                  userRegisterStep1.identityNumber =
-                      _identityEditingController.text;
 
                   //
-                  userRegisterStep1.gender = registerGender;
-                  userRegisterStep1.gsm = registerPhoneNumber;
-                  userRegisterStep1.birthDate = registerDateOfBirth;
-                  userRegisterStep1.email = _emailEditingController.text;
-                  userRegisterStep1.countryCode =
-                      registerCountryCode.substring(1);
-                  //-------------------------------------
-                  UserRegistrationStep1Model userRegisterStep1Model =
-                      UserRegistrationStep1Model();
-                  userRegisterStep1Model.name = registerName;
-                  userRegisterStep1Model.surname = registerSurname;
-                  userRegisterStep1Model.identificationNumber =
-                      _identityEditingController.text;
-                  userRegisterStep1Model.userNationality =
-                      vm.isTcCitizen ? 'TC' : 'D';
-                  userRegisterStep1Model.phoneNumber = registerPhoneNumber;
-                  userRegisterStep1Model.electronicMail =
-                      _emailEditingController.text;
-                  userRegisterStep1Model.countryCode =
-                      registerCountryCode.substring(1);
-
-                  if (_identityEditingController.text.isNotEmpty &&
-                      _emailEditingController.text.isNotEmpty) {
-                    vm.registerStep1(
-                      userRegisterStep1,
-                      userRegisterStep1Model,
-                    );
-                  } else if ((_identityEditingController.text.isEmpty) &&
-                      _emailEditingController.text.isNotEmpty) {
-                    vm.registerStep1(
-                      userRegisterStep1,
-                      userRegisterStep1Model,
-                    );
-                  } else {
-                    vm.showInfoDialog(
-                      LocaleProvider.of(context).warning,
-                      LocaleProvider.of(context).fill_all_field,
-                    );
-                  }
-                },
-              ),
-            ),
-
-            //
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Text(
-                  LocaleProvider.of(context).lbl_dont_have_account,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<IAppConfig>().theme.textColorSecondary,
-                  ),
-                ),
-                InkWell(
-                  child: Text(
-                    LocaleProvider.of(context).btn_sign_in,
-                    style: context.xHeadline3.copyWith(
-                      color: getIt<IAppConfig>().theme.mainColor,
+                  Container(
+                    margin: const EdgeInsets.only(
+                      bottom: 10,
+                    ),
+                    child: RbioTextFormField(
+                      obscureText: false,
+                      focusNode: _identityFocusNode,
+                      controller: _identityEditingController,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: vm.isTcCitizen
+                          ? TextInputType.number
+                          : TextInputType.text,
+                      hintText: vm.isTcCitizen
+                          ? LocaleProvider.of(context).tc_identity_number
+                          : LocaleProvider.of(context).passport_number,
+                      autovalidateMode: vm.autovalidateMode,
+                      validator: (value) {
+                        if (value?.isNotEmpty ?? false) {
+                          if ((value!.length < 5 && !vm.isTcCitizen)) {
+                            return LocaleProvider.current.passport_validation;
+                          }
+                          return null;
+                        } else {
+                          return LocaleProvider.current.validation;
+                        }
+                      },
+                      inputFormatters: <TextInputFormatter>[
+                        TabToNextFieldTextInputFormatter(
+                          context,
+                          _identityFocusNode,
+                          _emailFocusNode,
+                        ),
+                      ],
+                      onFieldSubmitted: (term) {
+                        UtilityManager().fieldFocusChange(
+                          context,
+                          _identityFocusNode,
+                          _emailFocusNode,
+                        );
+                      },
                     ),
                   ),
-                  onTap: () {
-                    context.vRouter.to(PagePaths.login);
+                ],
+              ),
+
+              //
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, bottom: 5),
+                    child: Text(
+                      LocaleProvider.current.email,
+                      style: context.xHeadline3,
+                    ),
+                  ),
+
+                  //
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: RbioTextFormField(
+                      focusNode: _emailFocusNode,
+                      controller: _emailEditingController,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: LocaleProvider.of(context).email_address,
+                      autovalidateMode: vm.autovalidateMode,
+                      validator: (value) {
+                        if (value?.isNotEmpty ?? false) {
+                          return null;
+                        } else {
+                          return LocaleProvider.current.validation;
+                        }
+                      },
+                      inputFormatters: <TextInputFormatter>[
+                        TabToNextFieldTextInputFormatter(
+                          context,
+                          _emailFocusNode,
+                          null,
+                        ),
+                      ],
+                      onFieldSubmitted: (term) {
+                        UtilityManager().fieldFocusChange(
+                          context,
+                          _emailFocusNode,
+                          null,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              //
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, bottom: 5),
+                    child: Text(
+                      LocaleProvider.current.password,
+                      style: context.xHeadline3,
+                    ),
+                  ),
+
+                  //
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: RbioTextFormField(
+                      obscureText: true,
+                      focusNode: _passwordFocusNode,
+                      controller: _passwordEditingController,
+                      textInputAction: TextInputAction.next,
+                      hintText: LocaleProvider.of(context).hint_input_password,
+                      inputFormatters: <TextInputFormatter>[
+                        TabToNextFieldTextInputFormatter(
+                          context,
+                          _passwordFocusNode,
+                          _passwordAgainFocusNode,
+                        ),
+                      ],
+                      autovalidateMode: vm.autovalidateMode,
+                      validator: (value) {
+                        if (value?.isNotEmpty ?? false) {
+                          if (!vm.passwordFetcher(value!)) {
+                            return LocaleProvider.current.password_validation;
+                          }
+                          return null;
+                        } else {
+                          return LocaleProvider.current.validation;
+                        }
+                      },
+                      onFieldSubmitted: (term) {
+                        UtilityManager().fieldFocusChange(
+                          context,
+                          _passwordFocusNode,
+                          _passwordAgainFocusNode,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              //
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, bottom: 5),
+                    child: Text(
+                      LocaleProvider.current.password_again,
+                      style: context.xHeadline3,
+                    ),
+                  ),
+
+                  //
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: RbioTextFormField(
+                      obscureText: true,
+                      focusNode: _passwordAgainFocusNode,
+                      controller: _passwordAgainEditingController,
+                      textInputAction: TextInputAction.done,
+                      hintText: LocaleProvider.of(context).password_again,
+                      autovalidateMode: vm.autovalidateMode,
+                      validator: (value) {
+                        if (value?.isNotEmpty ?? false) {
+                          return null;
+                        } else {
+                          return LocaleProvider.current.validation;
+                        }
+                      },
+                      inputFormatters: <TextInputFormatter>[
+                        TabToNextFieldTextInputFormatter(
+                          context,
+                          _passwordAgainFocusNode,
+                          null,
+                        ),
+                      ],
+                      onChanged: (value) {
+                        vm.passwordAgainFetcher(value);
+                      },
+                      onFieldSubmitted: (term) {
+                        UtilityManager().fieldFocusChange(
+                          context,
+                          _passwordAgainFocusNode,
+                          null,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              //
+              Row(
+                children: [
+                  //
+                  Container(
+                    alignment: Alignment.bottomLeft,
+                    child: Checkbox(
+                      value: vm.clickedGeneralForm,
+                      onChanged: (newValue) {
+                        vm.showApplicationContestForm();
+                      },
+                      activeColor: getIt<IAppConfig>().theme.mainColor,
+                    ),
+                  ),
+
+                  //
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        vm.showApplicationContestForm();
+                      },
+                      child: Text(
+                        LocaleProvider.of(context)
+                            .accept_application_consent_form,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.xHeadline4.copyWith(
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              //
+              Container(
+                margin: const EdgeInsets.only(top: 5, bottom: 10),
+                child: Utils.instance.button(
+                  text: LocaleProvider.of(context).btn_next.toUpperCase(),
+                  onPressed: () {
+                    if (vm.formKey?.currentState?.validate() ?? false) {
+                      AddStep1Model userRegisterStep1 = AddStep1Model();
+                      userRegisterStep1.id = 0;
+                      userRegisterStep1.firstName = registerName;
+                      userRegisterStep1.lastName = registerSurname;
+                      userRegisterStep1.nationalityId =
+                          vm.isTcCitizen ? 213 : 38;
+                      userRegisterStep1.identityNumber =
+                          _identityEditingController.text;
+
+                      //
+                      userRegisterStep1.gender = registerGender;
+                      userRegisterStep1.gsm = registerPhoneNumber;
+                      userRegisterStep1.birthDate = registerDateOfBirth;
+                      userRegisterStep1.email = _emailEditingController.text;
+                      userRegisterStep1.countryCode =
+                          registerCountryCode.substring(1);
+                      //-------------------------------------
+                      UserRegistrationStep1Model userRegisterStep1Model =
+                          UserRegistrationStep1Model();
+                      userRegisterStep1Model.name = registerName;
+                      userRegisterStep1Model.surname = registerSurname;
+                      userRegisterStep1Model.identificationNumber =
+                          _identityEditingController.text;
+                      userRegisterStep1Model.userNationality =
+                          vm.isTcCitizen ? 'TC' : 'D';
+                      userRegisterStep1Model.phoneNumber = registerPhoneNumber;
+                      userRegisterStep1Model.electronicMail =
+                          _emailEditingController.text;
+                      userRegisterStep1Model.countryCode =
+                          registerCountryCode.substring(1);
+
+                      if (_identityEditingController.text.isNotEmpty &&
+                          _emailEditingController.text.isNotEmpty) {
+                        vm.registerStep1(
+                          userRegisterStep1,
+                          userRegisterStep1Model,
+                        );
+                      } else if ((_identityEditingController.text.isEmpty) &&
+                          _emailEditingController.text.isNotEmpty) {
+                        vm.registerStep1(
+                          userRegisterStep1,
+                          userRegisterStep1Model,
+                        );
+                      }
+                    }
+                    return null;
                   },
                 ),
-              ],
-            ),
+              ),
 
-            //
-            //buildSeperator(),
+              //
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Text(
+                    LocaleProvider.of(context).lbl_dont_have_account,
+                    style: context.xHeadline3.copyWith(
+                      color: getIt<IAppConfig>().theme.textColorSecondary,
+                    ),
+                  ),
+                  InkWell(
+                    child: Text(
+                      LocaleProvider.of(context).btn_sign_in,
+                      style: context.xHeadline3.copyWith(
+                        color: getIt<IAppConfig>().theme.mainColor,
+                      ),
+                    ),
+                    onTap: () {
+                      context.vRouter.to(PagePaths.login);
+                    },
+                  ),
+                ],
+              ),
 
-            //
-            //buildSocialLogin(),
-          ],
+              //
+              //buildSeperator(),
+
+              //
+              //buildSocialLogin(),
+            ],
+          ),
         ),
       ),
     );

@@ -30,6 +30,7 @@ class RbioTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
   final bool isForSms;
+  final InputDecoration? decoration;
 
   const RbioTextFormField({
     Key? key,
@@ -59,6 +60,7 @@ class RbioTextFormField extends StatelessWidget {
     this.textColor,
     this.autovalidateMode,
     this.isForSms = false,
+    this.decoration,
   }) : super(key: key);
 
   @override
@@ -98,21 +100,28 @@ class RbioTextFormField extends StatelessWidget {
             obscureText: obscureText ?? false,
             keyboardType: keyboardType,
             textInputAction: textInputAction,
-            decoration: defaultDecoration(
-              context,
-              hintText: hintText,
-              labelText: labelText,
-              contentPadding: contentPadding,
-              border: border,
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
-              backColor: backColor,
-            ).copyWith(
-              errorStyle: context.xBodyText1Error,
-              errorBorder: _redErrorBorder(),
-              focusedBorder: _focusedBorder(),
-              focusedErrorBorder: _focusedRedErrorBorder(),
-            ),
+            decoration: decoration?.copyWith(
+                  contentPadding: contentPadding,
+                  errorStyle: context.xBodyText1Error,
+                  errorBorder: _redErrorBorder(),
+                  focusedBorder: _focusedBorder(),
+                  focusedErrorBorder: _focusedRedErrorBorder(),
+                ) ??
+                defaultDecoration(
+                  context,
+                  hintText: hintText,
+                  labelText: labelText,
+                  contentPadding: contentPadding,
+                  border: border,
+                  prefixIcon: prefixIcon,
+                  suffixIcon: suffixIcon,
+                  backColor: backColor,
+                ).copyWith(
+                  errorStyle: context.xBodyText1Error,
+                  errorBorder: _redErrorBorder(),
+                  focusedBorder: _focusedBorder(),
+                  focusedErrorBorder: _focusedRedErrorBorder(),
+                ),
             cursorColor: getIt<IAppConfig>().theme.mainColor,
             onChanged: onChanged,
             inputFormatters: inputFormatters,

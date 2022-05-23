@@ -1318,6 +1318,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Phone number is not matching the user"),
         "user_with_email_does_not_exists": MessageLookupByLibrary.simpleMessage(
             "User with this email doesn\'t exist."),
+        "validation": MessageLookupByLibrary.simpleMessage(
+            "This field cannot be left blank"),
         "value": MessageLookupByLibrary.simpleMessage("Değer"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "verify_email_error":

@@ -24,6 +24,13 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
   bool get isSalesContractConfirmed => _isSalesContractConfirmed ?? false;
 
   bool get cancellationFormConfirmed => _cancellationFormConfirmed ?? false;
+ final  AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  AutovalidateMode? get autovalidateMode => _autovalidateMode;
+
+
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState>? get formKey => _formKey;
 
   Future<void> doMobilePayment(ERandevuCCResponse cc, int appointmentId) async {
     if (checkRequiredFields(cc)) {

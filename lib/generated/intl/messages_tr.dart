@@ -1308,6 +1308,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Telefon numarası, kullanıcı ile eşleşmedi"),
         "user_with_email_does_not_exists": MessageLookupByLibrary.simpleMessage(
             "Bu e-posta adresine kayıtlı kullanıcı yoktur."),
+        "validation":
+            MessageLookupByLibrary.simpleMessage("Bu alan boş bırakılamaz"),
         "value": MessageLookupByLibrary.simpleMessage("Value"),
         "verify": MessageLookupByLibrary.simpleMessage("Doğrula"),
         "verify_email_error": MessageLookupByLibrary.simpleMessage(

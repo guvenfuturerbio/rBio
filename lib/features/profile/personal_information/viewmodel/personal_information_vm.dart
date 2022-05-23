@@ -15,6 +15,14 @@ class PersonalInformationScreenVm extends RbioVm {
   String email;
   late bool isTwoFactorAuth;
 
+  
+  final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  AutovalidateMode? get autovalidateMode => _autovalidateMode;
+
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState>? get formKey => _formKey;
+
   final imagePicker = ImagePicker();
 
   ImageProvider<Object> get getProfileImage =>

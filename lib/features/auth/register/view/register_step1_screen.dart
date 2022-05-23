@@ -5,6 +5,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
+import 'package:onedosehealth/core/widgets/rbio_error_text.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -26,10 +27,13 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
   late TextEditingController _nameEditingController;
   late TextEditingController _surnameEditingController;
   late TextEditingController _phoneNumberEditingController;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late FocusNode _nameFocusNode;
   late FocusNode _surnameFocusNode;
   late FocusNode _phoneNumberFocusNode;
+  bool isGenderNull = false;
+  bool isBirthDayNull = false;
 
   @override
   void initState() {
@@ -93,235 +97,83 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
       child: KeyboardAvoider(
         autoScroll: true,
         duration: const Duration(seconds: 1),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            //
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 15.0, left: 20, top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5.0),
-                        child: Text(
-                          LocaleProvider.current.btn_sign_up,
-                          style: context.xHeadline1.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: context.textScale * 30,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        LocaleProvider.current.lets_know_you_better,
-                        style: context.xHeadline3,
-                      ),
-                    ],
-                  ),
-                ),
-
-                //
-                Row(
-                  children: [
-                    //
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 15.0, bottom: 5),
-                            child: Text(
-                              LocaleProvider.current.name,
-                              style: context.xHeadline3,
-                            ),
-                          ),
-                          RbioTextFormField(
-                            focusNode: _nameFocusNode,
-                            controller: _nameEditingController,
-                            obscureText: false,
-                            keyboardType: TextInputType.name,
-                            textInputAction: TextInputAction.next,
-                            hintText: LocaleProvider.of(context).name,
-                            onFieldSubmitted: (term) {
-                              UtilityManager().fieldFocusChange(
-                                context,
-                                _nameFocusNode,
-                                _surnameFocusNode,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //
-                    const SizedBox(
-                      width: 5,
-                    ),
-
-                    //
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 15.0,
-                              bottom: 5,
-                              top: 15,
-                            ),
-                            child: Text(
-                              LocaleProvider.current.surname,
-                              style: context.xHeadline3,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(
-                              bottom: 10,
-                            ),
-                            child: RbioTextFormField(
-                              focusNode: _surnameFocusNode,
-                              controller: _surnameEditingController,
-                              obscureText: false,
-                              keyboardType: TextInputType.name,
-                              textInputAction: TextInputAction.next,
-                              hintText: LocaleProvider.of(context).surname,
-                              onFieldSubmitted: (term) {
-                                UtilityManager().fieldFocusChange(
-                                  context,
-                                  _surnameFocusNode,
-                                  null,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-
-            //
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 15.0,
-                    bottom: 5,
-                    top: 15,
-                  ),
-                  child: Text(
-                    LocaleProvider.current.gender,
-                    style: context.xHeadline3,
-                  ),
-                ),
-
-                //
-                Container(
-                  color: Colors.transparent,
-                  margin: const EdgeInsets.only(
-                    bottom: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      addRadioButton(0, LocaleProvider.current.gender_male),
-                      addRadioButton(1, LocaleProvider.current.gender_female),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-
-            //
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 15.0,
-                    bottom: 5,
-                    top: 15,
-                  ),
-                  child: Text(
-                    LocaleProvider.of(context).birth_date,
-                    style: context.xHeadline3,
-                  ),
-                ),
-                InkWell(
-                  onTap: () => vm.selectDate(context),
-                  child: Container(
-                    padding: const EdgeInsets.all(13),
-                    decoration: BoxDecoration(
-                      color: getIt<IAppConfig>().theme.white,
-                      border: Border.all(
-                        color: getIt<IAppConfig>().theme.darkWhite,
-                      ),
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        (vm.selectedDate == null)
-                            ? Text('DD/MM/YYYY',
-                                style: context.xHeadline3.copyWith(
-                                    color: getIt<IAppConfig>()
-                                        .theme
-                                        .textColorSecondary
-                                        .withOpacity(0.5)))
-                            : Text(
-                                DateFormat('dd MMMM yyyy')
-                                    .format(vm.selectedDate!),
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                        const Icon(Icons.calendar_today)
-                      ],
-                    ),
-                    margin: const EdgeInsets.only(
-                      bottom: 10,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            //
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15.0),
-              child: Column(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              //
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
-                    child: Text(
-                      LocaleProvider.current.phone_number,
-                      style: context.xHeadline3,
+                        const EdgeInsets.only(bottom: 15.0, left: 20, top: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5.0),
+                          child: Text(
+                            LocaleProvider.current.btn_sign_up,
+                            style: context.xHeadline1.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: context.textScale * 30,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          LocaleProvider.current.lets_know_you_better,
+                          style: context.xHeadline3,
+                        ),
+                      ],
                     ),
                   ),
 
                   //
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //
-                      RbioCountryCodePicker(
-                        onChanged: (value) {
-                          countryCode = value;
-                        },
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15.0, bottom: 5),
+                              child: Text(
+                                LocaleProvider.current.name,
+                                style: context.xHeadline3,
+                              ),
+                            ),
+                            RbioTextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value?.isNotEmpty ?? false) {
+                                  return null;
+                                } else {
+                                  return LocaleProvider.current.validation;
+                                }
+                              },
+                              focusNode: _nameFocusNode,
+                              controller: _nameEditingController,
+                              obscureText: false,
+                              keyboardType: TextInputType.name,
+                              textInputAction: TextInputAction.next,
+                              hintText: LocaleProvider.of(context).name,
+                              onFieldSubmitted: (term) {
+                                UtilityManager().fieldFocusChange(
+                                  context,
+                                  _nameFocusNode,
+                                  _surnameFocusNode,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
 
                       //
@@ -331,112 +183,350 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
                       //
                       Expanded(
-                        child: RbioTextFormField(
-                          focusNode: _phoneNumberFocusNode,
-                          controller: _phoneNumberEditingController,
-                          keyboardType: TextInputType.phone,
-                          textInputAction: TextInputAction.next,
-                          hintText: LocaleProvider.of(context).phone_number,
-                          inputFormatters: <TextInputFormatter>[
-                            TabToNextFieldTextInputFormatter(
-                              context,
-                              _phoneNumberFocusNode,
-                              null,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 15.0,
+                                bottom: 5,
+                                top: 15,
+                              ),
+                              child: Text(
+                                LocaleProvider.current.surname,
+                                style: context.xHeadline3,
+                              ),
                             ),
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9\t\r]'))
+                            Container(
+                              margin: const EdgeInsets.only(
+                                bottom: 10,
+                              ),
+                              child: RbioTextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value?.isNotEmpty ?? false) {
+                                    return null;
+                                  } else {
+                                    return LocaleProvider.current.validation;
+                                  }
+                                },
+                                focusNode: _surnameFocusNode,
+                                controller: _surnameEditingController,
+                                obscureText: false,
+                                keyboardType: TextInputType.name,
+                                textInputAction: TextInputAction.next,
+                                hintText: LocaleProvider.of(context).surname,
+                                onFieldSubmitted: (term) {
+                                  UtilityManager().fieldFocusChange(
+                                    context,
+                                    _surnameFocusNode,
+                                    null,
+                                  );
+                                },
+                              ),
+                            ),
                           ],
-                          onFieldSubmitted: (term) {
-                            UtilityManager().fieldFocusChange(
-                              context,
-                              _phoneNumberFocusNode,
-                              null,
-                            );
-                          },
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-            ),
 
-            //
-            Container(
-              margin: const EdgeInsets.only(
-                top: 5,
-                bottom: 10,
-                left: 50,
-                right: 50,
-              ),
-              child: RbioElevatedButton(
-                infinityWidth: true,
-                title: LocaleProvider.of(context).btn_next.toUpperCase(),
-                onTap: () {
-                  if (_nameEditingController.text.isNotEmpty &&
-                      _surnameEditingController.text.isNotEmpty &&
-                      _phoneNumberEditingController.text.isNotEmpty &&
-                      vm.selectedDate != null &&
-                      gender != null) {
-                    Atom.to(
-                      PagePaths.registerStep2,
-                      queryParameters: {
-                        'registerName': _nameEditingController.text,
-                        'registerSurname': _surnameEditingController.text,
-                        'registerGender': gender.toString(),
-                        'registerDateOfBirth': vm.selectedDate.toString(),
-                        'registerPhoneNumber':
-                            _phoneNumberEditingController.text,
-                        'registerCountryCode':
-                            Uri.encodeFull(countryCode.dialCode.toString()),
-                      },
-                    );
-                  } else {
-                    getIt<AdjustManager>()
-                        .trackEvent(UnsuccessfulRegisterStep1Event());
-                    getIt<FirebaseAnalyticsManager>().logEvent(
-                      KayitOlAdim1Hata(
-                        "Register1 User TC",
-                        22.toString(),
-                      ),
-                    );
-                    vm.showInfoDialog(
-                      LocaleProvider.of(context).warning,
-                      LocaleProvider.of(context).fill_all_field,
-                    );
-                  }
-                },
-              ),
-            ),
-
-            //
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  LocaleProvider.of(context).lbl_have_account,
-                  style: context.xHeadline3.copyWith(
-                    color: getIt<IAppConfig>().theme.textColorSecondary,
-                  ),
-                ),
-                InkWell(
-                  child: Text(
-                    LocaleProvider.of(context).btn_sign_in,
-                    style: context.xHeadline3.copyWith(
-                      color: getIt<IAppConfig>().theme.mainColor,
+              //
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      bottom: 5,
+                      top: 15,
+                    ),
+                    child: Text(
+                      LocaleProvider.current.gender,
+                      style: context.xHeadline3,
                     ),
                   ),
+
+                  //
+                  Container(
+                    color: Colors.transparent,
+                    margin: const EdgeInsets.only(
+                      bottom: 10,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        addRadioButton(
+                            0, LocaleProvider.current.gender_male, true),
+                        addRadioButton(
+                            1, LocaleProvider.current.gender_female, false),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              //
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      bottom: 5,
+                      top: 15,
+                    ),
+                    child: Text(
+                      LocaleProvider.of(context).birth_date,
+                      style: context.xHeadline3,
+                    ),
+                  ),
+                  InkWell(
+                      onTap: () {
+                        setState(() {
+                          isBirthDayNull = false;
+                          vm.selectDate(context);
+                        });
+                      },
+                      child: isBirthDayNull
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    padding: const EdgeInsets.all(13),
+                                    decoration: BoxDecoration(
+                                      color: getIt<IAppConfig>().theme.white,
+                                      border: Border.all(
+                                        color: getIt<IAppConfig>().theme.red,
+                                      ),
+                                      borderRadius:
+                                          R.sizes.borderRadiusCircular,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        if (vm.selectedDate == null)
+                                          Text('DD/MM/YYYY',
+                                              style: context.xHeadline3
+                                                  .copyWith(
+                                                      color: getIt<IAppConfig>()
+                                                          .theme
+                                                          .textColorSecondary
+                                                          .withOpacity(0.5))),
+                                        const Icon(Icons.calendar_today)
+                                      ],
+                                    )),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 22.0),
+                                  child: RbioErrorText(
+                                    title: LocaleProvider.current.validation,
+                                  ),
+                                )
+                              ],
+                            )
+                          : Container(
+                              padding: const EdgeInsets.all(13),
+                              decoration: BoxDecoration(
+                                color: getIt<IAppConfig>().theme.white,
+                                border: Border.all(
+                                  color: getIt<IAppConfig>().theme.darkWhite,
+                                ),
+                                borderRadius: R.sizes.borderRadiusCircular,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  vm.selectedDate != null
+                                      ? Text(
+                                          DateFormat('dd MMMM yyyy')
+                                              .format(vm.selectedDate!),
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        )
+                                      : Text('DD/MM/YYYY',
+                                          style: context.xHeadline3.copyWith(
+                                              color: getIt<IAppConfig>()
+                                                  .theme
+                                                  .textColorSecondary
+                                                  .withOpacity(0.5))),
+                                  const Icon(Icons.calendar_today),
+                                ],
+                              ),
+                              margin: const EdgeInsets.only(
+                                bottom: 10,
+                              ),
+                            )),
+                ],
+              ),
+
+              //
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 15.0, bottom: 5, top: 15),
+                      child: Text(
+                        LocaleProvider.current.phone_number,
+                        style: context.xHeadline3,
+                      ),
+                    ),
+
+                    //
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //
+                        RbioCountryCodePicker(
+                          onChanged: (value) {
+                            countryCode = value;
+                          },
+                        ),
+
+                        //
+                        const SizedBox(
+                          width: 5,
+                        ),
+
+                        //
+                        Expanded(
+                          child: RbioTextFormField(
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value?.isNotEmpty ?? false) {
+                                return null;
+                              } else {
+                                return LocaleProvider.current.validation;
+                              }
+                            },
+                            focusNode: _phoneNumberFocusNode,
+                            controller: _phoneNumberEditingController,
+                            keyboardType: TextInputType.phone,
+                            textInputAction: TextInputAction.next,
+                            hintText: LocaleProvider.of(context).phone_number,
+                            inputFormatters: <TextInputFormatter>[
+                              TabToNextFieldTextInputFormatter(
+                                context,
+                                _phoneNumberFocusNode,
+                                null,
+                              ),
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9\t\r]'))
+                            ],
+                            onFieldSubmitted: (term) {
+                              UtilityManager().fieldFocusChange(
+                                context,
+                                _phoneNumberFocusNode,
+                                null,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              //
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 5,
+                  bottom: 10,
+                  left: 50,
+                  right: 50,
+                ),
+                child: RbioElevatedButton(
+                  infinityWidth: true,
+                  title: LocaleProvider.of(context).btn_next.toUpperCase(),
                   onTap: () {
-                    context.vRouter.to(PagePaths.login);
+                    if ((_formKey.currentState?.validate() ?? false) &&
+                        !isBirthDayNull &&
+                        !isGenderNull) {
+                      Atom.to(
+                        PagePaths.registerStep2,
+                        queryParameters: {
+                          'registerName': _nameEditingController.text,
+                          'registerSurname': _surnameEditingController.text,
+                          'registerGender': gender.toString(),
+                          'registerDateOfBirth': vm.selectedDate.toString(),
+                          'registerPhoneNumber':
+                              _phoneNumberEditingController.text,
+                          'registerCountryCode':
+                              Uri.encodeFull(countryCode.dialCode.toString()),
+                        },
+                      );
+                    } else {
+                      if (gender == null) {
+                        setState(() {
+                          isGenderNull = true;
+                        });
+                      }
+                      if (vm.selectedDate == null) {
+                        setState(() {
+                          isBirthDayNull = true;
+                        });
+                      }
+
+                      getIt<AdjustManager>()
+                          .trackEvent(UnsuccessfulRegisterStep1Event());
+                      getIt<FirebaseAnalyticsManager>().logEvent(
+                        KayitOlAdim1Hata(
+                          "Register1 User TC",
+                          22.toString(),
+                        ),
+                      );
+                      // vm.showInfoDialog(
+                      //   LocaleProvider.of(context).warning,
+                      //   LocaleProvider.of(context).fill_all_field,
+                      // );
+                    }
                   },
                 ),
-              ],
-            ),
+              ),
 
-            const SizedBox(
-              height: 10,
-            ),
-          ],
+              //
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    LocaleProvider.of(context).lbl_have_account,
+                    style: context.xHeadline3.copyWith(
+                      color: getIt<IAppConfig>().theme.textColorSecondary,
+                    ),
+                  ),
+                  InkWell(
+                    child: Text(
+                      LocaleProvider.of(context).btn_sign_in,
+                      style: context.xHeadline3.copyWith(
+                        color: getIt<IAppConfig>().theme.mainColor,
+                      ),
+                    ),
+                    onTap: () {
+                      context.vRouter.to(PagePaths.login);
+                    },
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -505,36 +595,90 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
 
   String? gender;
 
-  Widget addRadioButton(int btnValue, String title) {
-    return Expanded(
-      child: Card(
-        elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            //
-            Radio<String>(
-              activeColor: Theme.of(context).primaryColor,
-              value: genderList[btnValue],
-              groupValue: gender,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    gender = value;
-                  });
-                }
-              },
-            ),
+  Widget addRadioButton(int btnValue, String title, bool showBorder) {
+    return isGenderNull
+        ? Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Card(
+                  elevation: R.sizes.defaultElevation,
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: getIt<IAppConfig>().theme.red,
+                      ),
+                      borderRadius: R.sizes.borderRadiusCircular),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      //
+                      Radio<String>(
+                        activeColor: Theme.of(context).primaryColor,
+                        value: genderList[btnValue],
+                        groupValue: gender,
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              gender = value;
+                              isGenderNull = false;
+                            });
+                          }
+                        },
+                      ),
 
-            //
-            Text(
-              title,
-              style: context.xHeadline3,
+                      //
+                      Text(
+                        title,
+                        style: context.xHeadline3,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 22),
+                    child: showBorder
+                        ? RbioErrorText(
+                            title: LocaleProvider.current.validation,
+                          )
+                        : const Text(''))
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          )
+        : Expanded(
+            child: Card(
+              elevation: R.sizes.defaultElevation,
+              shape: RoundedRectangleBorder(
+                  borderRadius: R.sizes.borderRadiusCircular),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  //
+                  Radio<String>(
+                      activeColor: Theme.of(context).primaryColor,
+                      value: genderList[btnValue],
+                      groupValue: gender,
+                      onChanged: (value) {
+                        if (!isGenderNull) {
+                          if (value != null) {
+                            setState(() {
+                              gender = value;
+                              isGenderNull = false;
+                            });
+                          }
+                        }
+                      }),
+
+                  //
+                  Text(
+                    title,
+                    style: context.xHeadline3,
+                  ),
+                ],
+              ),
+            ),
+          );
   }
 }

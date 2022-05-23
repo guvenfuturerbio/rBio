@@ -853,5 +853,6 @@
   "identification_match_problem": "Kimlik numarası formatı veya pasaport numarası formatı ile eşleşme bulunamadı.",
   "verify": "Doğrula",
   "twofa": "İki Faktörlü Kimlik Doğrulama",
-  "resend": "Tekrar Gönder"
+  "resend": "Tekrar Gönder",
+  "validation": "Bu alan boş bırakılamaz"
 }

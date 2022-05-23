@@ -135,115 +135,182 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
             //
             Padding(
               padding: const EdgeInsets.only(top: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  RbioTextFormField(
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    focusNode: _cardHolderNameFNode,
-                    controller: _cardHolderNameController,
-                    textInputAction: TextInputAction.next,
-                    hintText: LocaleProvider.of(context).credit_card_holder,
-                    inputFormatters: <TextInputFormatter>[
-                      TabToNextFieldTextInputFormatter(
-                        context,
-                        _cardHolderNameFNode,
-                        _cardNumberFNode,
-                      ),
-                    ],
-                    onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
-                        context,
-                        _cardHolderNameFNode,
-                        _cardNumberFNode,
-                      );
-                    },
-                  ),
+              child: Form(
+                key: value.formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RbioTextFormField(
+                      autovalidateMode: value.autovalidateMode,
+                      validator: (value) {
+                        if (value?.isNotEmpty ?? false) {
+                          return null;
+                        } else {
+                          return LocaleProvider.current.validation;
+                        }
+                      },
+                      decoration: Utils.instance
+                          .inputImageDecoration(
+                            suffixIconClicked: () {},
+                            hintText: LocaleProvider.current.credit_card_holder,
+                            image: R.image.user,
+                          )
+                          .copyWith(
+                              fillColor: getIt<IAppConfig>().theme.white,
+                              filled: true),
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      focusNode: _cardHolderNameFNode,
+                      controller: _cardHolderNameController,
+                      textInputAction: TextInputAction.next,
+                      inputFormatters: <TextInputFormatter>[
+                        TabToNextFieldTextInputFormatter(
+                          context,
+                          _cardHolderNameFNode,
+                          _cardNumberFNode,
+                        ),
+                      ],
+                      onFieldSubmitted: (term) {
+                        UtilityManager().fieldFocusChange(
+                          context,
+                          _cardHolderNameFNode,
+                          _cardNumberFNode,
+                        );
+                      },
+                    ),
 
-                  //
-                  _buildVerticalGap(),
+                    //
+                    _buildVerticalGap(),
 
-                  //
-                  RbioTextFormField(
-                    focusNode: _cardNumberFNode,
-                    controller: _cardNumberController,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    hintText: LocaleProvider.of(context).credit_card_number,
-                    inputFormatters: <TextInputFormatter>[
-                      TabToNextFieldTextInputFormatter(
-                        context,
-                        _cardNumberFNode,
-                        _cardCcvFNode,
-                      )
-                    ],
-                    onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
-                        context,
-                        _cardNumberFNode,
-                        _cardCcvFNode,
-                      );
-                    },
-                  ),
+                    //
+                    RbioTextFormField(
+                      autovalidateMode: value.autovalidateMode,
+                      validator: (value) {
+                        if (value?.isNotEmpty ?? false) {
+                          return null;
+                        } else {
+                          return LocaleProvider.current.validation;
+                        }
+                      },
+                      decoration: Utils.instance
+                          .inputImageDecoration(
+                            suffixIconClicked: () {},
+                            hintText: LocaleProvider.current.credit_card_number,
+                            image: R.image.creditCardNumber,
+                          )
+                          .copyWith(
+                              fillColor: getIt<IAppConfig>().theme.white,
+                              filled: true),
+                      focusNode: _cardNumberFNode,
+                      controller: _cardNumberController,
+                      enableSuggestions: false,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        TabToNextFieldTextInputFormatter(
+                          context,
+                          _cardNumberFNode,
+                          _cardCcvFNode,
+                        )
+                      ],
+                      onFieldSubmitted: (term) {
+                        UtilityManager().fieldFocusChange(
+                          context,
+                          _cardNumberFNode,
+                          _cardCcvFNode,
+                        );
+                      },
+                    ),
 
-                  //
-                  _buildVerticalGap(),
+                    //
+                    _buildVerticalGap(),
 
-                  //
-                  RbioTextFormField(
-                    focusNode: _cardCcvFNode,
-                    controller: _cvvCodeController,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    hintText: LocaleProvider.of(context).credit_card_cvv,
-                    inputFormatters: <TextInputFormatter>[
-                      TabToNextFieldTextInputFormatter(
-                        context,
-                        _cardCcvFNode,
-                        _cardExpirityDateFNode,
-                      ),
-                    ],
-                    onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
-                        context,
-                        _cardCcvFNode,
-                        _cardExpirityDateFNode,
-                      );
-                    },
-                  ),
+                    //
+                    RbioTextFormField(
+                      autovalidateMode: value.autovalidateMode,
+                      validator: (value) {
+                        if (value?.isNotEmpty ?? false) {
+                          return null;
+                        } else {
+                          return LocaleProvider.current.validation;
+                        }
+                      },
+                      decoration: Utils.instance
+                          .inputImageDecoration(
+                            suffixIconClicked: () {},
+                            hintText: LocaleProvider.current.credit_card_cvv,
+                            image: R.image.password,
+                          )
+                          .copyWith(
+                              fillColor: getIt<IAppConfig>().theme.white,
+                              filled: true),
+                      focusNode: _cardCcvFNode,
+                      controller: _cvvCodeController,
+                      enableSuggestions: false,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      inputFormatters: <TextInputFormatter>[
+                        TabToNextFieldTextInputFormatter(
+                          context,
+                          _cardCcvFNode,
+                          _cardExpirityDateFNode,
+                        ),
+                      ],
+                      onFieldSubmitted: (term) {
+                        UtilityManager().fieldFocusChange(
+                          context,
+                          _cardCcvFNode,
+                          _cardExpirityDateFNode,
+                        );
+                      },
+                    ),
 
-                  //
-                  _buildVerticalGap(),
+                    //
+                    _buildVerticalGap(),
 
-                  //
-                  RbioTextFormField(
-                    focusNode: _cardExpirityDateFNode,
-                    controller: _expiryDateController,
-                    enableSuggestions: false,
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.done,
-                    hintText:
-                        LocaleProvider.of(context).credit_card_expired_date,
-                    inputFormatters: <TextInputFormatter>[
-                      TabToNextFieldTextInputFormatter(
-                        context,
-                        _cardExpirityDateFNode,
-                        null,
-                      ),
-                    ],
-                    onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
-                        context,
-                        _cardExpirityDateFNode,
-                        null,
-                      );
-                    },
-                  ),
-                ],
+                    //
+                    RbioTextFormField(
+                      autovalidateMode: value.autovalidateMode,
+                      validator: (value) {
+                        if (value?.isNotEmpty ?? false) {
+                          return null;
+                        } else {
+                          return LocaleProvider.current.validation;
+                        }
+                      },
+                      decoration: Utils.instance
+                          .inputImageDecoration(
+                            suffixIconClicked: () {},
+                            hintText:
+                                LocaleProvider.current.credit_card_expired_date,
+                            image: R.image.creditCalendar,
+                          )
+                          .copyWith(
+                              fillColor: getIt<IAppConfig>().theme.white,
+                              filled: true),
+                      focusNode: _cardExpirityDateFNode,
+                      controller: _expiryDateController,
+                      enableSuggestions: false,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.done,
+                      inputFormatters: <TextInputFormatter>[
+                        TabToNextFieldTextInputFormatter(
+                          context,
+                          _cardExpirityDateFNode,
+                          null,
+                        ),
+                      ],
+                      onFieldSubmitted: (term) {
+                        UtilityManager().fieldFocusChange(
+                          context,
+                          _cardExpirityDateFNode,
+                          null,
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
 
@@ -339,30 +406,22 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                   RbioElevatedButton(
                     title: LocaleProvider.of(context).confirm.toUpperCase(),
                     onTap: () {
-                      if (value.isSalesContractConfirmed) {
-                        if (value.cancellationFormConfirmed) {
-                          value.doMobilePayment(
-                            ERandevuCCResponse(
-                              cardNumber: _cardNumberController.text
-                                  .replaceAll(" ", ""),
-                              cvv: _cvvCodeController.text,
-                              cardHolder: _cardHolderNameController.text,
-                              expirationMonth: _expiryDateController.text,
-                              expirationYear: _expiryDateController.text,
-                            ),
-                            widget.appointmentId,
-                          );
-                        } else {
-                          value.showGradientDialog(
-                            LocaleProvider.current.warning,
-                            LocaleProvider.current.check_cancellation_refund,
-                          );
+                      if (value.formKey?.currentState?.validate() ?? false) {
+                        if (value.isSalesContractConfirmed) {
+                          if (value.cancellationFormConfirmed) {
+                            value.doMobilePayment(
+                              ERandevuCCResponse(
+                                cardNumber: _cardNumberController.text
+                                    .replaceAll(" ", ""),
+                                cvv: _cvvCodeController.text,
+                                cardHolder: _cardHolderNameController.text,
+                                expirationMonth: _expiryDateController.text,
+                                expirationYear: _expiryDateController.text,
+                              ),
+                              widget.appointmentId,
+                            );
+                          }
                         }
-                      } else {
-                        value.showGradientDialog(
-                          LocaleProvider.current.warning,
-                          LocaleProvider.current.check_distance_sales_contract,
-                        );
                       }
                     },
                   ),
