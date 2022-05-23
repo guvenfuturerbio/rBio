@@ -8689,6 +8689,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `This field cannot be left blank`
+  String get validation {
+    return Intl.message(
+      'This field cannot be left blank',
+      name: 'validation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

@@ -10,6 +10,14 @@ class TreatmentEditVm extends ChangeNotifier {
     patientName = getIt<ProfileStorageImpl>().getFirst().name ?? 'Name';
   }
 
+
+   final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  AutovalidateMode? get autovalidateMode => _autovalidateMode;
+
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState>? get formKey => _formKey;
+
   save(String treatment) async {
     await getIt<ChronicTrackingRepository>()
         .addTreatment(getIt<ProfileStorageImpl>().getFirst(), treatment);

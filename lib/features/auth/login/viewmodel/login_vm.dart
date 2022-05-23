@@ -32,12 +32,15 @@ class LoginScreenVm extends ChangeNotifier {
     });
   }
 
-  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+
+  AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
   late ConsentForm consentForm;
 
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  GlobalKey<FormState>? get key => _key;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState>? get formKey => _formKey;
+
 
   String locale = "";
   LoadingDialog? loadingDialog;
@@ -203,6 +206,7 @@ class LoginScreenVm extends ChangeNotifier {
   Future<void> login(String username, String password, String consentId) async {
     if (checkFields(username, password)) {
       _autovalidateMode = AutovalidateMode.always;
+    
       notifyListeners();
       showLoadingDialog();
       try {
@@ -602,11 +606,11 @@ class LoginScreenVm extends ChangeNotifier {
       if (username.isNotEmpty && password.isNotEmpty) {
         return true;
       } else {
-        showGradientDialog(
-          mContext,
-          LocaleProvider.current.warning,
-          LocaleProvider.current.tc_or_pass_cannot_empty,
-        );
+        // showGradientDialog(
+        //   mContext,
+        //   LocaleProvider.current.warning,
+        //   LocaleProvider.current.tc_or_pass_cannot_empty,
+        // );
         return false;
       }
     } else {

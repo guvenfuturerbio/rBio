@@ -863,5 +863,6 @@
   "created_by": "Created By",
   "detail_search": "Detail Search",
   "past_treatments": "Past Treatments",
-  "current_treatments": "Current Treatments"
+  "current_treatments": "Current Treatments",
+  "validation": "This field cannot be left blank"
 }

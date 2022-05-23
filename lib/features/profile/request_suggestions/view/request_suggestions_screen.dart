@@ -99,28 +99,39 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
             ),
 
             //
-            Container(
-              height: MediaQuery.of(context).size.height * 0.40,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: R.sizes.borderRadiusCircular,
-              ),
-              child: ClipRRect(
-                borderRadius: R.sizes.borderRadiusCircular,
-                child: RbioTextFormField(
-                  focusNode: focusNode,
-                  controller: textEditingController,
-                  keyboardType: TextInputType.multiline,
-                  border: RbioTextFormField.noneBorder(),
-                  maxLines: null,
-                  textInputAction: TextInputAction.newline,
-                  onChanged: (text) {
-                    vm.setText(text);
-                  },
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(500),
-                  ],
-                  hintText: LocaleProvider.current.request_and_suggestions,
+            Form(
+              key: vm.formKey,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: R.sizes.borderRadiusCircular,
+                ),
+                child: ClipRRect(
+                  borderRadius: R.sizes.borderRadiusCircular,
+                  child: RbioTextFormField(
+                    autovalidateMode: vm.autovalidateMode,
+                    validator: (value) {
+                      if (value?.isNotEmpty ?? false) {
+                        return null;
+                      } else {
+                        return LocaleProvider.current.validation;
+                      }
+                    },
+                    focusNode: focusNode,
+                    controller: textEditingController,
+                    keyboardType: TextInputType.multiline,
+                    border: RbioTextFormField.noneBorder(),
+                    maxLines: null,
+                    textInputAction: TextInputAction.newline,
+                    onChanged: (text) {
+                      vm.setText(text);
+                    },
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(500),
+                    ],
+                    hintText: LocaleProvider.current.request_and_suggestions,
+                  ),
                 ),
               ),
             ),
@@ -142,7 +153,11 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
               child: RbioElevatedButton(
                 title: LocaleProvider.current.send,
                 onTap: () {
-                  vm.sendSuggestion();
+                  if (vm.formKey?.currentState?.validate() ?? false) {
+                    vm.sendSuggestion();
+                  } else {
+                    LocaleProvider.current.validation;
+                  }
                 },
                 infinityWidth: true,
               ),

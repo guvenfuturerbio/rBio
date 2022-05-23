@@ -112,17 +112,17 @@ class _LoginScreenState extends State<LoginScreen> {
             _buildHeader(),
 
             Form(
-                autovalidateMode: value.autovalidateMode,
-                key: value.key,
-                child: Column(
-                  children: [
-                    //
-                    _buildEmail(value),
+              key: value.formKey,
+              child: Column(
+                children: [
+                  //
+                  _buildEmail(value),
 
-                    //
-                    _buildPassword(value),
-                  ],
-                )),
+                  //
+                  _buildPassword(value),
+                ],
+              ),
+            ),
 
             //
             _buildRememberMe(value),
@@ -207,8 +207,15 @@ class _LoginScreenState extends State<LoginScreen> {
           child: RbioTextFormField(
             obscureText: false,
             autocorrect: false,
+            autovalidateMode: value.autovalidateMode,
             focusNode: _usernameFocusNode,
-            // validator: Utils.instance.validateIdentificationNumber,
+            validator: (value) {
+              if (value!.isNotEmpty) {
+                return null;
+              } else {
+                return LocaleProvider.current.validation;
+              }
+            },
             controller: _userNameEditingController,
             textInputAction: TextInputAction.next,
             hintText: '', // LocaleProvider.of(context).email_or_identity,
@@ -253,7 +260,14 @@ class _LoginScreenState extends State<LoginScreen> {
           autocorrect: false,
           enableSuggestions: false,
           focusNode: _passwordFocusNode,
-          // validator: Utils.instance.validatePassword,
+          autovalidateMode: value.autovalidateMode,
+          validator: (value) {
+            if (value!.isNotEmpty) {
+              return null;
+            } else {
+              return LocaleProvider.current.validation;
+            }
+          },
           controller: _passwordEditingController,
           textInputAction: TextInputAction.done,
           obscureText: value.passwordVisibility ? false : true,
@@ -432,26 +446,27 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 //
                 Container(
-                  child:
-                      value.versionCheckProgress == VersionCheckProgress.loading
-                          ? Column(
-                              children: <Widget>[
-                                LoadingDialog(),
-                                Text(
-                                  LocaleProvider.of(context).check_for_updates,
-                                ),
-                              ],
-                            )
-                          : Utils.instance.button(
-                              text: LocaleProvider.of(context).btn_sign_in,
-                              onPressed: () {
-                                value.login(
-                                  _userNameEditingController.text,
-                                  _passwordEditingController.text,
-                                  getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.consentId) ?? ''
-                                );
-                              },
+                  child: value.versionCheckProgress ==
+                          VersionCheckProgress.loading
+                      ? Column(
+                          children: <Widget>[
+                            LoadingDialog(),
+                            Text(
+                              LocaleProvider.of(context).check_for_updates,
                             ),
+                          ],
+                        )
+                      : Utils.instance.button(
+                          text: LocaleProvider.of(context).btn_sign_in,
+                          onPressed: () {
+                            value.login(
+                                _userNameEditingController.text,
+                                _passwordEditingController.text,
+                                getIt<ISharedPreferencesManager>().getString(
+                                        SharedPreferencesKeys.consentId) ??
+                                    '');
+                          },
+                        ),
                 ),
 
                 //
@@ -502,11 +517,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           ? Utils.instance.button(
                               text: LocaleProvider.of(context).btn_sign_in,
                               onPressed: () {
-                                value.login(
-                                  _userNameEditingController.text,
-                                  _passwordEditingController.text,
-                                  getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.consentId) ?? ''
-                                );
+                                if (value.formKey?.currentState?.validate() ??
+                                    false) {
+                                  value.login(
+                                      _userNameEditingController.text,
+                                      _passwordEditingController.text,
+                                      getIt<ISharedPreferencesManager>()
+                                              .getString(SharedPreferencesKeys
+                                                  .consentId) ??
+                                          '');
+                                }
                               },
                             )
                           : value.needForceUpdate == true &&

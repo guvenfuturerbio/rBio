@@ -14,6 +14,12 @@ class RequestSuggestionsScreenVm extends RbioVm {
     _progressOverlay = value;
     notifyListeners();
   }
+    final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  AutovalidateMode? get autovalidateMode => _autovalidateMode;
+
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState>? get formKey => _formKey;
 
   String text = '';
   int textLength = 0;
