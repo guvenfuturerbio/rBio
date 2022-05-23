@@ -60,7 +60,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
         child: Consumer<TreatmentEditVm>(builder: (ctx, vm, __) {
           return RbioScaffold(
             appbar: _buildAppBar(),
-            body: _buildBody(ctx),
+            body: _buildBody(ctx, vm),
           );
         }),
       ),
@@ -74,7 +74,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
         ),
       );
 
-  Widget _buildBody(BuildContext ctx) => Column(
+  Widget _buildBody(BuildContext ctx, TreatmentEditVm vm) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -104,19 +104,30 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
 
           //
           Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: R.sizes.borderRadiusCircular,
-              ),
-              child: RbioTextFormField(
-                controller: textEditingController,
-                maxLines: null,
-                enabled: newModel,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                border: RbioTextFormField.noneBorder(),
+            child: Form(
+              key: vm.formKey,
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  borderRadius: R.sizes.borderRadiusCircular,
+                ),
+                child: RbioTextFormField(
+                  autovalidateMode: vm.autovalidateMode,
+                  validator: (value) {
+                    if (value?.isNotEmpty ?? false) {
+                      return null;
+                    } else {
+                      return LocaleProvider.current.validation;
+                    }
+                  },
+                  controller: textEditingController,
+                  maxLines: null,
+                  enabled: newModel,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  border: RbioTextFormField.noneBorder(),
+                ),
               ),
             ),
           ),
@@ -127,7 +138,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
           ),
 
           //
-          if (newModel!) _buildButtons(ctx),
+          if (newModel!) _buildButtons(ctx, vm),
 
           //
           SizedBox(
@@ -136,7 +147,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
         ],
       );
 
-  Widget _buildButtons(BuildContext ctx) {
+  Widget _buildButtons(BuildContext ctx, TreatmentEditVm vm) {
     return KeyboardVisibilityBuilder(
       builder: (context, isKeyboardVisible) {
         if (!isKeyboardVisible) {
@@ -148,9 +159,15 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
               Expanded(
                 child: RbioElevatedButton(
                   title: LocaleProvider.current.save,
-                  onTap: () => ctx
-                      .read<TreatmentEditVm>()
-                      .save(textEditingController.text),
+                  onTap: () {
+                    if (vm.formKey?.currentState?.validate() ?? false) {
+                      ctx
+                          .read<TreatmentEditVm>()
+                          .save(textEditingController.text);
+                    } else {
+                      LocaleProvider.current.validation;
+                    }
+                  },
                   fontWeight: FontWeight.bold,
                 ),
               ),

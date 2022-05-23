@@ -98,190 +98,219 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           _passwordFocusNode,
           _passwordAgainFocusNode,
         ],
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            //
-            R.sizes.stackedTopPadding(context),
+        child: Form(
+          key: value.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              //
+              R.sizes.stackedTopPadding(context),
 
-            //
-            R.sizes.hSizer16,
+              //
+              R.sizes.hSizer16,
 
-            //
-            Text(
-              LocaleProvider.current.password_security,
-              textAlign: TextAlign.center,
-              style: context.xHeadline4.copyWith(
-                color: getIt<IAppConfig>().theme.mainColor,
-              ),
-            ),
-
-            //
-            Container(
-              margin: const EdgeInsets.only(bottom: 20, top: 20),
-              child: RbioTextFormField(
-                focusNode: _oldPasswordFocusNode,
-                controller: _oldPasswordController,
-                textInputAction: TextInputAction.next,
-                obscureText: value.oldPasswordVisibility ? false : true,
-                hintText: LocaleProvider.of(context).hint_input_old_password,
-                prefixIcon: SvgPicture.asset(
-                  R.image.passwordSmall,
-                  fit: BoxFit.none,
+              //
+              Text(
+                LocaleProvider.current.password_security,
+                textAlign: TextAlign.center,
+                style: context.xHeadline4.copyWith(
+                  color: getIt<IAppConfig>().theme.mainColor,
                 ),
-                suffixIcon: RbioVisibilitySuffixIcon(
-                  eyesOpen: value.oldPasswordVisibility,
-                  onTap: () {
-                    value.toggleOldPasswordVisibility();
+              ),
+
+              //
+              Container(
+                margin: const EdgeInsets.only(bottom: 20, top: 20),
+                child: RbioTextFormField(
+                  autovalidateMode: value.autovalidateMode,
+                  validator: (value) {
+                    if (value?.isNotEmpty ?? false) {
+                      return null;
+                    } else {
+                      return LocaleProvider.current.validation;
+                    }
+                  },
+                  focusNode: _oldPasswordFocusNode,
+                  controller: _oldPasswordController,
+                  textInputAction: TextInputAction.next,
+                  obscureText: value.oldPasswordVisibility ? false : true,
+                  hintText: LocaleProvider.of(context).hint_input_old_password,
+                  prefixIcon: SvgPicture.asset(
+                    R.image.passwordSmall,
+                    fit: BoxFit.none,
+                  ),
+                  suffixIcon: RbioVisibilitySuffixIcon(
+                    eyesOpen: value.oldPasswordVisibility,
+                    onTap: () {
+                      value.toggleOldPasswordVisibility();
+                    },
+                  ),
+                  inputFormatters: <TextInputFormatter>[
+                    TabToNextFieldTextInputFormatter(
+                      context,
+                      _oldPasswordFocusNode,
+                      _passwordFocusNode,
+                    ),
+                  ],
+                  onFieldSubmitted: (term) {
+                    UtilityManager().fieldFocusChange(
+                      context,
+                      _oldPasswordFocusNode,
+                      _passwordFocusNode,
+                    );
                   },
                 ),
-                inputFormatters: <TextInputFormatter>[
-                  TabToNextFieldTextInputFormatter(
-                    context,
-                    _oldPasswordFocusNode,
-                    _passwordFocusNode,
-                  ),
-                ],
-                onFieldSubmitted: (term) {
-                  UtilityManager().fieldFocusChange(
-                    context,
-                    _oldPasswordFocusNode,
-                    _passwordFocusNode,
-                  );
-                },
               ),
-            ),
 
-            //
-            Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              child: RbioTextFormField(
-                focusNode: _passwordFocusNode,
-                controller: _passwordController,
-                textInputAction: TextInputAction.next,
-                obscureText: value.passwordVisibility ? false : true,
-                hintText: LocaleProvider.of(context).hint_input_password,
-                prefixIcon: SvgPicture.asset(
-                  R.image.passwordAgain,
-                  fit: BoxFit.none,
-                ),
-                suffixIcon: RbioVisibilitySuffixIcon(
-                  onTap: () {
-                    value.togglePasswordVisibility();
+              //
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: RbioTextFormField(
+                  focusNode: _passwordFocusNode,
+                  controller: _passwordController,
+                  autovalidateMode: value.autovalidateMode,
+                  validator: (value) {
+                    if (value?.isNotEmpty ?? false) {
+                      return null;
+                    } else {
+                      return LocaleProvider.current.validation;
+                    }
                   },
-                  eyesOpen: value.passwordVisibility,
-                ),
-                inputFormatters: <TextInputFormatter>[
-                  TabToNextFieldTextInputFormatter(
-                    context,
-                    _passwordFocusNode,
-                    _passwordAgainFocusNode,
+                  textInputAction: TextInputAction.next,
+                  obscureText: value.passwordVisibility ? false : true,
+                  hintText: LocaleProvider.of(context).hint_input_password,
+                  prefixIcon: SvgPicture.asset(
+                    R.image.passwordAgain,
+                    fit: BoxFit.none,
                   ),
-                ],
-                onFieldSubmitted: (term) {
-                  UtilityManager().fieldFocusChange(
-                    context,
-                    _passwordFocusNode,
-                    _passwordAgainFocusNode,
-                  );
-                },
-                onChanged: (text) {
-                  value.checkPasswordCapability(text);
-                },
-              ),
-            ),
-
-            //
-            Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              child: RbioTextFormField(
-                focusNode: _passwordAgainFocusNode,
-                controller: _passwordAgainController,
-                textInputAction: TextInputAction.done,
-                obscureText: value.passwordAgainVisibility ? false : true,
-                hintText: LocaleProvider.of(context).password_again,
-                prefixIcon: SvgPicture.asset(
-                  R.image.passwordAgain,
-                  fit: BoxFit.none,
-                ),
-                suffixIcon: RbioVisibilitySuffixIcon(
-                  onTap: () {
-                    value.togglePasswordAgainVisibility();
+                  suffixIcon: RbioVisibilitySuffixIcon(
+                    onTap: () {
+                      value.togglePasswordVisibility();
+                    },
+                    eyesOpen: value.passwordVisibility,
+                  ),
+                  inputFormatters: <TextInputFormatter>[
+                    TabToNextFieldTextInputFormatter(
+                      context,
+                      _passwordFocusNode,
+                      _passwordAgainFocusNode,
+                    ),
+                  ],
+                  onFieldSubmitted: (term) {
+                    UtilityManager().fieldFocusChange(
+                      context,
+                      _passwordFocusNode,
+                      _passwordAgainFocusNode,
+                    );
                   },
-                  eyesOpen: value.passwordAgainVisibility,
+                  onChanged: (text) {
+                    value.checkPasswordCapability(text);
+                  },
                 ),
-                inputFormatters: <TextInputFormatter>[
-                  TabToNextFieldTextInputFormatter(
-                    context,
-                    _passwordAgainFocusNode,
-                    null,
+              ),
+
+              //
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: RbioTextFormField(
+                  focusNode: _passwordAgainFocusNode,
+                  controller: _passwordAgainController,
+                  autovalidateMode: value.autovalidateMode,
+                  validator: (value) {
+                    if (value?.isNotEmpty ?? false) {
+                      return null;
+                    } else {
+                      return LocaleProvider.current.validation;
+                    }
+                  },
+                  textInputAction: TextInputAction.done,
+                  obscureText: value.passwordAgainVisibility ? false : true,
+                  hintText: LocaleProvider.of(context).password_again,
+                  prefixIcon: SvgPicture.asset(
+                    R.image.passwordAgain,
+                    fit: BoxFit.none,
                   ),
-                ],
-                onFieldSubmitted: (term) {
-                  UtilityManager().fieldFocusChange(
-                    context,
-                    _passwordAgainFocusNode,
-                    null,
-                  );
-                },
+                  suffixIcon: RbioVisibilitySuffixIcon(
+                    onTap: () {
+                      value.togglePasswordAgainVisibility();
+                    },
+                    eyesOpen: value.passwordAgainVisibility,
+                  ),
+                  inputFormatters: <TextInputFormatter>[
+                    TabToNextFieldTextInputFormatter(
+                      context,
+                      _passwordAgainFocusNode,
+                      null,
+                    ),
+                  ],
+                  onFieldSubmitted: (term) {
+                    UtilityManager().fieldFocusChange(
+                      context,
+                      _passwordAgainFocusNode,
+                      null,
+                    );
+                  },
+                ),
               ),
-            ),
 
-            //
-            _buildRow(
-              value.checkNumeric,
-              LocaleProvider.of(context).must_contain_digit,
-            ),
-
-            //
-            _buildRow(
-              value.checkUpperCase,
-              LocaleProvider.of(context).must_contain_uppercase,
-            ),
-
-            //
-            _buildRow(
-              value.checkLowerCase,
-              LocaleProvider.of(context).must_contain_lowercase,
-            ),
-
-            //
-            _buildRow(
-              value.checkSpecial,
-              LocaleProvider.of(context).must_contain_special,
-            ),
-
-            //
-            _buildRow(
-              value.checkLength,
-              LocaleProvider.of(context).password_must_8_char,
-            ),
-
-            //
-            Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-                left: 20,
-                right: 20,
+              //
+              _buildRow(
+                value.checkNumeric,
+                LocaleProvider.of(context).must_contain_digit,
               ),
-              child: RbioElevatedButton(
-                infinityWidth: true,
-                title: LocaleProvider.of(context).btn_done.toUpperCase(),
-                onTap: () {
-                  value.changePassword(
-                    oldPassword: _oldPasswordController.text.trim(),
-                    password: _passwordController.text.trim(),
-                    passwordAgain: _passwordAgainController.text.trim(),
-                  );
-                },
-              ),
-            ),
 
-            //
-            R.sizes.defaultBottomPadding,
-          ],
+              //
+              _buildRow(
+                value.checkUpperCase,
+                LocaleProvider.of(context).must_contain_uppercase,
+              ),
+
+              //
+              _buildRow(
+                value.checkLowerCase,
+                LocaleProvider.of(context).must_contain_lowercase,
+              ),
+
+              //
+              _buildRow(
+                value.checkSpecial,
+                LocaleProvider.of(context).must_contain_special,
+              ),
+
+              //
+              _buildRow(
+                value.checkLength,
+                LocaleProvider.of(context).password_must_8_char,
+              ),
+
+              //
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  left: 20,
+                  right: 20,
+                ),
+                child: RbioElevatedButton(
+                  infinityWidth: true,
+                  title: LocaleProvider.of(context).btn_done.toUpperCase(),
+                  onTap: () {
+                    if (value.formKey?.currentState?.validate() ?? false) {
+                      value.changePassword(
+                        oldPassword: _oldPasswordController.text.trim(),
+                        password: _passwordController.text.trim(),
+                        passwordAgain: _passwordAgainController.text.trim(),
+                      );
+                    }
+                  },
+                ),
+              ),
+
+              //
+              R.sizes.defaultBottomPadding,
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,13 @@ class RegisterStep3ScreenVm extends RbioVm {
 
   LoadingDialog? loadingDialog;
 
+   final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  AutovalidateMode? get autovalidateMode => _autovalidateMode;
+
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState>? get formKey => _formKey;
+
   void registerStep3(
     UserRegistrationStep3Model userRegistrationStep3,
     bool isWithoutTCKN,
