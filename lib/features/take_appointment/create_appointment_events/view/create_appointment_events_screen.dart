@@ -87,9 +87,9 @@ class _CreateAppointmentEventsScreenState
       mainAxisSize: MainAxisSize.max,
       children: [
         //
-        _buildHeaderInfo(),
+        // _buildHeaderInfo(),
 
-        const SizedBox(height: 15),
+        // const SizedBox(height: 15),
 
         //
         if (val.availableDatesProgress == LoadingProgress.loading) ...[
@@ -135,10 +135,8 @@ class _CreateAppointmentEventsScreenState
                     'resourceName':
                         Uri.encodeFull(widget.resourceName.toString()),
                     'date': val.selectedDate.toIso8601String(),
-                    'from': 
-                    completeNotifier.value!.selected!.from!.toString(),
-                    'to': 
-                    completeNotifier.value!.selected!.to!.toString(),
+                    'from': completeNotifier.value!.selected!.from!.toString(),
+                    'to': completeNotifier.value!.selected!.to!.toString(),
                     'forOnline': widget.forOnline.toString(),
                   },
                 );
@@ -152,54 +150,46 @@ class _CreateAppointmentEventsScreenState
   }
 
   Widget _buildHeaderInfo() {
-    return ExpansionTile(
-      title: const Text('Randevu Bilgisi'),
-      initiallyExpanded: true,
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-      collapsedBackgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-      children: [
-        Container(
-          width: double.infinity,
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-            color: getIt<IAppConfig>().theme.cardBackgroundColor,
-            borderRadius: BorderRadius.vertical(
-              top: R.sizes.radiusCircular,
-            ),
-          ),
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              //
-              _buildHeaderPassiveText(LocaleProvider.current.patient_name),
-              _buildHeaderActiveText(widget.patientName),
-
-              //
-              _buildHeaderVerticalGap(),
-
-              //
-              _buildHeaderPassiveText(LocaleProvider.current.tenant_name),
-              _buildHeaderActiveText(widget.tenantName),
-
-              //
-              _buildHeaderVerticalGap(),
-
-              //
-              _buildHeaderPassiveText(LocaleProvider.current.doctor_name),
-              _buildHeaderActiveText(widget.resourceName),
-
-              _buildHeaderVerticalGap(),
-
-              //
-              _buildHeaderPassiveText(LocaleProvider.current.depart_name),
-              _buildHeaderActiveText(widget.departmentName),
-            ],
-          ),
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        borderRadius: BorderRadius.vertical(
+          top: R.sizes.radiusCircular,
         ),
-      ],
+      ),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          //
+          _buildHeaderPassiveText(LocaleProvider.current.patient_name),
+          _buildHeaderActiveText(widget.patientName),
+
+          //
+          _buildHeaderVerticalGap(),
+
+          //
+          _buildHeaderPassiveText(LocaleProvider.current.tenant_name),
+          _buildHeaderActiveText(widget.tenantName),
+
+          //
+          _buildHeaderVerticalGap(),
+
+          //
+          _buildHeaderPassiveText(LocaleProvider.current.doctor_name),
+          _buildHeaderActiveText(widget.resourceName),
+
+          _buildHeaderVerticalGap(),
+
+          //
+          _buildHeaderPassiveText(LocaleProvider.current.depart_name),
+          _buildHeaderActiveText(widget.departmentName),
+        ],
+      ),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:adjust_sdk/adjust.dart';
 import 'package:adjust_sdk/adjust_config.dart';
 import 'package:adjust_sdk/adjust_event.dart';
+import 'package:flutter/foundation.dart';
 
 class AdjustBaseEvent {
   late final String token;
@@ -25,8 +26,10 @@ class AdjustManager {
 
   // Firebase analytics log event fonksiyonu gibi event oluşturur
   void trackEvent(AdjustBaseEvent eventToken) {
-    AdjustEvent adjustEvent = AdjustEvent(eventToken.token);
-    Adjust.trackEvent(adjustEvent);
+    if (!kIsWeb) {
+      AdjustEvent adjustEvent = AdjustEvent(eventToken.token);
+      Adjust.trackEvent(adjustEvent);
+    }
   }
 
   void setRevenue(String eventToken, int unitPrice) {

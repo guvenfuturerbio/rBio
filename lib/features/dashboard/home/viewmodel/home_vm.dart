@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
@@ -117,6 +118,7 @@ class HomeVm extends ChangeNotifier {
   // #region fetchWidgets
   Future<void> fetchWidgets(AllUsersModel? allUsersModel) async {
     widgetsInUse = [];
+
     final sharedUserList = getUserWidgets;
     if (sharedUserList == null) {
       List<String> setList = [];
@@ -130,6 +132,7 @@ class HomeVm extends ChangeNotifier {
           }
         }
       }
+
       await saveWidgetList(setList);
     } else {
       final sharedTypes = sharedUserList.map((e) => e.xHomeWidgets).toList();

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
@@ -35,13 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
       if (kAutoConnect) {
         context.read<DeviceSelectedCubit>().connectAndListen(context);
         final widgetsBinding = WidgetsBinding.instance;
-        if (widgetsBinding != null) {
-          widgetsBinding.addPostFrameCallback((_) {
-            AppInheritedWidget.of(context)?.listenLocalNotification();
-          });
-        }
+        widgetsBinding! .addPostFrameCallback((_) {
+          AppInheritedWidget.of(context)?.listenLocalNotification();
+        });
         kAutoConnect = false;
       }
+    } else {
+      final allUsersModel = getIt<UserNotifier>().getHomeWidgets("halil");
+      context.read<HomeVm>().init(allUsersModel);
     }
     super.initState();
   }
@@ -118,7 +120,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBody(HomeVm vm) {
     return GestureDetector(
       onLongPress: () {
-        vm.changeStatus();
+        if (!kIsWeb) {
+          vm.changeStatus();
+        }
       },
       child: ReorderableWrap(
         alignment: WrapAlignment.center,
