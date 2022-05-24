@@ -78,258 +78,298 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
   Widget _buildBody(BuildContext context, CreditCardScreenVm value) {
     return KeyboardAvoider(
       autoScroll: true,
-      child: Column(
-        children: <Widget>[
-          //
-          Container(
-            child: TextFormField(
-              controller: _cardHolderNameController,
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.text,
-              style: Utils.instance.inputTextStyle(),
-              decoration: Utils.instance
-                  .inputImageDecoration(
-                    suffixIconClicked: () {},
-                    hintText: LocaleProvider.current.credit_card_holder,
-                    image: R.image.user,
-                  )
-                  .copyWith(
-                      fillColor: getIt<IAppConfig>().theme.white, filled: true),
-              focusNode: cardHolderNameFNode,
-              inputFormatters: <TextInputFormatter>[
-                TabToNextFieldTextInputFormatter(
-                  context,
-                  cardHolderNameFNode,
-                  cardNumberFNode,
-                ),
-              ],
-              onFieldSubmitted: (term) {
-                UtilityManager().fieldFocusChange(
-                  context,
-                  cardHolderNameFNode,
-                  cardNumberFNode,
-                );
-              },
-            ),
-            margin: const EdgeInsets.only(bottom: 20, top: 40),
-          ),
-
-          //
-          Container(
-            margin: const EdgeInsets.only(bottom: 20),
-            child: TextFormField(
-              controller: _cardNumberController,
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.number,
-              style: Utils.instance.inputTextStyle(),
-              decoration: Utils.instance
-                  .inputImageDecoration(
-                    suffixIconClicked: () {},
-                    hintText: LocaleProvider.current.credit_card_number,
-                    image: R.image.creditCardNumber,
-                  )
-                  .copyWith(
-                    fillColor: getIt<IAppConfig>().theme.white,
-                    filled: true,
-                  ),
-              focusNode: cardNumberFNode,
-              inputFormatters: <TextInputFormatter>[
-                TabToNextFieldTextInputFormatter(
-                  context,
-                  cardNumberFNode,
-                  cardCcvFNode,
-                ),
-              ],
-              onFieldSubmitted: (term) {
-                UtilityManager().fieldFocusChange(
-                  context,
-                  cardNumberFNode,
-                  cardCcvFNode,
-                );
-              },
-            ),
-          ),
-
-          //
-          Container(
-            child: TextFormField(
-              controller: _cvvCodeController,
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.number,
-              style: Utils.instance.inputTextStyle(),
-              decoration: Utils.instance
-                  .inputImageDecoration(
-                    suffixIconClicked: () {},
-                    hintText: LocaleProvider.current.credit_card_cvv,
-                    image: R.image.password,
-                  )
-                  .copyWith(
-                    fillColor: getIt<IAppConfig>().theme.white,
-                    filled: true,
-                  ),
-              focusNode: cardCcvFNode,
-              inputFormatters: <TextInputFormatter>[
-                TabToNextFieldTextInputFormatter(
-                  context,
-                  cardCcvFNode,
-                  cardExpirityDateFNode,
-                ),
-              ],
-              onFieldSubmitted: (term) {
-                UtilityManager().fieldFocusChange(
-                  context,
-                  cardCcvFNode,
-                  cardExpirityDateFNode,
-                );
-              },
-            ),
-            margin: const EdgeInsets.only(bottom: 20),
-          ),
-
-          //
-          Container(
-            child: TextFormField(
-              controller: _expiryDateController,
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.number,
-              style: Utils.instance.inputTextStyle(),
-              decoration: Utils.instance
-                  .inputImageDecoration(
-                    suffixIconClicked: () {},
-                    hintText: LocaleProvider.current.credit_card_expired_date,
-                    image: R.image.creditCalendar,
-                  )
-                  .copyWith(
-                    fillColor: getIt<IAppConfig>().theme.white,
-                    filled: true,
-                  ),
-              focusNode: cardExpirityDateFNode,
-              inputFormatters: <TextInputFormatter>[
-                TabToNextFieldTextInputFormatter(
-                  context,
-                  cardExpirityDateFNode,
-                  null,
-                ),
-              ],
-              onFieldSubmitted: (term) {
-                UtilityManager().fieldFocusChange(
-                  context,
-                  cardExpirityDateFNode,
-                  null,
-                );
-              },
-            ),
-            margin: const EdgeInsets.only(bottom: 5),
-          ),
-
-          //
-          Row(
-            children: [
-              Container(
-                alignment: Alignment.bottomLeft,
-                child: Checkbox(
-                  value: value.isDistanceContractSelected,
-                  onChanged: (newValue) {
-                    setState(() {
-                      value.toggleDistanceContract();
-                    });
-                  },
-                  activeColor: getIt<IAppConfig>().theme.mainColor,
-                ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () => {
-                    value.showDistanceSaleContract(
-                      price: widget.price!,
-                      packageName: widget.packageName!,
+      child: Form(
+        key: value.formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            //
+            Container(
+              child: RbioTextFormField(
+                autovalidateMode: value.autovalidateMode,
+                validator: (value) {
+                  if (value?.isNotEmpty ?? false) {
+                    return null;
+                  } else {
+                    return LocaleProvider.current.validation;
+                  }
+                },
+                controller: _cardHolderNameController,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.text,
+                decoration: Utils.instance
+                    .inputImageDecoration(
+                      suffixIconClicked: () {},
+                      hintText: LocaleProvider.current.credit_card_holder,
+                      image: R.image.user,
                     )
-                  },
-                  child: Text(
-                    LocaleProvider.current.accept_distance_sales_contract,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.xHeadline3.copyWith(
-                      color: getIt<IAppConfig>().theme.textColorSecondary,
-                      decoration: TextDecoration.underline,
-                    ),
+                    .copyWith(
+                        fillColor: getIt<IAppConfig>().theme.white,
+                        filled: true),
+                focusNode: cardHolderNameFNode,
+                inputFormatters: <TextInputFormatter>[
+                  TabToNextFieldTextInputFormatter(
+                    context,
+                    cardHolderNameFNode,
+                    cardNumberFNode,
                   ),
-                ),
+                ],
+                onFieldSubmitted: (term) {
+                  UtilityManager().fieldFocusChange(
+                    context,
+                    cardHolderNameFNode,
+                    cardNumberFNode,
+                  );
+                },
               ),
-            ],
-          ),
+              margin: const EdgeInsets.only(bottom: 20, top: 40),
+            ),
 
-          //
-          Row(
-            children: [
-              Container(
-                alignment: Alignment.bottomLeft,
-                child: Checkbox(
-                  value: value.isInformationFormAccepted,
-                  onChanged: (newValue) {
-                    setState(() {
-                      value.toggleInformationForm();
-                    });
-                  },
-                  activeColor: getIt<IAppConfig>().theme.mainColor,
-                ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    value.showCancellationAndRefund(
-                      packageName: widget.packageName!,
-                      price: widget.price!,
-                    );
-                  },
-                  child: Text(
-                    LocaleProvider.current.information_form,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.xHeadline3.copyWith(
-                      color: getIt<IAppConfig>().theme.textColorSecondary,
-                      decoration: TextDecoration.underline,
+            //
+            Container(
+              margin: const EdgeInsets.only(bottom: 20),
+              child: RbioTextFormField(
+                autovalidateMode: value.autovalidateMode,
+                validator: (value) {
+                  if (value?.isNotEmpty ?? false) {
+                    return null;
+                  } else {
+                    return LocaleProvider.current.validation;
+                  }
+                },
+                controller: _cardNumberController,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                decoration: Utils.instance
+                    .inputImageDecoration(
+                      suffixIconClicked: () {},
+                      hintText: LocaleProvider.current.credit_card_number,
+                      image: R.image.creditCardNumber,
+                    )
+                    .copyWith(
+                      fillColor: getIt<IAppConfig>().theme.white,
+                      filled: true,
                     ),
+                focusNode: cardNumberFNode,
+                inputFormatters: <TextInputFormatter>[
+                  TabToNextFieldTextInputFormatter(
+                    context,
+                    cardNumberFNode,
+                    cardCcvFNode,
                   ),
-                ),
-              )
-            ],
-          ),
+                ],
+                onFieldSubmitted: (term) {
+                  UtilityManager().fieldFocusChange(
+                    context,
+                    cardNumberFNode,
+                    cardCcvFNode,
+                  );
+                },
+              ),
+            ),
 
-          //
-          Container(
-            child: value.progress == LoadingProgress.loading
-                ? const RbioLoading()
-                : Utils.instance.button(
-                    text: LocaleProvider.current.confirm.toUpperCase(),
-                    onPressed: () {
-                      if (value.checkRequiredFields(
-                          cardNumber: _cardNumberController.text,
-                          date: _expiryDateController.text,
-                          cvv: _cvvCodeController.text,
-                          cardHolder: _cardHolderNameController.text)) {
-                        value.doPackagePayment(
-                          PackagePaymentRequest(
-                            cc: PaymentCCRequest(
-                              cvv: _cvvCodeController.text,
-                              cardNumber: _cardNumberController.text
-                                  .replaceAll(" ", ""),
-                              cardHolder: _cardHolderNameController.text,
-                              expirationMonth:
-                                  _expiryDateController.text.substring(0, 2),
-                              expirationYear: "20" +
-                                  _expiryDateController.text.substring(3, 5),
-                            ),
-                            subPackageItemId:
-                                widget.paymentObjectCode.toString(),
-                          ),
-                        );
-                      }
+            //
+            Container(
+              child: RbioTextFormField(
+                autovalidateMode: value.autovalidateMode,
+                validator: (value) {
+                  if (value?.isNotEmpty ?? false) {
+                    return null;
+                  } else {
+                    return LocaleProvider.current.validation;
+                  }
+                },
+                controller: _cvvCodeController,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                decoration: Utils.instance
+                    .inputImageDecoration(
+                      suffixIconClicked: () {},
+                      hintText: LocaleProvider.current.credit_card_cvv,
+                      image: R.image.password,
+                    )
+                    .copyWith(
+                      fillColor: getIt<IAppConfig>().theme.white,
+                      filled: true,
+                    ),
+                focusNode: cardCcvFNode,
+                inputFormatters: <TextInputFormatter>[
+                  TabToNextFieldTextInputFormatter(
+                    context,
+                    cardCcvFNode,
+                    cardExpirityDateFNode,
+                  ),
+                ],
+                onFieldSubmitted: (term) {
+                  UtilityManager().fieldFocusChange(
+                    context,
+                    cardCcvFNode,
+                    cardExpirityDateFNode,
+                  );
+                },
+              ),
+              margin: const EdgeInsets.only(bottom: 20),
+            ),
+
+            //
+            Container(
+              child: RbioTextFormField(
+                autovalidateMode: value.autovalidateMode,
+                validator: (value) {
+                  if (value?.isNotEmpty ?? false) {
+                    return null;
+                  } else {
+                    return LocaleProvider.current.validation;
+                  }
+                },
+                controller: _expiryDateController,
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.number,
+                decoration: Utils.instance
+                    .inputImageDecoration(
+                      suffixIconClicked: () {},
+                      hintText: LocaleProvider.current.credit_card_expired_date,
+                      image: R.image.creditCalendar,
+                    )
+                    .copyWith(
+                      fillColor: getIt<IAppConfig>().theme.white,
+                      filled: true,
+                    ),
+                focusNode: cardExpirityDateFNode,
+                inputFormatters: <TextInputFormatter>[
+                  TabToNextFieldTextInputFormatter(
+                    context,
+                    cardExpirityDateFNode,
+                    null,
+                  ),
+                ],
+                onFieldSubmitted: (term) {
+                  UtilityManager().fieldFocusChange(
+                    context,
+                    cardExpirityDateFNode,
+                    null,
+                  );
+                },
+              ),
+              margin: const EdgeInsets.only(bottom: 5),
+            ),
+
+            //
+            Row(
+              children: [
+                Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Checkbox(
+                    value: value.isDistanceContractSelected,
+                    onChanged: (newValue) {
+                      setState(() {
+                        value.toggleDistanceContract();
+                      });
                     },
+                    activeColor: getIt<IAppConfig>().theme.mainColor,
                   ),
-            margin: const EdgeInsets.only(top: 5, bottom: 20),
-          )
-        ],
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () => {
+                      value.showDistanceSaleContract(
+                        price: widget.price!,
+                        packageName: widget.packageName!,
+                      )
+                    },
+                    child: Text(
+                      LocaleProvider.current.accept_distance_sales_contract,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.xHeadline3.copyWith(
+                        color: getIt<IAppConfig>().theme.textColorSecondary,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            //
+            Row(
+              children: [
+                Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Checkbox(
+                    value: value.isInformationFormAccepted,
+                    onChanged: (newValue) {
+                      setState(() {
+                        value.toggleInformationForm();
+                      });
+                    },
+                    activeColor: getIt<IAppConfig>().theme.mainColor,
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      value.showCancellationAndRefund(
+                        packageName: widget.packageName!,
+                        price: widget.price!,
+                      );
+                    },
+                    child: Text(
+                      LocaleProvider.current.information_form,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.xHeadline3.copyWith(
+                        color: getIt<IAppConfig>().theme.textColorSecondary,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+
+            //
+            Container(
+              child: value.progress == LoadingProgress.loading
+                  ? const RbioLoading()
+                  : Utils.instance.button(
+                      text: LocaleProvider.current.confirm.toUpperCase(),
+                      onPressed: () {
+                        if (value.formKey?.currentState?.validate() ?? false) {
+                          if (value.checkRequiredFields(
+                              cardNumber: _cardNumberController.text,
+                              date: _expiryDateController.text,
+                              cvv: _cvvCodeController.text,
+                              cardHolder: _cardHolderNameController.text)) {
+                            value.doPackagePayment(
+                              PackagePaymentRequest(
+                                cc: PaymentCCRequest(
+                                  cvv: _cvvCodeController.text,
+                                  cardNumber: _cardNumberController.text
+                                      .replaceAll(" ", ""),
+                                  cardHolder: _cardHolderNameController.text,
+                                  expirationMonth: _expiryDateController.text
+                                      .substring(0, 2),
+                                  expirationYear: "20" +
+                                      _expiryDateController.text
+                                          .substring(3, 5),
+                                ),
+                                subPackageItemId:
+                                    widget.paymentObjectCode.toString(),
+                              ),
+                            );
+                          }
+                        } else {
+                          LocaleProvider.current.validation;
+                        }
+                      },
+                    ),
+              margin: const EdgeInsets.only(top: 5, bottom: 20),
+            )
+          ],
+        ),
       ),
     );
   }

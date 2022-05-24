@@ -130,15 +130,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     //
 
-                    getIt<IAppConfig>().functionality.chronicTracking ? 
-                    _buildListItem( 
-                      LocaleProvider.current.health_information,
-                      () {
-                        Atom.to(PagePaths.healthInformation);
-                      } ,
-                    ) : const SizedBox(),
+                    getIt<IAppConfig>().functionality.chronicTracking
+                        ? _buildListItem(
+                            LocaleProvider.current.health_information,
+                            () {
+                              Atom.to(PagePaths.healthInformation);
+                            },
+                          )
+                        : const SizedBox(),
 
-                    if (!Atom.isWeb && getIt<UserNotifier>().isCronic && getIt<IAppConfig>().functionality.chronicTracking)
+                    if (!Atom.isWeb &&
+                        getIt<UserNotifier>().isCronic &&
+                        getIt<IAppConfig>().functionality.chronicTracking)
                       _buildListItem(
                         LocaleProvider.current.devices,
                         () {
@@ -147,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
 
                     //
-                    if (getIt<IAppConfig>().functionality.mediminder)
+                    if (getIt<IAppConfig>().platform.checkMedimender())
                       _buildListItem(
                         LocaleProvider.current.reminders,
                         () {

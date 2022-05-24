@@ -95,6 +95,7 @@ class MyReorderableWidget extends StatelessWidget {
               if (!vm.status.isShaken && !vm.showDeletedAlert) {
                 return InkWell(
                   onLongPress: () {
+                    if (kIsWeb) return;
                     vm.changeStatus();
                   },
                   onTap: () {},

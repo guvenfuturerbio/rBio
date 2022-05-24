@@ -66,75 +66,79 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
       child: KeyboardAvoider(
         autoScroll: true,
         duration: const Duration(seconds: 1),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5.0, left: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      LocaleProvider.current.enter_the_code,
-                      style: context.xHeadline1
-                          .copyWith(fontWeight: FontWeight.bold),
+        child: Form(
+          key: vm.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5.0, left: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Text(
+                        LocaleProvider.current.enter_the_code,
+                        style: context.xHeadline1
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  Text(
-                    LocaleProvider.current.check_sms,
-                    style: context.xHeadline3,
-                  ),
-                ],
+                    Text(
+                      LocaleProvider.current.check_sms,
+                      style: context.xHeadline3,
+                    ),
+                  ],
+                ),
               ),
-            ),
 
-            //
-            Container(
-              margin: const EdgeInsets.only(
-                  right: 15, left: 15, bottom: 20, top: 40),
-              child: RbioTextFormField(
-                controller: _smsController,
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.number,
-                hintText: LocaleProvider.of(context).sms_verification_code,
-                focusNode: focus,
-                onFieldSubmitted: (term) {
-                  UtilityManager().fieldFocusChange(context, focus, null);
-                },
+              //
+              Container(
+                margin: const EdgeInsets.only(
+                    right: 15, left: 15, bottom: 20, top: 40),
+                child: RbioTextFormField(
+                  autovalidateMode: vm.autovalidateMode,
+                  validator: (value) {
+                    if (value?.isNotEmpty ?? false) {
+                      return null;
+                    } else {
+                      return LocaleProvider.current.validation;
+                    }
+                  },
+                  controller: _smsController,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.number,
+                  hintText: LocaleProvider.of(context).sms_verification_code,
+                  focusNode: focus,
+                  onFieldSubmitted: (term) {
+                    UtilityManager().fieldFocusChange(context, focus, null);
+                  },
+                ),
               ),
-            ),
 
-            //
-            Container(
-              margin: const EdgeInsets.only(top: 20, bottom: 20),
-              child: Utils.instance.button(
-                text: LocaleProvider.of(context).btn_done.toUpperCase(),
-                onPressed: () {
-                  UserRegistrationStep3Model userRegisterStep3 =
-                      UserRegistrationStep3Model();
-
-                  userRegisterStep3.userRegistrationStep2 =
-                      userRegistrationStep2Model;
-                  userRegisterStep3.sms = _smsController.text;
-
-                  if (_smsController.text.isNotEmpty) {
-                    vm.registerStep3(
-                      userRegisterStep3,
-                      isWithoutTCKN,
-                    );
-                  } else {
-                    vm.showInfoDialog(
-                      LocaleProvider.of(context).warning,
-                      LocaleProvider.of(context).fill_all_field,
-                    );
-                  }
-                },
+              //
+              Container(
+                margin: const EdgeInsets.only(top: 20, bottom: 20),
+                child: Utils.instance.button(
+                    text: LocaleProvider.of(context).btn_done.toUpperCase(),
+                    onPressed: () {
+                      if (vm.formKey?.currentState?.validate() ?? false) {
+                        UserRegistrationStep3Model userRegisterStep3 =
+                            UserRegistrationStep3Model();
+                        userRegisterStep3.userRegistrationStep2 =
+                            userRegistrationStep2Model;
+                        userRegisterStep3.sms = _smsController.text;
+                        vm.registerStep3(
+                          userRegisterStep3,
+                          isWithoutTCKN,
+                        );
+                      }
+                      return null;
+                    }),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

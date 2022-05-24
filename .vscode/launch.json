@@ -17,15 +17,5 @@
                 // "--release",
             ]
         },
-        {
-            "name": "Flutter For Mobile",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "debug",
-            "program": "lib/main.dart",
-            "args": [
-                "-d 8C0584DB-86F1-4BC5-BC69-3259E465C5FF",
-            ]
-        }
     ]
 }

@@ -19,6 +19,12 @@ class OneDoseMobilePlatformConfig extends IOneDosePlatformConfig
     }
     return initialRoute;
   }
+
+  @override
+  bool checkDevices() => true;
+
+  @override
+  bool checkMedimender() => true;
 }
 
 class OneDoseWebPlatformConfig extends IOneDosePlatformConfig
@@ -35,4 +41,10 @@ class OneDoseWebPlatformConfig extends IOneDosePlatformConfig
             measurementId: "G-BYWQLYEVVW",
           ),
         );
+
+  @override
+  bool checkDevices() => false;
+
+  @override
+  bool checkMedimender() =>  false;
 }

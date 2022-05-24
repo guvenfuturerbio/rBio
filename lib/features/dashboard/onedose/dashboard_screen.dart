@@ -444,16 +444,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.symptomMainMenu);
           },
         ),
-        DrawerModel(
-          title: LocaleProvider.current.devices,
-          onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementDevicesClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('cihazlarim'));
-            Atom.to(PagePaths.devices);
-          },
-        ),
-        if (getIt<IAppConfig>().functionality.mediminder)
+        if (getIt<IAppConfig>().platform.checkDevices())
+          DrawerModel(
+            title: LocaleProvider.current.devices,
+            onTap: () {
+              getIt<AdjustManager>()
+                  .trackEvent(MenuElementDevicesClickedEvent());
+              getIt<FirebaseAnalyticsManager>()
+                  .logEvent(MenuElementTiklamaEvent('cihazlarim'));
+              Atom.to(PagePaths.devices);
+            },
+          ),
+        if (getIt<IAppConfig>().platform.checkMedimender())
           DrawerModel(
             title: LocaleProvider.current.reminders,
             onTap: () {

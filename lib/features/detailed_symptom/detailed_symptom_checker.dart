@@ -29,7 +29,10 @@ class _DetailedSymptomCheckerState extends State<DetailedSymptomChecker> {
       ),
       body: SafeArea(
         child: kIsWeb
-            ? const HtmlElementView(viewType: 'detailed_symptom')
+            // ignore: prefer_const_constructors
+            ? HtmlElementView(
+                viewType: 'detailed_symptom',
+              )
             : WebView(
                 initialUrl: "https://tsdc.onedosehealth.com/",
                 javascriptMode: JavascriptMode.unrestricted,
