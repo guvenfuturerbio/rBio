@@ -22,6 +22,15 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
   final FocusNode focus = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      Utils.instance
+          .showSuccessSnackbar(context, LocaleProvider.current.code_sent);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     try {
       isWithoutTCKN = Atom.queryParameters['isWithoutTCKN'] == 'true';

@@ -8659,6 +8659,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `A verification code has sent to the phone number and e-mail address you entered.`
+  String get code_sent {
+    return Intl.message(
+      'A verification code has sent to the phone number and e-mail address you entered.',
+      name: 'code_sent',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
