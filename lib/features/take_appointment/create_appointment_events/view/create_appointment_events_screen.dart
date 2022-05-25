@@ -87,7 +87,9 @@ class _CreateAppointmentEventsScreenState
       mainAxisSize: MainAxisSize.max,
       children: [
         //
-        _buildHeaderInfo(),
+        // _buildHeaderInfo(),
+
+        // const SizedBox(height: 15),
 
         //
         if (val.availableDatesProgress == LoadingProgress.loading) ...[
@@ -133,10 +135,8 @@ class _CreateAppointmentEventsScreenState
                     'resourceName':
                         Uri.encodeFull(widget.resourceName.toString()),
                     'date': val.selectedDate.toIso8601String(),
-                    'from': 
-                    completeNotifier.value!.selected!.from!.toString(),
-                    'to': 
-                    completeNotifier.value!.selected!.to!.toString(),
+                    'from': completeNotifier.value!.selected!.from!.toString(),
+                    'to': completeNotifier.value!.selected!.to!.toString(),
                     'forOnline': widget.forOnline.toString(),
                   },
                 );

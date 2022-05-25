@@ -24,6 +24,15 @@ class RegisterViews {
         ..style.border = 'none',
     );
 
+     MobileWebInterface.registerViewFactory(
+      'detailed_symptom',
+      (int viewId) => IFrameElement()
+        ..width = '640'
+        ..height = '360'
+        ..src = 'https://tsdc.onedosehealth.com/'
+        ..style.border = 'none',
+    );
+
     MobileWebInterface.registerViewFactory(
       'tawkto',
       (int viewId) => IFrameElement()

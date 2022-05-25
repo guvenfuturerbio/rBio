@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
@@ -22,7 +23,11 @@ class HomeSizer {
   double getRunSpacing() => Atom.width * .025;
   double getBodyCardWidth(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return ((width - getRunSpacing()) * .45);
+    return kIsWeb
+        ? width > 1200
+            ? 530
+            : ((width - getRunSpacing()) / 2) - 60
+        : ((width - getRunSpacing()) * .45);
   }
 
   double getBodyCardHeightLarge() => _getPartHeight() * 30;

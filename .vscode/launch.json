@@ -11,16 +11,11 @@
             "flutterMode": "debug",
             "program": "lib/main.dart",
             "args": [
-                "--web-port=59844",
+                // "--web-port=59844",
+                "--device chrome",
+                "--web-renderer canvaskit",
+                // "--release",
             ]
         },
-        {
-            "name": "Flutter For Mobile",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "debug",
-            "program": "lib/main.dart",
-            "args": []
-        }
     ]
 }

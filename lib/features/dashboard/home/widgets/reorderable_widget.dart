@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class MyReorderableWidget extends StatelessWidget {
   final bool isVerticalCard;
   final VoidCallback? onTap;
   final bool isRemovedWidgets;
-  
+
   const MyReorderableWidget({
     Key? key,
     required this.body,
@@ -94,6 +95,7 @@ class MyReorderableWidget extends StatelessWidget {
               if (!vm.status.isShaken && !vm.showDeletedAlert) {
                 return InkWell(
                   onLongPress: () {
+                    if (kIsWeb) return;
                     vm.changeStatus();
                   },
                   onTap: () {},
