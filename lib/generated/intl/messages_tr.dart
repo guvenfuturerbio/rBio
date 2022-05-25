@@ -413,6 +413,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Tanı Tarihi"),
         "didnt_reach_goals": MessageLookupByLibrary.simpleMessage(
             "Değer aralığına uyulmayanlar"),
+        "diet_list": MessageLookupByLibrary.simpleMessage("Diyet Listesi"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Dijital Checkup"),
         "discard": MessageLookupByLibrary.simpleMessage("İptal et"),

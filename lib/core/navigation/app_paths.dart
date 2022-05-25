@@ -7,12 +7,10 @@ import '../../features/auth/auth.dart';
 import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';
+import '../../features/chronic_tracking/blood_glucose/blood_glucose.dart';
+import '../../features/chronic_tracking/blood_pressure/blood_pressure.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
-import '../../features/chronic_tracking/progress_sections/blood_glucose/view/bg_progress_screen.dart';
-import '../../features/chronic_tracking/progress_sections/blood_pressure/view/bp_progres_screen.dart';
-import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_detail_screen.dart';
-import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_manuel_add_screen.dart';
-import '../../features/chronic_tracking/progress_sections/scale/treatment/view/patient_scale_treatment_list_screen.dart';
+import '../../features/chronic_tracking/scale/scale.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/search/doctor_cv/doctor_cv_screen.dart';
@@ -131,6 +129,7 @@ class VRouterRoutes {
               Atom.show(const NotChronicWarning());
             }
           },
+          
           stackedRoutes: [
             VWidget(
               path: PagePaths.measurementTrackingHome,
@@ -153,6 +152,10 @@ class VRouterRoutes {
                     VWidget(
                       path: PagePaths.patientScaleTreatmentList,
                       widget: const PatientScaleTreatmentListScreen(),
+                    ),
+                    VWidget(
+                      path: PagePaths.patientScaleDietDetail,
+                      widget: const PatientScaleDietDetailScreen(),
                     ),
                   ],
                 ),
@@ -627,8 +630,8 @@ class PagePaths {
   static const scaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-manuel-add';
 
-  static const patientScaleTreatmentList =
-      "/scale-detail/patient-scale-treatment-list";
+  static const patientScaleTreatmentList = "/scale-detail/patient-scale-treatment-list";
+  static const patientScaleDietDetail = "/scale-detail/patient-scale-diet-detail";
   // #endregion
 
   // #region Dashboard

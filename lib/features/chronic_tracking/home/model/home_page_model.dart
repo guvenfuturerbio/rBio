@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../progress_sections/widgets/i_progress_screen.dart';
+import '../view/widgets/widgets.dart';
 
 class HomePageModel<K extends IProgressScreen> {
   final String? title;

@@ -71,6 +71,7 @@ abstract class DevApiEndpoints {
   String get getChatContacts;
   String get ctUpdateUserStrip;
   String getTreatmentNoteWithDiet(int? entegrationId);
+  String treatmentGetDetail(int itemType, int id);
 }
 
 abstract class SearchEndpoints {

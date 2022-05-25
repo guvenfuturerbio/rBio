@@ -864,5 +864,6 @@
   "detail_search": "Detail Search",
   "past_treatments": "Past Treatments",
   "current_treatments": "Current Treatments",
-  "validation": "This field cannot be left blank"
+  "validation": "This field cannot be left blank",
+  "diet_list": "Diet List"
 }

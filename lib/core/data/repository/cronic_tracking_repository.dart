@@ -1,4 +1,4 @@
-import '../../../features/chronic_tracking/progress_sections/scale/treatment/model/scale_treatment_request.dart';
+import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../features/mediminder/mediminder.dart';
 import '../../../model/bg_measurement/blood_glucose_report_body.dart';
 import '../../../model/bg_measurement/blood_glucose_value_model.dart';
@@ -113,9 +113,47 @@ class ChronicTrackingRepository {
   ) =>
       apiService.updateBpMeasurement(updateBpMeasurements);
 
-  Future<GuvenResponseModel> getTreatmentNoteWithDiet(
+  Future<List<RbioTreatmentModel>> getTreatmentNoteWithDiet(
     int? entegrationId,
     ScaleTreatmentRequest request,
+  ) async {
+    final result = <RbioTreatmentModel>[];
+    final list =
+        await apiService.getTreatmentNoteWithDiet(entegrationId, request);
+    result.addAll(
+      (list.dietList ?? []).map(
+        (e) => RbioTreatmentModel(
+          id: e.id ?? -1,
+          title: e.dietTitle ?? '',
+          description: e.createdByName ?? '',
+          dateTime: e.dietCreateDate,
+          type: TreatmentType.diet,
+        ),
+      ),
+    );
+
+    result.addAll(
+      (list.treatmentNoteList ?? []).map(
+        (e) => RbioTreatmentModel(
+          id: e.id ?? -1,
+          title: e.treatmentNoteTitle ?? '',
+          description: e.createdByName ?? '',
+          dateTime: e.treatmentNoteCreateDate,
+          type: TreatmentType.treatmentNote,
+        ),
+      ),
+    );
+
+    return result
+        .xSortedBy((e) => e.dateTime ?? DateTime.now())
+        .toList()
+        .reversed
+        .toList();
+  }
+
+  Future<ScaleTreatmentDetailResponse> treatmentGetDetail(
+    TreatmentItemType itemType,
+    int id,
   ) =>
-      apiService.getTreatmentNoteWithDiet(entegrationId, request);
+      apiService.treatmentGetDetail(itemType, id);
 }

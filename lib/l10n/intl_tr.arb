@@ -858,5 +858,6 @@
   "detail_search": "Detaylı Arama",
   "past_treatments": "Geçmiş Tedaviler",
   "current_treatments": "Güncel Tedaviler",
-  "validation": "Bu alan boş bırakılamaz"
+  "validation": "Bu alan boş bırakılamaz",
+  "diet_list": "Diyet Listesi"
 }

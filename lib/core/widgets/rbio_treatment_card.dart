@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../features/chronic_tracking/progress_sections/scale/treatment/model/treatment_type.dart';
+import '../../features/chronic_tracking/scale/scale.dart';
 import '../core.dart';
 
 class RbioTreatmentCard extends StatelessWidget {
   final RbioTreatmentModel item;
+  final VoidCallback onTap;
 
   const RbioTreatmentCard({
     Key? key,
     required this.item,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: item.onTap,
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(top: 20),
         decoration: const BoxDecoration(
@@ -60,7 +62,9 @@ class RbioTreatmentCard extends StatelessWidget {
 
                     //
                     Text(
-                      item.dateTime.xFormatTime1(),
+                      item.dateTime == null
+                          ? ''
+                          : item.dateTime!.xFormatTime1(),
                       style: context.xHeadline4,
                     ),
                   ],
@@ -131,21 +135,22 @@ class RbioTreatmentCard extends StatelessWidget {
 }
 
 class RbioTreatmentModel {
+  final int id;
   final String title;
   final String description;
-  final DateTime dateTime;
-  final VoidCallback? onTap;
+  final DateTime? dateTime;
   final TreatmentType? type;
 
   RbioTreatmentModel({
+    required this.id,
     required this.title,
     required this.description,
     required this.dateTime,
-    this.onTap,
     this.type,
   });
 
   RbioTreatmentModel copyWith({
+    int? id,
     String? title,
     String? description,
     DateTime? dateTime,
@@ -153,10 +158,10 @@ class RbioTreatmentModel {
     TreatmentType? type,
   }) {
     return RbioTreatmentModel(
+      id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       dateTime: dateTime ?? this.dateTime,
-      onTap: onTap ?? this.onTap,
       type: type ?? this.type,
     );
   }

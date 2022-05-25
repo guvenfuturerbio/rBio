@@ -228,6 +228,10 @@ class OneDoseDevApiEndpoints extends DevApiEndpoints {
   @override
   String getTreatmentNoteWithDiet(int? entegrationId) =>
       '/Treatment/get-treatment-note-with-diet/$entegrationId'.xDevApiTest;
+
+  @override
+  String treatmentGetDetail(int itemType, int id) =>
+      '/Treatment/get-detail/$itemType/$id'.xDevApiTest;
 }
 
 class OneDoseBaseEndpoints extends BaseEndpoints {

@@ -11,11 +11,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
+import '../../../../chronic_tracking/blood_pressure/blood_pressure.dart';
 import '../../../../chronic_tracking/bottom_actions_of_graph.dart';
-import '../../../../chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_measurement_vm.dart';
-import '../../../../chronic_tracking/progress_sections/blood_pressure/widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
-import '../../../../chronic_tracking/progress_sections/blood_pressure/widgets/tagger/bp_tagger_pop_up.dart';
-import '../../../../chronic_tracking/progress_sections/widgets/date_range_picker/date_range_picker.dart';
+import '../../../../chronic_tracking/home/view/widgets/widgets.dart';
 import '../../../notifiers/patient_notifiers.dart';
 import '../../../treatment_process/view/treatment_process_screen.dart';
 

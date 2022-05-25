@@ -422,6 +422,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Diagnosis Date"),
         "didnt_reach_goals":
             MessageLookupByLibrary.simpleMessage("Didn\'t reach goals"),
+        "diet_list": MessageLookupByLibrary.simpleMessage("Diet List"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Digital Checkup"),
         "discard": MessageLookupByLibrary.simpleMessage("Discard"),
