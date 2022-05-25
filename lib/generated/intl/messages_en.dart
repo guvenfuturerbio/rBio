@@ -251,6 +251,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "close_lbl": MessageLookupByLibrary.simpleMessage("Close"),
         "closest_available_appointments": MessageLookupByLibrary.simpleMessage(
             "Closest available appointments"),
+        "code_sent": MessageLookupByLibrary.simpleMessage(
+            "A verification code has sent to the phone number and e-mail address you entered."),
         "comments_and_suggestion": MessageLookupByLibrary.simpleMessage(
             "Your Comments and Suggestions"),
         "complaint_body_part": MessageLookupByLibrary.simpleMessage(
