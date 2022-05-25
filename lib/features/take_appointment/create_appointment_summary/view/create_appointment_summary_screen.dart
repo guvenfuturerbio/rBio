@@ -128,7 +128,8 @@ class _CreateAppointmentSummaryScreenState
                       //
                       SvgPicture.asset(
                         getIt<IAppConfig>().theme.successAppointmentImage,
-                        width: Atom.width * 0.4,
+                        width: Atom.width * 0.2,
+                        height: Atom.height * .2,
                       ),
 
                       //

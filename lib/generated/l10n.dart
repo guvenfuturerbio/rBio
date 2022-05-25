@@ -8690,6 +8690,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Diet List`
+  String get diet_list {
+    return Intl.message(
+      'Diet List',
+      name: 'diet_list',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `This field cannot be left blank`
   String get validation {
     return Intl.message(
@@ -8700,11 +8710,11 @@ class LocaleProvider {
     );
   }
 
-  /// `Diet List`
-  String get diet_list {
+  /// `A verification code has sent to the phone number and e-mail address you entered.`
+  String get code_sent {
     return Intl.message(
-      'Diet List',
-      name: 'diet_list',
+      'A verification code has sent to the phone number and e-mail address you entered.',
+      name: 'code_sent',
       desc: '',
       args: [],
     );

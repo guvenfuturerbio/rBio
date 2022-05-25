@@ -245,6 +245,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "close_lbl": MessageLookupByLibrary.simpleMessage("Kapat"),
         "closest_available_appointments":
             MessageLookupByLibrary.simpleMessage("En yakın uygun randevular"),
+        "code_sent": MessageLookupByLibrary.simpleMessage(
+            "Girmiş olduğunuz telefon numarasına ve e posta adresine doğrulama kodu gönderilmiştir."),
         "comments_and_suggestion":
             MessageLookupByLibrary.simpleMessage("Görüş ve Önerileriniz"),
         "complaint_body_part": MessageLookupByLibrary.simpleMessage(

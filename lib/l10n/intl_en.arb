@@ -864,6 +864,7 @@
   "detail_search": "Detail Search",
   "past_treatments": "Past Treatments",
   "current_treatments": "Current Treatments",
+  "diet_list": "Diet List",
   "validation": "This field cannot be left blank",
-  "diet_list": "Diet List"
+  "code_sent": "A verification code has sent to the phone number and e-mail address you entered."
 }
