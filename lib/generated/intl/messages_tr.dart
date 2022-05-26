@@ -90,9 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "appo_created": MessageLookupByLibrary.simpleMessage(
             "Randevunuz başarıyla oluşturulmuştur"),
         "appo_for":
-            MessageLookupByLibrary.simpleMessage("Randevu alınacak kişi :"),
+            MessageLookupByLibrary.simpleMessage("Randevu alınacak kişi:"),
         "appo_suitability": MessageLookupByLibrary.simpleMessage(
-            "Bu doktor için uygun bir randevu bulunamadı. Bizimle iletişime geçmek için lütfen bizi arayınız."),
+            "Bu uzman için uygun bir randevu bulunamadı. Bizimle iletişime geçmek için lütfen bizi arayınız."),
         "appointment": MessageLookupByLibrary.simpleMessage("Randevu"),
         "appointment_could_not_create":
             MessageLookupByLibrary.simpleMessage("Randevunuz oluşturulamadı."),
@@ -230,7 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Lütfen mesajlarınızı kontrol ediniz"),
         "checkout_my_blood_glucose": MessageLookupByLibrary.simpleMessage(
             "Hey, şeker ölçüm sürecime bak!"),
-        "choice": MessageLookupByLibrary.simpleMessage("Seçiminiz : "),
+        "choice": MessageLookupByLibrary.simpleMessage("Seçiminiz: "),
         "choose": MessageLookupByLibrary.simpleMessage("Seç"),
         "chronic_track": MessageLookupByLibrary.simpleMessage("Kronik Takip"),
         "chronic_track_error": MessageLookupByLibrary.simpleMessage(
@@ -327,7 +327,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Cvv kod en az 3 haneli olmalıdır"),
         "daily": MessageLookupByLibrary.simpleMessage("Günlük"),
         "date": MessageLookupByLibrary.simpleMessage("Tarih"),
-        "date_filter": MessageLookupByLibrary.simpleMessage("Tarih Aralığı : "),
+        "date_filter": MessageLookupByLibrary.simpleMessage("Tarih Aralığı: "),
         "date_of_birth": MessageLookupByLibrary.simpleMessage("Doğum Tarihi"),
         "day": MessageLookupByLibrary.simpleMessage("Gün"),
         "days": MessageLookupByLibrary.simpleMessage("Günler"),
@@ -351,9 +351,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Silinecektir!"),
         "demographic": MessageLookupByLibrary.simpleMessage("Demografik"),
         "depart_analyse": MessageLookupByLibrary.simpleMessage("Bölüm analizi"),
-        "depart_name": MessageLookupByLibrary.simpleMessage("Bölüm :"),
+        "depart_name": MessageLookupByLibrary.simpleMessage("Bölüm:"),
         "depart_selection":
-            MessageLookupByLibrary.simpleMessage("Bölüm seçimi :"),
+            MessageLookupByLibrary.simpleMessage("Bölüm seçimi:"),
         "department": MessageLookupByLibrary.simpleMessage("Bölüm"),
         "des_forgot_password": MessageLookupByLibrary.simpleMessage(
             "We just need your registered Email to  send you password reset intruction"),
@@ -366,7 +366,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "detailed_error_dialog_part1": MessageLookupByLibrary.simpleMessage(
             "Aynı tarih ya da saat de farklı bir randevunuz olabilir,"),
         "detailed_error_dialog_part2": MessageLookupByLibrary.simpleMessage(
-            "Randevu almak istediğiniz doktor için zaten bir randevunuz olabilir,"),
+            "Randevu almak istediğiniz uzman için zaten bir randevunuz olabilir,"),
         "detailed_error_dialog_part3": MessageLookupByLibrary.simpleMessage(
             "Farklı bir sorun olduğunu düşünüyorsanız aşağıdaki numaradan bizi arayabilirsiniz."),
         "detailed_report":
@@ -424,14 +424,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Devam etmek istiyor musunuz ?"),
         "do_you_smoke":
             MessageLookupByLibrary.simpleMessage("Sigara içiyor musunuz?"),
-        "doctor": MessageLookupByLibrary.simpleMessage("Doktor"),
+        "doctor": MessageLookupByLibrary.simpleMessage("Uzman"),
         "doctor_cv_not_uploaded": MessageLookupByLibrary.simpleMessage(
             "özgeçmiş bilgileri henüz yüklenmedi"),
         "doctor_legand": MessageLookupByLibrary.simpleMessage(
             "(Memnun Kalmadım 1 … 5 Çok Memnun Kaldım)"),
-        "doctor_name": MessageLookupByLibrary.simpleMessage("Doktor Adı :"),
+        "doctor_name": MessageLookupByLibrary.simpleMessage("Uzman Adı:"),
         "doctor_selection":
-            MessageLookupByLibrary.simpleMessage("Doktor seçimi :"),
+            MessageLookupByLibrary.simpleMessage("Uzman seçimi:"),
         "doesnt_match_tc": MessageLookupByLibrary.simpleMessage(
             "Girilen Tc kimlik numarası kayıt bilgilerinizle uyuşmuyor."),
         "done": MessageLookupByLibrary.simpleMessage("Bitti"),
@@ -451,7 +451,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email_or_identity": MessageLookupByLibrary.simpleMessage(
             "TCKN/Pasaport Numarası/Email"),
         "emergency": MessageLookupByLibrary.simpleMessage(
-            "Kritik öneme sahip bir semptom seçtiniz, acilen doktora görünmeniz gerekiyor!"),
+            "Kritik öneme sahip bir semptom seçtiniz, acilen uzmana görünmeniz gerekiyor!"),
         "emergency_lbl": MessageLookupByLibrary.simpleMessage("Acil Uyarı"),
         "end": MessageLookupByLibrary.simpleMessage("Bitiş"),
         "end_angle": MessageLookupByLibrary.simpleMessage("Bitiş Açısı"),
@@ -562,7 +562,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "high": MessageLookupByLibrary.simpleMessage("Yüksek"),
         "high_range": MessageLookupByLibrary.simpleMessage("Yüksek Aralık"),
         "hint_date": MessageLookupByLibrary.simpleMessage("Tarih"),
-        "hint_doctor": MessageLookupByLibrary.simpleMessage("Doktor"),
+        "hint_doctor": MessageLookupByLibrary.simpleMessage("Uzman"),
         "hint_dosage": MessageLookupByLibrary.simpleMessage("Doz"),
         "hint_hour": MessageLookupByLibrary.simpleMessage("saatinde"),
         "hint_input_old_password":
@@ -571,7 +571,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hint_time": MessageLookupByLibrary.simpleMessage("Saat"),
         "home": MessageLookupByLibrary.simpleMessage("Anasayfa"),
         "hosp_selection":
-            MessageLookupByLibrary.simpleMessage("Hastane seçimi :"),
+            MessageLookupByLibrary.simpleMessage("Hastane seçimi:"),
         "hour": MessageLookupByLibrary.simpleMessage("Saatte"),
         "hours": MessageLookupByLibrary.simpleMessage("Saatler"),
         "how_many_reminder_is_needed": MessageLookupByLibrary.simpleMessage(
@@ -582,7 +582,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "how_to_get_photo":
             MessageLookupByLibrary.simpleMessage("Fotoğraf nasıl alınsın?"),
         "how_video_doctor": MessageLookupByLibrary.simpleMessage(
-            "Doktorunuzdan memnun kaldınız mı ?"),
+            "Uzmanınızdan memnun kaldınız mı ?"),
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
             "Video görüşmesinin kalitesi nasıldı ?"),
         "how_will_you_follow_up":
@@ -631,8 +631,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "ONLINE DOKTOR VE E-KONSÜLTASYON KİŞİSEL VERİLERİN KORUNMASI HUKUKU AYDINLATMA METNİ"),
         "laboratory_result":
             MessageLookupByLibrary.simpleMessage("Laboratuvar\nSonuçları"),
-        "last_appointment_doctor": MessageLookupByLibrary.simpleMessage(
-            "Son randevu aldığınız doktor"),
+        "last_appointment_doctor":
+            MessageLookupByLibrary.simpleMessage("Son randevu aldığınız uzman"),
         "last_bg": MessageLookupByLibrary.simpleMessage("Son Ölçüm"),
         "last_hba1c": MessageLookupByLibrary.simpleMessage("Son HbA1c"),
         "last_measurement": MessageLookupByLibrary.simpleMessage("Son Ölçüm"),
@@ -962,7 +962,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Girilen şifreler eşleşmiyor."),
         "pathology_result":
             MessageLookupByLibrary.simpleMessage("Patoloji\nSonuçları"),
-        "patient_name": MessageLookupByLibrary.simpleMessage("Hasta Adı :"),
+        "patient_name": MessageLookupByLibrary.simpleMessage("Hasta Adı:"),
         "patient_name_2": MessageLookupByLibrary.simpleMessage("Hasta Adı"),
         "patients": MessageLookupByLibrary.simpleMessage("Hastalar"),
         "pay": MessageLookupByLibrary.simpleMessage("Ödeme yap"),
@@ -997,7 +997,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Lütfen departman seçiniz"),
         "pls_select_doctor":
-            MessageLookupByLibrary.simpleMessage("Lütfen doktor seçiniz"),
+            MessageLookupByLibrary.simpleMessage("Lütfen uzman seçiniz"),
         "pls_select_hosp":
             MessageLookupByLibrary.simpleMessage("Lütfen hastane seçiniz"),
         "pls_select_person":
@@ -1101,7 +1101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchEmpty": MessageLookupByLibrary.simpleMessage(
             "Aradığınız kritelerde sonuç bulunamadı."),
         "search_hint": MessageLookupByLibrary.simpleMessage(
-            "Doktor, Hastane, Tıp Bölümü ile ilgili arama"),
+            "Uzman, Hastane, Tıp Bölümü ile ilgili arama"),
         "select_another_language":
             MessageLookupByLibrary.simpleMessage("Başka dil seçiniz"),
         "select_appo_type": MessageLookupByLibrary.simpleMessage(
@@ -1234,7 +1234,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tc_or_passport": MessageLookupByLibrary.simpleMessage(
             "T.C Kimlik/Pasaport Numaranız"),
         "temporary_pass": MessageLookupByLibrary.simpleMessage("Geçici Şifre"),
-        "tenant_name": MessageLookupByLibrary.simpleMessage("Hastane Adı :"),
+        "tenant_name": MessageLookupByLibrary.simpleMessage("Hastane Adı:"),
         "terms_and_privacy":
             MessageLookupByLibrary.simpleMessage("Koşullar ve Gizlilik"),
         "test_name": MessageLookupByLibrary.simpleMessage("Test Adı"),
@@ -1242,7 +1242,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "thank_you_for_survey": MessageLookupByLibrary.simpleMessage(
             "Anketimize katıldığınız için teşekkür ederiz."),
         "the_doctor_u_chose":
-            MessageLookupByLibrary.simpleMessage("Seçtiğiniz doktor"),
+            MessageLookupByLibrary.simpleMessage("Seçtiğiniz uzman"),
         "there_are_no_reminders":
             MessageLookupByLibrary.simpleMessage("Hiç hatırlatıcınız yok"),
         "three_months": MessageLookupByLibrary.simpleMessage("3 Aylık"),
@@ -1264,7 +1264,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Delete Doctor"),
         "title_doctors": MessageLookupByLibrary.simpleMessage("Doctors"),
         "title_doctors_profiles":
-            MessageLookupByLibrary.simpleMessage("Doktor Profili"),
+            MessageLookupByLibrary.simpleMessage("Uzman Profili"),
         "title_forgot_password":
             MessageLookupByLibrary.simpleMessage("Şifremi Unuttum"),
         "title_goal": MessageLookupByLibrary.simpleMessage("Goal"),
