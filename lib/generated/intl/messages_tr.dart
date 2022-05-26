@@ -166,6 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "box_code": MessageLookupByLibrary.simpleMessage("Kutu kodu"),
         "boy": MessageLookupByLibrary.simpleMessage("Erkek Çocuğu"),
         "bp_tracking": MessageLookupByLibrary.simpleMessage("Tansiyon Takibi"),
+        "breakfast": MessageLookupByLibrary.simpleMessage("Sabah"),
         "btn_cancel": MessageLookupByLibrary.simpleMessage("İptal"),
         "btn_confirm": MessageLookupByLibrary.simpleMessage("Onayla"),
         "btn_create": MessageLookupByLibrary.simpleMessage("Oluştur"),
@@ -418,6 +419,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diet_list": MessageLookupByLibrary.simpleMessage("Diyet Listesi"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Dijital Checkup"),
+        "dinner": MessageLookupByLibrary.simpleMessage("Akşam"),
         "discard": MessageLookupByLibrary.simpleMessage("İptal et"),
         "discount_code": MessageLookupByLibrary.simpleMessage("İndirim kodu"),
         "disease": MessageLookupByLibrary.simpleMessage("Hastalık"),
@@ -690,6 +692,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uygulamadan çıkış yapmak istiyor musunuz?"),
         "low": MessageLookupByLibrary.simpleMessage("Düşük"),
         "low_range": MessageLookupByLibrary.simpleMessage("Düşük Aralık"),
+        "lunch": MessageLookupByLibrary.simpleMessage("Öğle"),
         "make_an_appointment":
             MessageLookupByLibrary.simpleMessage("Randevu Al"),
         "make_an_online":
@@ -1048,6 +1051,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Son Randevularım"),
         "recover_your_password":
             MessageLookupByLibrary.simpleMessage("Şifremi Kurtar"),
+        "refreshment": MessageLookupByLibrary.simpleMessage("Ara"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Bundan sonraki işlemleriniz seçilen kullanıcı ile yapılacaktır, onaylıyor musunuz?"),
         "relatives": MessageLookupByLibrary.simpleMessage("Yakınlarım"),
@@ -1283,6 +1287,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Türkiye vatandaşıyım"),
         "trainings": MessageLookupByLibrary.simpleMessage("Çalışmalar"),
         "treatment": MessageLookupByLibrary.simpleMessage("Tedavi"),
+        "treatment_note": MessageLookupByLibrary.simpleMessage("Tedavi Notu"),
         "treatment_process":
             MessageLookupByLibrary.simpleMessage("Tedavi Süreci"),
         "treatments": MessageLookupByLibrary.simpleMessage("Tedaviler"),
@@ -1301,6 +1306,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "update_information":
             MessageLookupByLibrary.simpleMessage("Bilgilerini Güncelle"),
         "update_now": MessageLookupByLibrary.simpleMessage("Şimdi Güncelle"),
+        "update_treatment_note":
+            MessageLookupByLibrary.simpleMessage("Tedavi Notu Güncelle"),
         "upload": MessageLookupByLibrary.simpleMessage("Yükle"),
         "uploadFile": MessageLookupByLibrary.simpleMessage("Dosya\nYükle"),
         "upload_file_question": MessageLookupByLibrary.simpleMessage(

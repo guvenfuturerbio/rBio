@@ -866,5 +866,11 @@
   "current_treatments": "Current Treatments",
   "diet_list": "Diet List",
   "validation": "This field cannot be left blank",
-  "code_sent": "A verification code has sent to the phone number and e-mail address you entered."
+  "code_sent": "A verification code has sent to the phone number and e-mail address you entered.",
+  "breakfast": "Breakfast",
+  "refreshment": "Refreshment",
+  "lunch": "Lunch",
+  "dinner": "Dinner",
+  "treatment_note": "Treatment Note",
+  "update_treatment_note": "Update Treatment Note"
 }

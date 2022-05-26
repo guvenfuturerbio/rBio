@@ -5,11 +5,13 @@ import '../../features/chronic_tracking/scale/scale.dart';
 import '../core.dart';
 
 class RbioTreatmentCard extends StatelessWidget {
+  final bool fromPatient;
   final RbioTreatmentModel item;
   final VoidCallback onTap;
 
   const RbioTreatmentCard({
     Key? key,
+    required this.fromPatient,
     required this.item,
     required this.onTap,
   }) : super(key: key);
@@ -51,7 +53,9 @@ class RbioTreatmentCard extends StatelessWidget {
                     //
                     Expanded(
                       child: Text(
-                        item.title,
+                        fromPatient
+                            ? item.type!.xGetTitle(context)
+                            : item.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.xHeadline2.copyWith(

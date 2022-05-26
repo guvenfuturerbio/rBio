@@ -860,5 +860,11 @@
   "current_treatments": "Güncel Tedaviler",
   "diet_list": "Diyet Listesi",
   "validation": "Bu alan boş bırakılamaz",
-  "code_sent": "Girmiş olduğunuz telefon numarasına ve e posta adresine doğrulama kodu gönderilmiştir."
+  "code_sent": "Girmiş olduğunuz telefon numarasına ve e posta adresine doğrulama kodu gönderilmiştir.",
+  "breakfast": "Sabah",
+  "refreshment": "Ara",
+  "lunch": "Öğle",
+  "dinner": "Akşam",
+  "treatment_note": "Tedavi Notu",
+  "update_treatment_note": "Tedavi Notu Güncelle"
 }

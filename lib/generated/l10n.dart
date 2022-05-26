@@ -8719,6 +8719,66 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Breakfast`
+  String get breakfast {
+    return Intl.message(
+      'Breakfast',
+      name: 'breakfast',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refreshment`
+  String get refreshment {
+    return Intl.message(
+      'Refreshment',
+      name: 'refreshment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lunch`
+  String get lunch {
+    return Intl.message(
+      'Lunch',
+      name: 'lunch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dinner`
+  String get dinner {
+    return Intl.message(
+      'Dinner',
+      name: 'dinner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Treatment Note`
+  String get treatment_note {
+    return Intl.message(
+      'Treatment Note',
+      name: 'treatment_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Treatment Note`
+  String get update_treatment_note {
+    return Intl.message(
+      'Update Treatment Note',
+      name: 'update_treatment_note',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

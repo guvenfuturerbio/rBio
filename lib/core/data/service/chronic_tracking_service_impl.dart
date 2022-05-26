@@ -469,7 +469,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<ScaleTreatmentDetailResponse> treatmentGetDetail(
+  Future<GuvenResponseModel> treatmentGetDetail(
     TreatmentItemType itemType,
     int id,
   ) async {
@@ -481,9 +481,26 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       options: authOptions,
     );
     if (response.xIsSuccessful) {
-      return ScaleTreatmentDetailResponse.fromJson(response.xGetMap);
+      return response;
     } else {
-      throw Exception('/getTreatmentNoteWithDiet : ${response.isSuccessful}');
+      throw Exception('/treatmentGetDetail : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> addTreatmentNote(
+    int? entegrationId,
+    PatientTreatmentAddRequest model,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>().endpoints.devApi.addTreatmentNote(entegrationId),
+      model.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/addTreatmentNote : ${response.isSuccessful}');
     }
   }
 }

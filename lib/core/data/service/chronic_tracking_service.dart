@@ -89,8 +89,13 @@ abstract class ChronicTrackingApiService {
     ScaleTreatmentRequest request,
   );
 
-  Future<ScaleTreatmentDetailResponse> treatmentGetDetail(
+  Future<GuvenResponseModel> treatmentGetDetail(
     TreatmentItemType itemType,
     int id,
+  );
+
+  Future<GuvenResponseModel> addTreatmentNote(
+    int? entegrationId,
+    PatientTreatmentAddRequest model,
   );
 }

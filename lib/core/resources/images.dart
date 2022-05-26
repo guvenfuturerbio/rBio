@@ -34,6 +34,10 @@ class _Images {
   final checkup = 'assets/images/checkup_icon.svg';
   final clockGreen = 'assets/images/clock_green_icon.svg';
   final clock = 'assets/images/clock_icon.svg';
+  final clockBreakfast = 'assets/images/clock_breakfast.svg';
+  final clockDinner = 'assets/images/clock_dinner.svg';
+  final clockLunch = 'assets/images/clock_lunch.svg';
+  final clockRefreshment = 'assets/images/clock_refreshment.svg';
   final contour = "assets/images/contour.png";
   final covid_1 = "assets/images/covid_1.png";
   final covid_2 = "assets/images/covid_2.png";

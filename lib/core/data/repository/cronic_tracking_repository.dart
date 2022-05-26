@@ -151,9 +151,23 @@ class ChronicTrackingRepository {
         .toList();
   }
 
-  Future<ScaleTreatmentDetailResponse> treatmentGetDetail(
-    TreatmentItemType itemType,
-    int id,
+  Future<ScaleTreatmentDietDetailResponse> treatmentDietGetDetail(
+      int id) async {
+    final guvenResponseModel =
+        await apiService.treatmentGetDetail(TreatmentItemType.diet, id);
+    return ScaleTreatmentDietDetailResponse.fromJson(
+        guvenResponseModel.xGetMap);
+  }
+
+  Future<ScaleTreatmentDetailResponse> treatmentGetDetail(int id) async {
+    final guvenResponseModel =
+        await apiService.treatmentGetDetail(TreatmentItemType.treatment, id);
+    return ScaleTreatmentDetailResponse.fromJson(guvenResponseModel.xGetMap);
+  }
+
+  Future<GuvenResponseModel> addTreatmentNote(
+    int? entegrationId,
+    PatientTreatmentAddRequest model,
   ) =>
-      apiService.treatmentGetDetail(itemType, id);
+      apiService.addTreatmentNote(entegrationId, model);
 }

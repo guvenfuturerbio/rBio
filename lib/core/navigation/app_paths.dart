@@ -129,7 +129,6 @@ class VRouterRoutes {
               Atom.show(const NotChronicWarning());
             }
           },
-          
           stackedRoutes: [
             VWidget(
               path: PagePaths.measurementTrackingHome,
@@ -156,6 +155,10 @@ class VRouterRoutes {
                     VWidget(
                       path: PagePaths.patientScaleDietDetail,
                       widget: const PatientScaleDietDetailScreen(),
+                    ),
+                    VWidget(
+                      path: PagePaths.patientScaleTreatmentDetail,
+                      widget: const PatientScaleTreatmentDetailScreen(),
                     ),
                   ],
                 ),
@@ -630,8 +633,12 @@ class PagePaths {
   static const scaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-manuel-add';
 
-  static const patientScaleTreatmentList = "/scale-detail/patient-scale-treatment-list";
-  static const patientScaleDietDetail = "/scale-detail/patient-scale-diet-detail";
+  static const patientScaleTreatmentList =
+      "/scale-detail/patient-scale-treatment-list";
+  static const patientScaleDietDetail =
+      "/scale-detail/patient-scale-diet-detail";
+  static const patientScaleTreatmentDetail =
+      "/scale-detail/patient-scale-treatment-detail";
   // #endregion
 
   // #region Dashboard

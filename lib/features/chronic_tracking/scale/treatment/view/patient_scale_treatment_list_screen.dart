@@ -80,6 +80,7 @@ class PatientScaleTreatmentListView extends StatelessWidget {
                   itemCount: result.list.length,
                   itemBuilder: (BuildContext context, int index) {
                     return RbioTreatmentCard(
+                      fromPatient: true,
                       item: result.list[index],
                       onTap: () {
                         if (result.list[index].type == TreatmentType.diet) {
@@ -91,7 +92,12 @@ class PatientScaleTreatmentListView extends StatelessWidget {
                           );
                         } else if (result.list[index].type ==
                             TreatmentType.treatmentNote) {
-                          //
+                          Atom.to(
+                            PagePaths.patientScaleTreatmentDetail,
+                            queryParameters: {
+                              'itemId': result.list[index].id.toString(),
+                            },
+                          );
                         }
                       },
                     );

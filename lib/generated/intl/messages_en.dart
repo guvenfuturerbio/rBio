@@ -171,6 +171,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "boy": MessageLookupByLibrary.simpleMessage("Boy"),
         "bp_tracking":
             MessageLookupByLibrary.simpleMessage("Blood Pressure Tracking"),
+        "breakfast": MessageLookupByLibrary.simpleMessage("Breakfast"),
         "btn_cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "btn_confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "btn_create": MessageLookupByLibrary.simpleMessage("Create"),
@@ -427,6 +428,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diet_list": MessageLookupByLibrary.simpleMessage("Diet List"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Digital Checkup"),
+        "dinner": MessageLookupByLibrary.simpleMessage("Dinner"),
         "discard": MessageLookupByLibrary.simpleMessage("Discard"),
         "discount_code": MessageLookupByLibrary.simpleMessage("Discount Code"),
         "disease": MessageLookupByLibrary.simpleMessage("Disease"),
@@ -699,6 +701,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Do you want to exit the application?"),
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "low_range": MessageLookupByLibrary.simpleMessage("Low Range"),
+        "lunch": MessageLookupByLibrary.simpleMessage("Lunch"),
         "make_an_appointment":
             MessageLookupByLibrary.simpleMessage("Make an Appointment"),
         "make_an_online":
@@ -1060,6 +1063,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Recent Appointments"),
         "recover_your_password":
             MessageLookupByLibrary.simpleMessage("Recover your password"),
+        "refreshment": MessageLookupByLibrary.simpleMessage("Refreshment"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Further operations will be completed by the selected user, do you confirm?"),
         "relatives": MessageLookupByLibrary.simpleMessage("Relatives"),
@@ -1293,6 +1297,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("I am a Turkish citizen"),
         "trainings": MessageLookupByLibrary.simpleMessage("Trainings"),
         "treatment": MessageLookupByLibrary.simpleMessage("Treatment"),
+        "treatment_note":
+            MessageLookupByLibrary.simpleMessage("Treatment Note"),
         "treatment_process":
             MessageLookupByLibrary.simpleMessage("Treatment Process"),
         "treatments": MessageLookupByLibrary.simpleMessage("Treatments"),
@@ -1311,6 +1317,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "update_information":
             MessageLookupByLibrary.simpleMessage("Update Information"),
         "update_now": MessageLookupByLibrary.simpleMessage("Update Now"),
+        "update_treatment_note":
+            MessageLookupByLibrary.simpleMessage("Update Treatment Note"),
         "upload": MessageLookupByLibrary.simpleMessage("Upload"),
         "uploadFile": MessageLookupByLibrary.simpleMessage("Upload\nFile"),
         "upload_file_question": MessageLookupByLibrary.simpleMessage(

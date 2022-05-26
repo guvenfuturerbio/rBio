@@ -237,6 +237,10 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
   @override
   String treatmentGetDetail(int itemType, int id) =>
       throw RbioUndefinedEndpointException("treatmentGetDetail");
+
+  @override
+  String addTreatmentNote(int? entegrationId) =>
+      throw RbioUndefinedEndpointException("addTreatmentNote");
 }
 
 class GuvenBaseEndpoints extends BaseEndpoints {
