@@ -1,3 +1,4 @@
+import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../model/model.dart';
 import '../../core.dart';
 import '../service/model/patient_scale_measurement.dart';
@@ -53,4 +54,51 @@ class DoctorRepository {
     GetMyPatientFilter getMyPatientFilter,
   ) =>
       apiService.getMyPatientBloodPressure(patientId, getMyPatientFilter);
+
+  Future<List<RbioTreatmentModel>> getTreatmentNoteWithDietDoctor(
+    int patientId,
+    ScaleTreatmentRequest request,
+  ) async {
+    final result = <RbioTreatmentModel>[];
+    final list =
+        await apiService.getTreatmentNoteWithDietDoctor(patientId, request);
+    result.addAll(
+      (list.dietList ?? []).map(
+        (e) => RbioTreatmentModel(
+          id: e.id ?? -1,
+          description: e.dietTitle ?? '',
+          dateTime: e.dietCreateDate,
+          type: TreatmentType.diet,
+        ),
+      ),
+    );
+
+    result.addAll(
+      (list.treatmentNoteList ?? []).map(
+        (e) => RbioTreatmentModel(
+          id: e.id ?? -1,
+          description: e.createdByName ?? '',
+          dateTime: e.treatmentNoteCreateDate,
+          type: TreatmentType.treatmentNote,
+        ),
+      ),
+    );
+
+    result.addAll(
+      (list.doctorNoteList ?? []).map(
+        (e) => RbioTreatmentModel(
+          id: e.id ?? -1,
+          description: e.treatmentNoteTitle ?? '',
+          dateTime: e.treatmentNoteCreateDate,
+          type: TreatmentType.doctorNote,
+        ),
+      ),
+    );
+
+    return result
+        .xSortedBy((e) => e.dateTime ?? DateTime.now())
+        .toList()
+        .reversed
+        .toList();
+  }
 }

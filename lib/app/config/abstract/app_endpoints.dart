@@ -72,6 +72,7 @@ abstract class DevApiEndpoints {
   String get ctUpdateUserStrip;
 
   String getTreatmentNoteWithDiet(int? entegrationId);
+  String getTreatmentNoteWithDietDoctor(int patientId);
   String treatmentGetDetail(int itemType, int id);
   String addTreatmentNote(int? entegrationId);
 }

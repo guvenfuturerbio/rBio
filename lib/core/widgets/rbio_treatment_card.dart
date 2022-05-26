@@ -5,16 +5,38 @@ import '../../features/chronic_tracking/scale/scale.dart';
 import '../core.dart';
 
 class RbioTreatmentCard extends StatelessWidget {
-  final bool fromPatient;
   final RbioTreatmentModel item;
   final VoidCallback onTap;
+  final String subTitle;
 
-  const RbioTreatmentCard({
+  const RbioTreatmentCard._({
     Key? key,
-    required this.fromPatient,
     required this.item,
     required this.onTap,
+    required this.subTitle,
   }) : super(key: key);
+
+  factory RbioTreatmentCard.createdBy({
+    required RbioTreatmentModel item,
+    required VoidCallback onTap,
+  }) {
+    return RbioTreatmentCard._(
+      item: item,
+      onTap: onTap,
+      subTitle: LocaleProvider.current.created_by,
+    );
+  }
+
+  factory RbioTreatmentCard.title({
+    required RbioTreatmentModel item,
+    required VoidCallback onTap,
+  }) {
+    return RbioTreatmentCard._(
+      item: item,
+      onTap: onTap,
+      subTitle: LocaleProvider.current.title,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +75,7 @@ class RbioTreatmentCard extends StatelessWidget {
                     //
                     Expanded(
                       child: Text(
-                        fromPatient
-                            ? item.type!.xGetTitle(context)
-                            : item.title,
+                        item.type!.xGetTitle(context),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.xHeadline2.copyWith(
@@ -99,7 +119,7 @@ class RbioTreatmentCard extends StatelessWidget {
                         children: [
                           //
                           Text(
-                            LocaleProvider.of(context).created_by,
+                            subTitle,
                             style: context.xHeadline3.copyWith(
                               color: getIt<IAppConfig>().theme.textColorPassive,
                             ),
@@ -140,14 +160,12 @@ class RbioTreatmentCard extends StatelessWidget {
 
 class RbioTreatmentModel {
   final int id;
-  final String title;
   final String description;
   final DateTime? dateTime;
   final TreatmentType? type;
 
   RbioTreatmentModel({
     required this.id,
-    required this.title,
     required this.description,
     required this.dateTime,
     this.type,
@@ -155,7 +173,6 @@ class RbioTreatmentModel {
 
   RbioTreatmentModel copyWith({
     int? id,
-    String? title,
     String? description,
     DateTime? dateTime,
     VoidCallback? onTap,
@@ -163,7 +180,6 @@ class RbioTreatmentModel {
   }) {
     return RbioTreatmentModel(
       id: id ?? this.id,
-      title: title ?? this.title,
       description: description ?? this.description,
       dateTime: dateTime ?? this.dateTime,
       type: type ?? this.type,

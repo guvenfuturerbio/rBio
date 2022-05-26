@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'patient_scale_treatment_list_cubit.dart';
+part of 'doctor_scale_treatment_list_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,8 +14,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$PatientScaleTreatmentListStateTearOff {
-  const _$PatientScaleTreatmentListStateTearOff();
+class _$DoctorScaleTreatmentListStateTearOff {
+  const _$DoctorScaleTreatmentListStateTearOff();
 
   _Initial initial() {
     return const _Initial();
@@ -37,11 +37,10 @@ class _$PatientScaleTreatmentListStateTearOff {
 }
 
 /// @nodoc
-const $PatientScaleTreatmentListState =
-    _$PatientScaleTreatmentListStateTearOff();
+const $DoctorScaleTreatmentListState = _$DoctorScaleTreatmentListStateTearOff();
 
 /// @nodoc
-mixin _$PatientScaleTreatmentListState {
+mixin _$DoctorScaleTreatmentListState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -95,21 +94,21 @@ mixin _$PatientScaleTreatmentListState {
 }
 
 /// @nodoc
-abstract class $PatientScaleTreatmentListStateCopyWith<$Res> {
-  factory $PatientScaleTreatmentListStateCopyWith(
-          PatientScaleTreatmentListState value,
-          $Res Function(PatientScaleTreatmentListState) then) =
-      _$PatientScaleTreatmentListStateCopyWithImpl<$Res>;
+abstract class $DoctorScaleTreatmentListStateCopyWith<$Res> {
+  factory $DoctorScaleTreatmentListStateCopyWith(
+          DoctorScaleTreatmentListState value,
+          $Res Function(DoctorScaleTreatmentListState) then) =
+      _$DoctorScaleTreatmentListStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$PatientScaleTreatmentListStateCopyWithImpl<$Res>
-    implements $PatientScaleTreatmentListStateCopyWith<$Res> {
-  _$PatientScaleTreatmentListStateCopyWithImpl(this._value, this._then);
+class _$DoctorScaleTreatmentListStateCopyWithImpl<$Res>
+    implements $DoctorScaleTreatmentListStateCopyWith<$Res> {
+  _$DoctorScaleTreatmentListStateCopyWithImpl(this._value, this._then);
 
-  final PatientScaleTreatmentListState _value;
+  final DoctorScaleTreatmentListState _value;
   // ignore: unused_field
-  final $Res Function(PatientScaleTreatmentListState) _then;
+  final $Res Function(DoctorScaleTreatmentListState) _then;
 }
 
 /// @nodoc
@@ -120,7 +119,7 @@ abstract class _$InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$InitialCopyWithImpl<$Res>
-    extends _$PatientScaleTreatmentListStateCopyWithImpl<$Res>
+    extends _$DoctorScaleTreatmentListStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -136,7 +135,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'PatientScaleTreatmentListState.initial()';
+    return 'DoctorScaleTreatmentListState.initial()';
   }
 
   @override
@@ -223,7 +222,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements PatientScaleTreatmentListState {
+abstract class _Initial implements DoctorScaleTreatmentListState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -236,7 +235,7 @@ abstract class _$LoadInProgressCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadInProgressCopyWithImpl<$Res>
-    extends _$PatientScaleTreatmentListStateCopyWithImpl<$Res>
+    extends _$DoctorScaleTreatmentListStateCopyWithImpl<$Res>
     implements _$LoadInProgressCopyWith<$Res> {
   __$LoadInProgressCopyWithImpl(
       _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
@@ -253,7 +252,7 @@ class _$_LoadInProgress implements _LoadInProgress {
 
   @override
   String toString() {
-    return 'PatientScaleTreatmentListState.loadInProgress()';
+    return 'DoctorScaleTreatmentListState.loadInProgress()';
   }
 
   @override
@@ -340,7 +339,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   }
 }
 
-abstract class _LoadInProgress implements PatientScaleTreatmentListState {
+abstract class _LoadInProgress implements DoctorScaleTreatmentListState {
   const factory _LoadInProgress() = _$_LoadInProgress;
 }
 
@@ -353,7 +352,7 @@ abstract class _$SuccessCopyWith<$Res> {
 
 /// @nodoc
 class __$SuccessCopyWithImpl<$Res>
-    extends _$PatientScaleTreatmentListStateCopyWithImpl<$Res>
+    extends _$DoctorScaleTreatmentListStateCopyWithImpl<$Res>
     implements _$SuccessCopyWith<$Res> {
   __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
       : super(_value, (v) => _then(v as _Success));
@@ -384,7 +383,7 @@ class _$_Success implements _Success {
 
   @override
   String toString() {
-    return 'PatientScaleTreatmentListState.success(result: $result)';
+    return 'DoctorScaleTreatmentListState.success(result: $result)';
   }
 
   @override
@@ -479,7 +478,7 @@ class _$_Success implements _Success {
   }
 }
 
-abstract class _Success implements PatientScaleTreatmentListState {
+abstract class _Success implements DoctorScaleTreatmentListState {
   const factory _Success(ScaleTreatmentListResult result) = _$_Success;
 
   ScaleTreatmentListResult get result;
@@ -496,7 +495,7 @@ abstract class _$FailureCopyWith<$Res> {
 
 /// @nodoc
 class __$FailureCopyWithImpl<$Res>
-    extends _$PatientScaleTreatmentListStateCopyWithImpl<$Res>
+    extends _$DoctorScaleTreatmentListStateCopyWithImpl<$Res>
     implements _$FailureCopyWith<$Res> {
   __$FailureCopyWithImpl(_Failure _value, $Res Function(_Failure) _then)
       : super(_value, (v) => _then(v as _Failure));
@@ -512,7 +511,7 @@ class _$_Failure implements _Failure {
 
   @override
   String toString() {
-    return 'PatientScaleTreatmentListState.failure()';
+    return 'DoctorScaleTreatmentListState.failure()';
   }
 
   @override
@@ -599,6 +598,6 @@ class _$_Failure implements _Failure {
   }
 }
 
-abstract class _Failure implements PatientScaleTreatmentListState {
+abstract class _Failure implements DoctorScaleTreatmentListState {
   const factory _Failure() = _$_Failure;
 }

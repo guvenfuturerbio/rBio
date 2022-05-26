@@ -21,6 +21,7 @@ import '../../features/doctor/patient_detail/blood_pressure/blood_pressure.dart'
 import '../../features/doctor/patient_detail/scale/view/scale_patient_detail_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
+import '../../features/doctor/treatment/treatment_list/view/doctor_scale_treatment_list_screen.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../features/mediminder/mediminder.dart';
 import '../../features/my_appointments/my_appointments.dart';
@@ -258,6 +259,10 @@ class VRouterRoutes {
                 VWidget(
                   path: PagePaths.doctorCosultation,
                   widget: const ConsultationScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.doctorScaleTreatmentList,
+                  widget: const DoctorScaleTreatmentListScreen(),
                 ),
               ],
             ),
@@ -659,6 +664,8 @@ class PagePaths {
   static const doctorTreatmentProgress = '/doctor-treatment_process';
   static const doctorTreatmentEdit = '/doctor-patient-treatment-edit';
   static const doctorCosultation = '/doctor-consultation';
+
+  static const doctorScaleTreatmentList = '/doctor-scale-treatment-list';
   // #endregion
 
   // #region Mediminder

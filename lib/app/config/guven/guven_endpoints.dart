@@ -235,6 +235,10 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
       throw RbioUndefinedEndpointException("getTreatmentNoteWithDiet");
 
   @override
+  String getTreatmentNoteWithDietDoctor(int patientId) =>
+      throw RbioUndefinedEndpointException("getTreatmentNoteWithDietDoctor");
+
+  @override
   String treatmentGetDetail(int itemType, int id) =>
       throw RbioUndefinedEndpointException("treatmentGetDetail");
 

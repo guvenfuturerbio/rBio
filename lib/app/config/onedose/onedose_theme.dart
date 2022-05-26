@@ -184,4 +184,7 @@ class OneDoseTheme extends IAppTheme {
 
   @override
   Color get yellow => const Color(0xFFFFE57B);
+
+  @override
+  Color get pink => const Color(0xFFEBCAF3);
 }

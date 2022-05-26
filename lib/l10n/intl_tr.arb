@@ -866,5 +866,7 @@
   "lunch": "Öğle",
   "dinner": "Akşam",
   "treatment_note": "Tedavi Notu",
-  "update_treatment_note": "Tedavi Notu Güncelle"
+  "update_treatment_note": "Tedavi Notu Güncelle",
+  "title": "Başlık",
+  "doctor_note": "Doktor Notu"
 }

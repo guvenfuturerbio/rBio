@@ -4,18 +4,18 @@ part of 'patient_scale_treatment_list_cubit.dart';
 class PatientScaleTreatmentListState with _$PatientScaleTreatmentListState {
   const factory PatientScaleTreatmentListState.initial() = _Initial;
   const factory PatientScaleTreatmentListState.loadInProgress() = _LoadInProgress;
-  const factory PatientScaleTreatmentListState.success(PatientScaleTreatmentListResult result) = _Success;
+  const factory PatientScaleTreatmentListState.success(ScaleTreatmentListResult result) = _Success;
   const factory PatientScaleTreatmentListState.failure() = _Failure;
 }
 
-class PatientScaleTreatmentListResult {
+class ScaleTreatmentListResult {
   final bool isLoading;
   final List<RbioTreatmentModel> list;
   final TreatmentFilterType filterType;
   final DateTime startCurrentDate;
   final DateTime endCurrentDate;
 
-  PatientScaleTreatmentListResult({
+  ScaleTreatmentListResult({
     this.isLoading = false,
     this.list = const [],
     this.filterType = TreatmentFilterType.current,
@@ -23,14 +23,14 @@ class PatientScaleTreatmentListResult {
     required this.endCurrentDate,
   });
 
-  PatientScaleTreatmentListResult copyWith({
+  ScaleTreatmentListResult copyWith({
     bool? isLoading,
     List<RbioTreatmentModel>? list,
     TreatmentFilterType? filterType,
     DateTime? startCurrentDate,
     DateTime? endCurrentDate,
   }) {
-    return PatientScaleTreatmentListResult(
+    return ScaleTreatmentListResult(
       isLoading: isLoading ?? this.isLoading,
       list: list ?? this.list,
       filterType: filterType ?? this.filterType,

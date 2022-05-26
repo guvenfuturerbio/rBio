@@ -18,10 +18,8 @@ extension TreatmentTypeExtension on TreatmentType {
         return getIt<IAppConfig>().theme.blue;
 
       case TreatmentType.doctorNote:
-        break;
+        return getIt<IAppConfig>().theme.pink;
     }
-
-    throw Exception("Undefined");
   }
 
   String xGetTitle(BuildContext context) {
@@ -33,9 +31,7 @@ extension TreatmentTypeExtension on TreatmentType {
         return LocaleProvider.of(context).treatment_note;
 
       case TreatmentType.doctorNote:
-        LocaleProvider.of(context).diet_list;
+        return LocaleProvider.of(context).doctor_note;
     }
-
-    throw Exception("Undefined");
   }
 }

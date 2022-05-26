@@ -445,6 +445,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "doctor_legand": MessageLookupByLibrary.simpleMessage(
             "(Not Satisfied 1 … 5 Very Satisfied)"),
         "doctor_name": MessageLookupByLibrary.simpleMessage("Doctor Name :"),
+        "doctor_note": MessageLookupByLibrary.simpleMessage("Doctor Note"),
         "doctor_selection":
             MessageLookupByLibrary.simpleMessage("Doctor selection :"),
         "doesnt_match_tc": MessageLookupByLibrary.simpleMessage(
@@ -1275,6 +1276,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time_take_medicine_title":
             MessageLookupByLibrary.simpleMessage("It\'s time to take medicine"),
         "time_text": MessageLookupByLibrary.simpleMessage("Time"),
+        "title": MessageLookupByLibrary.simpleMessage("Title"),
         "title_appointment":
             MessageLookupByLibrary.simpleMessage("Create Appointment"),
         "title_appointment_detail":

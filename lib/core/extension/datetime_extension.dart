@@ -1,7 +1,6 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/core.dart';
 
 extension LocaleDateFromString on String {
   /// timeZoneOffset = +11:00:00.000000 - Currie

@@ -437,6 +437,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "doctor_legand": MessageLookupByLibrary.simpleMessage(
             "(Memnun Kalmadım 1 … 5 Çok Memnun Kaldım)"),
         "doctor_name": MessageLookupByLibrary.simpleMessage("Doktor Adı :"),
+        "doctor_note": MessageLookupByLibrary.simpleMessage("Doktor Notu"),
         "doctor_selection":
             MessageLookupByLibrary.simpleMessage("Doktor seçimi :"),
         "doesnt_match_tc": MessageLookupByLibrary.simpleMessage(
@@ -1265,6 +1266,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time_take_medicine_title": MessageLookupByLibrary.simpleMessage(
             "İlacınızı almanız gerekmektedir"),
         "time_text": MessageLookupByLibrary.simpleMessage("Zaman"),
+        "title": MessageLookupByLibrary.simpleMessage("Başlık"),
         "title_appointment":
             MessageLookupByLibrary.simpleMessage("Randevu Oluştur"),
         "title_appointment_detail":

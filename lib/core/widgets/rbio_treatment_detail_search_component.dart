@@ -1,18 +1,28 @@
-part of '../patient_scale_treatment_list_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class DetailSearchComponent extends StatefulWidget {
-  final PatientScaleTreatmentListResult result;
+import '../../features/chronic_tracking/scale/scale.dart';
+import '../core.dart';
 
-  const DetailSearchComponent({
+class RbioDetailSearchComponent extends StatefulWidget {
+  final ScaleTreatmentListResult result;
+  final void Function(DateTime date) onStartDateChange;
+  final void Function(DateTime date) onEndDateChange;
+  final void Function(TreatmentFilterType value) onTypeChange;
+
+  const RbioDetailSearchComponent({
     Key? key,
     required this.result,
+    required this.onStartDateChange,
+    required this.onEndDateChange,
+    required this.onTypeChange,
   }) : super(key: key);
 
   @override
-  _DetailSearchComponentState createState() => _DetailSearchComponentState();
+  _RbioDetailSearchComponentState createState() => _RbioDetailSearchComponentState();
 }
 
-class _DetailSearchComponentState extends State<DetailSearchComponent>
+class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
     with SingleTickerProviderStateMixin {
   bool _isExpanded = false;
   var val = TreatmentFilterType.current;
@@ -188,16 +198,12 @@ class _DetailSearchComponentState extends State<DetailSearchComponent>
                         onStartDateChange: (date) {
                           if (!widget.result.startCurrentDate
                               .xIsSameDate(date)) {
-                            context
-                                .read<PatientScaleTreatmentListCubit>()
-                                .setStartDate(date);
+                            widget.onStartDateChange(date);
                           }
                         },
                         onEndDateChange: (date) {
                           if (!widget.result.endCurrentDate.xIsSameDate(date)) {
-                            context
-                                .read<PatientScaleTreatmentListCubit>()
-                                .setEndDate(date);
+                            widget.onEndDateChange(date);
                           }
                         },
                         startMinDate: DateTime(1900).getStartOfTheDay,
@@ -228,6 +234,6 @@ class _DetailSearchComponentState extends State<DetailSearchComponent>
       });
     }
 
-    context.read<PatientScaleTreatmentListCubit>().filterTypeChange(value);
+    widget.onTypeChange(value);
   }
 }

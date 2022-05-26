@@ -124,7 +124,6 @@ class ChronicTrackingRepository {
       (list.dietList ?? []).map(
         (e) => RbioTreatmentModel(
           id: e.id ?? -1,
-          title: e.dietTitle ?? '',
           description: e.createdByName ?? '',
           dateTime: e.dietCreateDate,
           type: TreatmentType.diet,
@@ -136,7 +135,6 @@ class ChronicTrackingRepository {
       (list.treatmentNoteList ?? []).map(
         (e) => RbioTreatmentModel(
           id: e.id ?? -1,
-          title: e.treatmentNoteTitle ?? '',
           description: e.createdByName ?? '',
           dateTime: e.treatmentNoteCreateDate,
           type: TreatmentType.treatmentNote,

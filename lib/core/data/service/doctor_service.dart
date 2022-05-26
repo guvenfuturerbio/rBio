@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
+import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../model/model.dart';
 import '../../core.dart';
 import 'model/patient_scale_measurement.dart';
@@ -11,7 +12,8 @@ abstract class DoctorApiService {
   final IDioHelper helper;
   DoctorApiService(this.helper);
 
-  Future<RbioLoginResponse> login(String userId, String password, String consentId);
+  Future<RbioLoginResponse> login(
+      String userId, String password, String consentId);
   Future<List<Appointment>> getAllAppointment(
       AppointmentFilter appointmentFilter);
   Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
@@ -31,4 +33,9 @@ abstract class DoctorApiService {
       int patientId, GetMyPatientFilter getMyPatientFilter);
   Future<List<BloodPressureModel>> getMyPatientBloodPressure(
       int patientId, GetMyPatientFilter getMyPatientFilter);
+
+  Future<ScaleTreatmentResponse> getTreatmentNoteWithDietDoctor(
+    int patientId,
+    ScaleTreatmentRequest request,
+  );
 }

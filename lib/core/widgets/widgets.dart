@@ -48,5 +48,6 @@ export 'rbio_for_you_category_card.dart';
 export 'rbio_user_and_treatment_tile.dart';
 export 'rbio_treatment_card.dart';
 export 'rbio_radio.dart';
+export 'rbio_treatment_detail_search_component.dart';
 export 'stack_of_cards.dart';
 export 'warning_dialog.dart';

@@ -28,7 +28,7 @@ class _$ScaleTreatmentResponseTearOff {
       @JsonKey(name: 'dietList')
           List<ScaleTreatmentDietModel>? dietList,
       @JsonKey(name: 'doctorNoteList')
-          bool? doctorNoteList}) {
+          List<ScaleTreatmentDoctorNoteModel>? doctorNoteList}) {
     return _ScaleTreatmentResponse(
       treatmentNoteList: treatmentNoteList,
       dietList: dietList,
@@ -53,7 +53,8 @@ mixin _$ScaleTreatmentResponse {
   List<ScaleTreatmentDietModel>? get dietList =>
       throw _privateConstructorUsedError;
   @JsonKey(name: 'doctorNoteList')
-  bool? get doctorNoteList => throw _privateConstructorUsedError;
+  List<ScaleTreatmentDoctorNoteModel>? get doctorNoteList =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -72,7 +73,7 @@ abstract class $ScaleTreatmentResponseCopyWith<$Res> {
       @JsonKey(name: 'dietList')
           List<ScaleTreatmentDietModel>? dietList,
       @JsonKey(name: 'doctorNoteList')
-          bool? doctorNoteList});
+          List<ScaleTreatmentDoctorNoteModel>? doctorNoteList});
 }
 
 /// @nodoc
@@ -102,7 +103,7 @@ class _$ScaleTreatmentResponseCopyWithImpl<$Res>
       doctorNoteList: doctorNoteList == freezed
           ? _value.doctorNoteList
           : doctorNoteList // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as List<ScaleTreatmentDoctorNoteModel>?,
     ));
   }
 }
@@ -120,7 +121,7 @@ abstract class _$ScaleTreatmentResponseCopyWith<$Res>
       @JsonKey(name: 'dietList')
           List<ScaleTreatmentDietModel>? dietList,
       @JsonKey(name: 'doctorNoteList')
-          bool? doctorNoteList});
+          List<ScaleTreatmentDoctorNoteModel>? doctorNoteList});
 }
 
 /// @nodoc
@@ -152,7 +153,7 @@ class __$ScaleTreatmentResponseCopyWithImpl<$Res>
       doctorNoteList: doctorNoteList == freezed
           ? _value.doctorNoteList
           : doctorNoteList // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as List<ScaleTreatmentDoctorNoteModel>?,
     ));
   }
 }
@@ -177,7 +178,7 @@ class _$_ScaleTreatmentResponse extends _ScaleTreatmentResponse {
   final List<ScaleTreatmentDietModel>? dietList;
   @override
   @JsonKey(name: 'doctorNoteList')
-  final bool? doctorNoteList;
+  final List<ScaleTreatmentDoctorNoteModel>? doctorNoteList;
 
   @override
   String toString() {
@@ -217,12 +218,13 @@ class _$_ScaleTreatmentResponse extends _ScaleTreatmentResponse {
 
 abstract class _ScaleTreatmentResponse extends ScaleTreatmentResponse {
   const factory _ScaleTreatmentResponse(
-      {@JsonKey(name: 'treatmentNoteList')
-          List<ScaleTreatmentModel>? treatmentNoteList,
-      @JsonKey(name: 'dietList')
-          List<ScaleTreatmentDietModel>? dietList,
-      @JsonKey(name: 'doctorNoteList')
-          bool? doctorNoteList}) = _$_ScaleTreatmentResponse;
+          {@JsonKey(name: 'treatmentNoteList')
+              List<ScaleTreatmentModel>? treatmentNoteList,
+          @JsonKey(name: 'dietList')
+              List<ScaleTreatmentDietModel>? dietList,
+          @JsonKey(name: 'doctorNoteList')
+              List<ScaleTreatmentDoctorNoteModel>? doctorNoteList}) =
+      _$_ScaleTreatmentResponse;
   const _ScaleTreatmentResponse._() : super._();
 
   factory _ScaleTreatmentResponse.fromJson(Map<String, dynamic> json) =
@@ -236,7 +238,7 @@ abstract class _ScaleTreatmentResponse extends ScaleTreatmentResponse {
   List<ScaleTreatmentDietModel>? get dietList;
   @override
   @JsonKey(name: 'doctorNoteList')
-  bool? get doctorNoteList;
+  List<ScaleTreatmentDoctorNoteModel>? get doctorNoteList;
   @override
   @JsonKey(ignore: true)
   _$ScaleTreatmentResponseCopyWith<_ScaleTreatmentResponse> get copyWith =>
@@ -499,6 +501,271 @@ abstract class _ScaleTreatmentModel extends ScaleTreatmentModel {
   @JsonKey(ignore: true)
   _$ScaleTreatmentModelCopyWith<_ScaleTreatmentModel> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+ScaleTreatmentDoctorNoteModel _$ScaleTreatmentDoctorNoteModelFromJson(
+    Map<String, dynamic> json) {
+  return _ScaleTreatmentDoctorNoteModel.fromJson(json);
+}
+
+/// @nodoc
+class _$ScaleTreatmentDoctorNoteModelTearOff {
+  const _$ScaleTreatmentDoctorNoteModelTearOff();
+
+  _ScaleTreatmentDoctorNoteModel call(
+      {@JsonKey(name: 'treatmentNoteTitle')
+          String? treatmentNoteTitle,
+      @JsonKey(name: 'treatmentNoteCreateDate')
+          DateTime? treatmentNoteCreateDate,
+      @JsonKey(name: 'createdByName')
+          String? createdByName,
+      @JsonKey(name: 'id')
+          int? id}) {
+    return _ScaleTreatmentDoctorNoteModel(
+      treatmentNoteTitle: treatmentNoteTitle,
+      treatmentNoteCreateDate: treatmentNoteCreateDate,
+      createdByName: createdByName,
+      id: id,
+    );
+  }
+
+  ScaleTreatmentDoctorNoteModel fromJson(Map<String, Object?> json) {
+    return ScaleTreatmentDoctorNoteModel.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $ScaleTreatmentDoctorNoteModel = _$ScaleTreatmentDoctorNoteModelTearOff();
+
+/// @nodoc
+mixin _$ScaleTreatmentDoctorNoteModel {
+  @JsonKey(name: 'treatmentNoteTitle')
+  String? get treatmentNoteTitle => throw _privateConstructorUsedError;
+  @JsonKey(name: 'treatmentNoteCreateDate')
+  DateTime? get treatmentNoteCreateDate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'createdByName')
+  String? get createdByName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'id')
+  int? get id => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ScaleTreatmentDoctorNoteModelCopyWith<ScaleTreatmentDoctorNoteModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ScaleTreatmentDoctorNoteModelCopyWith<$Res> {
+  factory $ScaleTreatmentDoctorNoteModelCopyWith(
+          ScaleTreatmentDoctorNoteModel value,
+          $Res Function(ScaleTreatmentDoctorNoteModel) then) =
+      _$ScaleTreatmentDoctorNoteModelCopyWithImpl<$Res>;
+  $Res call(
+      {@JsonKey(name: 'treatmentNoteTitle')
+          String? treatmentNoteTitle,
+      @JsonKey(name: 'treatmentNoteCreateDate')
+          DateTime? treatmentNoteCreateDate,
+      @JsonKey(name: 'createdByName')
+          String? createdByName,
+      @JsonKey(name: 'id')
+          int? id});
+}
+
+/// @nodoc
+class _$ScaleTreatmentDoctorNoteModelCopyWithImpl<$Res>
+    implements $ScaleTreatmentDoctorNoteModelCopyWith<$Res> {
+  _$ScaleTreatmentDoctorNoteModelCopyWithImpl(this._value, this._then);
+
+  final ScaleTreatmentDoctorNoteModel _value;
+  // ignore: unused_field
+  final $Res Function(ScaleTreatmentDoctorNoteModel) _then;
+
+  @override
+  $Res call({
+    Object? treatmentNoteTitle = freezed,
+    Object? treatmentNoteCreateDate = freezed,
+    Object? createdByName = freezed,
+    Object? id = freezed,
+  }) {
+    return _then(_value.copyWith(
+      treatmentNoteTitle: treatmentNoteTitle == freezed
+          ? _value.treatmentNoteTitle
+          : treatmentNoteTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      treatmentNoteCreateDate: treatmentNoteCreateDate == freezed
+          ? _value.treatmentNoteCreateDate
+          : treatmentNoteCreateDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      createdByName: createdByName == freezed
+          ? _value.createdByName
+          : createdByName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$ScaleTreatmentDoctorNoteModelCopyWith<$Res>
+    implements $ScaleTreatmentDoctorNoteModelCopyWith<$Res> {
+  factory _$ScaleTreatmentDoctorNoteModelCopyWith(
+          _ScaleTreatmentDoctorNoteModel value,
+          $Res Function(_ScaleTreatmentDoctorNoteModel) then) =
+      __$ScaleTreatmentDoctorNoteModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {@JsonKey(name: 'treatmentNoteTitle')
+          String? treatmentNoteTitle,
+      @JsonKey(name: 'treatmentNoteCreateDate')
+          DateTime? treatmentNoteCreateDate,
+      @JsonKey(name: 'createdByName')
+          String? createdByName,
+      @JsonKey(name: 'id')
+          int? id});
+}
+
+/// @nodoc
+class __$ScaleTreatmentDoctorNoteModelCopyWithImpl<$Res>
+    extends _$ScaleTreatmentDoctorNoteModelCopyWithImpl<$Res>
+    implements _$ScaleTreatmentDoctorNoteModelCopyWith<$Res> {
+  __$ScaleTreatmentDoctorNoteModelCopyWithImpl(
+      _ScaleTreatmentDoctorNoteModel _value,
+      $Res Function(_ScaleTreatmentDoctorNoteModel) _then)
+      : super(_value, (v) => _then(v as _ScaleTreatmentDoctorNoteModel));
+
+  @override
+  _ScaleTreatmentDoctorNoteModel get _value =>
+      super._value as _ScaleTreatmentDoctorNoteModel;
+
+  @override
+  $Res call({
+    Object? treatmentNoteTitle = freezed,
+    Object? treatmentNoteCreateDate = freezed,
+    Object? createdByName = freezed,
+    Object? id = freezed,
+  }) {
+    return _then(_ScaleTreatmentDoctorNoteModel(
+      treatmentNoteTitle: treatmentNoteTitle == freezed
+          ? _value.treatmentNoteTitle
+          : treatmentNoteTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      treatmentNoteCreateDate: treatmentNoteCreateDate == freezed
+          ? _value.treatmentNoteCreateDate
+          : treatmentNoteCreateDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      createdByName: createdByName == freezed
+          ? _value.createdByName
+          : createdByName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ScaleTreatmentDoctorNoteModel extends _ScaleTreatmentDoctorNoteModel {
+  const _$_ScaleTreatmentDoctorNoteModel(
+      {@JsonKey(name: 'treatmentNoteTitle') this.treatmentNoteTitle,
+      @JsonKey(name: 'treatmentNoteCreateDate') this.treatmentNoteCreateDate,
+      @JsonKey(name: 'createdByName') this.createdByName,
+      @JsonKey(name: 'id') this.id})
+      : super._();
+
+  factory _$_ScaleTreatmentDoctorNoteModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_ScaleTreatmentDoctorNoteModelFromJson(json);
+
+  @override
+  @JsonKey(name: 'treatmentNoteTitle')
+  final String? treatmentNoteTitle;
+  @override
+  @JsonKey(name: 'treatmentNoteCreateDate')
+  final DateTime? treatmentNoteCreateDate;
+  @override
+  @JsonKey(name: 'createdByName')
+  final String? createdByName;
+  @override
+  @JsonKey(name: 'id')
+  final int? id;
+
+  @override
+  String toString() {
+    return 'ScaleTreatmentDoctorNoteModel(treatmentNoteTitle: $treatmentNoteTitle, treatmentNoteCreateDate: $treatmentNoteCreateDate, createdByName: $createdByName, id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ScaleTreatmentDoctorNoteModel &&
+            const DeepCollectionEquality()
+                .equals(other.treatmentNoteTitle, treatmentNoteTitle) &&
+            const DeepCollectionEquality().equals(
+                other.treatmentNoteCreateDate, treatmentNoteCreateDate) &&
+            const DeepCollectionEquality()
+                .equals(other.createdByName, createdByName) &&
+            const DeepCollectionEquality().equals(other.id, id));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(treatmentNoteTitle),
+      const DeepCollectionEquality().hash(treatmentNoteCreateDate),
+      const DeepCollectionEquality().hash(createdByName),
+      const DeepCollectionEquality().hash(id));
+
+  @JsonKey(ignore: true)
+  @override
+  _$ScaleTreatmentDoctorNoteModelCopyWith<_ScaleTreatmentDoctorNoteModel>
+      get copyWith => __$ScaleTreatmentDoctorNoteModelCopyWithImpl<
+          _ScaleTreatmentDoctorNoteModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ScaleTreatmentDoctorNoteModelToJson(this);
+  }
+}
+
+abstract class _ScaleTreatmentDoctorNoteModel
+    extends ScaleTreatmentDoctorNoteModel {
+  const factory _ScaleTreatmentDoctorNoteModel(
+      {@JsonKey(name: 'treatmentNoteTitle')
+          String? treatmentNoteTitle,
+      @JsonKey(name: 'treatmentNoteCreateDate')
+          DateTime? treatmentNoteCreateDate,
+      @JsonKey(name: 'createdByName')
+          String? createdByName,
+      @JsonKey(name: 'id')
+          int? id}) = _$_ScaleTreatmentDoctorNoteModel;
+  const _ScaleTreatmentDoctorNoteModel._() : super._();
+
+  factory _ScaleTreatmentDoctorNoteModel.fromJson(Map<String, dynamic> json) =
+      _$_ScaleTreatmentDoctorNoteModel.fromJson;
+
+  @override
+  @JsonKey(name: 'treatmentNoteTitle')
+  String? get treatmentNoteTitle;
+  @override
+  @JsonKey(name: 'treatmentNoteCreateDate')
+  DateTime? get treatmentNoteCreateDate;
+  @override
+  @JsonKey(name: 'createdByName')
+  String? get createdByName;
+  @override
+  @JsonKey(name: 'id')
+  int? get id;
+  @override
+  @JsonKey(ignore: true)
+  _$ScaleTreatmentDoctorNoteModelCopyWith<_ScaleTreatmentDoctorNoteModel>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 ScaleTreatmentDietModel _$ScaleTreatmentDietModelFromJson(

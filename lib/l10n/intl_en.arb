@@ -872,5 +872,7 @@
   "lunch": "Lunch",
   "dinner": "Dinner",
   "treatment_note": "Treatment Note",
-  "update_treatment_note": "Update Treatment Note"
+  "update_treatment_note": "Update Treatment Note",
+  "title": "Title",
+  "doctor_note": "Doctor Note"
 }

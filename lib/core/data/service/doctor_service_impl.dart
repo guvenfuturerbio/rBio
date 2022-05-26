@@ -21,9 +21,11 @@ class DoctorApiServiceImpl extends DoctorApiService {
       });
 
   @override
-  Future<RbioLoginResponse> login(String userId, String password, String consentId) async {
-    final response =
-        await helper.postGuven(getIt<IAppConfig>().endpoints.doctor.login(userId, password, consentId), {});
+  Future<RbioLoginResponse> login(
+      String userId, String password, String consentId) async {
+    final response = await helper.postGuven(
+        getIt<IAppConfig>().endpoints.doctor.login(userId, password, consentId),
+        {});
     if (response.isSuccessful == true) {
       return RbioLoginResponse.fromJson(response.xGetMap);
     } else {
@@ -214,6 +216,27 @@ class DoctorApiServiceImpl extends DoctorApiService {
           .toList();
     } else {
       throw Exception('/getMyPatientBloodGlucose : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<ScaleTreatmentResponse> getTreatmentNoteWithDietDoctor(
+    int patientId,
+    ScaleTreatmentRequest request,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .getTreatmentNoteWithDietDoctor(patientId),
+      request.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return ScaleTreatmentResponse.fromJson(response.xGetMap);
+    } else {
+      throw Exception(
+          '/getTreatmentNoteWithDietDoctor : ${response.isSuccessful}');
     }
   }
 }

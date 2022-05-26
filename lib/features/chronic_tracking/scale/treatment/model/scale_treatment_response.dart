@@ -9,7 +9,8 @@ class ScaleTreatmentResponse with _$ScaleTreatmentResponse {
     @JsonKey(name: 'treatmentNoteList')
         List<ScaleTreatmentModel>? treatmentNoteList,
     @JsonKey(name: 'dietList') List<ScaleTreatmentDietModel>? dietList,
-    @JsonKey(name: 'doctorNoteList') bool? doctorNoteList,
+    @JsonKey(name: 'doctorNoteList')
+        List<ScaleTreatmentDoctorNoteModel>? doctorNoteList,
   }) = _ScaleTreatmentResponse;
 
   const ScaleTreatmentResponse._();
@@ -31,6 +32,21 @@ class ScaleTreatmentModel with _$ScaleTreatmentModel {
 
   factory ScaleTreatmentModel.fromJson(Map<String, dynamic> json) =>
       _$ScaleTreatmentModelFromJson(json);
+}
+
+@freezed
+class ScaleTreatmentDoctorNoteModel with _$ScaleTreatmentDoctorNoteModel {
+  const factory ScaleTreatmentDoctorNoteModel({
+    @JsonKey(name: 'treatmentNoteTitle') String? treatmentNoteTitle,
+    @JsonKey(name: 'treatmentNoteCreateDate') DateTime? treatmentNoteCreateDate,
+    @JsonKey(name: 'createdByName') String? createdByName,
+    @JsonKey(name: 'id') int? id,
+  }) = _ScaleTreatmentDoctorNoteModel;
+
+  const ScaleTreatmentDoctorNoteModel._();
+
+  factory ScaleTreatmentDoctorNoteModel.fromJson(Map<String, dynamic> json) =>
+      _$ScaleTreatmentDoctorNoteModelFromJson(json);
 }
 
 @freezed

@@ -4,28 +4,23 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../../core/core.dart';
-import '../model/scale_treatment_request.dart';
-import '../model/treatment_filter_type.dart';
+import '../../../../chronic_tracking/scale/scale.dart';
 
-part 'patient_scale_treatment_list_cubit.freezed.dart';
-part 'patient_scale_treatment_list_state.dart';
+part 'doctor_scale_treatment_list_cubit.freezed.dart';
+part 'doctor_scale_treatment_list_state.dart';
 
-class PatientScaleTreatmentListCubit
-    extends Cubit<PatientScaleTreatmentListState> {
-  PatientScaleTreatmentListCubit(this.profileStorage, this.repository)
-      : super(const PatientScaleTreatmentListState.initial()) {
-    final user = profileStorage.getFirst();
-    entegrationId = user.id;
-  }
-  late final int? entegrationId;
-  late final ProfileStorageImpl profileStorage;
-  late final ChronicTrackingRepository repository;
+class DoctorScaleTreatmentListCubit
+    extends Cubit<DoctorScaleTreatmentListState> {
+  DoctorScaleTreatmentListCubit(this.patientId, this.repository)
+      : super(const DoctorScaleTreatmentListState.initial());
+  late final int patientId;
+  late final DoctorRepository repository;
 
   FutureOr<void> fetchAll() async {
-    emit(const PatientScaleTreatmentListState.loadInProgress());
+    emit(const DoctorScaleTreatmentListState.loadInProgress());
     try {
-      final result = await repository.getTreatmentNoteWithDiet(
-        entegrationId,
+      final result = await repository.getTreatmentNoteWithDietDoctor(
+        patientId,
         ScaleTreatmentRequest(
           count: 1,
           start_Date: DateTime.now()
@@ -35,7 +30,7 @@ class PatientScaleTreatmentListCubit
         ),
       );
       emit(
-        PatientScaleTreatmentListState.success(
+        DoctorScaleTreatmentListState.success(
           ScaleTreatmentListResult(
             startCurrentDate:
                 DateTime.now().subtract(const Duration(days: 365)),
@@ -45,7 +40,7 @@ class PatientScaleTreatmentListCubit
         ),
       );
     } catch (error) {
-      emit(const PatientScaleTreatmentListState.failure());
+      emit(const DoctorScaleTreatmentListState.failure());
     }
   }
 
@@ -115,11 +110,11 @@ class PatientScaleTreatmentListCubit
             startCurrentDate: startCurrentDate,
             endCurrentDate: endCurrentDate,
           );
-          emit(PatientScaleTreatmentListState.success(stateResult));
-          final list =
-              await repository.getTreatmentNoteWithDiet(entegrationId, request);
+          emit(DoctorScaleTreatmentListState.success(stateResult));
+          final list = await repository.getTreatmentNoteWithDietDoctor(
+              patientId, request);
           emit(
-            PatientScaleTreatmentListState.success(
+            DoctorScaleTreatmentListState.success(
               stateResult.copyWith(
                 isLoading: false,
                 list: list,
@@ -127,7 +122,7 @@ class PatientScaleTreatmentListCubit
             ),
           );
         } catch (error) {
-          emit(const PatientScaleTreatmentListState.failure());
+          emit(const DoctorScaleTreatmentListState.failure());
         }
       },
     );

@@ -2,24 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/core.dart';
-import '../cubit/patient_scale_treatment_list_cubit.dart';
-import '../model/treatment_type.dart';
+import '../../../../chronic_tracking/scale/scale.dart';
+import '../cubit/doctor_scale_treatment_list_cubit.dart';
 
-class PatientScaleTreatmentListScreen extends StatelessWidget {
-  const PatientScaleTreatmentListScreen({Key? key}) : super(key: key);
+class DoctorScaleTreatmentListScreen extends StatelessWidget {
+  const DoctorScaleTreatmentListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PatientScaleTreatmentListCubit>(
+    late int patientId;
+    try {
+      patientId = int.parse(Atom.queryParameters['patientId']!);
+    } catch (_) {
+      return const RbioRouteError();
+    }
+
+    return BlocProvider<DoctorScaleTreatmentListCubit>(
       create: (context) =>
-          PatientScaleTreatmentListCubit(getIt(), getIt())..fetchAll(),
-      child: const PatientScaleTreatmentListView(),
+          DoctorScaleTreatmentListCubit(patientId, getIt())..fetchAll(),
+      child: const DoctorScaleTreatmentListView(),
     );
   }
 }
 
-class PatientScaleTreatmentListView extends StatelessWidget {
-  const PatientScaleTreatmentListView({Key? key}) : super(key: key);
+class DoctorScaleTreatmentListView extends StatelessWidget {
+  const DoctorScaleTreatmentListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +44,8 @@ class PatientScaleTreatmentListView extends StatelessWidget {
       );
 
   Widget _buildBody() {
-    return BlocBuilder<PatientScaleTreatmentListCubit,
-        PatientScaleTreatmentListState>(
+    return BlocBuilder<DoctorScaleTreatmentListCubit,
+        DoctorScaleTreatmentListState>(
       builder: (context, state) {
         return state.when(
           initial: () => const SizedBox(),
@@ -63,14 +70,14 @@ class PatientScaleTreatmentListView extends StatelessWidget {
         RbioDetailSearchComponent(
           result: result,
           onStartDateChange: (date) {
-            context.read<PatientScaleTreatmentListCubit>().setStartDate(date);
+            context.read<DoctorScaleTreatmentListCubit>().setStartDate(date);
           },
           onEndDateChange: (date) {
-            context.read<PatientScaleTreatmentListCubit>().setEndDate(date);
+            context.read<DoctorScaleTreatmentListCubit>().setEndDate(date);
           },
           onTypeChange: (value) {
             context
-                .read<PatientScaleTreatmentListCubit>()
+                .read<DoctorScaleTreatmentListCubit>()
                 .filterTypeChange(value);
           },
         ),
@@ -88,27 +95,19 @@ class PatientScaleTreatmentListView extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   itemCount: result.list.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return RbioTreatmentCard.createdBy(
-                      item: result.list[index],
-                      onTap: () {
-                        if (result.list[index].type == TreatmentType.diet) {
-                          Atom.to(
-                            PagePaths.patientScaleDietDetail,
-                            queryParameters: {
-                              'itemId': result.list[index].id.toString(),
-                            },
-                          );
-                        } else if (result.list[index].type ==
-                            TreatmentType.treatmentNote) {
-                          Atom.to(
-                            PagePaths.patientScaleTreatmentDetail,
-                            queryParameters: {
-                              'itemId': result.list[index].id.toString(),
-                            },
-                          );
-                        }
-                      },
-                    );
+                    final item = result.list[index];
+
+                    if (item.type == TreatmentType.treatmentNote) {
+                      return RbioTreatmentCard.createdBy(
+                        item: result.list[index],
+                        onTap: () {},
+                      );
+                    } else {
+                      return RbioTreatmentCard.title(
+                        item: result.list[index],
+                        onTap: () {},
+                      );
+                    }
                   },
                 ),
         ),

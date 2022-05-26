@@ -16,7 +16,10 @@ _$_ScaleTreatmentResponse _$$_ScaleTreatmentResponseFromJson(
           ?.map((e) =>
               ScaleTreatmentDietModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      doctorNoteList: json['doctorNoteList'] as bool?,
+      doctorNoteList: (json['doctorNoteList'] as List<dynamic>?)
+          ?.map((e) =>
+              ScaleTreatmentDoctorNoteModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_ScaleTreatmentResponseToJson(
@@ -40,6 +43,27 @@ _$_ScaleTreatmentModel _$$_ScaleTreatmentModelFromJson(
 
 Map<String, dynamic> _$$_ScaleTreatmentModelToJson(
         _$_ScaleTreatmentModel instance) =>
+    <String, dynamic>{
+      'treatmentNoteTitle': instance.treatmentNoteTitle,
+      'treatmentNoteCreateDate':
+          instance.treatmentNoteCreateDate?.toIso8601String(),
+      'createdByName': instance.createdByName,
+      'id': instance.id,
+    };
+
+_$_ScaleTreatmentDoctorNoteModel _$$_ScaleTreatmentDoctorNoteModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_ScaleTreatmentDoctorNoteModel(
+      treatmentNoteTitle: json['treatmentNoteTitle'] as String?,
+      treatmentNoteCreateDate: json['treatmentNoteCreateDate'] == null
+          ? null
+          : DateTime.parse(json['treatmentNoteCreateDate'] as String),
+      createdByName: json['createdByName'] as String?,
+      id: json['id'] as int?,
+    );
+
+Map<String, dynamic> _$$_ScaleTreatmentDoctorNoteModelToJson(
+        _$_ScaleTreatmentDoctorNoteModel instance) =>
     <String, dynamic>{
       'treatmentNoteTitle': instance.treatmentNoteTitle,
       'treatmentNoteCreateDate':

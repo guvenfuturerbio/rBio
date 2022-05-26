@@ -8779,6 +8779,26 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Title`
+  String get title {
+    return Intl.message(
+      'Title',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Doctor Note`
+  String get doctor_note {
+    return Intl.message(
+      'Doctor Note',
+      name: 'doctor_note',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
