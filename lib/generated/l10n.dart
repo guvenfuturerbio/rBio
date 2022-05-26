@@ -420,10 +420,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Doctor`
+  /// `Specialist`
   String get hint_doctor {
     return Intl.message(
-      'Doctor',
+      'Specialist',
       name: 'hint_doctor',
       desc: '',
       args: [],
@@ -640,10 +640,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Doctor's Profile`
+  /// `Specialist's Profile`
   String get title_doctors_profiles {
     return Intl.message(
-      'Doctor\'s Profile',
+      'Specialist\'s Profile',
       name: 'title_doctors_profiles',
       desc: '',
       args: [],
@@ -1530,10 +1530,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Doctor, Hospital, Department`
+  /// `Specialist, Hospital, Department`
   String get search_hint {
     return Intl.message(
-      'Doctor, Hospital, Department',
+      'Specialist, Hospital, Department',
       name: 'search_hint',
       desc: '',
       args: [],
@@ -3070,10 +3070,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Are you satisfied with your doctor ?`
+  /// `Are you satisfied with your specialist ?`
   String get how_video_doctor {
     return Intl.message(
-      'Are you satisfied with your doctor ?',
+      'Are you satisfied with your specialist ?',
       name: 'how_video_doctor',
       desc: '',
       args: [],
@@ -3330,10 +3330,10 @@ class LocaleProvider {
     );
   }
 
-  /// `No suitable appointment was found for this doctor. To contact us, please call us.`
+  /// `No suitable appointment was found for this specialist. To contact us, please call us.`
   String get appo_suitability {
     return Intl.message(
-      'No suitable appointment was found for this doctor. To contact us, please call us.',
+      'No suitable appointment was found for this specialist. To contact us, please call us.',
       name: 'appo_suitability',
       desc: '',
       args: [],
@@ -3370,10 +3370,10 @@ class LocaleProvider {
     );
   }
 
-  /// `You may already have an appointment with the doctor you want to make an appointment with,`
+  /// `You may already have an appointment with the specialist you want to make an appointment with,`
   String get detailed_error_dialog_part2 {
     return Intl.message(
-      'You may already have an appointment with the doctor you want to make an appointment with,',
+      'You may already have an appointment with the specialist you want to make an appointment with,',
       name: 'detailed_error_dialog_part2',
       desc: '',
       args: [],
@@ -3700,10 +3700,10 @@ class LocaleProvider {
     );
   }
 
-  /// `You have chosen a critical symptom, you need to see a doctor urgently!`
+  /// `You have chosen a critical symptom, you need to see a specialist urgently!`
   String get emergency {
     return Intl.message(
-      'You have chosen a critical symptom, you need to see a doctor urgently!',
+      'You have chosen a critical symptom, you need to see a specialist urgently!',
       name: 'emergency',
       desc: '',
       args: [],
@@ -3900,10 +3900,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Doctor Name :`
+  /// `Specialist Name :`
   String get doctor_name {
     return Intl.message(
-      'Doctor Name :',
+      'Specialist Name :',
       name: 'doctor_name',
       desc: '',
       args: [],
@@ -3960,20 +3960,20 @@ class LocaleProvider {
     );
   }
 
-  /// `Doctor selection :`
+  /// `Specialist selection :`
   String get doctor_selection {
     return Intl.message(
-      'Doctor selection :',
+      'Specialist selection :',
       name: 'doctor_selection',
       desc: '',
       args: [],
     );
   }
 
-  /// `Please select doctor`
+  /// `Please select specialist`
   String get pls_select_doctor {
     return Intl.message(
-      'Please select doctor',
+      'Please select specialist',
       name: 'pls_select_doctor',
       desc: '',
       args: [],
@@ -4800,10 +4800,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Doctor`
+  /// `Specialist`
   String get doctor {
     return Intl.message(
-      'Doctor',
+      'Specialist',
       name: 'doctor',
       desc: '',
       args: [],
@@ -5300,10 +5300,10 @@ class LocaleProvider {
     );
   }
 
-  /// `The doctor you made your last appointment with`
+  /// `The specialist you made your last appointment with`
   String get last_appointment_doctor {
     return Intl.message(
-      'The doctor you made your last appointment with',
+      'The specialist you made your last appointment with',
       name: 'last_appointment_doctor',
       desc: '',
       args: [],
@@ -6730,10 +6730,10 @@ class LocaleProvider {
     );
   }
 
-  /// `The doctor you chose`
+  /// `The specialist you chose`
   String get the_doctor_u_chose {
     return Intl.message(
-      'The doctor you chose',
+      'The specialist you chose',
       name: 'the_doctor_u_chose',
       desc: '',
       args: [],
