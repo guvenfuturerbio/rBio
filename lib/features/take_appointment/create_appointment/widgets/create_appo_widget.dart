@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
 import '../viewmodel/create_appointment_vm.dart';
 
 Widget createAppoWidget({
