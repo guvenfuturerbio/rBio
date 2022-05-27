@@ -855,5 +855,6 @@
   "twofa": "İki Faktörlü Kimlik Doğrulama",
   "resend": "Tekrar Gönder",
   "validation": "Bu alan boş bırakılamaz",
-  "code_sent": "Girmiş olduğunuz telefon numarasına ve e posta adresine doğrulama kodu gönderilmiştir."
+  "code_sent": "Girmiş olduğunuz telefon numarasına ve e posta adresine doğrulama kodu gönderilmiştir.",
+  "empty_cv": "Uzman CV'si bulunamadı."
 }

@@ -453,6 +453,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "emergency": MessageLookupByLibrary.simpleMessage(
             "Kritik öneme sahip bir semptom seçtiniz, acilen uzmana görünmeniz gerekiyor!"),
         "emergency_lbl": MessageLookupByLibrary.simpleMessage("Acil Uyarı"),
+        "empty_cv":
+            MessageLookupByLibrary.simpleMessage("Uzman CV\'si bulunamadı."),
         "end": MessageLookupByLibrary.simpleMessage("Bitiş"),
         "end_angle": MessageLookupByLibrary.simpleMessage("Bitiş Açısı"),
         "end_time": MessageLookupByLibrary.simpleMessage("End Time"),

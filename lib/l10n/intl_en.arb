@@ -861,5 +861,6 @@
   "twofa": "Two-Factor Authentication (2FA)",
   "resend": "Resend",
   "validation": "This field cannot be left blank",
-  "code_sent": "A verification code has sent to the phone number and e-mail address you entered."
+  "code_sent": "A verification code has sent to the phone number and e-mail address you entered.",
+  "empty_cv": "Specialist's CV can not be found."
 }
