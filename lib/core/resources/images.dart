@@ -97,6 +97,7 @@ class _Images {
   final photo = 'assets/images/photo_icon.svg';
   final profileAvatar = "assets/images/profile_avatar.svg";
   final profile = 'assets/images/profile_icon.svg';
+  final cv = 'assets/images/cv_icon.svg';
   final qr = 'assets/images/qr_icon.svg';
   final hospitalResultsRed = "assets/images/result_hospital.png";
   final results = 'assets/images/results_icon.svg';

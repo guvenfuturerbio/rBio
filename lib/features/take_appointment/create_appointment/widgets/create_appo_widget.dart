@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -81,39 +82,42 @@ Widget _buildDropdown(
                         : value.title,
                     style: context.xHeadline5,
                   ),
-                  IconButton(
-                      onPressed: () {
-                        int? index = itemList.indexOf(value);
-                        if (whichField == Fields.doctors) {
-                          Atom.to(PagePaths.doctorCv, queryParameters: {
-                            'tenantId': val.filterResourceResponse?[index]
-                                    .tenants?[0].id
-                                    .toString() ??
-                                '',
-                            'doctorNameNoTitle': val
-                                    .filterResourceResponse?[index].title
-                                    .toString() ??
-                                '',
-                            'departmentId': val.filterResourceResponse?[index]
-                                    .departments?[0].id
-                                    .toString() ??
-                                '',
-                            'resourceId': val.filterResourceResponse?[index].id
-                                    .toString() ??
-                                '',
-                            'doctorName': val
-                                    .filterResourceResponse?[index].title
-                                    .toString() ??
-                                '',
-                            'departmentName': val.filterResourceResponse?[index]
-                                    .departments?[0].title ??
-                                ''
-                          });
-                        }
-                      },
-                      icon: Icon(whichField == Fields.doctors
-                          ? Icons.remove_red_eye_sharp
-                          : null))
+                  GestureDetector(
+                    onTap: () {
+                      int? index = itemList.indexOf(value);
+                      if (whichField == Fields.doctors) {
+                        Atom.to(PagePaths.doctorCv, queryParameters: {
+                          'tenantId': val
+                                  .filterResourceResponse?[index].tenants?[0].id
+                                  .toString() ??
+                              '',
+                          'doctorNameNoTitle': val
+                                  .filterResourceResponse?[index].title
+                                  .toString() ??
+                              '',
+                          'departmentId': val.filterResourceResponse?[index]
+                                  .departments?[0].id
+                                  .toString() ??
+                              '',
+                          'resourceId': val.filterResourceResponse?[index].id
+                                  .toString() ??
+                              '',
+                          'doctorName': val.filterResourceResponse?[index].title
+                                  .toString() ??
+                              '',
+                          'departmentName': val.filterResourceResponse?[index]
+                                  .departments?[0].title ??
+                              ''
+                        });
+                      }
+                    },
+                    child: SvgPicture.asset(
+                      whichField == Fields.doctors
+                          ? R.image.cv
+                          : null.toString(),
+                      width: R.sizes.iconSize3,
+                    ),
+                  )
                 ],
               ),
             );
