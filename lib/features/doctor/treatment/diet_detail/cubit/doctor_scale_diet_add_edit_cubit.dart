@@ -7,27 +7,35 @@ import '../../../../../core/core.dart';
 import '../../../../chronic_tracking/scale/scale.dart';
 import '../model/doctor_diet_list_add_request.dart';
 
-part 'doctor_scale_diet_detail_state.dart';
-part 'doctor_scale_diet_detail_cubit.freezed.dart';
+part 'doctor_scale_diet_add_edit_state.dart';
+part 'doctor_scale_diet_add_edit_cubit.freezed.dart';
 
-class DoctorScaleDietDetailCubit extends Cubit<DoctorScaleDietDetailState> {
-  DoctorScaleDietDetailCubit(this.patientId, this.itemId, this.repository)
-      : super(const DoctorScaleDietDetailState.initial());
-  late final int itemId;
+class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
+  DoctorScaleDietAddEditCubit(this.patientId, this.itemId, this.repository)
+      : super(const DoctorScaleDietAddEditState.initial());
+  late final int? itemId;
   late final int patientId;
   late final DoctorRepository repository;
 
-  FutureOr<void> fetchAll() async {
-    emit(const DoctorScaleDietDetailState.loadInProgress());
-    try {
-      final response = await repository.treatmentDietGetDetail(itemId);
+  FutureOr<void> setInitState() async {
+    emit(const DoctorScaleDietAddEditState.loadInProgress());
+    if (itemId == null) {
       emit(
-        DoctorScaleDietDetailState.success(
-          DoctorScaleDietDetailResult(response: response),
+        DoctorScaleDietAddEditState.success(
+          DoctorScaleDietAddEditResult(isCreated: true),
         ),
       );
-    } catch (error) {
-      emit(const DoctorScaleDietDetailState.failure());
+    } else {
+      try {
+        final response = await repository.treatmentDietGetDetail(itemId!);
+        emit(
+          DoctorScaleDietAddEditState.success(
+            DoctorScaleDietAddEditResult(response: response),
+          ),
+        );
+      } catch (error) {
+        emit(const DoctorScaleDietAddEditState.failure());
+      }
     }
   }
 
@@ -36,7 +44,7 @@ class DoctorScaleDietDetailCubit extends Cubit<DoctorScaleDietDetailState> {
     currentState.whenOrNull(
       success: (result) {
         emit(
-          DoctorScaleDietDetailState.success(
+          DoctorScaleDietAddEditState.success(
             result.copyWith(
               screenMode: ScaleTreatmentScreenMode.update,
             ),
@@ -57,7 +65,7 @@ class DoctorScaleDietDetailCubit extends Cubit<DoctorScaleDietDetailState> {
     await currentState.whenOrNull(
       success: (result) async {
         emit(
-          DoctorScaleDietDetailState.success(
+          DoctorScaleDietAddEditState.success(
             result.copyWith(isLoading: true),
           ),
         );
@@ -72,9 +80,9 @@ class DoctorScaleDietDetailCubit extends Cubit<DoctorScaleDietDetailState> {
               dinner: dinner,
             ),
           );
-          emit(const DoctorScaleDietDetailState.openListScreen());
+          emit(const DoctorScaleDietAddEditState.openListScreen());
         } catch (error) {
-          emit(const DoctorScaleDietDetailState.failure());
+          emit(const DoctorScaleDietAddEditState.failure());
         }
       },
     );
@@ -85,15 +93,15 @@ class DoctorScaleDietDetailCubit extends Cubit<DoctorScaleDietDetailState> {
     await currentState.whenOrNull(
       success: (result) async {
         emit(
-          DoctorScaleDietDetailState.success(
+          DoctorScaleDietAddEditState.success(
             result.copyWith(isLoading: true),
           ),
         );
         try {
-          await repository.deleteNoteDiet(TreatmentItemType.diet, itemId);
-          emit(const DoctorScaleDietDetailState.openListScreen());
+          await repository.deleteNoteDiet(TreatmentItemType.diet, itemId!);
+          emit(const DoctorScaleDietAddEditState.openListScreen());
         } catch (error) {
-          emit(const DoctorScaleDietDetailState.failure());
+          emit(const DoctorScaleDietAddEditState.failure());
         }
       },
     );

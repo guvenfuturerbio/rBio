@@ -21,7 +21,7 @@ import '../../features/doctor/patient_detail/blood_pressure/blood_pressure.dart'
 import '../../features/doctor/patient_detail/scale/view/scale_patient_detail_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
-import '../../features/doctor/treatment/diet_detail/view/doctor_scale_diet_detail_screen.dart';
+import '../../features/doctor/treatment/diet_detail/view/doctor_scale_diet_add_edit_screen.dart';
 import '../../features/doctor/treatment/treatment_list/view/doctor_scale_treatment_list_screen.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../features/mediminder/mediminder.dart';
@@ -266,8 +266,8 @@ class VRouterRoutes {
                   widget: const DoctorScaleTreatmentListScreen(),
                 ),
                 VWidget(
-                  path: PagePaths.doctorScaleDietDetail,
-                  widget: const DoctorScaleDietDetailScreen(),
+                  path: PagePaths.doctorScaleDietAddEdit,
+                  widget: const DoctorScaleDietAddEditScreen(),
                 ),
               ],
             ),
@@ -671,7 +671,7 @@ class PagePaths {
   static const doctorCosultation = '/doctor-consultation';
 
   static const doctorScaleTreatmentList = '/doctor-scale-treatment-list';
-  static const doctorScaleDietDetail = '/doctor-scale-diet-detail';
+  static const doctorScaleDietAddEdit = '/doctor-scale-diet-add-edit';
   // #endregion
 
   // #region Mediminder

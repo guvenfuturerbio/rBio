@@ -113,9 +113,9 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
                         onTap: () {
                           if (result.list[index].type == TreatmentType.diet) {
                             Atom.to(
-                              PagePaths.doctorScaleDietDetail,
+                              PagePaths.doctorScaleDietAddEdit,
                               queryParameters: {
-                                'itemId': result.list[index].id.toString(),
+                                // 'itemId': result.list[index].id.toString(),
                                 'patientId': patientId.toString(),
                               },
                             );

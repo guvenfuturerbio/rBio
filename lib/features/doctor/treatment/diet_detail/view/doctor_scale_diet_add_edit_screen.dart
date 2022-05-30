@@ -5,33 +5,36 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../chronic_tracking/scale/scale.dart';
-import '../cubit/doctor_scale_diet_detail_cubit.dart';
+import '../cubit/doctor_scale_diet_add_edit_cubit.dart';
 
-class DoctorScaleDietDetailScreen extends StatelessWidget {
-  const DoctorScaleDietDetailScreen({Key? key}) : super(key: key);
+class DoctorScaleDietAddEditScreen extends StatelessWidget {
+  const DoctorScaleDietAddEditScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    late int itemId;
+    int? itemId;
     late int patientId;
 
     try {
-      itemId = int.parse(Atom.queryParameters['itemId']!);
+      final routeParam = Atom.queryParameters['itemId'];
+      if (routeParam != null) {
+        itemId = int.tryParse(routeParam);
+      }
       patientId = int.parse(Atom.queryParameters['patientId']!);
     } catch (_) {
       return const RbioRouteError();
     }
 
-    return BlocProvider<DoctorScaleDietDetailCubit>(
-      create: (context) => DoctorScaleDietDetailCubit(
+    return BlocProvider<DoctorScaleDietAddEditCubit>(
+      create: (context) => DoctorScaleDietAddEditCubit(
         patientId,
         itemId,
         getIt(),
-      )..fetchAll(),
+      )..setInitState(),
       child: Builder(
         builder: (context) {
-          return BlocListener<DoctorScaleDietDetailCubit,
-              DoctorScaleDietDetailState>(
+          return BlocListener<DoctorScaleDietAddEditCubit,
+              DoctorScaleDietAddEditState>(
             listener: (context, state) {
               state.whenOrNull(
                 openListScreen: () {
@@ -39,7 +42,7 @@ class DoctorScaleDietDetailScreen extends StatelessWidget {
                 },
               );
             },
-            child: const DoctorScaleDietDetailView(),
+            child: const DoctorScaleDietAddEditView(),
           );
         },
       ),
@@ -47,15 +50,16 @@ class DoctorScaleDietDetailScreen extends StatelessWidget {
   }
 }
 
-class DoctorScaleDietDetailView extends StatefulWidget {
-  const DoctorScaleDietDetailView({Key? key}) : super(key: key);
+class DoctorScaleDietAddEditView extends StatefulWidget {
+  const DoctorScaleDietAddEditView({Key? key}) : super(key: key);
 
   @override
-  State<DoctorScaleDietDetailView> createState() =>
-      _DoctorScaleDietDetailViewState();
+  State<DoctorScaleDietAddEditView> createState() =>
+      _DoctorScaleDietAddEditViewState();
 }
 
-class _DoctorScaleDietDetailViewState extends State<DoctorScaleDietDetailView> {
+class _DoctorScaleDietAddEditViewState
+    extends State<DoctorScaleDietAddEditView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late TextEditingController _titleEditingController;
@@ -103,18 +107,22 @@ class _DoctorScaleDietDetailViewState extends State<DoctorScaleDietDetailView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DoctorScaleDietDetailCubit, DoctorScaleDietDetailState>(
+    return BlocConsumer<DoctorScaleDietAddEditCubit,
+        DoctorScaleDietAddEditState>(
       listener: (context, state) {
         state.whenOrNull(
           success: (result) {
             if (!result.isLoading) {
-              _titleEditingController.text = result.response.dietTitle ?? '';
-              _breakfastEditingController.text =
-                  result.response.dietBreakfast ?? '';
-              _refreshmentEditingController.text =
-                  result.response.dietRefreshment ?? '';
-              _lunchEditingController.text = result.response.dietLunch ?? '';
-              _dinnerEditingController.text = result.response.dietDinner ?? '';
+              if (!result.isCreated && result.response != null) {
+                _titleEditingController.text = result.response!.dietTitle ?? '';
+                _breakfastEditingController.text =
+                    result.response!.dietBreakfast ?? '';
+                _refreshmentEditingController.text =
+                    result.response!.dietRefreshment ?? '';
+                _lunchEditingController.text = result.response!.dietLunch ?? '';
+                _dinnerEditingController.text =
+                    result.response!.dietDinner ?? '';
+              }
             }
           },
         );
@@ -136,7 +144,7 @@ class _DoctorScaleDietDetailViewState extends State<DoctorScaleDietDetailView> {
     );
   }
 
-  RbioAppBar _buildAppBar(DoctorScaleDietDetailState state) => RbioAppBar(
+  RbioAppBar _buildAppBar(DoctorScaleDietAddEditState state) => RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
           state.whenOrNull(
@@ -146,7 +154,7 @@ class _DoctorScaleDietDetailViewState extends State<DoctorScaleDietDetailView> {
         ),
       );
 
-  Widget _buildBody(DoctorScaleDietDetailState state) {
+  Widget _buildBody(DoctorScaleDietAddEditState state) {
     return state.whenOrNull(
           initial: () => const SizedBox(),
           loadInProgress: () => const RbioLoading(),
@@ -158,7 +166,7 @@ class _DoctorScaleDietDetailViewState extends State<DoctorScaleDietDetailView> {
 
   Widget _buildSuccess(
     BuildContext context,
-    DoctorScaleDietDetailResult result,
+    DoctorScaleDietAddEditResult result,
   ) {
     return Form(
       key: _formKey,
@@ -315,7 +323,7 @@ class _DoctorScaleDietDetailViewState extends State<DoctorScaleDietDetailView> {
   }
 
   Widget _buildTextFormField(
-    DoctorScaleDietDetailResult result,
+    DoctorScaleDietAddEditResult result,
     FocusNode focusNode,
     TextEditingController controller,
     String imagePath,
@@ -361,97 +369,103 @@ class _DoctorScaleDietDetailViewState extends State<DoctorScaleDietDetailView> {
   }
 
   List<Widget> _buildBottomButtons(
-    DoctorScaleDietDetailResult result,
+    DoctorScaleDietAddEditResult result,
     bool isKeyboardVisible,
   ) {
     if (isKeyboardVisible) return [];
 
-    return result.screenMode == ScaleTreatmentScreenMode.readOnly
-        ? [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //
-                Expanded(
-                  child: RbioElevatedButton(
-                    infinityWidth: true,
-                    title: LocaleProvider.current.update,
-                    onTap: () {
-                      context
-                          .read<DoctorScaleDietDetailCubit>()
-                          .changeScreenMode();
-                    },
+    if (result.isCreated) {
+      return [];
+    } else {
+      return result.screenMode == ScaleTreatmentScreenMode.readOnly
+          ? [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  Expanded(
+                    child: RbioElevatedButton(
+                      infinityWidth: true,
+                      title: LocaleProvider.current.update,
+                      onTap: () {
+                        context
+                            .read<DoctorScaleDietAddEditCubit>()
+                            .changeScreenMode();
+                      },
+                    ),
                   ),
-                ),
 
-                //
-                R.sizes.wSizer8,
+                  //
+                  R.sizes.wSizer8,
 
-                //
-                Expanded(
-                  child: RbioRedButton(
-                    infinityWidth: true,
-                    title: LocaleProvider.current.delete,
-                    onTap: () {
-                      Atom.show(
-                        RbioDeleteConfirmationDialog(
-                          description:
-                              LocaleProvider.of(context).delete_diet_list,
-                          deleteConfirm: () {
-                            context
-                                .read<DoctorScaleDietDetailCubit>()
-                                .deleteDietList();
-                          },
-                        ),
-                      );
-                    },
+                  //
+                  Expanded(
+                    child: RbioRedButton(
+                      infinityWidth: true,
+                      title: LocaleProvider.current.delete,
+                      onTap: () {
+                        Atom.show(
+                          RbioDeleteConfirmationDialog(
+                            description:
+                                LocaleProvider.of(context).delete_diet_list,
+                            deleteConfirm: () {
+                              context
+                                  .read<DoctorScaleDietAddEditCubit>()
+                                  .deleteDietList();
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ]
-        : [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //
-                Expanded(
-                  child: RbioElevatedButton(
-                    title: LocaleProvider.current.save,
-                    onTap: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        context.read<DoctorScaleDietDetailCubit>().saveDietList(
-                              title: _titleEditingController.text.trim(),
-                              breakfast:
-                                  _breakfastEditingController.text.trim(),
-                              refreshment:
-                                  _refreshmentEditingController.text.trim(),
-                              lunch: _lunchEditingController.text.trim(),
-                              dinner: _dinnerEditingController.text.trim(),
-                            );
-                      }
-                    },
+                ],
+              ),
+            ]
+          : [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  Expanded(
+                    child: RbioElevatedButton(
+                      title: LocaleProvider.current.save,
+                      onTap: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          context
+                              .read<DoctorScaleDietAddEditCubit>()
+                              .saveDietList(
+                                title: _titleEditingController.text.trim(),
+                                breakfast:
+                                    _breakfastEditingController.text.trim(),
+                                refreshment:
+                                    _refreshmentEditingController.text.trim(),
+                                lunch: _lunchEditingController.text.trim(),
+                                dinner: _dinnerEditingController.text.trim(),
+                              );
+                        }
+                      },
+                    ),
                   ),
-                ),
 
-                //
-                R.sizes.wSizer8,
+                  //
+                  R.sizes.wSizer8,
 
-                //
-                Expanded(
-                  child: RbioWhiteButton(
-                    title: LocaleProvider.current.btn_cancel,
-                    onTap: () {
-                      Atom.historyBack();
-                    },
+                  //
+                  Expanded(
+                    child: RbioWhiteButton(
+                      title: LocaleProvider.current.btn_cancel,
+                      onTap: () {
+                        Atom.historyBack();
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ];
+                ],
+              ),
+            ];
+    }
   }
 }
