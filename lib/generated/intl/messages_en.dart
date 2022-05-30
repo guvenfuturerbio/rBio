@@ -344,6 +344,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "day": MessageLookupByLibrary.simpleMessage("Day"),
         "days": MessageLookupByLibrary.simpleMessage("Days"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "delete_diet_list": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete the diet list?"),
         "delete_file_question": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this file ?"),
         "delete_measurement_succesfull":
@@ -1317,6 +1319,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unsupported_language":
             MessageLookupByLibrary.simpleMessage("Unsupported Language"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
+        "update_diet_list":
+            MessageLookupByLibrary.simpleMessage("Update Diet List"),
         "update_information":
             MessageLookupByLibrary.simpleMessage("Update Information"),
         "update_now": MessageLookupByLibrary.simpleMessage("Update Now"),

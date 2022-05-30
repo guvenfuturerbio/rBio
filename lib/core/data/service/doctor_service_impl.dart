@@ -239,4 +239,56 @@ class DoctorApiServiceImpl extends DoctorApiService {
           '/getTreatmentNoteWithDietDoctor : ${response.isSuccessful}');
     }
   }
+
+  @override
+  Future<GuvenResponseModel> treatmentGetDetail(int id) async {
+    final response = await helper.getGuven(
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .treatmentGetDetail(TreatmentItemType.diet.xGetRawValue, id),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/treatmentGetDetail : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> treatmentAddDiet(
+    int patientId,
+    DoctorDietListAddRequest model,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>().endpoints.devApi.addDiet(patientId),
+      model.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/treatmentAddDiet : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> deleteNoteDiet(
+    TreatmentItemType type,
+    int id,
+  ) async {
+    final response = await helper.deleteGuven(
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .deleteNoteDiet(type.xGetRawValue, id),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/deleteNoteDiet : ${response.isSuccessful}');
+    }
+  }
 }

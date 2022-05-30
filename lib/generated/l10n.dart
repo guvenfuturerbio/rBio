@@ -8700,6 +8700,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Update Diet List`
+  String get update_diet_list {
+    return Intl.message(
+      'Update Diet List',
+      name: 'update_diet_list',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `This field cannot be left blank`
   String get validation {
     return Intl.message(
@@ -8795,6 +8805,16 @@ class LocaleProvider {
     return Intl.message(
       'Doctor Note',
       name: 'doctor_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete the diet list?`
+  String get delete_diet_list {
+    return Intl.message(
+      'Are you sure you want to delete the diet list?',
+      name: 'delete_diet_list',
       desc: '',
       args: [],
     );

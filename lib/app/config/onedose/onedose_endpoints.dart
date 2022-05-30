@@ -240,6 +240,13 @@ class OneDoseDevApiEndpoints extends DevApiEndpoints {
   @override
   String addTreatmentNote(int? entegrationId) =>
       '/Treatment/add-treatment-note/$entegrationId'.xDevApiTest;
+
+  @override
+  String addDiet(int patientId) => '/Treatment/add-diet/$patientId'.xDevApiTest;
+
+  @override
+  String deleteNoteDiet(int itemType, int id) =>
+      '/Treatment/delete-note-diet/$itemType/$id'.xDevApiTest;
 }
 
 class OneDoseBaseEndpoints extends BaseEndpoints {

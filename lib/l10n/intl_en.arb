@@ -865,6 +865,7 @@
   "past_treatments": "Past Treatments",
   "current_treatments": "Current Treatments",
   "diet_list": "Diet List",
+  "update_diet_list": "Update Diet List",
   "validation": "This field cannot be left blank",
   "code_sent": "A verification code has sent to the phone number and e-mail address you entered.",
   "breakfast": "Breakfast",
@@ -874,5 +875,6 @@
   "treatment_note": "Treatment Note",
   "update_treatment_note": "Update Treatment Note",
   "title": "Title",
-  "doctor_note": "Doctor Note"
+  "doctor_note": "Doctor Note",
+  "delete_diet_list": "Are you sure you want to delete the diet list?"
 }

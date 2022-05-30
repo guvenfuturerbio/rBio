@@ -143,9 +143,53 @@ class GuvenAlert extends StatelessWidget {
     void Function() onPressed, {
     EdgeInsetsGeometry? padding,
   }) {
+    return _actionButton(
+      title,
+      getIt<IAppConfig>().theme.mainColor,
+      getIt<IAppConfig>().theme.textColor,
+      onPressed,
+      padding: padding,
+    );
+  }
+
+  static Widget buildMaterialRedAction(
+    String title,
+    void Function() onPressed, {
+    EdgeInsetsGeometry? padding,
+  }) {
+    return _actionButton(
+      title,
+      getIt<IAppConfig>().theme.darkRed,
+      getIt<IAppConfig>().theme.textColor,
+      onPressed,
+      padding: padding,
+    );
+  }
+
+  static Widget buildMaterialWhiteAction(
+    String title,
+    void Function() onPressed, {
+    EdgeInsetsGeometry? padding,
+  }) {
+    return _actionButton(
+      title,
+      getIt<IAppConfig>().theme.cardBackgroundColor,
+      getIt<IAppConfig>().theme.textColorSecondary,
+      onPressed,
+      padding: padding,
+    );
+  }
+
+  static Widget _actionButton(
+    String title,
+    Color backColor,
+    Color textColor,
+    void Function() onPressed, {
+    EdgeInsetsGeometry? padding,
+  }) {
     return Container(
       decoration: BoxDecoration(
-        gradient: appGradient(),
+        color: backColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: RbioTextButton(
@@ -158,7 +202,7 @@ class GuvenAlert extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 18,
-            color: getIt<IAppConfig>().theme.textColor,
+            color: textColor,
           ),
         ),
         onPressed: onPressed,

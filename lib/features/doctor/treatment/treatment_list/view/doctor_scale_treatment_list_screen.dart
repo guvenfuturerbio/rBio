@@ -20,13 +20,18 @@ class DoctorScaleTreatmentListScreen extends StatelessWidget {
     return BlocProvider<DoctorScaleTreatmentListCubit>(
       create: (context) =>
           DoctorScaleTreatmentListCubit(patientId, getIt())..fetchAll(),
-      child: const DoctorScaleTreatmentListView(),
+      child: DoctorScaleTreatmentListView(patientId: patientId),
     );
   }
 }
 
 class DoctorScaleTreatmentListView extends StatelessWidget {
-  const DoctorScaleTreatmentListView({Key? key}) : super(key: key);
+  final int patientId;
+
+  const DoctorScaleTreatmentListView({
+    Key? key,
+    required this.patientId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +110,20 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
                     } else {
                       return RbioTreatmentCard.title(
                         item: result.list[index],
-                        onTap: () {},
+                        onTap: () {
+                          if (result.list[index].type == TreatmentType.diet) {
+                            Atom.to(
+                              PagePaths.doctorScaleDietDetail,
+                              queryParameters: {
+                                'itemId': result.list[index].id.toString(),
+                                'patientId': patientId.toString(),
+                              },
+                            );
+                          } else if (result.list[index].type ==
+                              TreatmentType.treatmentNote) {
+                            //
+                          }
+                        },
                       );
                     }
                   },

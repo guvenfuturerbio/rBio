@@ -75,6 +75,8 @@ abstract class DevApiEndpoints {
   String getTreatmentNoteWithDietDoctor(int patientId);
   String treatmentGetDetail(int itemType, int id);
   String addTreatmentNote(int? entegrationId);
+  String addDiet(int patientId);
+  String deleteNoteDiet(int itemType, int id);
 }
 
 abstract class SearchEndpoints {

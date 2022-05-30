@@ -336,6 +336,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "day": MessageLookupByLibrary.simpleMessage("Gün"),
         "days": MessageLookupByLibrary.simpleMessage("Günler"),
         "delete": MessageLookupByLibrary.simpleMessage("Sil"),
+        "delete_diet_list": MessageLookupByLibrary.simpleMessage(
+            "Diyet listesini silmek istediğinizden emin misiniz?"),
         "delete_file_question": MessageLookupByLibrary.simpleMessage(
             "Dosyayı silmek istediğinize emin misiniz ?"),
         "delete_measurement_succesfull":
@@ -1305,6 +1307,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unsupported_language":
             MessageLookupByLibrary.simpleMessage("Desteklenmeyen Dil"),
         "update": MessageLookupByLibrary.simpleMessage("Güncelle"),
+        "update_diet_list":
+            MessageLookupByLibrary.simpleMessage("Diyet Listesi Güncelle"),
         "update_information":
             MessageLookupByLibrary.simpleMessage("Bilgilerini Güncelle"),
         "update_now": MessageLookupByLibrary.simpleMessage("Şimdi Güncelle"),

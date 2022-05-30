@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 import '../../../features/chronic_tracking/scale/scale.dart';
+import '../../../features/doctor/treatment/diet_detail/model/doctor_diet_list_add_request.dart';
 import '../../../model/model.dart';
 import '../../core.dart';
 import 'model/patient_scale_measurement.dart';
@@ -37,5 +38,15 @@ abstract class DoctorApiService {
   Future<ScaleTreatmentResponse> getTreatmentNoteWithDietDoctor(
     int patientId,
     ScaleTreatmentRequest request,
+  );
+
+  Future<GuvenResponseModel> treatmentGetDetail(int id);
+  Future<GuvenResponseModel> treatmentAddDiet(
+    int patientId,
+    DoctorDietListAddRequest model,
+  );
+  Future<GuvenResponseModel> deleteNoteDiet(
+    TreatmentItemType type,
+    int id,
   );
 }

@@ -1,4 +1,5 @@
 import '../../../features/chronic_tracking/scale/scale.dart';
+import '../../../features/doctor/treatment/diet_detail/model/doctor_diet_list_add_request.dart';
 import '../../../model/model.dart';
 import '../../core.dart';
 import '../service/model/patient_scale_measurement.dart';
@@ -101,4 +102,23 @@ class DoctorRepository {
         .reversed
         .toList();
   }
+
+  Future<ScaleTreatmentDietDetailResponse> treatmentDietGetDetail(
+      int id) async {
+    final guvenResponseModel = await apiService.treatmentGetDetail(id);
+    return ScaleTreatmentDietDetailResponse.fromJson(
+        guvenResponseModel.xGetMap);
+  }
+
+  Future<GuvenResponseModel> treatmentAddDiet(
+    int patientId,
+    DoctorDietListAddRequest model,
+  ) =>
+      apiService.treatmentAddDiet(patientId, model);
+
+  Future<GuvenResponseModel> deleteNoteDiet(
+    TreatmentItemType type,
+    int id,
+  ) =>
+      apiService.deleteNoteDiet(type, id);
 }

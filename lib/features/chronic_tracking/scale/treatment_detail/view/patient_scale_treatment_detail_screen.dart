@@ -102,7 +102,8 @@ class _PatientScaleTreatmentDetailViewState
       title: RbioAppBar.textTitle(
         context,
         state.whenOrNull(
-                success: (result) => result.screenMode.xGetTitle(context)) ??
+                success: (result) =>
+                    result.screenMode.xGetTreatmentTitle(context)) ??
             LocaleProvider.of(context).diet_list,
       ),
     );
@@ -154,7 +155,7 @@ class _PatientScaleTreatmentDetailViewState
                   children: [
                     //
                     if (result.screenMode ==
-                        PatientScaleTreatmentDetailMode.readOnly) ...[
+                        ScaleTreatmentScreenMode.readOnly) ...[
                       Text(
                         result.response.createdByName ?? '',
                         style: context.xHeadline4.copyWith(
@@ -238,7 +239,7 @@ class _PatientScaleTreatmentDetailViewState
   ) {
     if (isKeyboardVisible) return [];
 
-    return result.screenMode == PatientScaleTreatmentDetailMode.readOnly
+    return result.screenMode == ScaleTreatmentScreenMode.readOnly
         ? [
             RbioElevatedButton(
               infinityWidth: true,

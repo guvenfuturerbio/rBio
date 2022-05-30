@@ -52,11 +52,13 @@ class ReminderManager {
           remindable: Remindable.hbA1c,
           title: LocaleProvider.current.hbA1c,
           subTitle: "",
-          nameAndSurname: allProfiles
-                  .firstWhere(
-                      (element) => element.id == hba1cModel.entegrationId)
-                  .name ??
-              '',
+          nameAndSurname: (allProfiles.isNotEmpty)
+              ? allProfiles
+                      .firstWhere(
+                          (element) => element.id == hba1cModel.entegrationId)
+                      .name ??
+                  ''
+              : '',
           status: hba1cModel.status,
         ),
       );
@@ -88,11 +90,13 @@ class ReminderManager {
           subTitle: medicationModel.drugTracking == DrugTracking.manuel
               ? LocaleProvider.current.manuel
               : LocaleProvider.current.pillar_small,
-          nameAndSurname: allProfiles
-                  .firstWhere(
-                      (element) => element.id == medicationModel.entegrationId)
-                  .name ??
-              '',
+          nameAndSurname: (allProfiles.isNotEmpty)
+              ? allProfiles
+                      .firstWhere((element) =>
+                          element.id == medicationModel.entegrationId)
+                      .name ??
+                  ''
+              : '',
           status: medicationModel.status,
         ),
       );
@@ -122,11 +126,13 @@ class ReminderManager {
           remindable: Remindable.bloodGlucose,
           title: LocaleProvider.current.blood_glucose_measurement_title,
           subTitle: bloodGlucoseModel.usageType.xGetText,
-          nameAndSurname: allProfiles
-                  .firstWhere((element) =>
-                      element.id == bloodGlucoseModel.entegrationId)
-                  .name ??
-              '',
+          nameAndSurname: (allProfiles.isNotEmpty)
+              ? allProfiles
+                      .firstWhere((element) =>
+                          element.id == bloodGlucoseModel.entegrationId)
+                      .name ??
+                  ''
+              : '',
           status: bloodGlucoseModel.status,
         ),
       );

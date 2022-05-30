@@ -8,24 +8,23 @@ class PatientScaleTreatmentDetailState with _$PatientScaleTreatmentDetailState {
   const factory PatientScaleTreatmentDetailState.success(
       PatientScaleTreatmentDetailResult result) = _Success;
   const factory PatientScaleTreatmentDetailState.failure() = _Failure;
-  const factory PatientScaleTreatmentDetailState.openListScreen() =
-      _OpenListScreen;
+  const factory PatientScaleTreatmentDetailState.openListScreen() = _OpenListScreen;
 }
 
 class PatientScaleTreatmentDetailResult {
   final ScaleTreatmentDetailResponse response;
-  final PatientScaleTreatmentDetailMode screenMode;
+  final ScaleTreatmentScreenMode screenMode;
   final bool isLoading;
 
   PatientScaleTreatmentDetailResult({
     required this.response,
-    this.screenMode = PatientScaleTreatmentDetailMode.readOnly,
+    this.screenMode = ScaleTreatmentScreenMode.readOnly,
     this.isLoading = false,
   });
 
   PatientScaleTreatmentDetailResult copyWith({
     ScaleTreatmentDetailResponse? response,
-    PatientScaleTreatmentDetailMode? screenMode,
+    ScaleTreatmentScreenMode? screenMode,
     bool? isLoading,
   }) {
     return PatientScaleTreatmentDetailResult(

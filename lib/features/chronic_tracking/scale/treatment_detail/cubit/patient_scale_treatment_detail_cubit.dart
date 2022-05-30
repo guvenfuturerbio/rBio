@@ -41,7 +41,7 @@ class PatientScaleTreatmentDetailCubit
         emit(
           PatientScaleTreatmentDetailState.success(
             result.copyWith(
-              screenMode: PatientScaleTreatmentDetailMode.update,
+              screenMode: ScaleTreatmentScreenMode.update,
             ),
           ),
         );
