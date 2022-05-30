@@ -1,15 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:onedosehealth/core/core.dart';
 import 'package:slugify/slugify.dart';
 
-import '../../../../../core/enums/loading_progress.dart';
-import '../../../../../core/utils/utils.dart';
+import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
 
-part 'doctor_cv_state.dart';
 part 'doctor_cv_cubit.freezed.dart';
+part 'doctor_cv_state.dart';
 
 class DoctorCvCubit extends Cubit<DoctorCvState> {
   DoctorCvCubit() : super(const DoctorCvState.initial());

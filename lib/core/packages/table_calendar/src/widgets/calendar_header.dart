@@ -5,10 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:onedosehealth/core/core.dart';
 
-import '../../../../../app/config/abstract/app_config.dart';
-import '../../../../locator.dart';
-import '../customization/header_style.dart';
-import '../shared/utils.dart' show CalendarFormat, DayBuilder;
 import 'custom_icon_button.dart';
 
 class CalendarHeader extends StatelessWidget {

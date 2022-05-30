@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import 'cubit/doctor_cv_cubit.dart';
-import 'doctor_cv_vm.dart';
 
 class DoctorCvScreen extends StatefulWidget {
   late String doctorNameNoTitle;
