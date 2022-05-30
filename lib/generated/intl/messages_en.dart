@@ -1320,6 +1320,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "User with this email doesn\'t exist."),
         "validation": MessageLookupByLibrary.simpleMessage(
             "This field cannot be left blank"),
+        "validation_of_phone_number": MessageLookupByLibrary.simpleMessage(
+            "Phone number must be 10 characters."),
         "value": MessageLookupByLibrary.simpleMessage("Değer"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "verify_email_error":

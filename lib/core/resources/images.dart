@@ -55,6 +55,7 @@ class _Images {
   final done = 'assets/images/done_icon.svg';
   final error = 'assets/images/error_icon.svg';
   final creditCalendar = "assets/images/expiration_date.svg";
+  final icClendarBlack = "assets/images/ic_calendar_black.svg";
   final eyeSeen = "assets/images/eyeseen_icon.svg";
   final facebook = "assets/images/facebook.svg";
   final facebookIcon = "assets/images/facebookicon.svg";
@@ -94,6 +95,7 @@ class _Images {
   final other = "assets/images/other_black.svg";
   final otherIcon = 'assets/images/other_icon.svg';
   final phone = 'assets/images/phone_icon.svg';
+  final email = 'assets/images/ic_email.svg';
   final photo = 'assets/images/photo_icon.svg';
   final profileAvatar = "assets/images/profile_avatar.svg";
   final profile = 'assets/images/profile_icon.svg';
@@ -117,6 +119,9 @@ class _Images {
   final upload = "assets/images/upload.svg";
   final startVideo = "assets/images/start_video_call.svg";
   final rate = "assets/images/ic_star_blue.svg";
+  final icDeleteRed = "assets/images/ic_delete_red.svg";
+  final icGenderSelectionGrey = "assets/images/ic_gender_selection_grey.svg";
+
 
   //GuvenOnlineDashboard
   final appointmentsRed = "assets/images/guven/dashboard/appointments_red.svg";

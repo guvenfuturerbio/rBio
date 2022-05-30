@@ -34,6 +34,7 @@ import '../../features/profile/profile/viewmodel/profile_vm.dart';
 import '../../features/profile/request_suggestions/view/request_suggestions_screen.dart';
 import '../../features/profile/terms_and_privacy/terms_and_privacy.dart';
 import '../../features/relatives/relatives.dart';
+import '../../features/relatives/view/add_relative_screen.dart';
 import '../../features/results/results.dart';
 import '../../features/shared/full_pdf_viewer_screen.dart';
 import '../../features/shared/webview_screen.dart';
@@ -431,7 +432,7 @@ class VRouterRoutes {
         // #region Relatives
         VWidget(
           path: PagePaths.addPatientRelatives,
-          widget: const AddPatientRelativesScreen(),
+          widget: const AddPatientRelativeScreen(),
         ),
 
         VWidget(

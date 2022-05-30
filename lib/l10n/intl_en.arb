@@ -860,5 +860,6 @@
   "verify": "Verify",
   "twofa": "Two-Factor Authentication (2FA)",
   "resend": "Resend",
-  "validation": "This field cannot be left blank"
+  "validation": "This field cannot be left blank",
+  "validation_of_phone_number": "Phone number must be 10 characters."
 }

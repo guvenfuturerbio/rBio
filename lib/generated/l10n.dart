@@ -8659,6 +8659,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Phone number must be 10 characters.`
+  String get validation_of_phone_number {
+    return Intl.message(
+      'Phone number must be 10 characters.',
+      name: 'validation_of_phone_number',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

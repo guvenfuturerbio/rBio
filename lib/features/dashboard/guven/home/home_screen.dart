@@ -256,6 +256,13 @@ Widget _itemOption({
                 ),
               ),
             ),
+            // TODO(hhh): SİLlll
+            ElevatedButton(
+              onPressed: () {
+                Atom.to(PagePaths.relatives);
+              },
+              child: const Text('Tıkla'),
+            ),
           ],
         ),
       ),

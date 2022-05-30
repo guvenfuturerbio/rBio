@@ -13,6 +13,7 @@ class RbioUserTile extends StatelessWidget {
   final void Function() onTap;
   final UserLeadingImage leadingImage;
   final UserTrailingIcons? trailingIcon;
+  final Widget? bottomChild;
 
   const RbioUserTile({
     Key? key,
@@ -23,6 +24,7 @@ class RbioUserTile extends StatelessWidget {
     required this.onTap,
     required this.leadingImage,
     this.trailingIcon,
+    this.bottomChild,
   }) : super(key: key);
 
   @override
@@ -30,39 +32,47 @@ class RbioUserTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: width,
-        alignment: Alignment.center,
+        padding: EdgeInsets.only(bottom: bottomChild != null ? 8 : 0),
         decoration: BoxDecoration(
           color: trailingIcon != null ? Colors.white : Colors.transparent,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
-        child: ListTile(
-          dense: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-            vertical: 6.0,
-          ),
+        child: Column(
+          children: [
+            Container(
+              width: width,
+              alignment: Alignment.center,
+              child: ListTile(
+                dense: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: R.sizes.borderRadiusCircular,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 6.0,
+                ),
 
-          leading: _getLeadingImage(leadingImage),
-          title: Text(
-            name ?? '',
-            style: context.xHeadline3.copyWith(
-              fontWeight: FontWeight.w500,
+                leading: _getLeadingImage(leadingImage),
+                title: Text(
+                  name ?? '',
+                  style: context.xHeadline3.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                // subtitle: Text(
+                //   'Hangi doktordan randevu almak istiyorsunuz?',
+                //   maxLines: 2,
+                //   overflow: TextOverflow.ellipsis,
+                //   style: context.xHeadline5.copyWith(
+                //     fontWeight: FontWeight.w600,
+                //     color: Colors.grey,
+                //   ),
+                // ),
+                trailing: _getTrailingIcon(trailingIcon),
+              ),
             ),
-          ),
-          // subtitle: Text(
-          //   'Hangi doktordan randevu almak istiyorsunuz?',
-          //   maxLines: 2,
-          //   overflow: TextOverflow.ellipsis,
-          //   style: context.xHeadline5.copyWith(
-          //     fontWeight: FontWeight.w600,
-          //     color: Colors.grey,
-          //   ),
-          // ),
-          trailing: _getTrailingIcon(trailingIcon),
+            if (bottomChild != null) bottomChild!,
+          ],
         ),
       ),
     );

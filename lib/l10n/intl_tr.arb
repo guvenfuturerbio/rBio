@@ -854,5 +854,6 @@
   "verify": "Doğrula",
   "twofa": "İki Faktörlü Kimlik Doğrulama",
   "resend": "Tekrar Gönder",
-  "validation": "Bu alan boş bırakılamaz"
+  "validation": "Bu alan boş bırakılamaz",
+  "validation_of_phone_number": "Telefon numarası 10 karakter olmalıdır."
 }

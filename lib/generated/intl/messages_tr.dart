@@ -1310,6 +1310,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Bu e-posta adresine kayıtlı kullanıcı yoktur."),
         "validation":
             MessageLookupByLibrary.simpleMessage("Bu alan boş bırakılamaz"),
+        "validation_of_phone_number": MessageLookupByLibrary.simpleMessage(
+            "Telefon numarası 10 karakter olmalıdır."),
         "value": MessageLookupByLibrary.simpleMessage("Value"),
         "verify": MessageLookupByLibrary.simpleMessage("Doğrula"),
         "verify_email_error": MessageLookupByLibrary.simpleMessage(
