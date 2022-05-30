@@ -134,16 +134,22 @@ class MenuElementTiklamaEvent extends BaseEvent {
 class RandevuOlusturRandevuAraEvent extends BaseEvent {
   RandevuOlusturRandevuAraEvent(
     String? randevuAlacakKisiId,
+    String? randevuAlacakKisiAdiveSoyadi,
+    String? kullaniciTelefonNo,
     String? hastaneSecimi,
     String? bolumSecimi,
     String? doktorSecimi,
+    String? doktorAdi,
   ) : super(
           _EventConstants.randevuOlusturRandevuAra,
           {
             'randevu_alacak_kisi_id': randevuAlacakKisiId,
+            'randevu_alacak_kisi_adi_ve_soyadi': randevuAlacakKisiAdiveSoyadi,
+            'kullanici_telefon_no': kullaniciTelefonNo,
             'hastane_secimi': hastaneSecimi,
             'bolum_secimi': bolumSecimi,
             'doktor_secimi': doktorSecimi,
+            'doktor_adi': doktorAdi,
           },
         );
 }

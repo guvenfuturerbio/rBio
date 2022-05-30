@@ -870,5 +870,6 @@
   "update_treatment_note": "Tedavi Notu Güncelle",
   "title": "Başlık",
   "doctor_note": "Doktor Notu",
-  "delete_diet_list": "Diyet listesini silmek istediğinizden emin misiniz?"
+  "delete_diet_list": "Diyet listesini silmek istediğinizden emin misiniz?",
+  "empty_cv": "Uzman CV'si bulunamadı."
 }

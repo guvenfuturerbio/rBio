@@ -8819,6 +8819,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Specialist's CV can not be found.`
+  String get empty_cv {
+    return Intl.message(
+      'Specialist\'s CV can not be found.',
+      name: 'empty_cv',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

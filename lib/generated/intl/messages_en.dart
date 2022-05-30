@@ -472,6 +472,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "emergency": MessageLookupByLibrary.simpleMessage(
             "You have chosen a critical symptom, you need to see a specialist urgently!"),
         "emergency_lbl": MessageLookupByLibrary.simpleMessage("Emergency"),
+        "empty_cv": MessageLookupByLibrary.simpleMessage(
+            "Specialist\'s CV can not be found."),
         "end": MessageLookupByLibrary.simpleMessage("End"),
         "end_angle": MessageLookupByLibrary.simpleMessage("End Angle"),
         "end_time": MessageLookupByLibrary.simpleMessage("End Time"),
