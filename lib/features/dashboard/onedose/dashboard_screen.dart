@@ -253,7 +253,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   elevation: 0,
                   onPressed: () {
-                    getIt<AdjustManager>().trackEvent(BottomBarClickedEvent());
+                    getIt<IAppConfig>()
+                        .platform
+                        .adjustManager
+                        ?.trackEvent(BottomBarClickedEvent());
                     getIt<FirebaseAnalyticsManager>()
                         .logEvent(AltBarTiklamaEvent('Logo'));
                     if (Atom.url != '/home/') {

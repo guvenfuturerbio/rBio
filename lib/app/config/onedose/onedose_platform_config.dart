@@ -1,12 +1,15 @@
 part of '../abstract/app_config.dart';
 
 abstract class IOneDosePlatformConfig extends IAppPlatformConfig {
-  IOneDosePlatformConfig(FirebaseOptions? options) : super(options);
+  IOneDosePlatformConfig(
+    FirebaseOptions? options,
+    AdjustManager? adjustManager,
+  ) : super(options, adjustManager);
 }
 
 class OneDoseMobilePlatformConfig extends IOneDosePlatformConfig
     with IAppMobilePlatformConfig {
-  OneDoseMobilePlatformConfig() : super(null);
+  OneDoseMobilePlatformConfig() : super(null, OneDoseAdjustManagerImpl());
 
   @override
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
@@ -40,11 +43,12 @@ class OneDoseWebPlatformConfig extends IOneDosePlatformConfig
             appId: "1:265636530937:web:5d18cdcf7fd03242263028",
             measurementId: "G-BYWQLYEVVW",
           ),
+          null,
         );
 
   @override
   bool checkDevices() => false;
 
   @override
-  bool checkMedimender() =>  false;
+  bool checkMedimender() => false;
 }
