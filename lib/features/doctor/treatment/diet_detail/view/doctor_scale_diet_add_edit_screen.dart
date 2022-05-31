@@ -42,7 +42,7 @@ class DoctorScaleDietAddEditScreen extends StatelessWidget {
                 },
               );
             },
-            child: const DoctorScaleDietAddEditView(),
+            child: DoctorScaleDietAddEditView(isCreated: itemId == null),
           );
         },
       ),
@@ -51,7 +51,12 @@ class DoctorScaleDietAddEditScreen extends StatelessWidget {
 }
 
 class DoctorScaleDietAddEditView extends StatefulWidget {
-  const DoctorScaleDietAddEditView({Key? key}) : super(key: key);
+  final bool isCreated;
+
+  const DoctorScaleDietAddEditView({
+    Key? key,
+    required this.isCreated,
+  }) : super(key: key);
 
   @override
   State<DoctorScaleDietAddEditView> createState() =>
@@ -112,17 +117,16 @@ class _DoctorScaleDietAddEditViewState
       listener: (context, state) {
         state.whenOrNull(
           success: (result) {
-            if (!result.isLoading) {
-              if (!result.isCreated && result.response != null) {
-                _titleEditingController.text = result.response!.dietTitle ?? '';
-                _breakfastEditingController.text =
-                    result.response!.dietBreakfast ?? '';
-                _refreshmentEditingController.text =
-                    result.response!.dietRefreshment ?? '';
-                _lunchEditingController.text = result.response!.dietLunch ?? '';
-                _dinnerEditingController.text =
-                    result.response!.dietDinner ?? '';
-              }
+            if (!result.isLoading &&
+                !widget.isCreated &&
+                result.response != null) {
+              _titleEditingController.text = result.response!.dietTitle ?? '';
+              _breakfastEditingController.text =
+                  result.response!.dietBreakfast ?? '';
+              _refreshmentEditingController.text =
+                  result.response!.dietRefreshment ?? '';
+              _lunchEditingController.text = result.response!.dietLunch ?? '';
+              _dinnerEditingController.text = result.response!.dietDinner ?? '';
             }
           },
         );
@@ -147,10 +151,12 @@ class _DoctorScaleDietAddEditViewState
   RbioAppBar _buildAppBar(DoctorScaleDietAddEditState state) => RbioAppBar(
         title: RbioAppBar.textTitle(
           context,
-          state.whenOrNull(
-                  success: (result) =>
-                      result.screenMode.xGetDietTitle(context)) ??
-              LocaleProvider.of(context).diet_list,
+          widget.isCreated
+              ? LocaleProvider.of(context).add_diet_list
+              : state.whenOrNull(
+                      success: (result) =>
+                          result.editMode.xGetDietTitle(context)) ??
+                  LocaleProvider.of(context).diet_list,
         ),
       );
 
@@ -201,8 +207,8 @@ class _DoctorScaleDietAddEditViewState
                     R.sizes.hSizer8,
 
                     //
-                    if (result.screenMode ==
-                        ScaleTreatmentScreenMode.readOnly) ...[
+                    if (result.editMode ==
+                        ScaleTreatmentScreenEditMode.readOnly) ...[
                       AbsorbPointer(
                         absorbing: true,
                         child: RbioTextFormField(
@@ -332,7 +338,7 @@ class _DoctorScaleDietAddEditViewState
       alignment: Alignment.topRight,
       children: [
         //
-        if (result.screenMode == ScaleTreatmentScreenMode.readOnly) ...[
+        if (result.editMode == ScaleTreatmentScreenEditMode.readOnly) ...[
           AbsorbPointer(
             absorbing: true,
             child: RbioTextFormField(
@@ -374,10 +380,44 @@ class _DoctorScaleDietAddEditViewState
   ) {
     if (isKeyboardVisible) return [];
 
-    if (result.isCreated) {
-      return [];
+    if (widget.isCreated) {
+      return [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Expanded(
+              child: RbioElevatedButton(
+                infinityWidth: true,
+                title: LocaleProvider.current.save,
+                onTap: () {
+                  context
+                      .read<DoctorScaleDietAddEditCubit>()
+                      .changeScreenMode();
+                  _saveDietList();
+                },
+              ),
+            ),
+
+            //
+            R.sizes.wSizer8,
+
+            //
+            Expanded(
+              child: RbioWhiteButton(
+                title: LocaleProvider.current.btn_cancel,
+                onTap: () {
+                  Atom.historyBack();
+                },
+              ),
+            ),
+          ],
+        )
+      ];
     } else {
-      return result.screenMode == ScaleTreatmentScreenMode.readOnly
+      return result.editMode == ScaleTreatmentScreenEditMode.readOnly
           ? [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -434,19 +474,7 @@ class _DoctorScaleDietAddEditViewState
                     child: RbioElevatedButton(
                       title: LocaleProvider.current.save,
                       onTap: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          context
-                              .read<DoctorScaleDietAddEditCubit>()
-                              .saveDietList(
-                                title: _titleEditingController.text.trim(),
-                                breakfast:
-                                    _breakfastEditingController.text.trim(),
-                                refreshment:
-                                    _refreshmentEditingController.text.trim(),
-                                lunch: _lunchEditingController.text.trim(),
-                                dinner: _dinnerEditingController.text.trim(),
-                              );
-                        }
+                        _saveDietList();
                       },
                     ),
                   ),
@@ -466,6 +494,18 @@ class _DoctorScaleDietAddEditViewState
                 ],
               ),
             ];
+    }
+  }
+
+  void _saveDietList() {
+    if (_formKey.currentState?.validate() ?? false) {
+      context.read<DoctorScaleDietAddEditCubit>().saveDietList(
+            title: _titleEditingController.text.trim(),
+            breakfast: _breakfastEditingController.text.trim(),
+            refreshment: _refreshmentEditingController.text.trim(),
+            lunch: _lunchEditingController.text.trim(),
+            dinner: _dinnerEditingController.text.trim(),
+          );
     }
   }
 }

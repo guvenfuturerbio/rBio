@@ -8829,6 +8829,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Add Diet List`
+  String get add_diet_list {
+    return Intl.message(
+      'Add Diet List',
+      name: 'add_diet_list',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

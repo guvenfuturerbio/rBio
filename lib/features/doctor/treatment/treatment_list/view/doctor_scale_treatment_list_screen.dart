@@ -115,7 +115,7 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
                             Atom.to(
                               PagePaths.doctorScaleDietAddEdit,
                               queryParameters: {
-                                // 'itemId': result.list[index].id.toString(),
+                                'itemId': result.list[index].id.toString(),
                                 'patientId': patientId.toString(),
                               },
                             );

@@ -13,23 +13,23 @@ class PatientScaleTreatmentDetailState with _$PatientScaleTreatmentDetailState {
 
 class PatientScaleTreatmentDetailResult {
   final ScaleTreatmentDetailResponse response;
-  final ScaleTreatmentScreenMode screenMode;
+  final ScaleTreatmentScreenEditMode editMode;
   final bool isLoading;
 
   PatientScaleTreatmentDetailResult({
     required this.response,
-    this.screenMode = ScaleTreatmentScreenMode.readOnly,
+    this.editMode = ScaleTreatmentScreenEditMode.readOnly,
     this.isLoading = false,
   });
 
   PatientScaleTreatmentDetailResult copyWith({
     ScaleTreatmentDetailResponse? response,
-    ScaleTreatmentScreenMode? screenMode,
+    ScaleTreatmentScreenEditMode? editMode,
     bool? isLoading,
   }) {
     return PatientScaleTreatmentDetailResult(
       response: response ?? this.response,
-      screenMode: screenMode ?? this.screenMode,
+      editMode: editMode ?? this.editMode,
       isLoading: isLoading ?? this.isLoading,
     );
   }

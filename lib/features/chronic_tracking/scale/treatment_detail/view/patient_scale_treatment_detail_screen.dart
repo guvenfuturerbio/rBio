@@ -103,7 +103,7 @@ class _PatientScaleTreatmentDetailViewState
         context,
         state.whenOrNull(
                 success: (result) =>
-                    result.screenMode.xGetTreatmentTitle(context)) ??
+                    result.editMode.xGetTreatmentTitle(context)) ??
             LocaleProvider.of(context).diet_list,
       ),
     );
@@ -154,8 +154,8 @@ class _PatientScaleTreatmentDetailViewState
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     //
-                    if (result.screenMode ==
-                        ScaleTreatmentScreenMode.readOnly) ...[
+                    if (result.editMode ==
+                        ScaleTreatmentScreenEditMode.readOnly) ...[
                       Text(
                         result.response.createdByName ?? '',
                         style: context.xHeadline4.copyWith(
@@ -239,7 +239,7 @@ class _PatientScaleTreatmentDetailViewState
   ) {
     if (isKeyboardVisible) return [];
 
-    return result.screenMode == ScaleTreatmentScreenMode.readOnly
+    return result.editMode == ScaleTreatmentScreenEditMode.readOnly
         ? [
             RbioElevatedButton(
               infinityWidth: true,

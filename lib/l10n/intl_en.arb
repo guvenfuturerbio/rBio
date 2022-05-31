@@ -877,5 +877,6 @@
   "title": "Title",
   "doctor_note": "Doctor Note",
   "delete_diet_list": "Are you sure you want to delete the diet list?",
-  "empty_cv": "Specialist's CV can not be found."
+  "empty_cv": "Specialist's CV can not be found.",
+  "add_diet_list": "Add Diet List"
 }

@@ -22,7 +22,9 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
     if (itemId == null) {
       emit(
         DoctorScaleDietAddEditState.success(
-          DoctorScaleDietAddEditResult(isCreated: true),
+          DoctorScaleDietAddEditResult(
+            editMode: ScaleTreatmentScreenEditMode.update,
+          ),
         ),
       );
     } else {
@@ -46,7 +48,7 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
         emit(
           DoctorScaleDietAddEditState.success(
             result.copyWith(
-              screenMode: ScaleTreatmentScreenMode.update,
+              editMode: ScaleTreatmentScreenEditMode.update,
             ),
           ),
         );

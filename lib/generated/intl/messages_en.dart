@@ -44,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ACCU-CHEK Blood Glucose"),
         "activate": MessageLookupByLibrary.simpleMessage("Activate"),
         "add_cart": MessageLookupByLibrary.simpleMessage("Add to Cart"),
+        "add_diet_list": MessageLookupByLibrary.simpleMessage("Add Diet List"),
         "add_discount_code":
             MessageLookupByLibrary.simpleMessage("Add discount code"),
         "add_medicine": MessageLookupByLibrary.simpleMessage("Add medicine"),

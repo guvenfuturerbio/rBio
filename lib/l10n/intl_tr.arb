@@ -871,5 +871,6 @@
   "title": "Başlık",
   "doctor_note": "Doktor Notu",
   "delete_diet_list": "Diyet listesini silmek istediğinizden emin misiniz?",
-  "empty_cv": "Uzman CV'si bulunamadı."
+  "empty_cv": "Uzman CV'si bulunamadı.",
+  "add_diet_list": "Diyet Listesi Ekle"
 }

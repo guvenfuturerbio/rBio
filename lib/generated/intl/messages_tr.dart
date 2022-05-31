@@ -43,6 +43,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "accu_chek_blood_sugar":
             MessageLookupByLibrary.simpleMessage("ACCU-CHEK Şeker Ölçüm"),
         "activate": MessageLookupByLibrary.simpleMessage("Aktifleştir"),
+        "add_diet_list":
+            MessageLookupByLibrary.simpleMessage("Diyet Listesi Ekle"),
         "add_discount_code":
             MessageLookupByLibrary.simpleMessage("İndirim kodu ekle"),
         "add_medicine": MessageLookupByLibrary.simpleMessage("İlaç ekle"),
