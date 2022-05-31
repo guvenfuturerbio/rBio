@@ -24,6 +24,16 @@ class AdjustManager {
     adjustConfig.logLevel = AdjustLogLevel.verbose;
   }
 
+
+
+   void initializeAdjust() {
+    final adjustConfig =
+        AdjustConfig('xe34hcactfk0', AdjustEnvironment.production);
+    adjustConfig.setAppSecret(1, 413165747, 1265213513, 190651275, 1454099636);
+    Adjust.start(adjustConfig);
+    adjustConfig.logLevel = AdjustLogLevel.verbose;
+  }
+
   // Firebase analytics log event fonksiyonu gibi event oluşturur
   void trackEvent(AdjustBaseEvent eventToken) {
     if (!kIsWeb) {
@@ -101,6 +111,68 @@ class _EventConstants {
   static const unsuccessfulRelativeDeletion = "9oy0yy";
   static const unsuccessfulRegisterStep1 = "5swn1m";
 }
+
+class _EventConstants {
+  static const bottomBarClicked = "khu88v";
+  static const successfulLogin = "8sqe4g";
+  static const detailedSymptom = "k20scn";
+  static const menuButtonClicked = "tlw11k";
+  static const menuElementProfileClicked = "fghm1j";
+  static const menuElementHospitalAppointmentClicked = "pijg1n";
+  static const menuElementOnlineAppoClicked = "4gan0y";
+  static const menuElementHealthTrackerClicked = "bbs00j";
+  static const menuElementAppointmentsClicked = "ok0oi3";
+  static const menuElementResultsClicked = "qjzo3m";
+  static const menuElementForYouClicked = "gjzzgc";
+  static const menuElementSymptomCheckerClicked = "vgwi9b";
+  static const menuElementDevicesClicked = "h8ifus";
+  static const menuElementRemindersClicked = "enil6j";
+  static const menuElementSuggestionsClicked = "vpysce";
+  static const searchCreateAppointment = "e6g9a2";
+  static const healthTrackerButtons = "httskd";
+  static const mySymptomsPage1 = "59jxtk";
+  static const mySymptomsPage2 = "cd55ql";
+  static const mySymptomsPage3 = "e2ovww";
+  static const mySymptomsPage4DepartmentAnalysis = "j6uc7c";
+  static const myResultsSearchAppointment = "gxrszf";
+  static const logOut = "ihw9p0";
+  static const forYouPageClicked = "4ofik7";
+  static const newDownloads = "mc3w9b";
+  static const successfulVideoCall = "197n1w";
+  static const successfulRelativeDeletion = "xq0m88";
+  static const successfulPayment = "7l8fms";
+  static const forYouCategoryClicked = "5au1nh";
+  static const forYouSubCategoryClicked = "fk34sf";
+  static const forYouPackageSummaryClicked = "no3rt8";
+  static const forYouItemPaymentClicked = "tp6wxp";
+  static const mainPageOAClicked = "cnwdss";
+  static const mainPagePcrTestClicked = "nhq16b";
+  static const mainPageFindDoctorClicked = "hjxw4y";
+  static const mainPageMyAppointmentsClicked = "ti44ge";
+  static const mainPageMyResultsClicked = "5hitl5";
+  static const mainPageCounselingLineClicked = "hnezai";
+  static const findDoctorTabClicked = "7q8cf3";
+  static const myAppointmentsTabClicked = "2adgzc";
+  static const mainPageTabClicked = "ogwm86";
+  static const myProfileTabClicked = "3ueq3x";
+  static const oaDepartmentSelection = "zi0ctu";
+  static const oaDoctorSelection = "x3dxbq";
+  static const takeAppointmentDoctorDetails = "sgi3b7";
+  static const pcrTestHospitalSelection = "n14jzp";
+  static const successfulPasswordChange = "3sqrhh";
+  static const relativesTabClicked = "yhcbfa";
+  static const relativeSwitchSuccessful = "mbbfrl";
+  static const successfulRelativeAdd = "vcegxl";
+  static const successfulRelativeMainAccountSwitch = "7r5q4d";
+  static const personalInformationClicked = "1ztdn1";
+  static const uploadProfilePicture = "d8ubop";
+  static const deleteProfilePicture = "y8vkrq";
+  static const unsuccessfulPasswordChange = "7pqrni";
+  static const unsuccessfulRelativeSwitch = "agmlb6";
+  static const unsuccessfulRelativeAdd = "ht91wu";
+  static const unccessfulRelativeMainAccountSwitchEvent = "sts62r";
+  static const unsuccessfulRelativeDeletion = "xefzyc";
+ static const unsuccessfulRegisterStep1 = "p3wk5v”;
 
 class BottomBarClickedEvent extends AdjustBaseEvent {
   BottomBarClickedEvent() : super(_EventConstants.bottomBarClicked);
