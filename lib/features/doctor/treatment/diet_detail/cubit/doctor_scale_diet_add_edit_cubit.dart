@@ -100,7 +100,7 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
           ),
         );
         try {
-          await repository.deleteNoteDiet(TreatmentItemType.diet, itemId!);
+          await repository.deleteNoteDiet(itemId!);
           emit(const DoctorScaleDietAddEditState.openListScreen());
         } catch (error) {
           emit(const DoctorScaleDietAddEditState.failure());

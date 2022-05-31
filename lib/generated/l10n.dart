@@ -8780,11 +8780,31 @@ class LocaleProvider {
     );
   }
 
+  /// `Add Treatment Note`
+  String get add_treatment_note {
+    return Intl.message(
+      'Add Treatment Note',
+      name: 'add_treatment_note',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Update Treatment Note`
   String get update_treatment_note {
     return Intl.message(
       'Update Treatment Note',
       name: 'update_treatment_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete the treatment note?`
+  String get delete_treatment_note {
+    return Intl.message(
+      'Are you sure you want to delete the treatment note?',
+      name: 'delete_treatment_note',
       desc: '',
       args: [],
     );

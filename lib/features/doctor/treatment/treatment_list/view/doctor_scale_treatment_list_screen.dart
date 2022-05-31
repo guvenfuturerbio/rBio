@@ -105,7 +105,15 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
                     if (item.type == TreatmentType.treatmentNote) {
                       return RbioTreatmentCard.createdBy(
                         item: result.list[index],
-                        onTap: () {},
+                        onTap: () {
+                          Atom.to(
+                            PagePaths.doctorScaleTreatmentAddEdit,
+                            queryParameters: {
+                              'itemId': result.list[index].id.toString(),
+                              'patientId': patientId.toString(),
+                            },
+                          );
+                        },
                       );
                     } else {
                       return RbioTreatmentCard.title(
@@ -120,8 +128,14 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
                               },
                             );
                           } else if (result.list[index].type ==
-                              TreatmentType.treatmentNote) {
-                            //
+                              TreatmentType.doctorNote) {
+                            Atom.to(
+                              PagePaths.doctorScaleDietAddEdit,
+                              queryParameters: {
+                                'itemId': result.list[index].id.toString(),
+                                'patientId': patientId.toString(),
+                              },
+                            );
                           }
                         },
                       );

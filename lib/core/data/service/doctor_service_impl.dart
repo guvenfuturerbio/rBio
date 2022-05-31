@@ -241,12 +241,15 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<GuvenResponseModel> treatmentGetDetail(int id) async {
+  Future<GuvenResponseModel> treatmentGetDetail(
+    TreatmentItemType type,
+    int id,
+  ) async {
     final response = await helper.getGuven(
       getIt<IAppConfig>()
           .endpoints
           .devApi
-          .treatmentGetDetail(TreatmentItemType.diet.xGetRawValue, id),
+          .treatmentGetDetail(type.xGetRawValue, id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -289,6 +292,23 @@ class DoctorApiServiceImpl extends DoctorApiService {
       return response;
     } else {
       throw Exception('/deleteNoteDiet : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> addTreatmentNote(
+    int patientId,
+    PatientTreatmentAddRequest model,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>().endpoints.devApi.addTreatmentNoteDoctor(patientId),
+      model.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/addTreatmentNote : ${response.isSuccessful}');
     }
   }
 }

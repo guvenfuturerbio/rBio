@@ -57,6 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Hatırlatıcı Ekle"),
         "add_strips": MessageLookupByLibrary.simpleMessage("Strip Ekle"),
         "add_symptom": MessageLookupByLibrary.simpleMessage("Semptom Ekle"),
+        "add_treatment_note":
+            MessageLookupByLibrary.simpleMessage("Tedavi Notu Ekle"),
         "additional_info":
             MessageLookupByLibrary.simpleMessage("Gerekli Bilgiler"),
         "aft": MessageLookupByLibrary.simpleMessage("Son."),
@@ -357,6 +359,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Onaylıyor musunuz?"),
         "delete_relative_title":
             MessageLookupByLibrary.simpleMessage("Silinecektir!"),
+        "delete_treatment_note": MessageLookupByLibrary.simpleMessage(
+            "Tedavi notunu silmek istediğinizden emin misiniz?"),
         "demographic": MessageLookupByLibrary.simpleMessage("Demografik"),
         "depart_analyse": MessageLookupByLibrary.simpleMessage("Bölüm analizi"),
         "depart_name": MessageLookupByLibrary.simpleMessage("Bölüm:"),

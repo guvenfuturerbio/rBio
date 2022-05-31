@@ -17,8 +17,10 @@ class AdjustBaseEvent {
 
 class AdjustManager {
   void initializeAdjust() {
-    final adjustConfig =
-        AdjustConfig('1vvx05nbpkio', AdjustEnvironment.production);
+    final adjustConfig = AdjustConfig(
+      '1vvx05nbpkio',
+      AdjustEnvironment.production,
+    );
     adjustConfig.setAppSecret(1, 492801584, 1304692510, 331550936, 2085469560);
     Adjust.start(adjustConfig);
     adjustConfig.logLevel = AdjustLogLevel.verbose;

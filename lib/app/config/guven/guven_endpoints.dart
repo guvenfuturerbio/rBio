@@ -253,6 +253,10 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
   @override
   String deleteNoteDiet(int itemType, int id) =>
       throw RbioUndefinedEndpointException("deleteNoteDiet");
+
+  @override
+  String addTreatmentNoteDoctor(int patientId) =>
+      throw RbioUndefinedEndpointException("addTreatmentNoteDoctor");
 }
 
 class GuvenBaseEndpoints extends BaseEndpoints {

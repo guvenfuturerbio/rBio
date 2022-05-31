@@ -139,7 +139,12 @@ class _PatientScaleTreatmentDetailViewState
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
             child: Container(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.only(
+                left: 8,
+                top: 8,
+                right: 8,
+                bottom: 12,
+              ),
               decoration: BoxDecoration(
                 color: getIt<IAppConfig>().theme.cardBackgroundColor,
                 borderRadius: R.sizes.borderRadiusCircular,

@@ -104,8 +104,12 @@ class DoctorRepository {
   }
 
   Future<ScaleTreatmentDietDetailResponse> treatmentDietGetDetail(
-      int id) async {
-    final guvenResponseModel = await apiService.treatmentGetDetail(id);
+    int id,
+  ) async {
+    final guvenResponseModel = await apiService.treatmentGetDetail(
+      TreatmentItemType.diet,
+      id,
+    );
     return ScaleTreatmentDietDetailResponse.fromJson(
         guvenResponseModel.xGetMap);
   }
@@ -117,8 +121,24 @@ class DoctorRepository {
       apiService.treatmentAddDiet(patientId, model);
 
   Future<GuvenResponseModel> deleteNoteDiet(
-    TreatmentItemType type,
     int id,
   ) =>
-      apiService.deleteNoteDiet(type, id);
+      apiService.deleteNoteDiet(TreatmentItemType.diet, id);
+
+  Future<ScaleTreatmentDetailResponse> treatmentGetDetail(int id) async {
+    final guvenResponseModel = await apiService.treatmentGetDetail(
+      TreatmentItemType.treatment,
+      id,
+    );
+    return ScaleTreatmentDetailResponse.fromJson(guvenResponseModel.xGetMap);
+  }
+
+  Future<GuvenResponseModel> deleteTreatmentNote(
+    int id,
+  ) =>
+      apiService.deleteNoteDiet(TreatmentItemType.treatment, id);
+
+  Future<GuvenResponseModel> addTreatmentNote(
+          int patientId, PatientTreatmentAddRequest model) =>
+      apiService.addTreatmentNote(patientId, model);
 }

@@ -56,6 +56,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_reminder": MessageLookupByLibrary.simpleMessage("Add Reminder"),
         "add_strips": MessageLookupByLibrary.simpleMessage("Add Strips"),
         "add_symptom": MessageLookupByLibrary.simpleMessage("Add Symptom"),
+        "add_treatment_note":
+            MessageLookupByLibrary.simpleMessage("Add Treatment Note"),
         "addcart_success_message": MessageLookupByLibrary.simpleMessage(
             "The product has been added to the cart. Would you like to view the cart?"),
         "additional_info":
@@ -364,6 +366,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Do you confirm?"),
         "delete_relative_title":
             MessageLookupByLibrary.simpleMessage("Deleting!"),
+        "delete_treatment_note": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete the treatment note?"),
         "demographic": MessageLookupByLibrary.simpleMessage("Demographic"),
         "depart_analyse":
             MessageLookupByLibrary.simpleMessage("Department analyze"),

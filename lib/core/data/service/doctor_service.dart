@@ -40,7 +40,10 @@ abstract class DoctorApiService {
     ScaleTreatmentRequest request,
   );
 
-  Future<GuvenResponseModel> treatmentGetDetail(int id);
+  Future<GuvenResponseModel> treatmentGetDetail(
+    TreatmentItemType type,
+    int id,
+  );
   Future<GuvenResponseModel> treatmentAddDiet(
     int patientId,
     DoctorDietListAddRequest model,
@@ -48,5 +51,10 @@ abstract class DoctorApiService {
   Future<GuvenResponseModel> deleteNoteDiet(
     TreatmentItemType type,
     int id,
+  );
+
+  Future<GuvenResponseModel> addTreatmentNote(
+    int patientId,
+    PatientTreatmentAddRequest model,
   );
 }
