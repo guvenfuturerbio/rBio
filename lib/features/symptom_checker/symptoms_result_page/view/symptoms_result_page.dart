@@ -140,7 +140,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                     //
                                     child: RbioTextButton(
                                       onPressed: () {
-                                        getIt<AdjustManager>().trackEvent(
+                                        getIt<IAppConfig>().platform.adjustManager?.trackEvent(
                                             MyResultsSearchAppointmentEvent());
                                         getIt<FirebaseAnalyticsManager>()
                                             .logEvent(
@@ -293,7 +293,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                             },
                                           );
                                         } else {
-                                          getIt<AdjustManager>().trackEvent(
+                                          getIt<IAppConfig>().platform.adjustManager?.trackEvent(
                                               MyResultsSearchAppointmentEvent());
                                           getIt<FirebaseAnalyticsManager>()
                                               .logEvent(

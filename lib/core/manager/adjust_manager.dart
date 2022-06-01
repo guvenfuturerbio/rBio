@@ -510,301 +510,520 @@ class SuccessfulLoginEvent extends AdjustBaseEvent {
 
 class DetailedSymptomEvent extends AdjustBaseEvent {
   DetailedSymptomEvent()
-      : super(getIt<AdjustManager>().constants.detailedSymptom);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .detailedSymptom);
 }
 
 class MenuButtonClickedEvent extends AdjustBaseEvent {
   MenuButtonClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuButtonClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuButtonClicked);
 }
 
 class MenuElementProfileClickedEvent extends AdjustBaseEvent {
   MenuElementProfileClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuElementProfileClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementProfileClicked);
 }
 
 class MenuElementHospitalAppointmentClickedEvent extends AdjustBaseEvent {
   MenuElementHospitalAppointmentClickedEvent()
-      : super(getIt<AdjustManager>()
-            .constants
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
             .menuElementHospitalAppointmentClicked);
 }
 
 class MenuElementOnlineAppoClickedEvent extends AdjustBaseEvent {
   MenuElementOnlineAppoClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuElementOnlineAppoClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementOnlineAppoClicked);
 }
 
 class MenuElementHealthTrackerClickedEvent extends AdjustBaseEvent {
   MenuElementHealthTrackerClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuElementHealthTrackerClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementHealthTrackerClicked);
 }
 
 class MenuElementAppointmentsClickedEvent extends AdjustBaseEvent {
   MenuElementAppointmentsClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuElementAppointmentsClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementAppointmentsClicked);
 }
 
 class MenuElementResultsClickedEvent extends AdjustBaseEvent {
   MenuElementResultsClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuElementResultsClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementResultsClicked);
 }
 
 class MenuElementForYouClickedEvent extends AdjustBaseEvent {
   MenuElementForYouClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuElementForYouClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementForYouClicked);
 }
 
 class MenuElementSymptomCheckerClickedEvent extends AdjustBaseEvent {
   MenuElementSymptomCheckerClickedEvent()
-      : super(
-            getIt<AdjustManager>().constants.menuElementSymptomCheckerClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementSymptomCheckerClicked);
 }
 
 class MenuElementDevicesClickedEvent extends AdjustBaseEvent {
   MenuElementDevicesClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuElementDevicesClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementDevicesClicked);
 }
 
 class MenuElementRemindersClickedEvent extends AdjustBaseEvent {
   MenuElementRemindersClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuElementRemindersClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementRemindersClicked);
 }
 
 class MenuElementSuggestionsClickedEvent extends AdjustBaseEvent {
   MenuElementSuggestionsClickedEvent()
-      : super(getIt<AdjustManager>().constants.menuElementSuggestionsClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .menuElementSuggestionsClicked);
 }
 
 class SearchCreateAppointmentEvent extends AdjustBaseEvent {
   SearchCreateAppointmentEvent()
-      : super(getIt<AdjustManager>().constants.searchCreateAppointment);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .searchCreateAppointment);
 }
 
 class HealthTrackerButtonsEvent extends AdjustBaseEvent {
   HealthTrackerButtonsEvent()
-      : super(getIt<AdjustManager>().constants.healthTrackerButtons);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .healthTrackerButtons);
 }
 
 class MySymptomsPage1Event extends AdjustBaseEvent {
   MySymptomsPage1Event()
-      : super(getIt<AdjustManager>().constants.mySymptomsPage1);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mySymptomsPage1);
 }
 
 class MySymptomsPage2Event extends AdjustBaseEvent {
   MySymptomsPage2Event()
-      : super(getIt<AdjustManager>().constants.mySymptomsPage2);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mySymptomsPage2);
 }
 
 class MySymptomsPage3Event extends AdjustBaseEvent {
   MySymptomsPage3Event()
-      : super(getIt<AdjustManager>().constants.mySymptomsPage3);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mySymptomsPage3);
 }
 
 class MySymptomsPage4DepartmentAnalysisEvent extends AdjustBaseEvent {
   MySymptomsPage4DepartmentAnalysisEvent()
-      : super(
-            getIt<AdjustManager>().constants.mySymptomsPage4DepartmentAnalysis);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mySymptomsPage4DepartmentAnalysis);
 }
 
 class MyResultsSearchAppointmentEvent extends AdjustBaseEvent {
   MyResultsSearchAppointmentEvent()
-      : super(getIt<AdjustManager>().constants.myResultsSearchAppointment);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .myResultsSearchAppointment);
 }
 
 class LogOutEvent extends AdjustBaseEvent {
-  LogOutEvent() : super(getIt<AdjustManager>().constants.logOut);
+  LogOutEvent()
+      : super(getIt<IAppConfig>().platform.adjustManager?.constants.logOut);
 }
 
 class NewDownloadsEvent extends AdjustBaseEvent {
-  NewDownloadsEvent() : super(getIt<AdjustManager>().constants.newDownloads);
+  NewDownloadsEvent()
+      : super(
+            getIt<IAppConfig>().platform.adjustManager?.constants.newDownloads);
 }
 
 class SuccessfulVideoCallEvent extends AdjustBaseEvent {
   SuccessfulVideoCallEvent()
-      : super(getIt<AdjustManager>().constants.successfulVideoCall);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .successfulVideoCall);
 }
 
 class SuccessfulPaymentEvent extends AdjustBaseEvent {
   SuccessfulPaymentEvent()
-      : super(getIt<AdjustManager>().constants.successfulPayment);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .successfulPayment);
 }
 
 class ForYouCategoryClickedEvent extends AdjustBaseEvent {
   ForYouCategoryClickedEvent()
-      : super(getIt<AdjustManager>().constants.forYouCategoryClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .forYouCategoryClicked);
 }
 
 class ForYouSubCategoryClickedEvent extends AdjustBaseEvent {
   ForYouSubCategoryClickedEvent()
-      : super(getIt<AdjustManager>().constants.forYouSubCategoryClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .forYouSubCategoryClicked);
 }
 
 class ForYouPackageSummaryClickedEvent extends AdjustBaseEvent {
   ForYouPackageSummaryClickedEvent()
-      : super(getIt<AdjustManager>().constants.forYouPackageSummaryClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .forYouPackageSummaryClicked);
 }
 
 class ForYouItemPaymentClickedEvent extends AdjustBaseEvent {
   ForYouItemPaymentClickedEvent()
-      : super(getIt<AdjustManager>().constants.forYouItemPaymentClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .forYouItemPaymentClicked);
 }
 
 class SuccessfulPasswordChangeEvent extends AdjustBaseEvent {
   SuccessfulPasswordChangeEvent()
-      : super(getIt<AdjustManager>().constants.successfulPasswordChange);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .successfulPasswordChange);
 }
 
 class MainPagePcrTestClickedEvent extends AdjustBaseEvent {
   MainPagePcrTestClickedEvent()
-      : super(getIt<AdjustManager>().constants.mainPagePcrTestClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mainPagePcrTestClicked);
 }
 
 class SuccessfulRelativeAddEvent extends AdjustBaseEvent {
   SuccessfulRelativeAddEvent()
-      : super(getIt<AdjustManager>().constants.successfulRelativeAdd);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .successfulRelativeAdd);
 }
 
 //#region No Reference
 class SuccessfulRelativeDeletionEvent extends AdjustBaseEvent {
   SuccessfulRelativeDeletionEvent()
-      : super(getIt<AdjustManager>().constants.successfulRelativeDeletion);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .successfulRelativeDeletion);
 }
 
 class MainPageOAClickedEvent extends AdjustBaseEvent {
   MainPageOAClickedEvent()
-      : super(getIt<AdjustManager>().constants.mainPageOAClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mainPageOAClicked);
 }
 
 class MainPageFindDoctorClickedEvent extends AdjustBaseEvent {
   MainPageFindDoctorClickedEvent()
-      : super(getIt<AdjustManager>().constants.mainPageFindDoctorClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mainPageFindDoctorClicked);
 }
 
 class MainPageMyAppointmentsClickedEvent extends AdjustBaseEvent {
   MainPageMyAppointmentsClickedEvent()
-      : super(getIt<AdjustManager>().constants.mainPageMyAppointmentsClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mainPageMyAppointmentsClicked);
 }
 
 class MainPageMyResultsClickedEvent extends AdjustBaseEvent {
   MainPageMyResultsClickedEvent()
-      : super(getIt<AdjustManager>().constants.mainPageMyResultsClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mainPageMyResultsClicked);
 }
 
 class MainPageCounselingLineClickedEvent extends AdjustBaseEvent {
   MainPageCounselingLineClickedEvent()
-      : super(getIt<AdjustManager>().constants.mainPageCounselingLineClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mainPageCounselingLineClicked);
 }
 
 class FindDoctorTabClickedEvent extends AdjustBaseEvent {
   FindDoctorTabClickedEvent()
-      : super(getIt<AdjustManager>().constants.findDoctorTabClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .findDoctorTabClicked);
 }
 
 class MyAppointmentsTabClickedEvent extends AdjustBaseEvent {
   MyAppointmentsTabClickedEvent()
-      : super(getIt<AdjustManager>().constants.myAppointmentsTabClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .myAppointmentsTabClicked);
 }
 
 class MainPageTabClickedEvent extends AdjustBaseEvent {
   MainPageTabClickedEvent()
-      : super(getIt<AdjustManager>().constants.mainPageTabClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .mainPageTabClicked);
 }
 
 class MyProfileTabClickedEvent extends AdjustBaseEvent {
   MyProfileTabClickedEvent()
-      : super(getIt<AdjustManager>().constants.myProfileTabClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .myProfileTabClicked);
 }
 
 class OaDepartmentSelectionEvent extends AdjustBaseEvent {
   OaDepartmentSelectionEvent()
-      : super(getIt<AdjustManager>().constants.oaDepartmentSelection);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .oaDepartmentSelection);
 }
 
 class OaDoctorSelectionEvent extends AdjustBaseEvent {
   OaDoctorSelectionEvent()
-      : super(getIt<AdjustManager>().constants.oaDoctorSelection);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .oaDoctorSelection);
 }
 
 class TakeAppointmentDoctorDetailsEvent extends AdjustBaseEvent {
   TakeAppointmentDoctorDetailsEvent()
-      : super(getIt<AdjustManager>().constants.takeAppointmentDoctorDetails);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .takeAppointmentDoctorDetails);
 }
 
 class PcrTestHospitalSelectionEvent extends AdjustBaseEvent {
   PcrTestHospitalSelectionEvent()
-      : super(getIt<AdjustManager>().constants.pcrTestHospitalSelection);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .pcrTestHospitalSelection);
 }
 
 class RelativesTabClickedEvent extends AdjustBaseEvent {
   RelativesTabClickedEvent()
-      : super(getIt<AdjustManager>().constants.relativesTabClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .relativesTabClicked);
 }
 
 class RelativeSwitchSuccessfulEvent extends AdjustBaseEvent {
   RelativeSwitchSuccessfulEvent()
-      : super(getIt<AdjustManager>().constants.relativeSwitchSuccessful);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .relativeSwitchSuccessful);
 }
 
 class SuccessfulRelativeMainAccountSwitchEvent extends AdjustBaseEvent {
   SuccessfulRelativeMainAccountSwitchEvent()
-      : super(getIt<AdjustManager>()
-            .constants
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
             .successfulRelativeMainAccountSwitch);
 }
 
 class PersonalInformationClickedEvent extends AdjustBaseEvent {
   PersonalInformationClickedEvent()
-      : super(getIt<AdjustManager>().constants.personalInformationClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .personalInformationClicked);
 }
 
 class UploadProfilePictureEvent extends AdjustBaseEvent {
   UploadProfilePictureEvent()
-      : super(getIt<AdjustManager>().constants.uploadProfilePicture);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .uploadProfilePicture);
 }
 
 class DeleteProfilePictureEvent extends AdjustBaseEvent {
   DeleteProfilePictureEvent()
-      : super(getIt<AdjustManager>().constants.deleteProfilePicture);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .deleteProfilePicture);
 }
 
 class UnsuccessfulRelativeSwitchEvent extends AdjustBaseEvent {
   UnsuccessfulRelativeSwitchEvent()
-      : super(getIt<AdjustManager>().constants.unsuccessfulRelativeSwitch);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .unsuccessfulRelativeSwitch);
 }
 
 class UnccessfulRelativeMainAccountSwitchEvent extends AdjustBaseEvent {
   UnccessfulRelativeMainAccountSwitchEvent()
-      : super(getIt<AdjustManager>()
-            .constants
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
             .unccessfulRelativeMainAccountSwitchEvent);
 }
 
 class UnsuccessfulRelativeDeletionEvent extends AdjustBaseEvent {
   UnsuccessfulRelativeDeletionEvent()
-      : super(getIt<AdjustManager>().constants.unsuccessfulRelativeDeletion);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .unsuccessfulRelativeDeletion);
 }
 
 class ForYouPageClickedEvent extends AdjustBaseEvent {
   ForYouPageClickedEvent()
-      : super(getIt<AdjustManager>().constants.forYouPageClicked);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .forYouPageClicked);
 }
 //#endregion
 
 //#region FailEvents
 class UnsuccessfulPasswordChangeEvent extends AdjustBaseEvent {
   UnsuccessfulPasswordChangeEvent()
-      : super(getIt<AdjustManager>().constants.unsuccessfulPasswordChange);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .unsuccessfulPasswordChange);
 }
 
 class UnsuccessfulRelativeAddEvent extends AdjustBaseEvent {
   UnsuccessfulRelativeAddEvent()
-      : super(getIt<AdjustManager>().constants.unsuccessfulRelativeAdd);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .unsuccessfulRelativeAdd);
 }
 
 class UnsuccessfulRegisterStep1Event extends AdjustBaseEvent {
   UnsuccessfulRegisterStep1Event()
-      : super(getIt<AdjustManager>().constants.unsuccessfulRegisterStep1);
+      : super(getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.constants
+            .unsuccessfulRegisterStep1);
 }
 //#endregion
 

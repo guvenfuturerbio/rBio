@@ -205,7 +205,7 @@ class _MeasurementTrackingHomeScreenState
           //
           GestureDetector(
             onTap: () {
-              getIt<AdjustManager>().trackEvent(HealthTrackerButtonsEvent());
+              getIt<IAppConfig>().platform.adjustManager?.trackEvent(HealthTrackerButtonsEvent());
               getIt<FirebaseAnalyticsManager>()
                   .logEvent(SaglikTakibiButonlarEvent('Tedavi'));
 

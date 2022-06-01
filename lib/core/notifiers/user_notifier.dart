@@ -209,7 +209,7 @@ class UserNotifier extends ChangeNotifier {
       LoggerUtils.instance.e(e);
     } finally {
       Atom.dismiss();
-      getIt<AdjustManager>().trackEvent(LogOutEvent());
+      getIt<IAppConfig>().platform.adjustManager?.trackEvent(LogOutEvent());
       getIt<FirebaseAnalyticsManager>().logEvent(UygulamaCikisEvent());
       Atom.to(PagePaths.login, isReplacement: true);
     }

@@ -20,7 +20,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
   await appConfig.platform.sendFirstOpenFirebaseEvent(
     getIt<ISharedPreferencesManager>(),
     getIt<FirebaseAnalyticsManager>(),
-    getIt<AdjustManager>(),
+    appConfig.platform.adjustManager
   );
 
   SystemChrome.setSystemUIOverlayStyle(
