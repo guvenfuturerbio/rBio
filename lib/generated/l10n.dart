@@ -8859,6 +8859,46 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Special note`
+  String get special_note {
+    return Intl.message(
+      'Special note',
+      name: 'special_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Special note`
+  String get add_special_note {
+    return Intl.message(
+      'Add Special note',
+      name: 'add_special_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Special note`
+  String get update_special_note {
+    return Intl.message(
+      'Update Special note',
+      name: 'update_special_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete the special note?`
+  String get delete_special_note {
+    return Intl.message(
+      'Are you sure you want to delete the special note?',
+      name: 'delete_special_note',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

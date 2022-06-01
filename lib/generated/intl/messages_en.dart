@@ -54,6 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Add New Relative"),
         "add_photo": MessageLookupByLibrary.simpleMessage("Add Photo"),
         "add_reminder": MessageLookupByLibrary.simpleMessage("Add Reminder"),
+        "add_special_note":
+            MessageLookupByLibrary.simpleMessage("Add Special note"),
         "add_strips": MessageLookupByLibrary.simpleMessage("Add Strips"),
         "add_symptom": MessageLookupByLibrary.simpleMessage("Add Symptom"),
         "add_treatment_note":
@@ -366,6 +368,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Do you confirm?"),
         "delete_relative_title":
             MessageLookupByLibrary.simpleMessage("Deleting!"),
+        "delete_special_note": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete the special note?"),
         "delete_treatment_note": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete the treatment note?"),
         "demographic": MessageLookupByLibrary.simpleMessage("Demographic"),
@@ -1190,6 +1194,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sorry_dont_transaction": MessageLookupByLibrary.simpleMessage(
             "Sorry, we are currently unable to complete your transaction. Please try again later"),
         "sort_by": MessageLookupByLibrary.simpleMessage("Sort by"),
+        "special_note": MessageLookupByLibrary.simpleMessage("Special note"),
         "specialities": MessageLookupByLibrary.simpleMessage("Specialities"),
         "specific": MessageLookupByLibrary.simpleMessage("Specific"),
         "specific_days": MessageLookupByLibrary.simpleMessage("Specific Days"),
@@ -1331,6 +1336,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "update_information":
             MessageLookupByLibrary.simpleMessage("Update Information"),
         "update_now": MessageLookupByLibrary.simpleMessage("Update Now"),
+        "update_special_note":
+            MessageLookupByLibrary.simpleMessage("Update Special note"),
         "update_treatment_note":
             MessageLookupByLibrary.simpleMessage("Update Treatment Note"),
         "upload": MessageLookupByLibrary.simpleMessage("Upload"),

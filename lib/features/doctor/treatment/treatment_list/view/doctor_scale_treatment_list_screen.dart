@@ -130,7 +130,7 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
                           } else if (result.list[index].type ==
                               TreatmentType.doctorNote) {
                             Atom.to(
-                              PagePaths.doctorScaleDietAddEdit,
+                              PagePaths.doctorScaleDoctorNoteAddEdit,
                               queryParameters: {
                                 'itemId': result.list[index].id.toString(),
                                 'patientId': patientId.toString(),

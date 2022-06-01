@@ -55,6 +55,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_photo": MessageLookupByLibrary.simpleMessage("Fotoğraf Ekle"),
         "add_reminder":
             MessageLookupByLibrary.simpleMessage("Hatırlatıcı Ekle"),
+        "add_special_note":
+            MessageLookupByLibrary.simpleMessage("Özel Not Ekle"),
         "add_strips": MessageLookupByLibrary.simpleMessage("Strip Ekle"),
         "add_symptom": MessageLookupByLibrary.simpleMessage("Semptom Ekle"),
         "add_treatment_note":
@@ -359,6 +361,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Onaylıyor musunuz?"),
         "delete_relative_title":
             MessageLookupByLibrary.simpleMessage("Silinecektir!"),
+        "delete_special_note": MessageLookupByLibrary.simpleMessage(
+            "Özel notu silmek istediğinizden emin misiniz?"),
         "delete_treatment_note": MessageLookupByLibrary.simpleMessage(
             "Tedavi notunu silmek istediğinizden emin misiniz?"),
         "demographic": MessageLookupByLibrary.simpleMessage("Demografik"),
@@ -1181,6 +1185,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sorry_dont_transaction": MessageLookupByLibrary.simpleMessage(
             "Üzgünüz, İşleminizi şuan gerçekleştiremiyoruz. Lütfen daha sonra tekrar deneyiniz"),
         "sort_by": MessageLookupByLibrary.simpleMessage("Sırala"),
+        "special_note": MessageLookupByLibrary.simpleMessage("Özel Not"),
         "specialities": MessageLookupByLibrary.simpleMessage("Uzmanlıklar"),
         "specific": MessageLookupByLibrary.simpleMessage("Özel"),
         "specific_days": MessageLookupByLibrary.simpleMessage("Belirli Günler"),
@@ -1320,6 +1325,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "update_information":
             MessageLookupByLibrary.simpleMessage("Bilgilerini Güncelle"),
         "update_now": MessageLookupByLibrary.simpleMessage("Şimdi Güncelle"),
+        "update_special_note":
+            MessageLookupByLibrary.simpleMessage("Özel Not Güncelle"),
         "update_treatment_note":
             MessageLookupByLibrary.simpleMessage("Tedavi Notu Güncelle"),
         "upload": MessageLookupByLibrary.simpleMessage("Yükle"),

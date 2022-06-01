@@ -22,6 +22,7 @@ import '../../features/doctor/patient_detail/scale/view/scale_patient_detail_scr
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
 import '../../features/doctor/treatment/diet_add_edit/view/doctor_scale_diet_add_edit_screen.dart';
+import '../../features/doctor/treatment/doctor_note_add_edit/doctor_note_add_edit.dart';
 import '../../features/doctor/treatment/treatment_add_edit/view/doctor_scale_treatment_add_edit_screen.dart';
 import '../../features/doctor/treatment/treatment_list/view/doctor_scale_treatment_list_screen.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
@@ -273,6 +274,10 @@ class VRouterRoutes {
                 VWidget(
                   path: PagePaths.doctorScaleTreatmentAddEdit,
                   widget: const DoctorScaleTreatmentAddEditScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.doctorScaleDoctorNoteAddEdit,
+                  widget: const DoctorScaleDoctorNoteAddEditScreen(),
                 ),
               ],
             ),
@@ -678,6 +683,8 @@ class PagePaths {
   static const doctorScaleTreatmentList = '/doctor-scale-treatment-list';
   static const doctorScaleDietAddEdit = '/doctor-scale-diet-add-edit';
   static const doctorScaleTreatmentAddEdit = '/doctor-scale-treatment-add-edit';
+  static const doctorScaleDoctorNoteAddEdit =
+      '/doctor-scale-doctor-note-add-edit';
   // #endregion
 
   // #region Mediminder

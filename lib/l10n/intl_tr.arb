@@ -874,5 +874,9 @@
   "doctor_note": "Doktor Notu",
   "delete_diet_list": "Diyet listesini silmek istediğinizden emin misiniz?",
   "empty_cv": "Uzman CV'si bulunamadı.",
-  "add_diet_list": "Diyet Listesi Ekle"
+  "add_diet_list": "Diyet Listesi Ekle",
+  "special_note": "Özel Not",
+  "add_special_note": "Özel Not Ekle",
+  "update_special_note": "Özel Not Güncelle",
+  "delete_special_note": "Özel notu silmek istediğinizden emin misiniz?"
 }

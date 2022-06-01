@@ -141,4 +141,13 @@ class DoctorRepository {
   Future<GuvenResponseModel> addTreatmentNote(
           int patientId, PatientTreatmentAddRequest model) =>
       apiService.addTreatmentNote(patientId, model);
+
+  Future<ScaleTreatmentDetailResponse> treatmentGetDoctorNoteDetail(
+      int id) async {
+    final guvenResponseModel = await apiService.treatmentGetDetail(
+      TreatmentItemType.treatment,
+      id,
+    );
+    return ScaleTreatmentDetailResponse.fromJson(guvenResponseModel.xGetMap);
+  }
 }

@@ -28,4 +28,14 @@ extension ScaleTreatmentScreenEditModeExtension
         return LocaleProvider.of(context).update_diet_list;
     }
   }
+
+  String xGetDoctorNoteTitle(BuildContext context) {
+    switch (this) {
+      case ScaleTreatmentScreenEditMode.readOnly:
+        return LocaleProvider.of(context).special_note;
+
+      case ScaleTreatmentScreenEditMode.update:
+        return LocaleProvider.of(context).update_special_note;
+    }
+  }
 }
