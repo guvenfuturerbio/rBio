@@ -153,6 +153,10 @@ dev_dependencies:
   freezed: ">=1.0.0 <1.1.1"
   json_annotation: ^4.4.0
   json_serializable: ^6.1.4
+  qr_flutter:
+    git:
+      url: https://github.com/theyakka/qr.flutter.git
+
 
 flutter:
   uses-material-design: true
