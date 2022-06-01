@@ -1,86 +1,87 @@
 import 'dart:ui';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:onedosehealth/core/core.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:io';
+import 'package:universal_html/html.dart' as html;
 
-import 'package:share/share.dart';
-
-class DemoScreen extends StatefulWidget {
-  const DemoScreen({Key? key}) : super(key: key);
+class QRCodeGeneratorScreen extends StatefulWidget {
+  QRCodeGeneratorScreen({required this.name, required this.id, Key? key})
+      : super(key: key);
+  String name;
+  String id;
 
   @override
-  State<DemoScreen> createState() => _DemoScreenState();
+  State<QRCodeGeneratorScreen> createState() => _QRCodeGeneratorScreenState();
 }
 
-class _DemoScreenState extends State<DemoScreen> {
+class _QRCodeGeneratorScreenState extends State<QRCodeGeneratorScreen> {
+  String? text;
   GlobalKey globalKey = GlobalKey();
-  String _dataString = "Hello from this QR";
-
   Future<void> _captureAndSharePng() async {
-    Future.delayed(const Duration(milliseconds: 1000), () async {
-      try {
-        RenderRepaintBoundary boundary = globalKey.currentContext
-            ?.findRenderObject() as RenderRepaintBoundary;
-        var image = await boundary.toImage();
-        ByteData? byteData =
-            await image.toByteData(format: ImageByteFormat.png);
-        Uint8List? pngBytes = byteData?.buffer.asUint8List();
+    try {
+      final boundary =
+          globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+      var image = await boundary.toImage();
+      ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
+      Uint8List? pngBytes = byteData?.buffer.asUint8List();
 
+      if (kIsWeb) {
+        html.Blob blob = html.Blob([pngBytes]);
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor = html.AnchorElement()
+          ..href = url
+          ..style.display = 'none'
+          ..download = 'deneme' + '.png';
+        html.document.body?.children.add(anchor);
+        anchor.click();
+        html.document.body?.children.remove(anchor);
+        html.Url.revokeObjectUrl(url);
+      } else {
         final tempDir = await getTemporaryDirectory();
         final file = await File('${tempDir.path}/image.png').create();
         await file.writeAsBytes(pngBytes!);
-        print('>>>>><PATH: ${file.path}');
         await FlutterShare.shareFile(
             title: 'deneme', filePath: file.path, fileType: 'image/png');
-      } catch (e) {
-        print(e.toString());
       }
-    });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    text = '{"name":${widget.name}:","id":${widget.id}}';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(actions: [
         IconButton(
-            onPressed: () {
-              _captureAndSharePng();
+            onPressed: () async {
+              await _captureAndSharePng();
             },
-            icon: Icon(Icons.share))
+            icon: kIsWeb ? const Icon(Icons.download) : const Icon(Icons.share))
       ]),
       backgroundColor: Colors.green,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(45),
-              child: RbioTextFormField(
-                hintText: 'Değer girin',
-                controller: controller,
-              ),
-            ),
-            RbioElevatedButton(
-              title: 'Generate QR CODe',
-              onTap: () {
-                _captureAndSharePng();
-                setState(() {
-                  _dataString = controller.text;
-                });
-              },
-            ),
             RepaintBoundary(
               key: globalKey,
               child: QrImageView(
-                data: _dataString,
+                data: text!,
                 version: QrVersions.auto,
                 size: 200.0,
               ),
