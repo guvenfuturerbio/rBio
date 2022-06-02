@@ -189,6 +189,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
                           focusNode: _titleFocusNode,
                           controller: _titleEditingController,
                           hintText: LocaleProvider.of(context).title,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
 
@@ -200,22 +201,23 @@ class _DoctorScaleDoctorNoteAddEditViewState
                         absorbing: true,
                         child: RbioTextFormField(
                           minLines: 1,
+                          isDense: true,
                           maxLines: null,
                           focusNode: _descriptionFocusNode,
-                          controller: _descriptionEditingController,
-                          textInputAction: TextInputAction.newline,
                           keyboardType: TextInputType.multiline,
-                          isDense: true,
+                          textInputAction: TextInputAction.newline,
+                          controller: _descriptionEditingController,
+                          hintText: LocaleProvider.of(context).description,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
                     ] else ...[
                       //
                       RbioTextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         focusNode: _titleFocusNode,
                         controller: _titleEditingController,
                         hintText: LocaleProvider.of(context).title,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value!.isNotEmpty) {
                             return null;
@@ -231,13 +233,14 @@ class _DoctorScaleDoctorNoteAddEditViewState
                       //
                       RbioTextFormField(
                         minLines: 1,
+                        isDense: true,
                         maxLines: null,
                         focusNode: _descriptionFocusNode,
+                        keyboardType: TextInputType.multiline,
                         controller: _descriptionEditingController,
                         textInputAction: TextInputAction.newline,
-                        keyboardType: TextInputType.multiline,
-                        isDense: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        hintText: LocaleProvider.of(context).description,
                         validator: (value) {
                           if (value!.isNotEmpty) {
                             return null;

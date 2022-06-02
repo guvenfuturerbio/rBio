@@ -385,6 +385,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "We just need your Passport and Phone number to send you temporary password"),
         "des_forgot_password_tc": MessageLookupByLibrary.simpleMessage(
             "We just need your T.C identity and Phone number to send you temporary password"),
+        "description": MessageLookupByLibrary.simpleMessage("Description"),
         "detail_search": MessageLookupByLibrary.simpleMessage("Detail Search"),
         "detailed_check":
             MessageLookupByLibrary.simpleMessage("Detailed Health Check"),

@@ -878,5 +878,6 @@
   "special_note": "Özel Not",
   "add_special_note": "Özel Not Ekle",
   "update_special_note": "Özel Not Güncelle",
-  "delete_special_note": "Özel notu silmek istediğinizden emin misiniz?"
+  "delete_special_note": "Özel notu silmek istediğinizden emin misiniz?",
+  "description": "Açıklama"
 }

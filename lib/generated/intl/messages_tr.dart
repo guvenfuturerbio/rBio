@@ -377,6 +377,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Size geçici şifrenizi iletebilmemiz için Pasaport numaranız ve telefon numaranıza ihtiyacımız var"),
         "des_forgot_password_tc": MessageLookupByLibrary.simpleMessage(
             "Size geçici şifrenizi iletebilmemiz için T.C kimlik numaranız ve telefon numaranıza ihtiyacımız var"),
+        "description": MessageLookupByLibrary.simpleMessage("Açıklama"),
         "detail_search": MessageLookupByLibrary.simpleMessage("Detaylı Arama"),
         "detailed_check":
             MessageLookupByLibrary.simpleMessage("Detaylı Sağlık Kontrolü"),
