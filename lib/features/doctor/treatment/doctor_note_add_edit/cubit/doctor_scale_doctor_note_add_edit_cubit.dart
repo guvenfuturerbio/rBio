@@ -6,37 +6,38 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../../core/core.dart';
 import '../../../../chronic_tracking/scale/scale.dart';
 
-part 'doctor_scale_treatment_add_edit_state.dart';
-part 'doctor_scale_treatment_add_edit_cubit.freezed.dart';
+part 'doctor_scale_doctor_note_add_edit_state.dart';
+part 'doctor_scale_doctor_note_add_edit_cubit.freezed.dart';
 
-class DoctorScaleTreatmentAddEditCubit
-    extends Cubit<DoctorScaleTreatmentAddEditState> {
-  DoctorScaleTreatmentAddEditCubit(this.patientId, this.itemId, this.repository)
-      : super(const DoctorScaleTreatmentAddEditState.initial());
+class DoctorScaleDoctorNoteAddEditCubit
+    extends Cubit<DoctorScaleDoctorNoteAddEditState> {
+  DoctorScaleDoctorNoteAddEditCubit(
+      this.patientId, this.itemId, this.repository)
+      : super(const DoctorScaleDoctorNoteAddEditState.initial());
   late final int? itemId;
   late final int patientId;
   late final DoctorRepository repository;
 
   FutureOr<void> setInitState() async {
-    emit(const DoctorScaleTreatmentAddEditState.loadInProgress());
+    emit(const DoctorScaleDoctorNoteAddEditState.loadInProgress());
     if (itemId == null) {
       emit(
-        DoctorScaleTreatmentAddEditState.success(
-          DoctorScaleTreatmentAddEditResult(
+        DoctorScaleDoctorNoteAddEditState.success(
+          DoctorScaleDoctorNoteAddEditResult(
             editMode: ScaleTreatmentScreenEditMode.update,
           ),
         ),
       );
     } else {
       try {
-        final response = await repository.treatmentGetDetail(itemId!);
+        final response = await repository.treatmentGetDoctorNoteDetail(itemId!);
         emit(
-          DoctorScaleTreatmentAddEditState.success(
-            DoctorScaleTreatmentAddEditResult(response: response),
+          DoctorScaleDoctorNoteAddEditState.success(
+            DoctorScaleDoctorNoteAddEditResult(response: response),
           ),
         );
       } catch (error) {
-        emit(const DoctorScaleTreatmentAddEditState.failure());
+        emit(const DoctorScaleDoctorNoteAddEditState.failure());
       }
     }
   }
@@ -46,7 +47,7 @@ class DoctorScaleTreatmentAddEditCubit
     currentState.whenOrNull(
       success: (result) {
         emit(
-          DoctorScaleTreatmentAddEditState.success(
+          DoctorScaleDoctorNoteAddEditState.success(
             result.copyWith(
               editMode: ScaleTreatmentScreenEditMode.update,
             ),
@@ -56,7 +57,10 @@ class DoctorScaleTreatmentAddEditCubit
     );
   }
 
-  FutureOr<void> saveTreatmentNote(String text) async {
+  FutureOr<void> saveTreatmentNote(
+    String title,
+    String description,
+  ) async {
     final currentState = state;
     await currentState.whenOrNull(
       success: (result) async {
@@ -65,12 +69,12 @@ class DoctorScaleTreatmentAddEditCubit
           await repository.addTreatmentNote(
             patientId,
             PatientTreatmentAddRequest(
-              title: "",
-              text: text,
-              treatmentNoteTypeId: 1,
+              title: title,
+              text: description,
+              treatmentNoteTypeId: 2,
             ),
           );
-          emit(const DoctorScaleTreatmentAddEditState.openListScreen());
+          emit(const DoctorScaleDoctorNoteAddEditState.openListScreen());
         } catch (error) {
           _emitSuccessFailure(result);
         }
@@ -85,7 +89,7 @@ class DoctorScaleTreatmentAddEditCubit
         try {
           _emitSuccessLoadInProgress(result);
           await repository.deleteTreatmentNote(itemId!);
-          emit(const DoctorScaleTreatmentAddEditState.openListScreen());
+          emit(const DoctorScaleDoctorNoteAddEditState.openListScreen());
         } catch (error) {
           _emitSuccessFailure(result);
         }
@@ -93,17 +97,17 @@ class DoctorScaleTreatmentAddEditCubit
     );
   }
 
-  void _emitSuccessLoadInProgress(DoctorScaleTreatmentAddEditResult result) {
+  void _emitSuccessLoadInProgress(DoctorScaleDoctorNoteAddEditResult result) {
     emit(
-      DoctorScaleTreatmentAddEditState.success(
+      DoctorScaleDoctorNoteAddEditState.success(
         result.copyWith(status: RbioLoadingProgress.loadInProgress),
       ),
     );
   }
 
-  void _emitSuccessFailure(DoctorScaleTreatmentAddEditResult result) {
+  void _emitSuccessFailure(DoctorScaleDoctorNoteAddEditResult result) {
     emit(
-      DoctorScaleTreatmentAddEditState.success(
+      DoctorScaleDoctorNoteAddEditState.success(
         result.copyWith(status: RbioLoadingProgress.failure),
       ),
     );
@@ -111,7 +115,7 @@ class DoctorScaleTreatmentAddEditCubit
       const Duration(seconds: 1),
       () {
         emit(
-          DoctorScaleTreatmentAddEditState.success(
+          DoctorScaleDoctorNoteAddEditState.success(
             result.copyWith(status: RbioLoadingProgress.initial),
           ),
         );

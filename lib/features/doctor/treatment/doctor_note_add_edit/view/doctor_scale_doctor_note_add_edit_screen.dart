@@ -4,7 +4,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../chronic_tracking/scale/scale.dart';
-import '../cubit/doctor_note_add_edit_cubit.dart';
+import '../cubit/doctor_scale_doctor_note_add_edit_cubit.dart';
 
 class DoctorScaleDoctorNoteAddEditScreen extends StatelessWidget {
   const DoctorScaleDoctorNoteAddEditScreen({Key? key}) : super(key: key);
@@ -24,14 +24,15 @@ class DoctorScaleDoctorNoteAddEditScreen extends StatelessWidget {
       return const RbioRouteError();
     }
 
-    return BlocProvider<DoctorNoteAddEditCubit>(
-      create: (context) => DoctorNoteAddEditCubit(
+    return BlocProvider<DoctorScaleDoctorNoteAddEditCubit>(
+      create: (context) => DoctorScaleDoctorNoteAddEditCubit(
         patientId,
         itemId,
         getIt(),
       )..setInitState(),
       child: Builder(builder: (context) {
-        return BlocListener<DoctorNoteAddEditCubit, DoctorNoteAddEditState>(
+        return BlocListener<DoctorScaleDoctorNoteAddEditCubit,
+            DoctorScaleDoctorNoteAddEditState>(
           listener: (context, state) {
             state.whenOrNull(
               openListScreen: () {
@@ -89,17 +90,26 @@ class _DoctorScaleDoctorNoteAddEditViewState
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DoctorNoteAddEditCubit, DoctorNoteAddEditState>(
-      listener: (context, state) {
+    return BlocConsumer<DoctorScaleDoctorNoteAddEditCubit,
+        DoctorScaleDoctorNoteAddEditState>(
+      listener:
+          (BuildContext context, DoctorScaleDoctorNoteAddEditState state) {
         state.whenOrNull(
           success: (result) {
-            if (!result.isLoading &&
+            if (!result.status.xIsLoadInProgress &&
                 !widget.isCreated &&
                 result.response != null) {
               _descriptionEditingController.text =
                   result.response!.treatmentNoteText ?? '';
               _titleEditingController.text =
                   result.response!.treatmentNoteTitle ?? '';
+            }
+
+            if (result.status.xIsFailure) {
+              Utils.instance.showErrorSnackbar(
+                context,
+                LocaleProvider.of(context).something_went_wrong,
+              );
             }
           },
         );
@@ -112,8 +122,9 @@ class _DoctorScaleDoctorNoteAddEditViewState
       builder: (context, state) {
         return RbioStackedScaffold(
           resizeToAvoidBottomInset: false,
-          isLoading:
-              state.whenOrNull(success: (result) => result.isLoading) ?? false,
+          isLoading: state.whenOrNull(
+                  success: (result) => result.status.xIsLoadInProgress) ??
+              false,
           appbar: _buildAppBar(state),
           body: _buildBody(state),
         );
@@ -121,7 +132,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
     );
   }
 
-  RbioAppBar _buildAppBar(DoctorNoteAddEditState state) {
+  RbioAppBar _buildAppBar(DoctorScaleDoctorNoteAddEditState state) {
     return RbioAppBar(
       title: RbioAppBar.textTitle(
         context,
@@ -135,7 +146,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
     );
   }
 
-  Widget _buildBody(DoctorNoteAddEditState state) {
+  Widget _buildBody(DoctorScaleDoctorNoteAddEditState state) {
     return state.whenOrNull(
           initial: () => const SizedBox(),
           loadInProgress: () => const RbioLoading(),
@@ -147,7 +158,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
 
   Widget _buildSuccess(
     BuildContext context,
-    DoctorNoteAddEditResult result,
+    DoctorScaleDoctorNoteAddEditResult result,
   ) {
     return Form(
       key: _formKey,
@@ -274,7 +285,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
   }
 
   List<Widget> _buildBottomButtons(
-    DoctorNoteAddEditResult result,
+    DoctorScaleDoctorNoteAddEditResult result,
     bool isKeyboardVisible,
   ) {
     if (isKeyboardVisible) return [];
@@ -292,7 +303,9 @@ class _DoctorScaleDoctorNoteAddEditViewState
                 infinityWidth: true,
                 title: LocaleProvider.current.save,
                 onTap: () {
-                  context.read<DoctorNoteAddEditCubit>().changeScreenMode();
+                  context
+                      .read<DoctorScaleDoctorNoteAddEditCubit>()
+                      .changeScreenMode();
                   _saveTreatmentNote();
                 },
               ),
@@ -328,7 +341,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
                       title: LocaleProvider.current.update,
                       onTap: () {
                         context
-                            .read<DoctorNoteAddEditCubit>()
+                            .read<DoctorScaleDoctorNoteAddEditCubit>()
                             .changeScreenMode();
                       },
                     ),
@@ -349,7 +362,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
                                 LocaleProvider.of(context).delete_special_note,
                             deleteConfirm: () {
                               context
-                                  .read<DoctorNoteAddEditCubit>()
+                                  .read<DoctorScaleDoctorNoteAddEditCubit>()
                                   .deleteTreatmentNote();
                             },
                           ),
@@ -396,7 +409,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
 
   void _saveTreatmentNote() {
     if (_formKey.currentState?.validate() ?? false) {
-      context.read<DoctorNoteAddEditCubit>().saveTreatmentNote(
+      context.read<DoctorScaleDoctorNoteAddEditCubit>().saveTreatmentNote(
             _titleEditingController.text.trim(),
             _descriptionEditingController.text.trim(),
           );

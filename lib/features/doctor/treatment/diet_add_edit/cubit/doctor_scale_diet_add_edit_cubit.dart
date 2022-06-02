@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../../core/core.dart';
 import '../../../../chronic_tracking/scale/diet_detail/model/scale_treatment_diet_detail_response.dart';
 import '../../../../chronic_tracking/scale/treatment_detail/model/scale_treatment_screen_edit_mode.dart';
-import '../model/doctor_diet_list_add_request.dart';
+import '../model/scale_diet_list_add_request.dart';
 
 part 'doctor_scale_diet_add_edit_cubit.freezed.dart';
 part 'doctor_scale_diet_add_edit_state.dart';
@@ -67,15 +67,11 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
     final currentState = state;
     await currentState.whenOrNull(
       success: (result) async {
-        emit(
-          DoctorScaleDietAddEditState.success(
-            result.copyWith(isLoading: true),
-          ),
-        );
         try {
+          _emitSuccessLoadInProgress(result);
           await repository.treatmentAddDiet(
             patientId,
-            DoctorDietListAddRequest(
+            ScaleDietListAddRequest(
               title: title,
               breakfast: breakfast,
               refreshment: refreshment,
@@ -85,7 +81,7 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
           );
           emit(const DoctorScaleDietAddEditState.openListScreen());
         } catch (error) {
-          emit(const DoctorScaleDietAddEditState.failure());
+          _emitSuccessFailure(result);
         }
       },
     );
@@ -95,17 +91,39 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
     final currentState = state;
     await currentState.whenOrNull(
       success: (result) async {
-        emit(
-          DoctorScaleDietAddEditState.success(
-            result.copyWith(isLoading: true),
-          ),
-        );
         try {
+          _emitSuccessLoadInProgress(result);
           await repository.deleteNoteDiet(itemId!);
           emit(const DoctorScaleDietAddEditState.openListScreen());
         } catch (error) {
-          emit(const DoctorScaleDietAddEditState.failure());
+          _emitSuccessFailure(result);
         }
+      },
+    );
+  }
+
+  void _emitSuccessLoadInProgress(DoctorScaleDietAddEditResult result) {
+    emit(
+      DoctorScaleDietAddEditState.success(
+        result.copyWith(status: RbioLoadingProgress.loadInProgress),
+      ),
+    );
+  }
+
+  void _emitSuccessFailure(DoctorScaleDietAddEditResult result) {
+    emit(
+      DoctorScaleDietAddEditState.success(
+        result.copyWith(status: RbioLoadingProgress.failure),
+      ),
+    );
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        emit(
+          DoctorScaleDietAddEditState.success(
+            result.copyWith(status: RbioLoadingProgress.initial),
+          ),
+        );
       },
     );
   }

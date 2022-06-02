@@ -116,7 +116,7 @@ class DoctorRepository {
 
   Future<GuvenResponseModel> treatmentAddDiet(
     int patientId,
-    DoctorDietListAddRequest model,
+    ScaleDietListAddRequest model,
   ) =>
       apiService.treatmentAddDiet(patientId, model);
 

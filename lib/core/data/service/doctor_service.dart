@@ -46,7 +46,7 @@ abstract class DoctorApiService {
   );
   Future<GuvenResponseModel> treatmentAddDiet(
     int patientId,
-    DoctorDietListAddRequest model,
+    ScaleDietListAddRequest model,
   );
   Future<GuvenResponseModel> deleteNoteDiet(
     TreatmentItemType type,

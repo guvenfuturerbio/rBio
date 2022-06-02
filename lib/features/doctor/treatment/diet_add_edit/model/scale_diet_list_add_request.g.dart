@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'doctor_diet_list_add_request.dart';
+part of 'scale_diet_list_add_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_DoctorDietListAddRequest _$$_DoctorDietListAddRequestFromJson(
+_$_ScaleDietListAddRequest _$$_ScaleDietListAddRequestFromJson(
         Map<String, dynamic> json) =>
-    _$_DoctorDietListAddRequest(
+    _$_ScaleDietListAddRequest(
       title: json['title'] as String?,
       breakfast: json['breakfast'] as String?,
       refreshment: json['refreshment'] as String?,
@@ -16,8 +16,8 @@ _$_DoctorDietListAddRequest _$$_DoctorDietListAddRequestFromJson(
       dinner: json['dinner'] as String?,
     );
 
-Map<String, dynamic> _$$_DoctorDietListAddRequestToJson(
-        _$_DoctorDietListAddRequest instance) =>
+Map<String, dynamic> _$$_ScaleDietListAddRequestToJson(
+        _$_ScaleDietListAddRequest instance) =>
     <String, dynamic>{
       'title': instance.title,
       'breakfast': instance.breakfast,

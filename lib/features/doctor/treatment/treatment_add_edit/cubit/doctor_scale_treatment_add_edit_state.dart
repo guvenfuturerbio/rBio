@@ -15,23 +15,23 @@ class DoctorScaleTreatmentAddEditState with _$DoctorScaleTreatmentAddEditState {
 class DoctorScaleTreatmentAddEditResult {
   final ScaleTreatmentDetailResponse? response;
   final ScaleTreatmentScreenEditMode editMode;
-  final bool isLoading;
+  final RbioLoadingProgress status;
 
   DoctorScaleTreatmentAddEditResult({
     this.response,
     this.editMode = ScaleTreatmentScreenEditMode.readOnly,
-    this.isLoading = false,
+    this.status = RbioLoadingProgress.initial,
   });
 
   DoctorScaleTreatmentAddEditResult copyWith({
     ScaleTreatmentDetailResponse? response,
     ScaleTreatmentScreenEditMode? editMode,
-    bool? isLoading,
+    RbioLoadingProgress? status,
   }) {
     return DoctorScaleTreatmentAddEditResult(
       response: response ?? this.response,
       editMode: editMode ?? this.editMode,
-      isLoading: isLoading ?? this.isLoading,
+      status: status ?? this.status,
     );
   }
 }

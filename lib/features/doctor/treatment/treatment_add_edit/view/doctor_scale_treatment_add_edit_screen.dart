@@ -88,11 +88,18 @@ class _DoctorScaleTreatmentAddEditViewState
       listener: (context, state) {
         state.whenOrNull(
           success: (result) {
-            if (!result.isLoading &&
+            if (!result.status.xIsLoadInProgress &&
                 !widget.isCreated &&
                 result.response != null) {
               _treatmentNoteEditingController.text =
                   result.response!.treatmentNoteText ?? '';
+            }
+
+            if (result.status.xIsFailure) {
+              Utils.instance.showErrorSnackbar(
+                context,
+                LocaleProvider.of(context).something_went_wrong,
+              );
             }
           },
         );
@@ -105,8 +112,9 @@ class _DoctorScaleTreatmentAddEditViewState
       builder: (context, state) {
         return RbioStackedScaffold(
           resizeToAvoidBottomInset: false,
-          isLoading:
-              state.whenOrNull(success: (result) => result.isLoading) ?? false,
+          isLoading: state.whenOrNull(
+                  success: (result) => result.status.xIsLoadInProgress) ??
+              false,
           appbar: _buildAppBar(state),
           body: _buildBody(state),
         );

@@ -117,7 +117,7 @@ class _DoctorScaleDietAddEditViewState
       listener: (context, state) {
         state.whenOrNull(
           success: (result) {
-            if (!result.isLoading &&
+            if ((!result.status.xIsLoadInProgress) &&
                 !widget.isCreated &&
                 result.response != null) {
               _titleEditingController.text = result.response!.dietTitle ?? '';
@@ -127,6 +127,13 @@ class _DoctorScaleDietAddEditViewState
                   result.response!.dietRefreshment ?? '';
               _lunchEditingController.text = result.response!.dietLunch ?? '';
               _dinnerEditingController.text = result.response!.dietDinner ?? '';
+            }
+
+            if (result.status.xIsFailure) {
+              Utils.instance.showErrorSnackbar(
+                context,
+                LocaleProvider.of(context).something_went_wrong,
+              );
             }
           },
         );
@@ -139,8 +146,9 @@ class _DoctorScaleDietAddEditViewState
       builder: (context, state) {
         return RbioStackedScaffold(
           resizeToAvoidBottomInset: false,
-          isLoading:
-              state.whenOrNull(success: (result) => result.isLoading) ?? false,
+          isLoading: state.whenOrNull(
+                  success: (result) => result.status.xIsLoadInProgress) ??
+              false,
           appbar: _buildAppBar(state),
           body: _buildBody(state),
         );

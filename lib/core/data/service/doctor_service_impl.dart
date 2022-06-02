@@ -262,7 +262,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
   @override
   Future<GuvenResponseModel> treatmentAddDiet(
     int patientId,
-    DoctorDietListAddRequest model,
+    ScaleDietListAddRequest model,
   ) async {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.devApi.addDiet(patientId),

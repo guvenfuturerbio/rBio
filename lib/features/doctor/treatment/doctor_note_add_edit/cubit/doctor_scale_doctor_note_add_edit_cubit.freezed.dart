@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'doctor_note_add_edit_cubit.dart';
+part of 'doctor_scale_doctor_note_add_edit_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,8 +14,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$DoctorNoteAddEditStateTearOff {
-  const _$DoctorNoteAddEditStateTearOff();
+class _$DoctorScaleDoctorNoteAddEditStateTearOff {
+  const _$DoctorScaleDoctorNoteAddEditStateTearOff();
 
   _Initial initial() {
     return const _Initial();
@@ -25,7 +25,7 @@ class _$DoctorNoteAddEditStateTearOff {
     return const _LoadInProgress();
   }
 
-  _Success success(DoctorNoteAddEditResult result) {
+  _Success success(DoctorScaleDoctorNoteAddEditResult result) {
     return _Success(
       result,
     );
@@ -41,15 +41,17 @@ class _$DoctorNoteAddEditStateTearOff {
 }
 
 /// @nodoc
-const $DoctorNoteAddEditState = _$DoctorNoteAddEditStateTearOff();
+const $DoctorScaleDoctorNoteAddEditState =
+    _$DoctorScaleDoctorNoteAddEditStateTearOff();
 
 /// @nodoc
-mixin _$DoctorNoteAddEditState {
+mixin _$DoctorScaleDoctorNoteAddEditState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(DoctorNoteAddEditResult result) success,
+    required TResult Function(DoctorScaleDoctorNoteAddEditResult result)
+        success,
     required TResult Function() failure,
     required TResult Function() openListScreen,
   }) =>
@@ -58,7 +60,7 @@ mixin _$DoctorNoteAddEditState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
   }) =>
@@ -67,7 +69,7 @@ mixin _$DoctorNoteAddEditState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
     required TResult orElse(),
@@ -104,20 +106,21 @@ mixin _$DoctorNoteAddEditState {
 }
 
 /// @nodoc
-abstract class $DoctorNoteAddEditStateCopyWith<$Res> {
-  factory $DoctorNoteAddEditStateCopyWith(DoctorNoteAddEditState value,
-          $Res Function(DoctorNoteAddEditState) then) =
-      _$DoctorNoteAddEditStateCopyWithImpl<$Res>;
+abstract class $DoctorScaleDoctorNoteAddEditStateCopyWith<$Res> {
+  factory $DoctorScaleDoctorNoteAddEditStateCopyWith(
+          DoctorScaleDoctorNoteAddEditState value,
+          $Res Function(DoctorScaleDoctorNoteAddEditState) then) =
+      _$DoctorScaleDoctorNoteAddEditStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$DoctorNoteAddEditStateCopyWithImpl<$Res>
-    implements $DoctorNoteAddEditStateCopyWith<$Res> {
-  _$DoctorNoteAddEditStateCopyWithImpl(this._value, this._then);
+class _$DoctorScaleDoctorNoteAddEditStateCopyWithImpl<$Res>
+    implements $DoctorScaleDoctorNoteAddEditStateCopyWith<$Res> {
+  _$DoctorScaleDoctorNoteAddEditStateCopyWithImpl(this._value, this._then);
 
-  final DoctorNoteAddEditState _value;
+  final DoctorScaleDoctorNoteAddEditState _value;
   // ignore: unused_field
-  final $Res Function(DoctorNoteAddEditState) _then;
+  final $Res Function(DoctorScaleDoctorNoteAddEditState) _then;
 }
 
 /// @nodoc
@@ -128,7 +131,7 @@ abstract class _$InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$InitialCopyWithImpl<$Res>
-    extends _$DoctorNoteAddEditStateCopyWithImpl<$Res>
+    extends _$DoctorScaleDoctorNoteAddEditStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -144,7 +147,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'DoctorNoteAddEditState.initial()';
+    return 'DoctorScaleDoctorNoteAddEditState.initial()';
   }
 
   @override
@@ -161,7 +164,8 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(DoctorNoteAddEditResult result) success,
+    required TResult Function(DoctorScaleDoctorNoteAddEditResult result)
+        success,
     required TResult Function() failure,
     required TResult Function() openListScreen,
   }) {
@@ -173,7 +177,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
   }) {
@@ -185,7 +189,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
     required TResult orElse(),
@@ -237,7 +241,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements DoctorNoteAddEditState {
+abstract class _Initial implements DoctorScaleDoctorNoteAddEditState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -250,7 +254,7 @@ abstract class _$LoadInProgressCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadInProgressCopyWithImpl<$Res>
-    extends _$DoctorNoteAddEditStateCopyWithImpl<$Res>
+    extends _$DoctorScaleDoctorNoteAddEditStateCopyWithImpl<$Res>
     implements _$LoadInProgressCopyWith<$Res> {
   __$LoadInProgressCopyWithImpl(
       _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
@@ -267,7 +271,7 @@ class _$_LoadInProgress implements _LoadInProgress {
 
   @override
   String toString() {
-    return 'DoctorNoteAddEditState.loadInProgress()';
+    return 'DoctorScaleDoctorNoteAddEditState.loadInProgress()';
   }
 
   @override
@@ -284,7 +288,8 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(DoctorNoteAddEditResult result) success,
+    required TResult Function(DoctorScaleDoctorNoteAddEditResult result)
+        success,
     required TResult Function() failure,
     required TResult Function() openListScreen,
   }) {
@@ -296,7 +301,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
   }) {
@@ -308,7 +313,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
     required TResult orElse(),
@@ -360,7 +365,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   }
 }
 
-abstract class _LoadInProgress implements DoctorNoteAddEditState {
+abstract class _LoadInProgress implements DoctorScaleDoctorNoteAddEditState {
   const factory _LoadInProgress() = _$_LoadInProgress;
 }
 
@@ -368,12 +373,12 @@ abstract class _LoadInProgress implements DoctorNoteAddEditState {
 abstract class _$SuccessCopyWith<$Res> {
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
       __$SuccessCopyWithImpl<$Res>;
-  $Res call({DoctorNoteAddEditResult result});
+  $Res call({DoctorScaleDoctorNoteAddEditResult result});
 }
 
 /// @nodoc
 class __$SuccessCopyWithImpl<$Res>
-    extends _$DoctorNoteAddEditStateCopyWithImpl<$Res>
+    extends _$DoctorScaleDoctorNoteAddEditStateCopyWithImpl<$Res>
     implements _$SuccessCopyWith<$Res> {
   __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
       : super(_value, (v) => _then(v as _Success));
@@ -389,7 +394,7 @@ class __$SuccessCopyWithImpl<$Res>
       result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
-              as DoctorNoteAddEditResult,
+              as DoctorScaleDoctorNoteAddEditResult,
     ));
   }
 }
@@ -400,11 +405,11 @@ class _$_Success implements _Success {
   const _$_Success(this.result);
 
   @override
-  final DoctorNoteAddEditResult result;
+  final DoctorScaleDoctorNoteAddEditResult result;
 
   @override
   String toString() {
-    return 'DoctorNoteAddEditState.success(result: $result)';
+    return 'DoctorScaleDoctorNoteAddEditState.success(result: $result)';
   }
 
   @override
@@ -429,7 +434,8 @@ class _$_Success implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(DoctorNoteAddEditResult result) success,
+    required TResult Function(DoctorScaleDoctorNoteAddEditResult result)
+        success,
     required TResult Function() failure,
     required TResult Function() openListScreen,
   }) {
@@ -441,7 +447,7 @@ class _$_Success implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
   }) {
@@ -453,7 +459,7 @@ class _$_Success implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
     required TResult orElse(),
@@ -505,10 +511,11 @@ class _$_Success implements _Success {
   }
 }
 
-abstract class _Success implements DoctorNoteAddEditState {
-  const factory _Success(DoctorNoteAddEditResult result) = _$_Success;
+abstract class _Success implements DoctorScaleDoctorNoteAddEditState {
+  const factory _Success(DoctorScaleDoctorNoteAddEditResult result) =
+      _$_Success;
 
-  DoctorNoteAddEditResult get result;
+  DoctorScaleDoctorNoteAddEditResult get result;
   @JsonKey(ignore: true)
   _$SuccessCopyWith<_Success> get copyWith =>
       throw _privateConstructorUsedError;
@@ -522,7 +529,7 @@ abstract class _$FailureCopyWith<$Res> {
 
 /// @nodoc
 class __$FailureCopyWithImpl<$Res>
-    extends _$DoctorNoteAddEditStateCopyWithImpl<$Res>
+    extends _$DoctorScaleDoctorNoteAddEditStateCopyWithImpl<$Res>
     implements _$FailureCopyWith<$Res> {
   __$FailureCopyWithImpl(_Failure _value, $Res Function(_Failure) _then)
       : super(_value, (v) => _then(v as _Failure));
@@ -538,7 +545,7 @@ class _$_Failure implements _Failure {
 
   @override
   String toString() {
-    return 'DoctorNoteAddEditState.failure()';
+    return 'DoctorScaleDoctorNoteAddEditState.failure()';
   }
 
   @override
@@ -555,7 +562,8 @@ class _$_Failure implements _Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(DoctorNoteAddEditResult result) success,
+    required TResult Function(DoctorScaleDoctorNoteAddEditResult result)
+        success,
     required TResult Function() failure,
     required TResult Function() openListScreen,
   }) {
@@ -567,7 +575,7 @@ class _$_Failure implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
   }) {
@@ -579,7 +587,7 @@ class _$_Failure implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
     required TResult orElse(),
@@ -631,7 +639,7 @@ class _$_Failure implements _Failure {
   }
 }
 
-abstract class _Failure implements DoctorNoteAddEditState {
+abstract class _Failure implements DoctorScaleDoctorNoteAddEditState {
   const factory _Failure() = _$_Failure;
 }
 
@@ -644,7 +652,7 @@ abstract class _$OpenListScreenCopyWith<$Res> {
 
 /// @nodoc
 class __$OpenListScreenCopyWithImpl<$Res>
-    extends _$DoctorNoteAddEditStateCopyWithImpl<$Res>
+    extends _$DoctorScaleDoctorNoteAddEditStateCopyWithImpl<$Res>
     implements _$OpenListScreenCopyWith<$Res> {
   __$OpenListScreenCopyWithImpl(
       _OpenListScreen _value, $Res Function(_OpenListScreen) _then)
@@ -661,7 +669,7 @@ class _$_OpenListScreen implements _OpenListScreen {
 
   @override
   String toString() {
-    return 'DoctorNoteAddEditState.openListScreen()';
+    return 'DoctorScaleDoctorNoteAddEditState.openListScreen()';
   }
 
   @override
@@ -678,7 +686,8 @@ class _$_OpenListScreen implements _OpenListScreen {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(DoctorNoteAddEditResult result) success,
+    required TResult Function(DoctorScaleDoctorNoteAddEditResult result)
+        success,
     required TResult Function() failure,
     required TResult Function() openListScreen,
   }) {
@@ -690,7 +699,7 @@ class _$_OpenListScreen implements _OpenListScreen {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
   }) {
@@ -702,7 +711,7 @@ class _$_OpenListScreen implements _OpenListScreen {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(DoctorNoteAddEditResult result)? success,
+    TResult Function(DoctorScaleDoctorNoteAddEditResult result)? success,
     TResult Function()? failure,
     TResult Function()? openListScreen,
     required TResult orElse(),
@@ -754,6 +763,6 @@ class _$_OpenListScreen implements _OpenListScreen {
   }
 }
 
-abstract class _OpenListScreen implements DoctorNoteAddEditState {
+abstract class _OpenListScreen implements DoctorScaleDoctorNoteAddEditState {
   const factory _OpenListScreen() = _$_OpenListScreen;
 }
