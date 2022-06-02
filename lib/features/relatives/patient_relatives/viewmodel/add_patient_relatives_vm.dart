@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
-import '../../../model/model.dart';
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
+
+
 
 class AddPatientRelativesScreenVm extends RbioVm {
   @override
@@ -51,7 +53,7 @@ class AddPatientRelativesScreenVm extends RbioVm {
   }
 
   Future savePatientRelative(
-    AddPatientRelativeRequest userRegistrationStep1,
+    UserRelativePatientModel userRegistrationStep1,
     BuildContext context,
   ) async {
     try {

@@ -12,6 +12,13 @@ class GuvenMobilePlatformConfig extends IGuvenPlatformConfig
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
     return PagePaths.login;
   }
+
+  @override
+  bool checkDevices() => false;
+
+  @override
+  bool checkMedimender() => false;
+  
 }
 
 class GuvenWebPlatformConfig extends IGuvenPlatformConfig
@@ -29,4 +36,10 @@ class GuvenWebPlatformConfig extends IGuvenPlatformConfig
             measurementId: "G-GPMMZ6Y733",
           ),
         );
+
+  @override
+  bool checkDevices() => false;
+
+  @override
+  bool checkMedimender() => false;
 }

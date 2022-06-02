@@ -117,6 +117,7 @@ class HomeVm extends ChangeNotifier {
   // #region fetchWidgets
   Future<void> fetchWidgets(AllUsersModel? allUsersModel) async {
     widgetsInUse = [];
+
     final sharedUserList = getUserWidgets;
     if (sharedUserList == null) {
       List<String> setList = [];
@@ -130,6 +131,7 @@ class HomeVm extends ChangeNotifier {
           }
         }
       }
+
       await saveWidgetList(setList);
     } else {
       final sharedTypes = sharedUserList.map((e) => e.xHomeWidgets).toList();

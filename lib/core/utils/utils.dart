@@ -166,6 +166,21 @@ class Utils {
   }
   // #endregion
 
+  // #region showErrorSnackbar
+  void showErrorSnackbar(BuildContext context, String text) {
+    showSnackbar(
+      context,
+      text,
+      backColor: getIt<IAppConfig>().theme.darkRed,
+      trailing: SvgPicture.asset(
+        R.image.error,
+        height: R.sizes.iconSize2,
+        color: getIt<IAppConfig>().theme.iconSecondaryColor,
+      ),
+    );
+  }
+  // #endregion
+
   String encryptWithSalsa20(String plainText, String email) {
     //final key = encrypt.Key.fromLength(32);
     final ivMail = email.substring(0, 8);

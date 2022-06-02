@@ -1,32 +1,33 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../viewmodel/relatives_vm.dart';
+import '../../../take_appointment/create_appointment/model/patient_relative_info_response.dart';
+import '../cubit/patient_relatives_cubit.dart';
 
-class RelativesScreen extends StatefulWidget {
-  const RelativesScreen({Key? key}) : super(key: key);
+class PatientRelativesScreen extends StatelessWidget {
+  const PatientRelativesScreen({Key? key}) : super(key: key);
 
   @override
-  _RelativesScreenState createState() => _RelativesScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          PatientRelativesCubit(getIt(), getIt(), getIt(), getIt())
+            ..fetchPatientReletives(),
+      child: const PatientRelativesView(),
+    );
+  }
 }
 
-class _RelativesScreenState extends State<RelativesScreen> {
-  @override
-  void initState() {
-    super.initState();
-    final widgetsBinding = WidgetsBinding.instance;
-    if (widgetsBinding != null) {
-      widgetsBinding.addPostFrameCallback(
-        (_) {
-          Provider.of<RelativesVm>(context, listen: false).getAll();
-        },
-      );
-    }
-  }
+class PatientRelativesView extends StatefulWidget {
+  const PatientRelativesView({Key? key}) : super(key: key);
 
+  @override
+  _PatientRelativesViewState createState() => _PatientRelativesViewState();
+}
+
+class _PatientRelativesViewState extends State<PatientRelativesView> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
@@ -36,30 +37,32 @@ class _RelativesScreenState extends State<RelativesScreen> {
           LocaleProvider.current.relatives,
         ),
       ),
-      body: Consumer<RelativesVm>(
-        builder: (
-          BuildContext context,
-          RelativesVm value,
-          Widget? child,
-        ) {
-          return _buildBody(value);
-        },
-      ),
+      body: _buildBody(),
       floatingActionButton: _buildFab(),
     );
   }
 
-  Widget _buildBody(RelativesVm vm) {
-    switch (vm.state) {
-      case LoadingProgress.loading:
-        return const RbioLoading();
-
-      case LoadingProgress.done:
-        return ListView.builder(
+  Widget _buildBody() {
+    return BlocConsumer<PatientRelativesCubit, PatientRelativesState>(
+        listener: (BuildContext context, PatientRelativesState state) {
+      state.when(
+        initial: () {},
+        loadInProgress: () {},
+        success: (value) {},
+        failure: () {
+          Utils.instance.showErrorSnackbar(
+              context, LocaleProvider.of(context).something_went_wrong);
+        },
+      );
+    }, builder: (BuildContext context, PatientRelativesState state) {
+      return state.when(
+        initial: () => const SizedBox(),
+        loadInProgress: () => const RbioLoading(),
+        success: (PatientRelativeInfoResponse response) => ListView.builder(
           padding: EdgeInsets.zero,
           scrollDirection: Axis.vertical,
           physics: const BouncingScrollPhysics(),
-          itemCount: vm.response.patientRelatives.length,
+          itemCount: response.patientRelatives.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,8 +71,7 @@ class _RelativesScreenState extends State<RelativesScreen> {
               children: [
                 //
                 _PatientRelativeListTile(
-                  name:
-                      '${vm.response.patientRelatives[index].name} ${vm.response.patientRelatives[index].surname}',
+                  patientRelative: response.patientRelatives[index],
                 ),
 
                 //
@@ -77,14 +79,10 @@ class _RelativesScreenState extends State<RelativesScreen> {
               ],
             );
           },
-        );
-
-      case LoadingProgress.error:
-        return const RbioBodyError();
-
-      default:
-        return const SizedBox();
-    }
+        ),
+        failure: () => const RbioBodyError(),
+      );
+    });
   }
 
   Widget _buildFab() {
@@ -108,10 +106,10 @@ class _RelativesScreenState extends State<RelativesScreen> {
 class _PatientRelativeListTile extends StatelessWidget {
   const _PatientRelativeListTile({
     Key? key,
-    required this.name,
+    required this.patientRelative,
   }) : super(key: key);
 
-  final String name;
+  final PatientRelative patientRelative;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +124,8 @@ class _PatientRelativeListTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(name, style: context.xTextTheme.headline3),
+              Text('${patientRelative.name} ${patientRelative.surname}',
+                  style: context.xTextTheme.headline3),
               GestureDetector(
                 onTap: () => showConfirmationAlertDialog(
                   context,
@@ -134,7 +133,9 @@ class _PatientRelativeListTile extends StatelessWidget {
                   LocaleProvider.of(context).delete_relative_confirm_message,
                   LocaleProvider.of(context).Ok,
                   () {
-                    // vm.deleteRelative(patientRelative, context);
+                    // context
+                    //     .read<PatientRelativesCubit>()
+                    //     .deletePatientRelative(patientRelative);
                   },
                 ),
                 child: SvgPicture.asset(

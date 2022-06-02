@@ -97,7 +97,8 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<GuvenResponseModel> login(String username, String password, String consentId) async {
+  Future<GuvenResponseModel> login(
+      String username, String password, String consentId) async {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.devApi.loginPath,
       <String, dynamic>{},
@@ -1251,7 +1252,7 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<GuvenResponseModel> addNewPatientRelative(
-      AddPatientRelativeRequest addPatientRelative) async {
+      UserRelativePatientModel addPatientRelative) async {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.relative.addNewPatientRelativePath,
       addPatientRelative.toJson(),

@@ -7,7 +7,7 @@ export '../features/my_appointments/model/get_patient_appointments_request.dart'
 export '../features/my_appointments/model/patient_appointments_response.dart';
 export '../features/profile/personal_information/model/change_contact_info_request.dart';
 export '../features/profile/request_suggestions/model/suggestion_request.dart';
-export '../features/relatives/model/add_patient_relative_request.dart';
+export '../features/relatives/patient_relatives/model/user_relative_patient_model.dart';
 export '../features/results/model/laboratory_pdf_result_request.dart';
 export '../features/results/model/laboratory_response.dart';
 export '../features/results/model/pathology_response.dart';

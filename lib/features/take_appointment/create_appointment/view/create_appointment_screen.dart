@@ -285,9 +285,12 @@ class CreateAppointmentScreen extends StatelessWidget {
       await getIt<FirebaseAnalyticsManager>().logEvent(
         RandevuOlusturRandevuAraEvent(
           getIt<UserNotifier>().firebaseEmail,
+          getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+          getIt<UserNotifier>().getUserAccount().phoneNumber.toString(),
           val.dropdownValueTenant!.title.toString(),
           val.dropdownValueDepartment!.title.toString(),
           val.dropdownValueDoctor!.id.toString(),
+          val.dropdownValueDoctor!.title.toString(),
         ),
       );
       getIt<AdjustManager>().trackEvent(SearchCreateAppointmentEvent());

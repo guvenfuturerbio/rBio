@@ -11,6 +11,11 @@ abstract class IAppPlatformConfig {
     FirebaseAnalyticsManager firebaseAnalyticsManager,
     AdjustManager adjustManager,
   );
+
+  bool checkDevices();
+
+  bool checkMedimender();
+
 }
 
 abstract class IAppWebPlatformConfig {

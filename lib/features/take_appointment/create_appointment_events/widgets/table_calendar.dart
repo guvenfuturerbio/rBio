@@ -82,7 +82,7 @@ class _TableCalendarState extends State<_TableCalendar> {
           lastDay: kLastDay,
           focusedDay: _focusedDay,
           selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-          calendarFormat: CalendarFormat.twoWeeks,
+          calendarFormat: CalendarFormat.month,
           rangeSelectionMode: RangeSelectionMode.toggledOff,
           startingDayOfWeek: StartingDayOfWeek.monday,
           calendarStyle: const CalendarStyle(

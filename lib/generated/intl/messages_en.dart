@@ -52,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_new_relative":
             MessageLookupByLibrary.simpleMessage("Add New Relative"),
         "add_photo": MessageLookupByLibrary.simpleMessage("Add Photo"),
+        "add_relative_request": MessageLookupByLibrary.simpleMessage(
+            "Your request to add relatives has been received."),
         "add_reminder": MessageLookupByLibrary.simpleMessage("Add Reminder"),
         "add_strips": MessageLookupByLibrary.simpleMessage("Add Strips"),
         "add_symptom": MessageLookupByLibrary.simpleMessage("Add Symptom"),
@@ -96,7 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "appo_for": MessageLookupByLibrary.simpleMessage(
             "Person to make an appointment :"),
         "appo_suitability": MessageLookupByLibrary.simpleMessage(
-            "No suitable appointment was found for this doctor. To contact us, please call us."),
+            "No suitable appointment was found for this specialist. To contact us, please call us."),
         "appointment": MessageLookupByLibrary.simpleMessage("Appointment"),
         "appointment_could_not_create": MessageLookupByLibrary.simpleMessage(
             "Your appointment couldn\'t be created"),
@@ -251,6 +253,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "close_lbl": MessageLookupByLibrary.simpleMessage("Close"),
         "closest_available_appointments": MessageLookupByLibrary.simpleMessage(
             "Closest available appointments"),
+        "code_sent": MessageLookupByLibrary.simpleMessage(
+            "A verification code has sent to the phone number and e-mail address you entered."),
         "comments_and_suggestion": MessageLookupByLibrary.simpleMessage(
             "Your Comments and Suggestions"),
         "complaint_body_part": MessageLookupByLibrary.simpleMessage(
@@ -373,7 +377,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "detailed_error_dialog_part1": MessageLookupByLibrary.simpleMessage(
             "You can have a different appointment on the same date or time,"),
         "detailed_error_dialog_part2": MessageLookupByLibrary.simpleMessage(
-            "You may already have an appointment with the doctor you want to make an appointment with,"),
+            "You may already have an appointment with the specialist you want to make an appointment with,"),
         "detailed_error_dialog_part3": MessageLookupByLibrary.simpleMessage(
             "If you think there is a different problem, you can call us at the number below."),
         "detailed_report":
@@ -430,14 +434,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "do_u_want_continue":
             MessageLookupByLibrary.simpleMessage("Do you want to continue ?"),
         "do_you_smoke": MessageLookupByLibrary.simpleMessage("Do you smoke?"),
-        "doctor": MessageLookupByLibrary.simpleMessage("Doctor"),
+        "doctor": MessageLookupByLibrary.simpleMessage("Specialist"),
         "doctor_cv_not_uploaded": MessageLookupByLibrary.simpleMessage(
             "CV has not been uploaded yet"),
         "doctor_legand": MessageLookupByLibrary.simpleMessage(
             "(Not Satisfied 1 … 5 Very Satisfied)"),
-        "doctor_name": MessageLookupByLibrary.simpleMessage("Doctor Name :"),
+        "doctor_name":
+            MessageLookupByLibrary.simpleMessage("Specialist Name :"),
         "doctor_selection":
-            MessageLookupByLibrary.simpleMessage("Doctor selection :"),
+            MessageLookupByLibrary.simpleMessage("Specialist selection :"),
         "doesnt_match_tc": MessageLookupByLibrary.simpleMessage(
             "The entered Identity number does not match your registration information"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
@@ -457,8 +462,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "email_or_identity": MessageLookupByLibrary.simpleMessage(
             "T.C Identity/Passport Number/Email"),
         "emergency": MessageLookupByLibrary.simpleMessage(
-            "You have chosen a critical symptom, you need to see a doctor urgently!"),
+            "You have chosen a critical symptom, you need to see a specialist urgently!"),
         "emergency_lbl": MessageLookupByLibrary.simpleMessage("Emergency"),
+        "empty_cv": MessageLookupByLibrary.simpleMessage(
+            "Specialist\'s CV can not be found."),
         "end": MessageLookupByLibrary.simpleMessage("End"),
         "end_angle": MessageLookupByLibrary.simpleMessage("End Angle"),
         "end_time": MessageLookupByLibrary.simpleMessage("End Time"),
@@ -568,7 +575,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "high": MessageLookupByLibrary.simpleMessage("High"),
         "high_range": MessageLookupByLibrary.simpleMessage("High Range"),
         "hint_date": MessageLookupByLibrary.simpleMessage("Date"),
-        "hint_doctor": MessageLookupByLibrary.simpleMessage("Doctor"),
+        "hint_doctor": MessageLookupByLibrary.simpleMessage("Specialist"),
         "hint_dosage": MessageLookupByLibrary.simpleMessage("Dosage"),
         "hint_hour": MessageLookupByLibrary.simpleMessage("o\'clock"),
         "hint_input_old_password":
@@ -588,7 +595,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "how_to_get_photo":
             MessageLookupByLibrary.simpleMessage("How to get the photo?"),
         "how_video_doctor": MessageLookupByLibrary.simpleMessage(
-            "Are you satisfied with your doctor ?"),
+            "Are you satisfied with your specialist ?"),
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
             "How was the quality of the video call ?"),
         "how_will_you_follow_up":
@@ -620,6 +627,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Intermittent Days"),
         "invalid_authorization": MessageLookupByLibrary.simpleMessage(
             "You are not authorized to login to the application"),
+        "invalid_identity_number":
+            MessageLookupByLibrary.simpleMessage("Inlavid Identity Number."),
+        "invalid_mail": MessageLookupByLibrary.simpleMessage("Inlavid Email."),
+        "invalid_phone_number":
+            MessageLookupByLibrary.simpleMessage("Inlavid Phone Number."),
         "iptal_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/iptal_en.html"),
         "irrelevant": MessageLookupByLibrary.simpleMessage("Irrelevant"),
@@ -638,7 +650,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "laboratory_result":
             MessageLookupByLibrary.simpleMessage("Laboratory\nResults"),
         "last_appointment_doctor": MessageLookupByLibrary.simpleMessage(
-            "The doctor you made your last appointment with"),
+            "The specialist you made your last appointment with"),
         "last_bg": MessageLookupByLibrary.simpleMessage("Last BG"),
         "last_hba1c": MessageLookupByLibrary.simpleMessage("Last HbA1c"),
         "last_measurement":
@@ -1008,7 +1020,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Please select department"),
         "pls_select_doctor":
-            MessageLookupByLibrary.simpleMessage("Please select doctor"),
+            MessageLookupByLibrary.simpleMessage("Please select specialist"),
         "pls_select_hosp":
             MessageLookupByLibrary.simpleMessage("Please select hospital"),
         "pls_select_person":
@@ -1053,6 +1065,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Recover your password"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Further operations will be completed by the selected user, do you confirm?"),
+        "relative_identity_number":
+            MessageLookupByLibrary.simpleMessage("T.C ID number of relatives"),
         "relatives": MessageLookupByLibrary.simpleMessage("Relatives"),
         "relatives_only_children_warning": MessageLookupByLibrary.simpleMessage(
             "You can only add children of your own below age of 18"),
@@ -1108,7 +1122,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchEmpty": MessageLookupByLibrary.simpleMessage(
             "We couldn\'t find a relevant result"),
         "search_hint": MessageLookupByLibrary.simpleMessage(
-            "Doctor, Hospital, Department"),
+            "Specialist, Hospital, Department"),
         "select_another_language":
             MessageLookupByLibrary.simpleMessage("Select another language"),
         "select_appo_type": MessageLookupByLibrary.simpleMessage(
@@ -1250,7 +1264,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "thank_you_for_survey": MessageLookupByLibrary.simpleMessage(
             "Thank you for completing our survey."),
         "the_doctor_u_chose":
-            MessageLookupByLibrary.simpleMessage("The doctor you chose"),
+            MessageLookupByLibrary.simpleMessage("The specialist you chose"),
         "there_are_no_reminders":
             MessageLookupByLibrary.simpleMessage("There are no reminders"),
         "three_months": MessageLookupByLibrary.simpleMessage("3 Months"),
@@ -1272,7 +1286,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Delete Doctor"),
         "title_doctors": MessageLookupByLibrary.simpleMessage("Doctors"),
         "title_doctors_profiles":
-            MessageLookupByLibrary.simpleMessage("Doctor\'s Profile"),
+            MessageLookupByLibrary.simpleMessage("Specialist\'s Profile"),
         "title_forgot_password":
             MessageLookupByLibrary.simpleMessage("Forgot Password"),
         "title_goal": MessageLookupByLibrary.simpleMessage("Goal"),
@@ -1320,8 +1334,6 @@ class MessageLookup extends MessageLookupByLibrary {
             "User with this email doesn\'t exist."),
         "validation": MessageLookupByLibrary.simpleMessage(
             "This field cannot be left blank"),
-        "validation_of_phone_number": MessageLookupByLibrary.simpleMessage(
-            "Phone number must be 10 characters."),
         "value": MessageLookupByLibrary.simpleMessage("Değer"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "verify_email_error":

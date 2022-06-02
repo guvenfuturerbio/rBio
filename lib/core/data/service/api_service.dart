@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -29,7 +30,8 @@ abstract class ApiService {
 
   Future<GuvenResponseModel> loginStarter(String username, String password);
   Future<GuvenResponseModel> verifyConfirmation2fa(String smsCode, int userId);
-  Future<GuvenResponseModel> login(String username, String password, String consentId);
+  Future<GuvenResponseModel> login(
+      String username, String password, String consentId);
 
   // for_you_services.dart
   Future<List<ForYouCategoryResponse>> getAllPackage(String path);
@@ -148,7 +150,7 @@ abstract class ApiService {
   Future<GetAvailabilityRateResponse> getAvailabilityRate(
       GetAvailabilityRateRequest getAvailabilityRateRequest);
   Future<GuvenResponseModel> addNewPatientRelative(
-      AddPatientRelativeRequest addPatientRelative);
+      UserRelativePatientModel addPatientRelative);
   Future<GuvenResponseModel> uploadPatientDocuments(
       String webAppoId, Uint8List file);
 

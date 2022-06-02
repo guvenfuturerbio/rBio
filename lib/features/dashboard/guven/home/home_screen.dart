@@ -20,104 +20,109 @@ class _GuvenHomeScreenState extends State<GuvenHomeScreen> {
         appBar: RbioAppBar(
           leading: const SizedBox(),
         ),
-        body: Container(
-          margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                //
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Text(
-                    LocaleProvider.of(context).lbl_hello +
-                        " " +
-                        getIt<UserNotifier>().getCurrentUserNameAndSurname(),
-                    style: TextStyle(
-                      color: getIt<IAppConfig>().theme.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 25,
+        body: Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 1200),
+            margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  //
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Text(
+                      LocaleProvider.of(context).lbl_hello +
+                          " " +
+                          getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+                      style: TextStyle(
+                        color: getIt<IAppConfig>().theme.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
-                ),
 
-                //
-                Container(
-                  child: Text(
-                    LocaleProvider.of(context).lbl_take_care,
-                    style: TextStyle(
-                      color: getIt<IAppConfig>().theme.gray,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  //
+                  Container(
+                    child: Text(
+                      LocaleProvider.of(context).lbl_take_care,
+                      style: TextStyle(
+                        color: getIt<IAppConfig>().theme.gray,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    margin: const EdgeInsets.only(
+                      top: 10,
+                      bottom: 10,
+                      left: 20,
+                      right: 120,
                     ),
                   ),
-                  margin: const EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                    left: 20,
-                    right: 120,
-                  ),
-                ),
 
-                //
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  width: double.infinity,
-                  child: InkWell(
-                    onTap: () {
-                      Atom.to(
-                        PagePaths.createAppointment,
-                        queryParameters: {
-                          'forOnline': true.toString(),
-                          'fromSearch': false.toString(),
-                          'fromSymptom': false.toString(),
-                        },
-                      );
-                    },
-                    child: _itemFindHospital(
-                      context: context,
-                      title: LocaleProvider.of(context).online_appo,
-                      image: R.image.icVideoIcon,
-                      number: LocaleProvider.of(context).title_appointment,
-                      colorLeft: getIt<IAppConfig>().theme.onlineAppointment,
-                      colorRight:
-                          getIt<IAppConfig>().theme.lightOnlineAppointment,
-                      margin: const EdgeInsets.only(top: 10),
-                    ),
-                  ),
-                ),
-
-                //
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  width: double.infinity,
-                  child: InkWell(
-                    child: _itemFindHospital(
+                  //
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    width: double.infinity,
+                    child: InkWell(
+                      onTap: () {
+                        Atom.to(
+                          PagePaths.createAppointment,
+                          queryParameters: {
+                            'forOnline': true.toString(),
+                            'fromSearch': false.toString(),
+                            'fromSymptom': false.toString(),
+                          },
+                        );
+                      },
+                      child: _itemFindHospital(
                         context: context,
-                        title: LocaleProvider.of(context).lbl_find_hospital,
-                        image: R.image.icHospitalWhite,
-                        colorLeft: getIt<IAppConfig>().theme.red,
-                        colorRight: getIt<IAppConfig>().theme.lightRed,
-                        number: LocaleProvider.of(context).lbl_number_hospital,
-                        margin: const EdgeInsets.only(top: 10, bottom: 10)),
-                    onTap: () {
-                      getIt<FirebaseAnalyticsManager>().logEvent(
-                          MenuElementTiklamaEvent('hastane_randevusu_olustur'));
-                      Atom.to(
-                        PagePaths.createAppointment,
-                        queryParameters: {
-                          'forOnline': false.toString(),
-                          'fromSearch': false.toString(),
-                          'fromSymptom': false.toString(),
-                        },
-                      );
-                    },
+                        title: LocaleProvider.of(context).online_appo,
+                        image: R.image.icVideoIcon,
+                        number: LocaleProvider.of(context).title_appointment,
+                        colorLeft: getIt<IAppConfig>().theme.onlineAppointment,
+                        colorRight:
+                            getIt<IAppConfig>().theme.lightOnlineAppointment,
+                        margin: const EdgeInsets.only(top: 10),
+                      ),
+                    ),
                   ),
-                ),
 
-                //
-                optionsWidget(context),
-              ],
+                  //
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    width: double.infinity,
+                    child: InkWell(
+                      child: _itemFindHospital(
+                          context: context,
+                          title: LocaleProvider.of(context).lbl_find_hospital,
+                          image: R.image.icHospitalWhite,
+                          colorLeft: getIt<IAppConfig>().theme.red,
+                          colorRight: getIt<IAppConfig>().theme.lightRed,
+                          number:
+                              LocaleProvider.of(context).lbl_number_hospital,
+                          margin: const EdgeInsets.only(top: 10, bottom: 10)),
+                      onTap: () {
+                        getIt<FirebaseAnalyticsManager>().logEvent(
+                            MenuElementTiklamaEvent(
+                                'hastane_randevusu_olustur'));
+                        Atom.to(
+                          PagePaths.createAppointment,
+                          queryParameters: {
+                            'forOnline': false.toString(),
+                            'fromSearch': false.toString(),
+                            'fromSymptom': false.toString(),
+                          },
+                        );
+                      },
+                    ),
+                  ),
+
+                  //
+                  optionsWidget(context),
+                ],
+              ),
             ),
           ),
         ),

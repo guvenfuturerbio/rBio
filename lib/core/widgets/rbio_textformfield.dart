@@ -31,6 +31,9 @@ class RbioTextFormField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final bool isForSms;
   final InputDecoration? decoration;
+  final String? counterText;
+  final bool? readOnly;
+  final void Function()? onTap;
 
   const RbioTextFormField({
     Key? key,
@@ -61,6 +64,9 @@ class RbioTextFormField extends StatelessWidget {
     this.autovalidateMode,
     this.isForSms = false,
     this.decoration,
+    this.counterText,
+    this.readOnly,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -97,15 +103,18 @@ class RbioTextFormField extends StatelessWidget {
             autovalidateMode: autovalidateMode,
             validator: validator,
             enableSuggestions: enableSuggestions ?? true,
+            onTap: onTap,
             obscureText: obscureText ?? false,
             keyboardType: keyboardType,
             textInputAction: textInputAction,
+            readOnly: readOnly ?? false,
             decoration: decoration?.copyWith(
                   contentPadding: contentPadding,
                   errorStyle: context.xBodyText1Error,
                   errorBorder: _redErrorBorder(),
                   focusedBorder: _focusedBorder(),
                   focusedErrorBorder: _focusedRedErrorBorder(),
+                  counterText: counterText,
                 ) ??
                 defaultDecoration(
                   context,
@@ -121,6 +130,7 @@ class RbioTextFormField extends StatelessWidget {
                   errorBorder: _redErrorBorder(),
                   focusedBorder: _focusedBorder(),
                   focusedErrorBorder: _focusedRedErrorBorder(),
+                  counterText: counterText,
                 ),
             cursorColor: getIt<IAppConfig>().theme.mainColor,
             onChanged: onChanged,

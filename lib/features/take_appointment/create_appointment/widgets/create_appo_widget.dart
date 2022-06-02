@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/core.dart';
 import '../viewmodel/create_appointment_vm.dart';
@@ -71,11 +72,52 @@ Widget _buildDropdown(
           (dynamic value) {
             return DropdownMenuItem<dynamic>(
               value: value,
-              child: Text(
-                whichField == Fields.relative
-                    ? '${value.name} ${value.surname}'
-                    : value.title,
-                style: context.xHeadline5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    whichField == Fields.relative
+                        ? '${value.name} ${value.surname}'
+                        : value.title,
+                    style: context.xHeadline5,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      int? index = itemList.indexOf(value);
+                      if (whichField == Fields.doctors) {
+                        Atom.to(PagePaths.doctorCv, queryParameters: {
+                          'tenantId': val
+                                  .filterResourceResponse?[index].tenants?[0].id
+                                  .toString() ??
+                              '',
+                          'doctorNameNoTitle': val
+                                  .filterResourceResponse?[index].title
+                                  .toString() ??
+                              '',
+                          'departmentId': val.filterResourceResponse?[index]
+                                  .departments?[0].id
+                                  .toString() ??
+                              '',
+                          'resourceId': val.filterResourceResponse?[index].id
+                                  .toString() ??
+                              '',
+                          'doctorName': val.filterResourceResponse?[index].title
+                                  .toString() ??
+                              '',
+                          'departmentName': val.filterResourceResponse?[index]
+                                  .departments?[0].title ??
+                              ''
+                        });
+                      }
+                    },
+                    child: SvgPicture.asset(
+                      whichField == Fields.doctors
+                          ? R.image.cv
+                          : null.toString(),
+                      width: R.sizes.iconSize3,
+                    ),
+                  )
+                ],
               ),
             );
           },

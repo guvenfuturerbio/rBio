@@ -38,7 +38,7 @@ class GuvenRelativeEndpoints extends RelativeEndpoints {
       '/profile/set-profile/$id'.xBaseUrl;
 
   @override
-  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
+  String get addNewPatientRelativePath => '/profile/add-relative'.xBaseUrl;
 
   @override
   String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
