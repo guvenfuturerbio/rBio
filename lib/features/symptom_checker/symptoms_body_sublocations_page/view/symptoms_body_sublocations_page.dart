@@ -243,7 +243,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
             RbioElevatedButton(
               onTap: value.selectedSymptoms?.isNotEmpty ?? false
                   ? () async {
-                      getIt<AdjustManager>().trackEvent(MySymptomsPage3Event());
+                      getIt<IAppConfig>().platform.adjustManager?.trackEvent(MySymptomsPage3Event());
                       getIt<FirebaseAnalyticsManager>().logEvent(
                         SikayetlerimSayfa3DevamEvent(
                           getIt<UserNotifier>().firebaseEmail.toString(),

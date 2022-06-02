@@ -14,13 +14,13 @@ Future<void> bootstrap(IAppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: appConfig.platform.options);
   await initializeLocator(appConfig);
-  appConfig.platform.initializeAdjust(getIt<AdjustManager>());
+  appConfig.platform.adjustManager?.initializeAdjust();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.initialize();
   await appConfig.platform.sendFirstOpenFirebaseEvent(
     getIt<ISharedPreferencesManager>(),
     getIt<FirebaseAnalyticsManager>(),
-    getIt<AdjustManager>(),
+    appConfig.platform.adjustManager
   );
 
   SystemChrome.setSystemUIOverlayStyle(

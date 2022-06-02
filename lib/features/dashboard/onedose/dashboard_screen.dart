@@ -64,8 +64,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      getIt<AdjustManager>()
-                          .trackEvent(MenuElementProfileClickedEvent());
+                      getIt<IAppConfig>()
+                          .platform
+                          .adjustManager
+                          ?.trackEvent(MenuElementProfileClickedEvent());
                       getIt<FirebaseAnalyticsManager>()
                           .logEvent(MenuElementTiklamaEvent('profil'));
                       Atom.to(PagePaths.profile);
@@ -131,7 +133,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
                   onPressed: () {
-                    getIt<AdjustManager>().trackEvent(MenuButtonClickedEvent());
+                    getIt<IAppConfig>()
+                        .platform
+                        .adjustManager
+                        ?.trackEvent(MenuButtonClickedEvent());
                     getIt<FirebaseAnalyticsManager>()
                         .logEvent(MenuButonTiklamaEvent());
                     if (widget.drawerKey.currentState?.isDrawerOpen ?? false) {
@@ -253,7 +258,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   elevation: 0,
                   onPressed: () {
-                    getIt<AdjustManager>().trackEvent(BottomBarClickedEvent());
+                    getIt<IAppConfig>()
+                        .platform
+                        .adjustManager
+                        ?.trackEvent(BottomBarClickedEvent());
                     getIt<FirebaseAnalyticsManager>()
                         .logEvent(AltBarTiklamaEvent('Logo'));
                     if (Atom.url != '/home/') {
@@ -281,8 +289,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationSearchGreen,
                     ),
                     onPressed: () {
-                      getIt<AdjustManager>()
-                          .trackEvent(BottomBarClickedEvent());
+                      getIt<IAppConfig>().platform.adjustManager
+                          ?.trackEvent(BottomBarClickedEvent());
                       getIt<FirebaseAnalyticsManager>()
                           .logEvent(AltBarTiklamaEvent('Arama'));
                       DashboardNavigation.toSearch(context);
@@ -296,8 +304,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationChatGreen,
                     ),
                     onPressed: () {
-                      getIt<AdjustManager>()
-                          .trackEvent(BottomBarClickedEvent());
+                      getIt<IAppConfig>().platform.adjustManager
+                          ?.trackEvent(BottomBarClickedEvent());
                       getIt<FirebaseAnalyticsManager>()
                           .logEvent(AltBarTiklamaEvent('Chat'));
                       DashboardNavigation.toChat(context);
@@ -313,8 +321,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationGraphGreen,
                     ),
                     onPressed: () {
-                      getIt<AdjustManager>()
-                          .trackEvent(BottomBarClickedEvent());
+                      getIt<IAppConfig>().platform.adjustManager
+                          ?.trackEvent(BottomBarClickedEvent());
                       getIt<FirebaseAnalyticsManager>()
                           .logEvent(AltBarTiklamaEvent('Grafik'));
                       DashboardNavigation.toGraph(context);
@@ -327,8 +335,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationNotificationGreen,
                     ),
                     onPressed: () {
-                      getIt<AdjustManager>()
-                          .trackEvent(BottomBarClickedEvent());
+                      getIt<IAppConfig>().platform.adjustManager
+                          ?.trackEvent(BottomBarClickedEvent());
                       getIt<FirebaseAnalyticsManager>()
                           .logEvent(AltBarTiklamaEvent('Bildirim'));
                       DashboardNavigation.toNotifications(context);
@@ -356,7 +364,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.profile,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementProfileClickedEvent());
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
+                ?.trackEvent(MenuElementProfileClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('profil'));
             Atom.to(PagePaths.profile);
@@ -365,8 +376,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
           onTap: () {
-            getIt<AdjustManager>()
-                .trackEvent(MenuElementHospitalAppointmentClickedEvent());
+            getIt<IAppConfig>().platform.adjustManager
+                ?.trackEvent(MenuElementHospitalAppointmentClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('hastane_randevusu_olustur'));
             Atom.to(
@@ -382,8 +393,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.take_video_appointment,
           onTap: () {
-            getIt<AdjustManager>()
-                .trackEvent(MenuElementOnlineAppoClickedEvent());
+            getIt<IAppConfig>().platform.adjustManager
+                ?.trackEvent(MenuElementOnlineAppoClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('online_randevu_olustur'));
             Atom.to(
@@ -399,8 +410,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.chronic_track_home,
           onTap: () {
-            getIt<AdjustManager>()
-                .trackEvent(MenuElementHealthTrackerClickedEvent());
+            getIt<IAppConfig>().platform.adjustManager
+                ?.trackEvent(MenuElementHealthTrackerClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('saglik_takibi'));
             Atom.to(PagePaths.measurementTrackingHome);
@@ -409,8 +420,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.my_appointments,
           onTap: () {
-            getIt<AdjustManager>()
-                .trackEvent(MenuElementAppointmentsClickedEvent());
+            getIt<IAppConfig>().platform.adjustManager
+                ?.trackEvent(MenuElementAppointmentsClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('randevu'));
             Atom.to(PagePaths.appointment);
@@ -419,7 +430,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.results,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementResultsClickedEvent());
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
+                ?.trackEvent(MenuElementResultsClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('sonuclar'));
             Atom.to(PagePaths.eResult);
@@ -428,7 +442,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.for_you,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(MenuElementForYouClickedEvent());
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
+                ?.trackEvent(MenuElementForYouClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('size_ozel'));
             Atom.to(PagePaths.forYouCategories);
@@ -437,8 +454,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.symptom_checker,
           onTap: () {
-            getIt<AdjustManager>()
-                .trackEvent(MenuElementSymptomCheckerClickedEvent());
+            getIt<IAppConfig>().platform.adjustManager
+                ?.trackEvent(MenuElementSymptomCheckerClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('symptom_checker'));
             Atom.to(PagePaths.symptomMainMenu);
@@ -448,8 +465,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           DrawerModel(
             title: LocaleProvider.current.devices,
             onTap: () {
-              getIt<AdjustManager>()
-                  .trackEvent(MenuElementDevicesClickedEvent());
+              getIt<IAppConfig>().platform.adjustManager
+                  ?.trackEvent(MenuElementDevicesClickedEvent());
               getIt<FirebaseAnalyticsManager>()
                   .logEvent(MenuElementTiklamaEvent('cihazlarim'));
               Atom.to(PagePaths.devices);
@@ -459,8 +476,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           DrawerModel(
             title: LocaleProvider.current.reminders,
             onTap: () {
-              getIt<AdjustManager>()
-                  .trackEvent(MenuElementRemindersClickedEvent());
+              getIt<IAppConfig>().platform.adjustManager
+                  ?.trackEvent(MenuElementRemindersClickedEvent());
               getIt<FirebaseAnalyticsManager>()
                   .logEvent(MenuElementTiklamaEvent('hatirlaticilar'));
               Atom.to(PagePaths.reminderList);
@@ -469,8 +486,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
           onTap: () {
-            getIt<AdjustManager>()
-                .trackEvent(MenuElementSuggestionsClickedEvent());
+            getIt<IAppConfig>().platform.adjustManager
+                ?.trackEvent(MenuElementSuggestionsClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('oneriler'));
             Atom.to(PagePaths.suggestResult);
@@ -479,7 +496,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.detailed_symptom,
           onTap: () {
-            getIt<AdjustManager>().trackEvent(DetailedSymptomEvent());
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
+                ?.trackEvent(DetailedSymptomEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(DetailedSymptomCheckerEvent());
             Atom.to(
@@ -490,7 +510,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.log_out,
           onTap: () async {
-            getIt<AdjustManager>().trackEvent(LogOutEvent());
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
+                ?.trackEvent(LogOutEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('cikis'));
             await getIt<UserNotifier>().logout(context);

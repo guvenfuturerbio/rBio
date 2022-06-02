@@ -19,7 +19,6 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerSingleton<IAppConfig>(appConfig);
   getIt.registerSingleton<CacheClient>(CacheClient());
   getIt.registerSingleton<UrlLauncherManager>(UrlLauncherManagerImpl());
-  getIt.registerSingleton<AdjustManager>(AdjustManager());
   getIt.registerSingleton<FirebaseAnalyticsManager>(FirebaseAnalyticsManager());
 
   getIt.registerSingleton<DeviceLocalDataSource>(
