@@ -1,9 +1,14 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../chronic_tracking/scale/scale.dart';
 import '../cubit/doctor_scale_treatment_list_cubit.dart';
+
+part 'widget/expandable_fab.dart';
 
 class DoctorScaleTreatmentListScreen extends StatelessWidget {
   const DoctorScaleTreatmentListScreen({Key? key}) : super(key: key);
@@ -25,7 +30,7 @@ class DoctorScaleTreatmentListScreen extends StatelessWidget {
   }
 }
 
-class DoctorScaleTreatmentListView extends StatelessWidget {
+class DoctorScaleTreatmentListView extends StatefulWidget {
   final int patientId;
 
   const DoctorScaleTreatmentListView({
@@ -34,10 +39,27 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<DoctorScaleTreatmentListView> createState() =>
+      _DoctorScaleTreatmentListViewState();
+}
+
+class _DoctorScaleTreatmentListViewState
+    extends State<DoctorScaleTreatmentListView> {
+  final ValueNotifier<bool> _fabNotifier = ValueNotifier(false);
+
+  @override
   Widget build(BuildContext context) {
-    return RbioScaffold(
-      appbar: _buildAppBar(context),
-      body: _buildBody(),
+    return ValueListenableBuilder(
+      valueListenable: _fabNotifier,
+      builder: (BuildContext context, bool fabState, Widget? child) {
+        return RbioStackedScaffold(
+          isLoading: fabState,
+          showLoadingIcon: false,
+          appbar: _buildAppBar(context),
+          body: _buildBody(),
+          floatingActionButton: _buildFAB(context),
+        );
+      },
     );
   }
 
@@ -71,6 +93,10 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
+        //
+        R.sizes.stackedTopPadding(context),
+        R.sizes.hSizer8,
+
         //
         RbioDetailSearchComponent(
           result: result,
@@ -106,13 +132,8 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
                       return RbioTreatmentCard.createdBy(
                         item: result.list[index],
                         onTap: () {
-                          Atom.to(
-                            PagePaths.doctorScaleTreatmentAddEdit,
-                            queryParameters: {
-                              'itemId': result.list[index].id.toString(),
-                              'patientId': patientId.toString(),
-                            },
-                          );
+                          _openTreatmentAddEdit(
+                              result.list[index].id.toString());
                         },
                       );
                     } else {
@@ -120,22 +141,11 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
                         item: result.list[index],
                         onTap: () {
                           if (result.list[index].type == TreatmentType.diet) {
-                            Atom.to(
-                              PagePaths.doctorScaleDietAddEdit,
-                              queryParameters: {
-                                'itemId': result.list[index].id.toString(),
-                                'patientId': patientId.toString(),
-                              },
-                            );
+                            _openDietAddEdit(result.list[index].id.toString());
                           } else if (result.list[index].type ==
                               TreatmentType.doctorNote) {
-                            Atom.to(
-                              PagePaths.doctorScaleDoctorNoteAddEdit,
-                              queryParameters: {
-                                'itemId': result.list[index].id.toString(),
-                                'patientId': patientId.toString(),
-                              },
-                            );
+                            _openDoctorNoteAddEdit(
+                                result.list[index].id.toString());
                           }
                         },
                       );
@@ -144,6 +154,65 @@ class DoctorScaleTreatmentListView extends StatelessWidget {
                 ),
         ),
       ],
+    );
+  }
+
+  Widget _buildFAB(BuildContext context) {
+    return _ExpandableFab(
+      fabNotifier: _fabNotifier,
+      distance: 150.0,
+      children: [
+        //
+        _ColorfulExpandedFab(
+          backColor: getIt<IAppConfig>().theme.yellow,
+          title: LocaleProvider.of(context).diet_list,
+          imagePath: R.image.fabDietList,
+          onTap: _openDietAddEdit,
+        ),
+
+        //
+        _ColorfulExpandedFab(
+          backColor: getIt<IAppConfig>().theme.blue,
+          title: LocaleProvider.of(context).treatment_note,
+          imagePath: R.image.fabTreatmentNote,
+          onTap: _openTreatmentAddEdit,
+        ),
+
+        //
+        _ColorfulExpandedFab(
+          backColor: getIt<IAppConfig>().theme.pink,
+          title: LocaleProvider.of(context).special_note,
+          imagePath: R.image.fabSpecialNote,
+          onTap: _openDoctorNoteAddEdit,
+        ),
+      ],
+    );
+  }
+
+  void _openDietAddEdit([String? itemId]) {
+    Atom.to(
+      PagePaths.doctorScaleDietAddEdit,
+      queryParameters: {
+        'patientId': widget.patientId.toString(),
+      }..addAll(itemId == null ? {} : {'itemId': itemId}),
+    );
+  }
+
+  void _openTreatmentAddEdit([String? itemId]) {
+    Atom.to(
+      PagePaths.doctorScaleTreatmentAddEdit,
+      queryParameters: {
+        'patientId': widget.patientId.toString(),
+      }..addAll(itemId == null ? {} : {'itemId': itemId}),
+    );
+  }
+
+  void _openDoctorNoteAddEdit([String? itemId]) {
+    Atom.to(
+      PagePaths.doctorScaleDoctorNoteAddEdit,
+      queryParameters: {
+        'patientId': widget.patientId.toString(),
+      }..addAll(itemId == null ? {} : {'itemId': itemId}),
     );
   }
 }

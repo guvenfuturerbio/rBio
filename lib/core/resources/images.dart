@@ -148,6 +148,10 @@ class _Images {
   final guvenLogoWhite = "assets/images/guven/dashboard/guvenonline_icon.svg";
   final icPhoneGreyCall = "assets/images/guven/ic_phone_call_grey";
 
+  final fabDietList = 'assets/images/fab_diet_list.svg';
+  final fabSpecialNote = 'assets/images/fab_special_note.svg';
+  final fabTreatmentNote = 'assets/images/fab_treatment_note.svg';
+
   final minus = 'assets/images/minus.svg';
   final warning = 'assets/images/warning.svg';
 
