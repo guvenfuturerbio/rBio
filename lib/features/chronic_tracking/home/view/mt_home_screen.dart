@@ -155,6 +155,7 @@ class _MeasurementTrackingHomeScreenState
 
   Widget _buildExpandedUser() {
     return RbioUserAndTreatmentTile(
+      horizontalPadding: false,
       onTap: () {
         getIt<AdjustManager>().trackEvent(HealthTrackerButtonsEvent());
         getIt<FirebaseAnalyticsManager>()

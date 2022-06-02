@@ -4,17 +4,19 @@ import '../core.dart';
 
 class RbioUserAndTreatmentTile extends StatelessWidget {
   final VoidCallback onTap;
+  final bool horizontalPadding;
 
   const RbioUserAndTreatmentTile({
     Key? key,
     required this.onTap,
+    this.horizontalPadding = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
+      padding: EdgeInsets.symmetric(
+        horizontal: horizontalPadding ? 15 : 0,
       ),
       child: SizedBox(
         height: 50,

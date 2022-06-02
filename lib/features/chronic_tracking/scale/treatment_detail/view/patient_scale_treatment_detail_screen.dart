@@ -49,6 +49,7 @@ class PatientScaleTreatmentDetailView extends StatefulWidget {
 
 class _PatientScaleTreatmentDetailViewState
     extends State<PatientScaleTreatmentDetailView> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController _treatmentNoteEditingController;
   late FocusNode _treatmentNoteFocusNode;
 
@@ -123,64 +124,92 @@ class _PatientScaleTreatmentDetailViewState
     BuildContext context,
     PatientScaleTreatmentDetailResult result,
   ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        //
-        R.sizes.stackedTopPadding(context),
-        R.sizes.hSizer8,
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          R.sizes.stackedTopPadding(context),
+          R.sizes.hSizer8,
 
-        //
-        Expanded(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.zero,
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            child: Container(
-              padding: const EdgeInsets.only(
-                left: 8,
-                top: 8,
-                right: 8,
-                bottom: 12,
-              ),
-              decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: R.sizes.borderRadiusCircular,
-              ),
+          //
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
               child: RbioKeyboardActions(
                 focusList: [
                   _treatmentNoteFocusNode,
                 ],
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    //
-                    if (result.editMode ==
-                        ScaleTreatmentScreenEditMode.readOnly) ...[
-                      Text(
-                        result.response.createdByName ?? '',
-                        style: context.xHeadline4.copyWith(
-                          fontWeight: FontWeight.bold,
+                child: Container(
+                  padding: const EdgeInsets.only(
+                    left: 8,
+                    top: 8,
+                    right: 8,
+                    bottom: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      //
+                      R.sizes.hSizer8,
+
+                      //
+                      if (result.editMode ==
+                          ScaleTreatmentScreenEditMode.readOnly) ...[
+                        Text(
+                          result.response.createdByName ?? '',
+                          style: context.xHeadline4.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
 
-                      //
-                      const Divider(),
+                        //
+                        const Divider(),
 
-                      //
-                      AbsorbPointer(
-                        absorbing: true,
-                        child: RbioTextFormField(
+                        //
+                        AbsorbPointer(
+                          absorbing: true,
+                          child: RbioTextFormField(
+                            minLines: 1,
+                            maxLines: null,
+                            focusNode: _treatmentNoteFocusNode,
+                            controller: _treatmentNoteEditingController,
+                            textInputAction: TextInputAction.newline,
+                            decoration: RbioTextFormField.defaultDecoration(
+                              context,
+                            ).copyWith(
+                              border: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              focusedErrorBorder: InputBorder.none,
+                              hintText:
+                                  LocaleProvider.of(context).add_treatment_note,
+                            ),
+                          ),
+                        ),
+                      ] else ...[
+                        RbioTextFormField(
                           minLines: 1,
                           maxLines: null,
-                          contentPadding: EdgeInsets.zero,
                           focusNode: _treatmentNoteFocusNode,
                           controller: _treatmentNoteEditingController,
                           textInputAction: TextInputAction.newline,
+                          keyboardType: TextInputType.multiline,
+                          isDense: true,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: RbioTextFormField.defaultDecoration(
                             context,
                           ).copyWith(
@@ -190,51 +219,39 @@ class _PatientScaleTreatmentDetailViewState
                             focusedBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
                             focusedErrorBorder: InputBorder.none,
+                            hintText:
+                                LocaleProvider.of(context).add_treatment_note,
                           ),
+                          validator: (value) {
+                            if (value!.isNotEmpty) {
+                              return null;
+                            } else {
+                              return LocaleProvider.current.validation;
+                            }
+                          },
                         ),
-                      ),
-                    ] else ...[
-                      RbioTextFormField(
-                        minLines: 1,
-                        maxLines: null,
-                        contentPadding: EdgeInsets.zero,
-                        focusNode: _treatmentNoteFocusNode,
-                        controller: _treatmentNoteEditingController,
-                        textInputAction: TextInputAction.newline,
-                        keyboardType: TextInputType.multiline,
-                        isDense: true,
-                        decoration: RbioTextFormField.defaultDecoration(
-                          context,
-                        ).copyWith(
-                          border: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          focusedErrorBorder: InputBorder.none,
-                        ),
-                      ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
 
-        //
-        R.sizes.hSizer8,
+          //
+          R.sizes.hSizer8,
 
-        //
-        KeyboardVisibilityBuilder(
-          builder: (context, isKeyboardVisible) => Column(
-            children: _buildBottomButtons(result, isKeyboardVisible),
+          //
+          KeyboardVisibilityBuilder(
+            builder: (context, isKeyboardVisible) => Column(
+              children: _buildBottomButtons(result, isKeyboardVisible),
+            ),
           ),
-        ),
 
-        //
-        R.sizes.defaultBottomPadding,
-      ],
+          //
+          R.sizes.defaultBottomPadding,
+        ],
+      ),
     );
   }
 
@@ -267,10 +284,7 @@ class _PatientScaleTreatmentDetailViewState
                   child: RbioElevatedButton(
                     title: LocaleProvider.current.save,
                     onTap: () {
-                      context
-                          .read<PatientScaleTreatmentDetailCubit>()
-                          .saveTreatmentNote(
-                              _treatmentNoteEditingController.text.trim());
+                      _saveTreatmentNote();
                     },
                   ),
                 ),
@@ -290,5 +304,13 @@ class _PatientScaleTreatmentDetailViewState
               ],
             ),
           ];
+  }
+
+  void _saveTreatmentNote() {
+    if (_formKey.currentState?.validate() ?? false) {
+      context
+          .read<PatientScaleTreatmentDetailCubit>()
+          .saveTreatmentNote(_treatmentNoteEditingController.text.trim());
+    }
   }
 }
