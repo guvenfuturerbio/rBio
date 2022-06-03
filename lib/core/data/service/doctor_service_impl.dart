@@ -34,25 +34,6 @@ class DoctorApiServiceImpl extends DoctorApiService {
   }
 
   @override
-  Future<List<Appointment>> getAllAppointment(
-    AppointmentFilter appointmentFilter,
-  ) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.doctor.getAllAppointment,
-      appointmentFilter.toJson(),
-      options: authOptions,
-    );
-    if (response.isSuccessful == true) {
-      return response.xGetMapList
-          .map((item) => Appointment.fromJson(item))
-          .cast<Appointment>()
-          .toList();
-    } else {
-      throw Exception('/getAllAppointment : ${response.isSuccessful}');
-    }
-  }
-
-  @override
   Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
     GetMyPatientFilter getMyPatientFilter,
   ) async {

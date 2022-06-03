@@ -13,10 +13,6 @@ class DoctorRepository {
     required this.localCacheService,
   });
 
-  Future<List<Appointment>> getAllAppointment(
-    AppointmentFilter appointmentFilter,
-  ) =>
-      apiService.getAllAppointment(appointmentFilter);
   Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
     GetMyPatientFilter getMyPatientFilter,
   ) =>
