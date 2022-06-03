@@ -37,7 +37,7 @@ class IyzicoResponseVm with ChangeNotifier {
         Atom.to(PagePaths.main, isReplacement: true);
 
         if (code == "13") {
-          getIt<AdjustManager>().trackEvent(SuccessfulPaymentEvent());
+          getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulPaymentEvent());
           getIt<FirebaseAnalyticsManager>().logEvent(BasariliOdemeEvent());
           Atom.show(
             GradientDialogForPaymentDialog(

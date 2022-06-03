@@ -481,8 +481,10 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                         });
                       }
 
-                      getIt<AdjustManager>()
-                          .trackEvent(UnsuccessfulRegisterStep1Event());
+                      getIt<IAppConfig>()
+                          .platform
+                          .adjustManager
+                          ?.trackEvent(UnsuccessfulRegisterStep1Event());
                       getIt<FirebaseAnalyticsManager>().logEvent(
                         KayitOlAdim1Hata(
                           "Register1 User TC",

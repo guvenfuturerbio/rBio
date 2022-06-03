@@ -293,7 +293,7 @@ class CreateAppointmentScreen extends StatelessWidget {
           val.dropdownValueDoctor!.title.toString(),
         ),
       );
-      getIt<AdjustManager>().trackEvent(SearchCreateAppointmentEvent());
+      getIt<IAppConfig>().platform.adjustManager?.trackEvent(SearchCreateAppointmentEvent());
     } catch (e) {
       LoggerUtils.instance.wtf('wtf');
     }

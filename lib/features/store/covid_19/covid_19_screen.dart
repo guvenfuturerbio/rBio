@@ -88,8 +88,8 @@ class _Covid19ScreenState extends State<Covid19Screen> {
                 context: context,
               ),
               onTap: () {
-                getIt<AdjustManager>()
-                    .trackEvent(MainPagePcrTestClickedEvent());
+                getIt<IAppConfig>().platform.adjustManager
+                    ?.trackEvent(MainPagePcrTestClickedEvent());
                 getIt<FirebaseAnalyticsManager>()
                     .logEvent(Covid19PcrTestiTiklandiEvent());
               },

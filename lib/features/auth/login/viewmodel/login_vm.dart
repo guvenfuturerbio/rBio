@@ -412,7 +412,7 @@ class LoginScreenVm extends ChangeNotifier {
         'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
-    getIt<AdjustManager>().trackEvent(SuccessfulLoginEvent());
+    getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulLoginEvent());
 
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
@@ -595,7 +595,7 @@ class LoginScreenVm extends ChangeNotifier {
         'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
-    getIt<AdjustManager>().trackEvent(SuccessfulLoginEvent());
+    getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulLoginEvent());
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }

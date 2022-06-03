@@ -179,7 +179,7 @@ class _SymptomsBodyLocationsScreenState
                   : false,
               child: RbioElevatedButton(
                 onTap: () async {
-                  getIt<AdjustManager>().trackEvent(MySymptomsPage2Event());
+                  getIt<IAppConfig>().platform.adjustManager?.trackEvent(MySymptomsPage2Event());
                   getIt<FirebaseAnalyticsManager>().logEvent(
                     SikayetlerimSayfa2DevamEvent(
                       getIt<UserNotifier>().firebaseEmail.toString(),

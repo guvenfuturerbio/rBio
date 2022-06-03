@@ -61,7 +61,7 @@ class AddPatientRelativesScreenVm extends RbioVm {
       hideDialog(context);
       String responseMessage = response.message.toString();
       if (response.datum == 0) {
-        getIt<AdjustManager>().trackEvent(SuccessfulRelativeAddEvent());
+        getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulRelativeAddEvent());
         getIt<FirebaseAnalyticsManager>()
             .logEvent(YakinEklemeBasariliEvent(response.datum));
         showInfoDialog(
@@ -69,7 +69,7 @@ class AddPatientRelativesScreenVm extends RbioVm {
           LocaleProvider.of(context).existing_relative_add,
         );
       } else if (response.datum == 1) {
-        getIt<AdjustManager>().trackEvent(SuccessfulRelativeAddEvent());
+        getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulRelativeAddEvent());
         getIt<FirebaseAnalyticsManager>()
             .logEvent(YakinEklemeBasariliEvent(response.datum));
         showInfoDialog(
@@ -77,7 +77,7 @@ class AddPatientRelativesScreenVm extends RbioVm {
           LocaleProvider.of(context).add_new_relative,
         );
       } else {
-        getIt<AdjustManager>().trackEvent(SuccessfulRelativeAddEvent());
+        getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulRelativeAddEvent());
         getIt<FirebaseAnalyticsManager>()
             .logEvent(YakinEklemeBasariliEvent(response.datum));
         showInfoDialog(
@@ -86,7 +86,7 @@ class AddPatientRelativesScreenVm extends RbioVm {
         );
       }
     } catch (error) {
-      getIt<AdjustManager>().trackEvent(UnsuccessfulRelativeAddEvent());
+      getIt<IAppConfig>().platform.adjustManager?.trackEvent(UnsuccessfulRelativeAddEvent());
       getIt<FirebaseAnalyticsManager>().logEvent(YakinEklemeHataEvent());
       Future.delayed(const Duration(milliseconds: 500), () {
         hideDialog(context);

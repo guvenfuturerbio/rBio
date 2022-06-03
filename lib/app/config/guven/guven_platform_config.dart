@@ -1,12 +1,15 @@
 part of '../abstract/app_config.dart';
 
 abstract class IGuvenPlatformConfig extends IAppPlatformConfig {
-  IGuvenPlatformConfig(FirebaseOptions? options) : super(options);
+  IGuvenPlatformConfig(
+    FirebaseOptions? options,
+    AdjustManager? adjustManager,
+  ) : super(options, adjustManager);
 }
 
 class GuvenMobilePlatformConfig extends IGuvenPlatformConfig
     with IAppMobilePlatformConfig {
-  GuvenMobilePlatformConfig() : super(null);
+  GuvenMobilePlatformConfig() : super(null, GuvenOnlineAdjustManagerImpl());
 
   @override
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
@@ -18,7 +21,6 @@ class GuvenMobilePlatformConfig extends IGuvenPlatformConfig
 
   @override
   bool checkMedimender() => false;
-  
 }
 
 class GuvenWebPlatformConfig extends IGuvenPlatformConfig
@@ -35,6 +37,7 @@ class GuvenWebPlatformConfig extends IGuvenPlatformConfig
             appId: "1:647411760545:web:20b622784c0cb600259fe0",
             measurementId: "G-GPMMZ6Y733",
           ),
+          null,
         );
 
   @override

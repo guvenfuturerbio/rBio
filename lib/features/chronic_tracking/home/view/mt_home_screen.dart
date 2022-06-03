@@ -157,7 +157,10 @@ class _MeasurementTrackingHomeScreenState
     return RbioUserAndTreatmentTile(
       horizontalPadding: false,
       onTap: () {
-        getIt<AdjustManager>().trackEvent(HealthTrackerButtonsEvent());
+        getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.trackEvent(HealthTrackerButtonsEvent());
         getIt<FirebaseAnalyticsManager>()
             .logEvent(SaglikTakibiButonlarEvent('Tedavi'));
 

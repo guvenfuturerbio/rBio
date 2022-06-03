@@ -98,7 +98,7 @@ class ChangePasswordScreenVm extends RbioVm {
                     .getString(SharedPreferencesKeys.jwtToken) ??
                 '',
           );
-          getIt<AdjustManager>().trackEvent(SuccessfulPasswordChangeEvent());
+          getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulPasswordChangeEvent());
           getIt<FirebaseAnalyticsManager>()
               .logEvent(SifreDegistirBasariliEvent());
           showInfoDialog(
@@ -109,7 +109,7 @@ class ChangePasswordScreenVm extends RbioVm {
           errorParse(response);
         }
       } catch (error, stackTrace) {
-        getIt<AdjustManager>().trackEvent(UnsuccessfulPasswordChangeEvent());
+        getIt<IAppConfig>().platform.adjustManager?.trackEvent(UnsuccessfulPasswordChangeEvent());
         getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
         showDelayedErrorDialog(error, stackTrace);
       } finally {
@@ -121,7 +121,7 @@ class ChangePasswordScreenVm extends RbioVm {
   void errorParse(GuvenResponseModel response) {
     var errorCode = response.datum;
     if (errorCode is int) {
-      getIt<AdjustManager>().trackEvent(UnsuccessfulPasswordChangeEvent());
+      getIt<IAppConfig>().platform.adjustManager?.trackEvent(UnsuccessfulPasswordChangeEvent());
       getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
       switch (errorCode) {
         case 1:
