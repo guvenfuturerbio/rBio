@@ -6,7 +6,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
 import '../scale_detail.dart';
-import 'widget/scale_chart.dart';
 
 class ScaleDetailScreen extends StatelessWidget {
   const ScaleDetailScreen({Key? key}) : super(key: key);
@@ -121,11 +120,11 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
       mainAxisSize: MainAxisSize.max,
       children: [
         //
-        RbioUserAndTreatmentTile(
-          onTap: () {
-            Atom.to(PagePaths.patientScaleTreatmentList);
-          },
-        ),
+        // RbioUserAndTreatmentTile(
+        //   onTap: () {
+        //     Atom.to(PagePaths.patientScaleTreatmentList);
+        //   },
+        // ),
 
         //
         Expanded(

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/features/doctor/patient_detail/scale/cubit/scale_doctor_loaded_result.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../../core/core.dart';
 import '../../../../../core/data/service/model/patient_scale_measurement.dart';
 import '../cubit/scale_doctor_cubit.dart';
+import '../cubit/scale_doctor_loaded_result.dart';
 import '../widget/doctor_scale_chart.dart';
 import '../widget/measurement_list.dart';
 
@@ -340,12 +340,12 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
           //
           GestureDetector(
             onTap: () {
-              Atom.to(
-                PagePaths.doctorScaleTreatmentList,
-                queryParameters: {
-                  'patientId': widget.patientId.toString(),
-                },
-              );
+              // Atom.to(
+              //   PagePaths.doctorScaleTreatmentList,
+              //   queryParameters: {
+              //     'patientId': widget.patientId.toString(),
+              //   },
+              // );
 
               // final patient = context.read<PatientNotifiers>().patientDetail;
 
