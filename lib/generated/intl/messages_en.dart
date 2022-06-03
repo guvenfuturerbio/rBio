@@ -1072,6 +1072,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rate": MessageLookupByLibrary.simpleMessage("Rate"),
         "rate_appointment": MessageLookupByLibrary.simpleMessage(
             "Would you like to rate your appointment ?"),
+        "rate_thank_you":
+            MessageLookupByLibrary.simpleMessage("Thanks for your review"),
         "reach_goal": MessageLookupByLibrary.simpleMessage("Reach goal"),
         "read_understood_kvkk": MessageLookupByLibrary.simpleMessage(
             "I have read and understood the notice of information regarding the policy of protection and processing of personal data."),

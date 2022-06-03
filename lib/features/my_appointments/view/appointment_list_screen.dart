@@ -122,7 +122,8 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             startMinDate: DateTime(1900).getStartOfTheDay,
             startMaxDate: DateTime.now().getStartOfTheDay,
             endMinDate: DateTime.now().getStartOfTheDay,
-            endMaxDate: DateTime.now().add(const Duration(days: 365)).getStartOfTheDay,
+            endMaxDate:
+                DateTime.now().add(const Duration(days: 365)).getStartOfTheDay,
           ),
         ),
 
@@ -199,22 +200,30 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     );
   }
 
-  String _getFormattedDate(String date) {
-    var parsedDate = DateTime.parse(date);
-    String textDate = DateFormat("d MMMM yyyy").format(parsedDate);
-    return textDate;
-  }
-
   Widget? _buildCardFooter(
     AppointmentListVm value,
     PatientAppointmentsResponse data,
   ) {
     if (data.type == R.constants.onlineAppointmentType) {
       if (DateTime.parse(data.from ?? '').isBefore(DateTime.now())) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: RbioIconButton(
+        if (data.isRated ?? false) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                LocaleProvider.current.rate_thank_you,
+                style: context.xHeadline4.copyWith(
+                  color: getIt<IAppConfig>().theme.mainColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          );
+        } else {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: RbioIconButton(
                 onPressed: () {
                   final itemId = data.id;
                   if (itemId != null) {
@@ -224,9 +233,11 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                 icon: SvgPicture.asset(
                   R.image.rate,
                   color: getIt<IAppConfig>().theme.white,
-                )),
-          ),
-        );
+                ),
+              ),
+            ),
+          );
+        }
       } else {
         return Center(
           child: Padding(

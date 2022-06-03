@@ -21,6 +21,7 @@ class PatientAppointmentsResponse {
   int? type;
   String? videoCallLink;
   String? videoGuid;
+  bool? isRated;
 
   PatientAppointmentsResponse({
     this.appointmentCancellationReason,
@@ -43,6 +44,7 @@ class PatientAppointmentsResponse {
     this.type,
     this.videoCallLink,
     this.videoGuid,
+    this.isRated,
   });
 
   PatientAppointmentsResponse.fromJson(Map<String, dynamic> json) {
@@ -74,6 +76,7 @@ class PatientAppointmentsResponse {
     type = json['type'] as int?;
     videoCallLink = json['videoCallLink'] as String?;
     videoGuid = json['video_guid'] as String?;
+    isRated = json["isRated"] as bool?;
   }
 
   Map<String, dynamic> toJson() {
@@ -100,6 +103,7 @@ class PatientAppointmentsResponse {
     data['type'] = type;
     data['videoCallLink'] = videoCallLink;
     data['video_guid'] = videoGuid;
+    data['isRated'] = isRated;
     return data;
   }
 
@@ -127,7 +131,8 @@ class PatientAppointmentsResponse {
         other.to == to &&
         other.type == type &&
         other.videoCallLink == videoCallLink &&
-        other.videoGuid == videoGuid;
+        other.videoGuid == videoGuid &&
+        other.isRated == isRated;
   }
 
   @override
@@ -151,7 +156,8 @@ class PatientAppointmentsResponse {
         to.hashCode ^
         type.hashCode ^
         videoCallLink.hashCode ^
-        videoGuid.hashCode;
+        videoGuid.hashCode ^
+        isRated.hashCode;
   }
 }
 

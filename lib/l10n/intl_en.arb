@@ -885,5 +885,6 @@
   "add_special_note": "Add Special note",
   "update_special_note": "Update Special note",
   "delete_special_note": "Are you sure you want to delete the special note?",
-  "description": "Description"
+  "description": "Description",
+  "rate_thank_you": "Thanks for your review"
 }
