@@ -189,11 +189,22 @@ class VRouterRoutes {
         // #endregion
 
         // #region Dashboard
-        VWidget(
-          path: PagePaths.main,
-          widget: Container(),
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (getIt<IAppConfig>().functionality.relatives) {
+              if ((await getIt<UserNotifier>().checkAccessToken()) == false) {
+                vRedirector.to(PagePaths.login);
+              }
+            }
+          },
           stackedRoutes: [
-            config.getDashboard(),
+            VWidget(
+              path: PagePaths.main,
+              widget: Container(),
+              stackedRoutes: [
+                config.getDashboard(),
+              ],
+            ),
           ],
         ),
 
@@ -430,17 +441,29 @@ class VRouterRoutes {
         // #endregion
 
         // #region Relatives
-        VWidget(
-          path: PagePaths.addPatientRelatives,
-          widget: const AddPatientRelativeScreen(),
-        ),
 
-        VWidget(
-          path: PagePaths.relatives,
-          widget: ChangeNotifierProvider<RelativesVm>(
-            create: (context) => RelativesVm(),
-            child: const PatientRelativesScreen(),
-          ),
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (!getIt<IAppConfig>().functionality.relatives) {
+              openDefaultScreen(vRedirector);
+            }
+          },
+          stackedRoutes: [
+            //
+            VWidget(
+              path: PagePaths.relatives,
+              widget: ChangeNotifierProvider<RelativesVm>(
+                create: (context) => RelativesVm(),
+                child: const PatientRelativesScreen(),
+              ),
+            ),
+
+            //
+            VWidget(
+              path: PagePaths.addPatientRelatives,
+              widget: const AddPatientRelativeScreen(),
+            ),
+          ],
         ),
         // #endregion
 

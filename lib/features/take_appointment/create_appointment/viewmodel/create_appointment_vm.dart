@@ -531,16 +531,18 @@ class CreateAppointmentVm extends ChangeNotifier {
     progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      _patientId != null
-          ? patientAppointments =
+      if (_patientId != null) {
+        if (getIt<UserNotifier>().isDefaultUser ?? true) {
+          patientAppointments =
               await getIt<Repository>().getPatientAppointments(
-              PatientAppointmentRequest(
-                patientId: _patientId,
-                to: endDate.toString(),
-                from: startDate.toString(),
-              ),
-            )
-          : null;
+            PatientAppointmentRequest(
+              patientId: _patientId,
+              to: endDate.toString(),
+              from: startDate.toString(),
+            ),
+          );
+        }
+      }
 
       await holderListFillFunc();
       for (var element in holderForFavorites) {

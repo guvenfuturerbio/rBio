@@ -1522,6 +1522,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1"
+  qr_flutter:
+    dependency: "direct dev"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "1fc6e38c198a76a6fd60b7bd3b4c190cd6c9330b"
+      url: "https://github.com/theyakka/qr.flutter.git"
+    source: git
+    version: "4.0.1"
   quiver:
     dependency: transitive
     description:
@@ -2072,7 +2081,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2"
   video_player_android:
     dependency: transitive
     description:

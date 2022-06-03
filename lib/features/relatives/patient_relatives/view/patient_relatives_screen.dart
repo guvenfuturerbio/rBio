@@ -155,6 +155,9 @@ class _PatientRelativeListTile extends StatelessWidget {
                 LocaleProvider.of(context).relative_change_message,
                 LocaleProvider.of(context).Ok,
                 () {
+                  context
+                      .read<PatientRelativesCubit>()
+                      .changeUserToPatientRelative(patientRelative);
                   // vm.changeUserToRelative(patientRelative, context);
                 },
               );

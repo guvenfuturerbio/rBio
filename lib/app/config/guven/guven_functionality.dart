@@ -15,4 +15,7 @@ class GuvenFunctionality extends IAppFunctionality {
 
   @override
   bool get mediminder => false;
+
+  @override
+  bool get relatives => true;
 }

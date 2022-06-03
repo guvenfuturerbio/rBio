@@ -141,7 +141,7 @@ dependencies:
   universal_html: ^2.0.8
   url_launcher: ^6.0.18
   url_strategy: ^0.2.0
-  video_player: ^2.3.0
+  video_player: ^2.4.2
   webview_flutter: ^2.3.1
 
 dev_dependencies:
@@ -153,6 +153,10 @@ dev_dependencies:
   freezed: ">=1.0.0 <1.1.1"
   json_annotation: ^4.4.0
   json_serializable: ^6.1.4
+  qr_flutter:
+    git:
+      url: https://github.com/theyakka/qr.flutter.git
+
 
 flutter:
   uses-material-design: true
