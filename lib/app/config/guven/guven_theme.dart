@@ -7,6 +7,9 @@ class GuvenTheme extends IAppTheme {
   ThemeType get type => ThemeType.burgundy;
 
   @override
+  IAppDialogTheme get dialogTheme => AppDialogThemeImpl();
+
+  @override
   String get fontFamily => 'Poppins';
 
   @override

@@ -7,17 +7,9 @@ class NotChronicWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GuvenAlert(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-      title: GuvenAlert.buildTitle(LocaleProvider.current.not_chronic_warning),
-      actions: [
-        GuvenAlert.buildMaterialAction(
-          LocaleProvider.current.ok,
-          () {
-            Atom.dismiss();
-          },
-        ),
-      ],
+    return RbioMessageDialog(
+      description: LocaleProvider.current.not_chronic_warning,
+      buttonTitle: LocaleProvider.current.ok,
     );
   }
 }

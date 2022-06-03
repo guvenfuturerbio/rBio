@@ -143,26 +143,24 @@ class GuvenAlert extends StatelessWidget {
     void Function() onPressed, {
     EdgeInsetsGeometry? padding,
   }) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: appGradient(),
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      child: RbioTextButton(
-        backgroundColor: Colors.transparent,
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        shape:
-            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
-        padding: padding ?? const EdgeInsets.symmetric(horizontal: 8),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: 18,
-            color: getIt<IAppConfig>().theme.textColor,
+    return RbioTextButton(
+      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      shape: RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+      padding: padding ??
+          const EdgeInsets.symmetric(
+            horizontal: 35,
+            vertical: 5,
           ),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: getIt<IAppConfig>().theme.textColor,
         ),
-        onPressed: onPressed,
       ),
+      onPressed: onPressed,
     );
   }
 }

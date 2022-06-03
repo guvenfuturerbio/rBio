@@ -5,6 +5,9 @@ class OneDoseTheme extends IAppTheme {
   ThemeType get type => ThemeType.green;
 
   @override
+  IAppDialogTheme get dialogTheme => AppDialogThemeImpl();
+
+  @override
   String get fontFamily => 'SourceSans';
 
   @override
