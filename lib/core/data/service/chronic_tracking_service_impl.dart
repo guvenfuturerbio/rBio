@@ -447,4 +447,60 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       throw Exception('/updateBpMeasurement : ${response.isSuccessful}');
     }
   }
+
+  @override
+  Future<ScaleTreatmentResponse> getTreatmentNoteWithDiet(
+    int? entegrationId,
+    ScaleTreatmentRequest request,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .getTreatmentNoteWithDiet(entegrationId),
+      request.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return ScaleTreatmentResponse.fromJson(response.xGetMap);
+    } else {
+      throw Exception('/getTreatmentNoteWithDiet : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> treatmentGetDetail(
+    TreatmentItemType itemType,
+    int id,
+  ) async {
+    final response = await helper.getGuven(
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .treatmentGetDetail(itemType.xGetRawValue, id),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/treatmentGetDetail : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> addTreatmentNote(
+    int? entegrationId,
+    PatientTreatmentAddRequest model,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>().endpoints.devApi.addTreatmentNote(entegrationId),
+      model.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/addTreatmentNote : ${response.isSuccessful}');
+    }
+  }
 }

@@ -70,6 +70,14 @@ abstract class DevApiEndpoints {
   String get updateContactInfoPath;
   String get getChatContacts;
   String get ctUpdateUserStrip;
+
+  String getTreatmentNoteWithDiet(int? entegrationId);
+  String getTreatmentNoteWithDietDoctor(int patientId);
+  String treatmentGetDetail(int itemType, int id);
+  String addTreatmentNote(int? entegrationId);
+  String addTreatmentNoteDoctor(int patientId);
+  String addDiet(int patientId);
+  String deleteNoteDiet(int itemType, int id);
 }
 
 abstract class SearchEndpoints {

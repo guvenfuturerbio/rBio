@@ -8,7 +8,6 @@ export 'appointment/part_model.dart';
 export 'appointment/patient_for_appointment_model.dart';
 export 'appointment/user_for_appointment_model.dart';
 export 'appointment/zoom_model.dart';
-export 'appointment_filter.dart';
 export 'bg_measurement.dart';
 export 'bg_measurements_view_model.dart';
 export 'blood_glucose/blood_glucose.dart';

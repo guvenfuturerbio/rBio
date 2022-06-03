@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,9 +7,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../../../core/core.dart';
 import '../../../../../core/core.dart';
 import '../../../../../core/data/service/model/patient_scale_measurement.dart';
-import '../../../notifiers/patient_notifiers.dart';
-import '../../../treatment_process/view/treatment_process_screen.dart';
 import '../cubit/scale_doctor_cubit.dart';
+import '../cubit/scale_doctor_loaded_result.dart';
 import '../widget/doctor_scale_chart.dart';
 import '../widget/measurement_list.dart';
 
@@ -30,16 +27,25 @@ class ScalePatientDetailScreen extends StatelessWidget {
     } catch (_) {
       return const RbioRouteError();
     }
+
     return BlocProvider(
       create: (context) => ScaleDoctorCubit(patientId)..fetchScaleData(),
-      child: ScalePatientDetailView(patientName),
+      child: ScalePatientDetailView(
+        patientId: patientId,
+        patientName: patientName,
+      ),
     );
   }
 }
 
 class ScalePatientDetailView extends StatefulWidget {
-  String patientName;
-  ScalePatientDetailView(this.patientName, {Key? key}) : super(key: key);
+  final int patientId;
+  final String patientName;
+  const ScalePatientDetailView({
+    Key? key,
+    required this.patientId,
+    required this.patientName,
+  }) : super(key: key);
 
   @override
   _ScalePatientDetailViewState createState() => _ScalePatientDetailViewState();
@@ -90,140 +96,12 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
     return BlocBuilder<ScaleDoctorCubit, ScaleDoctorState>(
       builder: (context, state) {
         return AtomDropdownBanner(
-            navigatorKey: _dropdownBannerKey,
-            child: RbioScaffold(
-              appbar: _buildAppBar(),
-              body: state.when(
-                error: () => const SizedBox(),
-                initial: () => const SizedBox(),
-                loading: () => const RbioLoading(),
-                loaded: (result) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      SizedBox(height: 50, child: _buildExpandedUser()),
-                      //
-                      ClipRRect(
-                        borderRadius: R.sizes.borderRadiusCircular,
-                        child: SizeTransition(
-                          sizeFactor: sizeAnimation,
-                          child: _UserScaleDetailCard(
-                            patientDetail: context
-                                .read<ScaleDoctorCubit>()
-                                .patientScaleMeasurements!
-                                .first,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      RbioElevatedButton(
-                        title: result.isChartVisible
-                            ? LocaleProvider.current.close_chart
-                            : LocaleProvider.current.open_chart,
-                        onTap: () {
-                          context.read<ScaleDoctorCubit>().toogleChart();
-                        },
-                      ),
-                      Visibility(
-                        visible: result.isChartVisible,
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        context
-                                            .read<ScaleDoctorCubit>()
-                                            .changeGraph(GraphTypes.weight);
-                                      },
-                                      child: Card(
-                                        color: result.graphType ==
-                                                GraphTypes.weight
-                                            ? getIt<IAppConfig>()
-                                                .theme
-                                                .mainColor
-                                            : null,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              R.sizes.borderRadiusCircular,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: Text(
-                                            'Weight',
-                                            style: result.graphType ==
-                                                    GraphTypes.weight
-                                                ? const TextStyle(
-                                                    color: Colors.white)
-                                                : const TextStyle(),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        context
-                                            .read<ScaleDoctorCubit>()
-                                            .changeGraph(GraphTypes.bmi);
-                                      },
-                                      child: Card(
-                                        color:
-                                            result.graphType == GraphTypes.bmi
-                                                ? getIt<IAppConfig>()
-                                                    .theme
-                                                    .mainColor
-                                                : null,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              R.sizes.borderRadiusCircular,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: Text(
-                                            'BMI',
-                                            style: result.graphType ==
-                                                    GraphTypes.bmi
-                                                ? const TextStyle(
-                                                    color: Colors.white)
-                                                : const TextStyle(),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ]),
-                            DoctorScaleChart(
-                                type: result.graphType,
-                                list: result.patientScaleMeasurements,
-                                zoomPanBehavior: ZoomPanBehavior(
-                                  enableDoubleTapZooming: true,
-                                  enablePanning: true,
-                                  enablePinching: true,
-                                  enableSelectionZooming: true,
-                                  zoomMode: ZoomMode.x,
-                                )),
-                          ],
-                        ),
-                      ),
-                      MeasurementList(
-                          scaleMeasurements: result.patientScaleMeasurements),
-                    ]),
-              ),
-            ));
+          navigatorKey: _dropdownBannerKey,
+          child: RbioScaffold(
+            appbar: _buildAppBar(),
+            body: _buildBody(state, context),
+          ),
+        );
       },
     );
   }
@@ -245,6 +123,154 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
           ),
         ],
       );
+
+  Widget _buildBody(ScaleDoctorState state, BuildContext context) {
+    return state.when(
+      initial: () => const SizedBox(),
+      loading: () => const RbioLoading(),
+      loaded: (result) => _buildSuccess(context, result),
+      error: () => const RbioBodyError(),
+    );
+  }
+
+  Widget _buildSuccess(BuildContext context, ScaleDoctorLoadedResult result) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        //
+        SizedBox(
+          height: 50,
+          child: _buildExpandedUser(),
+        ),
+
+        //
+        ClipRRect(
+          borderRadius: R.sizes.borderRadiusCircular,
+          child: SizeTransition(
+            sizeFactor: sizeAnimation,
+            child: _UserScaleDetailCard(
+              patientDetail: context
+                  .read<ScaleDoctorCubit>()
+                  .patientScaleMeasurements!
+                  .first,
+            ),
+          ),
+        ),
+
+        //
+        const SizedBox(
+          height: 15,
+        ),
+
+        //
+        RbioElevatedButton(
+          title: result.isChartVisible
+              ? LocaleProvider.current.close_chart
+              : LocaleProvider.current.open_chart,
+          onTap: () {
+            context.read<ScaleDoctorCubit>().toogleChart();
+          },
+        ),
+
+        //
+        Visibility(
+          visible: result.isChartVisible,
+          child: Column(
+            children: [
+              //
+              const SizedBox(
+                height: 5,
+              ),
+
+              //
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: InkWell(
+                      onTap: () {
+                        context
+                            .read<ScaleDoctorCubit>()
+                            .changeGraph(GraphTypes.weight);
+                      },
+                      child: Card(
+                        color: result.graphType == GraphTypes.weight
+                            ? getIt<IAppConfig>().theme.mainColor
+                            : null,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: R.sizes.borderRadiusCircular,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Text(
+                            'Weight',
+                            style: result.graphType == GraphTypes.weight
+                                ? const TextStyle(color: Colors.white)
+                                : const TextStyle(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  //
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: InkWell(
+                      onTap: () {
+                        context
+                            .read<ScaleDoctorCubit>()
+                            .changeGraph(GraphTypes.bmi);
+                      },
+                      child: Card(
+                        color: result.graphType == GraphTypes.bmi
+                            ? getIt<IAppConfig>().theme.mainColor
+                            : null,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: R.sizes.borderRadiusCircular,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Text(
+                            'BMI',
+                            style: result.graphType == GraphTypes.bmi
+                                ? const TextStyle(color: Colors.white)
+                                : const TextStyle(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              //
+              DoctorScaleChart(
+                type: result.graphType,
+                list: result.patientScaleMeasurements,
+                zoomPanBehavior: ZoomPanBehavior(
+                  enableDoubleTapZooming: true,
+                  enablePanning: true,
+                  enablePinching: true,
+                  enableSelectionZooming: true,
+                  zoomMode: ZoomMode.x,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        //
+        MeasurementList(
+          scaleMeasurements: result.patientScaleMeasurements,
+        ),
+      ],
+    );
+  }
 
   Widget _buildExpandedUser() {
     return SizedBox(
@@ -314,27 +340,34 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
           //
           GestureDetector(
             onTap: () {
-              final patient = context.read<PatientNotifiers>().patientDetail;
+              // Atom.to(
+              //   PagePaths.doctorScaleTreatmentList,
+              //   queryParameters: {
+              //     'patientId': widget.patientId.toString(),
+              //   },
+              // );
 
-              if (patient.treatmentModelList == null ||
-                  patient.treatmentModelList!.isEmpty) {
-                Atom.to(
-                  PagePaths.doctorTreatmentEdit,
-                  queryParameters: {
-                    'treatment_model': jsonEncode(
-                      TreatmentProcessItemModel(
-                        dateTime: DateTime.now(),
-                        description: '',
-                        id: -1,
-                        title: '',
-                      ).toJson(),
-                    ),
-                    'newModel': true.toString(),
-                  },
-                );
-              } else {
-                Atom.to(PagePaths.doctorTreatmentProgress);
-              }
+              // final patient = context.read<PatientNotifiers>().patientDetail;
+
+              // if (patient.treatmentModelList == null ||
+              //     patient.treatmentModelList!.isEmpty) {
+              //   Atom.to(
+              //     PagePaths.doctorTreatmentEdit,
+              //     queryParameters: {
+              //       'treatment_model': jsonEncode(
+              //         TreatmentProcessItemModel(
+              //           dateTime: DateTime.now(),
+              //           description: '',
+              //           id: -1,
+              //           title: '',
+              //         ).toJson(),
+              //       ),
+              //       'newModel': true.toString(),
+              //     },
+              //   );
+              // } else {
+              //   Atom.to(PagePaths.doctorTreatmentProgress);
+              // }
             },
             child: Container(
               height: double.infinity,

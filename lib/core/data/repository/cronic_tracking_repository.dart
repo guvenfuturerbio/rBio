@@ -1,3 +1,4 @@
+import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../features/mediminder/mediminder.dart';
 import '../../../model/bg_measurement/blood_glucose_report_body.dart';
 import '../../../model/bg_measurement/blood_glucose_value_model.dart';
@@ -111,4 +112,60 @@ class ChronicTrackingRepository {
     UpdateBpMeasurements updateBpMeasurements,
   ) =>
       apiService.updateBpMeasurement(updateBpMeasurements);
+
+  Future<List<RbioTreatmentModel>> getTreatmentNoteWithDiet(
+    int? entegrationId,
+    ScaleTreatmentRequest request,
+  ) async {
+    final result = <RbioTreatmentModel>[];
+    final list =
+        await apiService.getTreatmentNoteWithDiet(entegrationId, request);
+    result.addAll(
+      (list.dietList ?? []).map(
+        (e) => RbioTreatmentModel(
+          id: e.id ?? -1,
+          description: e.createdByName ?? '',
+          dateTime: e.dietCreateDate,
+          type: TreatmentType.diet,
+        ),
+      ),
+    );
+
+    result.addAll(
+      (list.treatmentNoteList ?? []).map(
+        (e) => RbioTreatmentModel(
+          id: e.id ?? -1,
+          description: e.createdByName ?? '',
+          dateTime: e.treatmentNoteCreateDate,
+          type: TreatmentType.treatmentNote,
+        ),
+      ),
+    );
+
+    return result
+        .xSortedBy((e) => e.dateTime ?? DateTime.now())
+        .toList()
+        .reversed
+        .toList();
+  }
+
+  Future<ScaleTreatmentDietDetailResponse> treatmentDietGetDetail(
+      int id) async {
+    final guvenResponseModel =
+        await apiService.treatmentGetDetail(TreatmentItemType.diet, id);
+    return ScaleTreatmentDietDetailResponse.fromJson(
+        guvenResponseModel.xGetMap);
+  }
+
+  Future<ScaleTreatmentDetailResponse> treatmentGetDetail(int id) async {
+    final guvenResponseModel =
+        await apiService.treatmentGetDetail(TreatmentItemType.treatment, id);
+    return ScaleTreatmentDetailResponse.fromJson(guvenResponseModel.xGetMap);
+  }
+
+  Future<GuvenResponseModel> addTreatmentNote(
+    int? entegrationId,
+    PatientTreatmentAddRequest model,
+  ) =>
+      apiService.addTreatmentNote(entegrationId, model);
 }

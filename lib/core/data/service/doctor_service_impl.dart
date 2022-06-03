@@ -21,32 +21,15 @@ class DoctorApiServiceImpl extends DoctorApiService {
       });
 
   @override
-  Future<RbioLoginResponse> login(String userId, String password, String consentId) async {
-    final response =
-        await helper.postGuven(getIt<IAppConfig>().endpoints.doctor.login(userId, password, consentId), {});
+  Future<RbioLoginResponse> login(
+      String userId, String password, String consentId) async {
+    final response = await helper.postGuven(
+        getIt<IAppConfig>().endpoints.doctor.login(userId, password, consentId),
+        {});
     if (response.isSuccessful == true) {
       return RbioLoginResponse.fromJson(response.xGetMap);
     } else {
       throw Exception('/login : ${response.isSuccessful}');
-    }
-  }
-
-  @override
-  Future<List<Appointment>> getAllAppointment(
-    AppointmentFilter appointmentFilter,
-  ) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.doctor.getAllAppointment,
-      appointmentFilter.toJson(),
-      options: authOptions,
-    );
-    if (response.isSuccessful == true) {
-      return response.xGetMapList
-          .map((item) => Appointment.fromJson(item))
-          .cast<Appointment>()
-          .toList();
-    } else {
-      throw Exception('/getAllAppointment : ${response.isSuccessful}');
     }
   }
 
@@ -214,6 +197,99 @@ class DoctorApiServiceImpl extends DoctorApiService {
           .toList();
     } else {
       throw Exception('/getMyPatientBloodGlucose : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<ScaleTreatmentResponse> getTreatmentNoteWithDietDoctor(
+    int patientId,
+    ScaleTreatmentRequest request,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .getTreatmentNoteWithDietDoctor(patientId),
+      request.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return ScaleTreatmentResponse.fromJson(response.xGetMap);
+    } else {
+      throw Exception(
+          '/getTreatmentNoteWithDietDoctor : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> treatmentGetDetail(
+    TreatmentItemType type,
+    int id,
+  ) async {
+    final response = await helper.getGuven(
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .treatmentGetDetail(type.xGetRawValue, id),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/treatmentGetDetail : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> treatmentAddDiet(
+    int patientId,
+    ScaleDietListAddRequest model,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>().endpoints.devApi.addDiet(patientId),
+      model.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/treatmentAddDiet : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> deleteNoteDiet(
+    TreatmentItemType type,
+    int id,
+  ) async {
+    final response = await helper.deleteGuven(
+      getIt<IAppConfig>()
+          .endpoints
+          .devApi
+          .deleteNoteDiet(type.xGetRawValue, id),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/deleteNoteDiet : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> addTreatmentNote(
+    int patientId,
+    PatientTreatmentAddRequest model,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>().endpoints.devApi.addTreatmentNoteDoctor(patientId),
+      model.toJson(),
+      options: authOptions,
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/addTreatmentNote : ${response.isSuccessful}');
     }
   }
 }

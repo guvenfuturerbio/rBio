@@ -141,12 +141,14 @@ class RbioScaffold extends StatelessWidget {
 class RbioBody extends StatelessWidget {
   final Widget child;
   final bool isLoading;
+  final bool showLoadingIcon;
   final EdgeInsetsGeometry? padding;
 
   const RbioBody({
     Key? key,
     required this.child,
     this.isLoading = false,
+    this.showLoadingIcon = false,
     this.padding,
   }) : super(key: key);
 
@@ -160,7 +162,7 @@ class RbioBody extends StatelessWidget {
           child: child,
         ),
         isLoading: isLoading,
-        progressIndicator: RbioLoading.progressIndicator(),
+        progressIndicator: RbioLoading.progressIndicator(showLoadingIcon),
         opacity: 0,
       ),
     );

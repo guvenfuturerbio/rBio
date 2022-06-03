@@ -7,6 +7,7 @@ class RbioStackedScaffold extends StatelessWidget {
   final RbioAppBar? appbar;
   final Widget body;
   final bool isLoading;
+  final bool showLoadingIcon;
 
   // Optionals
   final Color? backgroundColor;
@@ -36,6 +37,7 @@ class RbioStackedScaffold extends StatelessWidget {
     this.appbar,
     required this.body,
     this.isLoading = false,
+    this.showLoadingIcon = true,
     this.backgroundColor,
     this.bottomNavigationBar,
     this.bottomSheet,
@@ -72,6 +74,7 @@ class RbioStackedScaffold extends StatelessWidget {
           RbioBody(
             child: body,
             isLoading: isLoading,
+            showLoadingIcon: showLoadingIcon,
           ),
 
           //

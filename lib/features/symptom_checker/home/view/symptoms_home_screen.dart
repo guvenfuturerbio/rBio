@@ -207,7 +207,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         //
         RbioElevatedButton(
           onTap: () async {
-            getIt<AdjustManager>().trackEvent(MySymptomsPage1Event());
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MySymptomsPage1Event());
             getIt<FirebaseAnalyticsManager>().logEvent(
               SikayetlerimSayfa1DevamEvent(
                 getIt<UserNotifier>().firebaseEmail.toString(),

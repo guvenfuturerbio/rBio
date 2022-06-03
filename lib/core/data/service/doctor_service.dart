@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
+import '../../../features/chronic_tracking/scale/scale.dart';
+import '../../../features/doctor/treatment/diet_add_edit/diet_add_edit.dart';
 import '../../../model/model.dart';
 import '../../core.dart';
 import 'model/patient_scale_measurement.dart';
@@ -11,9 +13,8 @@ abstract class DoctorApiService {
   final IDioHelper helper;
   DoctorApiService(this.helper);
 
-  Future<RbioLoginResponse> login(String userId, String password, String consentId);
-  Future<List<Appointment>> getAllAppointment(
-      AppointmentFilter appointmentFilter);
+  Future<RbioLoginResponse> login(
+      String userId, String password, String consentId);
   Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
       GetMyPatientFilter getMyPatientFilter);
   Future<List<DoctorGlucosePatientModel>> getMyScalePatient(
@@ -31,4 +32,27 @@ abstract class DoctorApiService {
       int patientId, GetMyPatientFilter getMyPatientFilter);
   Future<List<BloodPressureModel>> getMyPatientBloodPressure(
       int patientId, GetMyPatientFilter getMyPatientFilter);
+
+  Future<ScaleTreatmentResponse> getTreatmentNoteWithDietDoctor(
+    int patientId,
+    ScaleTreatmentRequest request,
+  );
+
+  Future<GuvenResponseModel> treatmentGetDetail(
+    TreatmentItemType type,
+    int id,
+  );
+  Future<GuvenResponseModel> treatmentAddDiet(
+    int patientId,
+    ScaleDietListAddRequest model,
+  );
+  Future<GuvenResponseModel> deleteNoteDiet(
+    TreatmentItemType type,
+    int id,
+  );
+
+  Future<GuvenResponseModel> addTreatmentNote(
+    int patientId,
+    PatientTreatmentAddRequest model,
+  );
 }

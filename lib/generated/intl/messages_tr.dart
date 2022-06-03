@@ -43,6 +43,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "accu_chek_blood_sugar":
             MessageLookupByLibrary.simpleMessage("ACCU-CHEK Şeker Ölçüm"),
         "activate": MessageLookupByLibrary.simpleMessage("Aktifleştir"),
+        "add_diet_list":
+            MessageLookupByLibrary.simpleMessage("Diyet Listesi Ekle"),
         "add_discount_code":
             MessageLookupByLibrary.simpleMessage("İndirim kodu ekle"),
         "add_medicine": MessageLookupByLibrary.simpleMessage("İlaç ekle"),
@@ -55,8 +57,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Yakın ekleme talebiniz alınmıştır."),
         "add_reminder":
             MessageLookupByLibrary.simpleMessage("Hatırlatıcı Ekle"),
+        "add_special_note":
+            MessageLookupByLibrary.simpleMessage("Özel Not Ekle"),
         "add_strips": MessageLookupByLibrary.simpleMessage("Strip Ekle"),
         "add_symptom": MessageLookupByLibrary.simpleMessage("Semptom Ekle"),
+        "add_treatment_note":
+            MessageLookupByLibrary.simpleMessage("Tedavi Notu Ekle"),
         "additional_info":
             MessageLookupByLibrary.simpleMessage("Gerekli Bilgiler"),
         "aft": MessageLookupByLibrary.simpleMessage("Son."),
@@ -168,6 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "box_code": MessageLookupByLibrary.simpleMessage("Kutu kodu"),
         "boy": MessageLookupByLibrary.simpleMessage("Erkek Çocuğu"),
         "bp_tracking": MessageLookupByLibrary.simpleMessage("Tansiyon Takibi"),
+        "breakfast": MessageLookupByLibrary.simpleMessage("Sabah"),
         "btn_cancel": MessageLookupByLibrary.simpleMessage("İptal"),
         "btn_confirm": MessageLookupByLibrary.simpleMessage("Onayla"),
         "btn_create": MessageLookupByLibrary.simpleMessage("Oluştur"),
@@ -311,6 +318,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Şifre Oluştur"),
         "create_reminder":
             MessageLookupByLibrary.simpleMessage("Hatırlatıcı oluştur"),
+        "created_by": MessageLookupByLibrary.simpleMessage("Oluşturan"),
         "credential_already_exist": MessageLookupByLibrary.simpleMessage(
             "Kimlik bilgileri bir hesaba bağlı olarak zaten mevcuttur. Öncelikle bağlı olduğu hesabın altından silinmesi gereklidir"),
         "credit_card_cvv": MessageLookupByLibrary.simpleMessage("CVV"),
@@ -324,6 +332,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kart Numarası"),
         "critical_metrics":
             MessageLookupByLibrary.simpleMessage("Kritik ölçümler"),
+        "current_treatments":
+            MessageLookupByLibrary.simpleMessage("Güncel Tedaviler"),
         "cv": MessageLookupByLibrary.simpleMessage("Özgeçmiş"),
         "cvv_code_least_3_digit": MessageLookupByLibrary.simpleMessage(
             "Cvv kod en az 3 haneli olmalıdır"),
@@ -334,6 +344,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "day": MessageLookupByLibrary.simpleMessage("Gün"),
         "days": MessageLookupByLibrary.simpleMessage("Günler"),
         "delete": MessageLookupByLibrary.simpleMessage("Sil"),
+        "delete_diet_list": MessageLookupByLibrary.simpleMessage(
+            "Diyet listesini silmek istediğinizden emin misiniz?"),
         "delete_file_question": MessageLookupByLibrary.simpleMessage(
             "Dosyayı silmek istediğinize emin misiniz ?"),
         "delete_measurement_succesfull":
@@ -351,6 +363,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Onaylıyor musunuz?"),
         "delete_relative_title":
             MessageLookupByLibrary.simpleMessage("Silinecektir!"),
+        "delete_special_note": MessageLookupByLibrary.simpleMessage(
+            "Özel notu silmek istediğinizden emin misiniz?"),
+        "delete_treatment_note": MessageLookupByLibrary.simpleMessage(
+            "Tedavi notunu silmek istediğinizden emin misiniz?"),
         "demographic": MessageLookupByLibrary.simpleMessage("Demografik"),
         "depart_analyse": MessageLookupByLibrary.simpleMessage("Bölüm analizi"),
         "depart_name": MessageLookupByLibrary.simpleMessage("Bölüm:"),
@@ -363,6 +379,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Size geçici şifrenizi iletebilmemiz için Pasaport numaranız ve telefon numaranıza ihtiyacımız var"),
         "des_forgot_password_tc": MessageLookupByLibrary.simpleMessage(
             "Size geçici şifrenizi iletebilmemiz için T.C kimlik numaranız ve telefon numaranıza ihtiyacımız var"),
+        "description": MessageLookupByLibrary.simpleMessage("Açıklama"),
+        "detail_search": MessageLookupByLibrary.simpleMessage("Detaylı Arama"),
         "detailed_check":
             MessageLookupByLibrary.simpleMessage("Detaylı Sağlık Kontrolü"),
         "detailed_error_dialog_part1": MessageLookupByLibrary.simpleMessage(
@@ -413,8 +431,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Tanı Tarihi"),
         "didnt_reach_goals": MessageLookupByLibrary.simpleMessage(
             "Değer aralığına uyulmayanlar"),
+        "diet_list": MessageLookupByLibrary.simpleMessage("Diyet Listesi"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Dijital Checkup"),
+        "dinner": MessageLookupByLibrary.simpleMessage("Akşam"),
         "discard": MessageLookupByLibrary.simpleMessage("İptal et"),
         "discount_code": MessageLookupByLibrary.simpleMessage("İndirim kodu"),
         "disease": MessageLookupByLibrary.simpleMessage("Hastalık"),
@@ -432,6 +452,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "doctor_legand": MessageLookupByLibrary.simpleMessage(
             "(Memnun Kalmadım 1 … 5 Çok Memnun Kaldım)"),
         "doctor_name": MessageLookupByLibrary.simpleMessage("Uzman Adı:"),
+        "doctor_note": MessageLookupByLibrary.simpleMessage("Doktor Notu"),
         "doctor_selection":
             MessageLookupByLibrary.simpleMessage("Uzman seçimi:"),
         "doesnt_match_tc": MessageLookupByLibrary.simpleMessage(
@@ -694,6 +715,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uygulamadan çıkış yapmak istiyor musunuz?"),
         "low": MessageLookupByLibrary.simpleMessage("Düşük"),
         "low_range": MessageLookupByLibrary.simpleMessage("Düşük Aralık"),
+        "lunch": MessageLookupByLibrary.simpleMessage("Öğle"),
         "make_an_appointment":
             MessageLookupByLibrary.simpleMessage("Randevu Al"),
         "make_an_online":
@@ -969,6 +991,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Geçerli bir şifre giriniz."),
         "passwords_not_match": MessageLookupByLibrary.simpleMessage(
             "Girilen şifreler eşleşmiyor."),
+        "past_treatments":
+            MessageLookupByLibrary.simpleMessage("Geçmiş Tedaviler"),
         "pathology_result":
             MessageLookupByLibrary.simpleMessage("Patoloji\nSonuçları"),
         "patient_name": MessageLookupByLibrary.simpleMessage("Hasta Adı:"),
@@ -1050,6 +1074,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Son Randevularım"),
         "recover_your_password":
             MessageLookupByLibrary.simpleMessage("Şifremi Kurtar"),
+        "refreshment": MessageLookupByLibrary.simpleMessage("Ara"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Bundan sonraki işlemleriniz seçilen kullanıcı ile yapılacaktır, onaylıyor musunuz?"),
         "relative_identity_number":
@@ -1170,6 +1195,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sorry_dont_transaction": MessageLookupByLibrary.simpleMessage(
             "Üzgünüz, İşleminizi şuan gerçekleştiremiyoruz. Lütfen daha sonra tekrar deneyiniz"),
         "sort_by": MessageLookupByLibrary.simpleMessage("Sırala"),
+        "special_note": MessageLookupByLibrary.simpleMessage("Özel Not"),
         "specialities": MessageLookupByLibrary.simpleMessage("Uzmanlıklar"),
         "specific": MessageLookupByLibrary.simpleMessage("Özel"),
         "specific_days": MessageLookupByLibrary.simpleMessage("Belirli Günler"),
@@ -1265,6 +1291,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time_take_medicine_title": MessageLookupByLibrary.simpleMessage(
             "İlacınızı almanız gerekmektedir"),
         "time_text": MessageLookupByLibrary.simpleMessage("Zaman"),
+        "title": MessageLookupByLibrary.simpleMessage("Başlık"),
         "title_appointment":
             MessageLookupByLibrary.simpleMessage("Randevu Oluştur"),
         "title_appointment_detail":
@@ -1287,6 +1314,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Türkiye vatandaşıyım"),
         "trainings": MessageLookupByLibrary.simpleMessage("Çalışmalar"),
         "treatment": MessageLookupByLibrary.simpleMessage("Tedavi"),
+        "treatment_note": MessageLookupByLibrary.simpleMessage("Tedavi Notu"),
         "treatment_process":
             MessageLookupByLibrary.simpleMessage("Tedavi Süreci"),
         "treatments": MessageLookupByLibrary.simpleMessage("Tedaviler"),
@@ -1302,9 +1330,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "unsupported_language":
             MessageLookupByLibrary.simpleMessage("Desteklenmeyen Dil"),
         "update": MessageLookupByLibrary.simpleMessage("Güncelle"),
+        "update_diet_list":
+            MessageLookupByLibrary.simpleMessage("Diyet Listesi Güncelle"),
         "update_information":
             MessageLookupByLibrary.simpleMessage("Bilgilerini Güncelle"),
         "update_now": MessageLookupByLibrary.simpleMessage("Şimdi Güncelle"),
+        "update_special_note":
+            MessageLookupByLibrary.simpleMessage("Özel Not Güncelle"),
+        "update_treatment_note":
+            MessageLookupByLibrary.simpleMessage("Tedavi Notu Güncelle"),
         "upload": MessageLookupByLibrary.simpleMessage("Yükle"),
         "uploadFile": MessageLookupByLibrary.simpleMessage("Dosya\nYükle"),
         "upload_file_question": MessageLookupByLibrary.simpleMessage(

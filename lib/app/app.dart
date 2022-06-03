@@ -5,10 +5,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../core/core.dart';
-import '../features/chronic_tracking/progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
-import '../features/chronic_tracking/progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
-import '../features/chronic_tracking/progress_sections/scale/scale.dart';
-import '../features/chronic_tracking/progress_sections/scale/scale_detail/scale_detail.dart';
+import '../features/chronic_tracking/blood_glucose/blood_glucose.dart';
+import '../features/chronic_tracking/blood_pressure/blood_pressure.dart';
+import '../features/chronic_tracking/home/viewmodel/scale_progress_vm.dart';
+import '../features/chronic_tracking/scale/scale.dart';
 import '../features/dashboard/home/viewmodel/home_vm.dart';
 import '../features/doctor/notifiers/bg_measurements_notifiers.dart';
 import '../features/doctor/notifiers/patient_notifiers.dart';

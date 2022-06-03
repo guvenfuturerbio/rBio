@@ -860,7 +860,35 @@
   "verify": "Doğrula",
   "twofa": "İki Faktörlü Kimlik Doğrulama",
   "resend": "Tekrar Gönder",
+  "created_by": "Oluşturan",
+  "detail_search": "Detaylı Arama",
+  "past_treatments": "Geçmiş Tedaviler",
+  "current_treatments": "Güncel Tedaviler",
+  "diet_list": "Diyet Listesi",
+  "update_diet_list": "Diyet Listesi Güncelle",
   "validation": "Bu alan boş bırakılamaz",
   "code_sent": "Girmiş olduğunuz telefon numarasına ve e posta adresine doğrulama kodu gönderilmiştir.",
+<<<<<<< HEAD
   "empty_cv": "Uzman CV'si bulunamadı."
 }
+=======
+  "breakfast": "Sabah",
+  "refreshment": "Ara",
+  "lunch": "Öğle",
+  "dinner": "Akşam",
+  "treatment_note": "Tedavi Notu",
+  "add_treatment_note": "Tedavi Notu Ekle",
+  "update_treatment_note": "Tedavi Notu Güncelle",
+  "delete_treatment_note": "Tedavi notunu silmek istediğinizden emin misiniz?",
+  "title": "Başlık",
+  "doctor_note": "Doktor Notu",
+  "delete_diet_list": "Diyet listesini silmek istediğinizden emin misiniz?",
+  "empty_cv": "Uzman CV'si bulunamadı.",
+  "add_diet_list": "Diyet Listesi Ekle",
+  "special_note": "Özel Not",
+  "add_special_note": "Özel Not Ekle",
+  "update_special_note": "Özel Not Güncelle",
+  "delete_special_note": "Özel notu silmek istediğinizden emin misiniz?",
+  "description": "Açıklama"
+}
+>>>>>>> master

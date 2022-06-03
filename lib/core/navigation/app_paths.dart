@@ -7,11 +7,10 @@ import '../../features/auth/auth.dart';
 import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';
+import '../../features/chronic_tracking/blood_glucose/blood_glucose.dart';
+import '../../features/chronic_tracking/blood_pressure/blood_pressure.dart';
 import '../../features/chronic_tracking/home/view/mt_home_screen.dart';
-import '../../features/chronic_tracking/progress_sections/blood_glucose/view/bg_progress_screen.dart';
-import '../../features/chronic_tracking/progress_sections/blood_pressure/view/bp_progres_screen.dart';
-import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_detail_screen.dart';
-import '../../features/chronic_tracking/progress_sections/scale/scale_detail/view/scale_manuel_add_screen.dart';
+import '../../features/chronic_tracking/scale/scale.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/search/doctor_cv/doctor_cv_screen.dart';
@@ -22,6 +21,10 @@ import '../../features/doctor/patient_detail/blood_pressure/blood_pressure.dart'
 import '../../features/doctor/patient_detail/scale/view/scale_patient_detail_screen.dart';
 import '../../features/doctor/patient_list/view/patient_list_screen.dart';
 import '../../features/doctor/patient_treatment_edit/view/patient_treatment_edit_view.dart';
+import '../../features/doctor/treatment/diet_add_edit/view/doctor_scale_diet_add_edit_screen.dart';
+import '../../features/doctor/treatment/doctor_note_add_edit/doctor_note_add_edit.dart';
+import '../../features/doctor/treatment/treatment_add_edit/view/doctor_scale_treatment_add_edit_screen.dart';
+import '../../features/doctor/treatment/treatment_list/view/doctor_scale_treatment_list_screen.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../features/mediminder/mediminder.dart';
 import '../../features/my_appointments/my_appointments.dart';
@@ -144,9 +147,25 @@ class VRouterRoutes {
                   path: PagePaths.bpProgress,
                   widget: const BpProgressScreen(),
                 ),
-                VWidget(
-                  path: PagePaths.scaleDetail,
-                  widget: const ScaleDetailScreen(),
+                VGuard(
+                  stackedRoutes: [
+                    VWidget(
+                      path: PagePaths.scaleDetail,
+                      widget: const ScaleDetailScreen(),
+                    ),
+                    VWidget(
+                      path: PagePaths.patientScaleTreatmentList,
+                      widget: const PatientScaleTreatmentListScreen(),
+                    ),
+                    VWidget(
+                      path: PagePaths.patientScaleDietDetail,
+                      widget: const PatientScaleDietDetailScreen(),
+                    ),
+                    VWidget(
+                      path: PagePaths.patientScaleTreatmentDetail,
+                      widget: const PatientScaleTreatmentDetailScreen(),
+                    ),
+                  ],
                 ),
                 VWidget(
                   path: PagePaths.scaleManuelAdd,
@@ -255,6 +274,22 @@ class VRouterRoutes {
                 VWidget(
                   path: PagePaths.doctorCosultation,
                   widget: const ConsultationScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.doctorScaleTreatmentList,
+                  widget: const DoctorScaleTreatmentListScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.doctorScaleDietAddEdit,
+                  widget: const DoctorScaleDietAddEditScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.doctorScaleTreatmentAddEdit,
+                  widget: const DoctorScaleTreatmentAddEditScreen(),
+                ),
+                VWidget(
+                  path: PagePaths.doctorScaleDoctorNoteAddEdit,
+                  widget: const DoctorScaleDoctorNoteAddEditScreen(),
                 ),
               ],
             ),
@@ -641,6 +676,13 @@ class PagePaths {
   static const treatmentEditProgress = '/tretment-edit-progress';
   static const scaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-manuel-add';
+
+  static const patientScaleTreatmentList =
+      "/scale-detail/patient-scale-treatment-list";
+  static const patientScaleDietDetail =
+      "/scale-detail/patient-scale-diet-detail";
+  static const patientScaleTreatmentDetail =
+      "/scale-detail/patient-scale-treatment-detail";
   // #endregion
 
   // #region Dashboard
@@ -661,6 +703,12 @@ class PagePaths {
   static const doctorTreatmentProgress = '/doctor-treatment_process';
   static const doctorTreatmentEdit = '/doctor-patient-treatment-edit';
   static const doctorCosultation = '/doctor-consultation';
+
+  static const doctorScaleTreatmentList = '/doctor-scale-treatment-list';
+  static const doctorScaleDietAddEdit = '/doctor-scale-diet-add-edit';
+  static const doctorScaleTreatmentAddEdit = '/doctor-scale-treatment-add-edit';
+  static const doctorScaleDoctorNoteAddEdit =
+      '/doctor-scale-doctor-note-add-edit';
   // #endregion
 
   // #region Mediminder

@@ -8700,6 +8700,66 @@ class LocaleProvider {
     );
   }
 
+  /// `Created By`
+  String get created_by {
+    return Intl.message(
+      'Created By',
+      name: 'created_by',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detail Search`
+  String get detail_search {
+    return Intl.message(
+      'Detail Search',
+      name: 'detail_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Past Treatments`
+  String get past_treatments {
+    return Intl.message(
+      'Past Treatments',
+      name: 'past_treatments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Treatments`
+  String get current_treatments {
+    return Intl.message(
+      'Current Treatments',
+      name: 'current_treatments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diet List`
+  String get diet_list {
+    return Intl.message(
+      'Diet List',
+      name: 'diet_list',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Diet List`
+  String get update_diet_list {
+    return Intl.message(
+      'Update Diet List',
+      name: 'update_diet_list',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `This field cannot be left blank`
   String get validation {
     return Intl.message(
@@ -8720,11 +8780,181 @@ class LocaleProvider {
     );
   }
 
+  /// `Breakfast`
+  String get breakfast {
+    return Intl.message(
+      'Breakfast',
+      name: 'breakfast',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refreshment`
+  String get refreshment {
+    return Intl.message(
+      'Refreshment',
+      name: 'refreshment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lunch`
+  String get lunch {
+    return Intl.message(
+      'Lunch',
+      name: 'lunch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dinner`
+  String get dinner {
+    return Intl.message(
+      'Dinner',
+      name: 'dinner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Treatment Note`
+  String get treatment_note {
+    return Intl.message(
+      'Treatment Note',
+      name: 'treatment_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Treatment Note`
+  String get add_treatment_note {
+    return Intl.message(
+      'Add Treatment Note',
+      name: 'add_treatment_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Treatment Note`
+  String get update_treatment_note {
+    return Intl.message(
+      'Update Treatment Note',
+      name: 'update_treatment_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete the treatment note?`
+  String get delete_treatment_note {
+    return Intl.message(
+      'Are you sure you want to delete the treatment note?',
+      name: 'delete_treatment_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title`
+  String get title {
+    return Intl.message(
+      'Title',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Doctor Note`
+  String get doctor_note {
+    return Intl.message(
+      'Doctor Note',
+      name: 'doctor_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete the diet list?`
+  String get delete_diet_list {
+    return Intl.message(
+      'Are you sure you want to delete the diet list?',
+      name: 'delete_diet_list',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Specialist's CV can not be found.`
   String get empty_cv {
     return Intl.message(
       'Specialist\'s CV can not be found.',
       name: 'empty_cv',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Diet List`
+  String get add_diet_list {
+    return Intl.message(
+      'Add Diet List',
+      name: 'add_diet_list',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Special note`
+  String get special_note {
+    return Intl.message(
+      'Special note',
+      name: 'special_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Special note`
+  String get add_special_note {
+    return Intl.message(
+      'Add Special note',
+      name: 'add_special_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Special note`
+  String get update_special_note {
+    return Intl.message(
+      'Update Special note',
+      name: 'update_special_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete the special note?`
+  String get delete_special_note {
+    return Intl.message(
+      'Are you sure you want to delete the special note?',
+      name: 'delete_special_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
       desc: '',
       args: [],
     );

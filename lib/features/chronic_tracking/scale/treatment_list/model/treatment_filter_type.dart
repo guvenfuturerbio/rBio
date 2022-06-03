@@ -1,0 +1,4 @@
+enum TreatmentFilterType {
+  past,
+  current,
+}
