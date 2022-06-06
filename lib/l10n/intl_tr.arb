@@ -868,10 +868,6 @@
   "update_diet_list": "Diyet Listesi Güncelle",
   "validation": "Bu alan boş bırakılamaz",
   "code_sent": "Girmiş olduğunuz telefon numarasına ve e posta adresine doğrulama kodu gönderilmiştir.",
-<<<<<<< HEAD
-  "empty_cv": "Uzman CV'si bulunamadı."
-}
-=======
   "breakfast": "Sabah",
   "refreshment": "Ara",
   "lunch": "Öğle",
@@ -889,6 +885,6 @@
   "add_special_note": "Özel Not Ekle",
   "update_special_note": "Özel Not Güncelle",
   "delete_special_note": "Özel notu silmek istediğinizden emin misiniz?",
-  "description": "Açıklama"
+  "description": "Açıklama",
+  "rate_thank_you": "Değerlendirmeniz için teşekkürler"
 }
->>>>>>> master

@@ -1066,6 +1066,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rate": MessageLookupByLibrary.simpleMessage("Değerlendir"),
         "rate_appointment": MessageLookupByLibrary.simpleMessage(
             "Randevunuzu değerlendirmek ister misiniz ?"),
+        "rate_thank_you": MessageLookupByLibrary.simpleMessage(
+            "Değerlendirmeniz için teşekkürler"),
         "reach_goal":
             MessageLookupByLibrary.simpleMessage("Değer aralığına uyulanlar"),
         "read_understood_kvkk": MessageLookupByLibrary.simpleMessage(

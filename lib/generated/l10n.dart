@@ -8959,6 +8959,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Thanks for your review`
+  String get rate_thank_you {
+    return Intl.message(
+      'Thanks for your review',
+      name: 'rate_thank_you',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

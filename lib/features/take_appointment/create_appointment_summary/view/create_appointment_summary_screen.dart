@@ -34,17 +34,15 @@ class _CreateAppointmentSummaryScreenState
 
   @override
   void initState() {
+    super.initState();
     codeEditingController = TextEditingController();
     codeFocusNode = FocusNode();
-
-    super.initState();
   }
 
   @override
   void dispose() {
     codeEditingController.dispose();
     codeFocusNode.dispose();
-
     super.dispose();
   }
 
@@ -191,7 +189,9 @@ class _CreateAppointmentSummaryScreenState
   }
 
   Widget _buildKeyboardVisibilityBuilder(
-      CreateAppointmentSummaryVm vm, bool isKeyboardVisible) {
+    CreateAppointmentSummaryVm vm,
+    bool isKeyboardVisible,
+  ) {
     return RbioKeyboardActions(
       focusList: [
         codeFocusNode,
@@ -201,7 +201,7 @@ class _CreateAppointmentSummaryScreenState
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (forOnline) ...[
+          if (forOnline && !vm.appointmentSuccess) ...[
             if (vm.showCodeField) ...[
               Container(
                 height: 55,
@@ -329,24 +329,23 @@ class _CreateAppointmentSummaryScreenState
           ],
 
           //
-          if (!forOnline) ...[
+          if (vm.appointmentSuccess) ...[
             RbioElevatedButton(
               infinityWidth: true,
-              onTap: () async {
-                LoggerUtils.instance.i("heyo");
-                vm.appointmentSuccess
-                    ? Atom.to(PagePaths.main, isReplacement: true)
-                    : await vm.saveAppointment(forOnline: false, forFree: true);
+              onTap: () {
+                Atom.to(
+                  PagePaths.main,
+                  isReplacement: true,
+                );
               },
-              title: vm.appointmentSuccess
-                  ? LocaleProvider.current.home
-                  : LocaleProvider.current.confirm,
+              title: LocaleProvider.current.home,
               fontWeight: FontWeight.w600,
             ),
-            R.sizes.defaultBottomPadding,
           ] else ...[
-            if (!isKeyboardVisible) ...[
-              Row(
+            // Online Appointment
+            if (forOnline) ...[
+              if (!isKeyboardVisible) ...[
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
@@ -393,7 +392,6 @@ class _CreateAppointmentSummaryScreenState
                             : LocaleProvider.current.confirm,
                         fontWeight: FontWeight.w600,
                       ),
-                      R.sizes.defaultBottomPadding,
                     ] else ...[
                       if (!isKeyboardVisible) ...[
                         SizedBox(
@@ -404,69 +402,81 @@ class _CreateAppointmentSummaryScreenState
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               //
-                              _buildSummaryButton(vm),
-
-                              //
-                              const SizedBox(
-                                width: 5,
+                              Expanded(
+                                child: _buildSummaryButton(vm),
                               ),
 
                               //
-                              RbioElevatedButton(
-                                onTap: () {
-                                  if (vm.newVideoCallPriceResponse
-                                          ?.patientPrice ==
-                                      null) {
-                                    vm.saveAppointment(
-                                      price: vm.orgVideoCallPriceResponse
-                                          ?.patientPrice
-                                          ?.toString(),
-                                      forOnline: forOnline,
-                                      forFree: (vm.orgVideoCallPriceResponse
-                                                      ?.patientPrice ??
-                                                  0) <
-                                              1
-                                          ? true
-                                          : false,
-                                    );
-                                  } else {
-                                    vm.saveAppointment(
-                                      price: vm.newVideoCallPriceResponse
-                                          ?.patientPrice
-                                          ?.toString(),
-                                      forOnline: forOnline,
-                                      forFree: (vm.newVideoCallPriceResponse
-                                                      ?.patientPrice ??
-                                                  0) <
-                                              1
-                                          ? true
-                                          : false,
-                                    );
-                                  }
-                                },
-                                title: forOnline
-                                    ? LocaleProvider.current.pay
-                                    : LocaleProvider.current.done,
-                                fontWeight: FontWeight.w600,
+                              R.sizes.wSizer4,
+
+                              //
+                              Expanded(
+                                child: RbioElevatedButton(
+                                  onTap: () {
+                                    if (vm.newVideoCallPriceResponse
+                                            ?.patientPrice ==
+                                        null) {
+                                      vm.saveAppointment(
+                                        price: vm.orgVideoCallPriceResponse
+                                            ?.patientPrice
+                                            ?.toString(),
+                                        forOnline: forOnline,
+                                        forFree: (vm.orgVideoCallPriceResponse
+                                                        ?.patientPrice ??
+                                                    0) <
+                                                1
+                                            ? true
+                                            : false,
+                                      );
+                                    } else {
+                                      vm.saveAppointment(
+                                        price: vm.newVideoCallPriceResponse
+                                            ?.patientPrice
+                                            ?.toString(),
+                                        forOnline: forOnline,
+                                        forFree: (vm.newVideoCallPriceResponse
+                                                        ?.patientPrice ??
+                                                    0) <
+                                                1
+                                            ? true
+                                            : false,
+                                      );
+                                    }
+                                  },
+                                  title: forOnline
+                                      ? LocaleProvider.current.pay
+                                      : LocaleProvider.current.done,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ],
                           ),
                         ),
-
-                        //
-                        SizedBox(
-                          height: Atom.safeBottom + 10,
-                        ),
                       ],
-                    ]
-                  ]),
+                    ],
+                  ],
+                ),
+              ],
+            ]
 
-              //
-              SizedBox(
-                height: Atom.safeBottom + 10,
+            // Hospital Appointment
+            else ...[
+              RbioElevatedButton(
+                infinityWidth: true,
+                onTap: () async {
+                  await vm.saveAppointment(
+                    forOnline: false,
+                    forFree: true,
+                  );
+                },
+                title: LocaleProvider.current.confirm,
+                fontWeight: FontWeight.w600,
               ),
             ],
           ],
+
+          //
+          R.sizes.defaultBottomPadding,
         ],
       ),
     );

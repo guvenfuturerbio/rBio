@@ -42,68 +42,75 @@ class _ListBodyState extends State<ListBody>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
+    return Column(
       children: [
-        //
-        if (widget.vm.availableSlots.keys.isEmpty) ...[
-          Positioned.fill(
-            child: Center(
-              child: Text(
-                LocaleProvider.current.not_found,
-                style: context.xHeadline3,
-              ),
-            ),
-          ),
-        ] else ...[
-          Positioned.fill(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //
-                Expanded(
-                  flex: 9,
-                  child: _buildLeftList(context),
+        Expanded(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              //
+              if (widget.vm.availableSlots.keys.isEmpty) ...[
+                Positioned.fill(
+                  child: Center(
+                    child: Text(
+                      LocaleProvider.current.not_found,
+                      style: context.xHeadline3,
+                    ),
+                  ),
                 ),
+              ] else ...[
+                Positioned.fill(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      //
+                      Expanded(
+                        flex: 9,
+                        child: _buildLeftList(context),
+                      ),
 
-                //
-                const Expanded(
-                  flex: 3,
-                  child: SizedBox(),
-                ),
+                      //
+                      const Expanded(
+                        flex: 3,
+                        child: SizedBox(),
+                      ),
 
-                //
-                Expanded(
-                  flex: 9,
-                  child: _buildRightList(),
+                      //
+                      Expanded(
+                        flex: 9,
+                        child: _buildRightList(),
+                      ),
+                    ],
+                  ),
                 ),
               ],
-            ),
-          ),
-        ],
-
-        //
-        Align(
-          alignment: Alignment.bottomRight,
-          child: ValueListenableBuilder(
-            valueListenable: widget.completeNotifier,
-            builder: (BuildContext context, _EventSelectedModel? selectedModel,
-                Widget? child) {
-              return RbioSwitcher(
-                showFirstChild: selectedModel?.selected != null,
-                child1: child!,
-                child2: const SizedBox(),
-              );
-            },
-            child: RbioElevatedButton(
-              onTap: widget.onSubmit,
-              title: LocaleProvider.current.create_appointment_events,
-              fontWeight: FontWeight.bold,
-            ),
+            ],
           ),
         ),
+
+        //
+        ValueListenableBuilder(
+          valueListenable: widget.completeNotifier,
+          builder: (
+            BuildContext context,
+            _EventSelectedModel? selectedModel,
+            Widget? child,
+          ) {
+            return RbioSwitcher(
+              showFirstChild: selectedModel?.selected != null,
+              child1: child!,
+              child2: const SizedBox(),
+            );
+          },
+          child: RbioElevatedButton(
+            infinityWidth: true,
+            onTap: widget.onSubmit,
+            title: LocaleProvider.current.create_appointment_events,
+            fontWeight: FontWeight.bold,
+          ),
+        )
       ],
     );
   }

@@ -873,10 +873,6 @@
   "update_diet_list": "Update Diet List",
   "validation": "This field cannot be left blank",
   "code_sent": "A verification code has sent to the phone number and e-mail address you entered.",
-<<<<<<< HEAD
-  "empty_cv": "Specialist's CV can not be found."
-
-=======
   "breakfast": "Breakfast",
   "refreshment": "Refreshment",
   "lunch": "Lunch",
@@ -894,6 +890,6 @@
   "add_special_note": "Add Special note",
   "update_special_note": "Update Special note",
   "delete_special_note": "Are you sure you want to delete the special note?",
-  "description": "Description"
->>>>>>> master
+  "description": "Description",
+  "rate_thank_you": "Thanks for your review"
 }
