@@ -349,7 +349,9 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 var res = await showRbioSelectBottomSheet(
                   context,
                   title: LocaleProvider.current.gender,
-                  children: [for (var item in listOfGender) Text(item)],
+                  children: [
+                    for (var item in listOfGender) Center(child: Text(item))
+                  ],
                   initialItem: 0,
                 );
 

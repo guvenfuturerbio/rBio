@@ -16,8 +16,7 @@ class CountryListResponse {
   factory CountryListResponse.fromMap(Map<String, dynamic> map) {
     return CountryListResponse(
       countries: List<Country>.from(
-        map['datum']?.map((x) => Country.fromJson(x as Map<String, dynamic>))
-            as List<Country>,
+        map['datum']?.map((x) => Country.fromJson(x)),
       ),
     );
   }

@@ -8969,6 +8969,26 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `City`
+  String get city {
+    return Intl.message(
+      'City',
+      name: 'city',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Where will you attend the meeting ?`
+  String get where_will_you_attend_the_meeting {
+    return Intl.message(
+      'Where will you attend the meeting ?',
+      name: 'where_will_you_attend_the_meeting',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

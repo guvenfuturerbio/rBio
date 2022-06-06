@@ -248,6 +248,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sağlık Takibi"),
         "citizen_of_tc":
             MessageLookupByLibrary.simpleMessage("T.C vatandaşıyım"),
+        "city": MessageLookupByLibrary.simpleMessage("Şehir"),
         "click_go": MessageLookupByLibrary.simpleMessage("Tıkla ve Git"),
         "close": MessageLookupByLibrary.simpleMessage("Kapat"),
         "close_chart": MessageLookupByLibrary.simpleMessage("Grafiği Gizle"),
@@ -1409,6 +1410,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
             "Kaç strip kaldığında hatırlatılsın"),
+        "where_will_you_attend_the_meeting":
+            MessageLookupByLibrary.simpleMessage(
+                "Toplantıya nereden katılacaksınız ?"),
         "which_depart_i_go": MessageLookupByLibrary.simpleMessage(
             "Hangi bölüme gideceğimi bilmiyorum"),
         "widgets_add_message": MessageLookupByLibrary.simpleMessage(
