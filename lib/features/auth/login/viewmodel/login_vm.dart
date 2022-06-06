@@ -24,12 +24,10 @@ class LoginScreenVm extends ChangeNotifier {
   LoginScreenVm(this.mContext) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       consentForm = await getIt<Repository>().getConsentForm();
-
       getIt<ISharedPreferencesManager>().setString(
           SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();
       await getSavedLoginInfo();
-
       getIt<UserNotifier>().isDefaultUser = getIt<ISharedPreferencesManager>()
           .getBool(SharedPreferencesKeys.isDefaultUser);
     });
@@ -416,7 +414,10 @@ class LoginScreenVm extends ChangeNotifier {
         'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
-    getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulLoginEvent());
+    getIt<IAppConfig>()
+        .platform
+        .adjustManager
+        ?.trackEvent(SuccessfulLoginEvent());
 
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
@@ -599,7 +600,10 @@ class LoginScreenVm extends ChangeNotifier {
         'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
-    getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulLoginEvent());
+    getIt<IAppConfig>()
+        .platform
+        .adjustManager
+        ?.trackEvent(SuccessfulLoginEvent());
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }

@@ -200,10 +200,9 @@ class _Images {
   // #endregion
 
   // #region GuvenWebView
-  final guvenin_1 = "assets/images/guvenin_1.jpeg";
-  final guvenin_2 = "assets/images/guvenin_2.jpeg";
-  final guvenin_3 = "assets/images/guvenin_3.jpeg";
-  final guvenin_4 = "assets/images/guvenin_4.jpeg";
+  final guvenin_1 = "assets/images/magazines/guvenin_1.jpeg";
+  final guvenin_2 = "assets/images/magazines/guvenin_2.jpeg";
+  final guvenin_3 = "assets/images/magazines/guvenin_3.jpeg";
+  final guvenin_4 = "assets/images/magazines/guvenin_4.jpeg";
   // #endregion
-
 }
