@@ -253,6 +253,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chronic_track_home":
             MessageLookupByLibrary.simpleMessage("Health Tracker"),
         "citizen_of_tc": MessageLookupByLibrary.simpleMessage("Citizen of T.C"),
+        "city": MessageLookupByLibrary.simpleMessage("City"),
         "click_go": MessageLookupByLibrary.simpleMessage("Click and Go"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "close_chart": MessageLookupByLibrary.simpleMessage("Hide Graph"),
@@ -1422,6 +1423,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
             "When would you like to be notified?"),
+        "where_will_you_attend_the_meeting":
+            MessageLookupByLibrary.simpleMessage(
+                "Where will you attend the meeting ?"),
         "which_depart_i_go":
             MessageLookupByLibrary.simpleMessage("Department finder"),
         "widgets_add_message": MessageLookupByLibrary.simpleMessage(

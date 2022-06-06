@@ -887,5 +887,7 @@
   "delete_special_note": "Özel notu silmek istediğinizden emin misiniz?",
   "description": "Açıklama",
   "rate_thank_you": "Değerlendirmeniz için teşekkürler",
+  "city": "Şehir",
+  "where_will_you_attend_the_meeting": "Toplantıya nereden katılacaksınız ?",
   "magazines": "Dergiler"
 }

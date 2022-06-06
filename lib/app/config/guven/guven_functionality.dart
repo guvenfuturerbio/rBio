@@ -20,5 +20,8 @@ class GuvenFunctionality extends IAppFunctionality {
   bool get relatives => true;
 
   @override
+  bool get createOnlineAppointmentWithCountrySelection => true;
+
+  @override
   bool get magazines => true;
 }

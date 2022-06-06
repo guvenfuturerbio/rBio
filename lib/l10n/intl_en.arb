@@ -892,5 +892,7 @@
   "delete_special_note": "Are you sure you want to delete the special note?",
   "description": "Description",
   "rate_thank_you": "Thanks for your review",
+  "city": "City",
+  "where_will_you_attend_the_meeting": "Where will you attend the meeting ?",
   "magazines": "Magazines"
 }

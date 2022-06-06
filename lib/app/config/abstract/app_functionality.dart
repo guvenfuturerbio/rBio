@@ -7,5 +7,6 @@ abstract class IAppFunctionality {
   bool get takeHospitalAppointment;
   bool get mediminder;
   bool get relatives;
+  bool get createOnlineAppointmentWithCountrySelection;
   bool get magazines;
 }

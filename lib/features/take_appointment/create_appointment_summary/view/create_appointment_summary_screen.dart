@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment_summary/view/widget/location_info_card.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
+import '../../../../model/shared/country_list_response.dart';
 import '../viewmodel/create_appointment_summary_vm.dart';
 import 'qr_code_scanner_screen.dart';
 
@@ -32,11 +34,24 @@ class _CreateAppointmentSummaryScreenState
   late TextEditingController codeEditingController;
   late FocusNode codeFocusNode;
 
+  late final TextEditingController _countryController;
+  late final TextEditingController _cityController;
+
+  late Country selectedCountry;
+  late String selectedCity;
+
   @override
   void initState() {
     super.initState();
+
     codeEditingController = TextEditingController();
     codeFocusNode = FocusNode();
+
+    _countryController = TextEditingController(text: R.constants.turkey);
+    _cityController = TextEditingController();
+
+    selectedCountry = Country(name: R.constants.turkey, id: 213);
+    selectedCity = "";
   }
 
   @override
@@ -170,6 +185,50 @@ class _CreateAppointmentSummaryScreenState
                 child1: _buildInfoCard(vm),
                 child2: const SizedBox(),
               ),
+
+              const SizedBox(height: 15),
+
+              if (forOnline &&
+                  getIt<IAppConfig>()
+                      .functionality
+                      .createOnlineAppointmentWithCountrySelection)
+                LocationInfoCard(
+                  countryController: _countryController,
+                  cityController: _cityController,
+                  isCityVisible: selectedCountry.id == 213 ? true : false,
+                  countryOnTap: () async {
+                    var res = await showRbioSelectBottomSheet(
+                      context,
+                      title: LocaleProvider.current.country,
+                      children: [
+                        for (var item in vm.countryList.countries ?? [])
+                          Center(child: Text(item.name)),
+                      ],
+                      initialItem: 0,
+                    );
+
+                    _countryController.text =
+                        vm.countryList.countries![res].name!;
+
+                    setState(() {
+                      selectedCountry = vm.countryList.countries![res];
+                    });
+                  },
+                  cityOnTap: () async {
+                    var res = await showRbioSelectBottomSheet(
+                      context,
+                      title: LocaleProvider.current.city,
+                      children: [
+                        for (var item in vm.province) Center(child: Text(item))
+                      ],
+                      initialItem: 0,
+                    );
+
+                    _cityController.text = vm.province[res];
+                    selectedCity = _cityController.text;
+                    setState(() {});
+                  },
+                ),
 
               //
               Expanded(
