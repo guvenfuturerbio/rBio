@@ -16,6 +16,7 @@ class UserNotifier extends ChangeNotifier {
   String? firebaseID;
   String? firebaseEmail;
   String? firebasePassword;
+  bool? isDefaultUser;
   //
   bool get isDoctor => _userType.contains(UserType.doctor);
   bool get isCronic => _userType.contains(UserType.chronicUser);

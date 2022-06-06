@@ -42,6 +42,8 @@ class _Constants {
 
   final chatPersonListKey = "chatPersons";
 
+  final turkey = "Türkiye";
+
   final tawktoScript = "<script type="
       "text/javascript"
       ">"

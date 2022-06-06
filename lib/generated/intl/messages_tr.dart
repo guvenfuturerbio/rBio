@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_new_relative":
             MessageLookupByLibrary.simpleMessage("Yeni Yakın Ekle"),
         "add_photo": MessageLookupByLibrary.simpleMessage("Fotoğraf Ekle"),
+        "add_relative_request": MessageLookupByLibrary.simpleMessage(
+            "Yakın ekleme talebiniz alınmıştır."),
         "add_reminder":
             MessageLookupByLibrary.simpleMessage("Hatırlatıcı Ekle"),
         "add_special_note":
@@ -637,6 +639,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aralıklı Günler"),
         "invalid_authorization": MessageLookupByLibrary.simpleMessage(
             "Uygulamaya giriş yapma yetkiniz yok"),
+        "invalid_identity_number":
+            MessageLookupByLibrary.simpleMessage("Geçersiz Kimlik Numarası."),
+        "invalid_mail": MessageLookupByLibrary.simpleMessage("Email geçersiz."),
+        "invalid_phone_number":
+            MessageLookupByLibrary.simpleMessage("Telefon Numarası geçersiz."),
         "iptal_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/iptal_tr.html"),
         "irrelevant": MessageLookupByLibrary.simpleMessage("Farketmez"),
@@ -1072,6 +1079,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "refreshment": MessageLookupByLibrary.simpleMessage("Ara"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Bundan sonraki işlemleriniz seçilen kullanıcı ile yapılacaktır, onaylıyor musunuz?"),
+        "relative_identity_number":
+            MessageLookupByLibrary.simpleMessage("Yakının T.C Kimlik Numarası"),
         "relatives": MessageLookupByLibrary.simpleMessage("Yakınlarım"),
         "relatives_only_children_warning": MessageLookupByLibrary.simpleMessage(
             "Sadece 18 yaşından küçük çocuklarınızı ekleyebilirsiniz."),

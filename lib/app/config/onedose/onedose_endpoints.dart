@@ -31,14 +31,11 @@ class OneDoseRelativeEndpoints extends RelativeEndpoints {
   String get getAllRelativesPath => '/profile/get-all-table'.xBaseUrl;
 
   @override
-  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
-
-  @override
   String changeActiveUserToRelativePath(String id) =>
       '/profile/set-profile/$id'.xBaseUrl;
 
   @override
-  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
+  String get addNewPatientRelativePath => '/profile/add-relative'.xBaseUrl;
 
   @override
   String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;

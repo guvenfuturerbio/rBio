@@ -1850,11 +1850,31 @@ class LocaleProvider {
     );
   }
 
+  /// `Your request to add relatives has been received.`
+  String get add_relative_request {
+    return Intl.message(
+      'Your request to add relatives has been received.',
+      name: 'add_relative_request',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Saved Relatives`
   String get saved_relatives {
     return Intl.message(
       'Saved Relatives',
       name: 'saved_relatives',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `T.C ID number of relatives`
+  String get relative_identity_number {
+    return Intl.message(
+      'T.C ID number of relatives',
+      name: 'relative_identity_number',
       desc: '',
       args: [],
     );
@@ -5245,6 +5265,36 @@ class LocaleProvider {
     return Intl.message(
       'You are not authorized to login to the application',
       name: 'invalid_authorization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inlavid Phone Number.`
+  String get invalid_phone_number {
+    return Intl.message(
+      'Inlavid Phone Number.',
+      name: 'invalid_phone_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inlavid Email.`
+  String get invalid_mail {
+    return Intl.message(
+      'Inlavid Email.',
+      name: 'invalid_mail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inlavid Identity Number.`
+  String get invalid_identity_number {
+    return Intl.message(
+      'Inlavid Identity Number.',
+      name: 'invalid_identity_number',
       desc: '',
       args: [],
     );

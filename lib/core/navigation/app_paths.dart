@@ -36,7 +36,8 @@ import '../../features/profile/profile/view/profile_screen.dart';
 import '../../features/profile/profile/viewmodel/profile_vm.dart';
 import '../../features/profile/request_suggestions/view/request_suggestions_screen.dart';
 import '../../features/profile/terms_and_privacy/terms_and_privacy.dart';
-import '../../features/relatives/relatives.dart';
+import '../../features/relatives/add_patient_relative/view/add_relative_screen.dart';
+import '../../features/relatives/patient_relatives/relatives.dart';
 import '../../features/results/results.dart';
 import '../../features/shared/full_pdf_viewer_screen.dart';
 import '../../features/shared/webview_screen.dart';
@@ -207,11 +208,22 @@ class VRouterRoutes {
         // #endregion
 
         // #region Dashboard
-        VWidget(
-          path: PagePaths.main,
-          widget: Container(),
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (getIt<IAppConfig>().functionality.relatives) {
+              if ((await getIt<UserNotifier>().checkAccessToken()) == false) {
+                vRedirector.to(PagePaths.login);
+              }
+            }
+          },
           stackedRoutes: [
-            config.getDashboard(),
+            VWidget(
+              path: PagePaths.main,
+              widget: Container(),
+              stackedRoutes: [
+                config.getDashboard(),
+              ],
+            ),
           ],
         ),
 
@@ -464,17 +476,26 @@ class VRouterRoutes {
         // #endregion
 
         // #region Relatives
-        VWidget(
-          path: PagePaths.addPatientRelatives,
-          widget: const AddPatientRelativesScreen(),
-        ),
 
-        VWidget(
-          path: PagePaths.relatives,
-          widget: ChangeNotifierProvider<RelativesVm>(
-            create: (context) => RelativesVm(),
-            child: const RelativesScreen(),
-          ),
+        VGuard(
+          beforeEnter: (vRedirector) async {
+            if (!getIt<IAppConfig>().functionality.relatives) {
+              openDefaultScreen(vRedirector);
+            }
+          },
+          stackedRoutes: [
+            //
+            VWidget(
+              path: PagePaths.relatives,
+              widget: const PatientRelativesScreen(),
+            ),
+
+            //
+            VWidget(
+              path: PagePaths.addPatientRelatives,
+              widget: const AddPatientRelativeScreen(),
+            ),
+          ],
         ),
         // #endregion
 

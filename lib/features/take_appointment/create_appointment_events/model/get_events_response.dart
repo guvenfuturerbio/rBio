@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:onedosehealth/core/core.dart';
+import '../../../../core/core.dart';
 
 part 'get_events_response.g.dart';
 

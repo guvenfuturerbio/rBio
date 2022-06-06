@@ -32,6 +32,9 @@ class RbioTextFormField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final bool isForSms;
   final InputDecoration? decoration;
+  final String? counterText;
+  final bool? readOnly;
+  final void Function()? onTap;
   final bool? isDense;
 
   const RbioTextFormField({
@@ -64,6 +67,9 @@ class RbioTextFormField extends StatelessWidget {
     this.autovalidateMode,
     this.isForSms = false,
     this.decoration,
+    this.counterText,
+    this.readOnly,
+    this.onTap,
     this.isDense,
   }) : super(key: key);
 
@@ -104,9 +110,11 @@ class RbioTextFormField extends StatelessWidget {
             autovalidateMode: autovalidateMode,
             validator: validator,
             enableSuggestions: enableSuggestions ?? true,
+            onTap: onTap,
             obscureText: obscureText ?? false,
             keyboardType: keyboardType,
             textInputAction: textInputAction,
+            readOnly: readOnly ?? false,
             decoration: decoration?.copyWith(
                   isDense: isDense,
                   contentPadding: contentPadding,
@@ -114,6 +122,7 @@ class RbioTextFormField extends StatelessWidget {
                   errorBorder: _redErrorBorder(),
                   focusedBorder: _focusedBorder(),
                   focusedErrorBorder: _focusedRedErrorBorder(),
+                  counterText: counterText,
                   disabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.transparent,
@@ -137,6 +146,7 @@ class RbioTextFormField extends StatelessWidget {
                   errorBorder: _redErrorBorder(),
                   focusedBorder: _focusedBorder(),
                   focusedErrorBorder: _focusedRedErrorBorder(),
+                  counterText: counterText,
                   disabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.transparent,

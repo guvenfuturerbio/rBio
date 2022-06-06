@@ -15,4 +15,7 @@ class OneDoseFunctionality extends IAppFunctionality {
 
   @override
   bool get mediminder => true;
+
+  @override
+  bool get relatives => false;
 }

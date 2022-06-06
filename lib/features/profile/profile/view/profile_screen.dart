@@ -97,6 +97,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: Atom.width,
               ),
 
+              if (getIt<IAppConfig>().functionality.relatives)
+                if (!(context.read<UserNotifier>().isDefaultUser ?? true)) ...[
+                  RbioElevatedButton(
+                    title: LocaleProvider.of(context)
+                        .switch_back_to_default_account,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return GuvenAlert(
+                            backgroundColor: Colors.white,
+                            title: GuvenAlert.buildTitle(
+                                LocaleProvider.of(context).warning),
+                            actions: [
+                              GuvenAlert.buildMaterialAction(
+                                LocaleProvider.of(context).Ok,
+                                () {
+                                  vm.changeUserToDefault(context);
+                                },
+                              ),
+                            ],
+                            content: Container(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  GuvenAlert.buildDescription(
+                                    LocaleProvider.of(context)
+                                        .relative_change_message,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+
               //
               _buildVerticalGap(),
 
@@ -120,6 +163,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                       ),
                     ],
+
+                    if (getIt<IAppConfig>().functionality.relatives)
+                      _buildListItem(
+                        LocaleProvider.current.relatives,
+                        () {
+                          Atom.to(PagePaths.relatives);
+                        },
+                      ),
 
                     //
                     _buildListItem(

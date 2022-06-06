@@ -230,9 +230,36 @@ class Repository {
   Future<int> saveAppointment(AppointmentRequest appointmentRequest) =>
       apiService.saveAppointment(appointmentRequest);
 
-  Future<PatientRelativeInfoResponse> getAllRelatives(
-          GetAllRelativesRequest bodyPages) =>
-      apiService.getAllRelatives(bodyPages);
+  Future<PatientRelativeInfoResponse> getAllRelatives() async {
+    GetAllRelativesRequest bodyPages = GetAllRelativesRequest();
+    bodyPages.draw = 1;
+    bodyPages.start = 0;
+    bodyPages.length = "100";
+
+    SearchObject searchObject = SearchObject();
+    searchObject.value = "";
+    searchObject.regex = false;
+    bodyPages.search = SearchObject();
+    bodyPages.search = searchObject;
+
+    bodyPages.columns = <ColumnsObject>[];
+    ColumnsObject columnsObject = ColumnsObject();
+    columnsObject.search = searchObject;
+    columnsObject.orderable = true;
+    columnsObject.name = "null";
+    columnsObject.data = "patient.user.name";
+    columnsObject.searchable = true;
+    bodyPages.columns?.add(columnsObject);
+
+    bodyPages.order = <OrderObject>[];
+    OrderObject orderObject = OrderObject();
+    orderObject.column = 0;
+    orderObject.dir = "desc";
+    bodyPages.order?.add(orderObject);
+
+    return await apiService.getAllRelatives(bodyPages);
+  }
+
   Future<List<BannerTabsModel>> getBannerTab(
           String applicationName, String groupName) =>
       apiService.getBannerTab(applicationName, groupName);
@@ -346,9 +373,6 @@ class Repository {
   Future<GuvenResponseModel> downloadAppointmentFile(String id, String name) =>
       apiService.downloadAppointmentFile(id, name);
 
-  Future<GuvenResponseModel> removePatientRelative(String id) =>
-      apiService.removePatientRelative(id);
-
   Future<GuvenResponseModel> getRelativeRelationships() =>
       apiService.getRelativeRelationships();
 
@@ -440,7 +464,7 @@ class Repository {
       apiService.getAvailabilityRate(getAvailabilityRateRequest);
 
   Future<GuvenResponseModel> addNewPatientRelative(
-          AddPatientRelativeRequest addPatientRelative) =>
+          UserRelativePatientModel addPatientRelative) =>
       apiService.addNewPatientRelative(addPatientRelative);
 
   Future<GuvenResponseModel> uploadPatientDocuments(

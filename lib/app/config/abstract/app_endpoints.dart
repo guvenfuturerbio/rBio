@@ -22,7 +22,6 @@ abstract class SymptomCheckerEndpoints {
 
 abstract class RelativeEndpoints {
   String get getAllRelativesPath;
-  String removePatientRelativePath(String id);
   String changeActiveUserToRelativePath(String id);
   String get addNewPatientRelativePath;
   String get getRelativeRelationshipsPath;

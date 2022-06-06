@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_new_relative":
             MessageLookupByLibrary.simpleMessage("Add New Relative"),
         "add_photo": MessageLookupByLibrary.simpleMessage("Add Photo"),
+        "add_relative_request": MessageLookupByLibrary.simpleMessage(
+            "Your request to add relatives has been received."),
         "add_reminder": MessageLookupByLibrary.simpleMessage("Add Reminder"),
         "add_special_note":
             MessageLookupByLibrary.simpleMessage("Add Special note"),
@@ -645,6 +647,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Intermittent Days"),
         "invalid_authorization": MessageLookupByLibrary.simpleMessage(
             "You are not authorized to login to the application"),
+        "invalid_identity_number":
+            MessageLookupByLibrary.simpleMessage("Inlavid Identity Number."),
+        "invalid_mail": MessageLookupByLibrary.simpleMessage("Inlavid Email."),
+        "invalid_phone_number":
+            MessageLookupByLibrary.simpleMessage("Inlavid Phone Number."),
         "iptal_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/iptal_en.html"),
         "irrelevant": MessageLookupByLibrary.simpleMessage("Irrelevant"),
@@ -1084,6 +1091,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "refreshment": MessageLookupByLibrary.simpleMessage("Refreshment"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Further operations will be completed by the selected user, do you confirm?"),
+        "relative_identity_number":
+            MessageLookupByLibrary.simpleMessage("T.C ID number of relatives"),
         "relatives": MessageLookupByLibrary.simpleMessage("Relatives"),
         "relatives_only_children_warning": MessageLookupByLibrary.simpleMessage(
             "You can only add children of your own below age of 18"),
