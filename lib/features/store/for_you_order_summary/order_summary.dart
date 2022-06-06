@@ -202,21 +202,21 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                         ),
 
                         //
-                        Visibility(
-                          visible:
-                              value.selectedItem!.url != null ? true : false,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Utils.instance.button(
-                              text: LocaleProvider.current.package_detail,
-                              width: MediaQuery.of(context).size.width * 0.1,
-                              height: 10,
-                              onPressed: () {
-                                value.showWebViewPage();
-                              },
-                            ),
-                          ),
-                        ),
+                        // Visibility(
+                        //   visible:
+                        //       value.selectedItem!.url != null ? true : false,
+                        //   child: Container(
+                        //     alignment: Alignment.center,
+                        //     child: Utils.instance.button(
+                        //       text: LocaleProvider.current.package_detail,
+                        //       width: MediaQuery.of(context).size.width * 0.1,
+                        //       height: 10,
+                        //       onPressed: () {
+                        //         value.showWebViewPage();
+                        //       },
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -299,7 +299,9 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
                     width: 260,
                     text: LocaleProvider.current.payment,
                     onPressed: () {
-                      getIt<IAppConfig>().platform.adjustManager
+                      getIt<IAppConfig>()
+                          .platform
+                          .adjustManager
                           ?.trackEvent(ForYouItemPaymentClickedEvent());
                       getIt<FirebaseAnalyticsManager>().logEvent(
                         UrunOdemesiTiklandiEvent(

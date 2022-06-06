@@ -21,4 +21,7 @@ class OneDoseFunctionality extends IAppFunctionality {
 
   @override
   bool get createOnlineAppointmentWithCountrySelection => false;
+
+  @override
+  bool get magazines => false;
 }

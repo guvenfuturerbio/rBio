@@ -8,4 +8,5 @@ abstract class IAppFunctionality {
   bool get mediminder;
   bool get relatives;
   bool get createOnlineAppointmentWithCountrySelection;
+  bool get magazines;
 }

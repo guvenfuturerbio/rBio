@@ -8989,6 +8989,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Magazines`
+  String get magazines {
+    return Intl.message(
+      'Magazines',
+      name: 'magazines',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

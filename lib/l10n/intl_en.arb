@@ -893,5 +893,6 @@
   "description": "Description",
   "rate_thank_you": "Thanks for your review",
   "city": "City",
-  "where_will_you_attend_the_meeting": "Where will you attend the meeting ?"
+  "where_will_you_attend_the_meeting": "Where will you attend the meeting ?",
+  "magazines": "Magazines"
 }

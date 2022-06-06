@@ -726,6 +726,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "low_range": MessageLookupByLibrary.simpleMessage("Low Range"),
         "lunch": MessageLookupByLibrary.simpleMessage("Lunch"),
+        "magazines": MessageLookupByLibrary.simpleMessage("Magazines"),
         "make_an_appointment":
             MessageLookupByLibrary.simpleMessage("Make an Appointment"),
         "make_an_online":

@@ -198,4 +198,11 @@ class _Images {
   final riveSaglikTakibi = 'assets/animations/introduction/saglık_takibi.riv';
   final scaleLoadingLines = 'assets/animations/scale_loading_lines.riv';
   // #endregion
+
+  // #region GuvenWebView
+  final guvenin_1 = "assets/images/magazines/guvenin_1.jpeg";
+  final guvenin_2 = "assets/images/magazines/guvenin_2.jpeg";
+  final guvenin_3 = "assets/images/magazines/guvenin_3.jpeg";
+  final guvenin_4 = "assets/images/magazines/guvenin_4.jpeg";
+  // #endregion
 }
