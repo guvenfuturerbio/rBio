@@ -716,6 +716,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "low": MessageLookupByLibrary.simpleMessage("Düşük"),
         "low_range": MessageLookupByLibrary.simpleMessage("Düşük Aralık"),
         "lunch": MessageLookupByLibrary.simpleMessage("Öğle"),
+        "magazines": MessageLookupByLibrary.simpleMessage("Dergiler"),
         "make_an_appointment":
             MessageLookupByLibrary.simpleMessage("Randevu Al"),
         "make_an_online":

@@ -217,6 +217,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
 
+                    if (getIt<IAppConfig>().functionality.magazines) ...[
+                      _buildListItem(
+                        LocaleProvider.current.magazines,
+                        () {
+                          Atom.to(PagePaths.magazinselection);
+                        },
+                      )
+                    ],
+
                     //
                     _buildListItem(
                       LocaleProvider.current.request_and_suggestions,

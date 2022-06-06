@@ -886,5 +886,6 @@
   "update_special_note": "Özel Not Güncelle",
   "delete_special_note": "Özel notu silmek istediğinizden emin misiniz?",
   "description": "Açıklama",
-  "rate_thank_you": "Değerlendirmeniz için teşekkürler"
+  "rate_thank_you": "Değerlendirmeniz için teşekkürler",
+  "magazines": "Dergiler"
 }

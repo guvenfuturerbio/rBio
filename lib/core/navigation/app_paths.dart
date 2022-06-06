@@ -31,6 +31,8 @@ import '../../features/my_appointments/my_appointments.dart';
 import '../../features/onboarding/view/onboarding_screen.dart';
 import '../../features/profile/devices/devices.dart';
 import '../../features/profile/health_information/view/health_information_screen.dart';
+import '../../features/profile/magazines/magazine_detail.dart';
+import '../../features/profile/magazines/magazine_view.dart';
 import '../../features/profile/personal_information/view/personal_information_screen.dart';
 import '../../features/profile/profile/view/profile_screen.dart';
 import '../../features/profile/profile/viewmodel/profile_vm.dart';
@@ -632,6 +634,15 @@ class VRouterRoutes {
         ),
 
         VWidget(
+          path: PagePaths.magazinselection,
+          widget: const MagazineSelectionPage(),
+        ),
+        VWidget(
+          path: PagePaths.magazines,
+          widget: const MagazinesWebView(),
+        ),
+
+        VWidget(
           path: PagePaths.fullPdfViewer,
           widget: FullPdfViewerScreen(),
         ),
@@ -779,6 +790,8 @@ class PagePaths {
   static const webView = '/webview';
   static const fullPdfViewer = '/full-pdf-viewer';
   static const iyzicoResponseSmsPayment = '/form-submit';
+  static const magazines = '/magazine-detail';
+  static const magazinselection = '/magazines';
 }
 
 void openDefaultScreen(VRedirector vRedirector) {
