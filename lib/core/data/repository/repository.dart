@@ -373,9 +373,6 @@ class Repository {
   Future<GuvenResponseModel> downloadAppointmentFile(String id, String name) =>
       apiService.downloadAppointmentFile(id, name);
 
-  Future<GuvenResponseModel> removePatientRelative(String id) =>
-      apiService.removePatientRelative(id);
-
   Future<GuvenResponseModel> getRelativeRelationships() =>
       apiService.getRelativeRelationships();
 

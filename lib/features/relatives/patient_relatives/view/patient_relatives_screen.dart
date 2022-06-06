@@ -48,7 +48,7 @@ class _PatientRelativesViewState extends State<PatientRelativesView> {
       state.when(
         initial: () {},
         loadInProgress: () {},
-        success: (value) {},
+        success: (PatientRelativeInfoResponse value) {},
         failure: () {
           Utils.instance.showErrorSnackbar(
               context, LocaleProvider.of(context).something_went_wrong);
@@ -126,23 +126,6 @@ class _PatientRelativeListTile extends StatelessWidget {
             children: [
               Text('${patientRelative.name} ${patientRelative.surname}',
                   style: context.xTextTheme.headline3),
-              GestureDetector(
-                onTap: () => showConfirmationAlertDialog(
-                  context,
-                  LocaleProvider.of(context).delete_relative_title,
-                  LocaleProvider.of(context).delete_relative_confirm_message,
-                  LocaleProvider.of(context).Ok,
-                  () {
-                    // context
-                    //     .read<PatientRelativesCubit>()
-                    //     .deletePatientRelative(patientRelative);
-                  },
-                ),
-                child: SvgPicture.asset(
-                  R.image.icDeleteRed,
-                  width: R.sizes.iconSize3,
-                ),
-              ),
             ],
           ),
           const SizedBox(height: 10),
@@ -155,10 +138,10 @@ class _PatientRelativeListTile extends StatelessWidget {
                 LocaleProvider.of(context).relative_change_message,
                 LocaleProvider.of(context).Ok,
                 () {
+                  Navigator.pop(context);
                   context
                       .read<PatientRelativesCubit>()
                       .changeUserToPatientRelative(patientRelative);
-                  // vm.changeUserToRelative(patientRelative, context);
                 },
               );
             },

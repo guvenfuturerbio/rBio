@@ -24,10 +24,7 @@ class LoginScreenVm extends ChangeNotifier {
   LoginScreenVm(this.mContext) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       consentForm = await getIt<Repository>().getConsentForm();
-<<<<<<< HEAD
 
-=======
->>>>>>> master
       getIt<ISharedPreferencesManager>().setString(
           SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();

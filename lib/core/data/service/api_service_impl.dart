@@ -795,19 +795,6 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<GuvenResponseModel> removePatientRelative(String id) async {
-    final response = await helper.deleteGuven(
-      getIt<IAppConfig>().endpoints.relative.removePatientRelativePath(id),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/removePatientRelative : ${response.isSuccessful}');
-    }
-  }
-
-  @override
   Future<GuvenResponseModel> getRelativeRelationships() async {
     final response = await helper.getGuven(
       getIt<IAppConfig>().endpoints.relative.getRelativeRelationshipsPath,

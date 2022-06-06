@@ -487,10 +487,7 @@ class VRouterRoutes {
             //
             VWidget(
               path: PagePaths.relatives,
-              widget: ChangeNotifierProvider<RelativesVm>(
-                create: (context) => RelativesVm(),
-                child: const PatientRelativesScreen(),
-              ),
+              widget: const PatientRelativesScreen(),
             ),
 
             //

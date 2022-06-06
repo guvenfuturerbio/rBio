@@ -37,40 +37,9 @@ class PatientRelativesCubit extends Cubit<PatientRelativesState> {
     }
   }
 
-  Future<void> deletePatientRelative(PatientRelative patientRelative) async {
-    try {
-      emit(const PatientRelativesState.loadInProgress());
-      final response =
-          await getIt<Repository>().removePatientRelative(patientRelative.id!);
-      var isSuccess = response.datum;
-      if (isSuccess) {
-        _analyticsManager.logEvent(
-          YakinSilmeBasariliEvent(
-              '${patientRelative.name!} ${patientRelative.surname!}'),
-        );
-
-        fetchPatientReletives();
-      } else {
-        _analyticsManager.logEvent(
-          YakinSilmeHataEvent(
-              '${patientRelative.name!} ${patientRelative.surname!}'),
-        );
-        emit(const PatientRelativesState.failure());
-      }
-    } catch (error) {
-      LoggerUtils.instance.e(error);
-
-      _analyticsManager.logEvent(
-        YakinSilmeHataEvent(
-            '${patientRelative.name!} ${patientRelative.surname!}'),
-      );
-
-      emit(const PatientRelativesState.failure());
-    }
-  }
-
   Future<void> changeUserToPatientRelative(
       PatientRelative patientRelativeInfo) async {
+    emit(const PatientRelativesState.loadInProgress());
     try {
       final response = await _repository.getRelativeRelationships();
       var patientUserRelationships =
@@ -98,6 +67,7 @@ class PatientRelativesCubit extends Cubit<PatientRelativesState> {
       LoggerUtils.instance.e(error);
       _analyticsManager.logEvent(YakinDegistirmeHataEvent(
           '${patientRelativeInfo.name} ${patientRelativeInfo.surname}'));
+      emit(const PatientRelativesState.failure());
     }
   }
 }

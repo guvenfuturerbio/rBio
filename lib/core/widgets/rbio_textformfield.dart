@@ -32,13 +32,10 @@ class RbioTextFormField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final bool isForSms;
   final InputDecoration? decoration;
-<<<<<<< HEAD
   final String? counterText;
   final bool? readOnly;
   final void Function()? onTap;
-=======
   final bool? isDense;
->>>>>>> master
 
   const RbioTextFormField({
     Key? key,
@@ -70,13 +67,10 @@ class RbioTextFormField extends StatelessWidget {
     this.autovalidateMode,
     this.isForSms = false,
     this.decoration,
-<<<<<<< HEAD
     this.counterText,
     this.readOnly,
     this.onTap,
-=======
     this.isDense,
->>>>>>> master
   }) : super(key: key);
 
   @override
@@ -128,9 +122,7 @@ class RbioTextFormField extends StatelessWidget {
                   errorBorder: _redErrorBorder(),
                   focusedBorder: _focusedBorder(),
                   focusedErrorBorder: _focusedRedErrorBorder(),
-<<<<<<< HEAD
                   counterText: counterText,
-=======
                   disabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.transparent,
@@ -138,7 +130,6 @@ class RbioTextFormField extends StatelessWidget {
                     ),
                     borderRadius: R.sizes.borderRadiusCircular,
                   ),
->>>>>>> master
                 ) ??
                 defaultDecoration(
                   context,
@@ -155,9 +146,7 @@ class RbioTextFormField extends StatelessWidget {
                   errorBorder: _redErrorBorder(),
                   focusedBorder: _focusedBorder(),
                   focusedErrorBorder: _focusedRedErrorBorder(),
-<<<<<<< HEAD
                   counterText: counterText,
-=======
                   disabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.transparent,
@@ -165,7 +154,6 @@ class RbioTextFormField extends StatelessWidget {
                     ),
                     borderRadius: R.sizes.borderRadiusCircular,
                   ),
->>>>>>> master
                 ),
             cursorColor: getIt<IAppConfig>().theme.mainColor,
             onChanged: onChanged,

@@ -182,4 +182,9 @@ class GlucoseData extends HiveObject {
     }
     return jsonEncode(toMap()) == jsonEncode(other.toMap());
   }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
+
 }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -113,7 +112,6 @@ abstract class ApiService {
   Future<GuvenResponseModel> getChatContacts();
 
   Future<GuvenResponseModel> downloadAppointmentFile(String id, String name);
-  Future<GuvenResponseModel> removePatientRelative(String id);
   Future<GuvenResponseModel> getRelativeRelationships();
   Future<GuvenResponseModel> changeActiveUserToRelative(String id);
   Future<GuvenResponseModel> clickPost(int postId);
