@@ -124,7 +124,7 @@ dependencies:
   qr_flutter:
     git:
       url: https://github.com/theyakka/qr.flutter.git
-  reorderables: ^0.4.4
+  reorderables: ^0.5.0
   rive: ^0.8.1
   share: ^2.0.4
   shimmer: ^2.0.0
