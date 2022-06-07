@@ -140,7 +140,8 @@ class SelectedDeviceVm extends ChangeNotifier {
             //
             Text(
               LocaleProvider.current.pair_successful,
-              style: TextStyle(color: getIt<IAppConfig>().theme.black, fontSize: 20),
+              style: TextStyle(
+                  color: getIt<IAppConfig>().theme.black, fontSize: 20),
               textAlign: TextAlign.center,
             ),
 

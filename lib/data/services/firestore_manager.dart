@@ -12,7 +12,8 @@ import '../../../features/chat/model/chat_person.dart';
 import '../../../features/chat/model/message.dart';
 import '../../../features/chat/model/notification_data.dart';
 import '../../../features/chat/model/notification_model.dart';
-import '../../core.dart';
+import '../../core/core.dart';
+import '../data.dart';
 
 class FirestoreManager {
   XFile? imageFile;

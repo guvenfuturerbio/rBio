@@ -11,7 +11,7 @@ import '../../../../model/bp_measurement/add_bp_mesaurement.dart';
 import '../../../../model/bp_measurement/delete_bp_measurement.dart';
 import '../../../../model/bp_measurement/get_bp_measurement.dart';
 import '../../../../model/bp_measurement/update_bp_measurement.dart';
-import '../../../core.dart';
+import '../../../core/core.dart';
 
 part 'blood_pressure_storage_impl.dart';
 part 'glucose_storage_impl.dart';

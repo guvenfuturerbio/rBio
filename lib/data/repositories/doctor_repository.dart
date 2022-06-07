@@ -1,8 +1,7 @@
 import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../features/doctor/treatment/diet_add_edit/diet_add_edit.dart';
 import '../../../model/model.dart';
-import '../../core.dart';
-import '../service/model/patient_scale_measurement.dart';
+import '../../core/core.dart';
 
 class DoctorRepository {
   final DoctorApiService apiService;

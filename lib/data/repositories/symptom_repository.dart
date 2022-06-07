@@ -1,6 +1,6 @@
 import '../../../features/symptom_checker/symptoms_result_page/model/get_body_symptoms_response.dart';
 import '../../../model/model.dart';
-import '../../core.dart';
+import '../../core/core.dart';
 
 class SymptomRepository {
   final SymptomApiService service;

@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/data/service/model/patient_scale_measurement.dart';
 
 class ScaleTagger extends StatelessWidget {
   final PatientScaleMeasurement scaleModel;
@@ -105,15 +104,25 @@ class ScaleTagger extends StatelessWidget {
                     child: ListView(
                   shrinkWrap: true,
                   children: [
-                    _itemOfColorInfoDialog(context, getIt<IAppConfig>().theme.veryLow,
+                    _itemOfColorInfoDialog(
+                        context,
+                        getIt<IAppConfig>().theme.veryLow,
                         LocaleProvider.current.very_low),
                     _itemOfColorInfoDialog(
-                        context, getIt<IAppConfig>().theme.low, LocaleProvider.current.low),
+                        context,
+                        getIt<IAppConfig>().theme.low,
+                        LocaleProvider.current.low),
                     _itemOfColorInfoDialog(
-                        context, getIt<IAppConfig>().theme.target, LocaleProvider.current.target),
+                        context,
+                        getIt<IAppConfig>().theme.target,
+                        LocaleProvider.current.target),
                     _itemOfColorInfoDialog(
-                        context, getIt<IAppConfig>().theme.high, LocaleProvider.current.high),
-                    _itemOfColorInfoDialog(context, getIt<IAppConfig>().theme.veryHigh,
+                        context,
+                        getIt<IAppConfig>().theme.high,
+                        LocaleProvider.current.high),
+                    _itemOfColorInfoDialog(
+                        context,
+                        getIt<IAppConfig>().theme.veryHigh,
                         LocaleProvider.current.very_high),
                   ],
                 )),
@@ -370,7 +379,9 @@ class ScaleTagger extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: R.sizes.borderRadiusCircular,
                   border: Border.all(
-                      width: 6, color: color ?? getIt<IAppConfig>().theme.grey.withOpacity(.2)),
+                      width: 6,
+                      color: color ??
+                          getIt<IAppConfig>().theme.grey.withOpacity(.2)),
                   shape: BoxShape.rectangle,
                   color: getIt<IAppConfig>().theme.white),
               child: Padding(

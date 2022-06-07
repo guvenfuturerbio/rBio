@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:onedosehealth/core/platform/mobil_interface.dart'
     if (dart.library.html) 'package:onedosehealth/core/platform/web_interface.dart';
 
-import '../../core.dart';
+import '../../core/core.dart';
 
 const String getMethod = 'GET';
 const String postMethod = 'POST';
@@ -21,7 +21,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
       responseType: ResponseType.json,
       headers: {
         HttpHeaders.userAgentHeader: 'dio',
-       // 'clientVersion': getIt<GuvenSettings>().version,
+        // 'clientVersion': getIt<GuvenSettings>().version,
       },
     );
 
@@ -99,12 +99,16 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                     .getString(SharedPreferencesKeys.consentId);
 
                 if (password != null && userName != null) {
-                  if (getIt<IAppConfig>().endpoints.devApi.loginPath
+                  if (getIt<IAppConfig>()
+                      .endpoints
+                      .devApi
+                      .loginPath
                       .contains(error.response!.requestOptions.uri.path)) {
                     Atom.to(PagePaths.login, isReplacement: true);
                   } else {
                     try {
-                      await getIt<UserManager>().login(userName, password, consentId ?? '');
+                      await getIt<UserManager>()
+                          .login(userName, password, consentId ?? '');
 
                       final requestModel = error.requestOptions;
                       final response = await request(

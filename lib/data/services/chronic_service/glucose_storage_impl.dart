@@ -143,7 +143,6 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       {bool isFromHealth = false}) async {
     try {
       if (box.isOpen) {
-        // TODO: bu alan dart async metodları ile threadler üzerinden halledilebilir (bkz. Dart isolate). Geçici olarak bilerek foreach yapıldı kullanıcı arkaplanda rahat bir şekilde işlem yapabilmeye devam edebilsin diye.
         for (var item in data) {
           if (!doesExist(item)) {
             if (isFromHealth) {

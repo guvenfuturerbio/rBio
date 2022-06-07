@@ -6,7 +6,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
 import '../../../../../core/core.dart';
-import '../../../../../core/data/service/model/patient_scale_measurement.dart';
 import '../cubit/scale_doctor_cubit.dart';
 import '../cubit/scale_doctor_loaded_result.dart';
 import '../widget/doctor_scale_chart.dart';

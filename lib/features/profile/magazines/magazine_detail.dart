@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../core/core.dart';
@@ -33,12 +31,14 @@ class _MagazinesWebViewState extends State<MagazinesWebView> {
     } catch (_) {
       return const RbioRouteError();
     }
+
     return Scaffold(
       appBar: RbioAppBar(
-          title: RbioAppBar.textTitle(
-        context,
-        LocaleProvider.current.magazines,
-      )),
+        title: RbioAppBar.textTitle(
+          context,
+          LocaleProvider.current.magazines,
+        ),
+      ),
       body: SafeArea(
         child: WebView(
           initialUrl: magazineUrl,
@@ -48,21 +48,22 @@ class _MagazinesWebViewState extends State<MagazinesWebView> {
             myWebController = webViewController;
           },
           onProgress: (int progress) {
-            print('WebView is loading (progress : $progress%)');
+            LoggerUtils.instance
+                .i('WebView is loading (progress : $progress%)');
           },
           onPageStarted: (String url) {
-            print('Page started loading: $url');
+            LoggerUtils.instance.i('Page started loading: $url');
           },
           onPageFinished: (String url) async {
-            print('Page finished loading: $url');
+            LoggerUtils.instance.i('Page finished loading: $url');
           },
           // ignore: prefer_collection_literals
           navigationDelegate: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
-              print('blocking navigation to $request}');
+              LoggerUtils.instance.i('blocking navigation to $request}');
               return NavigationDecision.prevent;
             }
-            print('allowing navigation to $request');
+            LoggerUtils.instance.i('allowing navigation to $request');
             return NavigationDecision.navigate;
           },
 

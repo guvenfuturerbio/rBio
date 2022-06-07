@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_result_page/model/get_body_symptoms_response.dart';
 
 import '../../../model/model.dart';
-import '../../core.dart';
+import '../../core/core.dart';
+import '../../features/symptom_checker/symptoms_result_page/model/get_body_symptoms_response.dart';
 
 part 'symptom_api_service_impl.dart';
 
