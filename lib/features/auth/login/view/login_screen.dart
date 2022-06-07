@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordEditingController = TextEditingController();
     _usernameFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
-    GRecaptchaV3.showBadge();
+    getIt<IAppConfig>().platform.recaptchaManager?.showBadge();
 
     if (Atom.url == PagePaths.loginWithSuccessChangePassword()) {
       final widgetsBinding = WidgetsBinding.instance;
@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordEditingController.dispose();
     _usernameFocusNode.dispose();
     _passwordFocusNode.dispose();
-    GRecaptchaV3.hideBadge();
+    getIt<IAppConfig>().platform.recaptchaManager?.hideBadge();
 
     super.dispose();
   }

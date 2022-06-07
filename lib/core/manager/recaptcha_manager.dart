@@ -19,6 +19,14 @@ abstract class RecaptchaManager {
     final token = await GRecaptchaV3.execute('login') ?? '';
     return token;
   }
+
+  Future<void> showBadge() async {
+    GRecaptchaV3.showBadge();
+  }
+
+  Future<void> hideBadge() async {
+    GRecaptchaV3.hideBadge();
+  }
 }
 
 class GuvenRecaptchaManagerImpl extends RecaptchaManager {
