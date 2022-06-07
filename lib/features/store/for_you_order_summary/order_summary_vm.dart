@@ -6,7 +6,7 @@ import '../../../../model/model.dart';
 class OrderSummaryScreenVm extends ChangeNotifier {
   OrderSummaryScreenVm(BuildContext context, var id) {
     mContext = context;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchSubCategoryItems(id);
       setSelectedItem(subCategoryItems![0]);
     });

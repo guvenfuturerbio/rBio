@@ -261,7 +261,7 @@ class BpProgressVm
   }
 
   getNewItems() {
-    WidgetsBinding.instance?.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         try {
           if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {

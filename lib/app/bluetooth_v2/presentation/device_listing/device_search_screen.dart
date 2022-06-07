@@ -71,13 +71,10 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
   @override
   void initState() {
     super.initState();
-    final widgetsBinding = WidgetsBinding.instance;
-    if (widgetsBinding != null) {
-      widgetsBinding.addPostFrameCallback((_) {
-        _showSetupDialog();
-        _restartScan(context);
-      });
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showSetupDialog();
+      _restartScan(context);
+    });
   }
 
   @override

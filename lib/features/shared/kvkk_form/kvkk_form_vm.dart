@@ -8,7 +8,7 @@ class KvkkFormScreenVm extends ChangeNotifier {
 
   KvkkFormScreenVm({BuildContext? context, bool? alwaysAsk}) {
     mContext = context!;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (alwaysAsk!) {
       } else {
         await fetchClickedConsentForm();

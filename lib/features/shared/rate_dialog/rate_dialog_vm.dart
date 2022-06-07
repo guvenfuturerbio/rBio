@@ -15,7 +15,7 @@ class RateDialogVm extends ChangeNotifier {
   RateDialogVm({required BuildContext context, required int availabilityId}) {
     mContext = context;
     availabilityIdVm = availabilityId;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchAvailabilityRate(availabilityId);
     });
   }

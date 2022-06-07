@@ -74,7 +74,7 @@ class CreateAppointmentVm extends ChangeNotifier {
     int? resourceId,
   }) {
     _patientId = getIt<UserNotifier>().getPatient().id;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
       if (forOnline) {
         hospitalSelected = true;

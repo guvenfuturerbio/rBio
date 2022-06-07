@@ -17,7 +17,7 @@ class DoctorCvScreenVm extends ChangeNotifier {
     required String doctorNameNotTitle,
   }) {
     mContext = context;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchDoctorCv(doctorNameNotTitle);
     });
   }

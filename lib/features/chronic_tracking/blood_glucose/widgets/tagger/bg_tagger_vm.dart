@@ -69,7 +69,7 @@ class BgTaggerVm extends ChangeNotifier {
       }
 
       final PickedFile? pickedFile = await picker.getImage(source: imageSource);
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         Navigator.pop(context);
       });
 

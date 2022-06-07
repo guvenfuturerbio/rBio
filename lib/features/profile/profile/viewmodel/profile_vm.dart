@@ -13,7 +13,7 @@ class ProfileVm extends RbioVm {
     isTwoFactorAuth = getIt<ISharedPreferencesManager>()
             .getBool(SharedPreferencesKeys.isTwoFactorAuth) ??
         false;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       getIt<UserNotifier>().isDefaultUser = getIt<ISharedPreferencesManager>()
           .getBool(SharedPreferencesKeys.isDefaultUser);
     });

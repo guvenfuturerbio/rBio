@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (kAutoConnect) {
         context.read<DeviceSelectedCubit>().connectAndListen(context);
         final widgetsBinding = WidgetsBinding.instance;
-        widgetsBinding!.addPostFrameCallback((_) {
+        widgetsBinding.addPostFrameCallback((_) {
           AppInheritedWidget.of(context)?.listenLocalNotification();
         });
         kAutoConnect = false;

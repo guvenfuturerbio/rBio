@@ -6,7 +6,7 @@ import '../../shared/kvkk_form/kvkk_form_screen.dart';
 
 class TermsAndPrivacyVm extends ChangeNotifier {
   TermsAndPrivacyVm() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       Atom.show(RbioLoading.progressIndicator());
       await fetchKvkkFormState();
       notifyListeners();

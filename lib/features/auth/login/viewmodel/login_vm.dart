@@ -2,7 +2,6 @@ import 'dart:io' as platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:g_recaptcha_v3/g_recaptcha_v3.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +22,7 @@ class LoginScreenVm extends ChangeNotifier {
   BuildContext mContext;
 
   LoginScreenVm(this.mContext) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       consentForm = await getIt<Repository>().getConsentForm();
       getIt<ISharedPreferencesManager>().setString(
           SharedPreferencesKeys.consentId, consentForm.id.toString());

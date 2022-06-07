@@ -1,8 +1,5 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../../../core/core.dart';
 
@@ -14,33 +11,17 @@ class QRCodeScannerScreen extends StatefulWidget {
 }
 
 class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
-  Barcode? result;
-  late QRViewController controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  late StreamSubscription<Barcode> streamSubscription;
-
-  // In order to get hot reload to work we need to pause the camera if the platform
-  // is android, or resume the camera if the platform is iOS.
-  @override
-  void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid) {
-      controller.pauseCamera();
-    }
-    controller.resumeCamera();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    streamSubscription.cancel();
-
-    super.dispose();
-  }
+  String? code;
+  MobileScannerController controller = MobileScannerController(
+    torchEnabled: false,
+    formats: [BarcodeFormat.qrCode],
+    facing: CameraFacing.back,
+  );
 
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
+      bodyPadding: EdgeInsets.zero,
       appbar: RbioAppBar(
         leading: RbioAppBar.defaultLeading(
           context,
@@ -59,47 +40,16 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   }
 
   Widget _buildQrView() {
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
-        ? 150.0
-        : 300.0;
-    // To ensure the Scanner view is properly sizes after rotation
-    // we need to listen for Flutter SizeChanged notification and update controller
-
-    return QRView(
-      key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(
-        borderColor: getIt<IAppConfig>().theme.mainColor,
-        borderRadius: 12,
-        borderLength: 15,
-        borderWidth: 5,
-        cutOutSize: scanArea,
-      ),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(ctrl, p),
+    return MobileScanner(
+      allowDuplicates: false,
+      controller: controller,
+      fit: BoxFit.contain,
+      onDetect: (barcode, args) {
+        if (barcode.rawValue != null && code != barcode.rawValue) {
+          code = barcode.rawValue!;
+          Navigator.of(context).pop(code);
+        }
+      },
     );
-  }
-
-  late String code;
-  void _onQRViewCreated(QRViewController controller) {
-    setState(() {
-      this.controller = controller;
-    });
-
-    streamSubscription = controller.scannedDataStream.listen((scanData) {
-      if (scanData.code != null && code != scanData.code) {
-        code = scanData.code!;
-        Navigator.of(context).pop(scanData.code);
-      }
-    });
-  }
-
-  void _onPermissionSet(QRViewController ctrl, bool p) {
-    if (!p) {
-      Utils.instance.showSnackbar(
-        Atom.context,
-        LocaleProvider.current.no_permission,
-      );
-    }
   }
 }

@@ -146,7 +146,7 @@ class _SymptomsBodyLocationsScreenState
                                       : false,
                               clickedPathFunc: (myValue) {
                                 //LoggerUtils.instance.i(myValue);
-                                WidgetsBinding.instance!
+                                WidgetsBinding.instance
                                     .addPostFrameCallback((timeStamp) async {
                                   if (myValue != null) {
                                     await value.selectedBodyLocationFetch(
@@ -179,7 +179,10 @@ class _SymptomsBodyLocationsScreenState
                   : false,
               child: RbioElevatedButton(
                 onTap: () async {
-                  getIt<IAppConfig>().platform.adjustManager?.trackEvent(MySymptomsPage2Event());
+                  getIt<IAppConfig>()
+                      .platform
+                      .adjustManager
+                      ?.trackEvent(MySymptomsPage2Event());
                   getIt<FirebaseAnalyticsManager>().logEvent(
                     SikayetlerimSayfa2DevamEvent(
                       getIt<UserNotifier>().firebaseEmail.toString(),

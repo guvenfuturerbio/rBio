@@ -102,12 +102,9 @@ class _MyAppCommonState extends State<MyAppCommon> {
   @override
   void initState() {
     super.initState();
-    final widgetsBinding = WidgetsBinding.instance;
-    if (widgetsBinding != null) {
-      widgetsBinding.addPostFrameCallback((_) {
-        Utils.instance.hideKeyboardWithoutContext();
-      });
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Utils.instance.hideKeyboardWithoutContext();
+    });
   }
 
   @override
