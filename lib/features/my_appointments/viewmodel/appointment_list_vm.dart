@@ -25,7 +25,7 @@ class AppointmentListVm extends RbioVm {
     _patientId = getIt<UserNotifier>().getPatient().id ?? 0;
     showProgressOverlay = false;
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (getIt<UserNotifier>().canAccessHospital()) {
         await fetchAllTranslator();
         await fetchPatientAppointments();

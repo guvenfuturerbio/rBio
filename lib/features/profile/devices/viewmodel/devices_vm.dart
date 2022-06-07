@@ -11,7 +11,7 @@ class DevicesVm extends ChangeNotifier {
   List<RbioDevice> devices = [];
 
   DevicesVm() {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       getAll();
     });
   }

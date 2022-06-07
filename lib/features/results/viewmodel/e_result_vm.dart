@@ -42,7 +42,7 @@ class EResultScreenVm extends RbioVm {
   }
 
   EResultScreenVm(this.mContext) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       try {
         if (getIt<UserNotifier>().canAccessHospital()) {
           await fetchVisits();

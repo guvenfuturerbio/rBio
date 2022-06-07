@@ -16,7 +16,7 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) async {
         await getIt<UserManager>().startMeeting(
           context,

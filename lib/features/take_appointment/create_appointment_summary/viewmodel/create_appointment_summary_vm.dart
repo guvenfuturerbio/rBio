@@ -67,7 +67,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     if (forOnline) {
       summaryButton = SummaryButtons.add;
       hospitalName = LocaleProvider.current.online_appo;
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
         await getResourceVideoCallPrice();
         await getCountries();
       });

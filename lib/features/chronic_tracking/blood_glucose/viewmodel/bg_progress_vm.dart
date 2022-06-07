@@ -15,7 +15,7 @@ class BgProgressVm
     with ChangeNotifier, IBaseBottomActionsOfGraph
     implements IProgressScreen {
   BgProgressVm({required BuildContext context}) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       isChartShow = true;
       getIt<GlucoseStorageImpl>().addListener(() {
         setSelectedItem(selected);
@@ -1062,7 +1062,7 @@ class BgProgressVm
   }
 
   getNewItems() {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {
           getIt<GlucoseStorageImpl>()

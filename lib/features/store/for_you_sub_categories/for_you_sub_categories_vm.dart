@@ -7,7 +7,7 @@ class ForUSubCategoriesScreenVm extends ChangeNotifier {
   BuildContext? mContext;
 
   ForUSubCategoriesScreenVm(BuildContext context, var id) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       mContext = context;
       await fetchCategories(id);
     });

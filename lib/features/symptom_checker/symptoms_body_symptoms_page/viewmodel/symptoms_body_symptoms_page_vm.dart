@@ -29,7 +29,7 @@ class BodySymptomSelectionVm extends ChangeNotifier {
     BodySublocationsVm? myPv,
   }) {
     mContext = context!;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       myPv = myPv;
       isFromVoice = isFromVoice;
       await fetchBodySymptoms(symptomList);

@@ -19,7 +19,7 @@ class SymptomsBodyLocationsVm extends ChangeNotifier {
     String? yearOfBirth,
   }) {
     mContext = context!;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       notifier = notifierFromPage!;
       await fetchBodyLocations();
     });

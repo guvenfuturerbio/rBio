@@ -12,7 +12,7 @@ class SymptomsHomeVm extends ChangeNotifier {
 
   SymptomsHomeVm({BuildContext? context}) {
     mContext = context!;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchSymptomToken();
     });
   }
