@@ -3,7 +3,8 @@ part of 'app_config.dart';
 abstract class IAppPlatformConfig {
   FirebaseOptions? options;
   AdjustManager? adjustManager;
-  IAppPlatformConfig(this.options, this.adjustManager);
+  RecaptchaManager? recaptchaManager;
+  IAppPlatformConfig(this.options, this.adjustManager, this.recaptchaManager);
   Widget runApp(String initialRoute);
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager);
   Future<void> sendFirstOpenFirebaseEvent(

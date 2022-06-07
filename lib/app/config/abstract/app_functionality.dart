@@ -9,4 +9,5 @@ abstract class IAppFunctionality {
   bool get relatives;
   bool get createOnlineAppointmentWithCountrySelection;
   bool get magazines;
+  bool get recaptcha;
 }

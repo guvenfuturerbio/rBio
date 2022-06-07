@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:g_recaptcha_v3/g_recaptcha_v3.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
@@ -27,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordEditingController = TextEditingController();
     _usernameFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
+    getIt<IAppConfig>().platform.recaptchaManager?.showBadge();
 
     if (Atom.url == PagePaths.loginWithSuccessChangePassword()) {
       final widgetsBinding = WidgetsBinding.instance;
@@ -49,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordEditingController.dispose();
     _usernameFocusNode.dispose();
     _passwordFocusNode.dispose();
+    getIt<IAppConfig>().platform.recaptchaManager?.hideBadge();
 
     super.dispose();
   }
