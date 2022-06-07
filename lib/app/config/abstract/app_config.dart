@@ -1,13 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:universal_html/html.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../../bootstrap.dart';
 import '../../../core/core.dart';
 import '../../../core/exception/undefined_endpoint_exception.dart';
-import '../../../core/manager/recaptcha_manager.dart';
 import '../../../core/manager/recaptcha_manager.dart';
 import '../../../features/dashboard/guven/dashboard_navigation.dart';
 import '../../../features/dashboard/onedose/dashboard_navigation.dart';
