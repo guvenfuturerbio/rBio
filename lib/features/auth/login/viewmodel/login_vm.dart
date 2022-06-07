@@ -2,6 +2,7 @@ import 'dart:io' as platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:g_recaptcha_v3/g_recaptcha_v3.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -211,8 +212,14 @@ class LoginScreenVm extends ChangeNotifier {
       _autovalidateMode = AutovalidateMode.always;
 
       notifyListeners();
-      showLoadingDialog();
+
       try {
+        if (getIt<IAppConfig>().functionality.recaptcha && kIsWeb) {
+          String token =
+              await getIt<IAppConfig>().platform.recaptchaManager?.login() ??
+                  '';
+          if (token.isEmpty) return;
+        }
         final starterResponse = await getIt<Repository>().loginStarter(
           username,
           password,
@@ -266,6 +273,7 @@ class LoginScreenVm extends ChangeNotifier {
           }
         }
       } catch (e) {
+        LoggerUtils.instance.e(e);
         hideDialog(mContext);
         notifyListeners();
         showGradientDialog(
