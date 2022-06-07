@@ -1,5 +1,4 @@
-
-import '../../../core/core.dart';
+import '../../../../core/core.dart';
 
 class ForYouCategoryResponse extends IBaseModel<ForYouCategoryResponse> {
   int? id;

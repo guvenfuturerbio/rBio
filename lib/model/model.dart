@@ -16,7 +16,7 @@ export '../features/results/model/radiology_response.dart';
 export '../features/results/model/visit_detail_request.dart';
 export '../features/store/credit_card/package_payment_request.dart';
 export '../features/store/credit_card/payment_cc_request.dart';
-export '../features/store/for_you_categories/for_you_category_response.dart';
+export '../features/store/for_you_categories/model/for_you_category_response.dart';
 export '../features/store/for_you_order_summary/for_you_sub_category_items_response.dart';
 export '../features/store/for_you_sub_category_detail/for_you_sub_category_detail_response.dart';
 export '../features/symptom_checker/home/model/symptoms_auth_response.dart';
