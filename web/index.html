@@ -34,6 +34,9 @@
 
 <body
   style="position: fixed; inset: 0px; overflow: hidden; padding: 0px; margin: 0px; user-select: none; touch-action: none; font: 14px sans-serif; color: red;">
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcE2uUeAAAAAG9hT5S-uhoZ49oUZhai_I2gCnrg"></script>
+
+
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script>window.flutterfire_web_sdk_version = '8.10.1';</script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -41,6 +44,11 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://meet.jit.si/external_api.js"></script>
+  <script
+      src="https://stream.guven.com.tr/external_api.js"
+      type="application/javascript"
+    ></script>
+  
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -51,7 +59,6 @@
       });
     }
   </script>
-  <script src="https://stream.guven.com.tr/external_api.js" type="application/javascript"></script>
 
   srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x"
   media="(prefers-color-scheme: dark)">

@@ -24,4 +24,7 @@ class GuvenFunctionality extends IAppFunctionality {
 
   @override
   bool get magazines => true;
+
+  @override
+  bool get recaptcha => true;
 }
