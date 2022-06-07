@@ -289,7 +289,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationSearchGreen,
                     ),
                     onPressed: () {
-                      getIt<IAppConfig>().platform.adjustManager
+                      getIt<IAppConfig>()
+                          .platform
+                          .adjustManager
                           ?.trackEvent(BottomBarClickedEvent());
                       getIt<FirebaseAnalyticsManager>()
                           .logEvent(AltBarTiklamaEvent('Arama'));
@@ -304,7 +306,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationChatGreen,
                     ),
                     onPressed: () {
-                      getIt<IAppConfig>().platform.adjustManager
+                      getIt<IAppConfig>()
+                          .platform
+                          .adjustManager
                           ?.trackEvent(BottomBarClickedEvent());
                       getIt<FirebaseAnalyticsManager>()
                           .logEvent(AltBarTiklamaEvent('Chat'));
@@ -321,7 +325,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationGraphGreen,
                     ),
                     onPressed: () {
-                      getIt<IAppConfig>().platform.adjustManager
+                      getIt<IAppConfig>()
+                          .platform
+                          .adjustManager
                           ?.trackEvent(BottomBarClickedEvent());
                       getIt<FirebaseAnalyticsManager>()
                           .logEvent(AltBarTiklamaEvent('Grafik'));
@@ -335,7 +341,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationNotificationGreen,
                     ),
                     onPressed: () {
-                      getIt<IAppConfig>().platform.adjustManager
+                      getIt<IAppConfig>()
+                          .platform
+                          .adjustManager
                           ?.trackEvent(BottomBarClickedEvent());
                       getIt<FirebaseAnalyticsManager>()
                           .logEvent(AltBarTiklamaEvent('Bildirim'));
@@ -376,7 +384,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
                 ?.trackEvent(MenuElementHospitalAppointmentClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('hastane_randevusu_olustur'));
@@ -393,7 +403,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.take_video_appointment,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
                 ?.trackEvent(MenuElementOnlineAppoClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('online_randevu_olustur'));
@@ -410,7 +422,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.chronic_track_home,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
                 ?.trackEvent(MenuElementHealthTrackerClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('saglik_takibi'));
@@ -420,7 +434,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.my_appointments,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
                 ?.trackEvent(MenuElementAppointmentsClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('randevu'));
@@ -454,7 +470,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.symptom_checker,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
                 ?.trackEvent(MenuElementSymptomCheckerClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('symptom_checker'));
@@ -465,7 +483,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           DrawerModel(
             title: LocaleProvider.current.devices,
             onTap: () {
-              getIt<IAppConfig>().platform.adjustManager
+              getIt<IAppConfig>()
+                  .platform
+                  .adjustManager
                   ?.trackEvent(MenuElementDevicesClickedEvent());
               getIt<FirebaseAnalyticsManager>()
                   .logEvent(MenuElementTiklamaEvent('cihazlarim'));
@@ -476,7 +496,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           DrawerModel(
             title: LocaleProvider.current.reminders,
             onTap: () {
-              getIt<IAppConfig>().platform.adjustManager
+              getIt<IAppConfig>()
+                  .platform
+                  .adjustManager
                   ?.trackEvent(MenuElementRemindersClickedEvent());
               getIt<FirebaseAnalyticsManager>()
                   .logEvent(MenuElementTiklamaEvent('hatirlaticilar'));
@@ -486,7 +508,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
                 ?.trackEvent(MenuElementSuggestionsClickedEvent());
             getIt<FirebaseAnalyticsManager>()
                 .logEvent(MenuElementTiklamaEvent('oneriler'));

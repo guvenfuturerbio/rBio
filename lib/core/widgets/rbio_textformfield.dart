@@ -86,6 +86,7 @@ class RbioTextFormField extends StatelessWidget {
             onCodeChanged: onChanged,
           )
         : TextFormField(
+            
             maxLength: maxLength,
             maxLines: maxLines,
             initialValue: initialValue,

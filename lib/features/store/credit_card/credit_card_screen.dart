@@ -400,7 +400,10 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return WarningDialog(title, text);
+        return RbioMessageDialog(
+          description: text,
+          buttonTitle: LocaleProvider.current.ok,
+        );
       },
     );
   }

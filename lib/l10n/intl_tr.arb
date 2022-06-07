@@ -1,7 +1,7 @@
 {
   "succefully_created_account": "Kaydınız başarıyla tamamlanmıştır",
   "btn_create": "Oluştur",
-  "btn_cancel": "İptal",
+  "btn_cancel": "İptal et",
   "btn_delete": "Sil",
   "btn_confirm": "Onayla",
   "btn_done": "Tamamla",
@@ -79,7 +79,7 @@
   "passport_number": "Pasaport/Yabancı Vatandaşlık Numaranız",
   "passport_validation" : "Pasaport numarası 5 karakterden kısa olamaz",
   "personal_info": "Kişisel Bilgiler",
-  "password_validation": "Şifre en az 1 büyük, 1 küçük, 1 özel karakter, 1 sayı içermeli",
+  "password_validation": "Şifre en az 1 büyük, 1 küçük, 1 özel karakter, 1 sayı içermeli ve en az 8 karakter uzunluğunda olmalıdır.",
   "create_password": "Şifre Oluştur",
   "sms_verification": "Sms/Email Doğrulama",
   "sms_verification_code": "Sms/Email Doğrulama Kodu",

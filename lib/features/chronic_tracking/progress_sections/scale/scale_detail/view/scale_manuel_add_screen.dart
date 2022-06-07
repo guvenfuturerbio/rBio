@@ -12,8 +12,7 @@ class ScaleManuelAddScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ScaleManuelAddCubit>(
-      create: (context) =>
-          ScaleManuelAddCubit(getIt(), getIt()),
+      create: (context) => ScaleManuelAddCubit(getIt(), getIt()),
       child: Builder(
         builder: (context) {
           return BlocListener<ScaleManuelAddCubit, ScaleManuelAddState>(
@@ -36,9 +35,10 @@ class ScaleManuelAddScreen extends StatelessWidget {
                     context: context,
                     barrierDismissible: true,
                     builder: (BuildContext context) {
-                      return WarningDialog(
-                        LocaleProvider.current.warning,
-                        LocaleProvider.current.sorry_dont_transaction,
+                      return RbioMessageDialog(
+                        description:
+                            LocaleProvider.current.sorry_dont_transaction,
+                        isAtom: false,
                       );
                     },
                   );

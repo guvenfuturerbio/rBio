@@ -217,61 +217,67 @@ class UserNotifier extends ChangeNotifier {
 
   Future<bool?> _showConfirmationDialog(BuildContext context) async {
     final result = await Atom.show(
-      AlertDialog(
-        contentPadding: EdgeInsets.zero,
-        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      Dialog(
+        insetPadding: EdgeInsets.zero,
+        backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),
-        title: GuvenAlert.buildTitle(
-          LocaleProvider.current.warning,
-        ),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            //
-            R.sizes.hSizer12,
-
-            //
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GuvenAlert.buildDescription(
-                LocaleProvider.current.logout_confirmation_description,
+        child: Container(
+          width: context.width - 50,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                LocaleProvider.current.warning,
+                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
               ),
-            ),
+              //
+              R.sizes.hSizer32,
+              //
 
-            //
-            R.sizes.hSizer16,
+              Center(
+                child: Text(
+                  LocaleProvider.current.logout_confirmation_description,
+                  textAlign: TextAlign.center,
+                  style: getIt<IAppConfig>()
+                      .theme
+                      .dialogTheme
+                      .description(context),
+                ),
+              ),
 
-            //
-            Row(
-              children: [
-                R.sizes.wSizer12,
-                Expanded(
-                  child: GuvenAlert.buildMaterialAction(
-                    LocaleProvider.current.Ok,
-                    () {
-                      Atom.dismiss(true);
-                    },
+              //
+              R.sizes.hSizer32,
+
+              //
+              Row(
+                children: [
+                  R.sizes.wSizer12,
+                  Expanded(
+                    child: RbioSmallDialogButton.red(
+                      title: LocaleProvider.current.btn_cancel,
+                      onPressed: () {
+                        Atom.dismiss(false);
+                      },
+                    ),
                   ),
-                ),
-                R.sizes.wSizer8,
-                Expanded(
-                  child: GuvenAlert.buildMaterialAction(
-                    LocaleProvider.current.btn_cancel,
-                    () {
-                      Atom.dismiss(false);
-                    },
+                  R.sizes.wSizer8,
+                  Expanded(
+                    child: RbioSmallDialogButton.green(
+                      title: LocaleProvider.current.Ok,
+                      onPressed: () {
+                        Atom.dismiss(true);
+                      },
+                    ),
                   ),
-                ),
-                R.sizes.wSizer12,
-              ],
-            ),
-          ],
+                  R.sizes.wSizer12,
+                ],
+              ),
+            ],
+          ),
         ),
-        actions: const [],
       ),
     );
 

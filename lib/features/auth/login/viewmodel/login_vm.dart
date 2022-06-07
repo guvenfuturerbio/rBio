@@ -24,23 +24,20 @@ class LoginScreenVm extends ChangeNotifier {
   LoginScreenVm(this.mContext) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
       consentForm = await getIt<Repository>().getConsentForm();
- 
-       getIt<ISharedPreferencesManager>().setString(
-      SharedPreferencesKeys.consentId, consentForm.id.toString());
+
+      getIt<ISharedPreferencesManager>().setString(
+          SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();
       await getSavedLoginInfo();
     });
   }
 
-
   AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
   late ConsentForm consentForm;
 
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState>? get formKey => _formKey;
-
 
   String locale = "";
   LoadingDialog? loadingDialog;
@@ -198,7 +195,12 @@ class LoginScreenVm extends ChangeNotifier {
     } else {
       if ((userLoginInfo.username ?? "").isNotEmpty &&
           (userLoginInfo.password ?? "").isNotEmpty) {
-        await login(userLoginInfo.username ?? '', userLoginInfo.password ?? '', getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.consentId) ?? '');
+        await login(
+            userLoginInfo.username ?? '',
+            userLoginInfo.password ?? '',
+            getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.consentId) ??
+                '');
       }
     }
   }
@@ -206,7 +208,7 @@ class LoginScreenVm extends ChangeNotifier {
   Future<void> login(String username, String password, String consentId) async {
     if (checkFields(username, password)) {
       _autovalidateMode = AutovalidateMode.always;
-    
+
       notifyListeners();
       showLoadingDialog();
       try {
@@ -274,7 +276,8 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  Future<void> loginWithProductType(String username, String password, String consentId) async {
+  Future<void> loginWithProductType(
+      String username, String password, String consentId) async {
     showLoadingDialog();
     if (getIt<IAppConfig>().productType == ProductType.oneDose) {
       await loginOneDose(username, password, consentId);
@@ -283,9 +286,11 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  Future<void> loginGuven(String username, String password, String consentId) async {
+  Future<void> loginGuven(
+      String username, String password, String consentId) async {
     try {
-      _guvenLogin = await getIt<UserManager>().login(username, password, consentId);
+      _guvenLogin =
+          await getIt<UserManager>().login(username, password, consentId);
     } catch (e) {
       hideDialog(mContext);
 
@@ -408,7 +413,10 @@ class LoginScreenVm extends ChangeNotifier {
         'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
-    getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulLoginEvent());
+    getIt<IAppConfig>()
+        .platform
+        .adjustManager
+        ?.trackEvent(SuccessfulLoginEvent());
 
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
@@ -421,10 +429,12 @@ class LoginScreenVm extends ChangeNotifier {
     Atom.to(PagePaths.main, isReplacement: true);
   }
 
-  Future<void> loginOneDose(String username, String password, String consentId) async {
+  Future<void> loginOneDose(
+      String username, String password, String consentId) async {
     // Roles and token
     try {
-      _guvenLogin = await getIt<UserManager>().login(username, password, consentId);
+      _guvenLogin =
+          await getIt<UserManager>().login(username, password, consentId);
     } catch (e) {
       hideDialog(mContext);
 
@@ -589,7 +599,10 @@ class LoginScreenVm extends ChangeNotifier {
         'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
-    getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulLoginEvent());
+    getIt<IAppConfig>()
+        .platform
+        .adjustManager
+        ?.trackEvent(SuccessfulLoginEvent());
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }
@@ -658,7 +671,10 @@ class LoginScreenVm extends ChangeNotifier {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return WarningDialog(title, text);
+        return RbioMessageDialog(
+          description: text,
+          isAtom: false,
+        );
       },
     ).then(
       (value) {
@@ -680,7 +696,6 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   showApplicationContestForm() async {
-
     showDialog(
         context: mContext,
         barrierDismissible: true,

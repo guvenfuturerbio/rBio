@@ -107,7 +107,7 @@
   "week": "Week",
   "two_week": "2 weeks",
   "month": "Month",
-  "password_validation": "Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, ",
+  "password_validation": "Password must contain at least 1 upper, 1 lower, 1 number, 1 special character and password length must be at least 8 characters",
   "passport_validation" : "Passport number cannot be less than 5 characters",
   "appo_created": "Your appointment has been created successfully",
   "we_are_online": "We are currently online! How can we help?",

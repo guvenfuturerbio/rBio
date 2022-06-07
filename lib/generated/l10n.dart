@@ -1130,10 +1130,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, `
+  /// `Password must contain at least 1 upper, 1 lower, 1 number, 1 special character and password length must be at least 8 characters`
   String get password_validation {
     return Intl.message(
-      'Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, ',
+      'Password must contain at least 1 upper, 1 lower, 1 number, 1 special character and password length must be at least 8 characters',
       name: 'password_validation',
       desc: '',
       args: [],

@@ -55,7 +55,10 @@ abstract class RbioVm extends ChangeNotifier {
       context: mContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return WarningDialog(title, text);
+        return RbioMessageDialog(
+          description: text,
+          buttonTitle: LocaleProvider.current.ok,
+        );
       },
     ).then(
       (value) async {
@@ -70,7 +73,10 @@ abstract class RbioVm extends ChangeNotifier {
     showDialog(
       context: context ?? mContext,
       barrierDismissible: true,
-      builder: (BuildContext context) => WarningDialog(title, text),
+      builder: (BuildContext context) => RbioMessageDialog(
+        description: text,
+        buttonTitle: LocaleProvider.current.ok,
+      ),
     );
   }
 }

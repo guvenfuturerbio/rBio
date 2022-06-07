@@ -166,7 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "box_code": MessageLookupByLibrary.simpleMessage("Kutu kodu"),
         "boy": MessageLookupByLibrary.simpleMessage("Erkek Çocuğu"),
         "bp_tracking": MessageLookupByLibrary.simpleMessage("Tansiyon Takibi"),
-        "btn_cancel": MessageLookupByLibrary.simpleMessage("İptal"),
+        "btn_cancel": MessageLookupByLibrary.simpleMessage("İptal et"),
         "btn_confirm": MessageLookupByLibrary.simpleMessage("Onayla"),
         "btn_create": MessageLookupByLibrary.simpleMessage("Oluştur"),
         "btn_delete": MessageLookupByLibrary.simpleMessage("Sil"),
@@ -957,7 +957,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password_security": MessageLookupByLibrary.simpleMessage(
             "Güvenlik politikalarımız gereği şifrenizin güvenlik kriterlerine uyması gerekmektedir."),
         "password_validation": MessageLookupByLibrary.simpleMessage(
-            "Şifre en az 1 büyük, 1 küçük, 1 özel karakter, 1 sayı içermeli"),
+            "Şifre en az 1 büyük, 1 küçük, 1 özel karakter, 1 sayı içermeli ve en az 8 karakter uzunluğunda olmalıdır."),
         "password_wrong":
             MessageLookupByLibrary.simpleMessage("Geçerli bir şifre giriniz."),
         "passwords_not_match": MessageLookupByLibrary.simpleMessage(

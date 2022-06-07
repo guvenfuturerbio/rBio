@@ -4,12 +4,14 @@ import '../core.dart';
 
 class RbioMessageDialog extends StatelessWidget {
   final String description;
-  String? buttonTitle;
+  final String? buttonTitle;
+  final bool? isAtom;
 
-  RbioMessageDialog({
+  const RbioMessageDialog({
     Key? key,
     required this.description,
     this.buttonTitle,
+    this.isAtom,
   }) : super(key: key);
 
   @override
@@ -49,7 +51,11 @@ class RbioMessageDialog extends StatelessWidget {
             RbioSmallDialogButton.green(
               title: buttonTitle ?? LocaleProvider.current.Ok,
               onPressed: () {
-                Atom.dismiss();
+                if (isAtom == true) {
+                  Atom.dismiss();
+                } else {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ],

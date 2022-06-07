@@ -972,7 +972,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password_security": MessageLookupByLibrary.simpleMessage(
             "According to our security policies, your password must comply with the security criteria."),
         "password_validation": MessageLookupByLibrary.simpleMessage(
-            "Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, "),
+            "Password must contain at least 1 upper, 1 lower, 1 number, 1 special character and password length must be at least 8 characters"),
         "password_wrong": MessageLookupByLibrary.simpleMessage(
             "Please enter valid password."),
         "passwords_not_match": MessageLookupByLibrary.simpleMessage(

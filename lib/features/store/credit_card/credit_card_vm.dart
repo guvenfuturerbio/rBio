@@ -13,10 +13,8 @@ class CreditCardScreenVm extends ChangeNotifier {
   final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
 
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState>? get formKey => _formKey;
-  
 
   LoadingDialog? progressDialog;
 
@@ -153,7 +151,10 @@ class CreditCardScreenVm extends ChangeNotifier {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return WarningDialog(title, text, hasScrollable: true);
+        return RbioMessageDialog(
+          description: text,
+          buttonTitle: LocaleProvider.of(context).Ok,
+        );
       },
     );
   }

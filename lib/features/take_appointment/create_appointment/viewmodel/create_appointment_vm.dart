@@ -38,7 +38,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   DateTime? _startDate;
   DateTime? _endDate;
   int? _patientId;
-  List<PatientAppointmentsResponse>? patientAppointments =[];
+  List<PatientAppointmentsResponse>? patientAppointments = [];
   List<PatientAppointmentsResponse> holderForFavorites = [];
   final List<String> doctorsImageUrls = [];
   List<int> _doctorsIds = [];
@@ -546,7 +546,10 @@ class CreateAppointmentVm extends ChangeNotifier {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return WarningDialog(title, text);
+        return RbioMessageDialog(
+          description: text,
+          buttonTitle: LocaleProvider.current.ok,
+        );
       },
     );
   }
