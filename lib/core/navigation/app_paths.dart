@@ -43,12 +43,11 @@ import '../../features/relatives/patient_relatives/relatives.dart';
 import '../../features/results/results.dart';
 import '../../features/shared/full_pdf_viewer_screen.dart';
 import '../../features/shared/webview_screen.dart';
-import '../../features/store/covid_19/covid_19_screen.dart';
-import '../../features/store/credit_card/credit_card_screen.dart';
+import '../../features/store/credit_card/view/credit_card_screen.dart';
 import '../../features/store/for_you_categories/view/for_you_categories_screen.dart';
-import '../../features/store/for_you_order_summary/order_summary.dart';
+import '../../features/store/for_you_order_summary/view/for_you_order_summary.dart';
 import '../../features/store/for_you_sub_categories/view/for_you_sub_categories_screen.dart';
-import '../../features/store/for_you_sub_category_detail/for_you_sub_categories_detail_screen.dart';
+import '../../features/store/for_you_sub_category_detail/view/for_you_sub_categories_detail_screen.dart';
 import '../../features/store/shopping_cart/shopping_cart_screen.dart';
 import '../../features/symptom_checker/home/view/symptoms_home_screen.dart';
 import '../../features/symptom_checker/symptoms_body_location/view/symptoms_body_locations_screen.dart';
@@ -517,10 +516,6 @@ class VRouterRoutes {
         // #endregion
 
         // #region Store
-        VWidget(
-          path: PagePaths.covid19,
-          widget: const Covid19Screen(key: Key('Covid19Screen')),
-        ),
 
         VWidget(
           path: PagePaths.creditCard,
@@ -533,8 +528,8 @@ class VRouterRoutes {
         ),
 
         VWidget(
-          path: PagePaths.orderSummary,
-          widget: OrderSummaryScreen(),
+          path: PagePaths.forYouOrderSummary,
+          widget: ForYouOrderSummaryScreen(),
         ),
 
         VWidget(
@@ -776,7 +771,7 @@ class PagePaths {
   static const covid19 = '/covid19';
   static const creditCard = '/credit-card';
   static const forYouCategories = '/for-you';
-  static const orderSummary = '/order-summary';
+  static const forYouOrderSummary = '/for-you-order-summary';
   static const forYouSubCategories = '/for-you-categories';
   static const forYouSubCategoriesDetail = '/for-you-categories-detail';
   static const shoppingChart = '/shopping-cart';

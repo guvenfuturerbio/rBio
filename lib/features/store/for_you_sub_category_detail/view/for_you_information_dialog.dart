@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/core.dart';
+import '../../../../../core/core.dart';
 
 class ForYouInformationDialog extends StatelessWidget {
   const ForYouInformationDialog({Key? key}) : super(key: key);

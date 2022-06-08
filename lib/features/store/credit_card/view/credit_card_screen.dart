@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/core.dart';
-import '../../../../model/model.dart';
-import 'credit_card_vm.dart';
+import '../../../../../core/core.dart';
+import '../../../../../model/model.dart';
+import '../credit_card_vm.dart';
+import '../model/model.dart';
 
 class CreditCardScreen extends StatefulWidget {
   int? paymentObjectCode;

@@ -13,10 +13,8 @@ class CreditCardScreenVm extends ChangeNotifier {
   final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
 
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState>? get formKey => _formKey;
-  
 
   LoadingDialog? progressDialog;
 
