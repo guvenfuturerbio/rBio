@@ -130,11 +130,6 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                           },
                         )),
                       ],
-
-                      //
-
-                      //
-                      R.sizes.hSizer4,
                     ],
                   ),
                 ),

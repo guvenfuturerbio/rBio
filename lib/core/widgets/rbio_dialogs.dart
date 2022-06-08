@@ -2,6 +2,36 @@ import 'package:flutter/material.dart';
 
 import '../core.dart';
 
+class RbioBaseDialog extends StatelessWidget {
+  final Widget child;
+
+  const RbioBaseDialog({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.zero,
+      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: R.sizes.borderRadiusCircular,
+      ),
+      child: Container(
+        width: context.width > 500 ? 500 : context.width - 50,
+        height: context.height > 500
+            ? 500
+            : context.height - (Atom.safeBottom + Atom.safeTop),
+        padding: const EdgeInsets.all(20),
+        child: child,
+      ),
+    );
+  }
+
+  static Widget verticalGap() => R.sizes.hSizer32;
+}
+
 class RbioMessageDialog extends StatelessWidget {
   final String description;
   final String? buttonTitle;
@@ -16,50 +46,57 @@ class RbioMessageDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      child: Container(
-        width: context.width - 50,
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            //
-            Text(
-              LocaleProvider.current.warning,
-              style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+    return RbioBaseDialog(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          //
+          Text(
+            LocaleProvider.current.warning,
+            style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+          ),
+
+          //
+          RbioBaseDialog.verticalGap(),
+
+          //
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.zero,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  //
+                  Text(
+                    description * 150,
+                    textAlign: TextAlign.center,
+                    style: getIt<IAppConfig>()
+                        .theme
+                        .dialogTheme
+                        .description(context),
+                  ),
+                ],
+              ),
             ),
+          ),
 
-            //
-            R.sizes.hSizer32,
+          //
+          RbioBaseDialog.verticalGap(),
 
-            //
-            Text(
-              description,
-              textAlign: TextAlign.center,
-              style: getIt<IAppConfig>().theme.dialogTheme.description(context),
-            ),
-
-            //
-            R.sizes.hSizer32,
-
-            //
-            RbioSmallDialogButton.green(
-              title: buttonTitle ?? LocaleProvider.current.Ok,
-              onPressed: () {
-                if (isAtom == true) {
-                  Atom.dismiss();
-                } else {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
-        ),
+          //
+          RbioSmallDialogButton.green(
+            title: buttonTitle ?? LocaleProvider.current.Ok,
+            onPressed: () {
+              if (isAtom == true) {
+                Atom.dismiss();
+              } else {
+                Navigator.of(context).pop();
+              }
+            },
+          ),
+        ],
       ),
     );
   }
