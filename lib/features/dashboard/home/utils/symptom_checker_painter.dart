@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 class HomeSymptomCheckerCustomPainter extends CustomPainter {
+  final color = Colors.black;
+
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -550,7 +552,7 @@ class HomeSymptomCheckerCustomPainter extends CustomPainter {
     path_1.close();
 
     Paint paint_1_fill = Paint()..style = PaintingStyle.fill;
-    paint_1_fill.color = const Color(0xffffffff).withOpacity(1.0);
+    paint_1_fill.color = color;
     canvas.drawPath(path_1, paint_1_fill);
 
     Path path_2 = Path();
@@ -660,7 +662,7 @@ class HomeSymptomCheckerCustomPainter extends CustomPainter {
     path_2.close();
 
     Paint paint_2_fill = Paint()..style = PaintingStyle.fill;
-    paint_2_fill.color = const Color(0xffffffff).withOpacity(1.0);
+    paint_2_fill.color = color;
     canvas.drawPath(path_2, paint_2_fill);
 
     Path path_3 = Path();
@@ -719,7 +721,7 @@ class HomeSymptomCheckerCustomPainter extends CustomPainter {
     path_3.close();
 
     Paint paint_3_fill = Paint()..style = PaintingStyle.fill;
-    paint_3_fill.color = const Color(0xffffffff).withOpacity(1.0);
+    paint_3_fill.color = color;
     canvas.drawPath(path_3, paint_3_fill);
 
     Path path_4 = Path();
@@ -777,7 +779,7 @@ class HomeSymptomCheckerCustomPainter extends CustomPainter {
     path_4.close();
 
     Paint paint_4_fill = Paint()..style = PaintingStyle.fill;
-    paint_4_fill.color = const Color(0xffffffff).withOpacity(1.0);
+    paint_4_fill.color = color;
     canvas.drawPath(path_4, paint_4_fill);
 
     Path path_5 = Path();
@@ -855,7 +857,7 @@ class HomeSymptomCheckerCustomPainter extends CustomPainter {
     path_5.close();
 
     Paint paint_5_fill = Paint()..style = PaintingStyle.fill;
-    paint_5_fill.color = const Color(0xffffffff).withOpacity(1.0);
+    paint_5_fill.color = color;
     canvas.drawPath(path_5, paint_5_fill);
 
     Path path_6 = Path();
@@ -896,7 +898,7 @@ class HomeSymptomCheckerCustomPainter extends CustomPainter {
     path_6.close();
 
     Paint paint_6_fill = Paint()..style = PaintingStyle.fill;
-    paint_6_fill.color = const Color(0xffffffff).withOpacity(1.0);
+    paint_6_fill.color = color;
     canvas.drawPath(path_6, paint_6_fill);
   }
 
