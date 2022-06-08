@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'hba1c_reminder_add_edit_cubit.dart';
@@ -11,35 +12,7 @@ part of 'hba1c_reminder_add_edit_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$Hba1cReminderAddEditStateTearOff {
-  const _$Hba1cReminderAddEditStateTearOff();
-
-  _InitialState initial() {
-    return const _InitialState();
-  }
-
-  _SuccessState success(Hba1cReminderAddEditResult result) {
-    return _SuccessState(
-      result,
-    );
-  }
-
-  _AddEditOpenListScreenState openListScreen() {
-    return const _AddEditOpenListScreenState();
-  }
-
-  _ShowWarningDialogState showWarningDialog(String description) {
-    return _ShowWarningDialogState(
-      description,
-    );
-  }
-}
-
-/// @nodoc
-const $Hba1cReminderAddEditState = _$Hba1cReminderAddEditStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$Hba1cReminderAddEditState {
@@ -113,22 +86,22 @@ class _$Hba1cReminderAddEditStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialStateCopyWith<$Res> {
-  factory _$InitialStateCopyWith(
-          _InitialState value, $Res Function(_InitialState) then) =
-      __$InitialStateCopyWithImpl<$Res>;
+abstract class _$$_InitialStateCopyWith<$Res> {
+  factory _$$_InitialStateCopyWith(
+          _$_InitialState value, $Res Function(_$_InitialState) then) =
+      __$$_InitialStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialStateCopyWithImpl<$Res>
+class __$$_InitialStateCopyWithImpl<$Res>
     extends _$Hba1cReminderAddEditStateCopyWithImpl<$Res>
-    implements _$InitialStateCopyWith<$Res> {
-  __$InitialStateCopyWithImpl(
-      _InitialState _value, $Res Function(_InitialState) _then)
-      : super(_value, (v) => _then(v as _InitialState));
+    implements _$$_InitialStateCopyWith<$Res> {
+  __$$_InitialStateCopyWithImpl(
+      _$_InitialState _value, $Res Function(_$_InitialState) _then)
+      : super(_value, (v) => _then(v as _$_InitialState));
 
   @override
-  _InitialState get _value => super._value as _InitialState;
+  _$_InitialState get _value => super._value as _$_InitialState;
 }
 
 /// @nodoc
@@ -144,7 +117,7 @@ class _$_InitialState implements _InitialState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _InitialState);
+        (other.runtimeType == runtimeType && other is _$_InitialState);
   }
 
   @override
@@ -230,29 +203,29 @@ abstract class _InitialState implements Hba1cReminderAddEditState {
 }
 
 /// @nodoc
-abstract class _$SuccessStateCopyWith<$Res> {
-  factory _$SuccessStateCopyWith(
-          _SuccessState value, $Res Function(_SuccessState) then) =
-      __$SuccessStateCopyWithImpl<$Res>;
+abstract class _$$_SuccessStateCopyWith<$Res> {
+  factory _$$_SuccessStateCopyWith(
+          _$_SuccessState value, $Res Function(_$_SuccessState) then) =
+      __$$_SuccessStateCopyWithImpl<$Res>;
   $Res call({Hba1cReminderAddEditResult result});
 }
 
 /// @nodoc
-class __$SuccessStateCopyWithImpl<$Res>
+class __$$_SuccessStateCopyWithImpl<$Res>
     extends _$Hba1cReminderAddEditStateCopyWithImpl<$Res>
-    implements _$SuccessStateCopyWith<$Res> {
-  __$SuccessStateCopyWithImpl(
-      _SuccessState _value, $Res Function(_SuccessState) _then)
-      : super(_value, (v) => _then(v as _SuccessState));
+    implements _$$_SuccessStateCopyWith<$Res> {
+  __$$_SuccessStateCopyWithImpl(
+      _$_SuccessState _value, $Res Function(_$_SuccessState) _then)
+      : super(_value, (v) => _then(v as _$_SuccessState));
 
   @override
-  _SuccessState get _value => super._value as _SuccessState;
+  _$_SuccessState get _value => super._value as _$_SuccessState;
 
   @override
   $Res call({
     Object? result = freezed,
   }) {
-    return _then(_SuccessState(
+    return _then(_$_SuccessState(
       result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
@@ -278,7 +251,7 @@ class _$_SuccessState implements _SuccessState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SuccessState &&
+            other is _$_SuccessState &&
             const DeepCollectionEquality().equals(other.result, result));
   }
 
@@ -288,8 +261,8 @@ class _$_SuccessState implements _SuccessState {
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessStateCopyWith<_SuccessState> get copyWith =>
-      __$SuccessStateCopyWithImpl<_SuccessState>(this, _$identity);
+  _$$_SuccessStateCopyWith<_$_SuccessState> get copyWith =>
+      __$$_SuccessStateCopyWithImpl<_$_SuccessState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -367,34 +340,35 @@ class _$_SuccessState implements _SuccessState {
 }
 
 abstract class _SuccessState implements Hba1cReminderAddEditState {
-  const factory _SuccessState(Hba1cReminderAddEditResult result) =
+  const factory _SuccessState(final Hba1cReminderAddEditResult result) =
       _$_SuccessState;
 
-  Hba1cReminderAddEditResult get result;
+  Hba1cReminderAddEditResult get result => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$SuccessStateCopyWith<_SuccessState> get copyWith =>
+  _$$_SuccessStateCopyWith<_$_SuccessState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$AddEditOpenListScreenStateCopyWith<$Res> {
-  factory _$AddEditOpenListScreenStateCopyWith(
-          _AddEditOpenListScreenState value,
-          $Res Function(_AddEditOpenListScreenState) then) =
-      __$AddEditOpenListScreenStateCopyWithImpl<$Res>;
+abstract class _$$_AddEditOpenListScreenStateCopyWith<$Res> {
+  factory _$$_AddEditOpenListScreenStateCopyWith(
+          _$_AddEditOpenListScreenState value,
+          $Res Function(_$_AddEditOpenListScreenState) then) =
+      __$$_AddEditOpenListScreenStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$AddEditOpenListScreenStateCopyWithImpl<$Res>
+class __$$_AddEditOpenListScreenStateCopyWithImpl<$Res>
     extends _$Hba1cReminderAddEditStateCopyWithImpl<$Res>
-    implements _$AddEditOpenListScreenStateCopyWith<$Res> {
-  __$AddEditOpenListScreenStateCopyWithImpl(_AddEditOpenListScreenState _value,
-      $Res Function(_AddEditOpenListScreenState) _then)
-      : super(_value, (v) => _then(v as _AddEditOpenListScreenState));
+    implements _$$_AddEditOpenListScreenStateCopyWith<$Res> {
+  __$$_AddEditOpenListScreenStateCopyWithImpl(
+      _$_AddEditOpenListScreenState _value,
+      $Res Function(_$_AddEditOpenListScreenState) _then)
+      : super(_value, (v) => _then(v as _$_AddEditOpenListScreenState));
 
   @override
-  _AddEditOpenListScreenState get _value =>
-      super._value as _AddEditOpenListScreenState;
+  _$_AddEditOpenListScreenState get _value =>
+      super._value as _$_AddEditOpenListScreenState;
 }
 
 /// @nodoc
@@ -411,7 +385,7 @@ class _$_AddEditOpenListScreenState implements _AddEditOpenListScreenState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AddEditOpenListScreenState);
+            other is _$_AddEditOpenListScreenState);
   }
 
   @override
@@ -498,29 +472,30 @@ abstract class _AddEditOpenListScreenState
 }
 
 /// @nodoc
-abstract class _$ShowWarningDialogStateCopyWith<$Res> {
-  factory _$ShowWarningDialogStateCopyWith(_ShowWarningDialogState value,
-          $Res Function(_ShowWarningDialogState) then) =
-      __$ShowWarningDialogStateCopyWithImpl<$Res>;
+abstract class _$$_ShowWarningDialogStateCopyWith<$Res> {
+  factory _$$_ShowWarningDialogStateCopyWith(_$_ShowWarningDialogState value,
+          $Res Function(_$_ShowWarningDialogState) then) =
+      __$$_ShowWarningDialogStateCopyWithImpl<$Res>;
   $Res call({String description});
 }
 
 /// @nodoc
-class __$ShowWarningDialogStateCopyWithImpl<$Res>
+class __$$_ShowWarningDialogStateCopyWithImpl<$Res>
     extends _$Hba1cReminderAddEditStateCopyWithImpl<$Res>
-    implements _$ShowWarningDialogStateCopyWith<$Res> {
-  __$ShowWarningDialogStateCopyWithImpl(_ShowWarningDialogState _value,
-      $Res Function(_ShowWarningDialogState) _then)
-      : super(_value, (v) => _then(v as _ShowWarningDialogState));
+    implements _$$_ShowWarningDialogStateCopyWith<$Res> {
+  __$$_ShowWarningDialogStateCopyWithImpl(_$_ShowWarningDialogState _value,
+      $Res Function(_$_ShowWarningDialogState) _then)
+      : super(_value, (v) => _then(v as _$_ShowWarningDialogState));
 
   @override
-  _ShowWarningDialogState get _value => super._value as _ShowWarningDialogState;
+  _$_ShowWarningDialogState get _value =>
+      super._value as _$_ShowWarningDialogState;
 
   @override
   $Res call({
     Object? description = freezed,
   }) {
-    return _then(_ShowWarningDialogState(
+    return _then(_$_ShowWarningDialogState(
       description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -546,7 +521,7 @@ class _$_ShowWarningDialogState implements _ShowWarningDialogState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ShowWarningDialogState &&
+            other is _$_ShowWarningDialogState &&
             const DeepCollectionEquality()
                 .equals(other.description, description));
   }
@@ -557,8 +532,8 @@ class _$_ShowWarningDialogState implements _ShowWarningDialogState {
 
   @JsonKey(ignore: true)
   @override
-  _$ShowWarningDialogStateCopyWith<_ShowWarningDialogState> get copyWith =>
-      __$ShowWarningDialogStateCopyWithImpl<_ShowWarningDialogState>(
+  _$$_ShowWarningDialogStateCopyWith<_$_ShowWarningDialogState> get copyWith =>
+      __$$_ShowWarningDialogStateCopyWithImpl<_$_ShowWarningDialogState>(
           this, _$identity);
 
   @override
@@ -637,11 +612,11 @@ class _$_ShowWarningDialogState implements _ShowWarningDialogState {
 }
 
 abstract class _ShowWarningDialogState implements Hba1cReminderAddEditState {
-  const factory _ShowWarningDialogState(String description) =
+  const factory _ShowWarningDialogState(final String description) =
       _$_ShowWarningDialogState;
 
-  String get description;
+  String get description => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$ShowWarningDialogStateCopyWith<_ShowWarningDialogState> get copyWith =>
+  _$$_ShowWarningDialogStateCopyWith<_$_ShowWarningDialogState> get copyWith =>
       throw _privateConstructorUsedError;
 }

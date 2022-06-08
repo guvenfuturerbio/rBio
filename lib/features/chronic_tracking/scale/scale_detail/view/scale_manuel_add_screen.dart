@@ -49,7 +49,7 @@ class ScaleManuelAddScreen extends StatelessWidget {
                     LocaleProvider.current.measurement_saved,
                   );
                   Atom.to(
-                    PagePaths.scaleDetail,
+                    PagePaths.patientScaleDetail,
                     isReplacement: true,
                   );
                 },

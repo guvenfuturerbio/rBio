@@ -1,4 +1,5 @@
 import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -41,7 +42,7 @@ class BottomAreaAvoider extends StatefulWidget {
   /// The [ScrollPhysics] of the [SingleChildScrollView] which contains child
   final ScrollPhysics? physics;
 
-  BottomAreaAvoider(
+  const BottomAreaAvoider(
       {Key? key,
       required this.child,
       required this.areaToAvoid,
@@ -54,11 +55,12 @@ class BottomAreaAvoider extends StatefulWidget {
         assert(areaToAvoid >= 0, 'Cannot avoid a negative area'),
         super(key: key);
 
+  @override
   BottomAreaAvoiderState createState() => BottomAreaAvoiderState();
 }
 
 class BottomAreaAvoiderState extends State<BottomAreaAvoider> {
-  final _animationKey = new GlobalKey<ImplicitlyAnimatedWidgetState>();
+  final _animationKey = GlobalKey<ImplicitlyAnimatedWidgetState>();
   Function(AnimationStatus)? _animationListener;
   ScrollController? _scrollController;
   late double _previousAreaToAvoid;
@@ -81,7 +83,7 @@ class BottomAreaAvoiderState extends State<BottomAreaAvoider> {
     // Add a status listener to the animation after the initial build.
     // Wait a frame so that _animationKey.currentState is not null.
     if (_animationListener == null) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         _animationListener = _paddingAnimationStatusChanged;
         _animationKey.currentState?.animation
             .addStatusListener(_animationListener!);
@@ -100,7 +102,7 @@ class BottomAreaAvoiderState extends State<BottomAreaAvoider> {
     // embed the [child] in a [SingleChildScrollView] to make
     // it possible to scroll to the focused widget.
     if (widget.autoScroll) {
-      _scrollController = new ScrollController();
+      _scrollController = ScrollController();
       return _buildAnimatedContainer(
         LayoutBuilder(
           builder: (context, constraints) {
@@ -147,7 +149,7 @@ class BottomAreaAvoiderState extends State<BottomAreaAvoider> {
       return; // decreased-- do nothing. We only scroll when area to avoid is added (keyboard shown).
     }
     // Need to wait a frame to get the new size (todo: is this still needed? we dont use mediaquery anymore)
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) {
         return; // context is no longer valid
       }

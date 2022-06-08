@@ -7,31 +7,32 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../../../../core/core.dart';
 import '../scale_detail.dart';
 
-class ScaleDetailScreen extends StatelessWidget {
-  const ScaleDetailScreen({Key? key}) : super(key: key);
+class PatientScaleDetailScreen extends StatelessWidget {
+  const PatientScaleDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ScaleDetailCubit>(
-      create: (ctx) => ScaleDetailCubit()..fetchAll(),
-      child: const _ScaleDetailView(),
+    return BlocProvider<PatientScaleDetailCubit>(
+      create: (ctx) => PatientScaleDetailCubit()..fetchAll(),
+      child: const PatientScaleDetailView(),
     );
   }
 }
 
-class _ScaleDetailView extends StatefulWidget {
-  const _ScaleDetailView({Key? key}) : super(key: key);
+class PatientScaleDetailView extends StatefulWidget {
+  const PatientScaleDetailView({Key? key}) : super(key: key);
 
   @override
-  __ScaleDetailViewState createState() => __ScaleDetailViewState();
+  _PatientScaleDetailViewState createState() => _PatientScaleDetailViewState();
 }
 
-class __ScaleDetailViewState extends State<_ScaleDetailView> {
+class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
   final ValueNotifier<ScaleEntity?> _pointTapNotifier = ValueNotifier(null);
   late ZoomPanBehavior _zoomPanBehavior;
 
   @override
   void initState() {
+    super.initState();
     _zoomPanBehavior = ZoomPanBehavior(
       enableDoubleTapZooming: true,
       enablePanning: true,
@@ -40,8 +41,6 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
       zoomMode: ZoomMode.x,
       enableMouseWheelZooming: true,
     );
-
-    super.initState();
   }
 
   @override
@@ -68,7 +67,7 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
 
   // #region _buildBody
   Widget _buildBody() {
-    return BlocConsumer<ScaleDetailCubit, ScaleDetailState>(
+    return BlocConsumer<PatientScaleDetailCubit, ScaleDetailState>(
       listener: (context, state) {
         state.whenOrNull(
           success: (result) {
@@ -120,11 +119,11 @@ class __ScaleDetailViewState extends State<_ScaleDetailView> {
       mainAxisSize: MainAxisSize.max,
       children: [
         //
-        // RbioUserAndTreatmentTile(
-        //   onTap: () {
-        //     Atom.to(PagePaths.patientScaleTreatmentList);
-        //   },
-        // ),
+        RbioUserAndTreatmentTile(
+          onTap: () {
+            Atom.to(PagePaths.patientScaleTreatmentList);
+          },
+        ),
 
         //
         Expanded(
@@ -353,7 +352,7 @@ class ScaleCard extends StatelessWidget {
                           color: isSelected
                               ? getIt<IAppConfig>().theme.mainColor
                               : getIt<IAppConfig>().theme.grayColor,
-                          borderRadius:  BorderRadius.only(
+                          borderRadius: BorderRadius.only(
                             topLeft: R.sizes.radiusCircular,
                             bottomLeft: R.sizes.radiusCircular,
                           ),
@@ -437,7 +436,7 @@ class ScaleCard extends StatelessWidget {
           entity.dateTime,
         );
         if (isDeleted) {
-          context.read<ScaleDetailCubit>().deleteItem(entity);
+          context.read<PatientScaleDetailCubit>().deleteItem(entity);
         }
       } catch (e) {
         LoggerUtils.instance.e(e);

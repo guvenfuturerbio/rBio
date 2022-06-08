@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'reminder_detail_cubit.dart';
@@ -11,41 +12,7 @@ part of 'reminder_detail_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ReminderDetailStateTearOff {
-  const _$ReminderDetailStateTearOff();
-
-  ReminderDetailInitial initial() {
-    return const ReminderDetailInitial();
-  }
-
-  ReminderDetailLoadInProgress loadInProgress() {
-    return const ReminderDetailLoadInProgress();
-  }
-
-  ReminderDetailSuccess success(ReminderDetailResult result) {
-    return ReminderDetailSuccess(
-      result,
-    );
-  }
-
-  ReminderDetailEmpty empty() {
-    return const ReminderDetailEmpty();
-  }
-
-  ReminderDetailFailure failure() {
-    return const ReminderDetailFailure();
-  }
-
-  ReminderDetailOpenListScreen openListScreen() {
-    return const ReminderDetailOpenListScreen();
-  }
-}
-
-/// @nodoc
-const $ReminderDetailState = _$ReminderDetailStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ReminderDetailState {
@@ -133,22 +100,22 @@ class _$ReminderDetailStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $ReminderDetailInitialCopyWith<$Res> {
-  factory $ReminderDetailInitialCopyWith(ReminderDetailInitial value,
-          $Res Function(ReminderDetailInitial) then) =
-      _$ReminderDetailInitialCopyWithImpl<$Res>;
+abstract class _$$ReminderDetailInitialCopyWith<$Res> {
+  factory _$$ReminderDetailInitialCopyWith(_$ReminderDetailInitial value,
+          $Res Function(_$ReminderDetailInitial) then) =
+      __$$ReminderDetailInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ReminderDetailInitialCopyWithImpl<$Res>
+class __$$ReminderDetailInitialCopyWithImpl<$Res>
     extends _$ReminderDetailStateCopyWithImpl<$Res>
-    implements $ReminderDetailInitialCopyWith<$Res> {
-  _$ReminderDetailInitialCopyWithImpl(
-      ReminderDetailInitial _value, $Res Function(ReminderDetailInitial) _then)
-      : super(_value, (v) => _then(v as ReminderDetailInitial));
+    implements _$$ReminderDetailInitialCopyWith<$Res> {
+  __$$ReminderDetailInitialCopyWithImpl(_$ReminderDetailInitial _value,
+      $Res Function(_$ReminderDetailInitial) _then)
+      : super(_value, (v) => _then(v as _$ReminderDetailInitial));
 
   @override
-  ReminderDetailInitial get _value => super._value as ReminderDetailInitial;
+  _$ReminderDetailInitial get _value => super._value as _$ReminderDetailInitial;
 }
 
 /// @nodoc
@@ -164,7 +131,7 @@ class _$ReminderDetailInitial implements ReminderDetailInitial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ReminderDetailInitial);
+        (other.runtimeType == runtimeType && other is _$ReminderDetailInitial);
   }
 
   @override
@@ -264,25 +231,25 @@ abstract class ReminderDetailInitial implements ReminderDetailState {
 }
 
 /// @nodoc
-abstract class $ReminderDetailLoadInProgressCopyWith<$Res> {
-  factory $ReminderDetailLoadInProgressCopyWith(
-          ReminderDetailLoadInProgress value,
-          $Res Function(ReminderDetailLoadInProgress) then) =
-      _$ReminderDetailLoadInProgressCopyWithImpl<$Res>;
+abstract class _$$ReminderDetailLoadInProgressCopyWith<$Res> {
+  factory _$$ReminderDetailLoadInProgressCopyWith(
+          _$ReminderDetailLoadInProgress value,
+          $Res Function(_$ReminderDetailLoadInProgress) then) =
+      __$$ReminderDetailLoadInProgressCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ReminderDetailLoadInProgressCopyWithImpl<$Res>
+class __$$ReminderDetailLoadInProgressCopyWithImpl<$Res>
     extends _$ReminderDetailStateCopyWithImpl<$Res>
-    implements $ReminderDetailLoadInProgressCopyWith<$Res> {
-  _$ReminderDetailLoadInProgressCopyWithImpl(
-      ReminderDetailLoadInProgress _value,
-      $Res Function(ReminderDetailLoadInProgress) _then)
-      : super(_value, (v) => _then(v as ReminderDetailLoadInProgress));
+    implements _$$ReminderDetailLoadInProgressCopyWith<$Res> {
+  __$$ReminderDetailLoadInProgressCopyWithImpl(
+      _$ReminderDetailLoadInProgress _value,
+      $Res Function(_$ReminderDetailLoadInProgress) _then)
+      : super(_value, (v) => _then(v as _$ReminderDetailLoadInProgress));
 
   @override
-  ReminderDetailLoadInProgress get _value =>
-      super._value as ReminderDetailLoadInProgress;
+  _$ReminderDetailLoadInProgress get _value =>
+      super._value as _$ReminderDetailLoadInProgress;
 }
 
 /// @nodoc
@@ -299,7 +266,7 @@ class _$ReminderDetailLoadInProgress implements ReminderDetailLoadInProgress {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ReminderDetailLoadInProgress);
+            other is _$ReminderDetailLoadInProgress);
   }
 
   @override
@@ -399,31 +366,31 @@ abstract class ReminderDetailLoadInProgress implements ReminderDetailState {
 }
 
 /// @nodoc
-abstract class $ReminderDetailSuccessCopyWith<$Res> {
-  factory $ReminderDetailSuccessCopyWith(ReminderDetailSuccess value,
-          $Res Function(ReminderDetailSuccess) then) =
-      _$ReminderDetailSuccessCopyWithImpl<$Res>;
+abstract class _$$ReminderDetailSuccessCopyWith<$Res> {
+  factory _$$ReminderDetailSuccessCopyWith(_$ReminderDetailSuccess value,
+          $Res Function(_$ReminderDetailSuccess) then) =
+      __$$ReminderDetailSuccessCopyWithImpl<$Res>;
   $Res call({ReminderDetailResult result});
 
   $ReminderDetailResultCopyWith<$Res> get result;
 }
 
 /// @nodoc
-class _$ReminderDetailSuccessCopyWithImpl<$Res>
+class __$$ReminderDetailSuccessCopyWithImpl<$Res>
     extends _$ReminderDetailStateCopyWithImpl<$Res>
-    implements $ReminderDetailSuccessCopyWith<$Res> {
-  _$ReminderDetailSuccessCopyWithImpl(
-      ReminderDetailSuccess _value, $Res Function(ReminderDetailSuccess) _then)
-      : super(_value, (v) => _then(v as ReminderDetailSuccess));
+    implements _$$ReminderDetailSuccessCopyWith<$Res> {
+  __$$ReminderDetailSuccessCopyWithImpl(_$ReminderDetailSuccess _value,
+      $Res Function(_$ReminderDetailSuccess) _then)
+      : super(_value, (v) => _then(v as _$ReminderDetailSuccess));
 
   @override
-  ReminderDetailSuccess get _value => super._value as ReminderDetailSuccess;
+  _$ReminderDetailSuccess get _value => super._value as _$ReminderDetailSuccess;
 
   @override
   $Res call({
     Object? result = freezed,
   }) {
-    return _then(ReminderDetailSuccess(
+    return _then(_$ReminderDetailSuccess(
       result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
@@ -456,7 +423,7 @@ class _$ReminderDetailSuccess implements ReminderDetailSuccess {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ReminderDetailSuccess &&
+            other is _$ReminderDetailSuccess &&
             const DeepCollectionEquality().equals(other.result, result));
   }
 
@@ -466,8 +433,8 @@ class _$ReminderDetailSuccess implements ReminderDetailSuccess {
 
   @JsonKey(ignore: true)
   @override
-  $ReminderDetailSuccessCopyWith<ReminderDetailSuccess> get copyWith =>
-      _$ReminderDetailSuccessCopyWithImpl<ReminderDetailSuccess>(
+  _$$ReminderDetailSuccessCopyWith<_$ReminderDetailSuccess> get copyWith =>
+      __$$ReminderDetailSuccessCopyWithImpl<_$ReminderDetailSuccess>(
           this, _$identity);
 
   @override
@@ -560,32 +527,32 @@ class _$ReminderDetailSuccess implements ReminderDetailSuccess {
 }
 
 abstract class ReminderDetailSuccess implements ReminderDetailState {
-  const factory ReminderDetailSuccess(ReminderDetailResult result) =
+  const factory ReminderDetailSuccess(final ReminderDetailResult result) =
       _$ReminderDetailSuccess;
 
-  ReminderDetailResult get result;
+  ReminderDetailResult get result => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ReminderDetailSuccessCopyWith<ReminderDetailSuccess> get copyWith =>
+  _$$ReminderDetailSuccessCopyWith<_$ReminderDetailSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ReminderDetailEmptyCopyWith<$Res> {
-  factory $ReminderDetailEmptyCopyWith(
-          ReminderDetailEmpty value, $Res Function(ReminderDetailEmpty) then) =
-      _$ReminderDetailEmptyCopyWithImpl<$Res>;
+abstract class _$$ReminderDetailEmptyCopyWith<$Res> {
+  factory _$$ReminderDetailEmptyCopyWith(_$ReminderDetailEmpty value,
+          $Res Function(_$ReminderDetailEmpty) then) =
+      __$$ReminderDetailEmptyCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ReminderDetailEmptyCopyWithImpl<$Res>
+class __$$ReminderDetailEmptyCopyWithImpl<$Res>
     extends _$ReminderDetailStateCopyWithImpl<$Res>
-    implements $ReminderDetailEmptyCopyWith<$Res> {
-  _$ReminderDetailEmptyCopyWithImpl(
-      ReminderDetailEmpty _value, $Res Function(ReminderDetailEmpty) _then)
-      : super(_value, (v) => _then(v as ReminderDetailEmpty));
+    implements _$$ReminderDetailEmptyCopyWith<$Res> {
+  __$$ReminderDetailEmptyCopyWithImpl(
+      _$ReminderDetailEmpty _value, $Res Function(_$ReminderDetailEmpty) _then)
+      : super(_value, (v) => _then(v as _$ReminderDetailEmpty));
 
   @override
-  ReminderDetailEmpty get _value => super._value as ReminderDetailEmpty;
+  _$ReminderDetailEmpty get _value => super._value as _$ReminderDetailEmpty;
 }
 
 /// @nodoc
@@ -601,7 +568,7 @@ class _$ReminderDetailEmpty implements ReminderDetailEmpty {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ReminderDetailEmpty);
+        (other.runtimeType == runtimeType && other is _$ReminderDetailEmpty);
   }
 
   @override
@@ -701,22 +668,22 @@ abstract class ReminderDetailEmpty implements ReminderDetailState {
 }
 
 /// @nodoc
-abstract class $ReminderDetailFailureCopyWith<$Res> {
-  factory $ReminderDetailFailureCopyWith(ReminderDetailFailure value,
-          $Res Function(ReminderDetailFailure) then) =
-      _$ReminderDetailFailureCopyWithImpl<$Res>;
+abstract class _$$ReminderDetailFailureCopyWith<$Res> {
+  factory _$$ReminderDetailFailureCopyWith(_$ReminderDetailFailure value,
+          $Res Function(_$ReminderDetailFailure) then) =
+      __$$ReminderDetailFailureCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ReminderDetailFailureCopyWithImpl<$Res>
+class __$$ReminderDetailFailureCopyWithImpl<$Res>
     extends _$ReminderDetailStateCopyWithImpl<$Res>
-    implements $ReminderDetailFailureCopyWith<$Res> {
-  _$ReminderDetailFailureCopyWithImpl(
-      ReminderDetailFailure _value, $Res Function(ReminderDetailFailure) _then)
-      : super(_value, (v) => _then(v as ReminderDetailFailure));
+    implements _$$ReminderDetailFailureCopyWith<$Res> {
+  __$$ReminderDetailFailureCopyWithImpl(_$ReminderDetailFailure _value,
+      $Res Function(_$ReminderDetailFailure) _then)
+      : super(_value, (v) => _then(v as _$ReminderDetailFailure));
 
   @override
-  ReminderDetailFailure get _value => super._value as ReminderDetailFailure;
+  _$ReminderDetailFailure get _value => super._value as _$ReminderDetailFailure;
 }
 
 /// @nodoc
@@ -732,7 +699,7 @@ class _$ReminderDetailFailure implements ReminderDetailFailure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ReminderDetailFailure);
+        (other.runtimeType == runtimeType && other is _$ReminderDetailFailure);
   }
 
   @override
@@ -832,25 +799,25 @@ abstract class ReminderDetailFailure implements ReminderDetailState {
 }
 
 /// @nodoc
-abstract class $ReminderDetailOpenListScreenCopyWith<$Res> {
-  factory $ReminderDetailOpenListScreenCopyWith(
-          ReminderDetailOpenListScreen value,
-          $Res Function(ReminderDetailOpenListScreen) then) =
-      _$ReminderDetailOpenListScreenCopyWithImpl<$Res>;
+abstract class _$$ReminderDetailOpenListScreenCopyWith<$Res> {
+  factory _$$ReminderDetailOpenListScreenCopyWith(
+          _$ReminderDetailOpenListScreen value,
+          $Res Function(_$ReminderDetailOpenListScreen) then) =
+      __$$ReminderDetailOpenListScreenCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ReminderDetailOpenListScreenCopyWithImpl<$Res>
+class __$$ReminderDetailOpenListScreenCopyWithImpl<$Res>
     extends _$ReminderDetailStateCopyWithImpl<$Res>
-    implements $ReminderDetailOpenListScreenCopyWith<$Res> {
-  _$ReminderDetailOpenListScreenCopyWithImpl(
-      ReminderDetailOpenListScreen _value,
-      $Res Function(ReminderDetailOpenListScreen) _then)
-      : super(_value, (v) => _then(v as ReminderDetailOpenListScreen));
+    implements _$$ReminderDetailOpenListScreenCopyWith<$Res> {
+  __$$ReminderDetailOpenListScreenCopyWithImpl(
+      _$ReminderDetailOpenListScreen _value,
+      $Res Function(_$ReminderDetailOpenListScreen) _then)
+      : super(_value, (v) => _then(v as _$ReminderDetailOpenListScreen));
 
   @override
-  ReminderDetailOpenListScreen get _value =>
-      super._value as ReminderDetailOpenListScreen;
+  _$ReminderDetailOpenListScreen get _value =>
+      super._value as _$ReminderDetailOpenListScreen;
 }
 
 /// @nodoc
@@ -867,7 +834,7 @@ class _$ReminderDetailOpenListScreen implements ReminderDetailOpenListScreen {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ReminderDetailOpenListScreen);
+            other is _$ReminderDetailOpenListScreen);
   }
 
   @override
@@ -967,33 +934,6 @@ abstract class ReminderDetailOpenListScreen implements ReminderDetailState {
 }
 
 /// @nodoc
-class _$ReminderDetailResultTearOff {
-  const _$ReminderDetailResultTearOff();
-
-  ReminderDetailHba1C hba1C(Hba1CReminderModel model) {
-    return ReminderDetailHba1C(
-      model,
-    );
-  }
-
-  ReminderDetailBloodGlucose bloodGlucose(
-      List<BloodGlucoseReminderModel> list) {
-    return ReminderDetailBloodGlucose(
-      list,
-    );
-  }
-
-  ReminderDetailMedication medication(List<MedicationReminderModel> list) {
-    return ReminderDetailMedication(
-      list,
-    );
-  }
-}
-
-/// @nodoc
-const $ReminderDetailResult = _$ReminderDetailResultTearOff();
-
-/// @nodoc
 mixin _$ReminderDetailResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -1060,29 +1000,29 @@ class _$ReminderDetailResultCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $ReminderDetailHba1CCopyWith<$Res> {
-  factory $ReminderDetailHba1CCopyWith(
-          ReminderDetailHba1C value, $Res Function(ReminderDetailHba1C) then) =
-      _$ReminderDetailHba1CCopyWithImpl<$Res>;
+abstract class _$$ReminderDetailHba1CCopyWith<$Res> {
+  factory _$$ReminderDetailHba1CCopyWith(_$ReminderDetailHba1C value,
+          $Res Function(_$ReminderDetailHba1C) then) =
+      __$$ReminderDetailHba1CCopyWithImpl<$Res>;
   $Res call({Hba1CReminderModel model});
 }
 
 /// @nodoc
-class _$ReminderDetailHba1CCopyWithImpl<$Res>
+class __$$ReminderDetailHba1CCopyWithImpl<$Res>
     extends _$ReminderDetailResultCopyWithImpl<$Res>
-    implements $ReminderDetailHba1CCopyWith<$Res> {
-  _$ReminderDetailHba1CCopyWithImpl(
-      ReminderDetailHba1C _value, $Res Function(ReminderDetailHba1C) _then)
-      : super(_value, (v) => _then(v as ReminderDetailHba1C));
+    implements _$$ReminderDetailHba1CCopyWith<$Res> {
+  __$$ReminderDetailHba1CCopyWithImpl(
+      _$ReminderDetailHba1C _value, $Res Function(_$ReminderDetailHba1C) _then)
+      : super(_value, (v) => _then(v as _$ReminderDetailHba1C));
 
   @override
-  ReminderDetailHba1C get _value => super._value as ReminderDetailHba1C;
+  _$ReminderDetailHba1C get _value => super._value as _$ReminderDetailHba1C;
 
   @override
   $Res call({
     Object? model = freezed,
   }) {
-    return _then(ReminderDetailHba1C(
+    return _then(_$ReminderDetailHba1C(
       model == freezed
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
@@ -1108,7 +1048,7 @@ class _$ReminderDetailHba1C implements ReminderDetailHba1C {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ReminderDetailHba1C &&
+            other is _$ReminderDetailHba1C &&
             const DeepCollectionEquality().equals(other.model, model));
   }
 
@@ -1118,8 +1058,9 @@ class _$ReminderDetailHba1C implements ReminderDetailHba1C {
 
   @JsonKey(ignore: true)
   @override
-  $ReminderDetailHba1CCopyWith<ReminderDetailHba1C> get copyWith =>
-      _$ReminderDetailHba1CCopyWithImpl<ReminderDetailHba1C>(this, _$identity);
+  _$$ReminderDetailHba1CCopyWith<_$ReminderDetailHba1C> get copyWith =>
+      __$$ReminderDetailHba1CCopyWithImpl<_$ReminderDetailHba1C>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1192,42 +1133,44 @@ class _$ReminderDetailHba1C implements ReminderDetailHba1C {
 }
 
 abstract class ReminderDetailHba1C implements ReminderDetailResult {
-  const factory ReminderDetailHba1C(Hba1CReminderModel model) =
+  const factory ReminderDetailHba1C(final Hba1CReminderModel model) =
       _$ReminderDetailHba1C;
 
-  Hba1CReminderModel get model;
+  Hba1CReminderModel get model => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ReminderDetailHba1CCopyWith<ReminderDetailHba1C> get copyWith =>
+  _$$ReminderDetailHba1CCopyWith<_$ReminderDetailHba1C> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ReminderDetailBloodGlucoseCopyWith<$Res> {
-  factory $ReminderDetailBloodGlucoseCopyWith(ReminderDetailBloodGlucose value,
-          $Res Function(ReminderDetailBloodGlucose) then) =
-      _$ReminderDetailBloodGlucoseCopyWithImpl<$Res>;
+abstract class _$$ReminderDetailBloodGlucoseCopyWith<$Res> {
+  factory _$$ReminderDetailBloodGlucoseCopyWith(
+          _$ReminderDetailBloodGlucose value,
+          $Res Function(_$ReminderDetailBloodGlucose) then) =
+      __$$ReminderDetailBloodGlucoseCopyWithImpl<$Res>;
   $Res call({List<BloodGlucoseReminderModel> list});
 }
 
 /// @nodoc
-class _$ReminderDetailBloodGlucoseCopyWithImpl<$Res>
+class __$$ReminderDetailBloodGlucoseCopyWithImpl<$Res>
     extends _$ReminderDetailResultCopyWithImpl<$Res>
-    implements $ReminderDetailBloodGlucoseCopyWith<$Res> {
-  _$ReminderDetailBloodGlucoseCopyWithImpl(ReminderDetailBloodGlucose _value,
-      $Res Function(ReminderDetailBloodGlucose) _then)
-      : super(_value, (v) => _then(v as ReminderDetailBloodGlucose));
+    implements _$$ReminderDetailBloodGlucoseCopyWith<$Res> {
+  __$$ReminderDetailBloodGlucoseCopyWithImpl(
+      _$ReminderDetailBloodGlucose _value,
+      $Res Function(_$ReminderDetailBloodGlucose) _then)
+      : super(_value, (v) => _then(v as _$ReminderDetailBloodGlucose));
 
   @override
-  ReminderDetailBloodGlucose get _value =>
-      super._value as ReminderDetailBloodGlucose;
+  _$ReminderDetailBloodGlucose get _value =>
+      super._value as _$ReminderDetailBloodGlucose;
 
   @override
   $Res call({
     Object? list = freezed,
   }) {
-    return _then(ReminderDetailBloodGlucose(
+    return _then(_$ReminderDetailBloodGlucose(
       list == freezed
-          ? _value.list
+          ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
               as List<BloodGlucoseReminderModel>,
     ));
@@ -1237,10 +1180,15 @@ class _$ReminderDetailBloodGlucoseCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ReminderDetailBloodGlucose implements ReminderDetailBloodGlucose {
-  const _$ReminderDetailBloodGlucose(this.list);
+  const _$ReminderDetailBloodGlucose(final List<BloodGlucoseReminderModel> list)
+      : _list = list;
 
+  final List<BloodGlucoseReminderModel> _list;
   @override
-  final List<BloodGlucoseReminderModel> list;
+  List<BloodGlucoseReminderModel> get list {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_list);
+  }
 
   @override
   String toString() {
@@ -1251,20 +1199,19 @@ class _$ReminderDetailBloodGlucose implements ReminderDetailBloodGlucose {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ReminderDetailBloodGlucose &&
-            const DeepCollectionEquality().equals(other.list, list));
+            other is _$ReminderDetailBloodGlucose &&
+            const DeepCollectionEquality().equals(other._list, _list));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(list));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_list));
 
   @JsonKey(ignore: true)
   @override
-  $ReminderDetailBloodGlucoseCopyWith<ReminderDetailBloodGlucose>
-      get copyWith =>
-          _$ReminderDetailBloodGlucoseCopyWithImpl<ReminderDetailBloodGlucose>(
-              this, _$identity);
+  _$$ReminderDetailBloodGlucoseCopyWith<_$ReminderDetailBloodGlucose>
+      get copyWith => __$$ReminderDetailBloodGlucoseCopyWithImpl<
+          _$ReminderDetailBloodGlucose>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1338,41 +1285,43 @@ class _$ReminderDetailBloodGlucose implements ReminderDetailBloodGlucose {
 
 abstract class ReminderDetailBloodGlucose implements ReminderDetailResult {
   const factory ReminderDetailBloodGlucose(
-      List<BloodGlucoseReminderModel> list) = _$ReminderDetailBloodGlucose;
+          final List<BloodGlucoseReminderModel> list) =
+      _$ReminderDetailBloodGlucose;
 
-  List<BloodGlucoseReminderModel> get list;
+  List<BloodGlucoseReminderModel> get list =>
+      throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ReminderDetailBloodGlucoseCopyWith<ReminderDetailBloodGlucose>
+  _$$ReminderDetailBloodGlucoseCopyWith<_$ReminderDetailBloodGlucose>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ReminderDetailMedicationCopyWith<$Res> {
-  factory $ReminderDetailMedicationCopyWith(ReminderDetailMedication value,
-          $Res Function(ReminderDetailMedication) then) =
-      _$ReminderDetailMedicationCopyWithImpl<$Res>;
+abstract class _$$ReminderDetailMedicationCopyWith<$Res> {
+  factory _$$ReminderDetailMedicationCopyWith(_$ReminderDetailMedication value,
+          $Res Function(_$ReminderDetailMedication) then) =
+      __$$ReminderDetailMedicationCopyWithImpl<$Res>;
   $Res call({List<MedicationReminderModel> list});
 }
 
 /// @nodoc
-class _$ReminderDetailMedicationCopyWithImpl<$Res>
+class __$$ReminderDetailMedicationCopyWithImpl<$Res>
     extends _$ReminderDetailResultCopyWithImpl<$Res>
-    implements $ReminderDetailMedicationCopyWith<$Res> {
-  _$ReminderDetailMedicationCopyWithImpl(ReminderDetailMedication _value,
-      $Res Function(ReminderDetailMedication) _then)
-      : super(_value, (v) => _then(v as ReminderDetailMedication));
+    implements _$$ReminderDetailMedicationCopyWith<$Res> {
+  __$$ReminderDetailMedicationCopyWithImpl(_$ReminderDetailMedication _value,
+      $Res Function(_$ReminderDetailMedication) _then)
+      : super(_value, (v) => _then(v as _$ReminderDetailMedication));
 
   @override
-  ReminderDetailMedication get _value =>
-      super._value as ReminderDetailMedication;
+  _$ReminderDetailMedication get _value =>
+      super._value as _$ReminderDetailMedication;
 
   @override
   $Res call({
     Object? list = freezed,
   }) {
-    return _then(ReminderDetailMedication(
+    return _then(_$ReminderDetailMedication(
       list == freezed
-          ? _value.list
+          ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
               as List<MedicationReminderModel>,
     ));
@@ -1382,10 +1331,15 @@ class _$ReminderDetailMedicationCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ReminderDetailMedication implements ReminderDetailMedication {
-  const _$ReminderDetailMedication(this.list);
+  const _$ReminderDetailMedication(final List<MedicationReminderModel> list)
+      : _list = list;
 
+  final List<MedicationReminderModel> _list;
   @override
-  final List<MedicationReminderModel> list;
+  List<MedicationReminderModel> get list {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_list);
+  }
 
   @override
   String toString() {
@@ -1396,19 +1350,20 @@ class _$ReminderDetailMedication implements ReminderDetailMedication {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ReminderDetailMedication &&
-            const DeepCollectionEquality().equals(other.list, list));
+            other is _$ReminderDetailMedication &&
+            const DeepCollectionEquality().equals(other._list, _list));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(list));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_list));
 
   @JsonKey(ignore: true)
   @override
-  $ReminderDetailMedicationCopyWith<ReminderDetailMedication> get copyWith =>
-      _$ReminderDetailMedicationCopyWithImpl<ReminderDetailMedication>(
-          this, _$identity);
+  _$$ReminderDetailMedicationCopyWith<_$ReminderDetailMedication>
+      get copyWith =>
+          __$$ReminderDetailMedicationCopyWithImpl<_$ReminderDetailMedication>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1481,11 +1436,11 @@ class _$ReminderDetailMedication implements ReminderDetailMedication {
 }
 
 abstract class ReminderDetailMedication implements ReminderDetailResult {
-  const factory ReminderDetailMedication(List<MedicationReminderModel> list) =
-      _$ReminderDetailMedication;
+  const factory ReminderDetailMedication(
+      final List<MedicationReminderModel> list) = _$ReminderDetailMedication;
 
-  List<MedicationReminderModel> get list;
+  List<MedicationReminderModel> get list => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ReminderDetailMedicationCopyWith<ReminderDetailMedication> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ReminderDetailMedicationCopyWith<_$ReminderDetailMedication>
+      get copyWith => throw _privateConstructorUsedError;
 }

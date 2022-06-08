@@ -69,44 +69,55 @@ class _DoctorScaleDietAddEditViewState
 
   late TextEditingController _titleEditingController;
   late TextEditingController _breakfastEditingController;
-  late TextEditingController _refreshmentEditingController;
+  late TextEditingController _breakfastRefreshmentEditingController;
   late TextEditingController _lunchEditingController;
+  late TextEditingController _lunchRefreshmentEditingController;
   late TextEditingController _dinnerEditingController;
+  late TextEditingController _dinnerRefreshmentEditingController;
 
   late FocusNode _titleFocusNode;
   late FocusNode _breakfastFocusNode;
-  late FocusNode _refreshmentFocusNode;
+  late FocusNode _breakfastRefreshmentFocusNode;
   late FocusNode _lunchFocusNode;
+  late FocusNode _lunchRefreshmentFocusNode;
   late FocusNode _dinnerFocusNode;
+  late FocusNode _dinnerRefreshmentFocusNode;
 
   @override
   void initState() {
     super.initState();
     _titleEditingController = TextEditingController();
     _breakfastEditingController = TextEditingController();
-    _refreshmentEditingController = TextEditingController();
+    _breakfastRefreshmentEditingController = TextEditingController();
     _lunchEditingController = TextEditingController();
+    _lunchRefreshmentEditingController = TextEditingController();
     _dinnerEditingController = TextEditingController();
+    _dinnerRefreshmentEditingController = TextEditingController();
     _titleFocusNode = FocusNode();
     _breakfastFocusNode = FocusNode();
-    _refreshmentFocusNode = FocusNode();
+    _breakfastRefreshmentFocusNode = FocusNode();
     _lunchFocusNode = FocusNode();
+    _lunchRefreshmentFocusNode = FocusNode();
     _dinnerFocusNode = FocusNode();
+    _dinnerRefreshmentFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
     _titleEditingController.dispose();
     _breakfastEditingController.dispose();
-    _refreshmentEditingController.dispose();
+    _breakfastRefreshmentEditingController.dispose();
     _lunchEditingController.dispose();
+    _lunchRefreshmentEditingController.dispose();
     _dinnerEditingController.dispose();
+    _dinnerRefreshmentEditingController.dispose();
     _titleFocusNode.dispose();
     _breakfastFocusNode.dispose();
-    _refreshmentFocusNode.dispose();
+    _breakfastRefreshmentFocusNode.dispose();
     _lunchFocusNode.dispose();
+    _lunchRefreshmentFocusNode.dispose();
     _dinnerFocusNode.dispose();
-
+    _dinnerRefreshmentFocusNode.dispose();
     super.dispose();
   }
 
@@ -123,10 +134,14 @@ class _DoctorScaleDietAddEditViewState
               _titleEditingController.text = result.response!.dietTitle ?? '';
               _breakfastEditingController.text =
                   result.response!.dietBreakfast ?? '';
-              _refreshmentEditingController.text =
-                  result.response!.dietRefreshment ?? '';
+              _breakfastRefreshmentEditingController.text =
+                  result.response!.dietRefreshmentBreakfast ?? '';
               _lunchEditingController.text = result.response!.dietLunch ?? '';
+              _lunchRefreshmentEditingController.text =
+                  result.response!.dietRefreshmentLunch ?? '';
               _dinnerEditingController.text = result.response!.dietDinner ?? '';
+              _dinnerRefreshmentEditingController.text =
+                  result.response!.dietRefreshmentDinner ?? '';
             }
 
             if (result.status.xIsFailure) {
@@ -203,9 +218,11 @@ class _DoctorScaleDietAddEditViewState
                 focusList: [
                   _titleFocusNode,
                   _breakfastFocusNode,
-                  _refreshmentFocusNode,
+                  _breakfastRefreshmentFocusNode,
                   _lunchFocusNode,
+                  _lunchRefreshmentFocusNode,
                   _dinnerFocusNode,
+                  _dinnerRefreshmentFocusNode,
                 ],
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -266,8 +283,8 @@ class _DoctorScaleDietAddEditViewState
                     ),
                     _buildTextFormField(
                       result,
-                      _refreshmentFocusNode,
-                      _refreshmentEditingController,
+                      _breakfastRefreshmentFocusNode,
+                      _breakfastRefreshmentEditingController,
                       R.image.clockRefreshment,
                     ),
 
@@ -292,12 +309,42 @@ class _DoctorScaleDietAddEditViewState
                     //
                     _buildTitle(
                       context,
+                      LocaleProvider.of(context).refreshment,
+                    ),
+                    _buildTextFormField(
+                      result,
+                      _lunchRefreshmentFocusNode,
+                      _lunchRefreshmentEditingController,
+                      R.image.clockRefreshment,
+                    ),
+
+                    //
+                    R.sizes.hSizer8,
+
+                    //
+                    _buildTitle(
+                      context,
                       LocaleProvider.of(context).dinner,
                     ),
                     _buildTextFormField(
                       result,
                       _dinnerFocusNode,
                       _dinnerEditingController,
+                      R.image.clockDinner,
+                    ),
+
+                    //
+                    R.sizes.hSizer8,
+
+                    //
+                    _buildTitle(
+                      context,
+                      LocaleProvider.of(context).dinner,
+                    ),
+                    _buildTextFormField(
+                      result,
+                      _dinnerRefreshmentFocusNode,
+                      _dinnerRefreshmentEditingController,
                       R.image.clockDinner,
                     ),
                   ],
@@ -510,9 +557,12 @@ class _DoctorScaleDietAddEditViewState
       context.read<DoctorScaleDietAddEditCubit>().saveDietList(
             title: _titleEditingController.text.trim(),
             breakfast: _breakfastEditingController.text.trim(),
-            refreshment: _refreshmentEditingController.text.trim(),
+            breakfastRefreshment:
+                _breakfastRefreshmentEditingController.text.trim(),
             lunch: _lunchEditingController.text.trim(),
+            lunchRefreshment: _lunchRefreshmentEditingController.text.trim(),
             dinner: _dinnerEditingController.text.trim(),
+            dinnerRefreshment: _dinnerRefreshmentEditingController.text.trim(),
           );
     }
   }

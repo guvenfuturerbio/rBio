@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'scale_treatment_detail_response.dart';
@@ -11,39 +12,12 @@ part of 'scale_treatment_detail_response.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ScaleTreatmentDetailResponse _$ScaleTreatmentDetailResponseFromJson(
     Map<String, dynamic> json) {
   return _ScaleTreatmentDetailResponse.fromJson(json);
 }
-
-/// @nodoc
-class _$ScaleTreatmentDetailResponseTearOff {
-  const _$ScaleTreatmentDetailResponseTearOff();
-
-  _ScaleTreatmentDetailResponse call(
-      {@JsonKey(name: 'treatmentNoteTitle') String? treatmentNoteTitle,
-      @JsonKey(name: 'treatmentNoteText') String? treatmentNoteText,
-      @JsonKey(name: 'treatmentNoteCreateDate') String? treatmentNoteCreateDate,
-      @JsonKey(name: 'createdByName') String? createdByName,
-      @JsonKey(name: 'id') int? id}) {
-    return _ScaleTreatmentDetailResponse(
-      treatmentNoteTitle: treatmentNoteTitle,
-      treatmentNoteText: treatmentNoteText,
-      treatmentNoteCreateDate: treatmentNoteCreateDate,
-      createdByName: createdByName,
-      id: id,
-    );
-  }
-
-  ScaleTreatmentDetailResponse fromJson(Map<String, Object?> json) {
-    return ScaleTreatmentDetailResponse.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ScaleTreatmentDetailResponse = _$ScaleTreatmentDetailResponseTearOff();
 
 /// @nodoc
 mixin _$ScaleTreatmentDetailResponse {
@@ -121,12 +95,12 @@ class _$ScaleTreatmentDetailResponseCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ScaleTreatmentDetailResponseCopyWith<$Res>
+abstract class _$$_ScaleTreatmentDetailResponseCopyWith<$Res>
     implements $ScaleTreatmentDetailResponseCopyWith<$Res> {
-  factory _$ScaleTreatmentDetailResponseCopyWith(
-          _ScaleTreatmentDetailResponse value,
-          $Res Function(_ScaleTreatmentDetailResponse) then) =
-      __$ScaleTreatmentDetailResponseCopyWithImpl<$Res>;
+  factory _$$_ScaleTreatmentDetailResponseCopyWith(
+          _$_ScaleTreatmentDetailResponse value,
+          $Res Function(_$_ScaleTreatmentDetailResponse) then) =
+      __$$_ScaleTreatmentDetailResponseCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'treatmentNoteTitle') String? treatmentNoteTitle,
@@ -137,17 +111,17 @@ abstract class _$ScaleTreatmentDetailResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ScaleTreatmentDetailResponseCopyWithImpl<$Res>
+class __$$_ScaleTreatmentDetailResponseCopyWithImpl<$Res>
     extends _$ScaleTreatmentDetailResponseCopyWithImpl<$Res>
-    implements _$ScaleTreatmentDetailResponseCopyWith<$Res> {
-  __$ScaleTreatmentDetailResponseCopyWithImpl(
-      _ScaleTreatmentDetailResponse _value,
-      $Res Function(_ScaleTreatmentDetailResponse) _then)
-      : super(_value, (v) => _then(v as _ScaleTreatmentDetailResponse));
+    implements _$$_ScaleTreatmentDetailResponseCopyWith<$Res> {
+  __$$_ScaleTreatmentDetailResponseCopyWithImpl(
+      _$_ScaleTreatmentDetailResponse _value,
+      $Res Function(_$_ScaleTreatmentDetailResponse) _then)
+      : super(_value, (v) => _then(v as _$_ScaleTreatmentDetailResponse));
 
   @override
-  _ScaleTreatmentDetailResponse get _value =>
-      super._value as _ScaleTreatmentDetailResponse;
+  _$_ScaleTreatmentDetailResponse get _value =>
+      super._value as _$_ScaleTreatmentDetailResponse;
 
   @override
   $Res call({
@@ -157,7 +131,7 @@ class __$ScaleTreatmentDetailResponseCopyWithImpl<$Res>
     Object? createdByName = freezed,
     Object? id = freezed,
   }) {
-    return _then(_ScaleTreatmentDetailResponse(
+    return _then(_$_ScaleTreatmentDetailResponse(
       treatmentNoteTitle: treatmentNoteTitle == freezed
           ? _value.treatmentNoteTitle
           : treatmentNoteTitle // ignore: cast_nullable_to_non_nullable
@@ -221,7 +195,7 @@ class _$_ScaleTreatmentDetailResponse extends _ScaleTreatmentDetailResponse {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ScaleTreatmentDetailResponse &&
+            other is _$_ScaleTreatmentDetailResponse &&
             const DeepCollectionEquality()
                 .equals(other.treatmentNoteTitle, treatmentNoteTitle) &&
             const DeepCollectionEquality()
@@ -233,6 +207,7 @@ class _$_ScaleTreatmentDetailResponse extends _ScaleTreatmentDetailResponse {
             const DeepCollectionEquality().equals(other.id, id));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -244,9 +219,9 @@ class _$_ScaleTreatmentDetailResponse extends _ScaleTreatmentDetailResponse {
 
   @JsonKey(ignore: true)
   @override
-  _$ScaleTreatmentDetailResponseCopyWith<_ScaleTreatmentDetailResponse>
-      get copyWith => __$ScaleTreatmentDetailResponseCopyWithImpl<
-          _ScaleTreatmentDetailResponse>(this, _$identity);
+  _$$_ScaleTreatmentDetailResponseCopyWith<_$_ScaleTreatmentDetailResponse>
+      get copyWith => __$$_ScaleTreatmentDetailResponseCopyWithImpl<
+          _$_ScaleTreatmentDetailResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -257,11 +232,16 @@ class _$_ScaleTreatmentDetailResponse extends _ScaleTreatmentDetailResponse {
 abstract class _ScaleTreatmentDetailResponse
     extends ScaleTreatmentDetailResponse {
   const factory _ScaleTreatmentDetailResponse(
-      {@JsonKey(name: 'treatmentNoteTitle') String? treatmentNoteTitle,
-      @JsonKey(name: 'treatmentNoteText') String? treatmentNoteText,
-      @JsonKey(name: 'treatmentNoteCreateDate') String? treatmentNoteCreateDate,
-      @JsonKey(name: 'createdByName') String? createdByName,
-      @JsonKey(name: 'id') int? id}) = _$_ScaleTreatmentDetailResponse;
+      {@JsonKey(name: 'treatmentNoteTitle')
+          final String? treatmentNoteTitle,
+      @JsonKey(name: 'treatmentNoteText')
+          final String? treatmentNoteText,
+      @JsonKey(name: 'treatmentNoteCreateDate')
+          final String? treatmentNoteCreateDate,
+      @JsonKey(name: 'createdByName')
+          final String? createdByName,
+      @JsonKey(name: 'id')
+          final int? id}) = _$_ScaleTreatmentDetailResponse;
   const _ScaleTreatmentDetailResponse._() : super._();
 
   factory _ScaleTreatmentDetailResponse.fromJson(Map<String, dynamic> json) =
@@ -269,21 +249,21 @@ abstract class _ScaleTreatmentDetailResponse
 
   @override
   @JsonKey(name: 'treatmentNoteTitle')
-  String? get treatmentNoteTitle;
+  String? get treatmentNoteTitle => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'treatmentNoteText')
-  String? get treatmentNoteText;
+  String? get treatmentNoteText => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'treatmentNoteCreateDate')
-  String? get treatmentNoteCreateDate;
+  String? get treatmentNoteCreateDate => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'createdByName')
-  String? get createdByName;
+  String? get createdByName => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'id')
-  int? get id;
+  int? get id => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ScaleTreatmentDetailResponseCopyWith<_ScaleTreatmentDetailResponse>
+  _$$_ScaleTreatmentDetailResponseCopyWith<_$_ScaleTreatmentDetailResponse>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -237,7 +237,7 @@ class MeasurementTrackingVm with ChangeNotifier {
 
       final heightCheck = Utils.instance.checkUserHeight();
       if (heightCheck) {
-        Atom.to(PagePaths.scaleDetail);
+        Atom.to(PagePaths.patientScaleDetail);
       }
     } else if (key == const Key('Pressure')) {
       getIt<IAppConfig>()

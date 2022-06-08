@@ -9,7 +9,7 @@ class ChartFilterComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<ScaleDetailCubit>().state;
+    final state = context.watch<PatientScaleDetailCubit>().state;
 
     return state.whenOrNull(
           success: (result) {
@@ -87,7 +87,7 @@ class ChartFilterComponent extends StatelessWidget {
   ) {
     return GestureDetector(
       onTap: () {
-        context.read<ScaleDetailCubit>().changeFilterType(type);
+        context.read<PatientScaleDetailCubit>().changeFilterType(type);
       },
       child: Container(
         color: Colors.transparent,
