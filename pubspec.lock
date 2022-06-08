@@ -1108,13 +1108,11 @@ packages:
     source: path
     version: "3.4.5"
   keyboard_avoider:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
-      path: "."
-      ref: "fix/mounted-bug"
-      resolved-ref: "23883dd73a5afe176e9783e3dada0e08badab64f"
-      url: "https://github.com/ryanheise/keyboard_avoider.git"
-    source: git
+      path: "packages/keyboard_avoider-fix-mounted-bug"
+      relative: true
+    source: path
     version: "0.1.2-nullsafety.0"
   linkify:
     dependency: transitive

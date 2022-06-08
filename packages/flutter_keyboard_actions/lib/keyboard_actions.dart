@@ -112,7 +112,7 @@ class KeyboardActionstate extends State<KeyboardActions>
   KeyboardActionsConfig? config;
 
   /// private state
-  Map<int, KeyboardActionsItem> _map = Map();
+  Map<int, KeyboardActionsItem> _map = {};
   KeyboardActionsItem? _currentAction;
   int? _currentIndex = 0;
   OverlayEntry? _overlayEntry;
@@ -170,24 +170,24 @@ class KeyboardActionstate extends State<KeyboardActions>
   }
 
   void _clearAllFocusNode() {
-    _map = Map();
+    _map = {};
   }
 
   void _clearFocus() {
     _currentAction?.focusNode.unfocus();
   }
 
-  Future<Null> _focusNodeListener() async {
+  Future<void> _focusNodeListener() async {
     bool hasFocusFound = false;
-    _map.keys.forEach((key) {
+    for (var key in _map.keys) {
       final currentAction = _map[key]!;
       if (currentAction.focusNode.hasFocus) {
         hasFocusFound = true;
         _currentAction = currentAction;
         _currentIndex = key;
-        return;
+        continue;
       }
-    });
+    }
     _focusChanged(hasFocusFound);
   }
 
@@ -196,7 +196,7 @@ class KeyboardActionstate extends State<KeyboardActions>
     _currentAction = action;
     _currentIndex = nextIndex;
     //remove focus for unselected fields
-    _map.keys.forEach((key) {
+    for (var key in _map.keys) {
       final currentAction = _map[key]!;
       if (currentAction == _currentAction &&
           currentAction.footerBuilder != null) {
@@ -205,7 +205,7 @@ class KeyboardActionstate extends State<KeyboardActions>
       if (currentAction != _currentAction) {
         currentAction.focusNode.unfocus();
       }
-    });
+    }
     //if it is a custom keyboard then wait until the focus was dismissed from the others
     if (_currentAction!.footerBuilder != null) {
       await Future.delayed(
@@ -262,7 +262,7 @@ class KeyboardActionstate extends State<KeyboardActions>
         _overlayEntry!.markNeedsBuild();
       }
       if (_currentAction != null && _currentAction!.footerBuilder != null) {
-        WidgetsBinding.instance!.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           _updateOffset();
         });
       }
@@ -272,7 +272,7 @@ class KeyboardActionstate extends State<KeyboardActions>
   @override
   void didChangeMetrics() {
     if (PlatformCheck.isAndroid) {
-      final value = WidgetsBinding.instance!.window.viewInsets.bottom;
+      final value = WidgetsBinding.instance.window.viewInsets.bottom;
       if (value > 0) {
         _onKeyboardChanged(true);
         isKeyboardOpen = true;
@@ -282,19 +282,21 @@ class KeyboardActionstate extends State<KeyboardActions>
       }
     }
     // Need to wait a frame to get the new size
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _updateOffset();
     });
   }
 
   void _startListeningFocus() {
-    _map.values
-        .forEach((action) => action.focusNode.addListener(_focusNodeListener));
+    for (var action in _map.values) {
+      action.focusNode.addListener(_focusNodeListener);
+    }
   }
 
   void _dismissListeningFocus() {
-    _map.values.forEach(
-        (action) => action.focusNode.removeListener(_focusNodeListener));
+    for (var action in _map.values) {
+      action.focusNode.removeListener(_focusNodeListener);
+    }
   }
 
   bool _inserted = false;
@@ -450,16 +452,16 @@ class KeyboardActionstate extends State<KeyboardActions>
   void dispose() {
     clearConfig();
     _removeOverlay(fromDispose: true);
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     if (widget.enable) {
       setConfig(widget.config);
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         _onLayout();
         _updateOffset();
       });
@@ -501,7 +503,7 @@ class KeyboardActionstate extends State<KeyboardActions>
                 children: [
                   if (config!.nextFocus && displayArrows) ...[
                     IconButton(
-                      icon: Icon(Icons.keyboard_arrow_up),
+                      icon: const Icon(Icons.keyboard_arrow_up),
                       tooltip: 'Previous',
                       iconSize: IconTheme.of(context).size!,
                       color: IconTheme.of(context).color,
@@ -509,7 +511,7 @@ class KeyboardActionstate extends State<KeyboardActions>
                       onPressed: _previousIndex != null ? _onTapUp : null,
                     ),
                     IconButton(
-                      icon: Icon(Icons.keyboard_arrow_down),
+                      icon: const Icon(Icons.keyboard_arrow_down),
                       tooltip: 'Next',
                       iconSize: IconTheme.of(context).size!,
                       color: IconTheme.of(context).color,
@@ -532,9 +534,9 @@ class KeyboardActionstate extends State<KeyboardActions>
                           _clearFocus();
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 12.0),
-                          child: Text(
+                          child: const Text(
                             "Done",
                             style: TextStyle(
                               fontSize: 16.0,
