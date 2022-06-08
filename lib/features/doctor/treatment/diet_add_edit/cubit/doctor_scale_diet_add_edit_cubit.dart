@@ -60,9 +60,11 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
   FutureOr<void> saveDietList({
     required String title,
     required String breakfast,
-    required String refreshment,
+    required String breakfastRefreshment,
     required String lunch,
+    required String lunchRefreshment,
     required String dinner,
+    required String dinnerRefreshment,
   }) async {
     final currentState = state;
     await currentState.whenOrNull(
@@ -74,9 +76,11 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
             ScaleDietListAddRequest(
               title: title,
               breakfast: breakfast,
-              refreshment: refreshment,
+              refreshmentBreakfast: breakfastRefreshment,
               lunch: lunch,
+              refreshmentLunch: lunchRefreshment,
               dinner: dinner,
+              refreshmentDinner: dinnerRefreshment,
             ),
           );
           emit(const DoctorScaleDietAddEditState.openListScreen());

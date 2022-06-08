@@ -13,9 +13,11 @@ _$_ScaleTreatmentDietDetailResponse
           dietCreateDate: json['dietCreateDate'] as String?,
           createdByName: json['createdByName'] as String?,
           dietBreakfast: json['dietBreakfast'] as String?,
-          dietRefreshment: json['dietRefreshment'] as String?,
+          dietRefreshmentBreakfast: json['dietRefreshmentBreakfast'] as String?,
           dietLunch: json['dietLunch'] as String?,
+          dietRefreshmentLunch: json['dietRefreshmentLunch'] as String?,
           dietDinner: json['dietDinner'] as String?,
+          dietRefreshmentDinner: json['dietRefreshmentDinner'] as String?,
           id: json['id'] as int?,
         );
 
@@ -26,8 +28,10 @@ Map<String, dynamic> _$$_ScaleTreatmentDietDetailResponseToJson(
       'dietCreateDate': instance.dietCreateDate,
       'createdByName': instance.createdByName,
       'dietBreakfast': instance.dietBreakfast,
-      'dietRefreshment': instance.dietRefreshment,
+      'dietRefreshmentBreakfast': instance.dietRefreshmentBreakfast,
       'dietLunch': instance.dietLunch,
+      'dietRefreshmentLunch': instance.dietRefreshmentLunch,
       'dietDinner': instance.dietDinner,
+      'dietRefreshmentDinner': instance.dietRefreshmentDinner,
       'id': instance.id,
     };

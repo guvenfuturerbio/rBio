@@ -1,1 +1,1 @@
-export 'scale_detail_cubit.dart';
+export 'patient_scale_detail_cubit.dart';

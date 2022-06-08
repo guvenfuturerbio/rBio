@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'reminder_alert_dialog_cubit.dart';
@@ -11,37 +12,7 @@ part of 'reminder_alert_dialog_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ReminderAlertDialogStateTearOff {
-  const _$ReminderAlertDialogStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _LoadInProgress loadInProgress() {
-    return const _LoadInProgress();
-  }
-
-  _Success success(ReminderListModel model) {
-    return _Success(
-      model,
-    );
-  }
-
-  _Failure failure() {
-    return const _Failure();
-  }
-
-  _CreatedPostponeNotification createdPostponeNotification() {
-    return const _CreatedPostponeNotification();
-  }
-}
-
-/// @nodoc
-const $ReminderAlertDialogState = _$ReminderAlertDialogStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ReminderAlertDialogState {
@@ -124,20 +95,21 @@ class _$ReminderAlertDialogStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
     extends _$ReminderAlertDialogStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
@@ -153,7 +125,7 @@ class _$_Initial implements _Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -248,22 +220,22 @@ abstract class _Initial implements ReminderAlertDialogState {
 }
 
 /// @nodoc
-abstract class _$LoadInProgressCopyWith<$Res> {
-  factory _$LoadInProgressCopyWith(
-          _LoadInProgress value, $Res Function(_LoadInProgress) then) =
-      __$LoadInProgressCopyWithImpl<$Res>;
+abstract class _$$_LoadInProgressCopyWith<$Res> {
+  factory _$$_LoadInProgressCopyWith(
+          _$_LoadInProgress value, $Res Function(_$_LoadInProgress) then) =
+      __$$_LoadInProgressCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadInProgressCopyWithImpl<$Res>
+class __$$_LoadInProgressCopyWithImpl<$Res>
     extends _$ReminderAlertDialogStateCopyWithImpl<$Res>
-    implements _$LoadInProgressCopyWith<$Res> {
-  __$LoadInProgressCopyWithImpl(
-      _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
-      : super(_value, (v) => _then(v as _LoadInProgress));
+    implements _$$_LoadInProgressCopyWith<$Res> {
+  __$$_LoadInProgressCopyWithImpl(
+      _$_LoadInProgress _value, $Res Function(_$_LoadInProgress) _then)
+      : super(_value, (v) => _then(v as _$_LoadInProgress));
 
   @override
-  _LoadInProgress get _value => super._value as _LoadInProgress;
+  _$_LoadInProgress get _value => super._value as _$_LoadInProgress;
 }
 
 /// @nodoc
@@ -279,7 +251,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoadInProgress);
+        (other.runtimeType == runtimeType && other is _$_LoadInProgress);
   }
 
   @override
@@ -374,27 +346,28 @@ abstract class _LoadInProgress implements ReminderAlertDialogState {
 }
 
 /// @nodoc
-abstract class _$SuccessCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
-      __$SuccessCopyWithImpl<$Res>;
+abstract class _$$_SuccessCopyWith<$Res> {
+  factory _$$_SuccessCopyWith(
+          _$_Success value, $Res Function(_$_Success) then) =
+      __$$_SuccessCopyWithImpl<$Res>;
   $Res call({ReminderListModel model});
 }
 
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res>
+class __$$_SuccessCopyWithImpl<$Res>
     extends _$ReminderAlertDialogStateCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
-      : super(_value, (v) => _then(v as _Success));
+    implements _$$_SuccessCopyWith<$Res> {
+  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
+      : super(_value, (v) => _then(v as _$_Success));
 
   @override
-  _Success get _value => super._value as _Success;
+  _$_Success get _value => super._value as _$_Success;
 
   @override
   $Res call({
     Object? model = freezed,
   }) {
-    return _then(_Success(
+    return _then(_$_Success(
       model == freezed
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
@@ -420,7 +393,7 @@ class _$_Success implements _Success {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Success &&
+            other is _$_Success &&
             const DeepCollectionEquality().equals(other.model, model));
   }
 
@@ -430,8 +403,8 @@ class _$_Success implements _Success {
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessCopyWith<_Success> get copyWith =>
-      __$SuccessCopyWithImpl<_Success>(this, _$identity);
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -518,29 +491,30 @@ class _$_Success implements _Success {
 }
 
 abstract class _Success implements ReminderAlertDialogState {
-  const factory _Success(ReminderListModel model) = _$_Success;
+  const factory _Success(final ReminderListModel model) = _$_Success;
 
-  ReminderListModel get model;
+  ReminderListModel get model => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$SuccessCopyWith<_Success> get copyWith =>
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$FailureCopyWith<$Res> {
-  factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) then) =
-      __$FailureCopyWithImpl<$Res>;
+abstract class _$$_FailureCopyWith<$Res> {
+  factory _$$_FailureCopyWith(
+          _$_Failure value, $Res Function(_$_Failure) then) =
+      __$$_FailureCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$FailureCopyWithImpl<$Res>
+class __$$_FailureCopyWithImpl<$Res>
     extends _$ReminderAlertDialogStateCopyWithImpl<$Res>
-    implements _$FailureCopyWith<$Res> {
-  __$FailureCopyWithImpl(_Failure _value, $Res Function(_Failure) _then)
-      : super(_value, (v) => _then(v as _Failure));
+    implements _$$_FailureCopyWith<$Res> {
+  __$$_FailureCopyWithImpl(_$_Failure _value, $Res Function(_$_Failure) _then)
+      : super(_value, (v) => _then(v as _$_Failure));
 
   @override
-  _Failure get _value => super._value as _Failure;
+  _$_Failure get _value => super._value as _$_Failure;
 }
 
 /// @nodoc
@@ -556,7 +530,7 @@ class _$_Failure implements _Failure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Failure);
+        (other.runtimeType == runtimeType && other is _$_Failure);
   }
 
   @override
@@ -651,25 +625,25 @@ abstract class _Failure implements ReminderAlertDialogState {
 }
 
 /// @nodoc
-abstract class _$CreatedPostponeNotificationCopyWith<$Res> {
-  factory _$CreatedPostponeNotificationCopyWith(
-          _CreatedPostponeNotification value,
-          $Res Function(_CreatedPostponeNotification) then) =
-      __$CreatedPostponeNotificationCopyWithImpl<$Res>;
+abstract class _$$_CreatedPostponeNotificationCopyWith<$Res> {
+  factory _$$_CreatedPostponeNotificationCopyWith(
+          _$_CreatedPostponeNotification value,
+          $Res Function(_$_CreatedPostponeNotification) then) =
+      __$$_CreatedPostponeNotificationCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$CreatedPostponeNotificationCopyWithImpl<$Res>
+class __$$_CreatedPostponeNotificationCopyWithImpl<$Res>
     extends _$ReminderAlertDialogStateCopyWithImpl<$Res>
-    implements _$CreatedPostponeNotificationCopyWith<$Res> {
-  __$CreatedPostponeNotificationCopyWithImpl(
-      _CreatedPostponeNotification _value,
-      $Res Function(_CreatedPostponeNotification) _then)
-      : super(_value, (v) => _then(v as _CreatedPostponeNotification));
+    implements _$$_CreatedPostponeNotificationCopyWith<$Res> {
+  __$$_CreatedPostponeNotificationCopyWithImpl(
+      _$_CreatedPostponeNotification _value,
+      $Res Function(_$_CreatedPostponeNotification) _then)
+      : super(_value, (v) => _then(v as _$_CreatedPostponeNotification));
 
   @override
-  _CreatedPostponeNotification get _value =>
-      super._value as _CreatedPostponeNotification;
+  _$_CreatedPostponeNotification get _value =>
+      super._value as _$_CreatedPostponeNotification;
 }
 
 /// @nodoc
@@ -686,7 +660,7 @@ class _$_CreatedPostponeNotification implements _CreatedPostponeNotification {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CreatedPostponeNotification);
+            other is _$_CreatedPostponeNotification);
   }
 
   @override

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'search_bloc.dart';
@@ -11,35 +12,7 @@ part of 'search_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SearchEventTearOff {
-  const _$SearchEventTearOff();
-
-  SearchFetched fetch() {
-    return const SearchFetched();
-  }
-
-  SearchTextFiltered textFilter(String input) {
-    return SearchTextFiltered(
-      input,
-    );
-  }
-
-  SearchPlatformFiltered platformFilter(SearchSocialType type) {
-    return SearchPlatformFiltered(
-      type,
-    );
-  }
-
-  SearchFilterRetrieved filterRetrieved() {
-    return const SearchFilterRetrieved();
-  }
-}
-
-/// @nodoc
-const $SearchEvent = _$SearchEventTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SearchEvent {
@@ -112,21 +85,22 @@ class _$SearchEventCopyWithImpl<$Res> implements $SearchEventCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $SearchFetchedCopyWith<$Res> {
-  factory $SearchFetchedCopyWith(
-          SearchFetched value, $Res Function(SearchFetched) then) =
-      _$SearchFetchedCopyWithImpl<$Res>;
+abstract class _$$SearchFetchedCopyWith<$Res> {
+  factory _$$SearchFetchedCopyWith(
+          _$SearchFetched value, $Res Function(_$SearchFetched) then) =
+      __$$SearchFetchedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SearchFetchedCopyWithImpl<$Res> extends _$SearchEventCopyWithImpl<$Res>
-    implements $SearchFetchedCopyWith<$Res> {
-  _$SearchFetchedCopyWithImpl(
-      SearchFetched _value, $Res Function(SearchFetched) _then)
-      : super(_value, (v) => _then(v as SearchFetched));
+class __$$SearchFetchedCopyWithImpl<$Res>
+    extends _$SearchEventCopyWithImpl<$Res>
+    implements _$$SearchFetchedCopyWith<$Res> {
+  __$$SearchFetchedCopyWithImpl(
+      _$SearchFetched _value, $Res Function(_$SearchFetched) _then)
+      : super(_value, (v) => _then(v as _$SearchFetched));
 
   @override
-  SearchFetched get _value => super._value as SearchFetched;
+  _$SearchFetched get _value => super._value as _$SearchFetched;
 }
 
 /// @nodoc
@@ -142,7 +116,7 @@ class _$SearchFetched implements SearchFetched {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SearchFetched);
+        (other.runtimeType == runtimeType && other is _$SearchFetched);
   }
 
   @override
@@ -228,29 +202,29 @@ abstract class SearchFetched implements SearchEvent {
 }
 
 /// @nodoc
-abstract class $SearchTextFilteredCopyWith<$Res> {
-  factory $SearchTextFilteredCopyWith(
-          SearchTextFiltered value, $Res Function(SearchTextFiltered) then) =
-      _$SearchTextFilteredCopyWithImpl<$Res>;
+abstract class _$$SearchTextFilteredCopyWith<$Res> {
+  factory _$$SearchTextFilteredCopyWith(_$SearchTextFiltered value,
+          $Res Function(_$SearchTextFiltered) then) =
+      __$$SearchTextFilteredCopyWithImpl<$Res>;
   $Res call({String input});
 }
 
 /// @nodoc
-class _$SearchTextFilteredCopyWithImpl<$Res>
+class __$$SearchTextFilteredCopyWithImpl<$Res>
     extends _$SearchEventCopyWithImpl<$Res>
-    implements $SearchTextFilteredCopyWith<$Res> {
-  _$SearchTextFilteredCopyWithImpl(
-      SearchTextFiltered _value, $Res Function(SearchTextFiltered) _then)
-      : super(_value, (v) => _then(v as SearchTextFiltered));
+    implements _$$SearchTextFilteredCopyWith<$Res> {
+  __$$SearchTextFilteredCopyWithImpl(
+      _$SearchTextFiltered _value, $Res Function(_$SearchTextFiltered) _then)
+      : super(_value, (v) => _then(v as _$SearchTextFiltered));
 
   @override
-  SearchTextFiltered get _value => super._value as SearchTextFiltered;
+  _$SearchTextFiltered get _value => super._value as _$SearchTextFiltered;
 
   @override
   $Res call({
     Object? input = freezed,
   }) {
-    return _then(SearchTextFiltered(
+    return _then(_$SearchTextFiltered(
       input == freezed
           ? _value.input
           : input // ignore: cast_nullable_to_non_nullable
@@ -276,7 +250,7 @@ class _$SearchTextFiltered implements SearchTextFiltered {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SearchTextFiltered &&
+            other is _$SearchTextFiltered &&
             const DeepCollectionEquality().equals(other.input, input));
   }
 
@@ -286,8 +260,9 @@ class _$SearchTextFiltered implements SearchTextFiltered {
 
   @JsonKey(ignore: true)
   @override
-  $SearchTextFilteredCopyWith<SearchTextFiltered> get copyWith =>
-      _$SearchTextFilteredCopyWithImpl<SearchTextFiltered>(this, _$identity);
+  _$$SearchTextFilteredCopyWith<_$SearchTextFiltered> get copyWith =>
+      __$$SearchTextFilteredCopyWithImpl<_$SearchTextFiltered>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -365,38 +340,39 @@ class _$SearchTextFiltered implements SearchTextFiltered {
 }
 
 abstract class SearchTextFiltered implements SearchEvent {
-  const factory SearchTextFiltered(String input) = _$SearchTextFiltered;
+  const factory SearchTextFiltered(final String input) = _$SearchTextFiltered;
 
-  String get input;
+  String get input => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SearchTextFilteredCopyWith<SearchTextFiltered> get copyWith =>
+  _$$SearchTextFilteredCopyWith<_$SearchTextFiltered> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SearchPlatformFilteredCopyWith<$Res> {
-  factory $SearchPlatformFilteredCopyWith(SearchPlatformFiltered value,
-          $Res Function(SearchPlatformFiltered) then) =
-      _$SearchPlatformFilteredCopyWithImpl<$Res>;
+abstract class _$$SearchPlatformFilteredCopyWith<$Res> {
+  factory _$$SearchPlatformFilteredCopyWith(_$SearchPlatformFiltered value,
+          $Res Function(_$SearchPlatformFiltered) then) =
+      __$$SearchPlatformFilteredCopyWithImpl<$Res>;
   $Res call({SearchSocialType type});
 }
 
 /// @nodoc
-class _$SearchPlatformFilteredCopyWithImpl<$Res>
+class __$$SearchPlatformFilteredCopyWithImpl<$Res>
     extends _$SearchEventCopyWithImpl<$Res>
-    implements $SearchPlatformFilteredCopyWith<$Res> {
-  _$SearchPlatformFilteredCopyWithImpl(SearchPlatformFiltered _value,
-      $Res Function(SearchPlatformFiltered) _then)
-      : super(_value, (v) => _then(v as SearchPlatformFiltered));
+    implements _$$SearchPlatformFilteredCopyWith<$Res> {
+  __$$SearchPlatformFilteredCopyWithImpl(_$SearchPlatformFiltered _value,
+      $Res Function(_$SearchPlatformFiltered) _then)
+      : super(_value, (v) => _then(v as _$SearchPlatformFiltered));
 
   @override
-  SearchPlatformFiltered get _value => super._value as SearchPlatformFiltered;
+  _$SearchPlatformFiltered get _value =>
+      super._value as _$SearchPlatformFiltered;
 
   @override
   $Res call({
     Object? type = freezed,
   }) {
-    return _then(SearchPlatformFiltered(
+    return _then(_$SearchPlatformFiltered(
       type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -422,7 +398,7 @@ class _$SearchPlatformFiltered implements SearchPlatformFiltered {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SearchPlatformFiltered &&
+            other is _$SearchPlatformFiltered &&
             const DeepCollectionEquality().equals(other.type, type));
   }
 
@@ -432,8 +408,8 @@ class _$SearchPlatformFiltered implements SearchPlatformFiltered {
 
   @JsonKey(ignore: true)
   @override
-  $SearchPlatformFilteredCopyWith<SearchPlatformFiltered> get copyWith =>
-      _$SearchPlatformFilteredCopyWithImpl<SearchPlatformFiltered>(
+  _$$SearchPlatformFilteredCopyWith<_$SearchPlatformFiltered> get copyWith =>
+      __$$SearchPlatformFilteredCopyWithImpl<_$SearchPlatformFiltered>(
           this, _$identity);
 
   @override
@@ -512,32 +488,32 @@ class _$SearchPlatformFiltered implements SearchPlatformFiltered {
 }
 
 abstract class SearchPlatformFiltered implements SearchEvent {
-  const factory SearchPlatformFiltered(SearchSocialType type) =
+  const factory SearchPlatformFiltered(final SearchSocialType type) =
       _$SearchPlatformFiltered;
 
-  SearchSocialType get type;
+  SearchSocialType get type => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SearchPlatformFilteredCopyWith<SearchPlatformFiltered> get copyWith =>
+  _$$SearchPlatformFilteredCopyWith<_$SearchPlatformFiltered> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SearchFilterRetrievedCopyWith<$Res> {
-  factory $SearchFilterRetrievedCopyWith(SearchFilterRetrieved value,
-          $Res Function(SearchFilterRetrieved) then) =
-      _$SearchFilterRetrievedCopyWithImpl<$Res>;
+abstract class _$$SearchFilterRetrievedCopyWith<$Res> {
+  factory _$$SearchFilterRetrievedCopyWith(_$SearchFilterRetrieved value,
+          $Res Function(_$SearchFilterRetrieved) then) =
+      __$$SearchFilterRetrievedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SearchFilterRetrievedCopyWithImpl<$Res>
+class __$$SearchFilterRetrievedCopyWithImpl<$Res>
     extends _$SearchEventCopyWithImpl<$Res>
-    implements $SearchFilterRetrievedCopyWith<$Res> {
-  _$SearchFilterRetrievedCopyWithImpl(
-      SearchFilterRetrieved _value, $Res Function(SearchFilterRetrieved) _then)
-      : super(_value, (v) => _then(v as SearchFilterRetrieved));
+    implements _$$SearchFilterRetrievedCopyWith<$Res> {
+  __$$SearchFilterRetrievedCopyWithImpl(_$SearchFilterRetrieved _value,
+      $Res Function(_$SearchFilterRetrieved) _then)
+      : super(_value, (v) => _then(v as _$SearchFilterRetrieved));
 
   @override
-  SearchFilterRetrieved get _value => super._value as SearchFilterRetrieved;
+  _$SearchFilterRetrieved get _value => super._value as _$SearchFilterRetrieved;
 }
 
 /// @nodoc
@@ -553,7 +529,7 @@ class _$SearchFilterRetrieved implements SearchFilterRetrieved {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SearchFilterRetrieved);
+        (other.runtimeType == runtimeType && other is _$SearchFilterRetrieved);
   }
 
   @override
@@ -639,36 +615,6 @@ abstract class SearchFilterRetrieved implements SearchEvent {
 }
 
 /// @nodoc
-class _$SearchStateTearOff {
-  const _$SearchStateTearOff();
-
-  SearchInitial initial() {
-    return const SearchInitial();
-  }
-
-  SearchLoadInProgress loadInProgress(List<SearchSocialType>? socialTypes) {
-    return SearchLoadInProgress(
-      socialTypes,
-    );
-  }
-
-  SearchSuccess success(
-      List<SearchModel> list, List<SearchSocialType> socialTypes) {
-    return SearchSuccess(
-      list,
-      socialTypes,
-    );
-  }
-
-  SearchFailure failure() {
-    return const SearchFailure();
-  }
-}
-
-/// @nodoc
-const $SearchState = _$SearchStateTearOff();
-
-/// @nodoc
 mixin _$SearchState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -746,21 +692,22 @@ class _$SearchStateCopyWithImpl<$Res> implements $SearchStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $SearchInitialCopyWith<$Res> {
-  factory $SearchInitialCopyWith(
-          SearchInitial value, $Res Function(SearchInitial) then) =
-      _$SearchInitialCopyWithImpl<$Res>;
+abstract class _$$SearchInitialCopyWith<$Res> {
+  factory _$$SearchInitialCopyWith(
+          _$SearchInitial value, $Res Function(_$SearchInitial) then) =
+      __$$SearchInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SearchInitialCopyWithImpl<$Res> extends _$SearchStateCopyWithImpl<$Res>
-    implements $SearchInitialCopyWith<$Res> {
-  _$SearchInitialCopyWithImpl(
-      SearchInitial _value, $Res Function(SearchInitial) _then)
-      : super(_value, (v) => _then(v as SearchInitial));
+class __$$SearchInitialCopyWithImpl<$Res>
+    extends _$SearchStateCopyWithImpl<$Res>
+    implements _$$SearchInitialCopyWith<$Res> {
+  __$$SearchInitialCopyWithImpl(
+      _$SearchInitial _value, $Res Function(_$SearchInitial) _then)
+      : super(_value, (v) => _then(v as _$SearchInitial));
 
   @override
-  SearchInitial get _value => super._value as SearchInitial;
+  _$SearchInitial get _value => super._value as _$SearchInitial;
 }
 
 /// @nodoc
@@ -776,7 +723,7 @@ class _$SearchInitial implements SearchInitial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SearchInitial);
+        (other.runtimeType == runtimeType && other is _$SearchInitial);
   }
 
   @override
@@ -869,31 +816,31 @@ abstract class SearchInitial implements SearchState {
 }
 
 /// @nodoc
-abstract class $SearchLoadInProgressCopyWith<$Res> {
-  factory $SearchLoadInProgressCopyWith(SearchLoadInProgress value,
-          $Res Function(SearchLoadInProgress) then) =
-      _$SearchLoadInProgressCopyWithImpl<$Res>;
+abstract class _$$SearchLoadInProgressCopyWith<$Res> {
+  factory _$$SearchLoadInProgressCopyWith(_$SearchLoadInProgress value,
+          $Res Function(_$SearchLoadInProgress) then) =
+      __$$SearchLoadInProgressCopyWithImpl<$Res>;
   $Res call({List<SearchSocialType>? socialTypes});
 }
 
 /// @nodoc
-class _$SearchLoadInProgressCopyWithImpl<$Res>
+class __$$SearchLoadInProgressCopyWithImpl<$Res>
     extends _$SearchStateCopyWithImpl<$Res>
-    implements $SearchLoadInProgressCopyWith<$Res> {
-  _$SearchLoadInProgressCopyWithImpl(
-      SearchLoadInProgress _value, $Res Function(SearchLoadInProgress) _then)
-      : super(_value, (v) => _then(v as SearchLoadInProgress));
+    implements _$$SearchLoadInProgressCopyWith<$Res> {
+  __$$SearchLoadInProgressCopyWithImpl(_$SearchLoadInProgress _value,
+      $Res Function(_$SearchLoadInProgress) _then)
+      : super(_value, (v) => _then(v as _$SearchLoadInProgress));
 
   @override
-  SearchLoadInProgress get _value => super._value as SearchLoadInProgress;
+  _$SearchLoadInProgress get _value => super._value as _$SearchLoadInProgress;
 
   @override
   $Res call({
     Object? socialTypes = freezed,
   }) {
-    return _then(SearchLoadInProgress(
+    return _then(_$SearchLoadInProgress(
       socialTypes == freezed
-          ? _value.socialTypes
+          ? _value._socialTypes
           : socialTypes // ignore: cast_nullable_to_non_nullable
               as List<SearchSocialType>?,
     ));
@@ -903,10 +850,17 @@ class _$SearchLoadInProgressCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SearchLoadInProgress implements SearchLoadInProgress {
-  const _$SearchLoadInProgress(this.socialTypes);
+  const _$SearchLoadInProgress(final List<SearchSocialType>? socialTypes)
+      : _socialTypes = socialTypes;
 
+  final List<SearchSocialType>? _socialTypes;
   @override
-  final List<SearchSocialType>? socialTypes;
+  List<SearchSocialType>? get socialTypes {
+    final value = _socialTypes;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -917,19 +871,19 @@ class _$SearchLoadInProgress implements SearchLoadInProgress {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SearchLoadInProgress &&
+            other is _$SearchLoadInProgress &&
             const DeepCollectionEquality()
-                .equals(other.socialTypes, socialTypes));
+                .equals(other._socialTypes, _socialTypes));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(socialTypes));
+      runtimeType, const DeepCollectionEquality().hash(_socialTypes));
 
   @JsonKey(ignore: true)
   @override
-  $SearchLoadInProgressCopyWith<SearchLoadInProgress> get copyWith =>
-      _$SearchLoadInProgressCopyWithImpl<SearchLoadInProgress>(
+  _$$SearchLoadInProgressCopyWith<_$SearchLoadInProgress> get copyWith =>
+      __$$SearchLoadInProgressCopyWithImpl<_$SearchLoadInProgress>(
           this, _$identity);
 
   @override
@@ -1015,45 +969,46 @@ class _$SearchLoadInProgress implements SearchLoadInProgress {
 }
 
 abstract class SearchLoadInProgress implements SearchState {
-  const factory SearchLoadInProgress(List<SearchSocialType>? socialTypes) =
-      _$SearchLoadInProgress;
+  const factory SearchLoadInProgress(
+      final List<SearchSocialType>? socialTypes) = _$SearchLoadInProgress;
 
-  List<SearchSocialType>? get socialTypes;
+  List<SearchSocialType>? get socialTypes => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SearchLoadInProgressCopyWith<SearchLoadInProgress> get copyWith =>
+  _$$SearchLoadInProgressCopyWith<_$SearchLoadInProgress> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SearchSuccessCopyWith<$Res> {
-  factory $SearchSuccessCopyWith(
-          SearchSuccess value, $Res Function(SearchSuccess) then) =
-      _$SearchSuccessCopyWithImpl<$Res>;
+abstract class _$$SearchSuccessCopyWith<$Res> {
+  factory _$$SearchSuccessCopyWith(
+          _$SearchSuccess value, $Res Function(_$SearchSuccess) then) =
+      __$$SearchSuccessCopyWithImpl<$Res>;
   $Res call({List<SearchModel> list, List<SearchSocialType> socialTypes});
 }
 
 /// @nodoc
-class _$SearchSuccessCopyWithImpl<$Res> extends _$SearchStateCopyWithImpl<$Res>
-    implements $SearchSuccessCopyWith<$Res> {
-  _$SearchSuccessCopyWithImpl(
-      SearchSuccess _value, $Res Function(SearchSuccess) _then)
-      : super(_value, (v) => _then(v as SearchSuccess));
+class __$$SearchSuccessCopyWithImpl<$Res>
+    extends _$SearchStateCopyWithImpl<$Res>
+    implements _$$SearchSuccessCopyWith<$Res> {
+  __$$SearchSuccessCopyWithImpl(
+      _$SearchSuccess _value, $Res Function(_$SearchSuccess) _then)
+      : super(_value, (v) => _then(v as _$SearchSuccess));
 
   @override
-  SearchSuccess get _value => super._value as SearchSuccess;
+  _$SearchSuccess get _value => super._value as _$SearchSuccess;
 
   @override
   $Res call({
     Object? list = freezed,
     Object? socialTypes = freezed,
   }) {
-    return _then(SearchSuccess(
+    return _then(_$SearchSuccess(
       list == freezed
-          ? _value.list
+          ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
               as List<SearchModel>,
       socialTypes == freezed
-          ? _value.socialTypes
+          ? _value._socialTypes
           : socialTypes // ignore: cast_nullable_to_non_nullable
               as List<SearchSocialType>,
     ));
@@ -1063,12 +1018,24 @@ class _$SearchSuccessCopyWithImpl<$Res> extends _$SearchStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SearchSuccess implements SearchSuccess {
-  const _$SearchSuccess(this.list, this.socialTypes);
+  const _$SearchSuccess(
+      final List<SearchModel> list, final List<SearchSocialType> socialTypes)
+      : _list = list,
+        _socialTypes = socialTypes;
 
+  final List<SearchModel> _list;
   @override
-  final List<SearchModel> list;
+  List<SearchModel> get list {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_list);
+  }
+
+  final List<SearchSocialType> _socialTypes;
   @override
-  final List<SearchSocialType> socialTypes;
+  List<SearchSocialType> get socialTypes {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_socialTypes);
+  }
 
   @override
   String toString() {
@@ -1079,22 +1046,22 @@ class _$SearchSuccess implements SearchSuccess {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SearchSuccess &&
-            const DeepCollectionEquality().equals(other.list, list) &&
+            other is _$SearchSuccess &&
+            const DeepCollectionEquality().equals(other._list, _list) &&
             const DeepCollectionEquality()
-                .equals(other.socialTypes, socialTypes));
+                .equals(other._socialTypes, _socialTypes));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(list),
-      const DeepCollectionEquality().hash(socialTypes));
+      const DeepCollectionEquality().hash(_list),
+      const DeepCollectionEquality().hash(_socialTypes));
 
   @JsonKey(ignore: true)
   @override
-  $SearchSuccessCopyWith<SearchSuccess> get copyWith =>
-      _$SearchSuccessCopyWithImpl<SearchSuccess>(this, _$identity);
+  _$$SearchSuccessCopyWith<_$SearchSuccess> get copyWith =>
+      __$$SearchSuccessCopyWithImpl<_$SearchSuccess>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1179,33 +1146,33 @@ class _$SearchSuccess implements SearchSuccess {
 }
 
 abstract class SearchSuccess implements SearchState {
-  const factory SearchSuccess(
-          List<SearchModel> list, List<SearchSocialType> socialTypes) =
-      _$SearchSuccess;
+  const factory SearchSuccess(final List<SearchModel> list,
+      final List<SearchSocialType> socialTypes) = _$SearchSuccess;
 
-  List<SearchModel> get list;
-  List<SearchSocialType> get socialTypes;
+  List<SearchModel> get list => throw _privateConstructorUsedError;
+  List<SearchSocialType> get socialTypes => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SearchSuccessCopyWith<SearchSuccess> get copyWith =>
+  _$$SearchSuccessCopyWith<_$SearchSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SearchFailureCopyWith<$Res> {
-  factory $SearchFailureCopyWith(
-          SearchFailure value, $Res Function(SearchFailure) then) =
-      _$SearchFailureCopyWithImpl<$Res>;
+abstract class _$$SearchFailureCopyWith<$Res> {
+  factory _$$SearchFailureCopyWith(
+          _$SearchFailure value, $Res Function(_$SearchFailure) then) =
+      __$$SearchFailureCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SearchFailureCopyWithImpl<$Res> extends _$SearchStateCopyWithImpl<$Res>
-    implements $SearchFailureCopyWith<$Res> {
-  _$SearchFailureCopyWithImpl(
-      SearchFailure _value, $Res Function(SearchFailure) _then)
-      : super(_value, (v) => _then(v as SearchFailure));
+class __$$SearchFailureCopyWithImpl<$Res>
+    extends _$SearchStateCopyWithImpl<$Res>
+    implements _$$SearchFailureCopyWith<$Res> {
+  __$$SearchFailureCopyWithImpl(
+      _$SearchFailure _value, $Res Function(_$SearchFailure) _then)
+      : super(_value, (v) => _then(v as _$SearchFailure));
 
   @override
-  SearchFailure get _value => super._value as SearchFailure;
+  _$SearchFailure get _value => super._value as _$SearchFailure;
 }
 
 /// @nodoc
@@ -1221,7 +1188,7 @@ class _$SearchFailure implements SearchFailure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SearchFailure);
+        (other.runtimeType == runtimeType && other is _$SearchFailure);
   }
 
   @override

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'forgot_password_exception.dart';
@@ -11,27 +12,7 @@ part of 'forgot_password_exception.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ForgotPasswordExceptionsTearOff {
-  const _$ForgotPasswordExceptionsTearOff();
-
-  _ForgotPasswordUserNotFound userNotFound() {
-    return const _ForgotPasswordUserNotFound();
-  }
-
-  _ForgotPasswordPhoneNumberNotMatch phoneNumberNotMatch() {
-    return const _ForgotPasswordPhoneNumberNotMatch();
-  }
-
-  _ForgotPasswordUndefined undefined() {
-    return const _ForgotPasswordUndefined();
-  }
-}
-
-/// @nodoc
-const $ForgotPasswordExceptions = _$ForgotPasswordExceptionsTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ForgotPasswordExceptions {
@@ -102,24 +83,25 @@ class _$ForgotPasswordExceptionsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ForgotPasswordUserNotFoundCopyWith<$Res> {
-  factory _$ForgotPasswordUserNotFoundCopyWith(
-          _ForgotPasswordUserNotFound value,
-          $Res Function(_ForgotPasswordUserNotFound) then) =
-      __$ForgotPasswordUserNotFoundCopyWithImpl<$Res>;
+abstract class _$$_ForgotPasswordUserNotFoundCopyWith<$Res> {
+  factory _$$_ForgotPasswordUserNotFoundCopyWith(
+          _$_ForgotPasswordUserNotFound value,
+          $Res Function(_$_ForgotPasswordUserNotFound) then) =
+      __$$_ForgotPasswordUserNotFoundCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ForgotPasswordUserNotFoundCopyWithImpl<$Res>
+class __$$_ForgotPasswordUserNotFoundCopyWithImpl<$Res>
     extends _$ForgotPasswordExceptionsCopyWithImpl<$Res>
-    implements _$ForgotPasswordUserNotFoundCopyWith<$Res> {
-  __$ForgotPasswordUserNotFoundCopyWithImpl(_ForgotPasswordUserNotFound _value,
-      $Res Function(_ForgotPasswordUserNotFound) _then)
-      : super(_value, (v) => _then(v as _ForgotPasswordUserNotFound));
+    implements _$$_ForgotPasswordUserNotFoundCopyWith<$Res> {
+  __$$_ForgotPasswordUserNotFoundCopyWithImpl(
+      _$_ForgotPasswordUserNotFound _value,
+      $Res Function(_$_ForgotPasswordUserNotFound) _then)
+      : super(_value, (v) => _then(v as _$_ForgotPasswordUserNotFound));
 
   @override
-  _ForgotPasswordUserNotFound get _value =>
-      super._value as _ForgotPasswordUserNotFound;
+  _$_ForgotPasswordUserNotFound get _value =>
+      super._value as _$_ForgotPasswordUserNotFound;
 }
 
 /// @nodoc
@@ -136,7 +118,7 @@ class _$_ForgotPasswordUserNotFound implements _ForgotPasswordUserNotFound {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ForgotPasswordUserNotFound);
+            other is _$_ForgotPasswordUserNotFound);
   }
 
   @override
@@ -219,25 +201,25 @@ abstract class _ForgotPasswordUserNotFound implements ForgotPasswordExceptions {
 }
 
 /// @nodoc
-abstract class _$ForgotPasswordPhoneNumberNotMatchCopyWith<$Res> {
-  factory _$ForgotPasswordPhoneNumberNotMatchCopyWith(
-          _ForgotPasswordPhoneNumberNotMatch value,
-          $Res Function(_ForgotPasswordPhoneNumberNotMatch) then) =
-      __$ForgotPasswordPhoneNumberNotMatchCopyWithImpl<$Res>;
+abstract class _$$_ForgotPasswordPhoneNumberNotMatchCopyWith<$Res> {
+  factory _$$_ForgotPasswordPhoneNumberNotMatchCopyWith(
+          _$_ForgotPasswordPhoneNumberNotMatch value,
+          $Res Function(_$_ForgotPasswordPhoneNumberNotMatch) then) =
+      __$$_ForgotPasswordPhoneNumberNotMatchCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ForgotPasswordPhoneNumberNotMatchCopyWithImpl<$Res>
+class __$$_ForgotPasswordPhoneNumberNotMatchCopyWithImpl<$Res>
     extends _$ForgotPasswordExceptionsCopyWithImpl<$Res>
-    implements _$ForgotPasswordPhoneNumberNotMatchCopyWith<$Res> {
-  __$ForgotPasswordPhoneNumberNotMatchCopyWithImpl(
-      _ForgotPasswordPhoneNumberNotMatch _value,
-      $Res Function(_ForgotPasswordPhoneNumberNotMatch) _then)
-      : super(_value, (v) => _then(v as _ForgotPasswordPhoneNumberNotMatch));
+    implements _$$_ForgotPasswordPhoneNumberNotMatchCopyWith<$Res> {
+  __$$_ForgotPasswordPhoneNumberNotMatchCopyWithImpl(
+      _$_ForgotPasswordPhoneNumberNotMatch _value,
+      $Res Function(_$_ForgotPasswordPhoneNumberNotMatch) _then)
+      : super(_value, (v) => _then(v as _$_ForgotPasswordPhoneNumberNotMatch));
 
   @override
-  _ForgotPasswordPhoneNumberNotMatch get _value =>
-      super._value as _ForgotPasswordPhoneNumberNotMatch;
+  _$_ForgotPasswordPhoneNumberNotMatch get _value =>
+      super._value as _$_ForgotPasswordPhoneNumberNotMatch;
 }
 
 /// @nodoc
@@ -255,7 +237,7 @@ class _$_ForgotPasswordPhoneNumberNotMatch
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ForgotPasswordPhoneNumberNotMatch);
+            other is _$_ForgotPasswordPhoneNumberNotMatch);
   }
 
   @override
@@ -340,23 +322,23 @@ abstract class _ForgotPasswordPhoneNumberNotMatch
 }
 
 /// @nodoc
-abstract class _$ForgotPasswordUndefinedCopyWith<$Res> {
-  factory _$ForgotPasswordUndefinedCopyWith(_ForgotPasswordUndefined value,
-          $Res Function(_ForgotPasswordUndefined) then) =
-      __$ForgotPasswordUndefinedCopyWithImpl<$Res>;
+abstract class _$$_ForgotPasswordUndefinedCopyWith<$Res> {
+  factory _$$_ForgotPasswordUndefinedCopyWith(_$_ForgotPasswordUndefined value,
+          $Res Function(_$_ForgotPasswordUndefined) then) =
+      __$$_ForgotPasswordUndefinedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ForgotPasswordUndefinedCopyWithImpl<$Res>
+class __$$_ForgotPasswordUndefinedCopyWithImpl<$Res>
     extends _$ForgotPasswordExceptionsCopyWithImpl<$Res>
-    implements _$ForgotPasswordUndefinedCopyWith<$Res> {
-  __$ForgotPasswordUndefinedCopyWithImpl(_ForgotPasswordUndefined _value,
-      $Res Function(_ForgotPasswordUndefined) _then)
-      : super(_value, (v) => _then(v as _ForgotPasswordUndefined));
+    implements _$$_ForgotPasswordUndefinedCopyWith<$Res> {
+  __$$_ForgotPasswordUndefinedCopyWithImpl(_$_ForgotPasswordUndefined _value,
+      $Res Function(_$_ForgotPasswordUndefined) _then)
+      : super(_value, (v) => _then(v as _$_ForgotPasswordUndefined));
 
   @override
-  _ForgotPasswordUndefined get _value =>
-      super._value as _ForgotPasswordUndefined;
+  _$_ForgotPasswordUndefined get _value =>
+      super._value as _$_ForgotPasswordUndefined;
 }
 
 /// @nodoc
@@ -372,7 +354,8 @@ class _$_ForgotPasswordUndefined implements _ForgotPasswordUndefined {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _ForgotPasswordUndefined);
+        (other.runtimeType == runtimeType &&
+            other is _$_ForgotPasswordUndefined);
   }
 
   @override

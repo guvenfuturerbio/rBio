@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'login_exception.dart';
@@ -11,39 +12,7 @@ part of 'login_exception.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LoginExceptionsTearOff {
-  const _$LoginExceptionsTearOff();
-
-  _LoginInvalidUser invalidUser() {
-    return const _LoginInvalidUser();
-  }
-
-  _LoginAccountNotFullySetUp accountNotFullySetUp() {
-    return const _LoginAccountNotFullySetUp();
-  }
-
-  _LoginAccountDisabled accountDisabled() {
-    return const _LoginAccountDisabled();
-  }
-
-  _LoginServerError serverError() {
-    return const _LoginServerError();
-  }
-
-  _LoginNetworkError networkError() {
-    return const _LoginNetworkError();
-  }
-
-  _LoginUndefined undefined() {
-    return const _LoginUndefined();
-  }
-}
-
-/// @nodoc
-const $LoginExceptions = _$LoginExceptionsTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LoginExceptions {
@@ -130,22 +99,22 @@ class _$LoginExceptionsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$LoginInvalidUserCopyWith<$Res> {
-  factory _$LoginInvalidUserCopyWith(
-          _LoginInvalidUser value, $Res Function(_LoginInvalidUser) then) =
-      __$LoginInvalidUserCopyWithImpl<$Res>;
+abstract class _$$_LoginInvalidUserCopyWith<$Res> {
+  factory _$$_LoginInvalidUserCopyWith(
+          _$_LoginInvalidUser value, $Res Function(_$_LoginInvalidUser) then) =
+      __$$_LoginInvalidUserCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoginInvalidUserCopyWithImpl<$Res>
+class __$$_LoginInvalidUserCopyWithImpl<$Res>
     extends _$LoginExceptionsCopyWithImpl<$Res>
-    implements _$LoginInvalidUserCopyWith<$Res> {
-  __$LoginInvalidUserCopyWithImpl(
-      _LoginInvalidUser _value, $Res Function(_LoginInvalidUser) _then)
-      : super(_value, (v) => _then(v as _LoginInvalidUser));
+    implements _$$_LoginInvalidUserCopyWith<$Res> {
+  __$$_LoginInvalidUserCopyWithImpl(
+      _$_LoginInvalidUser _value, $Res Function(_$_LoginInvalidUser) _then)
+      : super(_value, (v) => _then(v as _$_LoginInvalidUser));
 
   @override
-  _LoginInvalidUser get _value => super._value as _LoginInvalidUser;
+  _$_LoginInvalidUser get _value => super._value as _$_LoginInvalidUser;
 }
 
 /// @nodoc
@@ -161,7 +130,7 @@ class _$_LoginInvalidUser implements _LoginInvalidUser {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoginInvalidUser);
+        (other.runtimeType == runtimeType && other is _$_LoginInvalidUser);
   }
 
   @override
@@ -260,23 +229,25 @@ abstract class _LoginInvalidUser implements LoginExceptions {
 }
 
 /// @nodoc
-abstract class _$LoginAccountNotFullySetUpCopyWith<$Res> {
-  factory _$LoginAccountNotFullySetUpCopyWith(_LoginAccountNotFullySetUp value,
-          $Res Function(_LoginAccountNotFullySetUp) then) =
-      __$LoginAccountNotFullySetUpCopyWithImpl<$Res>;
+abstract class _$$_LoginAccountNotFullySetUpCopyWith<$Res> {
+  factory _$$_LoginAccountNotFullySetUpCopyWith(
+          _$_LoginAccountNotFullySetUp value,
+          $Res Function(_$_LoginAccountNotFullySetUp) then) =
+      __$$_LoginAccountNotFullySetUpCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoginAccountNotFullySetUpCopyWithImpl<$Res>
+class __$$_LoginAccountNotFullySetUpCopyWithImpl<$Res>
     extends _$LoginExceptionsCopyWithImpl<$Res>
-    implements _$LoginAccountNotFullySetUpCopyWith<$Res> {
-  __$LoginAccountNotFullySetUpCopyWithImpl(_LoginAccountNotFullySetUp _value,
-      $Res Function(_LoginAccountNotFullySetUp) _then)
-      : super(_value, (v) => _then(v as _LoginAccountNotFullySetUp));
+    implements _$$_LoginAccountNotFullySetUpCopyWith<$Res> {
+  __$$_LoginAccountNotFullySetUpCopyWithImpl(
+      _$_LoginAccountNotFullySetUp _value,
+      $Res Function(_$_LoginAccountNotFullySetUp) _then)
+      : super(_value, (v) => _then(v as _$_LoginAccountNotFullySetUp));
 
   @override
-  _LoginAccountNotFullySetUp get _value =>
-      super._value as _LoginAccountNotFullySetUp;
+  _$_LoginAccountNotFullySetUp get _value =>
+      super._value as _$_LoginAccountNotFullySetUp;
 }
 
 /// @nodoc
@@ -293,7 +264,7 @@ class _$_LoginAccountNotFullySetUp implements _LoginAccountNotFullySetUp {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LoginAccountNotFullySetUp);
+            other is _$_LoginAccountNotFullySetUp);
   }
 
   @override
@@ -392,22 +363,22 @@ abstract class _LoginAccountNotFullySetUp implements LoginExceptions {
 }
 
 /// @nodoc
-abstract class _$LoginAccountDisabledCopyWith<$Res> {
-  factory _$LoginAccountDisabledCopyWith(_LoginAccountDisabled value,
-          $Res Function(_LoginAccountDisabled) then) =
-      __$LoginAccountDisabledCopyWithImpl<$Res>;
+abstract class _$$_LoginAccountDisabledCopyWith<$Res> {
+  factory _$$_LoginAccountDisabledCopyWith(_$_LoginAccountDisabled value,
+          $Res Function(_$_LoginAccountDisabled) then) =
+      __$$_LoginAccountDisabledCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoginAccountDisabledCopyWithImpl<$Res>
+class __$$_LoginAccountDisabledCopyWithImpl<$Res>
     extends _$LoginExceptionsCopyWithImpl<$Res>
-    implements _$LoginAccountDisabledCopyWith<$Res> {
-  __$LoginAccountDisabledCopyWithImpl(
-      _LoginAccountDisabled _value, $Res Function(_LoginAccountDisabled) _then)
-      : super(_value, (v) => _then(v as _LoginAccountDisabled));
+    implements _$$_LoginAccountDisabledCopyWith<$Res> {
+  __$$_LoginAccountDisabledCopyWithImpl(_$_LoginAccountDisabled _value,
+      $Res Function(_$_LoginAccountDisabled) _then)
+      : super(_value, (v) => _then(v as _$_LoginAccountDisabled));
 
   @override
-  _LoginAccountDisabled get _value => super._value as _LoginAccountDisabled;
+  _$_LoginAccountDisabled get _value => super._value as _$_LoginAccountDisabled;
 }
 
 /// @nodoc
@@ -423,7 +394,7 @@ class _$_LoginAccountDisabled implements _LoginAccountDisabled {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoginAccountDisabled);
+        (other.runtimeType == runtimeType && other is _$_LoginAccountDisabled);
   }
 
   @override
@@ -522,22 +493,22 @@ abstract class _LoginAccountDisabled implements LoginExceptions {
 }
 
 /// @nodoc
-abstract class _$LoginServerErrorCopyWith<$Res> {
-  factory _$LoginServerErrorCopyWith(
-          _LoginServerError value, $Res Function(_LoginServerError) then) =
-      __$LoginServerErrorCopyWithImpl<$Res>;
+abstract class _$$_LoginServerErrorCopyWith<$Res> {
+  factory _$$_LoginServerErrorCopyWith(
+          _$_LoginServerError value, $Res Function(_$_LoginServerError) then) =
+      __$$_LoginServerErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoginServerErrorCopyWithImpl<$Res>
+class __$$_LoginServerErrorCopyWithImpl<$Res>
     extends _$LoginExceptionsCopyWithImpl<$Res>
-    implements _$LoginServerErrorCopyWith<$Res> {
-  __$LoginServerErrorCopyWithImpl(
-      _LoginServerError _value, $Res Function(_LoginServerError) _then)
-      : super(_value, (v) => _then(v as _LoginServerError));
+    implements _$$_LoginServerErrorCopyWith<$Res> {
+  __$$_LoginServerErrorCopyWithImpl(
+      _$_LoginServerError _value, $Res Function(_$_LoginServerError) _then)
+      : super(_value, (v) => _then(v as _$_LoginServerError));
 
   @override
-  _LoginServerError get _value => super._value as _LoginServerError;
+  _$_LoginServerError get _value => super._value as _$_LoginServerError;
 }
 
 /// @nodoc
@@ -553,7 +524,7 @@ class _$_LoginServerError implements _LoginServerError {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoginServerError);
+        (other.runtimeType == runtimeType && other is _$_LoginServerError);
   }
 
   @override
@@ -652,22 +623,22 @@ abstract class _LoginServerError implements LoginExceptions {
 }
 
 /// @nodoc
-abstract class _$LoginNetworkErrorCopyWith<$Res> {
-  factory _$LoginNetworkErrorCopyWith(
-          _LoginNetworkError value, $Res Function(_LoginNetworkError) then) =
-      __$LoginNetworkErrorCopyWithImpl<$Res>;
+abstract class _$$_LoginNetworkErrorCopyWith<$Res> {
+  factory _$$_LoginNetworkErrorCopyWith(_$_LoginNetworkError value,
+          $Res Function(_$_LoginNetworkError) then) =
+      __$$_LoginNetworkErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoginNetworkErrorCopyWithImpl<$Res>
+class __$$_LoginNetworkErrorCopyWithImpl<$Res>
     extends _$LoginExceptionsCopyWithImpl<$Res>
-    implements _$LoginNetworkErrorCopyWith<$Res> {
-  __$LoginNetworkErrorCopyWithImpl(
-      _LoginNetworkError _value, $Res Function(_LoginNetworkError) _then)
-      : super(_value, (v) => _then(v as _LoginNetworkError));
+    implements _$$_LoginNetworkErrorCopyWith<$Res> {
+  __$$_LoginNetworkErrorCopyWithImpl(
+      _$_LoginNetworkError _value, $Res Function(_$_LoginNetworkError) _then)
+      : super(_value, (v) => _then(v as _$_LoginNetworkError));
 
   @override
-  _LoginNetworkError get _value => super._value as _LoginNetworkError;
+  _$_LoginNetworkError get _value => super._value as _$_LoginNetworkError;
 }
 
 /// @nodoc
@@ -683,7 +654,7 @@ class _$_LoginNetworkError implements _LoginNetworkError {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoginNetworkError);
+        (other.runtimeType == runtimeType && other is _$_LoginNetworkError);
   }
 
   @override
@@ -782,22 +753,22 @@ abstract class _LoginNetworkError implements LoginExceptions {
 }
 
 /// @nodoc
-abstract class _$LoginUndefinedCopyWith<$Res> {
-  factory _$LoginUndefinedCopyWith(
-          _LoginUndefined value, $Res Function(_LoginUndefined) then) =
-      __$LoginUndefinedCopyWithImpl<$Res>;
+abstract class _$$_LoginUndefinedCopyWith<$Res> {
+  factory _$$_LoginUndefinedCopyWith(
+          _$_LoginUndefined value, $Res Function(_$_LoginUndefined) then) =
+      __$$_LoginUndefinedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoginUndefinedCopyWithImpl<$Res>
+class __$$_LoginUndefinedCopyWithImpl<$Res>
     extends _$LoginExceptionsCopyWithImpl<$Res>
-    implements _$LoginUndefinedCopyWith<$Res> {
-  __$LoginUndefinedCopyWithImpl(
-      _LoginUndefined _value, $Res Function(_LoginUndefined) _then)
-      : super(_value, (v) => _then(v as _LoginUndefined));
+    implements _$$_LoginUndefinedCopyWith<$Res> {
+  __$$_LoginUndefinedCopyWithImpl(
+      _$_LoginUndefined _value, $Res Function(_$_LoginUndefined) _then)
+      : super(_value, (v) => _then(v as _$_LoginUndefined));
 
   @override
-  _LoginUndefined get _value => super._value as _LoginUndefined;
+  _$_LoginUndefined get _value => super._value as _$_LoginUndefined;
 }
 
 /// @nodoc
@@ -813,7 +784,7 @@ class _$_LoginUndefined implements _LoginUndefined {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoginUndefined);
+        (other.runtimeType == runtimeType && other is _$_LoginUndefined);
   }
 
   @override

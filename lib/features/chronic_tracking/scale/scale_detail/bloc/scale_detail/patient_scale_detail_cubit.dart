@@ -1,16 +1,17 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../scale_detail.dart';
 
-part 'scale_detail_cubit.freezed.dart';
-part 'scale_detail_state.dart';
+part 'patient_scale_detail_cubit.freezed.dart';
+part 'patient_scale_detail_state.dart';
 
-class ScaleDetailCubit extends Cubit<ScaleDetailState> {
-  ScaleDetailCubit() : super(const ScaleDetailState.initial());
+class PatientScaleDetailCubit extends Cubit<ScaleDetailState> {
+  PatientScaleDetailCubit() : super(const ScaleDetailState.initial());
 
   FutureOr<void> fetchAll() async {
     emit(const ScaleDetailState.loadInProgress());

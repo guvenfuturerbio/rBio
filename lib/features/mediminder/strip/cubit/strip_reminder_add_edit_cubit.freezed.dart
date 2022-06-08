@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'strip_reminder_add_edit_cubit.dart';
@@ -11,38 +12,7 @@ part of 'strip_reminder_add_edit_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$StripReminderAddEditCubitStateTearOff {
-  const _$StripReminderAddEditCubitStateTearOff();
-
-  _InitialState initial() {
-    return const _InitialState();
-  }
-
-  _LoadInProgress loadInProgress() {
-    return const _LoadInProgress();
-  }
-
-  _SuccessState success(StripReminderAddEditResult result) {
-    return _SuccessState(
-      result,
-    );
-  }
-
-  _Failure failure() {
-    return const _Failure();
-  }
-
-  _ShowSuccessMessage showSuccessMessage() {
-    return const _ShowSuccessMessage();
-  }
-}
-
-/// @nodoc
-const $StripReminderAddEditCubitState =
-    _$StripReminderAddEditCubitStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$StripReminderAddEditCubitState {
@@ -123,22 +93,22 @@ class _$StripReminderAddEditCubitStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialStateCopyWith<$Res> {
-  factory _$InitialStateCopyWith(
-          _InitialState value, $Res Function(_InitialState) then) =
-      __$InitialStateCopyWithImpl<$Res>;
+abstract class _$$_InitialStateCopyWith<$Res> {
+  factory _$$_InitialStateCopyWith(
+          _$_InitialState value, $Res Function(_$_InitialState) then) =
+      __$$_InitialStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialStateCopyWithImpl<$Res>
+class __$$_InitialStateCopyWithImpl<$Res>
     extends _$StripReminderAddEditCubitStateCopyWithImpl<$Res>
-    implements _$InitialStateCopyWith<$Res> {
-  __$InitialStateCopyWithImpl(
-      _InitialState _value, $Res Function(_InitialState) _then)
-      : super(_value, (v) => _then(v as _InitialState));
+    implements _$$_InitialStateCopyWith<$Res> {
+  __$$_InitialStateCopyWithImpl(
+      _$_InitialState _value, $Res Function(_$_InitialState) _then)
+      : super(_value, (v) => _then(v as _$_InitialState));
 
   @override
-  _InitialState get _value => super._value as _InitialState;
+  _$_InitialState get _value => super._value as _$_InitialState;
 }
 
 /// @nodoc
@@ -154,7 +124,7 @@ class _$_InitialState implements _InitialState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _InitialState);
+        (other.runtimeType == runtimeType && other is _$_InitialState);
   }
 
   @override
@@ -246,22 +216,22 @@ abstract class _InitialState implements StripReminderAddEditCubitState {
 }
 
 /// @nodoc
-abstract class _$LoadInProgressCopyWith<$Res> {
-  factory _$LoadInProgressCopyWith(
-          _LoadInProgress value, $Res Function(_LoadInProgress) then) =
-      __$LoadInProgressCopyWithImpl<$Res>;
+abstract class _$$_LoadInProgressCopyWith<$Res> {
+  factory _$$_LoadInProgressCopyWith(
+          _$_LoadInProgress value, $Res Function(_$_LoadInProgress) then) =
+      __$$_LoadInProgressCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadInProgressCopyWithImpl<$Res>
+class __$$_LoadInProgressCopyWithImpl<$Res>
     extends _$StripReminderAddEditCubitStateCopyWithImpl<$Res>
-    implements _$LoadInProgressCopyWith<$Res> {
-  __$LoadInProgressCopyWithImpl(
-      _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
-      : super(_value, (v) => _then(v as _LoadInProgress));
+    implements _$$_LoadInProgressCopyWith<$Res> {
+  __$$_LoadInProgressCopyWithImpl(
+      _$_LoadInProgress _value, $Res Function(_$_LoadInProgress) _then)
+      : super(_value, (v) => _then(v as _$_LoadInProgress));
 
   @override
-  _LoadInProgress get _value => super._value as _LoadInProgress;
+  _$_LoadInProgress get _value => super._value as _$_LoadInProgress;
 }
 
 /// @nodoc
@@ -277,7 +247,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoadInProgress);
+        (other.runtimeType == runtimeType && other is _$_LoadInProgress);
   }
 
   @override
@@ -369,29 +339,29 @@ abstract class _LoadInProgress implements StripReminderAddEditCubitState {
 }
 
 /// @nodoc
-abstract class _$SuccessStateCopyWith<$Res> {
-  factory _$SuccessStateCopyWith(
-          _SuccessState value, $Res Function(_SuccessState) then) =
-      __$SuccessStateCopyWithImpl<$Res>;
+abstract class _$$_SuccessStateCopyWith<$Res> {
+  factory _$$_SuccessStateCopyWith(
+          _$_SuccessState value, $Res Function(_$_SuccessState) then) =
+      __$$_SuccessStateCopyWithImpl<$Res>;
   $Res call({StripReminderAddEditResult result});
 }
 
 /// @nodoc
-class __$SuccessStateCopyWithImpl<$Res>
+class __$$_SuccessStateCopyWithImpl<$Res>
     extends _$StripReminderAddEditCubitStateCopyWithImpl<$Res>
-    implements _$SuccessStateCopyWith<$Res> {
-  __$SuccessStateCopyWithImpl(
-      _SuccessState _value, $Res Function(_SuccessState) _then)
-      : super(_value, (v) => _then(v as _SuccessState));
+    implements _$$_SuccessStateCopyWith<$Res> {
+  __$$_SuccessStateCopyWithImpl(
+      _$_SuccessState _value, $Res Function(_$_SuccessState) _then)
+      : super(_value, (v) => _then(v as _$_SuccessState));
 
   @override
-  _SuccessState get _value => super._value as _SuccessState;
+  _$_SuccessState get _value => super._value as _$_SuccessState;
 
   @override
   $Res call({
     Object? result = freezed,
   }) {
-    return _then(_SuccessState(
+    return _then(_$_SuccessState(
       result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
@@ -417,7 +387,7 @@ class _$_SuccessState implements _SuccessState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SuccessState &&
+            other is _$_SuccessState &&
             const DeepCollectionEquality().equals(other.result, result));
   }
 
@@ -427,8 +397,8 @@ class _$_SuccessState implements _SuccessState {
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessStateCopyWith<_SuccessState> get copyWith =>
-      __$SuccessStateCopyWithImpl<_SuccessState>(this, _$identity);
+  _$$_SuccessStateCopyWith<_$_SuccessState> get copyWith =>
+      __$$_SuccessStateCopyWithImpl<_$_SuccessState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -512,30 +482,31 @@ class _$_SuccessState implements _SuccessState {
 }
 
 abstract class _SuccessState implements StripReminderAddEditCubitState {
-  const factory _SuccessState(StripReminderAddEditResult result) =
+  const factory _SuccessState(final StripReminderAddEditResult result) =
       _$_SuccessState;
 
-  StripReminderAddEditResult get result;
+  StripReminderAddEditResult get result => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$SuccessStateCopyWith<_SuccessState> get copyWith =>
+  _$$_SuccessStateCopyWith<_$_SuccessState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$FailureCopyWith<$Res> {
-  factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) then) =
-      __$FailureCopyWithImpl<$Res>;
+abstract class _$$_FailureCopyWith<$Res> {
+  factory _$$_FailureCopyWith(
+          _$_Failure value, $Res Function(_$_Failure) then) =
+      __$$_FailureCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$FailureCopyWithImpl<$Res>
+class __$$_FailureCopyWithImpl<$Res>
     extends _$StripReminderAddEditCubitStateCopyWithImpl<$Res>
-    implements _$FailureCopyWith<$Res> {
-  __$FailureCopyWithImpl(_Failure _value, $Res Function(_Failure) _then)
-      : super(_value, (v) => _then(v as _Failure));
+    implements _$$_FailureCopyWith<$Res> {
+  __$$_FailureCopyWithImpl(_$_Failure _value, $Res Function(_$_Failure) _then)
+      : super(_value, (v) => _then(v as _$_Failure));
 
   @override
-  _Failure get _value => super._value as _Failure;
+  _$_Failure get _value => super._value as _$_Failure;
 }
 
 /// @nodoc
@@ -551,7 +522,7 @@ class _$_Failure implements _Failure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Failure);
+        (other.runtimeType == runtimeType && other is _$_Failure);
   }
 
   @override
@@ -643,22 +614,22 @@ abstract class _Failure implements StripReminderAddEditCubitState {
 }
 
 /// @nodoc
-abstract class _$ShowSuccessMessageCopyWith<$Res> {
-  factory _$ShowSuccessMessageCopyWith(
-          _ShowSuccessMessage value, $Res Function(_ShowSuccessMessage) then) =
-      __$ShowSuccessMessageCopyWithImpl<$Res>;
+abstract class _$$_ShowSuccessMessageCopyWith<$Res> {
+  factory _$$_ShowSuccessMessageCopyWith(_$_ShowSuccessMessage value,
+          $Res Function(_$_ShowSuccessMessage) then) =
+      __$$_ShowSuccessMessageCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ShowSuccessMessageCopyWithImpl<$Res>
+class __$$_ShowSuccessMessageCopyWithImpl<$Res>
     extends _$StripReminderAddEditCubitStateCopyWithImpl<$Res>
-    implements _$ShowSuccessMessageCopyWith<$Res> {
-  __$ShowSuccessMessageCopyWithImpl(
-      _ShowSuccessMessage _value, $Res Function(_ShowSuccessMessage) _then)
-      : super(_value, (v) => _then(v as _ShowSuccessMessage));
+    implements _$$_ShowSuccessMessageCopyWith<$Res> {
+  __$$_ShowSuccessMessageCopyWithImpl(
+      _$_ShowSuccessMessage _value, $Res Function(_$_ShowSuccessMessage) _then)
+      : super(_value, (v) => _then(v as _$_ShowSuccessMessage));
 
   @override
-  _ShowSuccessMessage get _value => super._value as _ShowSuccessMessage;
+  _$_ShowSuccessMessage get _value => super._value as _$_ShowSuccessMessage;
 }
 
 /// @nodoc
@@ -674,7 +645,7 @@ class _$_ShowSuccessMessage implements _ShowSuccessMessage {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _ShowSuccessMessage);
+        (other.runtimeType == runtimeType && other is _$_ShowSuccessMessage);
   }
 
   @override
