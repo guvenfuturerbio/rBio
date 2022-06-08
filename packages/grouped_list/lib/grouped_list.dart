@@ -265,7 +265,7 @@ class _GroupedListViewState<T, E> extends State<GroupedListView<T, E>> {
         widget.reverse ? (int i) => i.isOdd : (int i) => i.isEven;
 
     if (widget.reverse) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         _scrollListener();
       });
     }

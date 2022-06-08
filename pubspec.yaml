@@ -31,6 +31,8 @@ dependency_overrides:
     path: ./packages/shared_preferences_manager
   local_notification_manager:
     path: ./packages/local_notification_manager
+  keyboard_avoider:
+    path: ./packages/keyboard_avoider-fix-mounted-bug
 
 dependencies:
   adjust_sdk: ^4.29.2
@@ -99,10 +101,6 @@ dependencies:
   jiffy: ^5.0.0
   jitsi_meet_platform_interface: ^2.0.0
   jitsi_meet_wrapper: ^0.0.2
-  keyboard_avoider:
-    git:
-      url: https://github.com/ryanheise/keyboard_avoider.git
-      ref: fix/mounted-bug
   loading_animations: ^2.2.0
   logger: ^1.1.0
   mask_text_input_formatter: ^2.3.0
