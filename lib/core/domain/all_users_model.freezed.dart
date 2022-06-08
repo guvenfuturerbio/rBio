@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'all_users_model.dart';
@@ -11,29 +12,11 @@ part of 'all_users_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 AllUsersModel _$AllUsersModelFromJson(Map<String, dynamic> json) {
   return _AllUsersModel.fromJson(json);
 }
-
-/// @nodoc
-class _$AllUsersModelTearOff {
-  const _$AllUsersModelTearOff();
-
-  _AllUsersModel call({@JsonKey(name: 'useWidgets') List<String>? useWidgets}) {
-    return _AllUsersModel(
-      useWidgets: useWidgets,
-    );
-  }
-
-  AllUsersModel fromJson(Map<String, Object?> json) {
-    return AllUsersModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AllUsersModel = _$AllUsersModelTearOff();
 
 /// @nodoc
 mixin _$AllUsersModel {
@@ -77,33 +60,33 @@ class _$AllUsersModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$AllUsersModelCopyWith<$Res>
+abstract class _$$_AllUsersModelCopyWith<$Res>
     implements $AllUsersModelCopyWith<$Res> {
-  factory _$AllUsersModelCopyWith(
-          _AllUsersModel value, $Res Function(_AllUsersModel) then) =
-      __$AllUsersModelCopyWithImpl<$Res>;
+  factory _$$_AllUsersModelCopyWith(
+          _$_AllUsersModel value, $Res Function(_$_AllUsersModel) then) =
+      __$$_AllUsersModelCopyWithImpl<$Res>;
   @override
   $Res call({@JsonKey(name: 'useWidgets') List<String>? useWidgets});
 }
 
 /// @nodoc
-class __$AllUsersModelCopyWithImpl<$Res>
+class __$$_AllUsersModelCopyWithImpl<$Res>
     extends _$AllUsersModelCopyWithImpl<$Res>
-    implements _$AllUsersModelCopyWith<$Res> {
-  __$AllUsersModelCopyWithImpl(
-      _AllUsersModel _value, $Res Function(_AllUsersModel) _then)
-      : super(_value, (v) => _then(v as _AllUsersModel));
+    implements _$$_AllUsersModelCopyWith<$Res> {
+  __$$_AllUsersModelCopyWithImpl(
+      _$_AllUsersModel _value, $Res Function(_$_AllUsersModel) _then)
+      : super(_value, (v) => _then(v as _$_AllUsersModel));
 
   @override
-  _AllUsersModel get _value => super._value as _AllUsersModel;
+  _$_AllUsersModel get _value => super._value as _$_AllUsersModel;
 
   @override
   $Res call({
     Object? useWidgets = freezed,
   }) {
-    return _then(_AllUsersModel(
+    return _then(_$_AllUsersModel(
       useWidgets: useWidgets == freezed
-          ? _value.useWidgets
+          ? _value._useWidgets
           : useWidgets // ignore: cast_nullable_to_non_nullable
               as List<String>?,
     ));
@@ -113,14 +96,22 @@ class __$AllUsersModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AllUsersModel implements _AllUsersModel {
-  const _$_AllUsersModel({@JsonKey(name: 'useWidgets') this.useWidgets});
+  const _$_AllUsersModel(
+      {@JsonKey(name: 'useWidgets') final List<String>? useWidgets})
+      : _useWidgets = useWidgets;
 
   factory _$_AllUsersModel.fromJson(Map<String, dynamic> json) =>
       _$$_AllUsersModelFromJson(json);
 
+  final List<String>? _useWidgets;
   @override
   @JsonKey(name: 'useWidgets')
-  final List<String>? useWidgets;
+  List<String>? get useWidgets {
+    final value = _useWidgets;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -131,19 +122,20 @@ class _$_AllUsersModel implements _AllUsersModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AllUsersModel &&
+            other is _$_AllUsersModel &&
             const DeepCollectionEquality()
-                .equals(other.useWidgets, useWidgets));
+                .equals(other._useWidgets, _useWidgets));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(useWidgets));
 
   @JsonKey(ignore: true)
   @override
-  _$AllUsersModelCopyWith<_AllUsersModel> get copyWith =>
-      __$AllUsersModelCopyWithImpl<_AllUsersModel>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_useWidgets));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AllUsersModelCopyWith<_$_AllUsersModel> get copyWith =>
+      __$$_AllUsersModelCopyWithImpl<_$_AllUsersModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -153,7 +145,7 @@ class _$_AllUsersModel implements _AllUsersModel {
 
 abstract class _AllUsersModel implements AllUsersModel {
   const factory _AllUsersModel(
-          {@JsonKey(name: 'useWidgets') List<String>? useWidgets}) =
+          {@JsonKey(name: 'useWidgets') final List<String>? useWidgets}) =
       _$_AllUsersModel;
 
   factory _AllUsersModel.fromJson(Map<String, dynamic> json) =
@@ -161,9 +153,9 @@ abstract class _AllUsersModel implements AllUsersModel {
 
   @override
   @JsonKey(name: 'useWidgets')
-  List<String>? get useWidgets;
+  List<String>? get useWidgets => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$AllUsersModelCopyWith<_AllUsersModel> get copyWith =>
+  _$$_AllUsersModelCopyWith<_$_AllUsersModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

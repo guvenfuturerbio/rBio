@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'change_password_exception.dart';
@@ -11,31 +12,7 @@ part of 'change_password_exception.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ChangePasswordExceptionsTearOff {
-  const _$ChangePasswordExceptionsTearOff();
-
-  _ChangePasswordOldError oldError() {
-    return const _ChangePasswordOldError();
-  }
-
-  _ChangePasswordConfirmError confirmError() {
-    return const _ChangePasswordConfirmError();
-  }
-
-  _ChangePasswordSystemError systemError() {
-    return const _ChangePasswordSystemError();
-  }
-
-  _ChangePasswordUndefined undefined() {
-    return const _ChangePasswordUndefined();
-  }
-}
-
-/// @nodoc
-const $ChangePasswordExceptions = _$ChangePasswordExceptionsTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ChangePasswordExceptions {
@@ -109,22 +86,23 @@ class _$ChangePasswordExceptionsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ChangePasswordOldErrorCopyWith<$Res> {
-  factory _$ChangePasswordOldErrorCopyWith(_ChangePasswordOldError value,
-          $Res Function(_ChangePasswordOldError) then) =
-      __$ChangePasswordOldErrorCopyWithImpl<$Res>;
+abstract class _$$_ChangePasswordOldErrorCopyWith<$Res> {
+  factory _$$_ChangePasswordOldErrorCopyWith(_$_ChangePasswordOldError value,
+          $Res Function(_$_ChangePasswordOldError) then) =
+      __$$_ChangePasswordOldErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ChangePasswordOldErrorCopyWithImpl<$Res>
+class __$$_ChangePasswordOldErrorCopyWithImpl<$Res>
     extends _$ChangePasswordExceptionsCopyWithImpl<$Res>
-    implements _$ChangePasswordOldErrorCopyWith<$Res> {
-  __$ChangePasswordOldErrorCopyWithImpl(_ChangePasswordOldError _value,
-      $Res Function(_ChangePasswordOldError) _then)
-      : super(_value, (v) => _then(v as _ChangePasswordOldError));
+    implements _$$_ChangePasswordOldErrorCopyWith<$Res> {
+  __$$_ChangePasswordOldErrorCopyWithImpl(_$_ChangePasswordOldError _value,
+      $Res Function(_$_ChangePasswordOldError) _then)
+      : super(_value, (v) => _then(v as _$_ChangePasswordOldError));
 
   @override
-  _ChangePasswordOldError get _value => super._value as _ChangePasswordOldError;
+  _$_ChangePasswordOldError get _value =>
+      super._value as _$_ChangePasswordOldError;
 }
 
 /// @nodoc
@@ -140,7 +118,8 @@ class _$_ChangePasswordOldError implements _ChangePasswordOldError {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _ChangePasswordOldError);
+        (other.runtimeType == runtimeType &&
+            other is _$_ChangePasswordOldError);
   }
 
   @override
@@ -226,24 +205,25 @@ abstract class _ChangePasswordOldError implements ChangePasswordExceptions {
 }
 
 /// @nodoc
-abstract class _$ChangePasswordConfirmErrorCopyWith<$Res> {
-  factory _$ChangePasswordConfirmErrorCopyWith(
-          _ChangePasswordConfirmError value,
-          $Res Function(_ChangePasswordConfirmError) then) =
-      __$ChangePasswordConfirmErrorCopyWithImpl<$Res>;
+abstract class _$$_ChangePasswordConfirmErrorCopyWith<$Res> {
+  factory _$$_ChangePasswordConfirmErrorCopyWith(
+          _$_ChangePasswordConfirmError value,
+          $Res Function(_$_ChangePasswordConfirmError) then) =
+      __$$_ChangePasswordConfirmErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ChangePasswordConfirmErrorCopyWithImpl<$Res>
+class __$$_ChangePasswordConfirmErrorCopyWithImpl<$Res>
     extends _$ChangePasswordExceptionsCopyWithImpl<$Res>
-    implements _$ChangePasswordConfirmErrorCopyWith<$Res> {
-  __$ChangePasswordConfirmErrorCopyWithImpl(_ChangePasswordConfirmError _value,
-      $Res Function(_ChangePasswordConfirmError) _then)
-      : super(_value, (v) => _then(v as _ChangePasswordConfirmError));
+    implements _$$_ChangePasswordConfirmErrorCopyWith<$Res> {
+  __$$_ChangePasswordConfirmErrorCopyWithImpl(
+      _$_ChangePasswordConfirmError _value,
+      $Res Function(_$_ChangePasswordConfirmError) _then)
+      : super(_value, (v) => _then(v as _$_ChangePasswordConfirmError));
 
   @override
-  _ChangePasswordConfirmError get _value =>
-      super._value as _ChangePasswordConfirmError;
+  _$_ChangePasswordConfirmError get _value =>
+      super._value as _$_ChangePasswordConfirmError;
 }
 
 /// @nodoc
@@ -260,7 +240,7 @@ class _$_ChangePasswordConfirmError implements _ChangePasswordConfirmError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ChangePasswordConfirmError);
+            other is _$_ChangePasswordConfirmError);
   }
 
   @override
@@ -346,23 +326,25 @@ abstract class _ChangePasswordConfirmError implements ChangePasswordExceptions {
 }
 
 /// @nodoc
-abstract class _$ChangePasswordSystemErrorCopyWith<$Res> {
-  factory _$ChangePasswordSystemErrorCopyWith(_ChangePasswordSystemError value,
-          $Res Function(_ChangePasswordSystemError) then) =
-      __$ChangePasswordSystemErrorCopyWithImpl<$Res>;
+abstract class _$$_ChangePasswordSystemErrorCopyWith<$Res> {
+  factory _$$_ChangePasswordSystemErrorCopyWith(
+          _$_ChangePasswordSystemError value,
+          $Res Function(_$_ChangePasswordSystemError) then) =
+      __$$_ChangePasswordSystemErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ChangePasswordSystemErrorCopyWithImpl<$Res>
+class __$$_ChangePasswordSystemErrorCopyWithImpl<$Res>
     extends _$ChangePasswordExceptionsCopyWithImpl<$Res>
-    implements _$ChangePasswordSystemErrorCopyWith<$Res> {
-  __$ChangePasswordSystemErrorCopyWithImpl(_ChangePasswordSystemError _value,
-      $Res Function(_ChangePasswordSystemError) _then)
-      : super(_value, (v) => _then(v as _ChangePasswordSystemError));
+    implements _$$_ChangePasswordSystemErrorCopyWith<$Res> {
+  __$$_ChangePasswordSystemErrorCopyWithImpl(
+      _$_ChangePasswordSystemError _value,
+      $Res Function(_$_ChangePasswordSystemError) _then)
+      : super(_value, (v) => _then(v as _$_ChangePasswordSystemError));
 
   @override
-  _ChangePasswordSystemError get _value =>
-      super._value as _ChangePasswordSystemError;
+  _$_ChangePasswordSystemError get _value =>
+      super._value as _$_ChangePasswordSystemError;
 }
 
 /// @nodoc
@@ -379,7 +361,7 @@ class _$_ChangePasswordSystemError implements _ChangePasswordSystemError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ChangePasswordSystemError);
+            other is _$_ChangePasswordSystemError);
   }
 
   @override
@@ -465,23 +447,23 @@ abstract class _ChangePasswordSystemError implements ChangePasswordExceptions {
 }
 
 /// @nodoc
-abstract class _$ChangePasswordUndefinedCopyWith<$Res> {
-  factory _$ChangePasswordUndefinedCopyWith(_ChangePasswordUndefined value,
-          $Res Function(_ChangePasswordUndefined) then) =
-      __$ChangePasswordUndefinedCopyWithImpl<$Res>;
+abstract class _$$_ChangePasswordUndefinedCopyWith<$Res> {
+  factory _$$_ChangePasswordUndefinedCopyWith(_$_ChangePasswordUndefined value,
+          $Res Function(_$_ChangePasswordUndefined) then) =
+      __$$_ChangePasswordUndefinedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ChangePasswordUndefinedCopyWithImpl<$Res>
+class __$$_ChangePasswordUndefinedCopyWithImpl<$Res>
     extends _$ChangePasswordExceptionsCopyWithImpl<$Res>
-    implements _$ChangePasswordUndefinedCopyWith<$Res> {
-  __$ChangePasswordUndefinedCopyWithImpl(_ChangePasswordUndefined _value,
-      $Res Function(_ChangePasswordUndefined) _then)
-      : super(_value, (v) => _then(v as _ChangePasswordUndefined));
+    implements _$$_ChangePasswordUndefinedCopyWith<$Res> {
+  __$$_ChangePasswordUndefinedCopyWithImpl(_$_ChangePasswordUndefined _value,
+      $Res Function(_$_ChangePasswordUndefined) _then)
+      : super(_value, (v) => _then(v as _$_ChangePasswordUndefined));
 
   @override
-  _ChangePasswordUndefined get _value =>
-      super._value as _ChangePasswordUndefined;
+  _$_ChangePasswordUndefined get _value =>
+      super._value as _$_ChangePasswordUndefined;
 }
 
 /// @nodoc
@@ -497,7 +479,8 @@ class _$_ChangePasswordUndefined implements _ChangePasswordUndefined {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _ChangePasswordUndefined);
+        (other.runtimeType == runtimeType &&
+            other is _$_ChangePasswordUndefined);
   }
 
   @override

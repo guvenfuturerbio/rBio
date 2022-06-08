@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'scale_doctor_loaded_result.dart';
@@ -11,35 +12,12 @@ part of 'scale_doctor_loaded_result.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ScaleDoctorLoadedResult _$ScaleDoctorLoadedResultFromJson(
     Map<String, dynamic> json) {
   return _ScaleDoctorLoadedResult.fromJson(json);
 }
-
-/// @nodoc
-class _$ScaleDoctorLoadedResultTearOff {
-  const _$ScaleDoctorLoadedResultTearOff();
-
-  _ScaleDoctorLoadedResult call(
-      {bool isChartVisible = false,
-      GraphTypes graphType = GraphTypes.weight,
-      required List<PatientScaleMeasurement> patientScaleMeasurements}) {
-    return _ScaleDoctorLoadedResult(
-      isChartVisible: isChartVisible,
-      graphType: graphType,
-      patientScaleMeasurements: patientScaleMeasurements,
-    );
-  }
-
-  ScaleDoctorLoadedResult fromJson(Map<String, Object?> json) {
-    return ScaleDoctorLoadedResult.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ScaleDoctorLoadedResult = _$ScaleDoctorLoadedResultTearOff();
 
 /// @nodoc
 mixin _$ScaleDoctorLoadedResult {
@@ -98,11 +76,11 @@ class _$ScaleDoctorLoadedResultCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ScaleDoctorLoadedResultCopyWith<$Res>
+abstract class _$$_ScaleDoctorLoadedResultCopyWith<$Res>
     implements $ScaleDoctorLoadedResultCopyWith<$Res> {
-  factory _$ScaleDoctorLoadedResultCopyWith(_ScaleDoctorLoadedResult value,
-          $Res Function(_ScaleDoctorLoadedResult) then) =
-      __$ScaleDoctorLoadedResultCopyWithImpl<$Res>;
+  factory _$$_ScaleDoctorLoadedResultCopyWith(_$_ScaleDoctorLoadedResult value,
+          $Res Function(_$_ScaleDoctorLoadedResult) then) =
+      __$$_ScaleDoctorLoadedResultCopyWithImpl<$Res>;
   @override
   $Res call(
       {bool isChartVisible,
@@ -111,16 +89,16 @@ abstract class _$ScaleDoctorLoadedResultCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ScaleDoctorLoadedResultCopyWithImpl<$Res>
+class __$$_ScaleDoctorLoadedResultCopyWithImpl<$Res>
     extends _$ScaleDoctorLoadedResultCopyWithImpl<$Res>
-    implements _$ScaleDoctorLoadedResultCopyWith<$Res> {
-  __$ScaleDoctorLoadedResultCopyWithImpl(_ScaleDoctorLoadedResult _value,
-      $Res Function(_ScaleDoctorLoadedResult) _then)
-      : super(_value, (v) => _then(v as _ScaleDoctorLoadedResult));
+    implements _$$_ScaleDoctorLoadedResultCopyWith<$Res> {
+  __$$_ScaleDoctorLoadedResultCopyWithImpl(_$_ScaleDoctorLoadedResult _value,
+      $Res Function(_$_ScaleDoctorLoadedResult) _then)
+      : super(_value, (v) => _then(v as _$_ScaleDoctorLoadedResult));
 
   @override
-  _ScaleDoctorLoadedResult get _value =>
-      super._value as _ScaleDoctorLoadedResult;
+  _$_ScaleDoctorLoadedResult get _value =>
+      super._value as _$_ScaleDoctorLoadedResult;
 
   @override
   $Res call({
@@ -128,7 +106,7 @@ class __$ScaleDoctorLoadedResultCopyWithImpl<$Res>
     Object? graphType = freezed,
     Object? patientScaleMeasurements = freezed,
   }) {
-    return _then(_ScaleDoctorLoadedResult(
+    return _then(_$_ScaleDoctorLoadedResult(
       isChartVisible: isChartVisible == freezed
           ? _value.isChartVisible
           : isChartVisible // ignore: cast_nullable_to_non_nullable
@@ -138,7 +116,7 @@ class __$ScaleDoctorLoadedResultCopyWithImpl<$Res>
           : graphType // ignore: cast_nullable_to_non_nullable
               as GraphTypes,
       patientScaleMeasurements: patientScaleMeasurements == freezed
-          ? _value.patientScaleMeasurements
+          ? _value._patientScaleMeasurements
           : patientScaleMeasurements // ignore: cast_nullable_to_non_nullable
               as List<PatientScaleMeasurement>,
     ));
@@ -151,19 +129,24 @@ class _$_ScaleDoctorLoadedResult implements _ScaleDoctorLoadedResult {
   const _$_ScaleDoctorLoadedResult(
       {this.isChartVisible = false,
       this.graphType = GraphTypes.weight,
-      required this.patientScaleMeasurements});
+      required final List<PatientScaleMeasurement> patientScaleMeasurements})
+      : _patientScaleMeasurements = patientScaleMeasurements;
 
   factory _$_ScaleDoctorLoadedResult.fromJson(Map<String, dynamic> json) =>
       _$$_ScaleDoctorLoadedResultFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isChartVisible;
+  @override
   @JsonKey()
-  @override
   final GraphTypes graphType;
+  final List<PatientScaleMeasurement> _patientScaleMeasurements;
   @override
-  final List<PatientScaleMeasurement> patientScaleMeasurements;
+  List<PatientScaleMeasurement> get patientScaleMeasurements {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_patientScaleMeasurements);
+  }
 
   @override
   String toString() {
@@ -174,26 +157,28 @@ class _$_ScaleDoctorLoadedResult implements _ScaleDoctorLoadedResult {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ScaleDoctorLoadedResult &&
+            other is _$_ScaleDoctorLoadedResult &&
             const DeepCollectionEquality()
                 .equals(other.isChartVisible, isChartVisible) &&
             const DeepCollectionEquality().equals(other.graphType, graphType) &&
             const DeepCollectionEquality().equals(
-                other.patientScaleMeasurements, patientScaleMeasurements));
+                other._patientScaleMeasurements, _patientScaleMeasurements));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(isChartVisible),
       const DeepCollectionEquality().hash(graphType),
-      const DeepCollectionEquality().hash(patientScaleMeasurements));
+      const DeepCollectionEquality().hash(_patientScaleMeasurements));
 
   @JsonKey(ignore: true)
   @override
-  _$ScaleDoctorLoadedResultCopyWith<_ScaleDoctorLoadedResult> get copyWith =>
-      __$ScaleDoctorLoadedResultCopyWithImpl<_ScaleDoctorLoadedResult>(
-          this, _$identity);
+  _$$_ScaleDoctorLoadedResultCopyWith<_$_ScaleDoctorLoadedResult>
+      get copyWith =>
+          __$$_ScaleDoctorLoadedResultCopyWithImpl<_$_ScaleDoctorLoadedResult>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -203,22 +188,23 @@ class _$_ScaleDoctorLoadedResult implements _ScaleDoctorLoadedResult {
 
 abstract class _ScaleDoctorLoadedResult implements ScaleDoctorLoadedResult {
   const factory _ScaleDoctorLoadedResult(
-          {bool isChartVisible,
-          GraphTypes graphType,
-          required List<PatientScaleMeasurement> patientScaleMeasurements}) =
-      _$_ScaleDoctorLoadedResult;
+      {final bool isChartVisible,
+      final GraphTypes graphType,
+      required final List<PatientScaleMeasurement>
+          patientScaleMeasurements}) = _$_ScaleDoctorLoadedResult;
 
   factory _ScaleDoctorLoadedResult.fromJson(Map<String, dynamic> json) =
       _$_ScaleDoctorLoadedResult.fromJson;
 
   @override
-  bool get isChartVisible;
+  bool get isChartVisible => throw _privateConstructorUsedError;
   @override
-  GraphTypes get graphType;
+  GraphTypes get graphType => throw _privateConstructorUsedError;
   @override
-  List<PatientScaleMeasurement> get patientScaleMeasurements;
+  List<PatientScaleMeasurement> get patientScaleMeasurements =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ScaleDoctorLoadedResultCopyWith<_ScaleDoctorLoadedResult> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_ScaleDoctorLoadedResultCopyWith<_$_ScaleDoctorLoadedResult>
+      get copyWith => throw _privateConstructorUsedError;
 }

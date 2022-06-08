@@ -10,14 +10,17 @@ class ScaleTreatmentDietDetailResponse with _$ScaleTreatmentDietDetailResponse {
     @JsonKey(name: 'dietCreateDate') String? dietCreateDate,
     @JsonKey(name: 'createdByName') String? createdByName,
     @JsonKey(name: 'dietBreakfast') String? dietBreakfast,
-    @JsonKey(name: 'dietRefreshment') String? dietRefreshment,
+    @JsonKey(name: 'dietRefreshmentBreakfast') String? dietRefreshmentBreakfast,
     @JsonKey(name: 'dietLunch') String? dietLunch,
+    @JsonKey(name: 'dietRefreshmentLunch') String? dietRefreshmentLunch,
     @JsonKey(name: 'dietDinner') String? dietDinner,
+    @JsonKey(name: 'dietRefreshmentDinner') String? dietRefreshmentDinner,
     @JsonKey(name: 'id') int? id,
   }) = _ScaleTreatmentDietDetailResponse;
 
   const ScaleTreatmentDietDetailResponse._();
 
-  factory ScaleTreatmentDietDetailResponse.fromJson(Map<String, dynamic> json) =>
+  factory ScaleTreatmentDietDetailResponse.fromJson(
+          Map<String, dynamic> json) =>
       _$ScaleTreatmentDietDetailResponseFromJson(json);
 }

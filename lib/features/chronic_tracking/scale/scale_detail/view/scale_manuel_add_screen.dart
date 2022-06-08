@@ -12,8 +12,7 @@ class ScaleManuelAddScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ScaleManuelAddCubit>(
-      create: (context) =>
-          ScaleManuelAddCubit(getIt(), getIt()),
+      create: (context) => ScaleManuelAddCubit(getIt(), getIt()),
       child: Builder(
         builder: (context) {
           return BlocListener<ScaleManuelAddCubit, ScaleManuelAddState>(
@@ -49,7 +48,7 @@ class ScaleManuelAddScreen extends StatelessWidget {
                     LocaleProvider.current.measurement_saved,
                   );
                   Atom.to(
-                    PagePaths.scaleDetail,
+                    PagePaths.patientScaleDetail,
                     isReplacement: true,
                   );
                 },

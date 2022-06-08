@@ -38,26 +38,31 @@ class PatientScaleDietDetailView extends StatefulWidget {
 class _PatientScaleDietDetailViewState
     extends State<PatientScaleDietDetailView> {
   late TextEditingController _breakfastEditingController;
-  late TextEditingController _refreshmentEditingController;
+  late TextEditingController _breakfastRefreshmentEditingController;
   late TextEditingController _lunchEditingController;
+  late TextEditingController _lunchRefreshmentEditingController;
   late TextEditingController _dinnerEditingController;
+  late TextEditingController _dinnerRefreshmentEditingController;
 
   @override
   void initState() {
     super.initState();
     _breakfastEditingController = TextEditingController();
-    _refreshmentEditingController = TextEditingController();
+    _breakfastRefreshmentEditingController = TextEditingController();
     _lunchEditingController = TextEditingController();
+    _lunchRefreshmentEditingController = TextEditingController();
     _dinnerEditingController = TextEditingController();
+    _dinnerRefreshmentEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
     _breakfastEditingController.dispose();
-    _refreshmentEditingController.dispose();
+    _breakfastRefreshmentEditingController.dispose();
     _lunchEditingController.dispose();
+    _lunchRefreshmentEditingController.dispose();
     _dinnerEditingController.dispose();
-
+    _dinnerRefreshmentEditingController.dispose();
     super.dispose();
   }
 
@@ -83,9 +88,14 @@ class _PatientScaleDietDetailViewState
         state.whenOrNull(
           success: (response) {
             _breakfastEditingController.text = response.dietBreakfast ?? '';
-            _refreshmentEditingController.text = response.dietRefreshment ?? '';
+            _breakfastRefreshmentEditingController.text =
+                response.dietRefreshmentBreakfast ?? '';
             _lunchEditingController.text = response.dietLunch ?? '';
+            _lunchRefreshmentEditingController.text =
+                response.dietRefreshmentLunch ?? '';
             _dinnerEditingController.text = response.dietDinner ?? '';
+            _dinnerRefreshmentEditingController.text =
+                response.dietRefreshmentDinner ?? '';
           },
         );
       },
@@ -132,7 +142,7 @@ class _PatientScaleDietDetailViewState
             LocaleProvider.of(context).refreshment,
           ),
           _buildTextFormField(
-            _refreshmentEditingController,
+            _breakfastRefreshmentEditingController,
             R.image.clockRefreshment,
           ),
 
@@ -155,11 +165,37 @@ class _PatientScaleDietDetailViewState
           //
           _buildTitle(
             context,
+            LocaleProvider.of(context).refreshment,
+          ),
+          _buildTextFormField(
+            _lunchRefreshmentEditingController,
+            R.image.clockRefreshment,
+          ),
+
+          //
+          R.sizes.hSizer8,
+
+          //
+          _buildTitle(
+            context,
             LocaleProvider.of(context).dinner,
           ),
           _buildTextFormField(
             _dinnerEditingController,
             R.image.clockDinner,
+          ),
+
+          //
+          R.sizes.hSizer8,
+
+          //
+          _buildTitle(
+            context,
+            LocaleProvider.of(context).refreshment,
+          ),
+          _buildTextFormField(
+            _dinnerRefreshmentEditingController,
+            R.image.clockRefreshment,
           ),
         ],
       ),

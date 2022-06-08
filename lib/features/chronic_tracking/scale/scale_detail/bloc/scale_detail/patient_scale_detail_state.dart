@@ -1,4 +1,4 @@
-part of 'scale_detail_cubit.dart';
+part of 'patient_scale_detail_cubit.dart';
 
 @freezed
 class ScaleDetailState with _$ScaleDetailState {

@@ -63,25 +63,22 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
 
   @override
   void initState() {
+    super.initState();
     animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-
     sizeAnimation = CurvedAnimation(
       parent: animationController,
       curve: Curves.fastOutSlowIn,
     );
     Utils.instance.releaseOrientation();
-
-    super.initState();
   }
 
   @override
   void dispose() {
     animationController.dispose();
     Utils.instance.forcePortraitOrientation();
-
     super.dispose();
   }
 
@@ -339,12 +336,12 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
           //
           GestureDetector(
             onTap: () {
-              // Atom.to(
-              //   PagePaths.doctorScaleTreatmentList,
-              //   queryParameters: {
-              //     'patientId': widget.patientId.toString(),
-              //   },
-              // );
+              Atom.to(
+                PagePaths.doctorScaleTreatmentList,
+                queryParameters: {
+                  'patientId': widget.patientId.toString(),
+                },
+              );
 
               // final patient = context.read<PatientNotifiers>().patientDetail;
 
