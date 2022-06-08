@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'doctor_cv_cubit.dart';
@@ -11,35 +12,7 @@ part of 'doctor_cv_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$DoctorCvStateTearOff {
-  const _$DoctorCvStateTearOff();
-
-  _InitialState initial() {
-    return const _InitialState();
-  }
-
-  _SuccessState success(DoctorCvResponse result) {
-    return _SuccessState(
-      result,
-    );
-  }
-
-  _LoadingState loading() {
-    return const _LoadingState();
-  }
-
-  _ErrorState error(DoctorCvResponse? result) {
-    return _ErrorState(
-      result,
-    );
-  }
-}
-
-/// @nodoc
-const $DoctorCvState = _$DoctorCvStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$DoctorCvState {
@@ -113,22 +86,22 @@ class _$DoctorCvStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialStateCopyWith<$Res> {
-  factory _$InitialStateCopyWith(
-          _InitialState value, $Res Function(_InitialState) then) =
-      __$InitialStateCopyWithImpl<$Res>;
+abstract class _$$_InitialStateCopyWith<$Res> {
+  factory _$$_InitialStateCopyWith(
+          _$_InitialState value, $Res Function(_$_InitialState) then) =
+      __$$_InitialStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialStateCopyWithImpl<$Res>
+class __$$_InitialStateCopyWithImpl<$Res>
     extends _$DoctorCvStateCopyWithImpl<$Res>
-    implements _$InitialStateCopyWith<$Res> {
-  __$InitialStateCopyWithImpl(
-      _InitialState _value, $Res Function(_InitialState) _then)
-      : super(_value, (v) => _then(v as _InitialState));
+    implements _$$_InitialStateCopyWith<$Res> {
+  __$$_InitialStateCopyWithImpl(
+      _$_InitialState _value, $Res Function(_$_InitialState) _then)
+      : super(_value, (v) => _then(v as _$_InitialState));
 
   @override
-  _InitialState get _value => super._value as _InitialState;
+  _$_InitialState get _value => super._value as _$_InitialState;
 }
 
 /// @nodoc
@@ -144,7 +117,7 @@ class _$_InitialState implements _InitialState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _InitialState);
+        (other.runtimeType == runtimeType && other is _$_InitialState);
   }
 
   @override
@@ -230,29 +203,29 @@ abstract class _InitialState implements DoctorCvState {
 }
 
 /// @nodoc
-abstract class _$SuccessStateCopyWith<$Res> {
-  factory _$SuccessStateCopyWith(
-          _SuccessState value, $Res Function(_SuccessState) then) =
-      __$SuccessStateCopyWithImpl<$Res>;
+abstract class _$$_SuccessStateCopyWith<$Res> {
+  factory _$$_SuccessStateCopyWith(
+          _$_SuccessState value, $Res Function(_$_SuccessState) then) =
+      __$$_SuccessStateCopyWithImpl<$Res>;
   $Res call({DoctorCvResponse result});
 }
 
 /// @nodoc
-class __$SuccessStateCopyWithImpl<$Res>
+class __$$_SuccessStateCopyWithImpl<$Res>
     extends _$DoctorCvStateCopyWithImpl<$Res>
-    implements _$SuccessStateCopyWith<$Res> {
-  __$SuccessStateCopyWithImpl(
-      _SuccessState _value, $Res Function(_SuccessState) _then)
-      : super(_value, (v) => _then(v as _SuccessState));
+    implements _$$_SuccessStateCopyWith<$Res> {
+  __$$_SuccessStateCopyWithImpl(
+      _$_SuccessState _value, $Res Function(_$_SuccessState) _then)
+      : super(_value, (v) => _then(v as _$_SuccessState));
 
   @override
-  _SuccessState get _value => super._value as _SuccessState;
+  _$_SuccessState get _value => super._value as _$_SuccessState;
 
   @override
   $Res call({
     Object? result = freezed,
   }) {
-    return _then(_SuccessState(
+    return _then(_$_SuccessState(
       result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
@@ -278,7 +251,7 @@ class _$_SuccessState implements _SuccessState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SuccessState &&
+            other is _$_SuccessState &&
             const DeepCollectionEquality().equals(other.result, result));
   }
 
@@ -288,8 +261,8 @@ class _$_SuccessState implements _SuccessState {
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessStateCopyWith<_SuccessState> get copyWith =>
-      __$SuccessStateCopyWithImpl<_SuccessState>(this, _$identity);
+  _$$_SuccessStateCopyWith<_$_SuccessState> get copyWith =>
+      __$$_SuccessStateCopyWithImpl<_$_SuccessState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -367,31 +340,31 @@ class _$_SuccessState implements _SuccessState {
 }
 
 abstract class _SuccessState implements DoctorCvState {
-  const factory _SuccessState(DoctorCvResponse result) = _$_SuccessState;
+  const factory _SuccessState(final DoctorCvResponse result) = _$_SuccessState;
 
-  DoctorCvResponse get result;
+  DoctorCvResponse get result => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$SuccessStateCopyWith<_SuccessState> get copyWith =>
+  _$$_SuccessStateCopyWith<_$_SuccessState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$LoadingStateCopyWith<$Res> {
-  factory _$LoadingStateCopyWith(
-          _LoadingState value, $Res Function(_LoadingState) then) =
-      __$LoadingStateCopyWithImpl<$Res>;
+abstract class _$$_LoadingStateCopyWith<$Res> {
+  factory _$$_LoadingStateCopyWith(
+          _$_LoadingState value, $Res Function(_$_LoadingState) then) =
+      __$$_LoadingStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingStateCopyWithImpl<$Res>
+class __$$_LoadingStateCopyWithImpl<$Res>
     extends _$DoctorCvStateCopyWithImpl<$Res>
-    implements _$LoadingStateCopyWith<$Res> {
-  __$LoadingStateCopyWithImpl(
-      _LoadingState _value, $Res Function(_LoadingState) _then)
-      : super(_value, (v) => _then(v as _LoadingState));
+    implements _$$_LoadingStateCopyWith<$Res> {
+  __$$_LoadingStateCopyWithImpl(
+      _$_LoadingState _value, $Res Function(_$_LoadingState) _then)
+      : super(_value, (v) => _then(v as _$_LoadingState));
 
   @override
-  _LoadingState get _value => super._value as _LoadingState;
+  _$_LoadingState get _value => super._value as _$_LoadingState;
 }
 
 /// @nodoc
@@ -407,7 +380,7 @@ class _$_LoadingState implements _LoadingState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoadingState);
+        (other.runtimeType == runtimeType && other is _$_LoadingState);
   }
 
   @override
@@ -493,28 +466,29 @@ abstract class _LoadingState implements DoctorCvState {
 }
 
 /// @nodoc
-abstract class _$ErrorStateCopyWith<$Res> {
-  factory _$ErrorStateCopyWith(
-          _ErrorState value, $Res Function(_ErrorState) then) =
-      __$ErrorStateCopyWithImpl<$Res>;
+abstract class _$$_ErrorStateCopyWith<$Res> {
+  factory _$$_ErrorStateCopyWith(
+          _$_ErrorState value, $Res Function(_$_ErrorState) then) =
+      __$$_ErrorStateCopyWithImpl<$Res>;
   $Res call({DoctorCvResponse? result});
 }
 
 /// @nodoc
-class __$ErrorStateCopyWithImpl<$Res> extends _$DoctorCvStateCopyWithImpl<$Res>
-    implements _$ErrorStateCopyWith<$Res> {
-  __$ErrorStateCopyWithImpl(
-      _ErrorState _value, $Res Function(_ErrorState) _then)
-      : super(_value, (v) => _then(v as _ErrorState));
+class __$$_ErrorStateCopyWithImpl<$Res>
+    extends _$DoctorCvStateCopyWithImpl<$Res>
+    implements _$$_ErrorStateCopyWith<$Res> {
+  __$$_ErrorStateCopyWithImpl(
+      _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
+      : super(_value, (v) => _then(v as _$_ErrorState));
 
   @override
-  _ErrorState get _value => super._value as _ErrorState;
+  _$_ErrorState get _value => super._value as _$_ErrorState;
 
   @override
   $Res call({
     Object? result = freezed,
   }) {
-    return _then(_ErrorState(
+    return _then(_$_ErrorState(
       result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
@@ -540,7 +514,7 @@ class _$_ErrorState implements _ErrorState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorState &&
+            other is _$_ErrorState &&
             const DeepCollectionEquality().equals(other.result, result));
   }
 
@@ -550,8 +524,8 @@ class _$_ErrorState implements _ErrorState {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorStateCopyWith<_ErrorState> get copyWith =>
-      __$ErrorStateCopyWithImpl<_ErrorState>(this, _$identity);
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
+      __$$_ErrorStateCopyWithImpl<_$_ErrorState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -629,10 +603,10 @@ class _$_ErrorState implements _ErrorState {
 }
 
 abstract class _ErrorState implements DoctorCvState {
-  const factory _ErrorState(DoctorCvResponse? result) = _$_ErrorState;
+  const factory _ErrorState(final DoctorCvResponse? result) = _$_ErrorState;
 
-  DoctorCvResponse? get result;
+  DoctorCvResponse? get result => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$ErrorStateCopyWith<_ErrorState> get copyWith =>
+  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;
 }

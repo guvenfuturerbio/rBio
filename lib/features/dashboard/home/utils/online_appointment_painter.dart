@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 class HomeOnlineAppointmentCustomPainter extends CustomPainter {
+  final color = Colors.black;
+
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -429,7 +431,7 @@ class HomeOnlineAppointmentCustomPainter extends CustomPainter {
     path_1.close();
 
     Paint paint_1_fill = Paint()..style = PaintingStyle.fill;
-    paint_1_fill.color = const Color(0xffffffff).withOpacity(1.0);
+    paint_1_fill.color = color;
     canvas.drawPath(path_1, paint_1_fill);
   }
 

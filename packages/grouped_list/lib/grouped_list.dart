@@ -265,7 +265,7 @@ class _GroupedListViewState<T, E> extends State<GroupedListView<T, E>> {
         widget.reverse ? (int i) => i.isOdd : (int i) => i.isEven;
 
     if (widget.reverse) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         _scrollListener();
       });
     }
@@ -374,7 +374,7 @@ class _GroupedListViewState<T, E> extends State<GroupedListView<T, E>> {
   }
 
   List<T> _sortElements() {
-    var elements = widget.elements;
+    var elements = List<T>.from(widget.elements);
     if (widget.sort && elements.isNotEmpty) {
       elements.sort((e1, e2) {
         var compareResult;
@@ -400,7 +400,7 @@ class _GroupedListViewState<T, E> extends State<GroupedListView<T, E>> {
         elements = elements.reversed.toList();
       }
     }
-    return elements;
+    return elements as List<T>;
   }
 
   Widget _showFixedGroupHeader(int topElementIndex) {

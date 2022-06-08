@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'reminder_list_cubit.dart';
@@ -11,33 +12,7 @@ part of 'reminder_list_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ReminderListStateTearOff {
-  const _$ReminderListStateTearOff();
-
-  _InitialState initial() {
-    return const _InitialState();
-  }
-
-  _LoadInProgressState loadInProgress() {
-    return const _LoadInProgressState();
-  }
-
-  _SuccessState success(ReminderListResult result) {
-    return _SuccessState(
-      result,
-    );
-  }
-
-  _FailureState failure() {
-    return const _FailureState();
-  }
-}
-
-/// @nodoc
-const $ReminderListState = _$ReminderListStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ReminderListState {
@@ -111,22 +86,22 @@ class _$ReminderListStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialStateCopyWith<$Res> {
-  factory _$InitialStateCopyWith(
-          _InitialState value, $Res Function(_InitialState) then) =
-      __$InitialStateCopyWithImpl<$Res>;
+abstract class _$$_InitialStateCopyWith<$Res> {
+  factory _$$_InitialStateCopyWith(
+          _$_InitialState value, $Res Function(_$_InitialState) then) =
+      __$$_InitialStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialStateCopyWithImpl<$Res>
+class __$$_InitialStateCopyWithImpl<$Res>
     extends _$ReminderListStateCopyWithImpl<$Res>
-    implements _$InitialStateCopyWith<$Res> {
-  __$InitialStateCopyWithImpl(
-      _InitialState _value, $Res Function(_InitialState) _then)
-      : super(_value, (v) => _then(v as _InitialState));
+    implements _$$_InitialStateCopyWith<$Res> {
+  __$$_InitialStateCopyWithImpl(
+      _$_InitialState _value, $Res Function(_$_InitialState) _then)
+      : super(_value, (v) => _then(v as _$_InitialState));
 
   @override
-  _InitialState get _value => super._value as _InitialState;
+  _$_InitialState get _value => super._value as _$_InitialState;
 }
 
 /// @nodoc
@@ -142,7 +117,7 @@ class _$_InitialState implements _InitialState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _InitialState);
+        (other.runtimeType == runtimeType && other is _$_InitialState);
   }
 
   @override
@@ -228,22 +203,22 @@ abstract class _InitialState implements ReminderListState {
 }
 
 /// @nodoc
-abstract class _$LoadInProgressStateCopyWith<$Res> {
-  factory _$LoadInProgressStateCopyWith(_LoadInProgressState value,
-          $Res Function(_LoadInProgressState) then) =
-      __$LoadInProgressStateCopyWithImpl<$Res>;
+abstract class _$$_LoadInProgressStateCopyWith<$Res> {
+  factory _$$_LoadInProgressStateCopyWith(_$_LoadInProgressState value,
+          $Res Function(_$_LoadInProgressState) then) =
+      __$$_LoadInProgressStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadInProgressStateCopyWithImpl<$Res>
+class __$$_LoadInProgressStateCopyWithImpl<$Res>
     extends _$ReminderListStateCopyWithImpl<$Res>
-    implements _$LoadInProgressStateCopyWith<$Res> {
-  __$LoadInProgressStateCopyWithImpl(
-      _LoadInProgressState _value, $Res Function(_LoadInProgressState) _then)
-      : super(_value, (v) => _then(v as _LoadInProgressState));
+    implements _$$_LoadInProgressStateCopyWith<$Res> {
+  __$$_LoadInProgressStateCopyWithImpl(_$_LoadInProgressState _value,
+      $Res Function(_$_LoadInProgressState) _then)
+      : super(_value, (v) => _then(v as _$_LoadInProgressState));
 
   @override
-  _LoadInProgressState get _value => super._value as _LoadInProgressState;
+  _$_LoadInProgressState get _value => super._value as _$_LoadInProgressState;
 }
 
 /// @nodoc
@@ -259,7 +234,7 @@ class _$_LoadInProgressState implements _LoadInProgressState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoadInProgressState);
+        (other.runtimeType == runtimeType && other is _$_LoadInProgressState);
   }
 
   @override
@@ -345,29 +320,29 @@ abstract class _LoadInProgressState implements ReminderListState {
 }
 
 /// @nodoc
-abstract class _$SuccessStateCopyWith<$Res> {
-  factory _$SuccessStateCopyWith(
-          _SuccessState value, $Res Function(_SuccessState) then) =
-      __$SuccessStateCopyWithImpl<$Res>;
+abstract class _$$_SuccessStateCopyWith<$Res> {
+  factory _$$_SuccessStateCopyWith(
+          _$_SuccessState value, $Res Function(_$_SuccessState) then) =
+      __$$_SuccessStateCopyWithImpl<$Res>;
   $Res call({ReminderListResult result});
 }
 
 /// @nodoc
-class __$SuccessStateCopyWithImpl<$Res>
+class __$$_SuccessStateCopyWithImpl<$Res>
     extends _$ReminderListStateCopyWithImpl<$Res>
-    implements _$SuccessStateCopyWith<$Res> {
-  __$SuccessStateCopyWithImpl(
-      _SuccessState _value, $Res Function(_SuccessState) _then)
-      : super(_value, (v) => _then(v as _SuccessState));
+    implements _$$_SuccessStateCopyWith<$Res> {
+  __$$_SuccessStateCopyWithImpl(
+      _$_SuccessState _value, $Res Function(_$_SuccessState) _then)
+      : super(_value, (v) => _then(v as _$_SuccessState));
 
   @override
-  _SuccessState get _value => super._value as _SuccessState;
+  _$_SuccessState get _value => super._value as _$_SuccessState;
 
   @override
   $Res call({
     Object? result = freezed,
   }) {
-    return _then(_SuccessState(
+    return _then(_$_SuccessState(
       result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
@@ -393,7 +368,7 @@ class _$_SuccessState implements _SuccessState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SuccessState &&
+            other is _$_SuccessState &&
             const DeepCollectionEquality().equals(other.result, result));
   }
 
@@ -403,8 +378,8 @@ class _$_SuccessState implements _SuccessState {
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessStateCopyWith<_SuccessState> get copyWith =>
-      __$SuccessStateCopyWithImpl<_SuccessState>(this, _$identity);
+  _$$_SuccessStateCopyWith<_$_SuccessState> get copyWith =>
+      __$$_SuccessStateCopyWithImpl<_$_SuccessState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -482,31 +457,32 @@ class _$_SuccessState implements _SuccessState {
 }
 
 abstract class _SuccessState implements ReminderListState {
-  const factory _SuccessState(ReminderListResult result) = _$_SuccessState;
+  const factory _SuccessState(final ReminderListResult result) =
+      _$_SuccessState;
 
-  ReminderListResult get result;
+  ReminderListResult get result => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$SuccessStateCopyWith<_SuccessState> get copyWith =>
+  _$$_SuccessStateCopyWith<_$_SuccessState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$FailureStateCopyWith<$Res> {
-  factory _$FailureStateCopyWith(
-          _FailureState value, $Res Function(_FailureState) then) =
-      __$FailureStateCopyWithImpl<$Res>;
+abstract class _$$_FailureStateCopyWith<$Res> {
+  factory _$$_FailureStateCopyWith(
+          _$_FailureState value, $Res Function(_$_FailureState) then) =
+      __$$_FailureStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$FailureStateCopyWithImpl<$Res>
+class __$$_FailureStateCopyWithImpl<$Res>
     extends _$ReminderListStateCopyWithImpl<$Res>
-    implements _$FailureStateCopyWith<$Res> {
-  __$FailureStateCopyWithImpl(
-      _FailureState _value, $Res Function(_FailureState) _then)
-      : super(_value, (v) => _then(v as _FailureState));
+    implements _$$_FailureStateCopyWith<$Res> {
+  __$$_FailureStateCopyWithImpl(
+      _$_FailureState _value, $Res Function(_$_FailureState) _then)
+      : super(_value, (v) => _then(v as _$_FailureState));
 
   @override
-  _FailureState get _value => super._value as _FailureState;
+  _$_FailureState get _value => super._value as _$_FailureState;
 }
 
 /// @nodoc
@@ -522,7 +498,7 @@ class _$_FailureState implements _FailureState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _FailureState);
+        (other.runtimeType == runtimeType && other is _$_FailureState);
   }
 
   @override

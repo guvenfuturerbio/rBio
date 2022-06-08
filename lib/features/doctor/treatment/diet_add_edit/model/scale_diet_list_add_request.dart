@@ -8,9 +8,11 @@ class ScaleDietListAddRequest with _$ScaleDietListAddRequest {
   const factory ScaleDietListAddRequest({
     @JsonKey(name: 'title') String? title,
     @JsonKey(name: 'breakfast') String? breakfast,
-    @JsonKey(name: 'refreshment') String? refreshment,
+    @JsonKey(name: 'refreshmentBreakfast') String? refreshmentBreakfast,
     @JsonKey(name: 'lunch') String? lunch,
+    @JsonKey(name: 'refreshmentLunch') String? refreshmentLunch,
     @JsonKey(name: 'dinner') String? dinner,
+    @JsonKey(name: 'refreshmentDinner') String? refreshmentDinner,
   }) = _ScaleDietListAddRequest;
 
   const ScaleDietListAddRequest._();

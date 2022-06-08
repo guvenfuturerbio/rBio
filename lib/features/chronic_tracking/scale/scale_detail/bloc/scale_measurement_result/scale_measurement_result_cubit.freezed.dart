@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'scale_measurement_result_cubit.dart';
@@ -11,33 +12,7 @@ part of 'scale_measurement_result_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ScaleMeasurementResultStateTearOff {
-  const _$ScaleMeasurementResultStateTearOff();
-
-  _Initial initial(ScaleEntity scaleEntity) {
-    return _Initial(
-      scaleEntity,
-    );
-  }
-
-  _LoadInProgress loadInProgress() {
-    return const _LoadInProgress();
-  }
-
-  _Failure failure() {
-    return const _Failure();
-  }
-
-  _SuccessAdded successAdded() {
-    return const _SuccessAdded();
-  }
-}
-
-/// @nodoc
-const $ScaleMeasurementResultState = _$ScaleMeasurementResultStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ScaleMeasurementResultState {
@@ -112,27 +87,28 @@ class _$ScaleMeasurementResultStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
   $Res call({ScaleEntity scaleEntity});
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
     extends _$ScaleMeasurementResultStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 
   @override
   $Res call({
     Object? scaleEntity = freezed,
   }) {
-    return _then(_Initial(
+    return _then(_$_Initial(
       scaleEntity == freezed
           ? _value.scaleEntity
           : scaleEntity // ignore: cast_nullable_to_non_nullable
@@ -158,7 +134,7 @@ class _$_Initial implements _Initial {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Initial &&
+            other is _$_Initial &&
             const DeepCollectionEquality()
                 .equals(other.scaleEntity, scaleEntity));
   }
@@ -169,8 +145,8 @@ class _$_Initial implements _Initial {
 
   @JsonKey(ignore: true)
   @override
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -248,31 +224,31 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements ScaleMeasurementResultState {
-  const factory _Initial(ScaleEntity scaleEntity) = _$_Initial;
+  const factory _Initial(final ScaleEntity scaleEntity) = _$_Initial;
 
-  ScaleEntity get scaleEntity;
+  ScaleEntity get scaleEntity => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$InitialCopyWith<_Initial> get copyWith =>
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$LoadInProgressCopyWith<$Res> {
-  factory _$LoadInProgressCopyWith(
-          _LoadInProgress value, $Res Function(_LoadInProgress) then) =
-      __$LoadInProgressCopyWithImpl<$Res>;
+abstract class _$$_LoadInProgressCopyWith<$Res> {
+  factory _$$_LoadInProgressCopyWith(
+          _$_LoadInProgress value, $Res Function(_$_LoadInProgress) then) =
+      __$$_LoadInProgressCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadInProgressCopyWithImpl<$Res>
+class __$$_LoadInProgressCopyWithImpl<$Res>
     extends _$ScaleMeasurementResultStateCopyWithImpl<$Res>
-    implements _$LoadInProgressCopyWith<$Res> {
-  __$LoadInProgressCopyWithImpl(
-      _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
-      : super(_value, (v) => _then(v as _LoadInProgress));
+    implements _$$_LoadInProgressCopyWith<$Res> {
+  __$$_LoadInProgressCopyWithImpl(
+      _$_LoadInProgress _value, $Res Function(_$_LoadInProgress) _then)
+      : super(_value, (v) => _then(v as _$_LoadInProgress));
 
   @override
-  _LoadInProgress get _value => super._value as _LoadInProgress;
+  _$_LoadInProgress get _value => super._value as _$_LoadInProgress;
 }
 
 /// @nodoc
@@ -288,7 +264,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoadInProgress);
+        (other.runtimeType == runtimeType && other is _$_LoadInProgress);
   }
 
   @override
@@ -374,20 +350,21 @@ abstract class _LoadInProgress implements ScaleMeasurementResultState {
 }
 
 /// @nodoc
-abstract class _$FailureCopyWith<$Res> {
-  factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) then) =
-      __$FailureCopyWithImpl<$Res>;
+abstract class _$$_FailureCopyWith<$Res> {
+  factory _$$_FailureCopyWith(
+          _$_Failure value, $Res Function(_$_Failure) then) =
+      __$$_FailureCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$FailureCopyWithImpl<$Res>
+class __$$_FailureCopyWithImpl<$Res>
     extends _$ScaleMeasurementResultStateCopyWithImpl<$Res>
-    implements _$FailureCopyWith<$Res> {
-  __$FailureCopyWithImpl(_Failure _value, $Res Function(_Failure) _then)
-      : super(_value, (v) => _then(v as _Failure));
+    implements _$$_FailureCopyWith<$Res> {
+  __$$_FailureCopyWithImpl(_$_Failure _value, $Res Function(_$_Failure) _then)
+      : super(_value, (v) => _then(v as _$_Failure));
 
   @override
-  _Failure get _value => super._value as _Failure;
+  _$_Failure get _value => super._value as _$_Failure;
 }
 
 /// @nodoc
@@ -403,7 +380,7 @@ class _$_Failure implements _Failure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Failure);
+        (other.runtimeType == runtimeType && other is _$_Failure);
   }
 
   @override
@@ -489,22 +466,22 @@ abstract class _Failure implements ScaleMeasurementResultState {
 }
 
 /// @nodoc
-abstract class _$SuccessAddedCopyWith<$Res> {
-  factory _$SuccessAddedCopyWith(
-          _SuccessAdded value, $Res Function(_SuccessAdded) then) =
-      __$SuccessAddedCopyWithImpl<$Res>;
+abstract class _$$_SuccessAddedCopyWith<$Res> {
+  factory _$$_SuccessAddedCopyWith(
+          _$_SuccessAdded value, $Res Function(_$_SuccessAdded) then) =
+      __$$_SuccessAddedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SuccessAddedCopyWithImpl<$Res>
+class __$$_SuccessAddedCopyWithImpl<$Res>
     extends _$ScaleMeasurementResultStateCopyWithImpl<$Res>
-    implements _$SuccessAddedCopyWith<$Res> {
-  __$SuccessAddedCopyWithImpl(
-      _SuccessAdded _value, $Res Function(_SuccessAdded) _then)
-      : super(_value, (v) => _then(v as _SuccessAdded));
+    implements _$$_SuccessAddedCopyWith<$Res> {
+  __$$_SuccessAddedCopyWithImpl(
+      _$_SuccessAdded _value, $Res Function(_$_SuccessAdded) _then)
+      : super(_value, (v) => _then(v as _$_SuccessAdded));
 
   @override
-  _SuccessAdded get _value => super._value as _SuccessAdded;
+  _$_SuccessAdded get _value => super._value as _$_SuccessAdded;
 }
 
 /// @nodoc
@@ -520,7 +497,7 @@ class _$_SuccessAdded implements _SuccessAdded {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _SuccessAdded);
+        (other.runtimeType == runtimeType && other is _$_SuccessAdded);
   }
 
   @override

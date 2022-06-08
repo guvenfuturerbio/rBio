@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'patient_treatment_add_request.dart';
@@ -11,35 +12,12 @@ part of 'patient_treatment_add_request.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 PatientTreatmentAddRequest _$PatientTreatmentAddRequestFromJson(
     Map<String, dynamic> json) {
   return _PatientTreatmentAddRequest.fromJson(json);
 }
-
-/// @nodoc
-class _$PatientTreatmentAddRequestTearOff {
-  const _$PatientTreatmentAddRequestTearOff();
-
-  _PatientTreatmentAddRequest call(
-      {@JsonKey(name: 'title') String? title,
-      @JsonKey(name: 'text') String? text,
-      @JsonKey(name: 'treatmentNoteTypeId') int? treatmentNoteTypeId}) {
-    return _PatientTreatmentAddRequest(
-      title: title,
-      text: text,
-      treatmentNoteTypeId: treatmentNoteTypeId,
-    );
-  }
-
-  PatientTreatmentAddRequest fromJson(Map<String, Object?> json) {
-    return PatientTreatmentAddRequest.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $PatientTreatmentAddRequest = _$PatientTreatmentAddRequestTearOff();
 
 /// @nodoc
 mixin _$PatientTreatmentAddRequest {
@@ -100,12 +78,12 @@ class _$PatientTreatmentAddRequestCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$PatientTreatmentAddRequestCopyWith<$Res>
+abstract class _$$_PatientTreatmentAddRequestCopyWith<$Res>
     implements $PatientTreatmentAddRequestCopyWith<$Res> {
-  factory _$PatientTreatmentAddRequestCopyWith(
-          _PatientTreatmentAddRequest value,
-          $Res Function(_PatientTreatmentAddRequest) then) =
-      __$PatientTreatmentAddRequestCopyWithImpl<$Res>;
+  factory _$$_PatientTreatmentAddRequestCopyWith(
+          _$_PatientTreatmentAddRequest value,
+          $Res Function(_$_PatientTreatmentAddRequest) then) =
+      __$$_PatientTreatmentAddRequestCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'title') String? title,
@@ -114,16 +92,17 @@ abstract class _$PatientTreatmentAddRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PatientTreatmentAddRequestCopyWithImpl<$Res>
+class __$$_PatientTreatmentAddRequestCopyWithImpl<$Res>
     extends _$PatientTreatmentAddRequestCopyWithImpl<$Res>
-    implements _$PatientTreatmentAddRequestCopyWith<$Res> {
-  __$PatientTreatmentAddRequestCopyWithImpl(_PatientTreatmentAddRequest _value,
-      $Res Function(_PatientTreatmentAddRequest) _then)
-      : super(_value, (v) => _then(v as _PatientTreatmentAddRequest));
+    implements _$$_PatientTreatmentAddRequestCopyWith<$Res> {
+  __$$_PatientTreatmentAddRequestCopyWithImpl(
+      _$_PatientTreatmentAddRequest _value,
+      $Res Function(_$_PatientTreatmentAddRequest) _then)
+      : super(_value, (v) => _then(v as _$_PatientTreatmentAddRequest));
 
   @override
-  _PatientTreatmentAddRequest get _value =>
-      super._value as _PatientTreatmentAddRequest;
+  _$_PatientTreatmentAddRequest get _value =>
+      super._value as _$_PatientTreatmentAddRequest;
 
   @override
   $Res call({
@@ -131,7 +110,7 @@ class __$PatientTreatmentAddRequestCopyWithImpl<$Res>
     Object? text = freezed,
     Object? treatmentNoteTypeId = freezed,
   }) {
-    return _then(_PatientTreatmentAddRequest(
+    return _then(_$_PatientTreatmentAddRequest(
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -179,13 +158,14 @@ class _$_PatientTreatmentAddRequest extends _PatientTreatmentAddRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PatientTreatmentAddRequest &&
+            other is _$_PatientTreatmentAddRequest &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.text, text) &&
             const DeepCollectionEquality()
                 .equals(other.treatmentNoteTypeId, treatmentNoteTypeId));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -195,9 +175,9 @@ class _$_PatientTreatmentAddRequest extends _PatientTreatmentAddRequest {
 
   @JsonKey(ignore: true)
   @override
-  _$PatientTreatmentAddRequestCopyWith<_PatientTreatmentAddRequest>
-      get copyWith => __$PatientTreatmentAddRequestCopyWithImpl<
-          _PatientTreatmentAddRequest>(this, _$identity);
+  _$$_PatientTreatmentAddRequestCopyWith<_$_PatientTreatmentAddRequest>
+      get copyWith => __$$_PatientTreatmentAddRequestCopyWithImpl<
+          _$_PatientTreatmentAddRequest>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -207,10 +187,12 @@ class _$_PatientTreatmentAddRequest extends _PatientTreatmentAddRequest {
 
 abstract class _PatientTreatmentAddRequest extends PatientTreatmentAddRequest {
   const factory _PatientTreatmentAddRequest(
-          {@JsonKey(name: 'title') String? title,
-          @JsonKey(name: 'text') String? text,
-          @JsonKey(name: 'treatmentNoteTypeId') int? treatmentNoteTypeId}) =
-      _$_PatientTreatmentAddRequest;
+      {@JsonKey(name: 'title')
+          final String? title,
+      @JsonKey(name: 'text')
+          final String? text,
+      @JsonKey(name: 'treatmentNoteTypeId')
+          final int? treatmentNoteTypeId}) = _$_PatientTreatmentAddRequest;
   const _PatientTreatmentAddRequest._() : super._();
 
   factory _PatientTreatmentAddRequest.fromJson(Map<String, dynamic> json) =
@@ -218,15 +200,15 @@ abstract class _PatientTreatmentAddRequest extends PatientTreatmentAddRequest {
 
   @override
   @JsonKey(name: 'title')
-  String? get title;
+  String? get title => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'text')
-  String? get text;
+  String? get text => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'treatmentNoteTypeId')
-  int? get treatmentNoteTypeId;
+  int? get treatmentNoteTypeId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$PatientTreatmentAddRequestCopyWith<_PatientTreatmentAddRequest>
+  _$$_PatientTreatmentAddRequestCopyWith<_$_PatientTreatmentAddRequest>
       get copyWith => throw _privateConstructorUsedError;
 }

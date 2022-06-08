@@ -151,8 +151,8 @@ class VRouterRoutes {
                 VGuard(
                   stackedRoutes: [
                     VWidget(
-                      path: PagePaths.scaleDetail,
-                      widget: const ScaleDetailScreen(),
+                      path: PagePaths.patientScaleDetail,
+                      widget: const PatientScaleDetailScreen(),
                     ),
                     VWidget(
                       path: PagePaths.patientScaleTreatmentList,
@@ -677,7 +677,7 @@ class PagePaths {
   static const bpProgress = '/blood-pressure-progress';
   static const treatmentProgress = '/treatment-progress';
   static const treatmentEditProgress = '/tretment-edit-progress';
-  static const scaleDetail = '/scale-detail';
+  static const patientScaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-manuel-add';
 
   static const patientScaleTreatmentList =

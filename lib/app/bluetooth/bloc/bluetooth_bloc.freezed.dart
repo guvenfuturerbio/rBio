@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'bluetooth_bloc.dart';
@@ -11,59 +12,7 @@ part of 'bluetooth_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$BluetoothEventTearOff {
-  const _$BluetoothEventTearOff();
-
-  _BluetoothInitEvent init() {
-    return const _BluetoothInitEvent();
-  }
-
-  _BluetoothListenBleStatusEvent listenBleStatus() {
-    return const _BluetoothListenBleStatusEvent();
-  }
-
-  _BluetoothBleStatusHandlerEvent bleStatusHandler(BleStatus bleStatus) {
-    return _BluetoothBleStatusHandlerEvent(
-      bleStatus,
-    );
-  }
-
-  _BluetoothConnectEvent connect(DiscoveredDevice device) {
-    return _BluetoothConnectEvent(
-      device,
-    );
-  }
-
-  _BluetoothDisconnectEvent disconnect() {
-    return const _BluetoothDisconnectEvent();
-  }
-
-  _BluetoothUpdatePairedIdListEvent updatePairedIdList(List<String> list) {
-    return _BluetoothUpdatePairedIdListEvent(
-      list,
-    );
-  }
-
-  _BluetoothUpdateDiscoveredListEvent updateDiscoveredList(
-      List<DiscoveredDevice> list) {
-    return _BluetoothUpdateDiscoveredListEvent(
-      list,
-    );
-  }
-
-  _BluetoothUpdateDeviceConnectionListEvent updateDeviceConnectionList(
-      List<ConnectionStateUpdate> list) {
-    return _BluetoothUpdateDeviceConnectionListEvent(
-      list,
-    );
-  }
-}
-
-/// @nodoc
-const $BluetoothEvent = _$BluetoothEventTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$BluetoothEvent {
@@ -175,22 +124,22 @@ class _$BluetoothEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$BluetoothInitEventCopyWith<$Res> {
-  factory _$BluetoothInitEventCopyWith(
-          _BluetoothInitEvent value, $Res Function(_BluetoothInitEvent) then) =
-      __$BluetoothInitEventCopyWithImpl<$Res>;
+abstract class _$$_BluetoothInitEventCopyWith<$Res> {
+  factory _$$_BluetoothInitEventCopyWith(_$_BluetoothInitEvent value,
+          $Res Function(_$_BluetoothInitEvent) then) =
+      __$$_BluetoothInitEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$BluetoothInitEventCopyWithImpl<$Res>
+class __$$_BluetoothInitEventCopyWithImpl<$Res>
     extends _$BluetoothEventCopyWithImpl<$Res>
-    implements _$BluetoothInitEventCopyWith<$Res> {
-  __$BluetoothInitEventCopyWithImpl(
-      _BluetoothInitEvent _value, $Res Function(_BluetoothInitEvent) _then)
-      : super(_value, (v) => _then(v as _BluetoothInitEvent));
+    implements _$$_BluetoothInitEventCopyWith<$Res> {
+  __$$_BluetoothInitEventCopyWithImpl(
+      _$_BluetoothInitEvent _value, $Res Function(_$_BluetoothInitEvent) _then)
+      : super(_value, (v) => _then(v as _$_BluetoothInitEvent));
 
   @override
-  _BluetoothInitEvent get _value => super._value as _BluetoothInitEvent;
+  _$_BluetoothInitEvent get _value => super._value as _$_BluetoothInitEvent;
 }
 
 /// @nodoc
@@ -206,7 +155,7 @@ class _$_BluetoothInitEvent implements _BluetoothInitEvent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _BluetoothInitEvent);
+        (other.runtimeType == runtimeType && other is _$_BluetoothInitEvent);
   }
 
   @override
@@ -330,25 +279,25 @@ abstract class _BluetoothInitEvent implements BluetoothEvent {
 }
 
 /// @nodoc
-abstract class _$BluetoothListenBleStatusEventCopyWith<$Res> {
-  factory _$BluetoothListenBleStatusEventCopyWith(
-          _BluetoothListenBleStatusEvent value,
-          $Res Function(_BluetoothListenBleStatusEvent) then) =
-      __$BluetoothListenBleStatusEventCopyWithImpl<$Res>;
+abstract class _$$_BluetoothListenBleStatusEventCopyWith<$Res> {
+  factory _$$_BluetoothListenBleStatusEventCopyWith(
+          _$_BluetoothListenBleStatusEvent value,
+          $Res Function(_$_BluetoothListenBleStatusEvent) then) =
+      __$$_BluetoothListenBleStatusEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$BluetoothListenBleStatusEventCopyWithImpl<$Res>
+class __$$_BluetoothListenBleStatusEventCopyWithImpl<$Res>
     extends _$BluetoothEventCopyWithImpl<$Res>
-    implements _$BluetoothListenBleStatusEventCopyWith<$Res> {
-  __$BluetoothListenBleStatusEventCopyWithImpl(
-      _BluetoothListenBleStatusEvent _value,
-      $Res Function(_BluetoothListenBleStatusEvent) _then)
-      : super(_value, (v) => _then(v as _BluetoothListenBleStatusEvent));
+    implements _$$_BluetoothListenBleStatusEventCopyWith<$Res> {
+  __$$_BluetoothListenBleStatusEventCopyWithImpl(
+      _$_BluetoothListenBleStatusEvent _value,
+      $Res Function(_$_BluetoothListenBleStatusEvent) _then)
+      : super(_value, (v) => _then(v as _$_BluetoothListenBleStatusEvent));
 
   @override
-  _BluetoothListenBleStatusEvent get _value =>
-      super._value as _BluetoothListenBleStatusEvent;
+  _$_BluetoothListenBleStatusEvent get _value =>
+      super._value as _$_BluetoothListenBleStatusEvent;
 }
 
 /// @nodoc
@@ -366,7 +315,7 @@ class _$_BluetoothListenBleStatusEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _BluetoothListenBleStatusEvent);
+            other is _$_BluetoothListenBleStatusEvent);
   }
 
   @override
@@ -491,32 +440,32 @@ abstract class _BluetoothListenBleStatusEvent implements BluetoothEvent {
 }
 
 /// @nodoc
-abstract class _$BluetoothBleStatusHandlerEventCopyWith<$Res> {
-  factory _$BluetoothBleStatusHandlerEventCopyWith(
-          _BluetoothBleStatusHandlerEvent value,
-          $Res Function(_BluetoothBleStatusHandlerEvent) then) =
-      __$BluetoothBleStatusHandlerEventCopyWithImpl<$Res>;
+abstract class _$$_BluetoothBleStatusHandlerEventCopyWith<$Res> {
+  factory _$$_BluetoothBleStatusHandlerEventCopyWith(
+          _$_BluetoothBleStatusHandlerEvent value,
+          $Res Function(_$_BluetoothBleStatusHandlerEvent) then) =
+      __$$_BluetoothBleStatusHandlerEventCopyWithImpl<$Res>;
   $Res call({BleStatus bleStatus});
 }
 
 /// @nodoc
-class __$BluetoothBleStatusHandlerEventCopyWithImpl<$Res>
+class __$$_BluetoothBleStatusHandlerEventCopyWithImpl<$Res>
     extends _$BluetoothEventCopyWithImpl<$Res>
-    implements _$BluetoothBleStatusHandlerEventCopyWith<$Res> {
-  __$BluetoothBleStatusHandlerEventCopyWithImpl(
-      _BluetoothBleStatusHandlerEvent _value,
-      $Res Function(_BluetoothBleStatusHandlerEvent) _then)
-      : super(_value, (v) => _then(v as _BluetoothBleStatusHandlerEvent));
+    implements _$$_BluetoothBleStatusHandlerEventCopyWith<$Res> {
+  __$$_BluetoothBleStatusHandlerEventCopyWithImpl(
+      _$_BluetoothBleStatusHandlerEvent _value,
+      $Res Function(_$_BluetoothBleStatusHandlerEvent) _then)
+      : super(_value, (v) => _then(v as _$_BluetoothBleStatusHandlerEvent));
 
   @override
-  _BluetoothBleStatusHandlerEvent get _value =>
-      super._value as _BluetoothBleStatusHandlerEvent;
+  _$_BluetoothBleStatusHandlerEvent get _value =>
+      super._value as _$_BluetoothBleStatusHandlerEvent;
 
   @override
   $Res call({
     Object? bleStatus = freezed,
   }) {
-    return _then(_BluetoothBleStatusHandlerEvent(
+    return _then(_$_BluetoothBleStatusHandlerEvent(
       bleStatus == freezed
           ? _value.bleStatus
           : bleStatus // ignore: cast_nullable_to_non_nullable
@@ -543,7 +492,7 @@ class _$_BluetoothBleStatusHandlerEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _BluetoothBleStatusHandlerEvent &&
+            other is _$_BluetoothBleStatusHandlerEvent &&
             const DeepCollectionEquality().equals(other.bleStatus, bleStatus));
   }
 
@@ -553,9 +502,9 @@ class _$_BluetoothBleStatusHandlerEvent
 
   @JsonKey(ignore: true)
   @override
-  _$BluetoothBleStatusHandlerEventCopyWith<_BluetoothBleStatusHandlerEvent>
-      get copyWith => __$BluetoothBleStatusHandlerEventCopyWithImpl<
-          _BluetoothBleStatusHandlerEvent>(this, _$identity);
+  _$$_BluetoothBleStatusHandlerEventCopyWith<_$_BluetoothBleStatusHandlerEvent>
+      get copyWith => __$$_BluetoothBleStatusHandlerEventCopyWithImpl<
+          _$_BluetoothBleStatusHandlerEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -671,39 +620,40 @@ class _$_BluetoothBleStatusHandlerEvent
 }
 
 abstract class _BluetoothBleStatusHandlerEvent implements BluetoothEvent {
-  const factory _BluetoothBleStatusHandlerEvent(BleStatus bleStatus) =
+  const factory _BluetoothBleStatusHandlerEvent(final BleStatus bleStatus) =
       _$_BluetoothBleStatusHandlerEvent;
 
-  BleStatus get bleStatus;
+  BleStatus get bleStatus => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$BluetoothBleStatusHandlerEventCopyWith<_BluetoothBleStatusHandlerEvent>
+  _$$_BluetoothBleStatusHandlerEventCopyWith<_$_BluetoothBleStatusHandlerEvent>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$BluetoothConnectEventCopyWith<$Res> {
-  factory _$BluetoothConnectEventCopyWith(_BluetoothConnectEvent value,
-          $Res Function(_BluetoothConnectEvent) then) =
-      __$BluetoothConnectEventCopyWithImpl<$Res>;
+abstract class _$$_BluetoothConnectEventCopyWith<$Res> {
+  factory _$$_BluetoothConnectEventCopyWith(_$_BluetoothConnectEvent value,
+          $Res Function(_$_BluetoothConnectEvent) then) =
+      __$$_BluetoothConnectEventCopyWithImpl<$Res>;
   $Res call({DiscoveredDevice device});
 }
 
 /// @nodoc
-class __$BluetoothConnectEventCopyWithImpl<$Res>
+class __$$_BluetoothConnectEventCopyWithImpl<$Res>
     extends _$BluetoothEventCopyWithImpl<$Res>
-    implements _$BluetoothConnectEventCopyWith<$Res> {
-  __$BluetoothConnectEventCopyWithImpl(_BluetoothConnectEvent _value,
-      $Res Function(_BluetoothConnectEvent) _then)
-      : super(_value, (v) => _then(v as _BluetoothConnectEvent));
+    implements _$$_BluetoothConnectEventCopyWith<$Res> {
+  __$$_BluetoothConnectEventCopyWithImpl(_$_BluetoothConnectEvent _value,
+      $Res Function(_$_BluetoothConnectEvent) _then)
+      : super(_value, (v) => _then(v as _$_BluetoothConnectEvent));
 
   @override
-  _BluetoothConnectEvent get _value => super._value as _BluetoothConnectEvent;
+  _$_BluetoothConnectEvent get _value =>
+      super._value as _$_BluetoothConnectEvent;
 
   @override
   $Res call({
     Object? device = freezed,
   }) {
-    return _then(_BluetoothConnectEvent(
+    return _then(_$_BluetoothConnectEvent(
       device == freezed
           ? _value.device
           : device // ignore: cast_nullable_to_non_nullable
@@ -729,7 +679,7 @@ class _$_BluetoothConnectEvent implements _BluetoothConnectEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _BluetoothConnectEvent &&
+            other is _$_BluetoothConnectEvent &&
             const DeepCollectionEquality().equals(other.device, device));
   }
 
@@ -739,8 +689,8 @@ class _$_BluetoothConnectEvent implements _BluetoothConnectEvent {
 
   @JsonKey(ignore: true)
   @override
-  _$BluetoothConnectEventCopyWith<_BluetoothConnectEvent> get copyWith =>
-      __$BluetoothConnectEventCopyWithImpl<_BluetoothConnectEvent>(
+  _$$_BluetoothConnectEventCopyWith<_$_BluetoothConnectEvent> get copyWith =>
+      __$$_BluetoothConnectEventCopyWithImpl<_$_BluetoothConnectEvent>(
           this, _$identity);
 
   @override
@@ -857,33 +807,34 @@ class _$_BluetoothConnectEvent implements _BluetoothConnectEvent {
 }
 
 abstract class _BluetoothConnectEvent implements BluetoothEvent {
-  const factory _BluetoothConnectEvent(DiscoveredDevice device) =
+  const factory _BluetoothConnectEvent(final DiscoveredDevice device) =
       _$_BluetoothConnectEvent;
 
-  DiscoveredDevice get device;
+  DiscoveredDevice get device => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$BluetoothConnectEventCopyWith<_BluetoothConnectEvent> get copyWith =>
+  _$$_BluetoothConnectEventCopyWith<_$_BluetoothConnectEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$BluetoothDisconnectEventCopyWith<$Res> {
-  factory _$BluetoothDisconnectEventCopyWith(_BluetoothDisconnectEvent value,
-          $Res Function(_BluetoothDisconnectEvent) then) =
-      __$BluetoothDisconnectEventCopyWithImpl<$Res>;
+abstract class _$$_BluetoothDisconnectEventCopyWith<$Res> {
+  factory _$$_BluetoothDisconnectEventCopyWith(
+          _$_BluetoothDisconnectEvent value,
+          $Res Function(_$_BluetoothDisconnectEvent) then) =
+      __$$_BluetoothDisconnectEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$BluetoothDisconnectEventCopyWithImpl<$Res>
+class __$$_BluetoothDisconnectEventCopyWithImpl<$Res>
     extends _$BluetoothEventCopyWithImpl<$Res>
-    implements _$BluetoothDisconnectEventCopyWith<$Res> {
-  __$BluetoothDisconnectEventCopyWithImpl(_BluetoothDisconnectEvent _value,
-      $Res Function(_BluetoothDisconnectEvent) _then)
-      : super(_value, (v) => _then(v as _BluetoothDisconnectEvent));
+    implements _$$_BluetoothDisconnectEventCopyWith<$Res> {
+  __$$_BluetoothDisconnectEventCopyWithImpl(_$_BluetoothDisconnectEvent _value,
+      $Res Function(_$_BluetoothDisconnectEvent) _then)
+      : super(_value, (v) => _then(v as _$_BluetoothDisconnectEvent));
 
   @override
-  _BluetoothDisconnectEvent get _value =>
-      super._value as _BluetoothDisconnectEvent;
+  _$_BluetoothDisconnectEvent get _value =>
+      super._value as _$_BluetoothDisconnectEvent;
 }
 
 /// @nodoc
@@ -900,7 +851,7 @@ class _$_BluetoothDisconnectEvent implements _BluetoothDisconnectEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _BluetoothDisconnectEvent);
+            other is _$_BluetoothDisconnectEvent);
   }
 
   @override
@@ -1024,34 +975,34 @@ abstract class _BluetoothDisconnectEvent implements BluetoothEvent {
 }
 
 /// @nodoc
-abstract class _$BluetoothUpdatePairedIdListEventCopyWith<$Res> {
-  factory _$BluetoothUpdatePairedIdListEventCopyWith(
-          _BluetoothUpdatePairedIdListEvent value,
-          $Res Function(_BluetoothUpdatePairedIdListEvent) then) =
-      __$BluetoothUpdatePairedIdListEventCopyWithImpl<$Res>;
+abstract class _$$_BluetoothUpdatePairedIdListEventCopyWith<$Res> {
+  factory _$$_BluetoothUpdatePairedIdListEventCopyWith(
+          _$_BluetoothUpdatePairedIdListEvent value,
+          $Res Function(_$_BluetoothUpdatePairedIdListEvent) then) =
+      __$$_BluetoothUpdatePairedIdListEventCopyWithImpl<$Res>;
   $Res call({List<String> list});
 }
 
 /// @nodoc
-class __$BluetoothUpdatePairedIdListEventCopyWithImpl<$Res>
+class __$$_BluetoothUpdatePairedIdListEventCopyWithImpl<$Res>
     extends _$BluetoothEventCopyWithImpl<$Res>
-    implements _$BluetoothUpdatePairedIdListEventCopyWith<$Res> {
-  __$BluetoothUpdatePairedIdListEventCopyWithImpl(
-      _BluetoothUpdatePairedIdListEvent _value,
-      $Res Function(_BluetoothUpdatePairedIdListEvent) _then)
-      : super(_value, (v) => _then(v as _BluetoothUpdatePairedIdListEvent));
+    implements _$$_BluetoothUpdatePairedIdListEventCopyWith<$Res> {
+  __$$_BluetoothUpdatePairedIdListEventCopyWithImpl(
+      _$_BluetoothUpdatePairedIdListEvent _value,
+      $Res Function(_$_BluetoothUpdatePairedIdListEvent) _then)
+      : super(_value, (v) => _then(v as _$_BluetoothUpdatePairedIdListEvent));
 
   @override
-  _BluetoothUpdatePairedIdListEvent get _value =>
-      super._value as _BluetoothUpdatePairedIdListEvent;
+  _$_BluetoothUpdatePairedIdListEvent get _value =>
+      super._value as _$_BluetoothUpdatePairedIdListEvent;
 
   @override
   $Res call({
     Object? list = freezed,
   }) {
-    return _then(_BluetoothUpdatePairedIdListEvent(
+    return _then(_$_BluetoothUpdatePairedIdListEvent(
       list == freezed
-          ? _value.list
+          ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -1062,10 +1013,15 @@ class __$BluetoothUpdatePairedIdListEventCopyWithImpl<$Res>
 
 class _$_BluetoothUpdatePairedIdListEvent
     implements _BluetoothUpdatePairedIdListEvent {
-  const _$_BluetoothUpdatePairedIdListEvent(this.list);
+  const _$_BluetoothUpdatePairedIdListEvent(final List<String> list)
+      : _list = list;
 
+  final List<String> _list;
   @override
-  final List<String> list;
+  List<String> get list {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_list);
+  }
 
   @override
   String toString() {
@@ -1076,19 +1032,20 @@ class _$_BluetoothUpdatePairedIdListEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _BluetoothUpdatePairedIdListEvent &&
-            const DeepCollectionEquality().equals(other.list, list));
+            other is _$_BluetoothUpdatePairedIdListEvent &&
+            const DeepCollectionEquality().equals(other._list, _list));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(list));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_list));
 
   @JsonKey(ignore: true)
   @override
-  _$BluetoothUpdatePairedIdListEventCopyWith<_BluetoothUpdatePairedIdListEvent>
-      get copyWith => __$BluetoothUpdatePairedIdListEventCopyWithImpl<
-          _BluetoothUpdatePairedIdListEvent>(this, _$identity);
+  _$$_BluetoothUpdatePairedIdListEventCopyWith<
+          _$_BluetoothUpdatePairedIdListEvent>
+      get copyWith => __$$_BluetoothUpdatePairedIdListEventCopyWithImpl<
+          _$_BluetoothUpdatePairedIdListEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1204,44 +1161,45 @@ class _$_BluetoothUpdatePairedIdListEvent
 }
 
 abstract class _BluetoothUpdatePairedIdListEvent implements BluetoothEvent {
-  const factory _BluetoothUpdatePairedIdListEvent(List<String> list) =
+  const factory _BluetoothUpdatePairedIdListEvent(final List<String> list) =
       _$_BluetoothUpdatePairedIdListEvent;
 
-  List<String> get list;
+  List<String> get list => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$BluetoothUpdatePairedIdListEventCopyWith<_BluetoothUpdatePairedIdListEvent>
+  _$$_BluetoothUpdatePairedIdListEventCopyWith<
+          _$_BluetoothUpdatePairedIdListEvent>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$BluetoothUpdateDiscoveredListEventCopyWith<$Res> {
-  factory _$BluetoothUpdateDiscoveredListEventCopyWith(
-          _BluetoothUpdateDiscoveredListEvent value,
-          $Res Function(_BluetoothUpdateDiscoveredListEvent) then) =
-      __$BluetoothUpdateDiscoveredListEventCopyWithImpl<$Res>;
+abstract class _$$_BluetoothUpdateDiscoveredListEventCopyWith<$Res> {
+  factory _$$_BluetoothUpdateDiscoveredListEventCopyWith(
+          _$_BluetoothUpdateDiscoveredListEvent value,
+          $Res Function(_$_BluetoothUpdateDiscoveredListEvent) then) =
+      __$$_BluetoothUpdateDiscoveredListEventCopyWithImpl<$Res>;
   $Res call({List<DiscoveredDevice> list});
 }
 
 /// @nodoc
-class __$BluetoothUpdateDiscoveredListEventCopyWithImpl<$Res>
+class __$$_BluetoothUpdateDiscoveredListEventCopyWithImpl<$Res>
     extends _$BluetoothEventCopyWithImpl<$Res>
-    implements _$BluetoothUpdateDiscoveredListEventCopyWith<$Res> {
-  __$BluetoothUpdateDiscoveredListEventCopyWithImpl(
-      _BluetoothUpdateDiscoveredListEvent _value,
-      $Res Function(_BluetoothUpdateDiscoveredListEvent) _then)
-      : super(_value, (v) => _then(v as _BluetoothUpdateDiscoveredListEvent));
+    implements _$$_BluetoothUpdateDiscoveredListEventCopyWith<$Res> {
+  __$$_BluetoothUpdateDiscoveredListEventCopyWithImpl(
+      _$_BluetoothUpdateDiscoveredListEvent _value,
+      $Res Function(_$_BluetoothUpdateDiscoveredListEvent) _then)
+      : super(_value, (v) => _then(v as _$_BluetoothUpdateDiscoveredListEvent));
 
   @override
-  _BluetoothUpdateDiscoveredListEvent get _value =>
-      super._value as _BluetoothUpdateDiscoveredListEvent;
+  _$_BluetoothUpdateDiscoveredListEvent get _value =>
+      super._value as _$_BluetoothUpdateDiscoveredListEvent;
 
   @override
   $Res call({
     Object? list = freezed,
   }) {
-    return _then(_BluetoothUpdateDiscoveredListEvent(
+    return _then(_$_BluetoothUpdateDiscoveredListEvent(
       list == freezed
-          ? _value.list
+          ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
               as List<DiscoveredDevice>,
     ));
@@ -1252,10 +1210,15 @@ class __$BluetoothUpdateDiscoveredListEventCopyWithImpl<$Res>
 
 class _$_BluetoothUpdateDiscoveredListEvent
     implements _BluetoothUpdateDiscoveredListEvent {
-  const _$_BluetoothUpdateDiscoveredListEvent(this.list);
+  const _$_BluetoothUpdateDiscoveredListEvent(final List<DiscoveredDevice> list)
+      : _list = list;
 
+  final List<DiscoveredDevice> _list;
   @override
-  final List<DiscoveredDevice> list;
+  List<DiscoveredDevice> get list {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_list);
+  }
 
   @override
   String toString() {
@@ -1266,20 +1229,20 @@ class _$_BluetoothUpdateDiscoveredListEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _BluetoothUpdateDiscoveredListEvent &&
-            const DeepCollectionEquality().equals(other.list, list));
+            other is _$_BluetoothUpdateDiscoveredListEvent &&
+            const DeepCollectionEquality().equals(other._list, _list));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(list));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_list));
 
   @JsonKey(ignore: true)
   @override
-  _$BluetoothUpdateDiscoveredListEventCopyWith<
-          _BluetoothUpdateDiscoveredListEvent>
-      get copyWith => __$BluetoothUpdateDiscoveredListEventCopyWithImpl<
-          _BluetoothUpdateDiscoveredListEvent>(this, _$identity);
+  _$$_BluetoothUpdateDiscoveredListEventCopyWith<
+          _$_BluetoothUpdateDiscoveredListEvent>
+      get copyWith => __$$_BluetoothUpdateDiscoveredListEventCopyWithImpl<
+          _$_BluetoothUpdateDiscoveredListEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1396,45 +1359,46 @@ class _$_BluetoothUpdateDiscoveredListEvent
 
 abstract class _BluetoothUpdateDiscoveredListEvent implements BluetoothEvent {
   const factory _BluetoothUpdateDiscoveredListEvent(
-      List<DiscoveredDevice> list) = _$_BluetoothUpdateDiscoveredListEvent;
+          final List<DiscoveredDevice> list) =
+      _$_BluetoothUpdateDiscoveredListEvent;
 
-  List<DiscoveredDevice> get list;
+  List<DiscoveredDevice> get list => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$BluetoothUpdateDiscoveredListEventCopyWith<
-          _BluetoothUpdateDiscoveredListEvent>
+  _$$_BluetoothUpdateDiscoveredListEventCopyWith<
+          _$_BluetoothUpdateDiscoveredListEvent>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$BluetoothUpdateDeviceConnectionListEventCopyWith<$Res> {
-  factory _$BluetoothUpdateDeviceConnectionListEventCopyWith(
-          _BluetoothUpdateDeviceConnectionListEvent value,
-          $Res Function(_BluetoothUpdateDeviceConnectionListEvent) then) =
-      __$BluetoothUpdateDeviceConnectionListEventCopyWithImpl<$Res>;
+abstract class _$$_BluetoothUpdateDeviceConnectionListEventCopyWith<$Res> {
+  factory _$$_BluetoothUpdateDeviceConnectionListEventCopyWith(
+          _$_BluetoothUpdateDeviceConnectionListEvent value,
+          $Res Function(_$_BluetoothUpdateDeviceConnectionListEvent) then) =
+      __$$_BluetoothUpdateDeviceConnectionListEventCopyWithImpl<$Res>;
   $Res call({List<ConnectionStateUpdate> list});
 }
 
 /// @nodoc
-class __$BluetoothUpdateDeviceConnectionListEventCopyWithImpl<$Res>
+class __$$_BluetoothUpdateDeviceConnectionListEventCopyWithImpl<$Res>
     extends _$BluetoothEventCopyWithImpl<$Res>
-    implements _$BluetoothUpdateDeviceConnectionListEventCopyWith<$Res> {
-  __$BluetoothUpdateDeviceConnectionListEventCopyWithImpl(
-      _BluetoothUpdateDeviceConnectionListEvent _value,
-      $Res Function(_BluetoothUpdateDeviceConnectionListEvent) _then)
+    implements _$$_BluetoothUpdateDeviceConnectionListEventCopyWith<$Res> {
+  __$$_BluetoothUpdateDeviceConnectionListEventCopyWithImpl(
+      _$_BluetoothUpdateDeviceConnectionListEvent _value,
+      $Res Function(_$_BluetoothUpdateDeviceConnectionListEvent) _then)
       : super(_value,
-            (v) => _then(v as _BluetoothUpdateDeviceConnectionListEvent));
+            (v) => _then(v as _$_BluetoothUpdateDeviceConnectionListEvent));
 
   @override
-  _BluetoothUpdateDeviceConnectionListEvent get _value =>
-      super._value as _BluetoothUpdateDeviceConnectionListEvent;
+  _$_BluetoothUpdateDeviceConnectionListEvent get _value =>
+      super._value as _$_BluetoothUpdateDeviceConnectionListEvent;
 
   @override
   $Res call({
     Object? list = freezed,
   }) {
-    return _then(_BluetoothUpdateDeviceConnectionListEvent(
+    return _then(_$_BluetoothUpdateDeviceConnectionListEvent(
       list == freezed
-          ? _value.list
+          ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
               as List<ConnectionStateUpdate>,
     ));
@@ -1445,10 +1409,16 @@ class __$BluetoothUpdateDeviceConnectionListEventCopyWithImpl<$Res>
 
 class _$_BluetoothUpdateDeviceConnectionListEvent
     implements _BluetoothUpdateDeviceConnectionListEvent {
-  const _$_BluetoothUpdateDeviceConnectionListEvent(this.list);
+  const _$_BluetoothUpdateDeviceConnectionListEvent(
+      final List<ConnectionStateUpdate> list)
+      : _list = list;
 
+  final List<ConnectionStateUpdate> _list;
   @override
-  final List<ConnectionStateUpdate> list;
+  List<ConnectionStateUpdate> get list {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_list);
+  }
 
   @override
   String toString() {
@@ -1459,20 +1429,20 @@ class _$_BluetoothUpdateDeviceConnectionListEvent
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _BluetoothUpdateDeviceConnectionListEvent &&
-            const DeepCollectionEquality().equals(other.list, list));
+            other is _$_BluetoothUpdateDeviceConnectionListEvent &&
+            const DeepCollectionEquality().equals(other._list, _list));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(list));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_list));
 
   @JsonKey(ignore: true)
   @override
-  _$BluetoothUpdateDeviceConnectionListEventCopyWith<
-          _BluetoothUpdateDeviceConnectionListEvent>
-      get copyWith => __$BluetoothUpdateDeviceConnectionListEventCopyWithImpl<
-          _BluetoothUpdateDeviceConnectionListEvent>(this, _$identity);
+  _$$_BluetoothUpdateDeviceConnectionListEventCopyWith<
+          _$_BluetoothUpdateDeviceConnectionListEvent>
+      get copyWith => __$$_BluetoothUpdateDeviceConnectionListEventCopyWithImpl<
+          _$_BluetoothUpdateDeviceConnectionListEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1590,12 +1560,12 @@ class _$_BluetoothUpdateDeviceConnectionListEvent
 abstract class _BluetoothUpdateDeviceConnectionListEvent
     implements BluetoothEvent {
   const factory _BluetoothUpdateDeviceConnectionListEvent(
-          List<ConnectionStateUpdate> list) =
+          final List<ConnectionStateUpdate> list) =
       _$_BluetoothUpdateDeviceConnectionListEvent;
 
-  List<ConnectionStateUpdate> get list;
+  List<ConnectionStateUpdate> get list => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$BluetoothUpdateDeviceConnectionListEventCopyWith<
-          _BluetoothUpdateDeviceConnectionListEvent>
+  _$$_BluetoothUpdateDeviceConnectionListEventCopyWith<
+          _$_BluetoothUpdateDeviceConnectionListEvent>
       get copyWith => throw _privateConstructorUsedError;
 }

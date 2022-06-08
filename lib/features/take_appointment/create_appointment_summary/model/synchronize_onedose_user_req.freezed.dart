@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'synchronize_onedose_user_req.dart';
@@ -11,57 +12,12 @@ part of 'synchronize_onedose_user_req.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 SynchronizeOneDoseUserRequest _$SynchronizeOneDoseUserRequestFromJson(
     Map<String, dynamic> json) {
   return _SynchronizeOneDoseUserRequest.fromJson(json);
 }
-
-/// @nodoc
-class _$SynchronizeOneDoseUserRequestTearOff {
-  const _$SynchronizeOneDoseUserRequestTearOff();
-
-  _SynchronizeOneDoseUserRequest call(
-      {String? birthDate,
-      String? email,
-      String? firstName,
-      String? gender,
-      String? gsm,
-      String? countryCode,
-      bool? hasEtkApproval,
-      bool? hasKvkkApproval,
-      int? id,
-      String? identityNumber,
-      String? lastName,
-      int? nationalityId,
-      String? passportNumber,
-      int? patientType}) {
-    return _SynchronizeOneDoseUserRequest(
-      birthDate: birthDate,
-      email: email,
-      firstName: firstName,
-      gender: gender,
-      gsm: gsm,
-      countryCode: countryCode,
-      hasEtkApproval: hasEtkApproval,
-      hasKvkkApproval: hasKvkkApproval,
-      id: id,
-      identityNumber: identityNumber,
-      lastName: lastName,
-      nationalityId: nationalityId,
-      passportNumber: passportNumber,
-      patientType: patientType,
-    );
-  }
-
-  SynchronizeOneDoseUserRequest fromJson(Map<String, Object?> json) {
-    return SynchronizeOneDoseUserRequest.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SynchronizeOneDoseUserRequest = _$SynchronizeOneDoseUserRequestTearOff();
 
 /// @nodoc
 mixin _$SynchronizeOneDoseUserRequest {
@@ -197,12 +153,12 @@ class _$SynchronizeOneDoseUserRequestCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SynchronizeOneDoseUserRequestCopyWith<$Res>
+abstract class _$$_SynchronizeOneDoseUserRequestCopyWith<$Res>
     implements $SynchronizeOneDoseUserRequestCopyWith<$Res> {
-  factory _$SynchronizeOneDoseUserRequestCopyWith(
-          _SynchronizeOneDoseUserRequest value,
-          $Res Function(_SynchronizeOneDoseUserRequest) then) =
-      __$SynchronizeOneDoseUserRequestCopyWithImpl<$Res>;
+  factory _$$_SynchronizeOneDoseUserRequestCopyWith(
+          _$_SynchronizeOneDoseUserRequest value,
+          $Res Function(_$_SynchronizeOneDoseUserRequest) then) =
+      __$$_SynchronizeOneDoseUserRequestCopyWithImpl<$Res>;
   @override
   $Res call(
       {String? birthDate,
@@ -222,17 +178,17 @@ abstract class _$SynchronizeOneDoseUserRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SynchronizeOneDoseUserRequestCopyWithImpl<$Res>
+class __$$_SynchronizeOneDoseUserRequestCopyWithImpl<$Res>
     extends _$SynchronizeOneDoseUserRequestCopyWithImpl<$Res>
-    implements _$SynchronizeOneDoseUserRequestCopyWith<$Res> {
-  __$SynchronizeOneDoseUserRequestCopyWithImpl(
-      _SynchronizeOneDoseUserRequest _value,
-      $Res Function(_SynchronizeOneDoseUserRequest) _then)
-      : super(_value, (v) => _then(v as _SynchronizeOneDoseUserRequest));
+    implements _$$_SynchronizeOneDoseUserRequestCopyWith<$Res> {
+  __$$_SynchronizeOneDoseUserRequestCopyWithImpl(
+      _$_SynchronizeOneDoseUserRequest _value,
+      $Res Function(_$_SynchronizeOneDoseUserRequest) _then)
+      : super(_value, (v) => _then(v as _$_SynchronizeOneDoseUserRequest));
 
   @override
-  _SynchronizeOneDoseUserRequest get _value =>
-      super._value as _SynchronizeOneDoseUserRequest;
+  _$_SynchronizeOneDoseUserRequest get _value =>
+      super._value as _$_SynchronizeOneDoseUserRequest;
 
   @override
   $Res call({
@@ -251,7 +207,7 @@ class __$SynchronizeOneDoseUserRequestCopyWithImpl<$Res>
     Object? passportNumber = freezed,
     Object? patientType = freezed,
   }) {
-    return _then(_SynchronizeOneDoseUserRequest(
+    return _then(_$_SynchronizeOneDoseUserRequest(
       birthDate: birthDate == freezed
           ? _value.birthDate
           : birthDate // ignore: cast_nullable_to_non_nullable
@@ -374,7 +330,7 @@ class _$_SynchronizeOneDoseUserRequest
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SynchronizeOneDoseUserRequest &&
+            other is _$_SynchronizeOneDoseUserRequest &&
             const DeepCollectionEquality().equals(other.birthDate, birthDate) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.firstName, firstName) &&
@@ -398,6 +354,7 @@ class _$_SynchronizeOneDoseUserRequest
                 .equals(other.patientType, patientType));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -418,9 +375,9 @@ class _$_SynchronizeOneDoseUserRequest
 
   @JsonKey(ignore: true)
   @override
-  _$SynchronizeOneDoseUserRequestCopyWith<_SynchronizeOneDoseUserRequest>
-      get copyWith => __$SynchronizeOneDoseUserRequestCopyWithImpl<
-          _SynchronizeOneDoseUserRequest>(this, _$identity);
+  _$$_SynchronizeOneDoseUserRequestCopyWith<_$_SynchronizeOneDoseUserRequest>
+      get copyWith => __$$_SynchronizeOneDoseUserRequestCopyWithImpl<
+          _$_SynchronizeOneDoseUserRequest>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -431,54 +388,54 @@ class _$_SynchronizeOneDoseUserRequest
 abstract class _SynchronizeOneDoseUserRequest
     implements SynchronizeOneDoseUserRequest {
   const factory _SynchronizeOneDoseUserRequest(
-      {String? birthDate,
-      String? email,
-      String? firstName,
-      String? gender,
-      String? gsm,
-      String? countryCode,
-      bool? hasEtkApproval,
-      bool? hasKvkkApproval,
-      int? id,
-      String? identityNumber,
-      String? lastName,
-      int? nationalityId,
-      String? passportNumber,
-      int? patientType}) = _$_SynchronizeOneDoseUserRequest;
+      {final String? birthDate,
+      final String? email,
+      final String? firstName,
+      final String? gender,
+      final String? gsm,
+      final String? countryCode,
+      final bool? hasEtkApproval,
+      final bool? hasKvkkApproval,
+      final int? id,
+      final String? identityNumber,
+      final String? lastName,
+      final int? nationalityId,
+      final String? passportNumber,
+      final int? patientType}) = _$_SynchronizeOneDoseUserRequest;
 
   factory _SynchronizeOneDoseUserRequest.fromJson(Map<String, dynamic> json) =
       _$_SynchronizeOneDoseUserRequest.fromJson;
 
   @override
-  String? get birthDate;
+  String? get birthDate => throw _privateConstructorUsedError;
   @override
-  String? get email;
+  String? get email => throw _privateConstructorUsedError;
   @override
-  String? get firstName;
+  String? get firstName => throw _privateConstructorUsedError;
   @override
-  String? get gender;
+  String? get gender => throw _privateConstructorUsedError;
   @override
-  String? get gsm;
+  String? get gsm => throw _privateConstructorUsedError;
   @override
-  String? get countryCode;
+  String? get countryCode => throw _privateConstructorUsedError;
   @override
-  bool? get hasEtkApproval;
+  bool? get hasEtkApproval => throw _privateConstructorUsedError;
   @override
-  bool? get hasKvkkApproval;
+  bool? get hasKvkkApproval => throw _privateConstructorUsedError;
   @override
-  int? get id;
+  int? get id => throw _privateConstructorUsedError;
   @override
-  String? get identityNumber;
+  String? get identityNumber => throw _privateConstructorUsedError;
   @override
-  String? get lastName;
+  String? get lastName => throw _privateConstructorUsedError;
   @override
-  int? get nationalityId;
+  int? get nationalityId => throw _privateConstructorUsedError;
   @override
-  String? get passportNumber;
+  String? get passportNumber => throw _privateConstructorUsedError;
   @override
-  int? get patientType;
+  int? get patientType => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SynchronizeOneDoseUserRequestCopyWith<_SynchronizeOneDoseUserRequest>
+  _$$_SynchronizeOneDoseUserRequestCopyWith<_$_SynchronizeOneDoseUserRequest>
       get copyWith => throw _privateConstructorUsedError;
 }

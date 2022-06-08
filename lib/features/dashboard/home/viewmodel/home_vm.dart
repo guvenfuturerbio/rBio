@@ -161,7 +161,7 @@ class HomeVm extends ChangeNotifier {
 
   // #region addWidget
   Future<void> addWidget(HomeWidgets widgetType) async {
-    var sharedUserList = getUserWidgets ?? [];
+    List<String> sharedUserList = List<String>.from(getUserWidgets ?? []);
     final newWidget = _getWidgetByType(widgetType, false);
     if (newWidget != null) {
       if (!(widgetsInUse
@@ -181,10 +181,11 @@ class HomeVm extends ChangeNotifier {
             widgetsInUse.last.key != keys[HomeWidgets.slider]) {
           addAfterSlider(newWidget);
           sharedUserList.insert(
-              widgetsInUse.indexOf(widgetsInUse.singleWhere(
-                      (element) => element.key == keys[HomeWidgets.slider])) +
-                  1,
-              widgetType.xRawValue);
+            widgetsInUse.indexOf(widgetsInUse.singleWhere(
+                    (element) => element.key == keys[HomeWidgets.slider])) +
+                1,
+            widgetType.xRawValue,
+          );
         } else if (widgetsInUse
                 .indexOf(widgetsInUse.singleWhere(
                     (element) => element.key == keys[HomeWidgets.slider]))

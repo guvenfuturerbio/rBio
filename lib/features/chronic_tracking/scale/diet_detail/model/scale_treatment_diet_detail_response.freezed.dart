@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'scale_treatment_diet_detail_response.dart';
@@ -11,46 +12,12 @@ part of 'scale_treatment_diet_detail_response.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ScaleTreatmentDietDetailResponse _$ScaleTreatmentDietDetailResponseFromJson(
     Map<String, dynamic> json) {
   return _ScaleTreatmentDietDetailResponse.fromJson(json);
 }
-
-/// @nodoc
-class _$ScaleTreatmentDietDetailResponseTearOff {
-  const _$ScaleTreatmentDietDetailResponseTearOff();
-
-  _ScaleTreatmentDietDetailResponse call(
-      {@JsonKey(name: 'dietTitle') String? dietTitle,
-      @JsonKey(name: 'dietCreateDate') String? dietCreateDate,
-      @JsonKey(name: 'createdByName') String? createdByName,
-      @JsonKey(name: 'dietBreakfast') String? dietBreakfast,
-      @JsonKey(name: 'dietRefreshment') String? dietRefreshment,
-      @JsonKey(name: 'dietLunch') String? dietLunch,
-      @JsonKey(name: 'dietDinner') String? dietDinner,
-      @JsonKey(name: 'id') int? id}) {
-    return _ScaleTreatmentDietDetailResponse(
-      dietTitle: dietTitle,
-      dietCreateDate: dietCreateDate,
-      createdByName: createdByName,
-      dietBreakfast: dietBreakfast,
-      dietRefreshment: dietRefreshment,
-      dietLunch: dietLunch,
-      dietDinner: dietDinner,
-      id: id,
-    );
-  }
-
-  ScaleTreatmentDietDetailResponse fromJson(Map<String, Object?> json) {
-    return ScaleTreatmentDietDetailResponse.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ScaleTreatmentDietDetailResponse =
-    _$ScaleTreatmentDietDetailResponseTearOff();
 
 /// @nodoc
 mixin _$ScaleTreatmentDietDetailResponse {
@@ -62,12 +29,16 @@ mixin _$ScaleTreatmentDietDetailResponse {
   String? get createdByName => throw _privateConstructorUsedError;
   @JsonKey(name: 'dietBreakfast')
   String? get dietBreakfast => throw _privateConstructorUsedError;
-  @JsonKey(name: 'dietRefreshment')
-  String? get dietRefreshment => throw _privateConstructorUsedError;
+  @JsonKey(name: 'dietRefreshmentBreakfast')
+  String? get dietRefreshmentBreakfast => throw _privateConstructorUsedError;
   @JsonKey(name: 'dietLunch')
   String? get dietLunch => throw _privateConstructorUsedError;
+  @JsonKey(name: 'dietRefreshmentLunch')
+  String? get dietRefreshmentLunch => throw _privateConstructorUsedError;
   @JsonKey(name: 'dietDinner')
   String? get dietDinner => throw _privateConstructorUsedError;
+  @JsonKey(name: 'dietRefreshmentDinner')
+  String? get dietRefreshmentDinner => throw _privateConstructorUsedError;
   @JsonKey(name: 'id')
   int? get id => throw _privateConstructorUsedError;
 
@@ -84,14 +55,26 @@ abstract class $ScaleTreatmentDietDetailResponseCopyWith<$Res> {
           $Res Function(ScaleTreatmentDietDetailResponse) then) =
       _$ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'dietTitle') String? dietTitle,
-      @JsonKey(name: 'dietCreateDate') String? dietCreateDate,
-      @JsonKey(name: 'createdByName') String? createdByName,
-      @JsonKey(name: 'dietBreakfast') String? dietBreakfast,
-      @JsonKey(name: 'dietRefreshment') String? dietRefreshment,
-      @JsonKey(name: 'dietLunch') String? dietLunch,
-      @JsonKey(name: 'dietDinner') String? dietDinner,
-      @JsonKey(name: 'id') int? id});
+      {@JsonKey(name: 'dietTitle')
+          String? dietTitle,
+      @JsonKey(name: 'dietCreateDate')
+          String? dietCreateDate,
+      @JsonKey(name: 'createdByName')
+          String? createdByName,
+      @JsonKey(name: 'dietBreakfast')
+          String? dietBreakfast,
+      @JsonKey(name: 'dietRefreshmentBreakfast')
+          String? dietRefreshmentBreakfast,
+      @JsonKey(name: 'dietLunch')
+          String? dietLunch,
+      @JsonKey(name: 'dietRefreshmentLunch')
+          String? dietRefreshmentLunch,
+      @JsonKey(name: 'dietDinner')
+          String? dietDinner,
+      @JsonKey(name: 'dietRefreshmentDinner')
+          String? dietRefreshmentDinner,
+      @JsonKey(name: 'id')
+          int? id});
 }
 
 /// @nodoc
@@ -109,9 +92,11 @@ class _$ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>
     Object? dietCreateDate = freezed,
     Object? createdByName = freezed,
     Object? dietBreakfast = freezed,
-    Object? dietRefreshment = freezed,
+    Object? dietRefreshmentBreakfast = freezed,
     Object? dietLunch = freezed,
+    Object? dietRefreshmentLunch = freezed,
     Object? dietDinner = freezed,
+    Object? dietRefreshmentDinner = freezed,
     Object? id = freezed,
   }) {
     return _then(_value.copyWith(
@@ -131,17 +116,25 @@ class _$ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>
           ? _value.dietBreakfast
           : dietBreakfast // ignore: cast_nullable_to_non_nullable
               as String?,
-      dietRefreshment: dietRefreshment == freezed
-          ? _value.dietRefreshment
-          : dietRefreshment // ignore: cast_nullable_to_non_nullable
+      dietRefreshmentBreakfast: dietRefreshmentBreakfast == freezed
+          ? _value.dietRefreshmentBreakfast
+          : dietRefreshmentBreakfast // ignore: cast_nullable_to_non_nullable
               as String?,
       dietLunch: dietLunch == freezed
           ? _value.dietLunch
           : dietLunch // ignore: cast_nullable_to_non_nullable
               as String?,
+      dietRefreshmentLunch: dietRefreshmentLunch == freezed
+          ? _value.dietRefreshmentLunch
+          : dietRefreshmentLunch // ignore: cast_nullable_to_non_nullable
+              as String?,
       dietDinner: dietDinner == freezed
           ? _value.dietDinner
           : dietDinner // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dietRefreshmentDinner: dietRefreshmentDinner == freezed
+          ? _value.dietRefreshmentDinner
+          : dietRefreshmentDinner // ignore: cast_nullable_to_non_nullable
               as String?,
       id: id == freezed
           ? _value.id
@@ -152,36 +145,48 @@ class _$ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ScaleTreatmentDietDetailResponseCopyWith<$Res>
+abstract class _$$_ScaleTreatmentDietDetailResponseCopyWith<$Res>
     implements $ScaleTreatmentDietDetailResponseCopyWith<$Res> {
-  factory _$ScaleTreatmentDietDetailResponseCopyWith(
-          _ScaleTreatmentDietDetailResponse value,
-          $Res Function(_ScaleTreatmentDietDetailResponse) then) =
-      __$ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>;
+  factory _$$_ScaleTreatmentDietDetailResponseCopyWith(
+          _$_ScaleTreatmentDietDetailResponse value,
+          $Res Function(_$_ScaleTreatmentDietDetailResponse) then) =
+      __$$_ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'dietTitle') String? dietTitle,
-      @JsonKey(name: 'dietCreateDate') String? dietCreateDate,
-      @JsonKey(name: 'createdByName') String? createdByName,
-      @JsonKey(name: 'dietBreakfast') String? dietBreakfast,
-      @JsonKey(name: 'dietRefreshment') String? dietRefreshment,
-      @JsonKey(name: 'dietLunch') String? dietLunch,
-      @JsonKey(name: 'dietDinner') String? dietDinner,
-      @JsonKey(name: 'id') int? id});
+      {@JsonKey(name: 'dietTitle')
+          String? dietTitle,
+      @JsonKey(name: 'dietCreateDate')
+          String? dietCreateDate,
+      @JsonKey(name: 'createdByName')
+          String? createdByName,
+      @JsonKey(name: 'dietBreakfast')
+          String? dietBreakfast,
+      @JsonKey(name: 'dietRefreshmentBreakfast')
+          String? dietRefreshmentBreakfast,
+      @JsonKey(name: 'dietLunch')
+          String? dietLunch,
+      @JsonKey(name: 'dietRefreshmentLunch')
+          String? dietRefreshmentLunch,
+      @JsonKey(name: 'dietDinner')
+          String? dietDinner,
+      @JsonKey(name: 'dietRefreshmentDinner')
+          String? dietRefreshmentDinner,
+      @JsonKey(name: 'id')
+          int? id});
 }
 
 /// @nodoc
-class __$ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>
+class __$$_ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>
     extends _$ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>
-    implements _$ScaleTreatmentDietDetailResponseCopyWith<$Res> {
-  __$ScaleTreatmentDietDetailResponseCopyWithImpl(
-      _ScaleTreatmentDietDetailResponse _value,
-      $Res Function(_ScaleTreatmentDietDetailResponse) _then)
-      : super(_value, (v) => _then(v as _ScaleTreatmentDietDetailResponse));
+    implements _$$_ScaleTreatmentDietDetailResponseCopyWith<$Res> {
+  __$$_ScaleTreatmentDietDetailResponseCopyWithImpl(
+      _$_ScaleTreatmentDietDetailResponse _value,
+      $Res Function(_$_ScaleTreatmentDietDetailResponse) _then)
+      : super(_value, (v) => _then(v as _$_ScaleTreatmentDietDetailResponse));
 
   @override
-  _ScaleTreatmentDietDetailResponse get _value =>
-      super._value as _ScaleTreatmentDietDetailResponse;
+  _$_ScaleTreatmentDietDetailResponse get _value =>
+      super._value as _$_ScaleTreatmentDietDetailResponse;
 
   @override
   $Res call({
@@ -189,12 +194,14 @@ class __$ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>
     Object? dietCreateDate = freezed,
     Object? createdByName = freezed,
     Object? dietBreakfast = freezed,
-    Object? dietRefreshment = freezed,
+    Object? dietRefreshmentBreakfast = freezed,
     Object? dietLunch = freezed,
+    Object? dietRefreshmentLunch = freezed,
     Object? dietDinner = freezed,
+    Object? dietRefreshmentDinner = freezed,
     Object? id = freezed,
   }) {
-    return _then(_ScaleTreatmentDietDetailResponse(
+    return _then(_$_ScaleTreatmentDietDetailResponse(
       dietTitle: dietTitle == freezed
           ? _value.dietTitle
           : dietTitle // ignore: cast_nullable_to_non_nullable
@@ -211,17 +218,25 @@ class __$ScaleTreatmentDietDetailResponseCopyWithImpl<$Res>
           ? _value.dietBreakfast
           : dietBreakfast // ignore: cast_nullable_to_non_nullable
               as String?,
-      dietRefreshment: dietRefreshment == freezed
-          ? _value.dietRefreshment
-          : dietRefreshment // ignore: cast_nullable_to_non_nullable
+      dietRefreshmentBreakfast: dietRefreshmentBreakfast == freezed
+          ? _value.dietRefreshmentBreakfast
+          : dietRefreshmentBreakfast // ignore: cast_nullable_to_non_nullable
               as String?,
       dietLunch: dietLunch == freezed
           ? _value.dietLunch
           : dietLunch // ignore: cast_nullable_to_non_nullable
               as String?,
+      dietRefreshmentLunch: dietRefreshmentLunch == freezed
+          ? _value.dietRefreshmentLunch
+          : dietRefreshmentLunch // ignore: cast_nullable_to_non_nullable
+              as String?,
       dietDinner: dietDinner == freezed
           ? _value.dietDinner
           : dietDinner // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dietRefreshmentDinner: dietRefreshmentDinner == freezed
+          ? _value.dietRefreshmentDinner
+          : dietRefreshmentDinner // ignore: cast_nullable_to_non_nullable
               as String?,
       id: id == freezed
           ? _value.id
@@ -240,9 +255,11 @@ class _$_ScaleTreatmentDietDetailResponse
       @JsonKey(name: 'dietCreateDate') this.dietCreateDate,
       @JsonKey(name: 'createdByName') this.createdByName,
       @JsonKey(name: 'dietBreakfast') this.dietBreakfast,
-      @JsonKey(name: 'dietRefreshment') this.dietRefreshment,
+      @JsonKey(name: 'dietRefreshmentBreakfast') this.dietRefreshmentBreakfast,
       @JsonKey(name: 'dietLunch') this.dietLunch,
+      @JsonKey(name: 'dietRefreshmentLunch') this.dietRefreshmentLunch,
       @JsonKey(name: 'dietDinner') this.dietDinner,
+      @JsonKey(name: 'dietRefreshmentDinner') this.dietRefreshmentDinner,
       @JsonKey(name: 'id') this.id})
       : super._();
 
@@ -263,28 +280,34 @@ class _$_ScaleTreatmentDietDetailResponse
   @JsonKey(name: 'dietBreakfast')
   final String? dietBreakfast;
   @override
-  @JsonKey(name: 'dietRefreshment')
-  final String? dietRefreshment;
+  @JsonKey(name: 'dietRefreshmentBreakfast')
+  final String? dietRefreshmentBreakfast;
   @override
   @JsonKey(name: 'dietLunch')
   final String? dietLunch;
   @override
+  @JsonKey(name: 'dietRefreshmentLunch')
+  final String? dietRefreshmentLunch;
+  @override
   @JsonKey(name: 'dietDinner')
   final String? dietDinner;
+  @override
+  @JsonKey(name: 'dietRefreshmentDinner')
+  final String? dietRefreshmentDinner;
   @override
   @JsonKey(name: 'id')
   final int? id;
 
   @override
   String toString() {
-    return 'ScaleTreatmentDietDetailResponse(dietTitle: $dietTitle, dietCreateDate: $dietCreateDate, createdByName: $createdByName, dietBreakfast: $dietBreakfast, dietRefreshment: $dietRefreshment, dietLunch: $dietLunch, dietDinner: $dietDinner, id: $id)';
+    return 'ScaleTreatmentDietDetailResponse(dietTitle: $dietTitle, dietCreateDate: $dietCreateDate, createdByName: $createdByName, dietBreakfast: $dietBreakfast, dietRefreshmentBreakfast: $dietRefreshmentBreakfast, dietLunch: $dietLunch, dietRefreshmentLunch: $dietRefreshmentLunch, dietDinner: $dietDinner, dietRefreshmentDinner: $dietRefreshmentDinner, id: $id)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ScaleTreatmentDietDetailResponse &&
+            other is _$_ScaleTreatmentDietDetailResponse &&
             const DeepCollectionEquality().equals(other.dietTitle, dietTitle) &&
             const DeepCollectionEquality()
                 .equals(other.dietCreateDate, dietCreateDate) &&
@@ -292,14 +315,19 @@ class _$_ScaleTreatmentDietDetailResponse
                 .equals(other.createdByName, createdByName) &&
             const DeepCollectionEquality()
                 .equals(other.dietBreakfast, dietBreakfast) &&
-            const DeepCollectionEquality()
-                .equals(other.dietRefreshment, dietRefreshment) &&
+            const DeepCollectionEquality().equals(
+                other.dietRefreshmentBreakfast, dietRefreshmentBreakfast) &&
             const DeepCollectionEquality().equals(other.dietLunch, dietLunch) &&
             const DeepCollectionEquality()
+                .equals(other.dietRefreshmentLunch, dietRefreshmentLunch) &&
+            const DeepCollectionEquality()
                 .equals(other.dietDinner, dietDinner) &&
+            const DeepCollectionEquality()
+                .equals(other.dietRefreshmentDinner, dietRefreshmentDinner) &&
             const DeepCollectionEquality().equals(other.id, id));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -307,16 +335,19 @@ class _$_ScaleTreatmentDietDetailResponse
       const DeepCollectionEquality().hash(dietCreateDate),
       const DeepCollectionEquality().hash(createdByName),
       const DeepCollectionEquality().hash(dietBreakfast),
-      const DeepCollectionEquality().hash(dietRefreshment),
+      const DeepCollectionEquality().hash(dietRefreshmentBreakfast),
       const DeepCollectionEquality().hash(dietLunch),
+      const DeepCollectionEquality().hash(dietRefreshmentLunch),
       const DeepCollectionEquality().hash(dietDinner),
+      const DeepCollectionEquality().hash(dietRefreshmentDinner),
       const DeepCollectionEquality().hash(id));
 
   @JsonKey(ignore: true)
   @override
-  _$ScaleTreatmentDietDetailResponseCopyWith<_ScaleTreatmentDietDetailResponse>
-      get copyWith => __$ScaleTreatmentDietDetailResponseCopyWithImpl<
-          _ScaleTreatmentDietDetailResponse>(this, _$identity);
+  _$$_ScaleTreatmentDietDetailResponseCopyWith<
+          _$_ScaleTreatmentDietDetailResponse>
+      get copyWith => __$$_ScaleTreatmentDietDetailResponseCopyWithImpl<
+          _$_ScaleTreatmentDietDetailResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -327,14 +358,26 @@ class _$_ScaleTreatmentDietDetailResponse
 abstract class _ScaleTreatmentDietDetailResponse
     extends ScaleTreatmentDietDetailResponse {
   const factory _ScaleTreatmentDietDetailResponse(
-      {@JsonKey(name: 'dietTitle') String? dietTitle,
-      @JsonKey(name: 'dietCreateDate') String? dietCreateDate,
-      @JsonKey(name: 'createdByName') String? createdByName,
-      @JsonKey(name: 'dietBreakfast') String? dietBreakfast,
-      @JsonKey(name: 'dietRefreshment') String? dietRefreshment,
-      @JsonKey(name: 'dietLunch') String? dietLunch,
-      @JsonKey(name: 'dietDinner') String? dietDinner,
-      @JsonKey(name: 'id') int? id}) = _$_ScaleTreatmentDietDetailResponse;
+      {@JsonKey(name: 'dietTitle')
+          final String? dietTitle,
+      @JsonKey(name: 'dietCreateDate')
+          final String? dietCreateDate,
+      @JsonKey(name: 'createdByName')
+          final String? createdByName,
+      @JsonKey(name: 'dietBreakfast')
+          final String? dietBreakfast,
+      @JsonKey(name: 'dietRefreshmentBreakfast')
+          final String? dietRefreshmentBreakfast,
+      @JsonKey(name: 'dietLunch')
+          final String? dietLunch,
+      @JsonKey(name: 'dietRefreshmentLunch')
+          final String? dietRefreshmentLunch,
+      @JsonKey(name: 'dietDinner')
+          final String? dietDinner,
+      @JsonKey(name: 'dietRefreshmentDinner')
+          final String? dietRefreshmentDinner,
+      @JsonKey(name: 'id')
+          final int? id}) = _$_ScaleTreatmentDietDetailResponse;
   const _ScaleTreatmentDietDetailResponse._() : super._();
 
   factory _ScaleTreatmentDietDetailResponse.fromJson(
@@ -342,30 +385,37 @@ abstract class _ScaleTreatmentDietDetailResponse
 
   @override
   @JsonKey(name: 'dietTitle')
-  String? get dietTitle;
+  String? get dietTitle => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'dietCreateDate')
-  String? get dietCreateDate;
+  String? get dietCreateDate => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'createdByName')
-  String? get createdByName;
+  String? get createdByName => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'dietBreakfast')
-  String? get dietBreakfast;
+  String? get dietBreakfast => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 'dietRefreshment')
-  String? get dietRefreshment;
+  @JsonKey(name: 'dietRefreshmentBreakfast')
+  String? get dietRefreshmentBreakfast => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'dietLunch')
-  String? get dietLunch;
+  String? get dietLunch => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'dietRefreshmentLunch')
+  String? get dietRefreshmentLunch => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'dietDinner')
-  String? get dietDinner;
+  String? get dietDinner => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'dietRefreshmentDinner')
+  String? get dietRefreshmentDinner => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'id')
-  int? get id;
+  int? get id => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ScaleTreatmentDietDetailResponseCopyWith<_ScaleTreatmentDietDetailResponse>
+  _$$_ScaleTreatmentDietDetailResponseCopyWith<
+          _$_ScaleTreatmentDietDetailResponse>
       get copyWith => throw _privateConstructorUsedError;
 }
