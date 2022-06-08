@@ -1373,6 +1373,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "validation": MessageLookupByLibrary.simpleMessage(
             "This field cannot be left blank"),
         "value": MessageLookupByLibrary.simpleMessage("Değer"),
+        "verification_code":
+            MessageLookupByLibrary.simpleMessage("Verification Code"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "verify_email_error":
             MessageLookupByLibrary.simpleMessage("Please verify your email."),

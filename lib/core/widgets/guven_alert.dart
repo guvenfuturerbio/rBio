@@ -27,35 +27,56 @@ class GuvenAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      elevation: elevation,
-      insetPadding: insetPadding ??
-          const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
-      backgroundColor: backgroundColor ?? getIt<IAppConfig>().theme.mainColor,
-      contentPadding: contentPadding ?? const EdgeInsets.all(0.0),
-      title: context.xTextScaleType == TextScaleType.large
-          ? Container(
-              constraints: BoxConstraints(
-                maxHeight: Atom.height * 0.4,
-              ),
-              child: SingleChildScrollView(
-                child: title,
-              ),
-            )
-          : title,
-      shape: shape ??
-          RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
-      actions: actions,
-      content: !Atom.isWeb
-          ? content
-          : Container(
-              constraints: BoxConstraints(
-                maxWidth: Atom.width * 0.50,
-              ),
-              child: content,
-            ),
+    return Dialog(
+      elevation: 0,
+      insetPadding: EdgeInsets.zero,
+      backgroundColor: getIt<IAppConfig>().theme.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: R.sizes.borderRadiusCircular,
+      ),
+      child: Container(
+        width: context.width - 50,
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //
+                Center(
+                  child: Text(
+                    LocaleProvider.current.info,
+                    style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  ),
+                ),
+
+                //
+                R.sizes.hSizer32,
+
+                Center(
+                  child: Text(
+                    LocaleProvider.current.succefully_created_account,
+                    style: getIt<IAppConfig>()
+                        .theme
+                        .dialogTheme
+                        .description(context),
+                  ),
+                ),
+
+                //
+                R.sizes.hSizer32,
+
+                Center(
+                  child: RbioSmallDialogButton.green(
+                      title: LocaleProvider.current.ok,
+                      onPressed: () {
+                        Atom.dismiss(true);
+                      }),
+                ),
+              ]),
+        ),
+      ),
     );
   }
 

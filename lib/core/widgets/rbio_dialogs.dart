@@ -128,6 +128,7 @@ class RbioSmallDialogButton extends StatelessWidget {
       ),
       child: Text(
         title ?? '',
+        textAlign: TextAlign.left,
         style: context.xHeadline4.copyWith(
           color: textColor ?? getIt<IAppConfig>().theme.textColor,
           fontWeight: FontWeight.bold,

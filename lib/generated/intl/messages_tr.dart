@@ -1361,6 +1361,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "validation":
             MessageLookupByLibrary.simpleMessage("Bu alan boş bırakılamaz"),
         "value": MessageLookupByLibrary.simpleMessage("Value"),
+        "verification_code":
+            MessageLookupByLibrary.simpleMessage("Doğrulama Kodu"),
         "verify": MessageLookupByLibrary.simpleMessage("Doğrula"),
         "verify_email_error": MessageLookupByLibrary.simpleMessage(
             "Email adresinizi doğrulayınız."),

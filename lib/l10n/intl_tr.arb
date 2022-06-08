@@ -83,6 +83,7 @@
   "create_password": "Şifre Oluştur",
   "sms_verification": "Sms/Email Doğrulama",
   "sms_verification_code": "Sms/Email Doğrulama Kodu",
+  "verification_code": "Doğrulama Kodu",
   "password_again": "Şifre Tekrarı",
   "search": "Ara",
   "searchEmpty": "Aradığınız kritelerde sonuç bulunamadı.",

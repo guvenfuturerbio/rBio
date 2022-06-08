@@ -860,6 +860,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Verification Code`
+  String get verification_code {
+    return Intl.message(
+      'Verification Code',
+      name: 'verification_code',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Password Again`
   String get password_again {
     return Intl.message(
