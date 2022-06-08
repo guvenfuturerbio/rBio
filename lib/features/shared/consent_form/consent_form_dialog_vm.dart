@@ -7,7 +7,7 @@ class ConsentFormDialogVm extends ChangeNotifier {
 
   ConsentFormDialogVm({BuildContext? context, bool? alwaysAsk}) {
     mContext = context;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (alwaysAsk!) {
       } else {
         fetchClickedConsentForm();

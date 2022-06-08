@@ -10,6 +10,7 @@ class NotChronicWarning extends StatelessWidget {
     return RbioMessageDialog(
       description: LocaleProvider.current.not_chronic_warning,
       buttonTitle: LocaleProvider.current.ok,
+      isAtom: true,
     );
   }
 }

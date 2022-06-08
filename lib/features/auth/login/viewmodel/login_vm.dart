@@ -22,13 +22,15 @@ class LoginScreenVm extends ChangeNotifier {
   BuildContext mContext;
 
   LoginScreenVm(this.mContext) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       consentForm = await getIt<Repository>().getConsentForm();
 
       getIt<ISharedPreferencesManager>().setString(
           SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();
       await getSavedLoginInfo();
+      getIt<UserNotifier>().isDefaultUser = getIt<ISharedPreferencesManager>()
+          .getBool(SharedPreferencesKeys.isDefaultUser);
     });
   }
 
@@ -210,8 +212,14 @@ class LoginScreenVm extends ChangeNotifier {
       _autovalidateMode = AutovalidateMode.always;
 
       notifyListeners();
-      showLoadingDialog();
+
       try {
+        if (getIt<IAppConfig>().functionality.recaptcha && kIsWeb) {
+          String token =
+              await getIt<IAppConfig>().platform.recaptchaManager?.login() ??
+                  '';
+          if (token.isEmpty) return;
+        }
         final starterResponse = await getIt<Repository>().loginStarter(
           username,
           password,
@@ -265,6 +273,7 @@ class LoginScreenVm extends ChangeNotifier {
           }
         }
       } catch (e) {
+        LoggerUtils.instance.e(e);
         hideDialog(mContext);
         notifyListeners();
         showGradientDialog(

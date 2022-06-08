@@ -143,24 +143,70 @@ class GuvenAlert extends StatelessWidget {
     void Function() onPressed, {
     EdgeInsetsGeometry? padding,
   }) {
-    return RbioTextButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
-      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      shape: RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
-      padding: padding ??
-          const EdgeInsets.symmetric(
-            horizontal: 35,
-            vertical: 5,
-          ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: getIt<IAppConfig>().theme.textColor,
-        ),
+    return _actionButton(
+      title,
+      getIt<IAppConfig>().theme.mainColor,
+      getIt<IAppConfig>().theme.textColor,
+      onPressed,
+      padding: padding,
+    );
+  }
+
+  static Widget buildMaterialRedAction(
+    String title,
+    void Function() onPressed, {
+    EdgeInsetsGeometry? padding,
+  }) {
+    return _actionButton(
+      title,
+      getIt<IAppConfig>().theme.darkRed,
+      getIt<IAppConfig>().theme.textColor,
+      onPressed,
+      padding: padding,
+    );
+  }
+
+  static Widget buildMaterialWhiteAction(
+    String title,
+    void Function() onPressed, {
+    EdgeInsetsGeometry? padding,
+  }) {
+    return _actionButton(
+      title,
+      getIt<IAppConfig>().theme.cardBackgroundColor,
+      getIt<IAppConfig>().theme.textColorSecondary,
+      onPressed,
+      padding: padding,
+    );
+  }
+
+  static Widget _actionButton(
+    String title,
+    Color backColor,
+    Color textColor,
+    void Function() onPressed, {
+    EdgeInsetsGeometry? padding,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: backColor,
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
-      onPressed: onPressed,
+      child: RbioTextButton(
+        backgroundColor: Colors.transparent,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shape:
+            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+        padding: padding ?? const EdgeInsets.symmetric(horizontal: 8),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 18,
+            color: textColor,
+          ),
+        ),
+        onPressed: onPressed,
+      ),
     );
   }
 }

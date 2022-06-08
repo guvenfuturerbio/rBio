@@ -74,7 +74,7 @@ class CreateAppointmentVm extends ChangeNotifier {
     int? resourceId,
   }) {
     _patientId = getIt<UserNotifier>().getPatient().id;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       fetchRelatives();
       if (forOnline) {
         hospitalSelected = true;
@@ -226,34 +226,8 @@ class CreateAppointmentVm extends ChangeNotifier {
     relativeProgress = LoadingProgress.loading;
     notifyListeners();
 
-    GetAllRelativesRequest bodyPages = GetAllRelativesRequest();
-    bodyPages.draw = 1;
-    bodyPages.start = 0;
-    bodyPages.length = "100";
-
-    SearchObject searchObject = SearchObject();
-    searchObject.value = "";
-    searchObject.regex = false;
-    bodyPages.search = SearchObject();
-    bodyPages.search = searchObject;
-
-    bodyPages.columns = <ColumnsObject>[];
-    ColumnsObject columnsObject = ColumnsObject();
-    columnsObject.search = searchObject;
-    columnsObject.orderable = true;
-    columnsObject.name = "null";
-    columnsObject.data = "patient.user.name";
-    columnsObject.searchable = true;
-    bodyPages.columns?.add(columnsObject);
-
-    bodyPages.order = <OrderObject>[];
-    OrderObject orderObject = OrderObject();
-    orderObject.column = 0;
-    orderObject.dir = "desc";
-    bodyPages.order?.add(orderObject);
-
     try {
-      relativeResponse = await getIt<Repository>().getAllRelatives(bodyPages);
+      relativeResponse = await getIt<Repository>().getAllRelatives();
       if (relativeResponse == null ||
           relativeResponse?.patientRelatives == []) {
         relativeResponse = PatientRelativeInfoResponse([]);
@@ -537,6 +511,7 @@ class CreateAppointmentVm extends ChangeNotifier {
     } catch (e) {
       progress = LoadingProgress.error;
     }
+    return null;
   }
   // #endregion
 
@@ -559,16 +534,18 @@ class CreateAppointmentVm extends ChangeNotifier {
     progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      _patientId != null
-          ? patientAppointments =
+      if (_patientId != null) {
+        if (getIt<UserNotifier>().isDefaultUser ?? true) {
+          patientAppointments =
               await getIt<Repository>().getPatientAppointments(
-              PatientAppointmentRequest(
-                patientId: _patientId,
-                to: endDate.toString(),
-                from: startDate.toString(),
-              ),
-            )
-          : null;
+            PatientAppointmentRequest(
+              patientId: _patientId,
+              to: endDate.toString(),
+              from: startDate.toString(),
+            ),
+          );
+        }
+      }
 
       await holderListFillFunc();
       for (var element in holderForFavorites) {

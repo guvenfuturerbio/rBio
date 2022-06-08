@@ -27,6 +27,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   final bool forOnline;
   final String to;
   final String from;
+  CountryListResponse countryList = CountryListResponse();
 
   bool appointmentSuccess = false;
 
@@ -66,8 +67,9 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     if (forOnline) {
       summaryButton = SummaryButtons.add;
       hospitalName = LocaleProvider.current.online_appo;
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
         await getResourceVideoCallPrice();
+        await getCountries();
       });
     } else if (tenantId == 1) {
       hospitalName = LocaleProvider.current.guven_hospital_ayranci;
@@ -90,6 +92,19 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   set showOverlayLoading(bool value) {
     _showOverlayLoading = value;
     notifyListeners();
+  }
+
+  Future<void> getCountries() async {
+    try {
+      _showOverlayLoading = true;
+      final response = await getIt<Repository>().getCountries();
+      notifyListeners();
+      countryList = CountryListResponse.fromMap(response.toJson());
+      _showOverlayLoading = false;
+    } catch (error) {
+      LoggerUtils.instance.i(error);
+      //
+    }
   }
 
   Future getResourceVideoCallPrice() async {
@@ -322,4 +337,88 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       },
     );
   }
+
+  List<String> province = [
+    'Adana',
+    'Adıyaman',
+    'Afyonkarahisar',
+    'Ağrı',
+    'Aksaray',
+    'Amasya',
+    'Ankara',
+    'Antalya',
+    'Ardahan',
+    'Artvin',
+    'Aydın',
+    'Balıkesir',
+    'Bartın',
+    'Batman',
+    'Bayburt',
+    'Bilecik',
+    'Bingöl',
+    'Bitlis',
+    'Bolu',
+    'Burdur',
+    'Bursa',
+    'Çanakkale',
+    'Çankırı',
+    'Çorum',
+    'Denizli',
+    'Diyarbakır',
+    'Düzce',
+    'Edirne',
+    'Elazığ',
+    'Erzincan',
+    'Erzurum',
+    'Eskişehir',
+    'Gaziantep',
+    'Giresun',
+    'Gümüşhane',
+    'Hakkâri',
+    'Hatay',
+    'Iğdır',
+    'Isparta',
+    'İstanbul',
+    'İzmir',
+    'Kahramanmaraş',
+    'Karabük',
+    'Karaman',
+    'Kars',
+    'Kastamonu',
+    'Kayseri',
+    'Kilis',
+    'Kırıkkale',
+    'Kırklareli',
+    'Kırşehir',
+    'Kocaeli',
+    'Konya',
+    'Kütahya',
+    'Malatya',
+    'Manisa',
+    'Mardin',
+    'Mersin',
+    'Muğla',
+    'Muş',
+    'Nevşehir',
+    'Niğde',
+    'Ordu',
+    'Osmaniye',
+    'Rize',
+    'Sakarya',
+    'Samsun',
+    'Şanlıurfa',
+    'Siirt',
+    'Sinop',
+    'Sivas',
+    'Şırnak',
+    'Tekirdağ',
+    'Tokat',
+    'Trabzon',
+    'Tunceli',
+    'Uşak',
+    'Van',
+    'Yalova',
+    'Yozgat',
+    'Zonguldak'
+  ];
 }

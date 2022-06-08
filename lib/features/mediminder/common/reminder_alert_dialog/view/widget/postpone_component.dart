@@ -20,9 +20,7 @@ class __ExpandablePostponeComponentState
       duration: kTabScrollDuration,
       decoration: BoxDecoration(
         color: getIt<IAppConfig>().theme.cardBackgroundColor,
-        borderRadius: _isExpanded
-            ? R.sizes.borderRadiusCircular
-            : BorderRadius.circular(50),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,16 +38,15 @@ class __ExpandablePostponeComponentState
             },
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 7),
               decoration: const BoxDecoration(
                 color: Colors.transparent,
               ),
               child: Text(
                 LocaleProvider.current.postpone,
                 textAlign: TextAlign.center,
-                style: context.xHeadline3.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style:
+                    getIt<IAppConfig>().theme.dialogTheme.description(context),
               ),
             ),
           ),

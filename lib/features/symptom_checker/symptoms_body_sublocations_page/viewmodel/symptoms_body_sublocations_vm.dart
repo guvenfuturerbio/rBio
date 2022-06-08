@@ -35,7 +35,7 @@ class BodySublocationsVm extends ChangeNotifier {
       String? yearOfBirth,
       GetBodyLocationResponse? selectedBodyLocation}) {
     mContext = context!;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchBodySubLocations(bodyLocationId!, genderId!);
       //initializeRecord();
       selectedGenderId = genderId;

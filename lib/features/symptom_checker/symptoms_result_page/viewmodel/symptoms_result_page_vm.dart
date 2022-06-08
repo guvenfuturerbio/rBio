@@ -35,7 +35,7 @@ class SymptomsResultPageVm extends ChangeNotifier {
     bool? isFromVoice,
   }) {
     mContext = context;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchSpecialisations(selectedSymptoms!, gender!, yearOfBirth!);
       await loadJsonData();
     });

@@ -1,0 +1,21 @@
+# targets:
+#   $default:
+#     builders:
+#       json_serializable:
+#         enabled: true
+#         generate_for:
+#           include:
+#             - lib/sil/**.model.dart
+#             - lib/sil/**_bloc.dart
+#             - lib/sil/**_cubit.dart
+
+#         options:
+#           explicit_to_json: true
+#           include_if_null: false
+#       freezed|freezed:
+#         enabled: true
+#         generate_for:
+#           include:
+#             - lib/sil/**.model.dart
+#             - lib/sil/**_bloc.dart
+#             - lib/sil/**_cubit.dart

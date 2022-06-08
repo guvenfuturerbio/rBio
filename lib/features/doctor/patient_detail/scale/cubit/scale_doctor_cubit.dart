@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/data/service/model/patient_scale_measurement.dart';
 import '../../../../../model/doctor/get_my_patient_filter.dart';
 import 'scale_doctor_loaded_result.dart';
 

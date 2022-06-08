@@ -24,7 +24,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Utils.instance
           .showSuccessSnackbar(context, LocaleProvider.current.code_sent);
     });

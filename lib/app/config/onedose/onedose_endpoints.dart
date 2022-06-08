@@ -31,14 +31,11 @@ class OneDoseRelativeEndpoints extends RelativeEndpoints {
   String get getAllRelativesPath => '/profile/get-all-table'.xBaseUrl;
 
   @override
-  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
-
-  @override
   String changeActiveUserToRelativePath(String id) =>
       '/profile/set-profile/$id'.xBaseUrl;
 
   @override
-  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
+  String get addNewPatientRelativePath => '/profile/add-relative'.xBaseUrl;
 
   @override
   String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
@@ -224,6 +221,33 @@ class OneDoseDevApiEndpoints extends DevApiEndpoints {
 
   @override
   String get ctUpdateUserStrip => '/user/add-update-user-strip'.xDevApiTest;
+
+  @override
+  String getTreatmentNoteWithDiet(int? entegrationId) =>
+      '/Treatment/get-treatment-note-with-diet/$entegrationId'.xDevApiTest;
+
+  @override
+  String getTreatmentNoteWithDietDoctor(int patientId) =>
+      '/Treatment/get-treatment-note-with-diet-doctor/$patientId'.xDevApiTest;
+
+  @override
+  String treatmentGetDetail(int itemType, int id) =>
+      '/Treatment/get-detail/$itemType/$id'.xDevApiTest;
+
+  @override
+  String addTreatmentNote(int? entegrationId) =>
+      '/Treatment/add-treatment-note/$entegrationId'.xDevApiTest;
+
+  @override
+  String addDiet(int patientId) => '/Treatment/add-diet/$patientId'.xDevApiTest;
+
+  @override
+  String deleteNoteDiet(int itemType, int id) =>
+      '/Treatment/delete-note-diet/$itemType/$id'.xDevApiTest;
+
+  @override
+  String addTreatmentNoteDoctor(int patientId) =>
+      '/Treatment/add-treatment-note-by-doctor/$patientId'.xDevApiTest;
 }
 
 class OneDoseBaseEndpoints extends BaseEndpoints {

@@ -10,7 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../../core/core.dart';
-import '../../../features/chronic_tracking/progress_sections/blood_glucose/widgets/tagger/bg_tagger_pop_up.dart';
+import '../../../features/chronic_tracking/blood_glucose/blood_glucose.dart';
 
 part 'ble_connector.dart';
 part 'ble_reactor.dart';

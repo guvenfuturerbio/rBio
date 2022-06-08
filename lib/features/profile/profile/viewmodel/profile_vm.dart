@@ -13,6 +13,10 @@ class ProfileVm extends RbioVm {
     isTwoFactorAuth = getIt<ISharedPreferencesManager>()
             .getBool(SharedPreferencesKeys.isTwoFactorAuth) ??
         false;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      getIt<UserNotifier>().isDefaultUser = getIt<ISharedPreferencesManager>()
+          .getBool(SharedPreferencesKeys.isDefaultUser);
+    });
   }
 
   LoadingProgress _state = LoadingProgress.loading;
@@ -75,5 +79,39 @@ class ProfileVm extends RbioVm {
     } finally {
       showProgressOverlay = false;
     }
+  }
+
+  Future changeUserToDefault(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const RbioLoading();
+      },
+    );
+    try {
+      final response = await getIt<Repository>().getRelativeRelationships();
+      var userId = response.datum["id"];
+
+      await getIt<Repository>().changeActiveUserToRelative(userId.toString());
+
+      Atom.historyBack();
+
+      FirebaseAnalyticsManager()
+          .logEvent(YakinlarimAnaHesabaGecisBasariliEvent());
+      await getIt<ISharedPreferencesManager>()
+          .setBool(SharedPreferencesKeys.isDefaultUser, true);
+
+      getIt<UserNotifier>().isDefaultUser = true;
+
+      Atom.to(PagePaths.main, isReplacement: true, historyState: {});
+      return;
+    } on Exception {
+      FirebaseAnalyticsManager().logEvent(YakinlarimAnaHesapGecisHataEvent());
+
+      showGradientDialog(
+          "", LocaleProvider.of(context).sorry_dont_transaction, true);
+    }
+
+    Navigator.pop(context);
   }
 }

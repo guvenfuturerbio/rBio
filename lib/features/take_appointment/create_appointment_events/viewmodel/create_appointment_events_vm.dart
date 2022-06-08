@@ -37,7 +37,7 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
     required this.resourceId,
     required this.forOnline,
   }) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       setFilterRangeDate(DateTime.now());
 
       if (!forOnline) {

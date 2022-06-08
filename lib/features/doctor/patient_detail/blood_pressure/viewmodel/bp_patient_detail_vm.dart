@@ -24,7 +24,7 @@ class BpPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   final int patientId;
 
   BpPatientDetailVm({required this.mContext, required this.patientId}) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loading = LoadingProgress.loading;
       isChartShow = false;
       update();
@@ -316,7 +316,7 @@ class BpPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   }
 
   void getNewItems() {
-    WidgetsBinding.instance?.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         try {
           if ((selected == TimePeriodFilter.daily) && !hasReachEnd) {

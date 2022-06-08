@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -15,11 +17,10 @@ class QrCodeScanScreen extends StatefulWidget {
 }
 
 class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
-  String _platformVersion = 'Unknown';
   String? text = 'Unknown';
 
   Future<void> initPlatformState() async {
-    String platformVersion;
+    late String platformVersion;
     try {
       platformVersion = await Scan.platformVersion;
     } on PlatformException {
@@ -27,9 +28,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
     }
     if (!mounted) return;
 
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+    setState(() {});
   }
 
   @override

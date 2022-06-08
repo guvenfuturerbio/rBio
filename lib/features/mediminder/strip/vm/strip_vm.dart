@@ -10,7 +10,7 @@ class StripVm with ChangeNotifier {
   ProgressDialog? progressDialog;
 
   StripVm(this.mContext) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await loadValues();
     });
   }

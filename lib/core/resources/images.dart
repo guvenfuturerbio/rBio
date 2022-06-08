@@ -34,6 +34,10 @@ class _Images {
   final checkup = 'assets/images/checkup_icon.svg';
   final clockGreen = 'assets/images/clock_green_icon.svg';
   final clock = 'assets/images/clock_icon.svg';
+  final clockBreakfast = 'assets/images/clock_breakfast.svg';
+  final clockDinner = 'assets/images/clock_dinner.svg';
+  final clockLunch = 'assets/images/clock_lunch.svg';
+  final clockRefreshment = 'assets/images/clock_refreshment.svg';
   final contour = "assets/images/contour.png";
   final covid_1 = "assets/images/covid_1.png";
   final covid_2 = "assets/images/covid_2.png";
@@ -55,6 +59,7 @@ class _Images {
   final done = 'assets/images/done_icon.svg';
   final error = 'assets/images/error_icon.svg';
   final creditCalendar = "assets/images/expiration_date.svg";
+  final icClendarBlack = "assets/images/ic_calendar_black.svg";
   final eyeSeen = "assets/images/eyeseen_icon.svg";
   final facebook = "assets/images/facebook.svg";
   final facebookIcon = "assets/images/facebookicon.svg";
@@ -94,6 +99,7 @@ class _Images {
   final other = "assets/images/other_black.svg";
   final otherIcon = 'assets/images/other_icon.svg';
   final phone = 'assets/images/phone_icon.svg';
+  final email = 'assets/images/ic_email.svg';
   final photo = 'assets/images/photo_icon.svg';
   final profileAvatar = "assets/images/profile_avatar.svg";
   final profile = 'assets/images/profile_icon.svg';
@@ -118,6 +124,9 @@ class _Images {
   final upload = "assets/images/upload.svg";
   final startVideo = "assets/images/start_video_call.svg";
   final rate = "assets/images/ic_star_blue.svg";
+  final icDeleteRed = "assets/images/ic_delete_red.svg";
+  final icGenderSelectionGrey = "assets/images/ic_gender_selection_grey.svg";
+
 
   //GuvenOnlineDashboard
   final appointmentsRed = "assets/images/guven/dashboard/appointments_red.svg";
@@ -143,6 +152,10 @@ class _Images {
   final icVideoIcon = "assets/images/guven/dashboard/video_icon.svg";
   final guvenLogoWhite = "assets/images/guven/dashboard/guvenonline_icon.svg";
   final icPhoneGreyCall = "assets/images/guven/ic_phone_call_grey";
+
+  final fabDietList = 'assets/images/fab_diet_list.svg';
+  final fabSpecialNote = 'assets/images/fab_special_note.svg';
+  final fabTreatmentNote = 'assets/images/fab_treatment_note.svg';
 
   final minus = 'assets/images/minus.svg';
   final warning = 'assets/images/warning.svg';
@@ -184,5 +197,12 @@ class _Images {
   final riveReminer = 'assets/animations/introduction/reminer.riv';
   final riveSaglikTakibi = 'assets/animations/introduction/saglık_takibi.riv';
   final scaleLoadingLines = 'assets/animations/scale_loading_lines.riv';
+  // #endregion
+
+  // #region GuvenWebView
+  final guvenin_1 = "assets/images/magazines/guvenin_1.jpeg";
+  final guvenin_2 = "assets/images/magazines/guvenin_2.jpeg";
+  final guvenin_3 = "assets/images/magazines/guvenin_3.jpeg";
+  final guvenin_4 = "assets/images/magazines/guvenin_4.jpeg";
   // #endregion
 }

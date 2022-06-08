@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/data/repository/doctor_repository.dart';
-import '../../../core/locator.dart';
+import '../../../core/core.dart';
 import '../../../model/model.dart';
 
 class PatientNotifiers extends ChangeNotifier {

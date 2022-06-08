@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 1.0.30+43
+version: 1.0.31+44
 
 environment:
   sdk: ">=2.15.1 <3.0.0"
@@ -77,7 +77,7 @@ dependencies:
   flutter_linkify: ^5.0.2
   flutter_localizations:
     sdk: flutter
-  flutter_masked_text: null
+  flutter_masked_text2: ^0.9.1
   flutter_native_image: ^0.0.6+1
   flutter_native_splash: ^1.3.1
   flutter_rating_bar: ^4.0.0
@@ -120,8 +120,11 @@ dependencies:
   progress_indicators: ^1.0.0
   provider: ^6.0.2
   pub_semver: ^2.1.0
-  qr_code_scanner: ^0.6.1
-  reorderables: ^0.4.4
+  mobile_scanner: ^2.0.0
+  qr_flutter:
+    git:
+      url: https://github.com/theyakka/qr.flutter.git
+  reorderables: ^0.5.0
   rive: ^0.8.1
   share: ^2.0.4
   shimmer: ^2.0.0
@@ -141,12 +144,10 @@ dependencies:
   universal_html: ^2.0.8
   url_launcher: ^6.0.18
   url_strategy: ^0.2.0
-  video_player: ^2.3.0
+  video_player: ^2.4.2
   webview_flutter: ^2.3.1
   scan: ^1.6.0
-  qr_flutter:
-    git:
-      url: https://github.com/theyakka/qr.flutter.git
+  g_recaptcha_v3: ^0.0.4
 
 dev_dependencies:
   build_runner: ^2.1.7
@@ -166,6 +167,7 @@ flutter:
     - env/onedose/
     - assets/images/
     - assets/images/guven/
+    - assets/images/magazines/
     - assets/images/guven/dashboard/
     - assets/images/oneDose/
     - assets/images/bottom_navigation/

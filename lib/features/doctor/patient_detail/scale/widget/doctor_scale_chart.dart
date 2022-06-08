@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../../core/data/service/model/patient_scale_measurement.dart';
 import '../cubit/scale_doctor_cubit.dart';
 
 class DoctorScaleChart extends StatefulWidget {

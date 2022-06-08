@@ -53,7 +53,7 @@ class MeasurementTrackingVm with ChangeNotifier {
       HealthDataType.HEART_RATE,
     ];
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       getHealthDataFromDevice();
       getValues();
     });
@@ -74,7 +74,7 @@ class MeasurementTrackingVm with ChangeNotifier {
           .where((e) => e.type == HealthDataType.BLOOD_GLUCOSE)
           .toList();
 
-    /*
+      /*
       List<HealthDataPoint> scaleData = healthData
           .where((e) =>
               e.type == HealthDataType.BODY_MASS_INDEX ||
@@ -220,12 +220,18 @@ class MeasurementTrackingVm with ChangeNotifier {
     Utils.instance.releaseOrientation();
 
     if (key == const Key('Glucose')) {
-      getIt<IAppConfig>().platform.adjustManager?.trackEvent(HealthTrackerButtonsEvent());
+      getIt<IAppConfig>()
+          .platform
+          .adjustManager
+          ?.trackEvent(HealthTrackerButtonsEvent());
       getIt<FirebaseAnalyticsManager>()
           .logEvent(SaglikTakibiButonlarEvent('Kan_Şekeri'));
       Atom.to(PagePaths.bloodGlucoseProgress);
     } else if (key == const Key('Scale')) {
-      getIt<IAppConfig>().platform.adjustManager?.trackEvent(HealthTrackerButtonsEvent());
+      getIt<IAppConfig>()
+          .platform
+          .adjustManager
+          ?.trackEvent(HealthTrackerButtonsEvent());
       getIt<FirebaseAnalyticsManager>()
           .logEvent(SaglikTakibiButonlarEvent('Tartı'));
 
@@ -234,7 +240,10 @@ class MeasurementTrackingVm with ChangeNotifier {
         Atom.to(PagePaths.scaleDetail);
       }
     } else if (key == const Key('Pressure')) {
-      getIt<IAppConfig>().platform.adjustManager?.trackEvent(HealthTrackerButtonsEvent());
+      getIt<IAppConfig>()
+          .platform
+          .adjustManager
+          ?.trackEvent(HealthTrackerButtonsEvent());
       getIt<FirebaseAnalyticsManager>()
           .logEvent(SaglikTakibiButonlarEvent('Tansiyon'));
       Atom.to(PagePaths.bpProgress);

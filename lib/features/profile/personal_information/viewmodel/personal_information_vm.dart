@@ -15,10 +15,8 @@ class PersonalInformationScreenVm extends RbioVm {
   String email;
   late bool isTwoFactorAuth;
 
-  
   final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
-
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState>? get formKey => _formKey;
@@ -59,7 +57,7 @@ class PersonalInformationScreenVm extends RbioVm {
       var changeInfo = ChangeContactInfoRequest();
       var sharedUserAccount = getIt<UserNotifier>().getUserAccount();
       var pusulaAccount = getIt<UserNotifier>().getPatient();
-      if (pusulaAccount != null && pusulaAccount.id != null) {
+      if (pusulaAccount.id != null) {
         changeInfo.gsm = newPhoneNumber;
         changeInfo.gsmCountryCode = countryCode;
         changeInfo.email = newEmail;

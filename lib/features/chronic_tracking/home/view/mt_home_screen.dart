@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 import '../../../../core/core.dart';
 import '../../../dashboard/onedose/not_chronic_screen.dart';
 import '../../../doctor/treatment_process/view/treatment_process_screen.dart';
-import '../../progress_sections/blood_glucose/viewmodel/bg_progress_vm.dart';
-import '../../progress_sections/blood_pressure/viewmodel/bp_progres_vm.dart';
-import '../../progress_sections/scale/viewmodel/scale_progress_vm.dart';
+import '../../blood_glucose/blood_glucose.dart';
+import '../../blood_pressure/blood_pressure.dart';
 import '../model/home_page_model.dart';
 import '../../../../core/widgets/rbio_error_screen.dart';
+import '../viewmodel/scale_progress_vm.dart';
 
 part '../viewmodel/mt_home_vm.dart';
 part '../widgets/section_card.dart';
@@ -154,101 +154,37 @@ class _MeasurementTrackingHomeScreenState
   }
 
   Widget _buildExpandedUser() {
-    return SizedBox(
-      height: 50,
-      width: double.infinity,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          Expanded(
-            child: Container(
-              height: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: R.sizes.borderRadiusCircular,
+    return RbioUserAndTreatmentTile(
+      horizontalPadding: false,
+      onTap: () {
+        getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.trackEvent(HealthTrackerButtonsEvent());
+        getIt<FirebaseAnalyticsManager>()
+            .logEvent(SaglikTakibiButonlarEvent('Tedavi'));
+
+        final treatmentList =
+            getIt<ProfileStorageImpl>().getFirst().treatmentList;
+        if ((treatmentList ?? []).isEmpty) {
+          Atom.to(
+            PagePaths.treatmentEditProgress,
+            queryParameters: {
+              'treatment_model': jsonEncode(
+                TreatmentProcessItemModel(
+                  dateTime: DateTime.now(),
+                  description: '',
+                  id: -1,
+                  title: '',
+                ).toJson(),
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    foregroundImage: Utils.instance.getCacheProfileImage,
-                    backgroundColor:
-                        getIt<IAppConfig>().theme.cardBackgroundColor,
-                  ),
-
-                  //
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        getIt<ProfileStorageImpl>().getFirst().name ?? 'Name',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.xHeadline5.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          //
-          const SizedBox(width: 6),
-
-          //
-          GestureDetector(
-            onTap: () {
-              getIt<IAppConfig>().platform.adjustManager?.trackEvent(HealthTrackerButtonsEvent());
-              getIt<FirebaseAnalyticsManager>()
-                  .logEvent(SaglikTakibiButonlarEvent('Tedavi'));
-
-              final treatmentList =
-                  getIt<ProfileStorageImpl>().getFirst().treatmentList;
-              if ((treatmentList ?? []).isEmpty) {
-                Atom.to(
-                  PagePaths.treatmentEditProgress,
-                  queryParameters: {
-                    'treatment_model': jsonEncode(
-                      TreatmentProcessItemModel(
-                        dateTime: DateTime.now(),
-                        description: '',
-                        id: -1,
-                        title: '',
-                      ).toJson(),
-                    ),
-                    'newModel': true.toString(),
-                  },
-                );
-              } else {
-                Atom.to(PagePaths.treatmentProgress);
-              }
+              'newModel': true.toString(),
             },
-            child: Container(
-              height: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: R.sizes.borderRadiusCircular,
-              ),
-              child: Text(
-                LocaleProvider.current.treatment,
-                style: context.xHeadline5.copyWith(
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.5,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+          );
+        } else {
+          Atom.to(PagePaths.treatmentProgress);
+        }
+      },
     );
   }
 }

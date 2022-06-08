@@ -3,7 +3,6 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/data/service/model/patient_scale_measurement.dart';
 import 'tagger_popup.dart';
 
 class MeasurementList extends StatefulWidget {

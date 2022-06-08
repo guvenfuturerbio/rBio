@@ -67,7 +67,6 @@ class ForYouSubCategoriesDetailScreenVm extends ChangeNotifier {
     try {
       showLoadingOverlay = true;
       notifyListeners();
-      // TODO: API'ye bilgiler gönderilecek.
       await Future.delayed(const Duration(seconds: 1));
       showLoadingOverlay = false;
       notifyListeners();
@@ -81,8 +80,7 @@ class ForYouSubCategoriesDetailScreenVm extends ChangeNotifier {
       );
       //
     } catch (e) {
-      // TODO: Cart expired olduysa, yeni current sepet id'yi getir.
-      // TODO: Recursive
+      //
     }
   }
 

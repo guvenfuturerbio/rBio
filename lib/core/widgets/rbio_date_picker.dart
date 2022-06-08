@@ -12,6 +12,8 @@ Future<DateTime?> showRbioDatePicker(
   required DateTime initialDateTime,
   DateTime? minimumDate,
   DateTime? maximumDate,
+  int? minYear,
+  int? maxYear,
   CupertinoDatePickerMode? mode,
 }) async {
   dynamic result;
@@ -55,6 +57,8 @@ Future<DateTime?> showRbioDatePicker(
             minimumDate: minimumDate ?? DateTime(2000),
             maximumDate:
                 maximumDate ?? DateTime.now().add(const Duration(days: 365)),
+            minYear: minYear,
+            maxYear: maxYear,
           ),
         );
       },
@@ -69,6 +73,8 @@ class RbioDatePicker extends StatefulWidget {
   final DateTime minimumDate;
   final DateTime maximumDate;
   final CupertinoDatePickerMode mode;
+  final int? minYear;
+  final int? maxYear;
 
   const RbioDatePicker({
     Key? key,
@@ -77,6 +83,8 @@ class RbioDatePicker extends StatefulWidget {
     required this.minimumDate,
     required this.maximumDate,
     required this.mode,
+    this.minYear,
+    this.maxYear,
   }) : super(key: key);
 
   @override
@@ -160,6 +168,8 @@ class _RbioDatePickerState extends State<RbioDatePicker> {
             minimumDate: widget.minimumDate,
             maximumDate: widget.maximumDate,
             use24hFormat: true,
+            minimumYear: widget.minYear ?? 1,
+            maximumYear: widget.maxYear,
           ),
         ),
 

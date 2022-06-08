@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment_summary/view/widget/location_info_card.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
+import '../../../../model/shared/country_list_response.dart';
 import '../viewmodel/create_appointment_summary_vm.dart';
 import 'qr_code_scanner_screen.dart';
 
@@ -32,19 +34,30 @@ class _CreateAppointmentSummaryScreenState
   late TextEditingController codeEditingController;
   late FocusNode codeFocusNode;
 
+  late final TextEditingController _countryController;
+  late final TextEditingController _cityController;
+
+  late Country selectedCountry;
+  late String selectedCity;
+
   @override
   void initState() {
+    super.initState();
+
     codeEditingController = TextEditingController();
     codeFocusNode = FocusNode();
 
-    super.initState();
+    _countryController = TextEditingController(text: R.constants.turkey);
+    _cityController = TextEditingController();
+
+    selectedCountry = Country(name: R.constants.turkey, id: 213);
+    selectedCity = "";
   }
 
   @override
   void dispose() {
     codeEditingController.dispose();
     codeFocusNode.dispose();
-
     super.dispose();
   }
 
@@ -173,6 +186,50 @@ class _CreateAppointmentSummaryScreenState
                 child2: const SizedBox(),
               ),
 
+              const SizedBox(height: 15),
+
+              if (forOnline &&
+                  getIt<IAppConfig>()
+                      .functionality
+                      .createOnlineAppointmentWithCountrySelection)
+                LocationInfoCard(
+                  countryController: _countryController,
+                  cityController: _cityController,
+                  isCityVisible: selectedCountry.id == 213 ? true : false,
+                  countryOnTap: () async {
+                    var res = await showRbioSelectBottomSheet(
+                      context,
+                      title: LocaleProvider.current.country,
+                      children: [
+                        for (var item in vm.countryList.countries ?? [])
+                          Center(child: Text(item.name)),
+                      ],
+                      initialItem: 0,
+                    );
+
+                    _countryController.text =
+                        vm.countryList.countries![res].name!;
+
+                    setState(() {
+                      selectedCountry = vm.countryList.countries![res];
+                    });
+                  },
+                  cityOnTap: () async {
+                    var res = await showRbioSelectBottomSheet(
+                      context,
+                      title: LocaleProvider.current.city,
+                      children: [
+                        for (var item in vm.province) Center(child: Text(item))
+                      ],
+                      initialItem: 0,
+                    );
+
+                    _cityController.text = vm.province[res];
+                    selectedCity = _cityController.text;
+                    setState(() {});
+                  },
+                ),
+
               //
               Expanded(
                 child: Align(
@@ -191,7 +248,9 @@ class _CreateAppointmentSummaryScreenState
   }
 
   Widget _buildKeyboardVisibilityBuilder(
-      CreateAppointmentSummaryVm vm, bool isKeyboardVisible) {
+    CreateAppointmentSummaryVm vm,
+    bool isKeyboardVisible,
+  ) {
     return RbioKeyboardActions(
       focusList: [
         codeFocusNode,
@@ -201,7 +260,7 @@ class _CreateAppointmentSummaryScreenState
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (forOnline) ...[
+          if (forOnline && !vm.appointmentSuccess) ...[
             if (vm.showCodeField) ...[
               Container(
                 height: 55,
@@ -329,24 +388,23 @@ class _CreateAppointmentSummaryScreenState
           ],
 
           //
-          if (!forOnline) ...[
+          if (vm.appointmentSuccess) ...[
             RbioElevatedButton(
               infinityWidth: true,
-              onTap: () async {
-                LoggerUtils.instance.i("heyo");
-                vm.appointmentSuccess
-                    ? Atom.to(PagePaths.main, isReplacement: true)
-                    : await vm.saveAppointment(forOnline: false, forFree: true);
+              onTap: () {
+                Atom.to(
+                  PagePaths.main,
+                  isReplacement: true,
+                );
               },
-              title: vm.appointmentSuccess
-                  ? LocaleProvider.current.home
-                  : LocaleProvider.current.confirm,
+              title: LocaleProvider.current.home,
               fontWeight: FontWeight.w600,
             ),
-            R.sizes.defaultBottomPadding,
           ] else ...[
-            if (!isKeyboardVisible) ...[
-              Row(
+            // Online Appointment
+            if (forOnline) ...[
+              if (!isKeyboardVisible) ...[
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
@@ -393,7 +451,6 @@ class _CreateAppointmentSummaryScreenState
                             : LocaleProvider.current.confirm,
                         fontWeight: FontWeight.w600,
                       ),
-                      R.sizes.defaultBottomPadding,
                     ] else ...[
                       if (!isKeyboardVisible) ...[
                         SizedBox(
@@ -404,69 +461,81 @@ class _CreateAppointmentSummaryScreenState
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               //
-                              _buildSummaryButton(vm),
-
-                              //
-                              const SizedBox(
-                                width: 5,
+                              Expanded(
+                                child: _buildSummaryButton(vm),
                               ),
 
                               //
-                              RbioElevatedButton(
-                                onTap: () {
-                                  if (vm.newVideoCallPriceResponse
-                                          ?.patientPrice ==
-                                      null) {
-                                    vm.saveAppointment(
-                                      price: vm.orgVideoCallPriceResponse
-                                          ?.patientPrice
-                                          ?.toString(),
-                                      forOnline: forOnline,
-                                      forFree: (vm.orgVideoCallPriceResponse
-                                                      ?.patientPrice ??
-                                                  0) <
-                                              1
-                                          ? true
-                                          : false,
-                                    );
-                                  } else {
-                                    vm.saveAppointment(
-                                      price: vm.newVideoCallPriceResponse
-                                          ?.patientPrice
-                                          ?.toString(),
-                                      forOnline: forOnline,
-                                      forFree: (vm.newVideoCallPriceResponse
-                                                      ?.patientPrice ??
-                                                  0) <
-                                              1
-                                          ? true
-                                          : false,
-                                    );
-                                  }
-                                },
-                                title: forOnline
-                                    ? LocaleProvider.current.pay
-                                    : LocaleProvider.current.done,
-                                fontWeight: FontWeight.w600,
+                              R.sizes.wSizer4,
+
+                              //
+                              Expanded(
+                                child: RbioElevatedButton(
+                                  onTap: () {
+                                    if (vm.newVideoCallPriceResponse
+                                            ?.patientPrice ==
+                                        null) {
+                                      vm.saveAppointment(
+                                        price: vm.orgVideoCallPriceResponse
+                                            ?.patientPrice
+                                            ?.toString(),
+                                        forOnline: forOnline,
+                                        forFree: (vm.orgVideoCallPriceResponse
+                                                        ?.patientPrice ??
+                                                    0) <
+                                                1
+                                            ? true
+                                            : false,
+                                      );
+                                    } else {
+                                      vm.saveAppointment(
+                                        price: vm.newVideoCallPriceResponse
+                                            ?.patientPrice
+                                            ?.toString(),
+                                        forOnline: forOnline,
+                                        forFree: (vm.newVideoCallPriceResponse
+                                                        ?.patientPrice ??
+                                                    0) <
+                                                1
+                                            ? true
+                                            : false,
+                                      );
+                                    }
+                                  },
+                                  title: forOnline
+                                      ? LocaleProvider.current.pay
+                                      : LocaleProvider.current.done,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ],
                           ),
                         ),
-
-                        //
-                        SizedBox(
-                          height: Atom.safeBottom + 10,
-                        ),
                       ],
-                    ]
-                  ]),
+                    ],
+                  ],
+                ),
+              ],
+            ]
 
-              //
-              SizedBox(
-                height: Atom.safeBottom + 10,
+            // Hospital Appointment
+            else ...[
+              RbioElevatedButton(
+                infinityWidth: true,
+                onTap: () async {
+                  await vm.saveAppointment(
+                    forOnline: false,
+                    forFree: true,
+                  );
+                },
+                title: LocaleProvider.current.confirm,
+                fontWeight: FontWeight.w600,
               ),
             ],
           ],
+
+          //
+          R.sizes.defaultBottomPadding,
         ],
       ),
     );

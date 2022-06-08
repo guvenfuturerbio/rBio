@@ -10,7 +10,7 @@ class RegisterStep2ScreenVm extends RbioVm {
   @override
   BuildContext mContext;
   RegisterStep2ScreenVm(this.mContext) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       fetchConsentFormState();
     });
   }

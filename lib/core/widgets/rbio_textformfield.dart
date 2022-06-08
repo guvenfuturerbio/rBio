@@ -20,6 +20,7 @@ class RbioTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final InputBorder? border;
   final String? initialValue;
+  final int? minLines;
   final int? maxLines;
   final Widget? prefixIcon;
   final int? maxLength;
@@ -31,6 +32,10 @@ class RbioTextFormField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final bool isForSms;
   final InputDecoration? decoration;
+  final String? counterText;
+  final bool? readOnly;
+  final void Function()? onTap;
+  final bool? isDense;
 
   const RbioTextFormField({
     Key? key,
@@ -54,6 +59,7 @@ class RbioTextFormField extends StatelessWidget {
     this.border,
     this.validator,
     this.enabled,
+    this.minLines,
     this.maxLines = 1,
     this.suffixIcon,
     this.backColor,
@@ -61,6 +67,10 @@ class RbioTextFormField extends StatelessWidget {
     this.autovalidateMode,
     this.isForSms = false,
     this.decoration,
+    this.counterText,
+    this.readOnly,
+    this.onTap,
+    this.isDense,
   }) : super(key: key);
 
   @override
@@ -80,7 +90,9 @@ class RbioTextFormField extends StatelessWidget {
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               backColor: backColor,
-            ).copyWith(counterText: ""),
+            ).copyWith(
+              counterText: "",
+            ),
             inputFormatters: inputFormatters,
             onCodeSubmitted: onFieldSubmitted,
             onCodeChanged: onChanged,
@@ -89,6 +101,7 @@ class RbioTextFormField extends StatelessWidget {
             
             maxLength: maxLength,
             maxLines: maxLines,
+            minLines: minLines,
             initialValue: initialValue,
             style: Utils.instance.inputTextStyle(textColor),
             focusNode: focusNode,
@@ -98,15 +111,26 @@ class RbioTextFormField extends StatelessWidget {
             autovalidateMode: autovalidateMode,
             validator: validator,
             enableSuggestions: enableSuggestions ?? true,
+            onTap: onTap,
             obscureText: obscureText ?? false,
             keyboardType: keyboardType,
             textInputAction: textInputAction,
+            readOnly: readOnly ?? false,
             decoration: decoration?.copyWith(
+                  isDense: isDense,
                   contentPadding: contentPadding,
                   errorStyle: context.xBodyText1Error,
                   errorBorder: _redErrorBorder(),
                   focusedBorder: _focusedBorder(),
                   focusedErrorBorder: _focusedRedErrorBorder(),
+                  counterText: counterText,
+                  disabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                      width: 1.0,
+                    ),
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
                 ) ??
                 defaultDecoration(
                   context,
@@ -118,10 +142,19 @@ class RbioTextFormField extends StatelessWidget {
                   suffixIcon: suffixIcon,
                   backColor: backColor,
                 ).copyWith(
+                  isDense: isDense,
                   errorStyle: context.xBodyText1Error,
                   errorBorder: _redErrorBorder(),
                   focusedBorder: _focusedBorder(),
                   focusedErrorBorder: _focusedRedErrorBorder(),
+                  counterText: counterText,
+                  disabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                      width: 1.0,
+                    ),
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
                 ),
             cursorColor: getIt<IAppConfig>().theme.mainColor,
             onChanged: onChanged,

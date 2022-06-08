@@ -106,8 +106,11 @@ class _ForYouSubCategoriesDetailScreenState
                         child: _buildBuyPackageButton(
                           context,
                           () {
-                            getIt<IAppConfig>().platform.adjustManager
-                                ?.trackEvent(ForYouPackageSummaryClickedEvent());
+                            getIt<IAppConfig>()
+                                .platform
+                                .adjustManager
+                                ?.trackEvent(
+                                    ForYouPackageSummaryClickedEvent());
                             getIt<FirebaseAnalyticsManager>().logEvent(
                               SizeOzelAltKategoriOzeteTiklandiEvent(
                                 widget.itemId.toString(),

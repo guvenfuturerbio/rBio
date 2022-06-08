@@ -44,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ACCU-CHEK Blood Glucose"),
         "activate": MessageLookupByLibrary.simpleMessage("Activate"),
         "add_cart": MessageLookupByLibrary.simpleMessage("Add to Cart"),
+        "add_diet_list": MessageLookupByLibrary.simpleMessage("Add Diet List"),
         "add_discount_code":
             MessageLookupByLibrary.simpleMessage("Add discount code"),
         "add_medicine": MessageLookupByLibrary.simpleMessage("Add medicine"),
@@ -52,9 +53,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_new_relative":
             MessageLookupByLibrary.simpleMessage("Add New Relative"),
         "add_photo": MessageLookupByLibrary.simpleMessage("Add Photo"),
+        "add_relative_request": MessageLookupByLibrary.simpleMessage(
+            "Your request to add relatives has been received."),
         "add_reminder": MessageLookupByLibrary.simpleMessage("Add Reminder"),
+        "add_special_note":
+            MessageLookupByLibrary.simpleMessage("Add Special note"),
         "add_strips": MessageLookupByLibrary.simpleMessage("Add Strips"),
         "add_symptom": MessageLookupByLibrary.simpleMessage("Add Symptom"),
+        "add_treatment_note":
+            MessageLookupByLibrary.simpleMessage("Add Treatment Note"),
         "addcart_success_message": MessageLookupByLibrary.simpleMessage(
             "The product has been added to the cart. Would you like to view the cart?"),
         "additional_info":
@@ -171,6 +178,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "boy": MessageLookupByLibrary.simpleMessage("Boy"),
         "bp_tracking":
             MessageLookupByLibrary.simpleMessage("Blood Pressure Tracking"),
+        "breakfast": MessageLookupByLibrary.simpleMessage("Breakfast"),
         "btn_cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "btn_confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "btn_create": MessageLookupByLibrary.simpleMessage("Create"),
@@ -245,6 +253,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chronic_track_home":
             MessageLookupByLibrary.simpleMessage("Health Tracker"),
         "citizen_of_tc": MessageLookupByLibrary.simpleMessage("Citizen of T.C"),
+        "city": MessageLookupByLibrary.simpleMessage("City"),
         "click_go": MessageLookupByLibrary.simpleMessage("Click and Go"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "close_chart": MessageLookupByLibrary.simpleMessage("Hide Graph"),
@@ -317,6 +326,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create Password"),
         "create_reminder":
             MessageLookupByLibrary.simpleMessage("Create Reminder"),
+        "created_by": MessageLookupByLibrary.simpleMessage("Created By"),
         "credential_already_exist": MessageLookupByLibrary.simpleMessage(
             "Credentials already exist linked to an account. First of all, it must be deleted from the account it is linked to"),
         "credit_card_cvv": MessageLookupByLibrary.simpleMessage("CVV"),
@@ -330,6 +340,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Card number"),
         "critical_metrics":
             MessageLookupByLibrary.simpleMessage("Critical metrics"),
+        "current_treatments":
+            MessageLookupByLibrary.simpleMessage("Current Treatments"),
         "cv": MessageLookupByLibrary.simpleMessage("Cv"),
         "cvv_code_least_3_digit": MessageLookupByLibrary.simpleMessage(
             "Cvv code must be at least 3 digits"),
@@ -340,6 +352,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "day": MessageLookupByLibrary.simpleMessage("Day"),
         "days": MessageLookupByLibrary.simpleMessage("Days"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "delete_diet_list": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete the diet list?"),
         "delete_file_question": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this file ?"),
         "delete_measurement_succesfull":
@@ -357,6 +371,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Do you confirm?"),
         "delete_relative_title":
             MessageLookupByLibrary.simpleMessage("Deleting!"),
+        "delete_special_note": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete the special note?"),
+        "delete_treatment_note": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete the treatment note?"),
         "demographic": MessageLookupByLibrary.simpleMessage("Demographic"),
         "depart_analyse":
             MessageLookupByLibrary.simpleMessage("Department analyze"),
@@ -370,6 +388,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "We just need your Passport and Phone number to send you temporary password"),
         "des_forgot_password_tc": MessageLookupByLibrary.simpleMessage(
             "We just need your T.C identity and Phone number to send you temporary password"),
+        "description": MessageLookupByLibrary.simpleMessage("Description"),
+        "detail_search": MessageLookupByLibrary.simpleMessage("Detail Search"),
         "detailed_check":
             MessageLookupByLibrary.simpleMessage("Detailed Health Check"),
         "detailed_error_dialog_part1": MessageLookupByLibrary.simpleMessage(
@@ -420,8 +440,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Diagnosis Date"),
         "didnt_reach_goals":
             MessageLookupByLibrary.simpleMessage("Didn\'t reach goals"),
+        "diet_list": MessageLookupByLibrary.simpleMessage("Diet List"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Digital Checkup"),
+        "dinner": MessageLookupByLibrary.simpleMessage("Dinner"),
         "discard": MessageLookupByLibrary.simpleMessage("Discard"),
         "discount_code": MessageLookupByLibrary.simpleMessage("Discount Code"),
         "disease": MessageLookupByLibrary.simpleMessage("Disease"),
@@ -439,6 +461,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "(Not Satisfied 1 … 5 Very Satisfied)"),
         "doctor_name":
             MessageLookupByLibrary.simpleMessage("Specialist Name :"),
+        "doctor_note": MessageLookupByLibrary.simpleMessage("Doctor Note"),
         "doctor_selection":
             MessageLookupByLibrary.simpleMessage("Specialist selection :"),
         "doesnt_match_tc": MessageLookupByLibrary.simpleMessage(
@@ -625,6 +648,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Intermittent Days"),
         "invalid_authorization": MessageLookupByLibrary.simpleMessage(
             "You are not authorized to login to the application"),
+        "invalid_identity_number":
+            MessageLookupByLibrary.simpleMessage("Inlavid Identity Number."),
+        "invalid_mail": MessageLookupByLibrary.simpleMessage("Inlavid Email."),
+        "invalid_phone_number":
+            MessageLookupByLibrary.simpleMessage("Inlavid Phone Number."),
         "iptal_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/iptal_en.html"),
         "irrelevant": MessageLookupByLibrary.simpleMessage("Irrelevant"),
@@ -697,6 +725,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Do you want to exit the application?"),
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "low_range": MessageLookupByLibrary.simpleMessage("Low Range"),
+        "lunch": MessageLookupByLibrary.simpleMessage("Lunch"),
+        "magazines": MessageLookupByLibrary.simpleMessage("Magazines"),
         "make_an_appointment":
             MessageLookupByLibrary.simpleMessage("Make an Appointment"),
         "make_an_online":
@@ -977,6 +1007,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please enter valid password."),
         "passwords_not_match": MessageLookupByLibrary.simpleMessage(
             "The passwords entered do not match."),
+        "past_treatments":
+            MessageLookupByLibrary.simpleMessage("Past Treatments"),
         "pathology_result":
             MessageLookupByLibrary.simpleMessage("Pathology\nResults"),
         "patient_name": MessageLookupByLibrary.simpleMessage("Patient Name :"),
@@ -1049,6 +1081,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rate": MessageLookupByLibrary.simpleMessage("Rate"),
         "rate_appointment": MessageLookupByLibrary.simpleMessage(
             "Would you like to rate your appointment ?"),
+        "rate_thank_you":
+            MessageLookupByLibrary.simpleMessage("Thanks for your review"),
         "reach_goal": MessageLookupByLibrary.simpleMessage("Reach goal"),
         "read_understood_kvkk": MessageLookupByLibrary.simpleMessage(
             "I have read and understood the notice of information regarding the policy of protection and processing of personal data."),
@@ -1056,8 +1090,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Recent Appointments"),
         "recover_your_password":
             MessageLookupByLibrary.simpleMessage("Recover your password"),
+        "refreshment": MessageLookupByLibrary.simpleMessage("Refreshment"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Further operations will be completed by the selected user, do you confirm?"),
+        "relative_identity_number":
+            MessageLookupByLibrary.simpleMessage("T.C ID number of relatives"),
         "relatives": MessageLookupByLibrary.simpleMessage("Relatives"),
         "relatives_only_children_warning": MessageLookupByLibrary.simpleMessage(
             "You can only add children of your own below age of 18"),
@@ -1171,6 +1208,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sorry_dont_transaction": MessageLookupByLibrary.simpleMessage(
             "Sorry, we are currently unable to complete your transaction. Please try again later"),
         "sort_by": MessageLookupByLibrary.simpleMessage("Sort by"),
+        "special_note": MessageLookupByLibrary.simpleMessage("Special note"),
         "specialities": MessageLookupByLibrary.simpleMessage("Specialities"),
         "specific": MessageLookupByLibrary.simpleMessage("Specific"),
         "specific_days": MessageLookupByLibrary.simpleMessage("Specific Days"),
@@ -1267,6 +1305,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time_take_medicine_title":
             MessageLookupByLibrary.simpleMessage("It\'s time to take medicine"),
         "time_text": MessageLookupByLibrary.simpleMessage("Time"),
+        "title": MessageLookupByLibrary.simpleMessage("Title"),
         "title_appointment":
             MessageLookupByLibrary.simpleMessage("Create Appointment"),
         "title_appointment_detail":
@@ -1289,6 +1328,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("I am a Turkish citizen"),
         "trainings": MessageLookupByLibrary.simpleMessage("Trainings"),
         "treatment": MessageLookupByLibrary.simpleMessage("Treatment"),
+        "treatment_note":
+            MessageLookupByLibrary.simpleMessage("Treatment Note"),
         "treatment_process":
             MessageLookupByLibrary.simpleMessage("Treatment Process"),
         "treatments": MessageLookupByLibrary.simpleMessage("Treatments"),
@@ -1304,9 +1345,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "unsupported_language":
             MessageLookupByLibrary.simpleMessage("Unsupported Language"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
+        "update_diet_list":
+            MessageLookupByLibrary.simpleMessage("Update Diet List"),
         "update_information":
             MessageLookupByLibrary.simpleMessage("Update Information"),
         "update_now": MessageLookupByLibrary.simpleMessage("Update Now"),
+        "update_special_note":
+            MessageLookupByLibrary.simpleMessage("Update Special note"),
+        "update_treatment_note":
+            MessageLookupByLibrary.simpleMessage("Update Treatment Note"),
         "upload": MessageLookupByLibrary.simpleMessage("Upload"),
         "uploadFile": MessageLookupByLibrary.simpleMessage("Upload\nFile"),
         "upload_file_question": MessageLookupByLibrary.simpleMessage(
@@ -1376,6 +1423,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
             "When would you like to be notified?"),
+        "where_will_you_attend_the_meeting":
+            MessageLookupByLibrary.simpleMessage(
+                "Where will you attend the meeting ?"),
         "which_depart_i_go":
             MessageLookupByLibrary.simpleMessage("Department finder"),
         "widgets_add_message": MessageLookupByLibrary.simpleMessage(

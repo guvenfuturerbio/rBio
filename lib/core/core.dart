@@ -15,22 +15,10 @@ export 'locator.dart';
 export 'rbio_custom_icons.dart';
 export 'package:guven_service/guven_service.dart';
 
+export '../data/data.dart';
+export '../data/services/chronic_service/chronic_service.dart';
+
 export 'resources/resources.dart';
-
-export "data/helper/dio_helper.dart";
-
-export "data/repository/cronic_tracking_repository.dart";
-export "data/repository/doctor_repository.dart";
-export "data/repository/repository.dart";
-export "data/repository/symptom_repository.dart";
-
-export "data/service/chronic_service/chronic_storage_service.dart";
-export "data/service/api_service.dart";
-export 'data/service/chronic_tracking_service.dart';
-export "data/service/doctor_service.dart";
-export 'data/service/firestore_manager.dart';
-export "data/service/local_cache_service.dart";
-export "data/service/symptom_api_service.dart";
 
 export 'domain/all_users_model.dart';
 export "domain/blood_pressure_model.dart";

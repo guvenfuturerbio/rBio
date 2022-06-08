@@ -31,14 +31,11 @@ class GuvenRelativeEndpoints extends RelativeEndpoints {
   String get getAllRelativesPath => '/profile/get-all-table'.xBaseUrl;
 
   @override
-  String removePatientRelativePath(String id) => '/profile/remove/$id'.xBaseUrl;
-
-  @override
   String changeActiveUserToRelativePath(String id) =>
       '/profile/set-profile/$id'.xBaseUrl;
 
   @override
-  String get addNewPatientRelativePath => '/profile/add-pusula'.xBaseUrl;
+  String get addNewPatientRelativePath => '/profile/add-relative'.xBaseUrl;
 
   @override
   String get getRelativeRelationshipsPath => '/user/get-relationships'.xBaseUrl;
@@ -229,6 +226,34 @@ class GuvenDevApiEndpoints extends DevApiEndpoints {
   @override
   String get ctUpdateUserStrip =>
       throw RbioUndefinedEndpointException("ctUpdateUserStrip");
+
+  @override
+  String getTreatmentNoteWithDiet(int? entegrationId) =>
+      throw RbioUndefinedEndpointException("getTreatmentNoteWithDiet");
+
+  @override
+  String getTreatmentNoteWithDietDoctor(int patientId) =>
+      throw RbioUndefinedEndpointException("getTreatmentNoteWithDietDoctor");
+
+  @override
+  String treatmentGetDetail(int itemType, int id) =>
+      throw RbioUndefinedEndpointException("treatmentGetDetail");
+
+  @override
+  String addTreatmentNote(int? entegrationId) =>
+      throw RbioUndefinedEndpointException("addTreatmentNote");
+
+  @override
+  String addDiet(int patientId) =>
+      throw RbioUndefinedEndpointException("addDiet");
+
+  @override
+  String deleteNoteDiet(int itemType, int id) =>
+      throw RbioUndefinedEndpointException("deleteNoteDiet");
+
+  @override
+  String addTreatmentNoteDoctor(int patientId) =>
+      throw RbioUndefinedEndpointException("addTreatmentNoteDoctor");
 }
 
 class GuvenBaseEndpoints extends BaseEndpoints {

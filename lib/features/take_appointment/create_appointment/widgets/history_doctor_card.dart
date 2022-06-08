@@ -20,8 +20,8 @@ Widget _buildHistoryDoctorCard(
               child: Image.network(
                 vm.doctorsImageUrls[index],
                 fit: BoxFit.cover,
-                width: Atom.width * .14,
-                height: Atom.width * .14,
+                width: Atom.width * .07,
+                height: Atom.width * .07,
               ),
             ),
 
