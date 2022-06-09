@@ -171,6 +171,7 @@ flutter:
     - assets/images/oneDose/
     - assets/images/bottom_navigation/
     - assets/images/reminders/
+    - assets/images/drawer/
     - assets/animations/
     - assets/animations/introduction/
     - assets/sound/

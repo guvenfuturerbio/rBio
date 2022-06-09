@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Drawer _buildDrawer() {
     return Drawer(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: Colors.white,
       child: SafeArea(
         top: true,
         child: Column(
@@ -64,12 +64,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      getIt<IAppConfig>()
-                          .platform
-                          .adjustManager
-                          ?.trackEvent(MenuElementProfileClickedEvent());
-                      getIt<FirebaseAnalyticsManager>()
-                          .logEvent(MenuElementTiklamaEvent('profil'));
+                      getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementProfileClickedEvent());
+                      getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('profil'));
                       Atom.to(PagePaths.profile);
                     },
                     child: Container(
@@ -83,7 +79,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         right: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: getIt<IAppConfig>().theme.secondaryColor,
+                        color: getIt<IAppConfig>().theme.mainColor,
                         borderRadius: R.sizes.borderRadiusCircular,
                       ),
                       child: Row(
@@ -92,12 +88,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           //
-                          CircleAvatar(
-                            backgroundImage:
-                                Utils.instance.getCacheProfileImage,
-                            radius: R.sizes.iconSize2,
-                            backgroundColor:
-                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: CircleAvatar(
+                              backgroundImage: Utils.instance.getCacheProfileImage,
+                              radius: R.sizes.iconSize2,
+                              backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                            ),
                           ),
 
                           //
@@ -106,14 +103,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           //
                           Expanded(
                             child: Text(
-                              getIt<UserNotifier>()
-                                  .getCurrentUserNameAndSurname(),
+                              getIt<UserNotifier>().getCurrentUserNameAndSurname(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: context.xHeadline4.copyWith(
-                                  color: getIt<IAppConfig>()
-                                      .theme
-                                      .textContrastColor),
+                              style: context.xHeadline4.copyWith(color: getIt<IAppConfig>().theme.textColor),
                             ),
                           ),
                         ],
@@ -128,17 +121,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     color: Colors.transparent,
                     child: SvgPicture.asset(
                       R.image.cancel,
-                      color: Colors.white,
+                      color: Colors.black,
                       width: R.sizes.iconSize2,
                     ),
                   ),
                   onPressed: () {
-                    getIt<IAppConfig>()
-                        .platform
-                        .adjustManager
-                        ?.trackEvent(MenuButtonClickedEvent());
-                    getIt<FirebaseAnalyticsManager>()
-                        .logEvent(MenuButonTiklamaEvent());
+                    getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuButtonClickedEvent());
+                    getIt<FirebaseAnalyticsManager>().logEvent(MenuButonTiklamaEvent());
                     if (widget.drawerKey.currentState?.isDrawerOpen ?? false) {
                       widget.drawerKey.currentState?.openEndDrawer();
                     }
@@ -153,47 +142,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
             //
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.only(left: 15, top: 12),
-                scrollDirection: Axis.vertical,
+                padding: const EdgeInsets.only(top: 15),
                 physics: const BouncingScrollPhysics(),
                 itemCount: drawerList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      widget.drawerKey.currentState?.openDrawer();
-                      drawerList[index].onTap();
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          //
-                          R.sizes.hSizer8,
+                  return _buildDrawerListTile(drawerList[index]);
+                },
+              ),
+            ),
 
-                          //
-                          Text(
-                            drawerList[index].title,
-                            style: context.xHeadline4.copyWith(
-                              color: getIt<IAppConfig>().theme.textColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+            R.sizes.hSizer12,
 
-                          //
-                          R.sizes.hSizer8,
-
-                          //
-                          Divider(
-                            color: getIt<IAppConfig>().theme.textColor,
-                            endIndent: 15,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+            _buildDrawerListTile(
+              DrawerModel(
+                title: LocaleProvider.current.log_out,
+                svgPath: R.image.drawerLogOut,
+                onTap: () async {
+                  getIt<IAppConfig>().platform.adjustManager?.trackEvent(LogOutEvent());
+                  getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('cikis'));
+                  await getIt<UserNotifier>().logout(context);
                 },
               ),
             ),
@@ -209,6 +176,61 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  Widget _buildDrawerListTile(DrawerModel model) {
+    return InkWell(
+      onTap: () {
+        widget.drawerKey.currentState?.openDrawer();
+        model.onTap();
+      },
+      overlayColor: MaterialStateProperty.all(getIt<IAppConfig>().theme.mainColor),
+      child: Container(
+        color: Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //
+              R.sizes.hSizer16,
+
+              //
+              Row(
+                children: [
+                  const SizedBox(width: 5),
+                  SvgPicture.asset(
+                    model.svgPath,
+                    width: 20,
+                    height: 20,
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    model.title,
+                    style: context.xHeadline4.copyWith(
+                      color: getIt<IAppConfig>().theme.textColorSecondary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+
+              //
+              R.sizes.hSizer16,
+
+              // //
+              Divider(
+                color: Colors.grey.shade200,
+                height: 2,
+                endIndent: 15,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildVersion() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -216,7 +238,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         "v" + getIt<GuvenSettings>().version,
         textAlign: TextAlign.left,
         style: context.xHeadline5.copyWith(
-          color: getIt<IAppConfig>().theme.textColor,
+          color: Colors.black,
         ),
       ),
     );
@@ -258,12 +280,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   elevation: 0,
                   onPressed: () {
-                    getIt<IAppConfig>()
-                        .platform
-                        .adjustManager
-                        ?.trackEvent(BottomBarClickedEvent());
-                    getIt<FirebaseAnalyticsManager>()
-                        .logEvent(AltBarTiklamaEvent('Logo'));
+                    getIt<IAppConfig>().platform.adjustManager?.trackEvent(BottomBarClickedEvent());
+                    getIt<FirebaseAnalyticsManager>().logEvent(AltBarTiklamaEvent('Logo'));
                     if (Atom.url != '/home/') {
                       DashboardNavigation.toHome(context);
                     }
@@ -289,10 +307,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationSearchGreen,
                     ),
                     onPressed: () {
-                      getIt<IAppConfig>().platform.adjustManager
-                          ?.trackEvent(BottomBarClickedEvent());
-                      getIt<FirebaseAnalyticsManager>()
-                          .logEvent(AltBarTiklamaEvent('Arama'));
+                      getIt<IAppConfig>().platform.adjustManager?.trackEvent(BottomBarClickedEvent());
+                      getIt<FirebaseAnalyticsManager>().logEvent(AltBarTiklamaEvent('Arama'));
                       DashboardNavigation.toSearch(context);
                     },
                     splashColor: Colors.white,
@@ -304,10 +320,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationChatGreen,
                     ),
                     onPressed: () {
-                      getIt<IAppConfig>().platform.adjustManager
-                          ?.trackEvent(BottomBarClickedEvent());
-                      getIt<FirebaseAnalyticsManager>()
-                          .logEvent(AltBarTiklamaEvent('Chat'));
+                      getIt<IAppConfig>().platform.adjustManager?.trackEvent(BottomBarClickedEvent());
+                      getIt<FirebaseAnalyticsManager>().logEvent(AltBarTiklamaEvent('Chat'));
                       DashboardNavigation.toChat(context);
                     },
                   ),
@@ -321,10 +335,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationGraphGreen,
                     ),
                     onPressed: () {
-                      getIt<IAppConfig>().platform.adjustManager
-                          ?.trackEvent(BottomBarClickedEvent());
-                      getIt<FirebaseAnalyticsManager>()
-                          .logEvent(AltBarTiklamaEvent('Grafik'));
+                      getIt<IAppConfig>().platform.adjustManager?.trackEvent(BottomBarClickedEvent());
+                      getIt<FirebaseAnalyticsManager>().logEvent(AltBarTiklamaEvent('Grafik'));
                       DashboardNavigation.toGraph(context);
                     },
                   ),
@@ -335,10 +347,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       R.image.bottomNavigationNotificationGreen,
                     ),
                     onPressed: () {
-                      getIt<IAppConfig>().platform.adjustManager
-                          ?.trackEvent(BottomBarClickedEvent());
-                      getIt<FirebaseAnalyticsManager>()
-                          .logEvent(AltBarTiklamaEvent('Bildirim'));
+                      getIt<IAppConfig>().platform.adjustManager?.trackEvent(BottomBarClickedEvent());
+                      getIt<FirebaseAnalyticsManager>().logEvent(AltBarTiklamaEvent('Bildirim'));
                       DashboardNavigation.toNotifications(context);
                     },
                   ),
@@ -356,30 +366,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String passiveImage,
     String activeImage,
   ) =>
-      widget.currentIndex != iconIndex
-          ? SvgPicture.asset(passiveImage, width: R.sizes.iconSize2)
-          : SvgPicture.asset(activeImage, width: R.sizes.iconSize2);
+      widget.currentIndex != iconIndex ? SvgPicture.asset(passiveImage, width: R.sizes.iconSize2) : SvgPicture.asset(activeImage, width: R.sizes.iconSize2);
 
   List<DrawerModel> get drawerList => <DrawerModel>[
         DrawerModel(
           title: LocaleProvider.current.profile,
+          svgPath: R.image.drawerProfile,
           onTap: () {
-            getIt<IAppConfig>()
-                .platform
-                .adjustManager
-                ?.trackEvent(MenuElementProfileClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('profil'));
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementProfileClickedEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('profil'));
             Atom.to(PagePaths.profile);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
+          svgPath: R.image.drawerLblFindHospital,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
-                ?.trackEvent(MenuElementHospitalAppointmentClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('hastane_randevusu_olustur'));
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementHospitalAppointmentClickedEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('hastane_randevusu_olustur'));
             Atom.to(
               PagePaths.createAppointment,
               queryParameters: {
@@ -392,11 +396,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.take_video_appointment,
+          svgPath: R.image.drawerTakeVideoAppointment,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
-                ?.trackEvent(MenuElementOnlineAppoClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('online_randevu_olustur'));
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementOnlineAppoClickedEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('online_randevu_olustur'));
             Atom.to(
               PagePaths.createAppointment,
               queryParameters: {
@@ -409,114 +412,87 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.chronic_track_home,
+          svgPath: R.image.drawerChronicTrackHome,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
-                ?.trackEvent(MenuElementHealthTrackerClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('saglik_takibi'));
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementHealthTrackerClickedEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('saglik_takibi'));
             Atom.to(PagePaths.measurementTrackingHome);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.my_appointments,
+          svgPath: R.image.drawerMyAppointments,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
-                ?.trackEvent(MenuElementAppointmentsClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('randevu'));
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementAppointmentsClickedEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('randevu'));
             Atom.to(PagePaths.appointment);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.results,
+          svgPath: R.image.drawerResults,
           onTap: () {
-            getIt<IAppConfig>()
-                .platform
-                .adjustManager
-                ?.trackEvent(MenuElementResultsClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('sonuclar'));
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementResultsClickedEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('sonuclar'));
             Atom.to(PagePaths.eResult);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.for_you,
+          svgPath: R.image.drawerForYou,
           onTap: () {
-            getIt<IAppConfig>()
-                .platform
-                .adjustManager
-                ?.trackEvent(MenuElementForYouClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('size_ozel'));
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementForYouClickedEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('size_ozel'));
             Atom.to(PagePaths.forYouCategories);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.symptom_checker,
+          svgPath: R.image.drawerSymptomChecker,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
-                ?.trackEvent(MenuElementSymptomCheckerClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('symptom_checker'));
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementSymptomCheckerClickedEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('symptom_checker'));
             Atom.to(PagePaths.symptomMainMenu);
           },
         ),
         if (getIt<IAppConfig>().platform.checkDevices())
           DrawerModel(
             title: LocaleProvider.current.devices,
+            svgPath: R.image.drawerDevices,
             onTap: () {
-              getIt<IAppConfig>().platform.adjustManager
-                  ?.trackEvent(MenuElementDevicesClickedEvent());
-              getIt<FirebaseAnalyticsManager>()
-                  .logEvent(MenuElementTiklamaEvent('cihazlarim'));
+              getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementDevicesClickedEvent());
+              getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('cihazlarim'));
               Atom.to(PagePaths.devices);
             },
           ),
         if (getIt<IAppConfig>().platform.checkMedimender())
           DrawerModel(
             title: LocaleProvider.current.reminders,
+            svgPath: R.image.drawerReminders,
             onTap: () {
-              getIt<IAppConfig>().platform.adjustManager
-                  ?.trackEvent(MenuElementRemindersClickedEvent());
-              getIt<FirebaseAnalyticsManager>()
-                  .logEvent(MenuElementTiklamaEvent('hatirlaticilar'));
+              getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementRemindersClickedEvent());
+              getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('hatirlaticilar'));
               Atom.to(PagePaths.reminderList);
             },
           ),
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
+          svgPath: R.image.drawerRequestAndSuggestions,
           onTap: () {
-            getIt<IAppConfig>().platform.adjustManager
-                ?.trackEvent(MenuElementSuggestionsClickedEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('oneriler'));
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MenuElementSuggestionsClickedEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(MenuElementTiklamaEvent('oneriler'));
             Atom.to(PagePaths.suggestResult);
           },
         ),
         DrawerModel(
           title: LocaleProvider.current.detailed_symptom,
+          svgPath: R.image.drawerDetailedSymptom,
           onTap: () {
-            getIt<IAppConfig>()
-                .platform
-                .adjustManager
-                ?.trackEvent(DetailedSymptomEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(DetailedSymptomCheckerEvent());
+            getIt<IAppConfig>().platform.adjustManager?.trackEvent(DetailedSymptomEvent());
+            getIt<FirebaseAnalyticsManager>().logEvent(DetailedSymptomCheckerEvent());
             Atom.to(
               PagePaths.detailedSymptom,
             );
-          },
-        ),
-        DrawerModel(
-          title: LocaleProvider.current.log_out,
-          onTap: () async {
-            getIt<IAppConfig>()
-                .platform
-                .adjustManager
-                ?.trackEvent(LogOutEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('cikis'));
-            await getIt<UserNotifier>().logout(context);
           },
         ),
       ];
