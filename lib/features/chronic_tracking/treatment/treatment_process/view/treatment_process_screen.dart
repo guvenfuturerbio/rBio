@@ -42,10 +42,13 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
         var _item =
             getIt<ProfileStorageImpl>().getFirst().treatmentList![index];
         TreatmentProcessItemModel _tempItem = TreatmentProcessItemModel(
-            id: _item.id,
-            title: _item.createDate!.toString().xGetUTCLocalDateTimeTwo(),
-            description: _item.treatment,
-            dateTime: _item.createDate);
+          id: _item.id,
+          title: _item.createDate!.toString().xGetUTCLocalDateTimeTwo(),
+          description: _item.treatment,
+          dateTime: DateTime.parse(
+            _item.createDate ?? '',
+          ),
+        );
         return _buildCard(_tempItem, newModel: index == 0 ? true : false);
       },
     );
