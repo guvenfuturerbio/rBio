@@ -19,6 +19,7 @@ export '../features/store/credit_card/model/payment_cc_request.dart';
 export '../features/store/for_you_categories/model/for_you_category_response.dart';
 export '../features/store/for_you_order_summary/model/for_you_sub_category_items_response.dart';
 export '../features/store/for_you_sub_category_detail/model/for_you_sub_category_detail_response.dart';
+
 export '../features/symptom_checker/home/model/symptoms_auth_response.dart';
 export '../features/symptom_checker/symptoms_body_location/model/get_bodylocations_response.dart';
 export '../features/symptom_checker/symptoms_body_sublocations_page/model/get_bodysublocation_response.dart';

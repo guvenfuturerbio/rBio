@@ -13,7 +13,7 @@ class TreatmentModel {
 
   @HiveField(1)
   @JsonKey(name: "create_date")
-  DateTime? createDate;
+  String? createDate;
 
   @HiveField(2)
   @JsonKey(name: "id")

@@ -21,6 +21,7 @@ import '../../../features/take_appointment/create_appointment_summary/model/sync
 import '../../../features/take_appointment/do_mobile_payment/do_mobil_payment_voucher.dart';
 import '../../../model/model.dart';
 import '../../core/core.dart';
+import '../../features/store/credit_card/credit_card.dart';
 
 class Repository {
   final ApiService apiService;

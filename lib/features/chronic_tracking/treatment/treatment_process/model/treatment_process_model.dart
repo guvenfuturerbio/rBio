@@ -16,7 +16,7 @@ class TreatmentProcessItemModel {
   Map<String, dynamic> toJson() {
     return TreatmentModel(
       treatment: description,
-      createDate: dateTime,
+      createDate: dateTime?.toIso8601String(),
       id: id,
     ).toJson();
   }

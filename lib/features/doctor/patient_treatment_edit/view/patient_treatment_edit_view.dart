@@ -217,12 +217,12 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
           //
           Expanded(
             child: Text(
-              ctx
-                      .read<PatientTreatmentEditVm>()
-                      .selectedModel
-                      .createDate
-                      ?.xFormatTime9() ??
-                  DateTime.now().xFormatTime9(),
+              DateTime.parse(ctx
+                          .read<PatientTreatmentEditVm>()
+                          .selectedModel
+                          .createDate ??
+                      DateTime.now().xFormatTime9())
+                  .xFormatTime9(),
               textAlign: TextAlign.end,
               style: context.xHeadline4.copyWith(
                 fontWeight: FontWeight.bold,
