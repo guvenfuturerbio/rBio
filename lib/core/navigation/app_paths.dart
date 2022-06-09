@@ -44,7 +44,7 @@ import '../../features/results/results.dart';
 import '../../features/shared/full_pdf_viewer_screen.dart';
 import '../../features/shared/webview_screen.dart';
 import '../../features/store/covid_19/covid_19_screen.dart';
-import '../../features/store/credit_card/credit_card_screen.dart';
+import '../../features/store/credit_card/view/credit_card_screen.dart';
 import '../../features/store/for_you_categories/for_you_categories_screen.dart';
 import '../../features/store/for_you_order_summary/order_summary.dart';
 import '../../features/store/for_you_sub_categories/for_you_sub_categories_screen.dart';

@@ -29,4 +29,9 @@ class PaymentCCRequest {
         'expiration_month': expirationMonth,
         'expiration_year': expirationYear,
       };
+
+  @override
+  String toString() {
+    return 'PaymentCCRequest(cardHolder: $cardHolder, cardNumber: $cardNumber, cvv: $cvv, expirationMonth: $expirationMonth, expirationYear: $expirationYear)';
+  }
 }
