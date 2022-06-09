@@ -1550,6 +1550,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.2"
+  rename:
+    dependency: "direct main"
+    description:
+      name: rename
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   reorderables:
     dependency: "direct main"
     description:

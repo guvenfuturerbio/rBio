@@ -147,10 +147,8 @@ class LoginScreenVm extends ChangeNotifier {
 
   Future<void> fetchAppVersion(UserLoginInfo userLoginInfo) async {
     try {
-      if (getIt<IAppConfig>().productType == ProductType.oneDose) {
-        _applicationVersionResponse =
-            await getIt<Repository>().getCurrentApplicationVersion();
-      }
+      _applicationVersionResponse =
+          await getIt<Repository>().getCurrentApplicationVersion();
     } catch (e) {
       LoggerUtils.instance.e(e);
     } finally {
