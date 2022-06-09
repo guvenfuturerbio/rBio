@@ -1,4 +1,4 @@
-import '../../../core/core.dart';
+import '../../../../core/core.dart';
 
 class ForYouSubCategoryDetailResponse
     extends IBaseModel<ForYouSubCategoryDetailResponse> {

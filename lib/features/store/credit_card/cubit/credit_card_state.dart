@@ -75,7 +75,7 @@ class CreditCardResult {
     return CreditCardResult(
       htmlContent: htmlContent,
       isDistanceContractSelected: isDistanceContractSelected,
-      isInformationFormAccepted: !isInformationFormAccepted,
+      isInformationFormAccepted: isInformationFormAccepted,
       dialogTitle: null,
       dialogMessage: null,
     );
