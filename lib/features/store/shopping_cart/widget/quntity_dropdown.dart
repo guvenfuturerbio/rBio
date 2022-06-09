@@ -1,19 +1,16 @@
-import 'package:flutter/material.dart';
+part of '../shopping_cart_screen.dart';
 
-import '../../core/core.dart';
-
-/// This is the stateful widget that the main application instantiates.
-class QuantityDropdownWidget extends StatefulWidget {
-  const QuantityDropdownWidget({Key? key}) : super(key: key);
+class QuantityDropdown extends StatefulWidget {
+  const QuantityDropdown({Key? key}) : super(key: key);
 
   @override
-  State<QuantityDropdownWidget> createState() => _QuantityDropdownWidgetState();
+  State<QuantityDropdown> createState() => _QuantityDropdownState();
 }
 
-/// This is the private State class that goes with MyStatefulWidget.
-class _QuantityDropdownWidgetState extends State<QuantityDropdownWidget> {
-  String dropdownValue = '1';
+class _QuantityDropdownState extends State<QuantityDropdown> {
   final TextEditingController quantity = TextEditingController(text: '1');
+
+  String dropdownValue = '1';
 
   @override
   Widget build(BuildContext context) {
@@ -57,13 +54,9 @@ class _QuantityDropdownWidgetState extends State<QuantityDropdownWidget> {
                 ),
                 margin: const EdgeInsets.only(bottom: 20),
               ),
-
-              //
               const SizedBox(
                 width: 5,
               ),
-
-              //
               Utils.instance.button(
                   text: "Update",
                   width: 30,
