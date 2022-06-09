@@ -62,6 +62,7 @@ dependencies:
   file_picker: ^3.0.0
   firebase: 9.0.2
   firebase_analytics: ^9.1.7
+  firebase_core_web: ^1.6.4
   firebase_auth: ^3.3.17
   firebase_core: ^1.16.0
   firebase_dynamic_links: ^4.2.2
