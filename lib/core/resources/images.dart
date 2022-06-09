@@ -152,7 +152,7 @@ class _Images {
   final warning = 'assets/images/warning.svg';
 
   // #region Logo
-  final odhLogoSvg = "assets/logo/odh_logo.svg";
+  final odhLogoSvg = "assets/logo/onedosehealth/onedosehealth_onboarding.svg";
   // #endregion
 
   // #region bottom_navigation

@@ -8,6 +8,128 @@ version: 1.0.31+44
 environment:
   sdk: ">=2.17.1 <3.0.0"
 
+dependencies:
+  adjust_sdk: ^4.30.0
+  animated_widgets: ^1.1.0
+  app_settings: ^4.1.7
+  atom:
+    git:
+      url: https://jsck2wjl54wp5d65hbl32w6qpfxwae75bemnleehnhx23zqdxlra@guvenfuture.visualstudio.com/Atom/_git/Atom
+      ref: master
+  auto_size_text_pk: ^3.0.0
+  bloc_test: ^9.0.3
+  cached_network_image: ^3.2.1
+  carousel_slider: ^4.1.1
+  cloud_firestore: 3.1.17
+  connectivity_plus: ^2.3.3
+  country_code_picker: ^2.0.2
+  countup:
+    git: https://github.com/alpceylan/flutter-countup.git
+  cupertino_icons: ^1.0.5
+  dart_date: ^1.1.1
+  dartz: ^0.10.1
+  device_info_plus: ^3.2.4
+  dio: ^4.0.6
+  encrypt: ^5.0.1
+  equatable: ^2.0.3
+  expandable: ^5.0.1
+  file_picker: ^3.0.0 # ^4.6.1
+  firebase_analytics: 9.1.9
+  firebase_auth: 3.3.19
+  firebase_core: 1.17.1
+  firebase_core_web: 1.6.4
+  firebase_dynamic_links: 4.2.5
+  firebase_messaging: 11.4.1
+  firebase_storage: 10.2.17
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.0.1
+  flutter_blue_plus: ^1.1.3
+  flutter_calendar_carousel: ^2.1.0
+  flutter_datetime_picker:
+    git: https://github.com/tushardubey121/flutter_datetime_picker.git
+  flutter_dotenv: ^5.0.2
+  flutter_keyboard_visibility: ^5.2.0
+  flutter_linkify: ^5.0.2
+  flutter_localizations:
+    sdk: flutter
+  flutter_masked_text2: ^0.9.1
+  flutter_native_image: ^0.0.6+1
+  flutter_rating_bar: ^4.0.1
+  flutter_share: ^2.0.0
+  flutter_slidable: 0.6.0 # ^1.3.0
+  flutter_svg: ^1.1.0
+  flutter_xlider:
+    git:
+      url: https://github.com/Ali-Azmoud/flutter_xlider
+  fluttertoast: ^8.0.9
+  freezed_annotation: ^2.0.3
+  g_recaptcha_v3: ^0.0.4
+  get_it: ^7.2.0
+  gradient_widgets: ^0.6.0
+  hive_flutter: ^1.1.0
+  hive_generator: ^1.1.3
+  image_picker: ^0.8.5+3
+  intl: ^0.17.0
+  jiffy: ^5.0.0
+  jitsi_meet_platform_interface: ^2.0.0
+  jitsi_meet_wrapper: ^0.0.5
+  json_annotation: ^4.5.0
+  loading_animations: ^2.2.0
+  logger: ^1.1.0
+  mask_text_input_formatter: ^2.3.0
+  mobile_scanner: ^2.0.0
+  mockito: null
+  mocktail: ^0.3.0
+  numberpicker: ^2.1.1
+  package_info_plus: ^1.4.2
+  path: ^1.8.1
+  path_provider: ^2.0.11
+  pdf: ^3.8.1
+  percent_indicator: ^4.2.2
+  permission_handler: ^8.3.0 # ^9.2.0
+  photo_view: ^0.14.0
+  progress_dialog: ^1.2.4
+  progress_indicators: ^1.0.0
+  provider: ^6.0.3
+  pub_semver: ^2.1.1
+  qr_flutter:
+    git:
+      url: https://github.com/theyakka/qr.flutter.git
+  reorderables: ^0.5.0
+  rive: ^0.8.4
+  scan: ^1.6.0
+  shimmer: ^2.0.0
+  simple_gesture_detector: ^0.2.0
+  slugify: ^2.0.0
+  smooth_page_indicator: ^1.0.0+2
+  sms_autofill: ^2.2.0
+  spring: ^2.0.2
+  syncfusion_flutter_charts: ^20.1.59
+  syncfusion_flutter_gauges: ^20.1.59
+  syncfusion_flutter_pdfviewer: ^20.1.59-beta
+  table_calendar: ^3.0.6
+  time: ^2.1.1
+  timeago: ^3.2.2
+  tuple: ^2.0.0
+  turkish: ^0.2.1
+  universal_html: ^2.0.8
+  url_launcher: ^6.1.3
+  url_strategy: ^0.2.0
+  video_player: ^2.4.4
+  webview_flutter: ^3.0.4
+
+dev_dependencies:
+  analyzer: ^4.1.0
+  build_runner: ^2.1.11
+  flutter_launcher_icons: ^0.9.3
+  flutter_lints: ^1.0.4 # ^2.0.1
+  flutter_native_splash: ^2.2.3
+  flutter_test:
+    sdk: flutter
+  freezed: ^2.0.3+1
+  json_serializable: ^6.2.0
+
 dependency_overrides:
   flutter_reactive_ble:
     path: ./packages/flutter_reactive_ble
@@ -34,170 +156,38 @@ dependency_overrides:
   keyboard_avoider:
     path: ./packages/keyboard_avoider-fix-mounted-bug
 
-dependencies:
-  adjust_sdk: ^4.29.2
-  animated_widgets: ^1.1.0
-  app_settings: ^4.1.1
-  atom:
-    git:
-      url: https://jsck2wjl54wp5d65hbl32w6qpfxwae75bemnleehnhx23zqdxlra@guvenfuture.visualstudio.com/Atom/_git/Atom
-      ref: master
-  auto_size_text_pk: ^3.0.0
-  bloc_test: ^9.0.2
-  cached_network_image: ^3.1.0+1
-  carousel_slider: ^4.0.0
-  cloud_firestore: 3.1.10
-  connectivity_plus: ^2.2.0
-  country_code_picker: ^2.0.2
-  countup:
-    git: https://github.com/alpceylan/flutter-countup.git
-  cupertino_icons: ^1.0.4
-  dart_date: ^1.1.1
-  dartz: ^0.10.1
-  device_info_plus: ^3.2.1
-  dio: ^4.0.4
-  encrypt: ^5.0.1
-  equatable: ^2.0.3
-  expandable: ^5.0.1
-  file_picker: ^3.0.0
-  firebase: 9.0.2
-  firebase_analytics: ^9.1.7
-  firebase_core_web: ^1.6.4
-  firebase_auth: ^3.3.17
-  firebase_core: ^1.16.0
-  firebase_dynamic_links: ^4.2.2
-  firebase_messaging: ^11.3.0
-  firebase_storage: ^10.2.15
-  flutter:
-    sdk: flutter
-  flutter_bloc: ^8.0.1
-  flutter_blue_plus: ^1.1.2
-  flutter_calendar_carousel: ^2.0.1
-  flutter_datetime_picker:
-    git: https://github.com/tushardubey121/flutter_datetime_picker.git
-  flutter_dotenv: ^5.0.2
-  flutter_keyboard_visibility: ^5.1.1
-  flutter_linkify: ^5.0.2
-  flutter_localizations:
-    sdk: flutter
-  flutter_masked_text2: ^0.9.1
-  flutter_native_image: ^0.0.6+1
-  flutter_native_splash: ^1.3.1
-  flutter_rating_bar: ^4.0.0
-  flutter_share: ^2.0.0
-  flutter_slidable: 0.6.0
-  flutter_svg: ^0.23.0+1
-  flutter_xlider:
-    git:
-      url: https://github.com/Ali-Azmoud/flutter_xlider
-  fluttertoast: ^8.0.8
-  freezed_annotation: ^2.0.3
-  g_recaptcha_v3: ^0.0.4
-  get_it: ^7.2.0
-  gradient_widgets: ^0.6.0
-  hive_flutter: ^1.1.0
-  hive_generator: ^1.1.2
-  http: ^0.13.4
-  image_picker: ^0.8.4+7
-  intl: ^0.17.0
-  jiffy: ^5.0.0
-  jitsi_meet_platform_interface: ^2.0.0
-  jitsi_meet_wrapper: ^0.0.2
-  loading_animations: ^2.2.0
-  logger: ^1.1.0
-  mask_text_input_formatter: ^2.3.0
-  mobile_scanner: ^2.0.0
-  mockito: null
-  mocktail: ^0.2.0
-  numberpicker: ^2.1.1
-  package_info_plus: ^1.3.0
-  path: ^1.8.0
-  path_provider: ^2.0.8
-  pdf: ^3.7.1
-  percent_indicator: ^4.0.0
-  permission_handler: ^8.3.0
-  photo_view: ^0.13.0
-  progress_dialog: ^1.2.4
-  progress_indicators: ^1.0.0
-  provider: ^6.0.2
-  pub_semver: ^2.1.0
-  qr_flutter:
-    git:
-      url: https://github.com/theyakka/qr.flutter.git
-  reorderables: ^0.5.0
-  rive: ^0.8.1
-  scan: ^1.6.0
-  share: ^2.0.4
-  shimmer: ^2.0.0
-  simple_gesture_detector: ^0.2.0
-  slugify: ^2.0.0
-  smooth_page_indicator: ^1.0.0+2
-  sms_autofill: ^2.2.0
-  spring: ^2.0.2
-  syncfusion_flutter_charts: ^20.1.48
-  syncfusion_flutter_gauges: ^20.1.48
-  syncfusion_flutter_pdfviewer: ^20.1.48-beta.1
-  table_calendar: ^3.0.3
-  time: ^2.1.0
-  timeago: ^3.2.2
-  tuple: ^2.0.0
-  turkish: ^0.2.1
-  universal_html: ^2.0.8
-  url_launcher: ^6.0.18
-  url_strategy: ^0.2.0
-  video_player: ^2.4.2
-  webview_flutter: ^2.3.1
-
-dev_dependencies:
-  analyzer: ^4.1.0
-  build_runner: ^2.1.11
-  flutter_launcher_icons: ^0.9.0
-  flutter_lints: ^1.0.4
-  flutter_test:
-    sdk: flutter
-  freezed: ^2.0.3+1
-  json_annotation: ^4.4.0
-  json_serializable: ^6.1.4
-
 flutter:
   uses-material-design: true
 
   assets:
     - env/guven/
     - env/onedose/
-    - assets/images/
-    - assets/images/guven/
-    - assets/images/magazines/
-    - assets/images/guven/dashboard/
-    - assets/images/oneDose/
-    - assets/images/bottom_navigation/
-    - assets/images/reminders/
-    - assets/images/drawer/
     - assets/animations/
     - assets/animations/introduction/
-    - assets/sound/
-    - assets/departments.json
-    - assets/pdf/
-    - assets/logo/
     - assets/device/
-    - assets/animations/introduction/
+    - assets/images/
+    - assets/images/bottom_navigation/
+    - assets/images/drawer/
+    - assets/images/guven/
+    - assets/images/guven/dashboard/
+    - assets/images/magazines/
+    - assets/images/oneDose/
+    - assets/images/reminders/
+    - assets/logo/
+    - assets/logo/guvenonline/
+    - assets/logo/onedosehealth/
+    - assets/departments.json
 
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/guven/Poppins-Regular.ttf
+        - asset: assets/fonts/guvenonline/poppins_regular.ttf
     - family: SourceSans
       fonts:
-        - asset: assets/fonts/oneDose/SourceSansPro_Regular.ttf
+        - asset: assets/fonts/onedosehealth/source_sans_pro_regular.ttf
     - family: MyFlutterApp
       fonts:
-        - asset: assets/MyFlutterApp.ttf
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/logo/onedosehealth_logo-01.png"
-  remove_alpha_ios: true
+        - asset: assets/fonts/custom/my_flutter_app.ttf
 
 flutter_intl:
   enabled: true
@@ -206,6 +196,12 @@ flutter_intl:
   arb_dir: lib/l10n
   output_dir: lib/generated
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/onedosehealth/onedosehealth_applogo.png"
+  remove_alpha_ios: true
+
 flutter_native_splash:
   color: "00A147"
-  image: "assets/logo/splash_image.png"
+  image: "assets/logo/onedosehealth/onedosehealth_splash.png"

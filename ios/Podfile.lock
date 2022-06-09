@@ -596,11 +596,11 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - Adjust (4.29.7):
-    - Adjust/Core (= 4.29.7)
-  - Adjust/Core (4.29.7)
-  - adjust_sdk (4.29.2):
-    - Adjust (= 4.29.7)
+  - Adjust (4.30.0):
+    - Adjust/Core (= 4.30.0)
+  - Adjust/Core (4.30.0)
+  - adjust_sdk (4.30.0):
+    - Adjust (= 4.30.0)
     - Flutter
   - "app_settings (3.0.0+1)":
     - Flutter
@@ -610,7 +610,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
-  - cloud_firestore (3.1.10):
+  - cloud_firestore (3.1.17):
     - Firebase/Firestore (= 8.15.0)
     - firebase_core
     - Flutter
@@ -774,6 +774,8 @@ PODS:
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_native_image (0.0.1):
+    - Flutter
+  - flutter_native_splash (0.0.1):
     - Flutter
   - flutter_native_timezone (0.0.1):
     - Flutter
@@ -962,8 +964,6 @@ PODS:
   - SDWebImage (5.12.5):
     - SDWebImage/Core (= 5.12.5)
   - SDWebImage/Core (5.12.5)
-  - share (0.0.1):
-    - Flutter
   - shared_preferences_ios (0.0.1):
     - Flutter
   - sms_autofill (0.0.1):
@@ -1001,6 +1001,7 @@ DEPENDENCIES:
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_native_image (from `.symlinks/plugins/flutter_native_image/ios`)
+  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_native_timezone (from `.symlinks/plugins/flutter_native_timezone/ios`)
   - flutter_share (from `.symlinks/plugins/flutter_share/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -1014,7 +1015,6 @@ DEPENDENCIES:
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - reactive_ble_mobile (from `.symlinks/plugins/reactive_ble_mobile/ios`)
   - scan (from `.symlinks/plugins/scan/ios`)
-  - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sms_autofill (from `.symlinks/plugins/sms_autofill/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -1101,6 +1101,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_native_image:
     :path: ".symlinks/plugins/flutter_native_image/ios"
+  flutter_native_splash:
+    :path: ".symlinks/plugins/flutter_native_splash/ios"
   flutter_native_timezone:
     :path: ".symlinks/plugins/flutter_native_timezone/ios"
   flutter_share:
@@ -1127,8 +1129,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/reactive_ble_mobile/ios"
   scan:
     :path: ".symlinks/plugins/scan/ios"
-  share:
-    :path: ".symlinks/plugins/share/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sms_autofill:
@@ -1146,11 +1146,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
-  Adjust: 91a06a01e4bb35b432e26b5d5bb8995b95fc381c
-  adjust_sdk: 35d9da526160bfea774bd44536b2223697c0b86b
+  Adjust: 6ed5493e91e9a77f6515d94f640bb72506a06b9d
+  adjust_sdk: 69945c1f064fc54294d807e2b5c6bea6c85779bf
   app_settings: d103828c9f5d515c4df9ee754dabd443f7cedcf3
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
-  cloud_firestore: 3787100e41165409bdba916f9de54774d2ba21e6
+  cloud_firestore: 936969669b510f2affd43583582d7b117c5f08d1
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   DKImagePickerController: 72fd378f244cef3d27288e0aebf217a4467e4012
@@ -1177,6 +1177,7 @@ SPEC CHECKSUMS:
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_image: 9c0b7451838484458e5b0fae007b86a4c2d4bdfe
+  flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   flutter_native_timezone: 5f05b2de06c9776b4cc70e1839f03de178394d22
   flutter_share: 4be0208963c60b537e6255ed2ce1faae61cd9ac2
   fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
@@ -1212,7 +1213,6 @@ SPEC CHECKSUMS:
   reactive_ble_mobile: 9ce6723d37ccf701dbffd202d487f23f5de03b4c
   scan: aea35bb4aa59ccc8839c576a18cd57c7d492cc86
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
-  share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sms_autofill: c461043483362c3f1709ee76eaae6eb570b31686
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
