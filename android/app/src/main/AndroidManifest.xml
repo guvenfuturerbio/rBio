@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.guvenfuture.onedosehealth"
+    package="com.guvenfuture.mobile"
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- required for API 18 - 30 -->
@@ -36,7 +36,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
    <application
-        android:label="One Dose Health"
+        android:label="Güven Online"
         android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         tools:replace="android:label,android:allowBackup"

@@ -1,34 +1,50 @@
 {
   "project_info": {
-    "project_number": "265636530937",
-    "project_id": "rbio-ec8b1",
-    "storage_bucket": "rbio-ec8b1.appspot.com"
+    "project_number": "647411760545",
+    "firebase_url": "https://guven-mobile-7c512.firebaseio.com",
+    "project_id": "guven-mobile-7c512",
+    "storage_bucket": "guven-mobile-7c512.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:265636530937:android:60d0f66454c33970263028",
+        "mobilesdk_app_id": "1:647411760545:android:47d69b70f8025dba259fe0",
         "android_client_info": {
-          "package_name": "com.guvenfuture.onedosehealth"
+          "package_name": "com.guvenfuture.mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "265636530937-pue2jtdspp3b2n623fsnkgfapn47djtp.apps.googleusercontent.com",
+          "client_id": "647411760545-9i3m23g4ta815uflvoohefqjqrsrer22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guvenfuture.mobile",
+            "certificate_hash": "323d8af6829903384260f549864fc61ce480fa3b"
+          }
+        },
+        {
+          "client_id": "647411760545-k9jjrnq4gbs1b7dvmtnci9kh04l3eos6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCvQeKHRr9uSo8oG1eTWTM-_xPdeVdVHFY"
+          "current_key": "AIzaSyDIEaEMhr5mZ5P5dIINa76aaxy_uluNlP4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "265636530937-pue2jtdspp3b2n623fsnkgfapn47djtp.apps.googleusercontent.com",
+              "client_id": "647411760545-k9jjrnq4gbs1b7dvmtnci9kh04l3eos6.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "647411760545-m07uth1ugne0nh7hcsgofvji4pb7ci9a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.guvenfuture.mobile"
+              }
             }
           ]
         }

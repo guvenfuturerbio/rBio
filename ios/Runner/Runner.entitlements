@@ -5,10 +5,8 @@
 	<key>aps-environment</key>
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
-	<array/>
-	<key>com.apple.developer.healthkit</key>
-	<true/>
-	<key>com.apple.developer.healthkit.access</key>
-	<array/>
+	<array>
+		<string>applinks:guvenmobile.page.link</string>
+	</array>
 </dict>
 </plist>

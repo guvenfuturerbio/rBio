@@ -1,4 +1,4 @@
-package com.guvenfuture.onedosehealth
+package com.guvenfuture.mobile
 
 import com.polidea.rxandroidble2.exceptions.BleException
 import android.os.Bundle
