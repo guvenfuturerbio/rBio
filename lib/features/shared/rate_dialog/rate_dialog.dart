@@ -20,7 +20,7 @@ class _RateDialogState extends State<RateDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return RbioBaseDialog(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

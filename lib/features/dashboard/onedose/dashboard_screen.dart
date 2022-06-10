@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/features/dashboard/home/model/drawer_model.dart';
 
 import '../../../core/core.dart';
+import '../home/model/drawer_model.dart';
 import 'bottom_navbar_painter.dart';
 import 'dashboard_navigation.dart';
 
@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Drawer _buildDrawer() {
     return Drawer(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: Colors.white,
       child: SafeArea(
         top: true,
         child: Column(
@@ -83,7 +83,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         right: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: getIt<IAppConfig>().theme.secondaryColor,
+                        color: getIt<IAppConfig>().theme.mainColor,
                         borderRadius: R.sizes.borderRadiusCircular,
                       ),
                       child: Row(
@@ -92,12 +92,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           //
-                          CircleAvatar(
-                            backgroundImage:
-                                Utils.instance.getCacheProfileImage,
-                            radius: R.sizes.iconSize2,
-                            backgroundColor:
-                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  Utils.instance.getCacheProfileImage,
+                              radius: R.sizes.iconSize2,
+                              backgroundColor:
+                                  getIt<IAppConfig>().theme.cardBackgroundColor,
+                            ),
                           ),
 
                           //
@@ -111,9 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: context.xHeadline4.copyWith(
-                                  color: getIt<IAppConfig>()
-                                      .theme
-                                      .textContrastColor),
+                                  color: getIt<IAppConfig>().theme.textColor),
                             ),
                           ),
                         ],
@@ -128,7 +129,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     color: Colors.transparent,
                     child: SvgPicture.asset(
                       R.image.cancel,
-                      color: Colors.white,
+                      color: Colors.black,
                       width: R.sizes.iconSize2,
                     ),
                   ),
@@ -152,48 +153,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
             //
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.only(left: 15, top: 12),
-                scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
-                itemCount: drawerList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      widget.drawerKey.currentState?.openDrawer();
-                      drawerList[index].onTap();
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          //
-                          R.sizes.hSizer8,
+              child: RbioScrollbar(
+                isAlwaysShown: true,
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  padding: const EdgeInsets.only(top: 16),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: drawerList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _buildDrawerListTile(drawerList[index]);
+                  },
+                ),
+              ),
+            ),
 
-                          //
-                          Text(
-                            drawerList[index].title,
-                            style: context.xHeadline4.copyWith(
-                              color: getIt<IAppConfig>().theme.textColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+            R.sizes.hSizer12,
 
-                          //
-                          R.sizes.hSizer8,
-
-                          //
-                          Divider(
-                            color: getIt<IAppConfig>().theme.textColor,
-                            endIndent: 15,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+            _buildDrawerListTile(
+              DrawerModel(
+                title: LocaleProvider.current.log_out,
+                svgPath: R.image.drawerLogOut,
+                onTap: () async {
+                  getIt<IAppConfig>()
+                      .platform
+                      .adjustManager
+                      ?.trackEvent(LogOutEvent());
+                  getIt<FirebaseAnalyticsManager>()
+                      .logEvent(MenuElementTiklamaEvent('cikis'));
+                  await getIt<UserNotifier>().logout(context);
                 },
               ),
             ),
@@ -209,14 +196,82 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  Widget _buildDrawerListTile(DrawerModel model) {
+    return InkWell(
+      onTap: () {
+        widget.drawerKey.currentState?.openDrawer();
+        model.onTap();
+      },
+      overlayColor:
+          MaterialStateProperty.all(getIt<IAppConfig>().theme.mainColor),
+      child: Container(
+        color: Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //
+              R.sizes.hSizer16,
+
+              //
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  R.sizes.wSizer4,
+                  SizedBox(
+                    width: 25,
+                    height: 25,
+                    child: SvgPicture.asset(
+                      model.svgPath,
+                    ),
+                  ),
+                  R.sizes.wSizer16,
+                  Expanded(
+                    child: Text(
+                      model.title,
+                      style: context.xHeadline4.copyWith(
+                        color: getIt<IAppConfig>().theme.textColorSecondary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              //
+              R.sizes.hSizer16,
+
+              // //
+              Divider(
+                color: Colors.grey.shade200,
+                height: 2,
+                endIndent: 15,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildVersion() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(
+        top: 8,
+        left: 16,
+        right: 8,
+        bottom: 8,
+      ),
       child: Text(
         "v" + getIt<GuvenSettings>().version,
         textAlign: TextAlign.left,
         style: context.xHeadline5.copyWith(
-          color: getIt<IAppConfig>().theme.textColor,
+          color: Colors.black,
         ),
       ),
     );
@@ -371,6 +426,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<DrawerModel> get drawerList => <DrawerModel>[
         DrawerModel(
           title: LocaleProvider.current.profile,
+          svgPath: R.image.drawerProfile,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -383,6 +439,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
+          svgPath: R.image.drawerLblFindHospital,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -402,6 +459,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.take_video_appointment,
+          svgPath: R.image.drawerTakeVideoAppointment,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -421,6 +479,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.chronic_track_home,
+          svgPath: R.image.drawerChronicTrackHome,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -433,6 +492,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.my_appointments,
+          svgPath: R.image.drawerMyAppointments,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -445,6 +505,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.results,
+          svgPath: R.image.drawerResults,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -457,6 +518,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.for_you,
+          svgPath: R.image.drawerForYou,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -469,6 +531,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.symptom_checker,
+          svgPath: R.image.drawerSymptomChecker,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -482,6 +545,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         if (getIt<IAppConfig>().platform.checkDevices())
           DrawerModel(
             title: LocaleProvider.current.devices,
+            svgPath: R.image.drawerDevices,
             onTap: () {
               getIt<IAppConfig>()
                   .platform
@@ -495,6 +559,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         if (getIt<IAppConfig>().platform.checkMedimender())
           DrawerModel(
             title: LocaleProvider.current.reminders,
+            svgPath: R.image.drawerReminders,
             onTap: () {
               getIt<IAppConfig>()
                   .platform
@@ -507,6 +572,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
+          svgPath: R.image.drawerRequestAndSuggestions,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -519,6 +585,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         DrawerModel(
           title: LocaleProvider.current.detailed_symptom,
+          svgPath: R.image.drawerDetailedSymptom,
           onTap: () {
             getIt<IAppConfig>()
                 .platform
@@ -529,18 +596,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(
               PagePaths.detailedSymptom,
             );
-          },
-        ),
-        DrawerModel(
-          title: LocaleProvider.current.log_out,
-          onTap: () async {
-            getIt<IAppConfig>()
-                .platform
-                .adjustManager
-                ?.trackEvent(LogOutEvent());
-            getIt<FirebaseAnalyticsManager>()
-                .logEvent(MenuElementTiklamaEvent('cikis'));
-            await getIt<UserNotifier>().logout(context);
           },
         ),
       ];

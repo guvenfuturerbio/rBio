@@ -809,40 +809,40 @@ Future<void> showCompulsoryUpdateDialog({
     builder: (BuildContext context) {
       String btnLabel = LocaleProvider.of(context).update_now;
 
-      return RbioBaseDialog(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: Text(
-                    LocaleProvider.current.app_update_available,
-                    style: getIt<IAppConfig>().theme.dialogTheme.title(context),
-                    textAlign: TextAlign.center,
-                  ),
+      return RbioBaseGreyDialog(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Text(
+                  LocaleProvider.current.app_update_available,
+                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  textAlign: TextAlign.center,
                 ),
-                R.sizes.hSizer32,
-                Center(
-                  child: Text(
-                    LocaleProvider.current.force_update_message,
-                    style: getIt<IAppConfig>()
-                        .theme
-                        .dialogTheme
-                        .description(context),
-                    textAlign: TextAlign.center,
-                  ),
+              ),
+              R.sizes.hSizer32,
+              Center(
+                child: Text(
+                  LocaleProvider.current.force_update_message,
+                  style: getIt<IAppConfig>()
+                      .theme
+                      .dialogTheme
+                      .description(context),
+                  textAlign: TextAlign.center,
                 ),
-                R.sizes.hSizer32,
-                Center(
-                  child: RbioSmallDialogButton.green(
-                      title: LocaleProvider.current.update_now,
-                      onPressed: onPressed),
-                ),
-              ],
-            ),
+              ),
+              R.sizes.hSizer32,
+              Center(
+                child: RbioSmallDialogButton.green(
+                    title: LocaleProvider.current.update_now,
+                    onPressed: onPressed),
+              ),
+            ],
           ),
+        ),
       );
     },
   );

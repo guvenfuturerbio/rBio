@@ -19,7 +19,7 @@ class RbioHeightInfoDialog extends StatelessWidget {
           Atom.historyBack();
         }
       },
-      child: RbioBaseDialog(
+      child: RbioBaseGreyDialog(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

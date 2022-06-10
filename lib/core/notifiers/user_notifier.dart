@@ -218,15 +218,8 @@ class UserNotifier extends ChangeNotifier {
 
   Future<bool?> _showConfirmationDialog(BuildContext context) async {
     final result = await Atom.show(
-      Dialog(
-        insetPadding: EdgeInsets.zero,
-        backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
-        child: Container(
-          width: context.width - 50,
-          padding: const EdgeInsets.all(20),
+      RbioBaseGreyDialog(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

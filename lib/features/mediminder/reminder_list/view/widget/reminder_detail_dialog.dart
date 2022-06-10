@@ -57,7 +57,7 @@ class ReminderDetailDialog extends StatelessWidget {
             //
 
             //
-            R.sizes.hSizer32,
+            R.sizes.hSizer40,
 
             // //
             // RbioElevatedButton(

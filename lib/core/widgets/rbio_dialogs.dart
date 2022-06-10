@@ -29,6 +29,33 @@ class RbioBaseDialog extends StatelessWidget {
   static Widget verticalGap() => R.sizes.hSizer32;
 }
 
+class RbioBaseGreyDialog extends StatelessWidget {
+  final Widget child;
+
+  const RbioBaseGreyDialog({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.zero,
+      backgroundColor: getIt<IAppConfig>().theme.grayColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: R.sizes.borderRadiusCircular,
+      ),
+      child: Container(
+        width: context.width > 500 ? 500 : context.width - 50,
+        padding: const EdgeInsets.all(20),
+        child: child,
+      ),
+    );
+  }
+
+  static Widget verticalGap() => R.sizes.hSizer32;
+}
+
 class RbioMessageDialog extends StatelessWidget {
   final String description;
   final String? buttonTitle;
@@ -43,7 +70,7 @@ class RbioMessageDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RbioBaseDialog(
+    return RbioBaseGreyDialog(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,

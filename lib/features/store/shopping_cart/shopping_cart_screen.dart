@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../features/store/quntitydropdown_widget.dart';
 import 'shopping_cart_vm.dart';
+
+part 'widget/quntity_dropdown.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   const ShoppingCartScreen({Key? key}) : super(key: key);
@@ -87,7 +88,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                       Row(
                                         children: [
                                           //
-                                          const QuantityDropdownWidget(),
+                                          const QuantityDropdown(),
 
                                           //
                                           const SizedBox(

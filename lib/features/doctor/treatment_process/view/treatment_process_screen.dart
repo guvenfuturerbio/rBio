@@ -47,9 +47,9 @@ class _DoctorTreatmentProcessScreenState
             var _item = value.patientDetail.treatmentModelList?[index];
             TreatmentProcessItemModel _tempItem = TreatmentProcessItemModel(
               id: _item?.id,
-              title: _item?.createDate?.xFormatTime9(),
+              title: DateTime.parse(_item?.createDate ?? '').xFormatTime9(),
               description: _item?.treatment,
-              dateTime: _item?.createDate,
+              dateTime: DateTime.parse(_item?.createDate ?? ''),
             );
 
             return _buildCard(_tempItem, index == 0 ? true : false);

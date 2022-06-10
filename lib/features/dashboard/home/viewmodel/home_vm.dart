@@ -98,7 +98,9 @@ class HomeVm extends ChangeNotifier {
   Future<void> init(AllUsersModel? allUsersModel) async {
     springController = SpringController(initialAnim: Motion.mirror);
     await fetchWidgets(allUsersModel);
-    await fetchBanners();
+    if (getIt<IAppConfig>().productType == ProductType.oneDose) {
+      await fetchBanners();
+    }
     if (bannerTabsModel.isEmpty) {
       removeItemWidgetList(HomeWidgets.slider);
     }

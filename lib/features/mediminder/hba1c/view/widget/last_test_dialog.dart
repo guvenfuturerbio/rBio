@@ -35,7 +35,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return RbioBaseDialog(
+    return RbioBaseGreyDialog(
       child: SingleChildScrollView(
         child: RbioKeyboardActions(
           isDialog: true,
@@ -71,17 +71,19 @@ class _LastTestDialogState extends State<_LastTestDialog> {
               R.sizes.hSizer8,
 
               //
-              RbioTextFormField(
-                contentPadding: const EdgeInsets.only(left: 140),
-                focusNode: _valueFocusNode,
-                backColor:
-                    getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
-                controller: _valueEditingController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                child: RbioTextFormField(
+                  focusNode: _valueFocusNode,
+                  backColor:
+                      getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
+                  controller: _valueEditingController,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                  ],
+                ),
               ),
 
               //

@@ -38,7 +38,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
           NecessaryIdentityScreenVm value,
           Widget? child,
         ) {
-          return Dialog(
+          return RbioBaseGreyDialog(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -33,7 +33,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return RbioBaseDialog(
+    return RbioBaseGreyDialog(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
