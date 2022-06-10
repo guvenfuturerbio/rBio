@@ -95,8 +95,7 @@ class DoctorPatientDetailModel {
       stripCount: stripCount ?? this.stripCount,
       id: id ?? this.id,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      identificationNumber:
-          identificationNumber ?? this.identificationNumber,
+      identificationNumber: identificationNumber ?? this.identificationNumber,
       treatmentModelList: treatmentModelList ?? this.treatmentModelList,
     );
   }
@@ -135,7 +134,7 @@ class DoctorPatientDetailModel {
       height: map['height'] as String?,
       weight: map['weight'] as String?,
       diabetType:
-          DiabetType.fromJson(map['diabet_type'] as Map<String, dynamic>),
+          DiabetType.fromJson(map['diabet_type'] as Map<String, dynamic>?),
       rangeMin: map['range_min'] as int?,
       rangeMax: map['range_max'] as int?,
       hyper: map['hyper'] as int?,
