@@ -82,7 +82,10 @@ class RateDialogVm extends ChangeNotifier {
         context: mContext!,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          return WarningDialog(title, text);
+          return RbioMessageDialog(
+            description: text,
+            buttonTitle: LocaleProvider.current.ok,
+          );
         }).then((value) {
       Atom.to(PagePaths.main, isReplacement: true);
     });

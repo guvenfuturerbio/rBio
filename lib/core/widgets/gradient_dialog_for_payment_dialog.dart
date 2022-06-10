@@ -23,35 +23,25 @@ class _GradientDialogForPaymentDialogState
     extends State<GradientDialogForPaymentDialog> {
   @override
   Widget build(BuildContext context) {
-    return GuvenAlert(
-      backgroundColor: Colors.white,
-      title: GuvenAlert.buildTitle(
-        widget.code == "13"
-            ? LocaleProvider.of(context).info
-            : LocaleProvider.of(context).warning,
-      ),
-      actions: [
-        GuvenAlert.buildMaterialAction(
-          LocaleProvider.of(context).Ok,
-          () {
-            if (widget.code == "13" || widget.code == "10") {
-              Atom.to(PagePaths.main, isReplacement: true);
-            } else {
-              Navigator.of(context).pop();
-            }
-          },
-        ),
-      ],
-
-      //
-      content: Container(
-        padding: const EdgeInsets.all(16.0),
+    return RbioBaseDialog(
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            GuvenAlert.buildDescription(
+          children: [
+            //
+            Center(
+              child: Text(
+                widget.code == "13"
+                    ? LocaleProvider.of(context).info
+                    : LocaleProvider.of(context).warning,
+                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+              ),
+            ),
+            R.sizes.hSizer32,
+
+            Text(
               widget.code == "13"
                   ? LocaleProvider.of(context).payment_successfull
                   : widget.code == "10"
@@ -62,6 +52,24 @@ class _GradientDialogForPaymentDialogState
                               " " +
                               widget.errorText
                           : LocaleProvider.of(context).sorry_dont_transaction,
+              style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+              textAlign: TextAlign.center,
+            ),
+
+            R.sizes.hSizer32,
+
+            //
+
+            Center(
+              child: RbioSmallDialogButton.green(
+                  title: LocaleProvider.current.Ok,
+                  onPressed: () {
+                    if (widget.code == "13" || widget.code == "10") {
+                      Atom.dismiss();
+                    } else {
+                      Navigator.of(context).pop();
+                    }
+                  }),
             ),
           ],
         ),

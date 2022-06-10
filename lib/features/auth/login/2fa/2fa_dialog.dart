@@ -42,90 +42,89 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
       create: (context) => TwoFaVm(context),
       child: Consumer<TwoFaVm>(
         builder: (context, vm, child) {
-          return GuvenAlert(
-            elevation: 0,
-            insetPadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            backgroundColor: Colors.transparent,
-            content: SafeArea(
-              child: Container(
-                width: Atom.width > 350 ? 350 : Atom.width,
-                decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.scaffoldBackgroundColor,
-                  borderRadius: R.sizes.borderRadiusCircular,
-                ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(16),
-                  child: RbioKeyboardActions(
-                    isDialog: true,
-                    focusList: [
-                      _focusNode,
-                    ],
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        //
-                        R.sizes.hSizer8,
+          return RbioBaseGreyDialog(
+            child: SingleChildScrollView(
+              child: RbioKeyboardActions(
+                isDialog: true,
+                focusList: [
+                  _focusNode,
+                ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //
+                    R.sizes.hSizer8,
 
-                        //
-                        Text(
-                          LocaleProvider.of(context).sms_verification_code,
-                          style: context.xHeadline1.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    //
+                    Center(
+                      child: Text(
+                        LocaleProvider.of(context).sms_verification_code,
+                        style: getIt<IAppConfig>()
+                            .theme
+                            .dialogTheme
+                            .title(context),
+                      ),
+                    ),
 
-                        //
-                        _buildGap(),
+                    R.sizes.hSizer32,
 
-                        //
-                        RbioTextFormField(
-                          controller: _textEditingController,
-                          focusNode: _focusNode,
-                          keyboardType: TextInputType.text,
-                          textInputAction: TextInputAction.next,
-                          obscureText: false,
-                          hintText:
-                              LocaleProvider.of(context).sms_verification_code,
-                        ),
+                    //
 
-                        //
-                        _buildGap(),
+                    //
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: RbioTextFormField(
+                        controller: _textEditingController,
+                        focusNode: _focusNode,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
+                        obscureText: false,
+                        hintText: LocaleProvider.of(context).verification_code,
+                      ),
+                    ),
 
-                        //
-                        RbioElevatedButton(
+                    //
+
+                    if (!vm.resendButtonEnabled) ...[
+                      R.sizes.hSizer40,
+                      Center(
+                        child: RbioSmallDialogButton.green(
                           title: LocaleProvider.current.save,
-                          onTap: () async {
+                          onPressed: () async {
                             await vm.verifyCode(
                               _textEditingController.text.trim(),
                               widget.userId,
                             );
                           },
-                          fontWeight: FontWeight.bold,
-                          infinityWidth: true,
                         ),
+                      ),
+                    ],
 
-                        //
-                        if (vm.resendButtonEnabled) ...[
-                          R.sizes.hSizer8,
-                          Center(
-                            child: RbioWhiteButton(
-                              infinityWidth: true,
-                              title: LocaleProvider.of(context).resend,
-                              onTap: () async {
-                                await vm.resendCode();
-                              },
-                            ),
-                          ),
-                        ],
-
-                        //
-                        R.sizes.hSizer4,
-                      ],
-                    ),
-                  ),
+                    if (vm.resendButtonEnabled) ...[
+                      R.sizes.hSizer24,
+                      Center(
+                        child: RbioSmallDialogButton.white(
+                          title: LocaleProvider.current.resend,
+                          onPressed: () async {
+                            await vm.resendCode();
+                          },
+                        ),
+                      ),
+                      R.sizes.hSizer8,
+                      Center(
+                          child: RbioSmallDialogButton.green(
+                        title: LocaleProvider.current.save,
+                        onPressed: () async {
+                          await vm.verifyCode(
+                            _textEditingController.text.trim(),
+                            widget.userId,
+                          );
+                        },
+                      )),
+                    ],
+                  ],
                 ),
               ),
             ),
@@ -134,6 +133,4 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
       ),
     );
   }
-
-  Widget _buildGap() => R.sizes.hSizer16;
 }

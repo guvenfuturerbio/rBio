@@ -143,7 +143,8 @@ class ReminderCard extends StatelessWidget {
 
                               //
                               Text(
-                                model.nameAndSurname,
+                                getIt<UserNotifier>()
+                                    .getCurrentUserNameAndSurname(),
                                 style: context.xHeadline4.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
