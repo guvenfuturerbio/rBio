@@ -431,7 +431,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diabetes_type_2": MessageLookupByLibrary.simpleMessage("Tip 2"),
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Tanı Tarihi"),
         "didnt_reach_goals": MessageLookupByLibrary.simpleMessage(
-            "Değer aralığına uyulmayanlar"),
+            "Normal değer aralığında olmayanlar"),
         "diet_list": MessageLookupByLibrary.simpleMessage("Diyet Listesi"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Dijital Checkup"),
@@ -1070,8 +1070,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Randevunuzu değerlendirmek ister misiniz ?"),
         "rate_thank_you": MessageLookupByLibrary.simpleMessage(
             "Değerlendirmeniz için teşekkürler"),
-        "reach_goal":
-            MessageLookupByLibrary.simpleMessage("Değer aralığına uyulanlar"),
+        "reach_goal": MessageLookupByLibrary.simpleMessage(
+            "Normal değer aralığında olanlar"),
         "read_understood_kvkk": MessageLookupByLibrary.simpleMessage(
             "Kişisel verilerin korunması ve işlenmesi politikalarına ilişkin aydınlatma metnini okudum ve anladım."),
         "recent_appointments":

@@ -439,7 +439,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diabetes_type_2": MessageLookupByLibrary.simpleMessage("Type 2"),
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Diagnosis Date"),
         "didnt_reach_goals":
-            MessageLookupByLibrary.simpleMessage("Didn\'t reach goals"),
+            MessageLookupByLibrary.simpleMessage("Alert values"),
         "diet_list": MessageLookupByLibrary.simpleMessage("Diet List"),
         "digitalcheckup":
             MessageLookupByLibrary.simpleMessage("Digital Checkup"),
@@ -1083,7 +1083,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Would you like to rate your appointment ?"),
         "rate_thank_you":
             MessageLookupByLibrary.simpleMessage("Thanks for your review"),
-        "reach_goal": MessageLookupByLibrary.simpleMessage("Reach goal"),
+        "reach_goal": MessageLookupByLibrary.simpleMessage("Normal values"),
         "read_understood_kvkk": MessageLookupByLibrary.simpleMessage(
             "I have read and understood the notice of information regarding the policy of protection and processing of personal data."),
         "recent_appointments":
