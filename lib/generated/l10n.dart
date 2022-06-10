@@ -8490,20 +8490,20 @@ class LocaleProvider {
     );
   }
 
-  /// `Didn't reach goals`
+  /// `Alert values`
   String get didnt_reach_goals {
     return Intl.message(
-      'Didn\'t reach goals',
+      'Alert values',
       name: 'didnt_reach_goals',
       desc: '',
       args: [],
     );
   }
 
-  /// `Reach goal`
+  /// `Normal values`
   String get reach_goal {
     return Intl.message(
-      'Reach goal',
+      'Normal values',
       name: 'reach_goal',
       desc: '',
       args: [],
