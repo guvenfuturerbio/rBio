@@ -14,9 +14,9 @@ class RequestSuggestionsScreenVm extends RbioVm {
     _progressOverlay = value;
     notifyListeners();
   }
-    final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
-  AutovalidateMode? get autovalidateMode => _autovalidateMode;
 
+  final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  AutovalidateMode? get autovalidateMode => _autovalidateMode;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState>? get formKey => _formKey;
@@ -54,7 +54,10 @@ class RequestSuggestionsScreenVm extends RbioVm {
       context: mContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return WarningDialog(title, text);
+        return RbioMessageDialog(
+          description: text,
+          buttonTitle: LocaleProvider.current.ok,
+        );
       },
     ).then((value) {
       Atom.to(PagePaths.main, isReplacement: true);

@@ -12,7 +12,6 @@ class CreditCardCubit extends Cubit<CreditCardState> {
       : super(const CreditCardState());
   late final UserNotifier userNotifier;
   late final Repository repository;
-
   void toggleDistanceContract() {
     emit(
       CreditCardState(
@@ -78,40 +77,28 @@ class CreditCardCubit extends Cubit<CreditCardState> {
               if (date.length == 5) {
                 isCorrect = true;
               } else {
-                _showDialog(
-                  LocaleProvider.current.warning,
-                  LocaleProvider.current.expiration_date_should_be,
-                );
+                _showDialog(LocaleProvider.current.warning,
+                    LocaleProvider.current.expiration_date_should_be);
               }
             } else {
-              _showDialog(
-                LocaleProvider.current.warning,
-                LocaleProvider.current.cvv_code_least_3_digit,
-              );
+              _showDialog(LocaleProvider.current.warning,
+                  LocaleProvider.current.cvv_code_least_3_digit);
             }
           } else {
-            _showDialog(
-              LocaleProvider.current.warning,
-              LocaleProvider.current.credit_card_lenght_should,
-            );
+            _showDialog(LocaleProvider.current.warning,
+                LocaleProvider.current.credit_card_lenght_should);
           }
         } else {
-          _showDialog(
-            LocaleProvider.current.warning,
-            LocaleProvider.current.card_holder_cannot_empty,
-          );
+          _showDialog(LocaleProvider.current.warning,
+              LocaleProvider.current.card_holder_cannot_empty);
         }
       } else {
-        _showDialog(
-          LocaleProvider.current.warning,
-          LocaleProvider.current.check_information,
-        );
+        _showDialog(LocaleProvider.current.warning,
+            LocaleProvider.current.check_information);
       }
     } else {
-      _showDialog(
-        LocaleProvider.current.warning,
-        LocaleProvider.current.check_distance_sales_contract,
-      );
+      _showDialog(LocaleProvider.current.warning,
+          LocaleProvider.current.check_distance_sales_contract);
     }
     return isCorrect;
   }

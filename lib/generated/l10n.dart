@@ -860,6 +860,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Verification Code`
+  String get verification_code {
+    return Intl.message(
+      'Verification Code',
+      name: 'verification_code',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Password Again`
   String get password_again {
     return Intl.message(
@@ -1130,10 +1140,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, `
+  /// `Password must contain at least 1 upper, 1 lower, 1 number, 1 special character and password length must be at least 8 characters`
   String get password_validation {
     return Intl.message(
-      'Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, ',
+      'Password must contain at least 1 upper, 1 lower, 1 number, 1 special character and password length must be at least 8 characters',
       name: 'password_validation',
       desc: '',
       args: [],
@@ -3380,30 +3390,30 @@ class LocaleProvider {
     );
   }
 
-  /// `You can have a different appointment on the same date or time,`
+  /// `You may already have an appointment with the specialist you want to make an`
   String get detailed_error_dialog_part1 {
     return Intl.message(
-      'You can have a different appointment on the same date or time,',
+      'You may already have an appointment with the specialist you want to make an',
       name: 'detailed_error_dialog_part1',
       desc: '',
       args: [],
     );
   }
 
-  /// `You may already have an appointment with the specialist you want to make an appointment with,`
+  /// `appointment with on the same date or`
   String get detailed_error_dialog_part2 {
     return Intl.message(
-      'You may already have an appointment with the specialist you want to make an appointment with,',
+      'appointment with on the same date or',
       name: 'detailed_error_dialog_part2',
       desc: '',
       args: [],
     );
   }
 
-  /// `If you think there is a different problem, you can call us at the number below.`
+  /// `time, If you think there is a different problem, call 444 94 94.`
   String get detailed_error_dialog_part3 {
     return Intl.message(
-      'If you think there is a different problem, you can call us at the number below.',
+      'time, If you think there is a different problem, call 444 94 94.',
       name: 'detailed_error_dialog_part3',
       desc: '',
       args: [],

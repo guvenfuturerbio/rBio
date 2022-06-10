@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -23,79 +24,103 @@ class KvkkFormScreen extends StatefulWidget {
 class _KvkkFormScreenState extends State<KvkkFormScreen> {
   @override
   Widget build(BuildContext context) {
-    return GuvenAlert(
-      backgroundColor: Colors.white,
-      title: GuvenAlert.buildTitle(widget.title),
-      content: SingleChildScrollView(
-        child: ChangeNotifierProvider<KvkkFormScreenVm>(
-          create: (context) => KvkkFormScreenVm(
-            context: context,
-            alwaysAsk: widget.alwaysAsk,
-          ),
-          child: Consumer<KvkkFormScreenVm>(
-            builder: (context, value, child) {
-              return Container(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    //
-                    GuvenAlert.buildSmallDescription(widget.text),
+    return RbioBaseDialog(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //
+            Center(
+              child: Text(
+                LocaleProvider.current.kvkk_title,
+                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                textAlign: TextAlign.center,
+              ),
+            ),
 
-                    //
-                    const SizedBox(
-                      height: 20,
-                    ),
+            R.sizes.hSizer24,
 
-                    //
-                    Row(
-                      children: [
-                        Container(
-                          alignment: Alignment.bottomLeft,
-                          child: Checkbox(
-                            value: value.clickedConsentForm,
-                            checkColor: Colors.white,
-                            onChanged: (newValue) {
-                              value.toggleConsentFormState();
-                            },
-                            activeColor: getIt<IAppConfig>()
-                                .theme
-                                .mainColor, //  <-- leading Checkbox
-                          ),
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              value.toggleConsentFormState();
-                            },
-                            child: GuvenAlert.buildSmallDescription(
-                              LocaleProvider.of(context).read_understood_kvkk,
-                              textAlign: TextAlign.start,
-                              decoration: TextDecoration.underline,
+            SingleChildScrollView(
+              child: ChangeNotifierProvider<KvkkFormScreenVm>(
+                create: (context) => KvkkFormScreenVm(
+                  context: context,
+                  alwaysAsk: widget.alwaysAsk,
+                ),
+                child: Consumer<KvkkFormScreenVm>(
+                  builder: (context, value, child) {
+                    return Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Center(
+                            child: Text(
+                              LocaleProvider.current.one_dose_kvkk_url_text,
+                              style: getIt<IAppConfig>()
+                                  .theme
+                                  .dialogTheme
+                                  .description(context),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                          //
 
-                    //
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Center(
-                        child: GuvenAlert.buildBigMaterialAction(
-                          LocaleProvider.current.Ok.toUpperCase(),
-                          () {
-                            value.saveFormState();
-                          },
-                        ),
+                          //
+
+                          //
+                          Row(
+                            children: [
+                              Container(
+                                alignment: Alignment.bottomLeft,
+                                child: Checkbox(
+                                  value: value.clickedConsentForm,
+                                  checkColor: Colors.white,
+                                  onChanged: (newValue) {
+                                    value.toggleConsentFormState();
+                                  },
+                                  activeColor: getIt<IAppConfig>()
+                                      .theme
+                                      .mainColor, //  <-- leading Checkbox
+                                ),
+                              ),
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {
+                                    value.toggleConsentFormState();
+                                  },
+                                  child: GuvenAlert.buildSmallDescription(
+                                    LocaleProvider.of(context)
+                                        .read_understood_kvkk,
+                                    textAlign: TextAlign.start,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          //
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Center(
+                              child: GuvenAlert.buildBigMaterialAction(
+                                LocaleProvider.current.Ok.toUpperCase(),
+                                () {
+                                  value.saveFormState();
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
