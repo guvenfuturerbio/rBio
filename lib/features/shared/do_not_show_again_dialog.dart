@@ -4,7 +4,7 @@ import '../../core/core.dart';
 
 class DoNotAskAgainDialog extends StatefulWidget {
   final String title, subTitle, positiveButtonText, negativeButtonText;
-  final Function onPositiveButtonClicked;
+  final Function()? onPositiveButtonClicked;
   final String doNotAskAgainText;
 
   const DoNotAskAgainDialog({
@@ -33,81 +33,92 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return GuvenAlert(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-      title: GuvenAlert.buildTitle(widget.title),
-      contentPadding: const EdgeInsets.all(8),
-      content: FittedBox(
+    return RbioBaseDialog(
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Text(
+                LocaleProvider.current.app_update_available,
+                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                textAlign: TextAlign.center,
+              ),
+            ),
             //
-            GuvenAlert.buildDescription(
-              widget.subTitle,
+            R.sizes.hSizer24,
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Center(
+                child: Text(
+                  LocaleProvider.current.optional_update_message,
+                  textAlign: TextAlign.center,
+                  style: getIt<IAppConfig>()
+                      .theme
+                      .dialogTheme
+                      .description(context),
+                ),
+              ),
             ),
 
             //
-            R.sizes.hSizer8,
+            R.sizes.hSizer16,
 
             //
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                //
-                SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: Checkbox(
-                    value: doNotAskAgain,
-                    onChanged: (val) {
-                      setState(() {
-                        doNotAskAgain = val!;
-                      });
-                    },
-                    activeColor: getIt<IAppConfig>().theme.mainColor,
-                  ),
-                ),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  //
 
-                //
-                const SizedBox(width: 8),
-
-                //
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      doNotAskAgain = doNotAskAgain == false;
-                    });
-                  },
-                  child: GuvenAlert.buildDescription(
-                    widget.doNotAskAgainText,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32.0),
+                    child: SizedBox(
+                      child: Checkbox(
+                        value: doNotAskAgain,
+                        onChanged: (val) {
+                          setState(() {
+                            doNotAskAgain = val!;
+                          });
+                        },
+                        activeColor: getIt<IAppConfig>().theme.mainColor,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            )
+
+                  //
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Text(
+                        widget.doNotAskAgainText,
+                        textAlign: TextAlign.start,
+                        style: getIt<IAppConfig>()
+                            .theme
+                            .dialogTheme
+                            .description(context),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            R.sizes.hSizer16,
+
+            Center(
+              child: RbioSmallDialogButton.green(
+                  title: LocaleProvider.current.update_now,
+                  onPressed: widget.onPositiveButtonClicked),
+            ),
           ],
-        ),
-      ),
-
-      //
-      actions: <Widget>[
-        GuvenAlert.buildMaterialAction(
-          widget.positiveButtonText,
-          () {
-            widget.onPositiveButtonClicked();
-          },
         ),
 
         //
-        GuvenAlert.buildMaterialAction(
-          widget.negativeButtonText,
-          () {
-            Navigator.pop(context);
-            if (doNotAskAgain) {
-              _updateDoNotShowAgain();
-            }
-          },
-        ),
-      ],
+      ),
     );
   }
 }

@@ -393,11 +393,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "detailed_check":
             MessageLookupByLibrary.simpleMessage("Detailed Health Check"),
         "detailed_error_dialog_part1": MessageLookupByLibrary.simpleMessage(
-            "You can have a different appointment on the same date or time,"),
+            "You may already have an appointment with the specialist you want to make an"),
         "detailed_error_dialog_part2": MessageLookupByLibrary.simpleMessage(
-            "You may already have an appointment with the specialist you want to make an appointment with,"),
+            "appointment with on the same date or"),
         "detailed_error_dialog_part3": MessageLookupByLibrary.simpleMessage(
-            "If you think there is a different problem, you can call us at the number below."),
+            "time, If you think there is a different problem, call 444 94 94."),
         "detailed_report":
             MessageLookupByLibrary.simpleMessage("View Detailed Report"),
         "detailed_symptom":

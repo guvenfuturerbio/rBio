@@ -20,9 +20,6 @@ class RbioBaseDialog extends StatelessWidget {
       ),
       child: Container(
         width: context.width > 500 ? 500 : context.width - 50,
-        height: context.height > 500
-            ? 500
-            : context.height - (Atom.safeBottom + Atom.safeTop),
         padding: const EdgeInsets.all(20),
         child: child,
       ),
@@ -62,25 +59,7 @@ class RbioMessageDialog extends StatelessWidget {
           RbioBaseDialog.verticalGap(),
 
           //
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.zero,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  //
-                  Text(
-                    description * 150,
-                    textAlign: TextAlign.center,
-                    style: getIt<IAppConfig>()
-                        .theme
-                        .dialogTheme
-                        .description(context),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          _buildContainer(context, description),
 
           //
           RbioBaseDialog.verticalGap(),
@@ -98,6 +77,68 @@ class RbioMessageDialog extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildContainer(BuildContext context, String description) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final TextSpan _textSpan = TextSpan(
+          text: description,
+          style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+        );
+
+        final TextPainter _textPainter = TextPainter(
+          text: _textSpan,
+          textDirection: TextDirection.ltr,
+          maxLines: 10,
+        );
+
+        _textPainter.layout(
+          maxWidth: (context.width > 500 ? 500 : context.width - 50) - 40,
+        );
+
+        if (_textPainter.didExceedMaxLines) {
+          return SizedBox(
+            height: 0.35 * context.height,
+            child: Center(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.zero,
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      description,
+                      textAlign: TextAlign.center,
+                      style: getIt<IAppConfig>()
+                          .theme
+                          .dialogTheme
+                          .description(context),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        } else {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                description,
+                textAlign: TextAlign.center,
+                maxLines: 10,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 }

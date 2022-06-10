@@ -89,7 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "application_consent_form":
             MessageLookupByLibrary.simpleMessage("Uygulama Onam Formu"),
         "application_consent_form_text": MessageLookupByLibrary.simpleMessage(
-            "Bu uygulama kapsamında tarafınıza herhangi bir tıbbi işlem (muayene, tanı, teşhis, tedavi gibi) sunulmamakta ve vaat edilmemektedir. Uygulamanın kullanılmasına ek olarak, sağlığınızla ilgili herhangi bir karar vermeden önce bir hekime muayene olmanız gerekmektedir. Uygulamanın kullanımı ile ilgili tüm sorumluluk tarafınıza ait olup, uygulama “olduğu gibi” sunulmaktadır ve tarafınıza hiçbir garanti verilmemektedir. Uygulama kapsamında tarafınıza sunulan hizmet, hiçbir surette hekim tarafından muayene edilmenizin veya sağlık durumunuzun hekim tarafından birebir takip edilmesinin muadili değildir. Tıbbi tanı ve tedavi için hekiminize başvurmanız, kontrollerinizi aksatmamanız ve her türlü acil durumda vakit kaybetmeden en yakın acil servise müracaat etmeniz gerekmektedir. Aksi halde tarafımızca herhangi bir sorumluluk kabul edilmeyecektir"),
+            "Bu uygulama kapsamında tarafınıza herhangi bir tıbbi işlem (muayene, tanı, teşhis, tedavi gibi) sunulmamakta ve vaat edilmemektedir. Uygulamanın kullanılmasına ek olarak, sağlığınızla ilgili herhangi bir karar vermeden önce bir hekime muayene olmanız gerekmektedir. Uygulamanın kullanımı ile ilgili tüm sorumluluk tarafınıza ait olup, uygulama “olduğu gibi” sunulmaktadır ve tarafınıza hiçbir garanti verilmemektedir. Uygulama kapsamında tarafınıza sunulan hizmet, hiçbir surette hekim tarafından muayene edilmenizin veya sağlık durumunuzun hekim tarafından birebir takip edilmesinin muadili değildir. Tıbbi tanı ve tedavi için hekiminize başvurmanız, kontrollerinizi aksatmamanız ve her türlü acil durumda vakit kaybetmeden en yakın acil servise müracaat etmeniz gerekmektedir. Aksi halde tarafımızca herhangi bir sorumluluk kabul edilmeyecektir."),
         "apply": MessageLookupByLibrary.simpleMessage("Uygula"),
         "apply_discount":
             MessageLookupByLibrary.simpleMessage("İndirim uygula"),
@@ -116,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Randevu Dosyaları"),
         "appointments": MessageLookupByLibrary.simpleMessage("Randevular"),
         "approve_consent_form": MessageLookupByLibrary.simpleMessage(
-            "Uygulama onam formunu onaylamanız gerekiyor."),
+            "Uygulama Onam Formunu Onaylamanız Gerekiyor"),
         "approved_date": MessageLookupByLibrary.simpleMessage("Onay Tarihi"),
         "as_excel": MessageLookupByLibrary.simpleMessage("Excel olarak"),
         "as_pdf": MessageLookupByLibrary.simpleMessage("PDF olarak"),
@@ -384,12 +384,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "detail_search": MessageLookupByLibrary.simpleMessage("Detaylı Arama"),
         "detailed_check":
             MessageLookupByLibrary.simpleMessage("Detaylı Sağlık Kontrolü"),
-        "detailed_error_dialog_part1": MessageLookupByLibrary.simpleMessage(
-            "Aynı tarih ya da saat de farklı bir randevunuz olabilir,"),
+        "detailed_error_dialog_part1":
+            MessageLookupByLibrary.simpleMessage("Aynı tarih ya da saatte"),
         "detailed_error_dialog_part2": MessageLookupByLibrary.simpleMessage(
-            "Randevu almak istediğiniz uzman için zaten bir randevunuz olabilir,"),
+            "randevu almak istediğiniz uzman için zaten bir randevunuz olabilir,"),
         "detailed_error_dialog_part3": MessageLookupByLibrary.simpleMessage(
-            "Farklı bir sorun olduğunu düşünüyorsanız aşağıdaki numaradan bizi arayabilirsiniz."),
+            "Farklı bir sorun olduğunu düşünüyorsanız 444 94 94\'ü arayarak bize ulaşabilirsiniz."),
         "detailed_report":
             MessageLookupByLibrary.simpleMessage("Detaylı Rapor Görüntüle"),
         "detailed_symptom":
@@ -1197,7 +1197,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Bir şeyler ters gitti"),
         "sorry_dont_transaction": MessageLookupByLibrary.simpleMessage(
-            "Üzgünüz, İşleminizi şuan gerçekleştiremiyoruz. Lütfen daha sonra tekrar deneyiniz"),
+            "Üzgünüz, İşleminizi şuan gerçekleştiremiyoruz. Lütfen daha sonra tekrar deneyiniz."),
         "sort_by": MessageLookupByLibrary.simpleMessage("Sırala"),
         "special_note": MessageLookupByLibrary.simpleMessage("Özel Not"),
         "specialities": MessageLookupByLibrary.simpleMessage("Uzmanlıklar"),

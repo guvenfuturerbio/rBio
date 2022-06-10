@@ -38,36 +38,34 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
           NecessaryIdentityScreenVm value,
           Widget? child,
         ) {
-          return GuvenAlert(
-            backgroundColor: Colors.white,
-            title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
-            actions: [
-              GuvenAlert.buildMaterialAction(
-                LocaleProvider.of(context).Ok,
-                () {
-                  value.updateIdentity(_identityController.text);
-                },
-              ),
-
-              //
-              GuvenAlert.buildMaterialAction(
-                LocaleProvider.of(context).btn_cancel,
-                () {
-                  Atom.dismiss(false);
-                },
-              ),
-            ],
-            content: Container(
-              padding: const EdgeInsets.all(16.0),
+          return Dialog(
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  GuvenAlert.buildDescription(
-                    LocaleProvider.current.necessary_identity_message,
+                  Center(
+                    child: Text(
+                      LocaleProvider.current.warning,
+                      style:
+                          getIt<IAppConfig>().theme.dialogTheme.title(context),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
 
+                  R.sizes.hSizer32,
+
+                  Center(
+                    child: Text(
+                      LocaleProvider.current.necessary_identity_message,
+                      style: getIt<IAppConfig>()
+                          .theme
+                          .dialogTheme
+                          .description(context),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                   //
                   Container(
                     child: RbioTextFormField(
@@ -82,6 +80,32 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                       ),
                     ),
                     margin: const EdgeInsets.only(bottom: 10, top: 20),
+                  ),
+
+                  R.sizes.hSizer8,
+
+                  Row(
+                    children: [
+                      R.sizes.wSizer12,
+                      Expanded(
+                        child: RbioSmallDialogButton.red(
+                          title: LocaleProvider.current.btn_cancel,
+                          onPressed: () {
+                            Atom.dismiss();
+                          },
+                        ),
+                      ),
+                      R.sizes.wSizer8,
+                      Expanded(
+                        child: RbioSmallDialogButton.green(
+                            title: LocaleProvider.current.Ok,
+                            onPressed: () {
+                              Atom.dismiss();
+                              Atom.to(PagePaths.healthInformation);
+                            }),
+                      ),
+                      R.sizes.wSizer12,
+                    ],
                   ),
                 ],
               ),

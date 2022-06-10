@@ -42,47 +42,40 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
       create: (context) => TwoFaVm(context),
       child: Consumer<TwoFaVm>(
         builder: (context, vm, child) {
-          return Dialog(
-            elevation: 0,
-            insetPadding: EdgeInsets.zero,
-            backgroundColor: getIt<IAppConfig>().theme.grayColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: R.sizes.borderRadiusCircular,
-            ),
-            child: Container(
-              width: context.width - 50,
-              padding: const EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                child: RbioKeyboardActions(
-                  isDialog: true,
-                  focusList: [
-                    _focusNode,
-                  ],
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      //
-                      R.sizes.hSizer8,
+          return RbioBaseDialog(
+            child: SingleChildScrollView(
+              child: RbioKeyboardActions(
+                isDialog: true,
+                focusList: [
+                  _focusNode,
+                ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //
+                    R.sizes.hSizer8,
 
-                      //
-                      Center(
-                        child: Text(
-                          LocaleProvider.of(context).sms_verification_code,
-                          style: getIt<IAppConfig>()
-                              .theme
-                              .dialogTheme
-                              .title(context),
-                        ),
+                    //
+                    Center(
+                      child: Text(
+                        LocaleProvider.of(context).sms_verification_code,
+                        style: getIt<IAppConfig>()
+                            .theme
+                            .dialogTheme
+                            .title(context),
                       ),
+                    ),
 
-                      R.sizes.hSizer32,
+                    R.sizes.hSizer32,
 
-                      //
+                    //
 
-                      //
-                      RbioTextFormField(
+                    //
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: RbioTextFormField(
                         controller: _textEditingController,
                         focusNode: _focusNode,
                         keyboardType: TextInputType.text,
@@ -90,37 +83,14 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                         obscureText: false,
                         hintText: LocaleProvider.of(context).verification_code,
                       ),
+                    ),
 
-                      //
+                    //
 
-                      if (!vm.resendButtonEnabled) ...[
-                        R.sizes.hSizer40,
-                        Center(
-                          child: RbioSmallDialogButton.green(
-                            title: LocaleProvider.current.save,
-                            onPressed: () async {
-                              await vm.verifyCode(
-                                _textEditingController.text.trim(),
-                                widget.userId,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-
-                      if (vm.resendButtonEnabled) ...[
-                        R.sizes.hSizer24,
-                        Center(
-                          child: RbioSmallDialogButton.white(
-                            title: LocaleProvider.current.resend,
-                            onPressed: () async {
-                              await vm.resendCode();
-                            },
-                          ),
-                        ),
-                        R.sizes.hSizer8,
-                        Center(
-                            child: RbioSmallDialogButton.green(
+                    if (!vm.resendButtonEnabled) ...[
+                      R.sizes.hSizer40,
+                      Center(
+                        child: RbioSmallDialogButton.green(
                           title: LocaleProvider.current.save,
                           onPressed: () async {
                             await vm.verifyCode(
@@ -128,10 +98,33 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                               widget.userId,
                             );
                           },
-                        )),
-                      ],
+                        ),
+                      ),
                     ],
-                  ),
+
+                    if (vm.resendButtonEnabled) ...[
+                      R.sizes.hSizer24,
+                      Center(
+                        child: RbioSmallDialogButton.white(
+                          title: LocaleProvider.current.resend,
+                          onPressed: () async {
+                            await vm.resendCode();
+                          },
+                        ),
+                      ),
+                      R.sizes.hSizer8,
+                      Center(
+                          child: RbioSmallDialogButton.green(
+                        title: LocaleProvider.current.save,
+                        onPressed: () async {
+                          await vm.verifyCode(
+                            _textEditingController.text.trim(),
+                            widget.userId,
+                          );
+                        },
+                      )),
+                    ],
+                  ],
                 ),
               ),
             ),

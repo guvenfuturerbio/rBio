@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -23,83 +24,107 @@ class ConsentFormDialog extends StatefulWidget {
 class _ConsentFormDialogState extends State<ConsentFormDialog> {
   @override
   Widget build(BuildContext context) {
-    return GuvenAlert(
-      backgroundColor: Colors.white,
-      title: GuvenAlert.buildTitle(widget.title!),
-      content: SingleChildScrollView(
-        child: ChangeNotifierProvider<ConsentFormDialogVm>(
-          create: (context) => ConsentFormDialogVm(
-            context: context,
-            alwaysAsk: widget.alwaysAsk ?? false,
-          ),
-          child: Consumer<ConsentFormDialogVm>(
-            builder: (BuildContext context, ConsentFormDialogVm value,
-                Widget? child) {
-              return Container(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    //
-                    GuvenAlert.buildSmallDescription(widget.text!),
+    return RbioBaseDialog(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //
+            Center(
+              child: Text(
+                LocaleProvider.current.approve_consent_form,
+                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                textAlign: TextAlign.center,
+              ),
+            ),
 
-                    //
-                    const SizedBox(
-                      height: 20,
-                    ),
+            R.sizes.hSizer32,
 
-                    //
-                    Row(
-                      children: [
-                        //
-                        Container(
-                          alignment: Alignment.bottomLeft,
-                          child: Checkbox(
-                            value: value.clickedConsentForm,
-                            checkColor: Colors.white,
-                            onChanged: (newValue) {
-                              value.toggleConsentFormState();
-                            },
-                            activeColor: getIt<IAppConfig>().theme.mainColor,
-                          ),
-                        ),
-
-                        //
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              value.toggleConsentFormState();
-                            },
-                            child: GuvenAlert.buildSmallDescription(
-                              LocaleProvider.of(context)
-                                  .accept_application_consent_form,
-                              textAlign: TextAlign.start,
-                              decoration: TextDecoration.underline,
+            SingleChildScrollView(
+              child: ChangeNotifierProvider<ConsentFormDialogVm>(
+                create: (context) => ConsentFormDialogVm(
+                  context: context,
+                  alwaysAsk: widget.alwaysAsk ?? false,
+                ),
+                child: Consumer<ConsentFormDialogVm>(
+                  builder: (BuildContext context, ConsentFormDialogVm value,
+                      Widget? child) {
+                    return Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Center(
+                            child: Text(
+                              LocaleProvider
+                                  .current.application_consent_form_text,
+                              style: getIt<IAppConfig>()
+                                  .theme
+                                  .dialogTheme
+                                  .description(context),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
 
-                    //
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Center(
-                        child: GuvenAlert.buildBigMaterialAction(
-                          LocaleProvider.current.Ok.toUpperCase(),
-                          () {
-                            value.saveConsentFormState();
-                          },
-                        ),
+                          R.sizes.hSizer8,
+
+                          //
+                          Row(
+                            children: [
+                              //
+                              Container(
+                                alignment: Alignment.bottomLeft,
+                                child: Checkbox(
+                                  value: value.clickedConsentForm,
+                                  checkColor: Colors.white,
+                                  onChanged: (newValue) {
+                                    value.toggleConsentFormState();
+                                  },
+                                  activeColor:
+                                      getIt<IAppConfig>().theme.mainColor,
+                                ),
+                              ),
+
+                              //
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {
+                                    value.toggleConsentFormState();
+                                  },
+                                  child: GuvenAlert.buildSmallDescription(
+                                    LocaleProvider.of(context)
+                                        .accept_application_consent_form,
+                                    textAlign: TextAlign.start,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          //
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Center(
+                              child: GuvenAlert.buildBigMaterialAction(
+                                LocaleProvider.current.Ok.toUpperCase(),
+                                () {
+                                  value.saveConsentFormState();
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );

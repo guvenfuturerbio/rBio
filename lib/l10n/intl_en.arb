@@ -333,9 +333,9 @@
   "appo_suitability": "No suitable appointment was found for this specialist. To contact us, please call us.",
   "phone_guven": "444 94 94",
   "free_consultation_appointment": "Health Counseling Line",
-  "detailed_error_dialog_part1": "You can have a different appointment on the same date or time,",
-  "detailed_error_dialog_part2": "You may already have an appointment with the specialist you want to make an appointment with,",
-  "detailed_error_dialog_part3": "If you think there is a different problem, you can call us at the number below.",
+  "detailed_error_dialog_part1": "You may already have an appointment with the specialist you want to make an",
+  "detailed_error_dialog_part2": "appointment with on the same date or",
+  "detailed_error_dialog_part3": "time, If you think there is a different problem, call 444 94 94.",
   "read_understood_kvkk": "I have read and understood the notice of information regarding the policy of protection and processing of personal data.",
 
   "must_clicked_kvkk": "You must read and approve the information notice regarding the policy on the protection and processing of personal data.",

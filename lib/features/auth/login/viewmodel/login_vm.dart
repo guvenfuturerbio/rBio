@@ -669,9 +669,9 @@ class LoginScreenVm extends ChangeNotifier {
     String applicationUrl = platform.Platform.isIOS
         ? (applicationVersion?.iosUrl ?? '')
         : (applicationVersion?.androidUrl ?? '');
-    bool urlActive = await canLaunch(applicationUrl);
+    bool urlActive = await canLaunchUrl(Uri.parse(applicationUrl));
     if (urlActive) {
-      launch(applicationUrl);
+      launchUrl(Uri.parse(applicationUrl));
     }
   }
 

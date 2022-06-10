@@ -35,111 +35,101 @@ class _LastTestDialogState extends State<_LastTestDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      elevation: 0,
-      insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.grayColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
-      child: Container(
-        width: context.width - 50,
-        padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: RbioKeyboardActions(
-            isDialog: true,
-            focusList: [
-              _valueFocusNode,
-            ],
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //
-                Center(
-                  child: Text(
-                    LocaleProvider.current.test_result,
-                    style: getIt<IAppConfig>().theme.dialogTheme.title(context),
-                  ),
+    return RbioBaseDialog(
+      child: SingleChildScrollView(
+        child: RbioKeyboardActions(
+          isDialog: true,
+          focusList: [
+            _valueFocusNode,
+          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              //
+              Center(
+                child: Text(
+                  LocaleProvider.current.test_result,
+                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
                 ),
+              ),
 
-                //
-                R.sizes.hSizer40,
+              //
+              R.sizes.hSizer40,
 
-                Center(
-                  child: Text(
-                    getIt<UserNotifier>().getCurrentUserNameAndSurname(),
-                    style: getIt<IAppConfig>()
-                        .theme
-                        .dialogTheme
-                        .description(context),
-                  ),
+              Center(
+                child: Text(
+                  getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+                  style: getIt<IAppConfig>()
+                      .theme
+                      .dialogTheme
+                      .description(context),
                 ),
+              ),
 
-                R.sizes.hSizer8,
+              R.sizes.hSizer8,
 
-                //
-                RbioTextFormField(
-                  contentPadding: const EdgeInsets.only(left: 140),
-                  focusNode: _valueFocusNode,
-                  backColor:
-                      getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
-                  controller: _valueEditingController,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+              //
+              RbioTextFormField(
+                contentPadding: const EdgeInsets.only(left: 140),
+                focusNode: _valueFocusNode,
+                backColor:
+                    getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
+                controller: _valueEditingController,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                ],
+              ),
+
+              //
+              R.sizes.hSizer40,
+
+              //
+              if (context.xTextScaleType == TextScaleType.small) ...[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    //
+                    Expanded(
+                      child: RbioSmallDialogButton.red(
+                        title: LocaleProvider.current.btn_cancel,
+                        onPressed: () {
+                          Atom.dismiss(false);
+                        },
+                      ),
+                    ),
+
+                    //
+                    R.sizes.wSizer8,
+
+                    //
+                    Expanded(
+                      child: RbioSmallDialogButton.green(
+                        title: LocaleProvider.current.save,
+                        onPressed: () {
+                          final inputValue =
+                              _valueEditingController.text.trim();
+                          if (inputValue.isNotEmpty) {
+                            Atom.dismiss(inputValue.replaceAll(",", "."));
+                          }
+                        },
+                      ),
+                    ),
                   ],
                 ),
-
-                //
-                R.sizes.hSizer40,
-
-                //
-                if (context.xTextScaleType == TextScaleType.small) ...[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      //
-                      Expanded(
-                        child: RbioSmallDialogButton.red(
-                          title: LocaleProvider.current.btn_cancel,
-                          onPressed: () {
-                            Atom.dismiss(false);
-                          },
-                        ),
-                      ),
-
-                      //
-                      R.sizes.wSizer8,
-
-                      //
-                      Expanded(
-                        child: RbioSmallDialogButton.green(
-                          title: LocaleProvider.current.save,
-                          onPressed: () {
-                            final inputValue =
-                                _valueEditingController.text.trim();
-                            if (inputValue.isNotEmpty) {
-                              Atom.dismiss(inputValue.replaceAll(",", "."));
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ] else ...[
-                  _buildCancelButton(infinityWidth: true),
-                  R.sizes.hSizer12,
-                  _buildConfirmButton(infinityWidth: true),
-                ],
-
-                //
+              ] else ...[
+                _buildCancelButton(infinityWidth: true),
+                R.sizes.hSizer12,
+                _buildConfirmButton(infinityWidth: true),
               ],
-            ),
+
+              //
+            ],
           ),
         ),
       ),
