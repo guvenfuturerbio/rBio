@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/core/core.dart';
 
+import '../../app/config/abstract/app_config.dart';
 import '../../generated/l10n.dart';
+import '../locator.dart';
+import '../resources/resources.dart';
 import 'guven_alert.dart';
 
 class DialogForPossibleErrorDialog extends StatefulWidget {
@@ -22,20 +26,56 @@ class _DialogForPossibleErrorDialogState
     extends State<DialogForPossibleErrorDialog> {
   @override
   Widget build(BuildContext context) {
-    return GuvenAlert(
-      backgroundColor: Colors.white,
-      title: GuvenAlert.buildTitle(widget.title),
-      actions: [
-        GuvenAlert.buildMaterialAction(
-          LocaleProvider.of(context).Ok,
-          () {
-            Navigator.of(context).pop();
-          },
+    return RbioBaseGreyDialog(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Text(
+                LocaleProvider.current.warning,
+                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            R.sizes.hSizer32,
+            Center(
+              child: Text(
+                LocaleProvider.current.detailed_error_dialog_part1,
+                style:
+                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Center(
+              child: Text(
+                LocaleProvider.current.detailed_error_dialog_part2,
+                style:
+                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Center(
+              child: Text(
+                LocaleProvider.current.detailed_error_dialog_part3,
+                style:
+                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            R.sizes.hSizer32,
+            Center(
+              child: RbioSmallDialogButton.green(
+                title: LocaleProvider.current.Ok,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
         ),
-      ],
-      content: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: widget.body,
       ),
     );
   }

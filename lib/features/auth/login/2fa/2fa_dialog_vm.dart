@@ -19,11 +19,9 @@ class TwoFaVm extends ChangeNotifier {
 
   Future<void> verifyCode(String smsCode, int userId) async {
     if (progress == TwoFaStates.loading) return;
-
     progress = TwoFaStates.loading;
     resendButtonEnabled = false;
     notifyListeners();
-
     try {
       final response =
           await getIt<Repository>().verifyConfirmation2fa(smsCode, userId);
@@ -40,9 +38,9 @@ class TwoFaVm extends ChangeNotifier {
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          return WarningDialog(
-            LocaleProvider.current.warning,
-            LocaleProvider.current.wrong_username_password,
+          return RbioMessageDialog(
+            description: LocaleProvider.current.wrong_username_password,
+            isAtom: false,
           );
         },
       );

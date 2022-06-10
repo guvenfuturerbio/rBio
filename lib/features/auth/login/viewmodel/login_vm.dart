@@ -24,6 +24,7 @@ class LoginScreenVm extends ChangeNotifier {
   LoginScreenVm(this.mContext) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       consentForm = await getIt<Repository>().getConsentForm();
+
       getIt<ISharedPreferencesManager>().setString(
           SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();
@@ -666,9 +667,9 @@ class LoginScreenVm extends ChangeNotifier {
     String applicationUrl = platform.Platform.isIOS
         ? (applicationVersion?.iosUrl ?? '')
         : (applicationVersion?.androidUrl ?? '');
-    bool urlActive = await canLaunch(applicationUrl);
+    bool urlActive = await canLaunchUrl(Uri.parse(applicationUrl));
     if (urlActive) {
-      launch(applicationUrl);
+      launchUrl(Uri.parse(applicationUrl));
     }
   }
 
@@ -677,7 +678,10 @@ class LoginScreenVm extends ChangeNotifier {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return WarningDialog(title, text);
+        return RbioMessageDialog(
+          description: text,
+          isAtom: false,
+        );
       },
     ).then(
       (value) {

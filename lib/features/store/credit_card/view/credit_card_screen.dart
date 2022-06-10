@@ -126,10 +126,10 @@ class _CreditCardViewState extends State<CreditCardView> {
               context: context,
               barrierDismissible: true,
               builder: (BuildContext context) {
-                return WarningDialog(
-                  state.result.dialogTitle ?? '',
-                  state.result.dialogMessage ?? '',
-                  hasScrollable: true,
+                return RbioMessageDialog(
+                  description: state.result.dialogMessage!,
+                  buttonTitle: LocaleProvider.current.ok,
+                  isAtom: false,
                 );
               },
             );
@@ -152,10 +152,10 @@ class _CreditCardViewState extends State<CreditCardView> {
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) {
-              return WarningDialog(
-                LocaleProvider.of(context).warning,
-                LocaleProvider.of(context).something_went_wrong,
-                hasScrollable: true,
+              return RbioMessageDialog(
+                description: LocaleProvider.current.not_chronic_warning,
+                buttonTitle: LocaleProvider.current.ok,
+                isAtom: true,
               );
             },
           );

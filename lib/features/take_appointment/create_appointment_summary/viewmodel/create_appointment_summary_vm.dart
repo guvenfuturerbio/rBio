@@ -253,8 +253,11 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
           showPossibleProblemsDialog(
             mContext,
             LocaleProvider.current.warning,
-            DetailedGradientMessageWidget(
-                currentLocale: ui.window.locale.toString()),
+            RbioMessageDialog(
+              description: LocaleProvider.current.warning,
+              buttonTitle: LocaleProvider.current.ok,
+              isAtom: true,
+            ),
             false,
           );
         }
@@ -324,7 +327,10 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return WarningDialog(title, text);
+        return RbioMessageDialog(
+          description: text,
+          buttonTitle: LocaleProvider.current.ok,
+        );
       },
     ).then(
       (value) async {
