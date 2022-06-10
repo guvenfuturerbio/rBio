@@ -31,7 +31,7 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
                     double.tryParse(e.bloodGlucoseMeasurement?.value ?? '0')
                             ?.toInt() ??
                         0,
-                criticMin: PatientNotifiers.instace.patientDetail.hypo ?? 0,
+                criticMin: PatientNotifiers().patientDetail.hypo ?? 0,
                 criticMax: PatientNotifiers().patientDetail.hyper ?? 0,
                 targetMax: PatientNotifiers().patientDetail.rangeMax ?? 0,
                 targetMin: PatientNotifiers().patientDetail.rangeMin ?? 0),
