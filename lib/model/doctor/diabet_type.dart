@@ -7,9 +7,9 @@ class DiabetType {
     this.id,
   });
 
-  DiabetType.fromJson(Map<String, dynamic> json) {
-    name = json['name'] as String?;
-    id = json['id'] as int?;
+  DiabetType.fromJson(Map<String, dynamic>? json) {
+    name = json?['name'] as String?;
+    id = json?['id'] as int?;
   }
 
   Map<String, dynamic> toJson() {
