@@ -24,10 +24,8 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
   bool get isSalesContractConfirmed => _isSalesContractConfirmed ?? false;
 
   bool get cancellationFormConfirmed => _cancellationFormConfirmed ?? false;
- final  AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
-
-
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState>? get formKey => _formKey;
@@ -177,7 +175,10 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
       context: mContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return WarningDialog(title, text, hasScrollable: true);
+        return RbioMessageDialog(
+          description: text,
+          buttonTitle: LocaleProvider.of(context).Ok,
+        );
       },
     );
   }

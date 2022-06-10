@@ -22,53 +22,77 @@ class CustomPopUpDropDown extends StatefulWidget {
 class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
   @override
   Widget build(BuildContext context) {
-    return GuvenAlert(
-      backgroundColor: Colors.white,
-      title: GuvenAlert.buildTitle(widget.title),
-      actions: [
-        GuvenAlert.buildMaterialAction(
-          LocaleProvider.of(context).btn_cancel.toUpperCase(),
-          () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-
-      //
-      content: Container(
-        height: 200,
-        margin: const EdgeInsets.all(30),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: List.generate(
-              widget.translators.length,
-              (index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    widget.onChange(index);
-                  },
-                  child: SizedBox(
-                    height: 50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.translators[index].language ?? '',
-                          style: TextStyle(color: getIt<IAppConfig>().theme.black),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
+    return Dialog(
+      elevation: 0,
+      insetPadding: EdgeInsets.zero,
+      backgroundColor: getIt<IAppConfig>().theme.grayColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: R.sizes.borderRadiusCircular,
+      ),
+      child: Container(
+        width: context.width - 50,
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //
+            Center(
+              child: Text(
+                LocaleProvider.of(context).get_translator,
+                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+              ),
             ),
-          ),
+
+            //
+            Container(
+              height: 200,
+              margin: const EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(
+                    widget.translators.length,
+                    (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          widget.onChange(index);
+                        },
+                        child: SizedBox(
+                          height: 50,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.translators[index].language ?? '',
+                                style: TextStyle(
+                                    fontSize: context.xHeadline3.fontSize,
+                                    color: getIt<IAppConfig>().theme.black),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+
+            Center(
+              child: RbioSmallDialogButton.green(
+                  title: LocaleProvider.of(context).btn_cancel,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ),
+          ],
         ),
       ),
     );

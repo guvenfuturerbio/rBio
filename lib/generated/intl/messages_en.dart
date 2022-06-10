@@ -393,11 +393,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "detailed_check":
             MessageLookupByLibrary.simpleMessage("Detailed Health Check"),
         "detailed_error_dialog_part1": MessageLookupByLibrary.simpleMessage(
-            "You can have a different appointment on the same date or time,"),
+            "You may already have an appointment with the specialist you want to make an"),
         "detailed_error_dialog_part2": MessageLookupByLibrary.simpleMessage(
-            "You may already have an appointment with the specialist you want to make an appointment with,"),
+            "appointment with on the same date or"),
         "detailed_error_dialog_part3": MessageLookupByLibrary.simpleMessage(
-            "If you think there is a different problem, you can call us at the number below."),
+            "time, If you think there is a different problem, call 444 94 94."),
         "detailed_report":
             MessageLookupByLibrary.simpleMessage("View Detailed Report"),
         "detailed_symptom":
@@ -1002,7 +1002,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password_security": MessageLookupByLibrary.simpleMessage(
             "According to our security policies, your password must comply with the security criteria."),
         "password_validation": MessageLookupByLibrary.simpleMessage(
-            "Password must contain at least 1 upper, 1 lower, 1 number, 1 special character, "),
+            "Password must contain at least 1 upper, 1 lower, 1 number, 1 special character and password length must be at least 8 characters"),
         "password_wrong": MessageLookupByLibrary.simpleMessage(
             "Please enter valid password."),
         "passwords_not_match": MessageLookupByLibrary.simpleMessage(
@@ -1373,6 +1373,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "validation": MessageLookupByLibrary.simpleMessage(
             "This field cannot be left blank"),
         "value": MessageLookupByLibrary.simpleMessage("Değer"),
+        "verification_code":
+            MessageLookupByLibrary.simpleMessage("Verification Code"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "verify_email_error":
             MessageLookupByLibrary.simpleMessage("Please verify your email."),

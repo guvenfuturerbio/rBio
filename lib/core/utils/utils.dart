@@ -10,12 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:path/path.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../features/shared/do_not_show_again_dialog.dart';
 
 import '../../model/model.dart';
 import '../core.dart';
+import '../widgets/rbio_height_info_dialog.dart';
 
 class Utils {
   Utils._();
@@ -41,52 +43,10 @@ class Utils {
   /// * scale_manuel_add_cubit.dart'da kontrol ediyorum, yoksa "Kaydet" butonunu disable yapıyorum.
   bool checkUserHeight([bool backRoute = false]) {
     final height = getHeight();
-    if (height != null) {
+    if (height == null) {
       return true;
     } else {
-      Atom.show(
-        GestureDetector(
-          onTap: () {
-            Atom.dismiss();
-
-            if (backRoute) {
-              Atom.historyBack();
-            }
-          },
-          child: Container(
-            color: Colors.transparent,
-            constraints: const BoxConstraints.expand(),
-            child: GuvenAlert(
-              contentPadding: const EdgeInsets.all(16),
-              backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-              title: GuvenAlert.buildTitle(LocaleProvider.current.warning),
-              content: GuvenAlert.buildDescription(
-                LocaleProvider.current.required_user_height_info_message,
-              ),
-              actions: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                      ),
-                      child: RbioElevatedButton(
-                        infinityWidth: true,
-                        title: LocaleProvider.current.update_information,
-                        onTap: () {
-                          Atom.dismiss();
-                          Atom.to(PagePaths.healthInformation);
-                        },
-                      ),
-                    ),
-                    R.sizes.hSizer8,
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
+      Atom.show(RbioHeightInfoDialog(backRoute: backRoute));
       return false;
     }
   }
@@ -847,23 +807,49 @@ Future<void> showCompulsoryUpdateDialog({
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      String title = LocaleProvider.of(context).app_update_available;
       String btnLabel = LocaleProvider.of(context).update_now;
 
-      return GuvenAlert(
-        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-        title: GuvenAlert.buildTitle(title),
-        content: GuvenAlert.buildDescription(message),
-        actions: <Widget>[
-          GuvenAlert.buildMaterialAction(btnLabel, onPressed),
-        ],
+      return RbioBaseGreyDialog(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Text(
+                  LocaleProvider.current.app_update_available,
+                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              R.sizes.hSizer32,
+              Center(
+                child: Text(
+                  LocaleProvider.current.force_update_message,
+                  style: getIt<IAppConfig>()
+                      .theme
+                      .dialogTheme
+                      .description(context),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              R.sizes.hSizer32,
+              Center(
+                child: RbioSmallDialogButton.green(
+                    title: LocaleProvider.current.update_now,
+                    onPressed: onPressed),
+              ),
+            ],
+          ),
+        ),
       );
     },
   );
 }
 
 Future<void> showOptionalUpdateDialog({
-  required Function onPressed,
+  required Function()? onPressed,
   context,
   String? message,
 }) async {
@@ -881,9 +867,7 @@ Future<void> showOptionalUpdateDialog({
         subTitle: message ?? "No message",
         positiveButtonText: btnLabel,
         negativeButtonText: btnLabelCancel,
-        onPositiveButtonClicked: () {
-          onPressed();
-        },
+        onPositiveButtonClicked: onPressed,
         doNotAskAgainText: Platform.isIOS
             ? btnLabelDontAskAgain
             : LocaleProvider.of(context).never_ask_again,

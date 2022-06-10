@@ -77,93 +77,116 @@ class _ReminderAlertView extends StatelessWidget {
   // #region _buildSuccess
   Widget _buildSuccess(BuildContext context, ReminderListModel model) {
     return Center(
-      child: Container(
-        margin: const EdgeInsets.all(36),
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: context.scaffoldBackgroundColor,
+      child: Dialog(
+        elevation: 0,
+        insetPadding: EdgeInsets.zero,
+        backgroundColor: getIt<IAppConfig>().theme.grayColor,
+        shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            //
-            Text(
-              _getTitle(model),
-              style: context.xHeadline3,
-            ),
-
-            //
-            R.sizes.hSizer8,
-
-            //
-            Text(
-              model.title,
-              style: context.xHeadline2.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            //
-            Text(
-              model.scheduledDate.xHourFormat,
-              style: context.xHeadline3.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            //
-            Text(
-              model.nameAndSurname,
-              style: context.xHeadline3,
-            ),
-
-            //
-            R.sizes.hSizer4,
-
-            //
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //
-                if (notificationModel.baseNotificationId == null) ...[
-                  //
-                  const Expanded(
-                    child: _ExpandablePostponeComponent(),
-                  ),
-
-                  //
-                  R.sizes.wSizer8,
-                ],
-
-                //
-                Expanded(
-                  child: RbioElevatedButton(
-                    onTap: () {},
-                    title: LocaleProvider.current.Ok,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    fontWeight: FontWeight.bold,
-                  ),
+        child: Container(
+          width: context.width - 50,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              //
+              Center(
+                child: Text(
+                  _getTitle(model),
+                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
                 ),
-              ],
-            ),
+              ),
+              R.sizes.hSizer24,
 
-            //
-            R.sizes.hSizer4,
+              Center(
+                child: Text(
+                  getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+                  style: getIt<IAppConfig>()
+                      .theme
+                      .dialogTheme
+                      .description(context),
+                ),
+              ),
+              R.sizes.hSizer8,
+              //
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    model.title,
+                    style: getIt<IAppConfig>()
+                        .theme
+                        .dialogTheme
+                        .description(context)
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
 
-            //
-            RbioRedButton(
-              onTap: () {
-                Atom.dismiss();
-              },
-              title: LocaleProvider.current.discard,
-              infinityWidth: true,
-            ),
-          ],
+                  Text(
+                    "  -  ",
+                    style: getIt<IAppConfig>()
+                        .theme
+                        .dialogTheme
+                        .description(context)
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  //
+                  Text(
+                    model.scheduledDate.xHourFormat,
+                    style: getIt<IAppConfig>()
+                        .theme
+                        .dialogTheme
+                        .description(context)
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              //
+              R.sizes.hSizer12,
+
+              //
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //
+                  if (notificationModel.baseNotificationId == null) ...[
+                    //
+                    const Expanded(
+                      child: _ExpandablePostponeComponent(),
+                    ),
+
+                    //
+                    R.sizes.wSizer8,
+                  ],
+
+                  //
+                  Expanded(
+                    child: RbioSmallDialogButton.green(
+                      onPressed: () {
+                        Atom.dismiss();
+                      },
+                      title: LocaleProvider.current.Ok,
+                    ),
+                  ),
+                ],
+              ),
+
+              //
+              R.sizes.hSizer8,
+
+              //
+              RbioSmallDialogButton.red(
+                title: LocaleProvider.current.discard,
+                onPressed: () {
+                  Atom.dismiss(false);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

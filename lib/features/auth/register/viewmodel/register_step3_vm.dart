@@ -10,9 +10,8 @@ class RegisterStep3ScreenVm extends RbioVm {
 
   LoadingDialog? loadingDialog;
 
-   final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
-
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState>? get formKey => _formKey;
@@ -34,19 +33,12 @@ class RegisterStep3ScreenVm extends RbioVm {
       if (response?.isSuccessful == true) {
         Atom.to(PagePaths.login, isReplacement: true);
         Atom.show(
-          GuvenAlert(
-            title: GuvenAlert.buildTitle(LocaleProvider.current.info),
-            backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-            content: GuvenAlert.buildDescription(
-                LocaleProvider.current.succefully_created_account),
-            actions: [
-              GuvenAlert.buildBigMaterialAction(
-                LocaleProvider.current.Ok,
-                () {
-                  Atom.dismiss();
-                },
-              ),
-            ],
+          RbioBaseDialog(
+            child: RbioMessageDialog(
+              description: LocaleProvider.current.succefully_created_account,
+              buttonTitle: LocaleProvider.current.ok,
+              isAtom: true,
+            ),
           ),
         );
       } else {

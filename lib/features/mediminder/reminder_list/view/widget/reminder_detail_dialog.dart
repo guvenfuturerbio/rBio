@@ -12,8 +12,8 @@ class ReminderDetailDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: const EdgeInsets.all(36),
-        padding: const EdgeInsets.all(18),
+        width: context.width - 50,
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: context.scaffoldBackgroundColor,
           borderRadius: R.sizes.borderRadiusCircular,
@@ -24,27 +24,40 @@ class ReminderDetailDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            Text(
-              model.title,
-              style: context.xHeadline3,
+            Center(
+              child: Text(
+                LocaleProvider.current.blood_glucose_measurement_title,
+                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+              ),
             ),
+
+            R.sizes.hSizer32,
+
+            Center(
+              child: Text(
+                getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+                style:
+                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+              ),
+            ),
+
+            R.sizes.hSizer12,
 
             //
             if ((model.subTitle ?? '').isNotEmpty) ...[
-              Text(
-                model.subTitle!,
-                style: context.xHeadline3,
+              Center(
+                child: Text(
+                  model.subTitle!,
+                  style:
+                      context.xHeadline3.copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
             ],
 
             //
-            Text(
-              model.nameAndSurname,
-              style: context.xHeadline3,
-            ),
 
             //
-            R.sizes.hSizer8,
+            R.sizes.hSizer40,
 
             // //
             // RbioElevatedButton(
@@ -60,42 +73,45 @@ class ReminderDetailDialog extends StatelessWidget {
             // R.sizes.hSizer4,
 
             //
-            RbioElevatedButton(
-              onTap: () {
-                Atom.dismiss();
-                Future.delayed(
-                  const Duration(milliseconds: 500),
-                  () {
-                    Atom.to(
-                      PagePaths.reminderDetail,
-                      queryParameters: <String, String>{
-                        'title': model.title,
-                        'remindable': model.remindable.toRouteString(),
-                        'createdDate': model.createdDate.toString(),
-                        'notificationId': model.notificationId.toString(),
-                      },
-                    );
-                  },
-                );
-              },
-              title: LocaleProvider.current.details,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-              textColor: getIt<IAppConfig>().theme.textColorSecondary,
-              fontWeight: FontWeight.bold,
-            ),
+            Row(
+              children: [
+                Expanded(
+                  child: RbioSmallDialogButton.white(
+                    onPressed: () {
+                      Atom.dismiss();
+                      Future.delayed(
+                        const Duration(milliseconds: 500),
+                        () {
+                          Atom.to(
+                            PagePaths.reminderDetail,
+                            queryParameters: <String, String>{
+                              'title': model.title,
+                              'remindable': model.remindable.toRouteString(),
+                              'createdDate': model.createdDate.toString(),
+                              'notificationId': model.notificationId.toString(),
+                            },
+                          );
+                        },
+                      );
+                    },
+                    title: LocaleProvider.current.details,
+                  ),
+                ),
 
-            //
-            R.sizes.hSizer4,
+                //
+                R.sizes.wSizer8,
 
-            //
-            RbioRedButton(
-              onTap: () {
-                context.read<ReminderListCubit>().removeReminder(model);
-                Atom.dismiss();
-              },
-              title: LocaleProvider.current.btn_delete_reminder,
-              infinityWidth: true,
+                //
+                Expanded(
+                  child: RbioSmallDialogButton.red(
+                    onPressed: () {
+                      context.read<ReminderListCubit>().removeReminder(model);
+                      Atom.dismiss();
+                    },
+                    title: LocaleProvider.current.delete,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
