@@ -64,13 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
-  atom:
-    dependency: "direct main"
-    description:
-      path: "packages/atom"
-      relative: true
-    source: path
-    version: "3.0.0"
   auto_size_text_pk:
     dependency: "direct main"
     description:
@@ -2119,7 +2112,7 @@ packages:
     source: hosted
     version: "8.3.0"
   vrouter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: vrouter
       url: "https://pub.dartlang.org"
