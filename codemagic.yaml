@@ -72,5 +72,5 @@ workflows:
         api_key: Encrypted(Z0FBQUFBQmludlJIUEIycWxSdmVRT2hvYkFuTTlnT1kwY3I5ZGN3b3huVUstNXktV2NTeVQtZVVaWmI2cGYtRmlzRnBiV0JJUU4xbFprdlRKdFN0cGItYVJIRVV2RUhjX1hiZTgtcXVsOVpEN2Zkb3l5OTMyazFMZEVBc0pOaWJTd1l6cGNfMFg5eHFZenBjZno1S01ZX0VNX1FvMGpWM3pjQXV2cW8zSjlad3NjejE2d0lRdV9FSXRrQXZkRE5OMURuemd4amphdnN5UzZOYy1jZVBIc0N0c2lSd2dUbFRyb2ZsREkydUt1R1liS3YwelRBVlpLV21mWGF3UDhyZWNieEFCd2E2N0ZhZnRuUElZUFNZRG5HTU93d1I1NVhSZDloTGJQb2xHM0hRd25jSDg5MklrTDVNRlNuZTNKWVBwcFQzWnM1VEktSWJVVWVOV1FVYmFtR0ZWQUVKZmFDNkd5dkxmUHVZSVhtTGdPaW05aHhVcUkySTZaeXNuM0VRblpsTTdPVkdTbk5NZFE1M3RPT2RnNUd6bV9GbmhmcjFmc01aaFlHZEx1Y3hLcXNraXBvYmxnWT0=)
         key_id: WY67UAXD2C
         issuer_id: 9c10964a-5b98-475b-a394-11dd355707eb
-        submit_to_testflight: false
+        submit_to_testflight: true
         submit_to_app_store: false
