@@ -50,6 +50,7 @@ workflows:
         --create
       - keychain add-certificates
       - xcode-project use-profiles
+      - flutter build ipa --release
     artifacts:
       - build/**/outputs/apk/**/*.apk
       - build/**/outputs/bundle/**/*.aab
