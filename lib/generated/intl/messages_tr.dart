@@ -27,9 +27,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "accept_application_consent_form": MessageLookupByLibrary.simpleMessage(
             "Uygulama onam formunu okudum, anladım ve onaylıyorum."),
         "accept_distance_sales_contract": MessageLookupByLibrary.simpleMessage(
-            "Mesafeli satış sözleşmesini okudum, anladım ve onaylıyorum"),
+            "Mesafeli Satış Sözleşmesini okudum, anladım ve onaylıyorum"),
         "accept_personal_data": MessageLookupByLibrary.simpleMessage(
-            "Gizlilik bildirimi ve kişisel veri koruma politikası\' nı okudum, anladım."),
+            "Gizlilik Bildirimi ve Kişisel Veri Koruma Politikası\'nı okudum, anladım."),
         "account_disabled": MessageLookupByLibrary.simpleMessage(
             "Hesabınıza çok fazla hatalı giriş denemesi yapılmıştır. Güvenliğiniz için hesabınız geçici olarak devre dışı bırakılmıştır. Acil işlemleriniz için 4442525\'i arayabilirsiniz"),
         "accu_check_step1": MessageLookupByLibrary.simpleMessage(
@@ -79,7 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "already_registered_mail": MessageLookupByLibrary.simpleMessage(
             "Mail adresi daha önce kayıt edilmiş."),
         "already_registered_phone": MessageLookupByLibrary.simpleMessage(
-            "Hastanemizde Kayıtlı Cep Telefonu Numaranız Farklıdır.Lütfen Kontrol Ediniz ya da 444 94 94 arayarak numaranızı güncelleyebilirsiniz"),
+            "Hastanemizde Kayıtlı Cep Telefonu Numaranız Farklıdır. Lütfen Kontrol Ediniz ya da 444 94 94 arayarak numaranızı güncelleyebilirsiniz"),
         "analyze_department":
             MessageLookupByLibrary.simpleMessage("Bölüm Analizi Yapın"),
         "app_update_available":
@@ -143,7 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ble_scale_sync_info": MessageLookupByLibrary.simpleMessage(
             "Lütfen ölçüm için tartıya çıkınız..."),
         "ble_scale_weight_calculating_info":
-            MessageLookupByLibrary.simpleMessage("Kilonuz hessaplanıyor..."),
+            MessageLookupByLibrary.simpleMessage("Kilonuz hesaplanıyor..."),
         "ble_scale_weight_info":
             MessageLookupByLibrary.simpleMessage("Kilonuz:"),
         "ble_status_location_services_disabled":
@@ -216,13 +216,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Grafiği Değiştir"),
         "change_password":
             MessageLookupByLibrary.simpleMessage("Şifremi Değiştir"),
-        "chat": MessageLookupByLibrary.simpleMessage("Danışma hattı"),
+        "chat": MessageLookupByLibrary.simpleMessage("Danışma Hattı"),
         "check_and_try_again": MessageLookupByLibrary.simpleMessage(
             "Lütfen Girmiş olduğunuz bilgileri kontrol ederek tekrar deneyiniz"),
         "check_cancellation_refund": MessageLookupByLibrary.simpleMessage(
             "Devam etmek için iptal ve geri ödeme koşullarını kontrol etmeniz gerekiyor"),
         "check_distance_sales_contract": MessageLookupByLibrary.simpleMessage(
-            "İşleminize devam edebilmeniz için mesafeli satış sözleşmesini okumanız ve onaylamanız gerekiyor"),
+            "İşleminize devam edebilmeniz için Mesafeli Satış Sözleşmesini okumanız ve onaylamanız gerekiyor"),
         "check_email": MessageLookupByLibrary.simpleMessage(
             "E-Posta\'nızı kontrol ediniz"),
         "check_for_updates": MessageLookupByLibrary.simpleMessage(
@@ -230,7 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "check_information": MessageLookupByLibrary.simpleMessage(
             "Devam etmek için bilgi formunu onaylamanız gerekmektedir"),
         "check_informed_consent_form": MessageLookupByLibrary.simpleMessage(
-            "İşleminize devam edebilmeniz için aydınlatılmış onam belgesini okumanız ve onaylamanız gerekiyor"),
+            "İşleminize devam edebilmeniz için Aydınlatılmış Onam Belgesini okumanız ve onaylamanız gerekiyor"),
         "check_name":
             MessageLookupByLibrary.simpleMessage("İsminizi kontrol edin"),
         "check_personal_data": MessageLookupByLibrary.simpleMessage(
@@ -340,7 +340,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Cvv kod en az 3 haneli olmalıdır"),
         "daily": MessageLookupByLibrary.simpleMessage("Günlük"),
         "date": MessageLookupByLibrary.simpleMessage("Tarih"),
-        "date_filter": MessageLookupByLibrary.simpleMessage("Tarih Aralığı: "),
+        "date_filter": MessageLookupByLibrary.simpleMessage("Tarih Aralığı:"),
         "date_of_birth": MessageLookupByLibrary.simpleMessage("Doğum Tarihi"),
         "day": MessageLookupByLibrary.simpleMessage("Gün"),
         "days": MessageLookupByLibrary.simpleMessage("Günler"),
@@ -348,7 +348,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete_diet_list": MessageLookupByLibrary.simpleMessage(
             "Diyet listesini silmek istediğinizden emin misiniz?"),
         "delete_file_question": MessageLookupByLibrary.simpleMessage(
-            "Dosyayı silmek istediğinize emin misiniz ?"),
+            "Dosyayı silmek istediğinize emin misiniz?"),
         "delete_measurement_succesfull":
             MessageLookupByLibrary.simpleMessage("Ölçüm başarıyla silindi..."),
         "delete_measurement_un_succesfull":
@@ -396,11 +396,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Detaylı Sağlık Kontrolü"),
         "details": MessageLookupByLibrary.simpleMessage("Detaylar"),
         "device_connection_step_1": MessageLookupByLibrary.simpleMessage(
-            "Glucometreniz açıksa glukometrenizi kapatın"),
+            "Glukometreniz açıksa glukometrenizi kapatın"),
         "device_connection_step_2_Contour": MessageLookupByLibrary.simpleMessage(
             "Glukometrenizin üzerindeki butona en az 3 saniye olacak şekilde, Bluetooth simgesini ve mavi ışığı görene dek basılı tutunuz."),
         "device_connection_step_2_Roche": MessageLookupByLibrary.simpleMessage(
-            "Cihazın yanında bulunan açma düğmesine yaklaşık 3 saniye, bluetooth işareti çıkana kadar basılı tutun. "),
+            "Cihazın yanında bulunan açma düğmesine yaklaşık 3 saniye, bluetooth işareti çıkana kadar basılı tutun."),
         "device_connection_step_3_Contour":
             MessageLookupByLibrary.simpleMessage(
                 "Bağlanmak istediğiniz cihazı seçin."),
@@ -416,7 +416,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Lütfen bir cihaz kaydediniz"),
         "device_scale_connection_step_1_mi_scale":
             MessageLookupByLibrary.simpleMessage(
-                "Tartıyı sert, düz bir yüzeye yerleştirin. Çıplak ayakla, metal yüzeylere temas edecek şekilde durun, Ayakların elektrotlar ile düzgün bir biçimde temas ettiğinden emin olun"),
+                "Tartıyı sert, düz bir yüzeye yerleştirin. Çıplak ayakla, metal yüzeylere temas edecek şekilde durun, Ayakların elektrotlar ile düzgün bir biçimde temas ettiğinden emin olun."),
         "device_scale_connection_step_2_mi_scale":
             MessageLookupByLibrary.simpleMessage(
                 "Cihaz etkinleştirildiğinde, bağlanmak istediğiniz cihazı seçin."),
@@ -560,7 +560,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "girl": MessageLookupByLibrary.simpleMessage("Kız Çocuğu"),
         "glucometer_in_use_for_other_account":
             MessageLookupByLibrary.simpleMessage(
-                "Gluokmetre başka bir hesapta kullanılmakta!"),
+                "Glukometre başka bir hesapta kullanılmakta!"),
         "glucose_data_detail":
             MessageLookupByLibrary.simpleMessage("Kan Şekeri Detay"),
         "great": MessageLookupByLibrary.simpleMessage("Mükemmel"),
@@ -608,9 +608,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "how_to_get_photo":
             MessageLookupByLibrary.simpleMessage("Fotoğraf nasıl alınsın?"),
         "how_video_doctor": MessageLookupByLibrary.simpleMessage(
-            "Uzmanınızdan memnun kaldınız mı ?"),
+            "Uzmanınızdan memnun kaldınız mı?"),
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
-            "Video görüşmesinin kalitesi nasıldı ?"),
+            "Video görüşmesinin kalitesi nasıldı?"),
         "how_will_you_follow_up":
             MessageLookupByLibrary.simpleMessage("Nasıl takip edeceksiniz?"),
         "hungry": MessageLookupByLibrary.simpleMessage("Aç"),
@@ -632,7 +632,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "information_form":
             MessageLookupByLibrary.simpleMessage("Bilgilendirme Formu"),
         "informed_consent_form":
-            MessageLookupByLibrary.simpleMessage("Aydınlatılmış onam belgesi̇"),
+            MessageLookupByLibrary.simpleMessage("Aydınlatılmış Onam Belgesi̇"),
         "informed_consent_form_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/onam_tr.html"),
         "insufficient": MessageLookupByLibrary.simpleMessage("Yetersiz"),
@@ -701,7 +701,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lbl_take_care": MessageLookupByLibrary.simpleMessage(
             "Size nasıl yardımcı olabiliriz ?"),
         "lets_know_you_better":
-            MessageLookupByLibrary.simpleMessage("Sizi daha iyi tanıyalım! "),
+            MessageLookupByLibrary.simpleMessage("Sizi daha iyi tanıyalım!"),
         "load_zoom_meeting":
             MessageLookupByLibrary.simpleMessage("Görüşmeye Giriliyor..."),
         "loading": MessageLookupByLibrary.simpleMessage("Yükleniyor"),
@@ -730,7 +730,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "max_range": MessageLookupByLibrary.simpleMessage("Max Aralık: "),
         "meal": MessageLookupByLibrary.simpleMessage("Yemek"),
         "measurement_delete_question": MessageLookupByLibrary.simpleMessage(
-            "Ölçümü silmek istiyor musunuz ?"),
+            "Ölçümü silmek istiyor musunuz?"),
         "measurement_saved":
             MessageLookupByLibrary.simpleMessage("Ölçüm kaydedildi"),
         "medication_reminder":
@@ -774,7 +774,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "medicine_time_and_dose_message":
             MessageLookupByLibrary.simpleMessage("Zaman ve dozu belirleyin"),
         "medicine_time_has_come":
-            MessageLookupByLibrary.simpleMessage("zamanınız geldi"),
+            MessageLookupByLibrary.simpleMessage("Zamanınız geldi"),
         "medicine_type": MessageLookupByLibrary.simpleMessage("İlaç Tipi"),
         "medicine_type_bottle": MessageLookupByLibrary.simpleMessage("Şişe"),
         "medicine_type_pill": MessageLookupByLibrary.simpleMessage("Hap"),
@@ -836,7 +836,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "name_surname": MessageLookupByLibrary.simpleMessage("Ad Soyad"),
         "nationality": MessageLookupByLibrary.simpleMessage("Uyruk"),
         "necessary_identity_message": MessageLookupByLibrary.simpleMessage(
-            "Bu özelliği kullanabilmeniz için kimlik/pasaport numaranızı girmeniz gerekiyor"),
+            "Bu özelliği kullanabilmeniz için kimlik/pasaport numaranızı girmeniz gerekiyor."),
         "need_identification_number": MessageLookupByLibrary.simpleMessage(
             "Kimlik veya pasaport numaranızı girmeniz gerekiyor"),
         "neptune_hosp":
@@ -866,7 +866,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Dosya bulunamadı"),
         "no_measurement": MessageLookupByLibrary.simpleMessage("Son ölçüm yok"),
         "no_network": MessageLookupByLibrary.simpleMessage(
-            "İnternet bağlantınızda bir sorun olmadığından emin olduktan sonra tekrar deneyin"),
+            "İnternet bağlantınızda bir sorun olmadığından emin olduktan sonra tekrar deneyin."),
         "no_network_connection": MessageLookupByLibrary.simpleMessage(
             "Lütfen internet bağlantınızı kontrol ediniz."),
         "no_permission":
@@ -885,7 +885,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "normal_range": MessageLookupByLibrary.simpleMessage("Normal Aralık"),
         "not": MessageLookupByLibrary.simpleMessage("Açıklama"),
         "not_chronic_warning": MessageLookupByLibrary.simpleMessage(
-            "Sağlık Takibi özelliğini kullanmak için lütfen 444 94 94 numaralı telefondan bize ulaşın"),
+            "Sağlık Takibi özelliğini kullanmak için lütfen 4449494 numaralı telefondan bize ulaşın"),
         "not_done": MessageLookupByLibrary.simpleMessage("Yapılmayan"),
         "not_found": MessageLookupByLibrary.simpleMessage("Bulunamadı"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Belirtilmemiş"),
@@ -922,7 +922,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "omron_scale_step5": MessageLookupByLibrary.simpleMessage(
             "Ekranda ölçümünüzü görebilirsiniz."),
         "omron_wrist_step1": MessageLookupByLibrary.simpleMessage(
-            "Cihazın bandını el bileğinize bağlayın"),
+            "Cihazın bandını el bileğinize bağlayın."),
         "omron_wrist_step2":
             MessageLookupByLibrary.simpleMessage("Kolunuzu serbest bırakın"),
         "omron_wrist_step3": MessageLookupByLibrary.simpleMessage(
@@ -1067,7 +1067,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "range": MessageLookupByLibrary.simpleMessage("Tarih aralığı"),
         "rate": MessageLookupByLibrary.simpleMessage("Değerlendir"),
         "rate_appointment": MessageLookupByLibrary.simpleMessage(
-            "Randevunuzu değerlendirmek ister misiniz ?"),
+            "Randevunuzu değerlendirmek ister misiniz?"),
         "rate_thank_you": MessageLookupByLibrary.simpleMessage(
             "Değerlendirmeniz için teşekkürler"),
         "reach_goal": MessageLookupByLibrary.simpleMessage(
@@ -1203,7 +1203,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "specialities": MessageLookupByLibrary.simpleMessage("Uzmanlıklar"),
         "specific": MessageLookupByLibrary.simpleMessage("Özel"),
         "specific_days": MessageLookupByLibrary.simpleMessage("Belirli Günler"),
-        "start": MessageLookupByLibrary.simpleMessage(" Başlangıç"),
+        "start": MessageLookupByLibrary.simpleMessage("Başlangıç"),
         "startMeeting":
             MessageLookupByLibrary.simpleMessage("Görüşmeyi\nBaşlat"),
         "start_time": MessageLookupByLibrary.simpleMessage("Başlangıç Zamanı"),
@@ -1345,7 +1345,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "upload": MessageLookupByLibrary.simpleMessage("Yükle"),
         "uploadFile": MessageLookupByLibrary.simpleMessage("Dosya\nYükle"),
         "upload_file_question": MessageLookupByLibrary.simpleMessage(
-            "Seçili randevunuza bu dosyayı eklemek istediğinize emin misiniz ?"),
+            "Seçili randevunuza bu dosyayı eklemek istediğinize emin misiniz?"),
         "use_voucher": MessageLookupByLibrary.simpleMessage("Kupon Kullan"),
         "user_create_error":
             MessageLookupByLibrary.simpleMessage("Kullanıcı oluşturulamadı"),

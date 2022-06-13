@@ -730,10 +730,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Username or password cannot be empty !`
+  /// `Username or password cannot be empty!`
   String get tc_or_pass_cannot_empty {
     return Intl.message(
-      'Username or password cannot be empty !',
+      'Username or password cannot be empty!',
       name: 'tc_or_pass_cannot_empty',
       desc: '',
       args: [],
@@ -1150,10 +1150,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Passport number cannot be less than 5 characters`
+  /// `Passport number cannot be less than 5 characters.`
   String get passport_validation {
     return Intl.message(
-      'Passport number cannot be less than 5 characters',
+      'Passport number cannot be less than 5 characters.',
       name: 'passport_validation',
       desc: '',
       args: [],
@@ -1630,10 +1630,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Your Mobile Phone Number Registered In Our Hospital Is Different. Please Check It or You can update your number by calling 444 94 94.`
+  /// `Your mobile phone number registered in our hospital is different. Please check it or you can update your number by calling 444 94 94.`
   String get already_registered_phone {
     return Intl.message(
-      'Your Mobile Phone Number Registered In Our Hospital Is Different. Please Check It or You can update your number by calling 444 94 94.',
+      'Your mobile phone number registered in our hospital is different. Please check it or you can update your number by calling 444 94 94.',
       name: 'already_registered_phone',
       desc: '',
       args: [],
@@ -1800,10 +1800,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Are you sure you want to delete this file ?`
+  /// `Are you sure you want to delete this file?`
   String get delete_file_question {
     return Intl.message(
-      'Are you sure you want to delete this file ?',
+      'Are you sure you want to delete this file?',
       name: 'delete_file_question',
       desc: '',
       args: [],
@@ -1820,10 +1820,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Are you sure you want to upload this file for selected appointment ? `
+  /// `Are you sure you want to upload this file for selected appointment? `
   String get upload_file_question {
     return Intl.message(
-      'Are you sure you want to upload this file for selected appointment ? ',
+      'Are you sure you want to upload this file for selected appointment? ',
       name: 'upload_file_question',
       desc: '',
       args: [],
@@ -2760,10 +2760,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Please allow access to camera by going to your Settings`
+  /// `Please allow access to camera by going to your Settings.`
   String get allow_permission_camera {
     return Intl.message(
-      'Please allow access to camera by going to your Settings',
+      'Please allow access to camera by going to your Settings.',
       name: 'allow_permission_camera',
       desc: '',
       args: [],
@@ -3080,30 +3080,30 @@ class LocaleProvider {
     );
   }
 
-  /// `Would you like to rate your appointment ?`
+  /// `Would you like to rate your appointment?`
   String get rate_appointment {
     return Intl.message(
-      'Would you like to rate your appointment ?',
+      'Would you like to rate your appointment?',
       name: 'rate_appointment',
       desc: '',
       args: [],
     );
   }
 
-  /// `How was the quality of the video call ?`
+  /// `How was the quality of the video call?`
   String get how_video_quality {
     return Intl.message(
-      'How was the quality of the video call ?',
+      'How was the quality of the video call?',
       name: 'how_video_quality',
       desc: '',
       args: [],
     );
   }
 
-  /// `Are you satisfied with your specialist ?`
+  /// `Are you satisfied with your specialist?`
   String get how_video_doctor {
     return Intl.message(
-      'Are you satisfied with your specialist ?',
+      'Are you satisfied with your specialist?',
       name: 'how_video_doctor',
       desc: '',
       args: [],
@@ -3680,10 +3680,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Your Choice : `
+  /// `Your Choice :`
   String get choice {
     return Intl.message(
-      'Your Choice : ',
+      'Your Choice :',
       name: 'choice',
       desc: '',
       args: [],
@@ -4380,10 +4380,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Authorize the OneDose Health app to use Bluetooth and location`
+  /// `Authorize the OneDose Health App to use Bluetooth and location`
   String get ble_status_unauthorized {
     return Intl.message(
-      'Authorize the OneDose Health app to use Bluetooth and location',
+      'Authorize the OneDose Health App to use Bluetooth and location',
       name: 'ble_status_unauthorized',
       desc: '',
       args: [],
@@ -4820,10 +4820,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Do you want to continue ?`
+  /// `Do you want to continue?`
   String get do_u_want_continue {
     return Intl.message(
-      'Do you want to continue ?',
+      'Do you want to continue?',
       name: 'do_u_want_continue',
       desc: '',
       args: [],
@@ -7180,10 +7180,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Test stribini cihaza yerleştirin.`
+  /// `Enter the test strip into the device.`
   String get accu_check_step1 {
     return Intl.message(
-      'Test stribini cihaza yerleştirin.',
+      'Enter the test strip into the device.',
       name: 'accu_check_step1',
       desc: '',
       args: [],
