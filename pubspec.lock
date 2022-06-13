@@ -677,6 +677,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.2"
+  flutter_facebook_sdk:
+    dependency: "direct main"
+    description:
+      name: flutter_facebook_sdk
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   flutter_keyboard_visibility:
     dependency: "direct main"
     description:
@@ -1563,11 +1570,11 @@ packages:
     source: hosted
     version: "0.5.0"
   rive:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
-      name: rive
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/rive-flutter-master"
+      relative: true
+    source: path
     version: "0.8.4"
   rxdart:
     dependency: transitive
