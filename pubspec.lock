@@ -35,7 +35,7 @@ packages:
       name: app_settings
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.7"
+    version: "4.1.8"
   archive:
     dependency: transitive
     description:
@@ -671,9 +671,11 @@ packages:
   flutter_facebook_sdk:
     dependency: "direct main"
     description:
-      name: flutter_facebook_sdk
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "31f01e80d340e005dee0ba05d255e1f0d28aceb4"
+      url: "https://github.com/abdoosaed/flutter_facebook_sdk.git"
+    source: git
     version: "1.0.0"
   flutter_keyboard_visibility:
     dependency: "direct main"
@@ -2203,5 +2205,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: "2.17.1"
+  dart: ">=2.17.1 <3.0.0"
   flutter: ">=3.0.1"

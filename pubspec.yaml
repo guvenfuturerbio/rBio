@@ -113,7 +113,9 @@ dependencies:
   video_player: ^2.4.4
   vrouter: ^1.2.1
   webview_flutter: ^3.0.4
-  flutter_facebook_sdk: ^1.0.0
+  flutter_facebook_sdk:
+    git:
+      url: https://github.com/abdoosaed/flutter_facebook_sdk.git
 
 dev_dependencies:
   analyzer: ^4.1.0
