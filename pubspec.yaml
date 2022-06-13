@@ -12,10 +12,6 @@ dependencies:
   adjust_sdk: ^4.30.0
   animated_widgets: ^1.1.0
   app_settings: ^4.1.7
-  atom:
-    git:
-      url: https://jsck2wjl54wp5d65hbl32w6qpfxwae75bemnleehnhx23zqdxlra@guvenfuture.visualstudio.com/Atom/_git/Atom
-      ref: master
   auto_size_text_pk: ^3.0.0
   bloc_test: ^9.0.3
   cached_network_image: ^3.2.1
@@ -129,6 +125,8 @@ dev_dependencies:
   json_serializable: ^6.2.0
 
 dependency_overrides:
+  atom:
+    path: ./packages/atom
   flutter_reactive_ble:
     path: ./packages/flutter_reactive_ble
   reactive_ble_mobile:
