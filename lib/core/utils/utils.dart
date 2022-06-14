@@ -43,7 +43,7 @@ class Utils {
   /// * scale_manuel_add_cubit.dart'da kontrol ediyorum, yoksa "Kaydet" butonunu disable yapıyorum.
   bool checkUserHeight([bool backRoute = false]) {
     final height = getHeight();
-    if (height == null) {
+    if (height != null) {
       return true;
     } else {
       Atom.show(RbioHeightInfoDialog(backRoute: backRoute));
