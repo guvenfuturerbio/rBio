@@ -5,7 +5,12 @@ abstract class IOneDosePlatformConfig extends IAppPlatformConfig {
     FirebaseOptions? options,
     AdjustManager? adjustManager,
     RecaptchaManager? recaptchaManager,
-  ) : super(options, adjustManager, recaptchaManager);
+  ) : super(
+          options,
+          adjustManager,
+          recaptchaManager,
+          OneDoseSentryManagerImpl(),
+        );
 }
 
 class OneDoseMobilePlatformConfig extends IOneDosePlatformConfig
