@@ -161,7 +161,11 @@ class ReminderManager {
     try {
       await localNotificationManager.cancelNotification(notificationId);
       return true;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -176,7 +180,11 @@ class ReminderManager {
       final entity = _getRemindersFromRemindable[remindable];
       await deleteItemLocalList(notificationId, entity);
       return true;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -269,7 +277,11 @@ class ReminderManager {
       await _saveReminders(allMedicineList, SharedPreferencesKeys.medicineList);
 
       return true;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -312,7 +324,11 @@ class ReminderManager {
       }
 
       return true;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -408,7 +424,11 @@ class ReminderManager {
       }
 
       return true;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -619,7 +639,11 @@ class ReminderManager {
       }
 
       return true;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -823,7 +847,11 @@ class ReminderManager {
       await _saveReminderEntity<Hba1CReminderModel>(currentHbaModel);
 
       return true;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       if (e.toString().contains(
           'Invalid argument (scheduledDate): Must be a date in the future')) {
         LoggerUtils.instance.i("Geçmişe hatırlatıcı oluşturulamaz.");
@@ -970,7 +998,11 @@ class ReminderManager {
         },
       );
       return true;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }

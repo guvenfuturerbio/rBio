@@ -19,7 +19,11 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     try {
       await _userManager.getUserProfile();
       emit(const HomeScreenState.success());
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       emit(const HomeScreenState.failure());
     }
   }

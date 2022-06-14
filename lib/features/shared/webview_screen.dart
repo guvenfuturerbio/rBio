@@ -27,7 +27,11 @@ class _WebViewScreenState extends State<WebViewScreen> {
     try {
       widget.title = Uri.decodeFull(Atom.queryParameters['title'] as String);
       widget.url = Uri.decodeFull(Atom.queryParameters['url'] as String);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

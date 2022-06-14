@@ -54,7 +54,11 @@ class BgTaggerVm extends ChangeNotifier {
         } else {
           cameraPerm = await Permission.camera.request();
         }
-      } catch (e) {
+      } catch (e, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stackTrace);
         LoggerUtils.instance.e(e);
       }
 
@@ -82,6 +86,10 @@ class BgTaggerVm extends ChangeNotifier {
         LoggerUtils.instance.e('No image selected.');
       }
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       LoggerUtils.instance.e(e);
       debugPrintStack(stackTrace: stk);
     }

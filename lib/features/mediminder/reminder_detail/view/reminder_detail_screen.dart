@@ -34,7 +34,11 @@ class ReminderDetailScreen extends StatelessWidget {
       if (remindableStr != null) {
         remindable = remindableStr.toRouteToRemindable();
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

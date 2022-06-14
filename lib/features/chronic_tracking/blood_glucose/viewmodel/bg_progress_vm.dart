@@ -135,6 +135,10 @@ class BgProgressVm
       _filterState.update(key, (value) => !filterState[key]!);
       notifyListeners();
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
     }
   }
@@ -145,6 +149,10 @@ class BgProgressVm
       updateBgMeasurement();
       notifyListeners();
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
     }
   }
@@ -165,6 +173,10 @@ class BgProgressVm
       notifyListeners();
       updateBgMeasurement();
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
     }
   }
@@ -1072,6 +1084,10 @@ class BgProgressVm
           });
         }
       } catch (e, stk) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stk);
         debugPrintStack(stackTrace: stk);
       }
     });

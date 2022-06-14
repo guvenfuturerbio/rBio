@@ -116,7 +116,11 @@ class CreditCardCubit extends Cubit<CreditCardState> {
           ),
         ),
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       emit(
         state.copyWith(
           status: CreditCardStatus.failure,

@@ -20,7 +20,11 @@ class BloodGlucoseReminderAddEditScreen extends StatelessWidget {
       if (routeParam != null) {
         createdDate = int.tryParse(routeParam);
       }
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

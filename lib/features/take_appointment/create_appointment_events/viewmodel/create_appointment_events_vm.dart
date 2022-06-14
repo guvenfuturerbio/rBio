@@ -88,7 +88,11 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       await setSelectedDate(initDate, true);
       availableDatesProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       availableDatesProgress = LoadingProgress.error;
       notifyListeners();
     }
@@ -222,7 +226,11 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
 
       slotsProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       slotsProgress = LoadingProgress.error;
       notifyListeners();
     }
@@ -332,7 +340,11 @@ Future<Map<String, List<ResourcesRequest>>> calculateAppointmentHours(
     return appointments.groupBy(
       (m) => m.from!.substring(11, 16).substring(0, 2),
     );
-  } catch (e) {
+  } catch (e, stackTrace) {
+    getIt<IAppConfig>()
+        .platform
+        .sentryManager
+        .captureException(e, stackTrace: stackTrace);
     LoggerUtils.instance.e(e);
     return {};
   }

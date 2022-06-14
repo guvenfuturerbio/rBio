@@ -32,7 +32,11 @@ class PatientRelativesCubit extends Cubit<PatientRelativesState> {
           (PatientRelative element) => element.tcNo == identificationNumber);
 
       emit(PatientRelativesState.success(response: response));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       emit(const PatientRelativesState.failure());
     }
   }
@@ -63,7 +67,11 @@ class PatientRelativesCubit extends Cubit<PatientRelativesState> {
         }
       }
       // Navigator.pop(context);
-    } catch (error) {
+    } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       LoggerUtils.instance.e(error);
       _analyticsManager.logEvent(YakinDegistirmeHataEvent(
           '${patientRelativeInfo.name} ${patientRelativeInfo.surname}'));

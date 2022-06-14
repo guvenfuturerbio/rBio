@@ -16,7 +16,11 @@ class ForYouOrderSummaryScreen extends StatelessWidget {
     try {
       subCategoryId = Atom.queryParameters['subCategoryId'];
       categoryName = Atom.queryParameters['categoryName'];
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

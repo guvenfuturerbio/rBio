@@ -438,7 +438,11 @@ class ScaleCard extends StatelessWidget {
         if (isDeleted) {
           context.read<PatientScaleDetailCubit>().deleteItem(entity);
         }
-      } catch (e) {
+      } catch (e, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stackTrace);
         LoggerUtils.instance.e(e);
       }
     }

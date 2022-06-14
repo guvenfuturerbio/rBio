@@ -15,7 +15,11 @@ class PatientScaleTreatmentDetailScreen extends StatelessWidget {
     try {
       final routeParam = Atom.queryParameters['itemId'];
       itemId = int.tryParse(routeParam!);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

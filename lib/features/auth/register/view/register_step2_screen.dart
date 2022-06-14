@@ -81,7 +81,11 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
       registerDateOfBirth = Atom.queryParameters['registerDateOfBirth']!;
       registerCountryCode =
           Uri.decodeFull(Atom.queryParameters['registerCountryCode']!);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

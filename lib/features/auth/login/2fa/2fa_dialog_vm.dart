@@ -33,7 +33,11 @@ class TwoFaVm extends ChangeNotifier {
         resendButtonEnabled = true;
         notifyListeners();
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showDialog(
         context: context,
         barrierDismissible: true,

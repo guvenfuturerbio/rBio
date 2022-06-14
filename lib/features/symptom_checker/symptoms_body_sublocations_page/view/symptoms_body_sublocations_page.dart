@@ -29,7 +29,11 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
   void dispose() {
     try {
       AppInheritedWidget.of(context)?.bodyLocationRsp = null;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
     }
     super.dispose();
@@ -44,7 +48,11 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
           int.parse(Atom.queryParameters['selectedGenderId'] as String);
       widget.yearOfBirth = Atom.queryParameters['yearOfBirth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 
@@ -243,7 +251,10 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
             RbioElevatedButton(
               onTap: value.selectedSymptoms?.isNotEmpty ?? false
                   ? () async {
-                      getIt<IAppConfig>().platform.adjustManager?.trackEvent(MySymptomsPage3Event());
+                      getIt<IAppConfig>()
+                          .platform
+                          .adjustManager
+                          ?.trackEvent(MySymptomsPage3Event());
                       getIt<FirebaseAnalyticsManager>().logEvent(
                         SikayetlerimSayfa3DevamEvent(
                           getIt<UserNotifier>().firebaseEmail.toString(),

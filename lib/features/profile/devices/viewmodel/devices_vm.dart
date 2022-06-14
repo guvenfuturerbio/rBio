@@ -30,7 +30,11 @@ class DevicesVm extends ChangeNotifier {
             RbioDevice(version: BluetoothDeviceVersion.v2, v2Device: element));
       }
       state = LoadingProgress.done;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       state = LoadingProgress.error;
     }
   }
