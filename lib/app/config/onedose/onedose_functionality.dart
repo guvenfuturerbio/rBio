@@ -25,6 +25,9 @@ class OneDoseFunctionality extends IAppFunctionality {
   @override
   bool get magazines => false;
 
-   @override
+  @override
   bool get recaptcha => false;
+
+  @override
+  bool get bluetooth => true;
 }
