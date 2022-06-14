@@ -15,6 +15,7 @@ analyzer:
     - "**/*.freezed.dart"
     - packages/
     - lib/generated/
+    - lib/core/packages/atom/
 
   errors:
     undefined_prefixed_name: ignore

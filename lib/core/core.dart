@@ -1,4 +1,4 @@
-export 'package:atom/atom.dart';
+export '../core/packages/atom/atom.dart';
 export 'package:shared_preferences_manager/shared_preferences_manager.dart';
 export 'package:local_notification_manager/local_notification_manager.dart';
 export 'package:key_manager/key_manager.dart';
