@@ -45,6 +45,9 @@ dependencies:
   flutter_datetime_picker:
     git: https://github.com/tushardubey121/flutter_datetime_picker.git
   flutter_dotenv: ^5.0.2
+  flutter_facebook_sdk:
+    git:
+      url: https://github.com/abdoosaed/flutter_facebook_sdk.git
   flutter_keyboard_visibility: ^5.2.0
   flutter_linkify: ^5.0.2
   flutter_localizations:
@@ -93,6 +96,7 @@ dependencies:
   reorderables: ^0.5.0
   # rive: ^0.8.4
   scan: ^1.6.0
+  sentry_flutter: ^6.5.1
   shimmer: ^2.0.0
   simple_gesture_detector: ^0.2.0
   slugify: ^2.0.0
@@ -113,9 +117,6 @@ dependencies:
   video_player: ^2.4.4
   vrouter: ^1.2.1
   webview_flutter: ^3.0.4
-  flutter_facebook_sdk:
-    git:
-      url: https://github.com/abdoosaed/flutter_facebook_sdk.git
 
 dev_dependencies:
   analyzer: ^4.1.0

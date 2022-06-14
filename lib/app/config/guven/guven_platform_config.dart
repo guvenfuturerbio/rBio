@@ -5,7 +5,12 @@ abstract class IGuvenPlatformConfig extends IAppPlatformConfig {
     FirebaseOptions? options,
     AdjustManager? adjustManager,
     RecaptchaManager? recaptchaManager,
-  ) : super(options, adjustManager, recaptchaManager);
+  ) : super(
+          options,
+          adjustManager,
+          recaptchaManager,
+          GuvenOnlineSentryManagerImpl(),
+        );
 }
 
 class GuvenMobilePlatformConfig extends IGuvenPlatformConfig

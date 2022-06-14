@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
@@ -36,25 +38,42 @@ Future<void> bootstrap(IAppConfig appConfig) async {
 
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
+    appConfig.platform.sentryManager.captureException(
+      details.exception,
+      stackTrace: details.stack,
+    );
   };
 
   runZonedGuarded(
     () async {
-      await BlocOverrides.runZoned(
-        () async => runApp(
-          AppInheritedWidget(
-            localNotificationManager: getIt(),
-            child: appConfig.platform.runApp(
-              appConfig.platform.getInitialRoute(
-                getIt<ISharedPreferencesManager>(),
+      appConfig.platform.sentryManager.init(
+        () async {
+          await BlocOverrides.runZoned(
+            () async => runApp(
+              appConfig.platform.sentryManager.wrapBundle(
+                AppInheritedWidget(
+                  localNotificationManager: getIt(),
+                  child: appConfig.platform.runApp(
+                    appConfig.platform.getInitialRoute(
+                      getIt<ISharedPreferencesManager>(),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        blocObserver: AppBlocObserver(),
+            blocObserver: AppBlocObserver(),
+          );
+        },
+        '3.3.24+114',
       );
     },
-    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
+    (error, stackTrace) async {
+      log(error.toString(), stackTrace: stackTrace);
+      await appConfig.platform.sentryManager.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
+    },
   );
 }
 
