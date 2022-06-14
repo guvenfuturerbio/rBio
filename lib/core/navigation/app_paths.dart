@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/demo/audio_recorder/view/audio_record_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -101,8 +102,7 @@ class VRouterRoutes {
         // #region Chat
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!(getIt<UserNotifier>().isCronic ||
-                getIt<UserNotifier>().isDoctor)) {
+            if (!(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)) {
               vRedirector.stopRedirection();
               Atom.show(const NotChronicWarning());
             }
@@ -335,8 +335,7 @@ class VRouterRoutes {
                 Future<void> showAlert() async {
                   await Atom.show(
                     GuvenAlert(
-                      backgroundColor:
-                          getIt<IAppConfig>().theme.cardBackgroundColor,
+                      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
                       title: GuvenAlert.buildTitle(LocaleProvider.current.info),
                       content: GuvenAlert.buildDescription(
                         LocaleProvider.current.device_register,
@@ -355,15 +354,12 @@ class VRouterRoutes {
                   );
                 }
 
-                final pairedDevices =
-                    getIt<BleDeviceManager>().getPairedDevices();
+                final pairedDevices = getIt<BleDeviceManager>().getPairedDevices();
                 if (pairedDevices.isEmpty) {
                   await showAlert();
                   //vRedirector.stopRedirection();
                 } else {
-                  final hasSugarDevice = pairedDevices.any((item) =>
-                      item.deviceType == DeviceType.accuCheck ||
-                      item.deviceType == DeviceType.contourPlusOne);
+                  final hasSugarDevice = pairedDevices.any((item) => item.deviceType == DeviceType.accuCheck || item.deviceType == DeviceType.contourPlusOne);
                   if (!hasSugarDevice) {
                     await showAlert();
                     vRedirector.stopRedirection();
@@ -519,7 +515,7 @@ class VRouterRoutes {
 
         VWidget(
           path: PagePaths.creditCard,
-          widget: CreditCardScreen(),
+          widget: const CreditCardScreen(),
         ),
 
         VWidget(
@@ -595,8 +591,7 @@ class VRouterRoutes {
               if (!getIt<IAppConfig>().functionality.takeOnlineAppointment) {
                 vRedirector.to(PagePaths.main);
               }
-            } else if (vRedirector.toUrl?.contains('forOnline=false') ??
-                false) {
+            } else if (vRedirector.toUrl?.contains('forOnline=false') ?? false) {
               if (!getIt<IAppConfig>().functionality.takeHospitalAppointment) {
                 vRedirector.to(PagePaths.main);
               }
@@ -642,6 +637,11 @@ class VRouterRoutes {
           widget: FullPdfViewerScreen(),
         ),
 
+        VWidget(
+          path: PagePaths.demoAudioRecord,
+          widget: const AudioRecordScreen(),
+        ),
+
         //
         // :_ is a path parameters named _
         // .+ is a regexp to match any path
@@ -680,12 +680,9 @@ class PagePaths {
   static const patientScaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-manuel-add';
 
-  static const patientScaleTreatmentList =
-      "/scale-detail/patient-scale-treatment-list";
-  static const patientScaleDietDetail =
-      "/scale-detail/patient-scale-diet-detail";
-  static const patientScaleTreatmentDetail =
-      "/scale-detail/patient-scale-treatment-detail";
+  static const patientScaleTreatmentList = "/scale-detail/patient-scale-treatment-list";
+  static const patientScaleDietDetail = "/scale-detail/patient-scale-diet-detail";
+  static const patientScaleTreatmentDetail = "/scale-detail/patient-scale-treatment-detail";
   // #endregion
 
   // #region Dashboard
@@ -710,8 +707,7 @@ class PagePaths {
   static const doctorScaleTreatmentList = '/doctor-scale-treatment-list';
   static const doctorScaleDietAddEdit = '/doctor-scale-diet-add-edit';
   static const doctorScaleTreatmentAddEdit = '/doctor-scale-treatment-add-edit';
-  static const doctorScaleDoctorNoteAddEdit =
-      '/doctor-scale-doctor-note-add-edit';
+  static const doctorScaleDoctorNoteAddEdit = '/doctor-scale-doctor-note-add-edit';
   // #endregion
 
   // #region Mediminder
@@ -787,6 +783,9 @@ class PagePaths {
   static const iyzicoResponseSmsPayment = '/form-submit';
   static const magazines = '/magazine-detail';
   static const magazinselection = '/magazines';
+
+  // TODO : SILLL
+  static const demoAudioRecord = '/demoAudioRecord';
 }
 
 void openDefaultScreen(VRedirector vRedirector) {
