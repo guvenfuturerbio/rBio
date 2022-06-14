@@ -41,7 +41,11 @@ class ProfileVm extends RbioVm {
       await Future.delayed(const Duration(seconds: 1));
       numbers = ProfileNumbers(relatives: 3, followers: 10, subscriptions: 50);
       state = LoadingProgress.done;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       state = LoadingProgress.error;
     }
   }
@@ -75,6 +79,10 @@ class ProfileVm extends RbioVm {
       );
       isTwoFactorAuth = newValue;
     } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showDefaultErrorDialog(e, stackTrace);
     } finally {
       showProgressOverlay = false;

@@ -18,7 +18,11 @@ class ForYouSubCategoryDetailCubit extends Cubit<ForYouSubCategoryDetailState> {
       List<ForYouSubCategoryDetailResponse> subCategoryDetail =
           await repository.getSubCategoryDetail(id);
       emit(ForYouSubCategoryDetailState.success(subCategoryDetail));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       emit(const ForYouSubCategoryDetailState.failure());
     }
   }

@@ -29,7 +29,11 @@ class _DoctorCvScreenState extends State<DoctorCvScreen> {
       widget.resourceId = int.parse(Atom.queryParameters['resourceId']!);
       widget.doctorName = Atom.queryParameters['doctorName']!;
       widget.departmentName = Atom.queryParameters['departmentName']!;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

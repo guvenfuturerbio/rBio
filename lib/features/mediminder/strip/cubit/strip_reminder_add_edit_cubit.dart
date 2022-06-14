@@ -62,7 +62,11 @@ class StripReminderAddEditCubitCubit
           ),
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     }
   }
@@ -172,7 +176,11 @@ class StripReminderAddEditCubitCubit
           await chronicTrackingRepository.updateUserStrip(stripDetailModel);
           _showSuccessMessage();
           _checkAlarmAndSendNotification(stripDetailModel);
-        } catch (e) {
+        } catch (e, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(e, stackTrace: stackTrace);
           LoggerUtils.instance.e(e);
         }
       },

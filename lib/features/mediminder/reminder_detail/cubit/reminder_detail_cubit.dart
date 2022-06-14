@@ -41,7 +41,11 @@ class ReminderDetailCubit extends Cubit<ReminderDetailState> {
         createdDate,
       );
       emit(const ReminderDetailState.openListScreen());
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e('[ReminderDetailCubit] - removeReminder() | $e');
     }
   }

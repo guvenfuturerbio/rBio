@@ -19,7 +19,11 @@ class PatientScaleDietDetailCubit extends Cubit<PatientScaleDietDetailState> {
     try {
       final result = await repository.treatmentDietGetDetail(itemId);
       emit(PatientScaleDietDetailState.success(result));
-    } catch (error) {
+    } catch (error, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stk);
       emit(const PatientScaleDietDetailState.failure());
     }
   }

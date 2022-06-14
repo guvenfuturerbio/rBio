@@ -17,7 +17,11 @@ class ForYouSubCategoriesScreen extends StatelessWidget {
     try {
       categoryId = int.parse(Atom.queryParameters['categoryId'] as String);
       title = Uri.decodeFull(Atom.queryParameters['title'] as String);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

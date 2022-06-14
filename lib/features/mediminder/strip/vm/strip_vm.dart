@@ -54,7 +54,11 @@ class StripVm with ChangeNotifier {
       //   stripCount = stripDetailModel.currentCount;
       //   initCount = stripDetailModel.currentCount;
       // }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     } finally {
       hideDialog(mContext);

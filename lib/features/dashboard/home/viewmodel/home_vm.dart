@@ -246,7 +246,11 @@ class HomeVm extends ChangeNotifier {
         }
       }
       await saveWidgetList(newList);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     }
   }

@@ -36,7 +36,11 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
       isWithoutTCKN = Atom.queryParameters['isWithoutTCKN'] == 'true';
       userRegistrationStep2Model = UserRegistrationStep2Model.fromJson(
           jsonDecode(Atom.queryParameters['userRegistrationStep2Model']!));
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

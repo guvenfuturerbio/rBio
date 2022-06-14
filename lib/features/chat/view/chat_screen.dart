@@ -80,7 +80,11 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     try {
       otherPerson = ChatPerson.fromJson(Atom.queryParameters['otherPerson']!);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 
@@ -308,7 +312,11 @@ class _ChatScreenState extends State<ChatScreen> {
                     messageData[index].date!,
                     isUtc: true,
                   );
-                } catch (e) {
+                } catch (e, stackTrace) {
+                  getIt<IAppConfig>()
+                      .platform
+                      .sentryManager
+                      .captureException(e, stackTrace: stackTrace);
                   LoggerUtils.instance.e(e);
                 }
 
@@ -414,7 +422,11 @@ class _ChatScreenState extends State<ChatScreen> {
     var time = "";
     try {
       time = _showTime(DateTime.fromMillisecondsSinceEpoch(message.date!));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     }
 
@@ -502,7 +514,11 @@ class _ChatScreenState extends State<ChatScreen> {
     var time = "";
     try {
       time = _showTime(DateTime.fromMillisecondsSinceEpoch(message.date!));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     }
 
@@ -638,7 +654,11 @@ class _ChatScreenState extends State<ChatScreen> {
           });
         }
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
       rethrow;
     }

@@ -12,7 +12,11 @@ class SelectedDevicesScreen extends StatelessWidget {
       if (deviceTypeStr != null) {
         deviceType = deviceTypeStr.toType;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

@@ -135,7 +135,11 @@ class LoginScreenVm extends ChangeNotifier {
       }
       _versionCheckProgress = VersionCheckProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -150,7 +154,11 @@ class LoginScreenVm extends ChangeNotifier {
     try {
       _applicationVersionResponse =
           await getIt<Repository>().getCurrentApplicationVersion();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     } finally {
       notifyListeners();
@@ -270,7 +278,11 @@ class LoginScreenVm extends ChangeNotifier {
             );
           }
         }
-      } catch (e) {
+      } catch (e, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stackTrace);
         LoggerUtils.instance.e(e);
         hideDialog(mContext);
         notifyListeners();
@@ -298,7 +310,11 @@ class LoginScreenVm extends ChangeNotifier {
     try {
       _guvenLogin =
           await getIt<UserManager>().login(username, password, consentId);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       hideDialog(mContext);
 
       if (e is LoginExceptions) {
@@ -368,7 +384,11 @@ class LoginScreenVm extends ChangeNotifier {
     PatientResponse? pusulaPatientDetail;
     try {
       pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       if (pusulaPatientDetail == null) {
         var inputFormat = DateFormat('dd.MM.yyyy');
         var date1 = inputFormat.parse(patientDetail.patients!.first.birthDate!);
@@ -407,7 +427,11 @@ class LoginScreenVm extends ChangeNotifier {
         SharedPreferencesKeys.profileImage,
         profilImage,
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       //
     }
 
@@ -442,7 +466,11 @@ class LoginScreenVm extends ChangeNotifier {
     try {
       _guvenLogin =
           await getIt<UserManager>().login(username, password, consentId);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       hideDialog(mContext);
 
       if (e is LoginExceptions) {
@@ -512,7 +540,11 @@ class LoginScreenVm extends ChangeNotifier {
     PatientResponse? pusulaPatientDetail;
     try {
       pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       if (pusulaPatientDetail == null) {
         var inputFormat = DateFormat('dd.MM.yyyy');
         var date1 = inputFormat.parse(patientDetail.patients!.first.birthDate!);
@@ -574,7 +606,11 @@ class LoginScreenVm extends ChangeNotifier {
               .read<BluetoothBloc>()
               .add(const BluetoothEvent.listenBleStatus());
         }
-      } catch (_) {
+      } catch (e, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stackTrace);
         Atom.context
             .read<BluetoothBloc>()
             .add(const BluetoothEvent.listenBleStatus());
@@ -589,7 +625,11 @@ class LoginScreenVm extends ChangeNotifier {
         SharedPreferencesKeys.profileImage,
         profilImage,
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       //
     }
 

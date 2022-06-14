@@ -39,7 +39,11 @@ class DoctorScaleTreatmentListCubit
           ),
         ),
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       emit(const DoctorScaleTreatmentListState.failure());
     }
   }
@@ -121,7 +125,11 @@ class DoctorScaleTreatmentListCubit
               ),
             ),
           );
-        } catch (error) {
+        } catch (error, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(error, stackTrace: stackTrace);
           emit(const DoctorScaleTreatmentListState.failure());
         }
       },

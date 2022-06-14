@@ -83,7 +83,11 @@ class FirestoreManager {
           keyUsers: usersMap,
         },
       );
-    } on FirebaseException catch (e) {
+    } on FirebaseException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       if (e.code == firestoreNotFoundException) {
         await _firebaseDB
             .collection(keyConversations)

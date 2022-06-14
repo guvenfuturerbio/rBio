@@ -166,15 +166,18 @@ class BleReactorOps extends ChangeNotifier {
     }
 
     // * Read ilgili unique id içerisindeki değeri okumamızı sağlayan parametre. byteArray - List<int> olarak döner.
-    _ble.readCharacteristic(
+    _ble
+        .readCharacteristic(
       QualifiedCharacteristic(
         characteristicId: Uuid.parse("2a24"),
         serviceId: Uuid.parse("180a"),
         deviceId: device.id,
       ),
-    ).then((value) {
+    )
+        .then((value) {
       final List<int> charCodes = value;
-      LoggerUtils.instance.d("2a24 model name ${String.fromCharCodes(charCodes)}");
+      LoggerUtils.instance
+          .d("2a24 model name ${String.fromCharCodes(charCodes)}");
       LoggerUtils.instance.d("2a24$value");
       pairedDevice.modelName = String.fromCharCodes(charCodes);
     });
@@ -214,7 +217,8 @@ class BleReactorOps extends ChangeNotifier {
     _ble.subscribeToCharacteristic(subsCharacteristic).listen(
       (measurementData) {
         _measurements.add(measurementData);
-        _gData.add(parseGlucoseDataFromReadingInstance(measurementData, device));
+        _gData
+            .add(parseGlucoseDataFromReadingInstance(measurementData, device));
         notifyListeners();
       },
       onError: (dynamic error) {
@@ -229,12 +233,14 @@ class BleReactorOps extends ChangeNotifier {
     bool _lock = false;
     _ble.subscribeToCharacteristic(writeCharacteristic).listen(
       (recordAccessData) async {
-        LoggerUtils.instance.i("record access data " + recordAccessData.toString());
+        LoggerUtils.instance
+            .i("record access data " + recordAccessData.toString());
         LoggerUtils.instance.i("LOCK :$_lock");
 
         if (!_lock) {
           _lock = true;
-          bool isSucces = await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+          bool isSucces =
+              await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
           isSucces
               ? _controlPointResponse = recordAccessData
               : _controlPointResponse.clear();
@@ -280,9 +286,13 @@ class BleReactorOps extends ChangeNotifier {
         notifyListeners();
         LoggerUtils.instance.i("write errorrrrrrrr" + e.toString());
       });
-    } catch (e) {
+    } catch (e, stackTrace) {
       notifyListeners();
       LoggerUtils.instance.i("write characterisctic error " + e.toString());
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
     }
   }
 

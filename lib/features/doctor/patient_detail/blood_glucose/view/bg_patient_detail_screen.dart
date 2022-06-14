@@ -81,7 +81,11 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
     try {
       patientName = Atom.queryParameters['patientName']!;
       patientId = int.parse(Atom.queryParameters['patientId']!);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 
@@ -315,9 +319,8 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                borderRadius: R.sizes.borderRadiusCircular
-              ),
+                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  borderRadius: R.sizes.borderRadiusCircular),
               child: Text(
                 LocaleProvider.current.treatment,
                 style: context.xHeadline5.copyWith(

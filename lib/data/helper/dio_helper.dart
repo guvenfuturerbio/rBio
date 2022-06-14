@@ -132,7 +132,11 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                         ),
                       );
                       return handler.resolve(response);
-                    } catch (_) {
+                    } catch (e, stackTrace) {
+                      getIt<IAppConfig>()
+                          .platform
+                          .sentryManager
+                          .captureException(e, stackTrace: stackTrace);
                       return handler.reject(
                         DioError(
                           requestOptions: error.response!.requestOptions,
@@ -263,12 +267,24 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
 
       return getResponseResult<T, R>(
           response.data, parseModel, isJsonDecode ?? false);
-    } on SocketException catch (e) {
+    } on SocketException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw SocketException(e.toString());
-    } on FormatException catch (_) {
+    } on FormatException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw const FormatException('Unable to process the data');
-    } catch (e) {
+    } catch (e, stackTrace) {
       _handleError(path, e);
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Future.value();
     }
   }
@@ -297,11 +313,23 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
       );
 
       return response.data;
-    } on SocketException catch (e) {
+    } on SocketException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw SocketException(e.toString());
-    } on FormatException catch (_) {
+    } on FormatException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw const FormatException('Unable to process the data');
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       _handleError(path, e);
     }
   }
@@ -326,11 +354,23 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
       );
 
       return response.data;
-    } on SocketException catch (e) {
+    } on SocketException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw SocketException(e.toString());
-    } on FormatException catch (_) {
+    } on FormatException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw const FormatException('Unable to process the data');
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       _handleError(path, e);
     }
   }
@@ -359,11 +399,23 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
       );
 
       return response.data;
-    } on SocketException catch (e) {
+    } on SocketException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw SocketException(e.toString());
-    } on FormatException catch (_) {
+    } on FormatException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw const FormatException('Unable to process the data');
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       _handleError(path, e);
     }
   }

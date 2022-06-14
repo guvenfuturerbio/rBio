@@ -57,7 +57,11 @@ class _QRCodeGeneratorScreenState extends State<QRCodeGeneratorScreen> {
         await FlutterShare.shareFile(
             title: 'deneme', filePath: file.path, fileType: 'image/png');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e.toString());
     }
   }
