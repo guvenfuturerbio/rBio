@@ -29,5 +29,5 @@ class GuvenFunctionality extends IAppFunctionality {
   bool get recaptcha => true;
 
   @override
-  bool get bluetooth => false;
+  bool get bluetooth => true;
 }
