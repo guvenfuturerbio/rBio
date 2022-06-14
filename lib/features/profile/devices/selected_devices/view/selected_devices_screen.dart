@@ -81,30 +81,32 @@ class SelectedDevicesScreen extends StatelessWidget {
                       (DiscoveredDevice device) {
                         final pairedDevices = bluetoothState.pairedDeviceIds;
 
-                        return _selectedDeviceVm.isFocusedDevice(device) &&
-                                !pairedDevices.contains(device.id)
-                            ? DeviceCard(
-                                onTap: () => _selectedDeviceVm.connectDevice(
-                                  bluetoothState,
-                                  device,
-                                ),
-                                background: getIt<BleConnector>()
+                        if (_selectedDeviceVm.isFocusedDevice(device) &&
+                            !pairedDevices.contains(device.id)) {
+                          return DeviceCard(
+                            onTap: () => _selectedDeviceVm.connectDevice(
+                              bluetoothState,
+                              device,
+                            ),
+                            background: getIt<BleConnector>()
+                                        .getStatus(device.id)
+                                        ?.connectionState ==
+                                    DeviceConnectionState.connected
+                                ? getIt<IAppConfig>().theme.mainColor
+                                : getIt<BleConnector>()
                                             .getStatus(device.id)
                                             ?.connectionState ==
-                                        DeviceConnectionState.connected
-                                    ? getIt<IAppConfig>().theme.mainColor
-                                    : getIt<BleConnector>()
-                                                .getStatus(device.id)
-                                                ?.connectionState ==
-                                            DeviceConnectionState.connecting
-                                        ? getIt<IAppConfig>().theme.high
-                                        : Colors.white,
-                                image: UtilityManager().getDeviceImageFromType(
-                                        _selectedDeviceVm.deviceType) ??
-                                    const SizedBox(),
-                                name: device.name,
-                              )
-                            : const SizedBox();
+                                        DeviceConnectionState.connecting
+                                    ? getIt<IAppConfig>().theme.high
+                                    : Colors.white,
+                            image: UtilityManager().getDeviceImageFromType(
+                                    _selectedDeviceVm.deviceType) ??
+                                const SizedBox(),
+                            name: device.name,
+                          );
+                        }
+
+                        return const SizedBox();
                       },
                     ).toList()
                   ],

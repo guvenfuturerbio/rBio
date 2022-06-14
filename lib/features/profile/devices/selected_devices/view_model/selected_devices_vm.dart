@@ -100,71 +100,20 @@ class SelectedDeviceVm extends ChangeNotifier {
     }
   }
 
-  void showLoadingDialog() {
-    Atom.show(
-      GuvenAlert(
-        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            //
-            Container(
-              child: ShakeAnimatedWidget(
-                enabled: true,
-                duration: const Duration(milliseconds: 1500),
-                shakeAngle: Rotation.deg(z: 10),
-                curve: Curves.linear,
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  width: Atom.context.width * .04,
-                  height: Atom.context.width * .04,
-                  child: SvgPicture.asset(
-                    R.image.logo,
-                    color: getIt<IAppConfig>().theme.mainColor,
-                  ),
-                ),
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: getIt<IAppConfig>().theme.mainColor, width: 10),
-                borderRadius: R.sizes.borderRadiusCircular,
-              ),
-            ),
+  Future<void> showLoadingDialog() async {
+    Utils.instance.showSuccessSnackbar(
+      Atom.context,
+      LocaleProvider.current.pair_successful,
+    );
 
-            //
-            const SizedBox(
-              height: 16,
-            ),
-
-            //
-            Text(
-              LocaleProvider.current.pair_successful,
-              style: TextStyle(
-                  color: getIt<IAppConfig>().theme.black, fontSize: 20),
-              textAlign: TextAlign.center,
-            ),
-
-            //
-            const SizedBox(
-              height: 16,
-            ),
-
-            //
-            GuvenAlert.buildWhiteAction(
-              text: LocaleProvider.current.ok,
-              onPressed: () {
-                getIt<BleReactorOps>().clearControlPointResponse();
-                Atom.dismiss();
-                Atom.historyBack();
-                Atom.historyBack();
-                Atom.to(PagePaths.devices, isReplacement: true);
-              },
-            ),
-          ],
-        ),
-      ),
-      barrierDismissible: false,
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        Atom.to(
+          PagePaths.main,
+          isReplacement: true,
+        );
+      },
     );
   }
 
