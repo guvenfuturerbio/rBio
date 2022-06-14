@@ -115,7 +115,11 @@ class UserNotifier extends ChangeNotifier {
     try {
       await getIt<Repository>().getPatientDetail();
       return true;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -206,7 +210,11 @@ class UserNotifier extends ChangeNotifier {
       await getIt<ScaleRepository>().clear();
       AppInheritedWidget.of(context)?.cancelStreamLocalNotification();
       kAutoConnect = true;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     } finally {
       Atom.dismiss();

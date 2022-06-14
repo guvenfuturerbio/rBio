@@ -48,6 +48,10 @@ class RegisterStep3ScreenVm extends RbioVm {
         );
       }
     } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       showDelayedErrorDialog(
         error,
         stackTrace,

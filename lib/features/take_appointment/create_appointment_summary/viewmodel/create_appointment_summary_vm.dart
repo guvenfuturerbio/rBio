@@ -101,7 +101,11 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       notifyListeners();
       countryList = CountryListResponse.fromMap(response.toJson());
       _showOverlayLoading = false;
-    } catch (error) {
+    } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       LoggerUtils.instance.i(error);
       //
     }
@@ -125,7 +129,11 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       _priceLoading = false;
       _showOverlayLoading = false;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       _priceLoading = false;
       _showOverlayLoading = false;
       notifyListeners();
@@ -173,7 +181,11 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       } else {
         patientId = patientDetail?.id;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e("Error in synchronization");
     }
     try {
@@ -246,7 +258,11 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
           }
 
           notifyListeners();
-        } catch (error) {
+        } catch (error, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(error, stackTrace: stackTrace);
           LoggerUtils.instance.e(error);
           _showOverlayLoading = false;
           notifyListeners();
@@ -262,7 +278,11 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
           );
         }
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showPossibleProblemsDialog(
         mContext,
         LocaleProvider.current.warning,

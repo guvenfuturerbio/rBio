@@ -67,7 +67,11 @@ class BloodPressureStorageImpl
       } else {
         return false;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -81,7 +85,11 @@ class BloodPressureStorageImpl
       await getIt<ChronicTrackingRepository>().deleteBpMeasurement(
         DeleteBpMeasurements.fromJson(deleteMeasurementRequest),
       );
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -111,7 +119,11 @@ class BloodPressureStorageImpl
       } else {
         throw Exception('box: $boxKey is empty');
       }
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -124,7 +136,11 @@ class BloodPressureStorageImpl
       } else {
         return [];
       }
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -147,7 +163,11 @@ class BloodPressureStorageImpl
       } else {
         return null;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -170,7 +190,11 @@ class BloodPressureStorageImpl
       return (await getIt<ChronicTrackingRepository>()
               .insertNewBpValue(addBpWithDetail))
           .datum;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -186,7 +210,11 @@ class BloodPressureStorageImpl
       } else {
         throw Exception('unhandled exception on box:$boxKey');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -210,7 +238,11 @@ class BloodPressureStorageImpl
     try {
       await getIt<ChronicTrackingRepository>()
           .updateBpMeasurement(updateBpMeasurements);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -257,7 +289,11 @@ class BloodPressureStorageImpl
       } else {
         throw Exception('unhandled exception on box:$boxKey');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -283,7 +319,11 @@ class BloodPressureStorageImpl
       } else {
         throw Exception('unhandled exception on box:$boxKey');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
 
       rethrow;
@@ -335,7 +375,11 @@ class BloodPressureStorageImpl
       }
 
       throw Exception("datum null");
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }

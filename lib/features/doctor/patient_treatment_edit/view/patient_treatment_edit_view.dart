@@ -43,6 +43,10 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
           jsonDecode(Atom.queryParameters['treatment_model']!));
       textEditingController.text = _treatmentModel.treatment!;
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
       LoggerUtils.instance.e(e.toString());
       return const RbioRouteError();

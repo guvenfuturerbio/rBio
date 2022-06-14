@@ -165,8 +165,12 @@ class _MyAppCommonState extends State<MyAppCommon> {
                       try {
                         Atom.dismiss();
                         data.stopRedirection();
-                      } catch (e) {
+                      } catch (e, stackTrace) {
                         LoggerUtils.instance.i(e);
+                        getIt<IAppConfig>()
+                            .platform
+                            .sentryManager
+                            .captureException(e, stackTrace: stackTrace);
                       }
                     } else {
                       final currentUrl = data.fromUrl ?? "";

@@ -272,6 +272,10 @@ class BpProgressVm
             });
           }
         } catch (e, stk) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(e, stackTrace: stk);
           LoggerUtils.instance.e(e);
           debugPrintStack(stackTrace: stk);
         }

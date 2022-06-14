@@ -18,7 +18,11 @@ class DoctorScaleTreatmentListScreen extends StatelessWidget {
     late int patientId;
     try {
       patientId = int.parse(Atom.queryParameters['patientId']!);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

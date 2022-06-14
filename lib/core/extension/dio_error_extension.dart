@@ -9,7 +9,11 @@ extension DioErrorExtension on DioError {
       try {
         final responseData = Map<String, dynamic>.from(response?.data);
         return GuvenResponseModel.fromJson(responseData);
-      } catch (e) {
+      } catch (e, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stackTrace);
         return null;
       }
     }

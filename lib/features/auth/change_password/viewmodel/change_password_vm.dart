@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import '../../../../core/core.dart';
 import '../../../../model/shared/user_login_info.dart';
 
@@ -22,9 +21,8 @@ class ChangePasswordScreenVm extends RbioVm {
     notifyListeners();
   }
 
-    final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
+  final AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
   AutovalidateMode? get autovalidateMode => _autovalidateMode;
-
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState>? get formKey => _formKey;
@@ -98,7 +96,10 @@ class ChangePasswordScreenVm extends RbioVm {
                     .getString(SharedPreferencesKeys.jwtToken) ??
                 '',
           );
-          getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulPasswordChangeEvent());
+          getIt<IAppConfig>()
+              .platform
+              .adjustManager
+              ?.trackEvent(SuccessfulPasswordChangeEvent());
           getIt<FirebaseAnalyticsManager>()
               .logEvent(SifreDegistirBasariliEvent());
           showInfoDialog(
@@ -109,7 +110,14 @@ class ChangePasswordScreenVm extends RbioVm {
           errorParse(response);
         }
       } catch (error, stackTrace) {
-        getIt<IAppConfig>().platform.adjustManager?.trackEvent(UnsuccessfulPasswordChangeEvent());
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(error, stackTrace: stackTrace);
+        getIt<IAppConfig>()
+            .platform
+            .adjustManager
+            ?.trackEvent(UnsuccessfulPasswordChangeEvent());
         getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
         showDelayedErrorDialog(error, stackTrace);
       } finally {
@@ -121,7 +129,10 @@ class ChangePasswordScreenVm extends RbioVm {
   void errorParse(GuvenResponseModel response) {
     var errorCode = response.datum;
     if (errorCode is int) {
-      getIt<IAppConfig>().platform.adjustManager?.trackEvent(UnsuccessfulPasswordChangeEvent());
+      getIt<IAppConfig>()
+          .platform
+          .adjustManager
+          ?.trackEvent(UnsuccessfulPasswordChangeEvent());
       getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
       switch (errorCode) {
         case 1:

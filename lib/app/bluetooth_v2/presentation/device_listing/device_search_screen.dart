@@ -35,7 +35,11 @@ class DeviceSearchScreen extends StatelessWidget {
       }
 
       return const RbioRouteError();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
   }

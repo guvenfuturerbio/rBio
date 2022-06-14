@@ -20,7 +20,11 @@ class KvkkFormScreenVm extends ChangeNotifier {
     try {
       clickedConsentForm = await getIt<UserManager>().getKvkkFormState();
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     }
   }

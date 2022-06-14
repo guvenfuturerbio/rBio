@@ -26,7 +26,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
       }
 
       throw Exception('/getSymtptomsApiToken: $response');
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw Exception('/getSymtptomsApiToken: $e');
     }
   }
@@ -65,7 +69,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
           '/getProposedSymptoms : ${response.runtimeType}',
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw Exception('/getProposedSymptoms: $e');
     }
   }
@@ -106,7 +114,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
           '/getSpeacialisations : ${response.runtimeType}',
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw Exception('/getSpeacialisations : $e');
     }
   }
@@ -139,7 +151,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
           '/getBodyLocations : ${response.runtimeType}',
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw Exception('/getBodyLocations : $e');
     }
   }
@@ -154,7 +170,10 @@ class SymptomApiServiceImpl extends SymptomApiService {
   ) async {
     try {
       final response = await helper.dioGet(
-        getIt<IAppConfig>().endpoints.symptom.symptomGetBodySubLocations(locationID),
+        getIt<IAppConfig>()
+            .endpoints
+            .symptom
+            .symptomGetBodySubLocations(locationID),
         queryParameters: <String, dynamic>{
           'token': token,
           'language': language,
@@ -173,7 +192,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
           '/getBodySubLocations : ${response.runtimeType}',
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw Exception('/getBodySubLocations : $e');
     }
   }
@@ -189,7 +212,10 @@ class SymptomApiServiceImpl extends SymptomApiService {
   ) async {
     try {
       final response = await helper.dioGet(
-        getIt<IAppConfig>().endpoints.symptom.symptomGetBodySymptoms(locationID, gender),
+        getIt<IAppConfig>()
+            .endpoints
+            .symptom
+            .symptomGetBodySymptoms(locationID, gender),
         queryParameters: <String, dynamic>{
           'token': token,
           'language': language,
@@ -208,7 +234,11 @@ class SymptomApiServiceImpl extends SymptomApiService {
           '/getBodySymptoms : ${response.runtimeType}',
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       throw Exception('/getBodySymptoms : $e');
     }
   }

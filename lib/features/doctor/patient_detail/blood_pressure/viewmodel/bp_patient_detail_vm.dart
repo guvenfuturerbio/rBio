@@ -328,6 +328,10 @@ class BpPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
             });
           }
         } catch (e, stk) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(e, stackTrace: stk);
           LoggerUtils.instance.i(e);
           debugPrintStack(stackTrace: stk);
         }

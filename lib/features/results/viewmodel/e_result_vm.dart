@@ -49,7 +49,11 @@ class EResultScreenVm extends RbioVm {
         } else {
           await showNecessary();
         }
-      } catch (e) {
+      } catch (e, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stackTrace);
         LoggerUtils.instance.wtf(e);
       }
     });
@@ -103,7 +107,11 @@ class EResultScreenVm extends RbioVm {
 
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       progress = LoadingProgress.error;
       showInfoDialog(
         LocaleProvider.current.warning,

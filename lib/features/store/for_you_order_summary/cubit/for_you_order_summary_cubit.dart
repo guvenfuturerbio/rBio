@@ -24,7 +24,11 @@ class ForYouOrderSummaryCubit extends Cubit<ForYouOrderSummaryState> {
           ),
         ),
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       emit(const ForYouOrderSummaryState.failure());
     }
   }

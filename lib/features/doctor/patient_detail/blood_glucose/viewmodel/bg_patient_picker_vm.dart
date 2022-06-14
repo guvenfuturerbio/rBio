@@ -142,7 +142,11 @@ class BgPatientPickerVm extends ChangeNotifier {
       hideDialog(context);
       await Future.delayed(const Duration(milliseconds: 300));
       Navigator.pop(context, true);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
       hideDialog(context);
       showInformationDialog(LocaleProvider.current.sorry_dont_transaction);

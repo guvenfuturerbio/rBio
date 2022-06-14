@@ -44,7 +44,11 @@ class PatientScaleTreatmentListCubit
           ),
         ),
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       emit(const PatientScaleTreatmentListState.failure());
     }
   }
@@ -126,7 +130,11 @@ class PatientScaleTreatmentListCubit
               ),
             ),
           );
-        } catch (error) {
+        } catch (error, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(error, stackTrace: stackTrace);
           emit(const PatientScaleTreatmentListState.failure());
         }
       },

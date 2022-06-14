@@ -32,6 +32,10 @@ class DoctorPatientListVm extends RbioVm {
       listModel = await _getAllByType();
       progress = LoadingProgress.done;
     } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       log(e.toString());
       debugPrintStack(stackTrace: stackTrace);
       progress = LoadingProgress.error;

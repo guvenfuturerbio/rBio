@@ -191,7 +191,11 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
 
   try {
     await registerStorage();
-  } catch (_) {
+  } catch (e, stackTrace) {
+    getIt<IAppConfig>()
+        .platform
+        .sentryManager
+        .captureException(e, stackTrace: stackTrace);
     clearStorage();
     await registerStorage();
   }

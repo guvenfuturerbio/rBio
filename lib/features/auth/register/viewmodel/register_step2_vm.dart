@@ -137,13 +137,21 @@ class RegisterStep2ScreenVm extends RbioVm {
           }
         }
       }
-    } on RbioNotSuccessfulException catch (e) {
+    } on RbioNotSuccessfulException catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       hideDialog(mContext);
       showInfoDialog(
         LocaleProvider.of(mContext).warning,
         e.xGetMessage,
       );
     } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       showDelayedErrorDialog(
         error,
         stackTrace,
@@ -232,6 +240,10 @@ class RegisterStep2ScreenVm extends RbioVm {
           );
         }
       } catch (error, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(error, stackTrace: stackTrace);
         showDelayedErrorDialog(
           error,
           stackTrace,

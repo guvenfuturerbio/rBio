@@ -133,7 +133,11 @@ class BpMeasurementList extends StatelessWidget {
                 context,
                 LocaleProvider.current.delete_measurement_succesfull,
               );
-            } catch (e) {
+            } catch (e, stackTrace) {
+              getIt<IAppConfig>()
+                  .platform
+                  .sentryManager
+                  .captureException(e, stackTrace: stackTrace);
               Utils.instance.showSnackbar(
                 context,
                 LocaleProvider.current.delete_measurement_un_succesfull,

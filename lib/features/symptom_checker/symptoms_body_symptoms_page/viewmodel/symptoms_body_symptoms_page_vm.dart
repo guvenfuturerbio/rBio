@@ -48,7 +48,11 @@ class BodySymptomSelectionVm extends ChangeNotifier {
       });
       //this._selectedBodySymptoms = symptomsList;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
       notifyListeners();
     }
@@ -75,7 +79,11 @@ class BodySymptomSelectionVm extends ChangeNotifier {
       proposedSymptomList = changeNamesOfSymps(proposedSymptoms);
       proposedProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
       proposedProgress = LoadingProgress.error;
       notifyListeners();

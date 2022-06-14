@@ -42,7 +42,11 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
       } else {
         return null;
       }
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -97,7 +101,11 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
       } else {
         return false;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -112,7 +120,11 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
       } else {
         return false;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -124,7 +136,11 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
       data.userId = -1;
       await getIt<ChronicTrackingRepository>()
           .updateProfile(data, data.id ?? 0);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -142,8 +158,12 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
         if (shouldSendToServer) await sendToServer(data);
       }
       return true;
-    } catch (_) {
-      LoggerUtils.instance.e(_);
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
+      LoggerUtils.instance.e(e);
       rethrow;
     }
   }

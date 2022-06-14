@@ -186,6 +186,10 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       } catch (e, stk) {
         debugPrintStack(stackTrace: stk);
         LoggerUtils.instance.e(e);
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stk);
         throw Exception('/getAllProfiles : $e');
       }
     } else {

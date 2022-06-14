@@ -6,7 +6,7 @@ import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart' as encrypt_pac;
 import 'package:tuple/tuple.dart';
 
-
+import '../core.dart';
 
 abstract class EncryptManager {
   String encrypt(String plainText);
@@ -32,7 +32,11 @@ class EncryptManagerImpl extends EncryptManager {
           _createUint8ListFromString('Salted__') + salt + encrypted.bytes);
 
       return base64.encode(encryptedBytesWithSalt);
-    } catch (error) {
+    } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -54,7 +58,11 @@ class EncryptManagerImpl extends EncryptManager {
           encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
 
       return decrypted;
-    } catch (error) {
+    } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       rethrow;
     }
   }

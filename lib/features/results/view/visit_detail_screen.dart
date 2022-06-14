@@ -33,7 +33,11 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
           int.parse(Atom.queryParameters['countOfLaboratoryResult']!);
       widget.visitId = int.parse(Atom.queryParameters['visitId']!);
       widget.patientId = int.parse(Atom.queryParameters['patientId']!);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 
@@ -587,7 +591,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     //
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 8, left:10),
+                        padding: const EdgeInsets.only(top: 8, left: 10),
                         child: vm.radiologyResults[index].report != null &&
                                 vm.radiologyResults[index].reportState == 6
                             ? Utils.instance.button(

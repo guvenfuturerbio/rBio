@@ -38,7 +38,11 @@ class CreateAppointmentScreen extends StatelessWidget {
       } else {
         fromSymptom = false;
       }
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 
@@ -293,8 +297,15 @@ class CreateAppointmentScreen extends StatelessWidget {
           val.dropdownValueDoctor!.title.toString(),
         ),
       );
-      getIt<IAppConfig>().platform.adjustManager?.trackEvent(SearchCreateAppointmentEvent());
-    } catch (e) {
+      getIt<IAppConfig>()
+          .platform
+          .adjustManager
+          ?.trackEvent(SearchCreateAppointmentEvent());
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.wtf('wtf');
     }
 

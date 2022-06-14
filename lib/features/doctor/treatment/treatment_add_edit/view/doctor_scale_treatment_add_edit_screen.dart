@@ -20,7 +20,11 @@ class DoctorScaleTreatmentAddEditScreen extends StatelessWidget {
         itemId = int.tryParse(routeParam);
       }
       patientId = int.parse(Atom.queryParameters['patientId']!);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

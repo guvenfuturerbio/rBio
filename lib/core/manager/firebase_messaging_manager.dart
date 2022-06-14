@@ -252,9 +252,13 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
                   'otherPerson': chatPersonModel.toJson(),
                 },
               );
-            } catch (e) {
+            } catch (e, stackTrace) {
               LoggerUtils.instance
                   .e("FirebaseMessagingManager - clickDataHandler() - $e");
+              getIt<IAppConfig>()
+                  .platform
+                  .sentryManager
+                  .captureException(e, stackTrace: stackTrace);
             }
           }
 
@@ -289,9 +293,13 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
       if (value.isEmpty) return;
       final notificationPayload = jsonDecode(value);
       clickDataHandler(notificationPayload);
-    } catch (e) {
+    } catch (e, stackTrace) {
       LoggerUtils.instance
           .e("FirebaseMessagingManager - _selectNotification() - $e");
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
     }
   }
 

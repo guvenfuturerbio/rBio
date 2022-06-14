@@ -60,6 +60,10 @@ class AllFilesVm extends RbioVm {
       }
       progress = LoadingProgress.done;
     } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showDefaultErrorDialog(e, stackTrace);
       progress = LoadingProgress.error;
     }
@@ -100,7 +104,11 @@ class AllFilesVm extends RbioVm {
           ),
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showProgressOverlay = false;
     }
   }
