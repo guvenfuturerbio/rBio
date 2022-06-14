@@ -46,7 +46,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
 
   // #region !isWeb
   String? directory;
-  if (!Atom.isWeb) {
+  if (!Atom.isWeb && appConfig.functionality.bluetooth) {
     final appDocumentDirectory = await getApplicationDocumentsDirectory();
     directory = appDocumentDirectory.path;
     Hive.init(directory);
