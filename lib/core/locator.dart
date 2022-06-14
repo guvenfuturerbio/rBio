@@ -44,13 +44,12 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerLazySingleton<BluetoothLocalManager>(
       () => BluetoothLocalManager(getIt()));
 
-  // #region !isWeb
-  String? directory;
-  if (!Atom.isWeb) {
-    final appDocumentDirectory = await getApplicationDocumentsDirectory();
-    directory = appDocumentDirectory.path;
-    Hive.init(directory);
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  final directory = appDocumentDirectory.path;
+  Hive.init(directory);
 
+  // #region !isWeb
+  if (!Atom.isWeb && appConfig.functionality.bluetooth) {
     final ble = FlutterReactiveBle();
     getIt.registerSingleton<BleScanner>(BleScanner(ble));
     getIt.registerSingleton<BleConnector>(BleConnector(ble));
