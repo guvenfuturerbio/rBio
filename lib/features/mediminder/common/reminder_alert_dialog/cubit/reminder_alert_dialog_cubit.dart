@@ -31,7 +31,11 @@ class ReminderAlertDialogCubit extends Cubit<ReminderAlertDialogState> {
       if (model != null) {
         emit(ReminderAlertDialogState.success(model));
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       emit(const ReminderAlertDialogState.failure());
     }
   }
@@ -57,7 +61,11 @@ class ReminderAlertDialogCubit extends Cubit<ReminderAlertDialogState> {
             ),
           );
           emit(const ReminderAlertDialogState.createdPostponeNotification());
-        } catch (e) {
+        } catch (e, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(e, stackTrace: stackTrace);
           LoggerUtils.instance.e(
             "[ReminderAlertDialogCubit] - createPostponeNotification() - $e",
           );

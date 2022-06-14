@@ -25,7 +25,11 @@ class DoctorPatientListScreen extends StatelessWidget {
       if (Atom.queryParameters['type'] != null) {
         type = Atom.queryParameters['type']!.xPatientType as PatientType;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

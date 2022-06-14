@@ -272,10 +272,14 @@ class Utils {
         return localModel.map((e) => model.fromJson(e)).cast<T>().toList();
       }
       return [];
-    } catch (e) {
+    } catch (e, stackTrace) {
       final apiData = await apiCall();
       await localCacheService.write(
           cacheUrl, json.encode(apiData), cacheDuration);
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return apiData;
     }
   }
@@ -304,10 +308,14 @@ class Utils {
       }
 
       throw Exception('getCacheApiCallModel : ${model.runtimeType}');
-    } catch (e) {
+    } catch (e, stackTrace) {
       final apiData = await apiCall();
       await localCacheService.write(
           cacheUrl, json.encode(apiData), cacheDuration);
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return apiData;
     }
   }

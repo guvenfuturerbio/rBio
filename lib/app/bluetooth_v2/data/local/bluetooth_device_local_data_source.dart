@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:scale_dependencies/scale_dependencies.dart';
 
+import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
 
 abstract class DeviceLocalDataSource {
@@ -144,9 +145,13 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
         }
         await characteristic.setNotifyValue(true);
       });
-    } catch (e) {
+    } catch (e, stackTrace) {
       LoggerUtils.instance
           .e("[BluetoothDeviceLocalDataSourceImpl] - miScaleReadValues() - $e");
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
     }
 
     await for (List<int> value in characteristic.value) {

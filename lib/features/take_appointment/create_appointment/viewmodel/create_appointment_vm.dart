@@ -132,7 +132,11 @@ class CreateAppointmentVm extends ChangeNotifier {
           await departmentSelection(department);
         }
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e("fillFromSymptom: $e");
     }
   }
@@ -162,7 +166,11 @@ class CreateAppointmentVm extends ChangeNotifier {
           doctorSelection(doctor);
         }
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e("fillFromSearch: $e");
     }
   }
@@ -192,7 +200,11 @@ class CreateAppointmentVm extends ChangeNotifier {
           doctorSelection(doctor);
         }
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e("fillFromFavorites: $e");
     }
 
@@ -209,7 +221,11 @@ class CreateAppointmentVm extends ChangeNotifier {
       tenantsFilterResponse = removeOtherTenants(tenantsFilterResponse!);
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -246,7 +262,11 @@ class CreateAppointmentVm extends ChangeNotifier {
       dropdownValueRelative = relativeResponse!.patientRelatives.first;
       relativeProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -294,7 +314,11 @@ class CreateAppointmentVm extends ChangeNotifier {
       progress = LoadingProgress.done;
       departmentProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -344,7 +368,11 @@ class CreateAppointmentVm extends ChangeNotifier {
       filterDepartmentResponse = temp;
       departmentProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -388,7 +416,11 @@ class CreateAppointmentVm extends ChangeNotifier {
       );
       doctorProgress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -508,7 +540,11 @@ class CreateAppointmentVm extends ChangeNotifier {
       notifyListeners();
       //removedTenants.add(onlineAppoTenant);
       return removedTenants;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       progress = LoadingProgress.error;
     }
     return null;
@@ -559,14 +595,22 @@ class CreateAppointmentVm extends ChangeNotifier {
           doctorsImageUrls.add(getIt<KeyManager>().get(Keys.dev4Guven) +
               "/storage/app/media/" +
               tmpResp.image1!);
-        } catch (e) {
+        } catch (e, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(e, stackTrace: stackTrace);
           doctorsImageUrls.add(R.image.circlevatar);
         }
       }
 
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
       progress = LoadingProgress.error;
       notifyListeners();

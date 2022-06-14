@@ -25,7 +25,11 @@ class PatientScaleDetailCubit extends Cubit<ScaleDetailState> {
       Future.microtask(() {
         emit(ScaleDetailState.success(initState));
       });
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       emit(const ScaleDetailState.failure());
     }
   }

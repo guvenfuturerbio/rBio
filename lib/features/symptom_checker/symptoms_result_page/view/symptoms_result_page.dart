@@ -37,7 +37,11 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
           int.parse(Atom.queryParameters['body_part_length']!);
       widget.yearOfBirth = Atom.queryParameters['year_of_birth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 
@@ -140,8 +144,11 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                     //
                                     child: RbioTextButton(
                                       onPressed: () {
-                                        getIt<IAppConfig>().platform.adjustManager?.trackEvent(
-                                            MyResultsSearchAppointmentEvent());
+                                        getIt<IAppConfig>()
+                                            .platform
+                                            .adjustManager
+                                            ?.trackEvent(
+                                                MyResultsSearchAppointmentEvent());
                                         getIt<FirebaseAnalyticsManager>()
                                             .logEvent(
                                           SonuclarimRandevuAraEvent(
@@ -293,8 +300,11 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                             },
                                           );
                                         } else {
-                                          getIt<IAppConfig>().platform.adjustManager?.trackEvent(
-                                              MyResultsSearchAppointmentEvent());
+                                          getIt<IAppConfig>()
+                                              .platform
+                                              .adjustManager
+                                              ?.trackEvent(
+                                                  MyResultsSearchAppointmentEvent());
                                           getIt<FirebaseAnalyticsManager>()
                                               .logEvent(
                                             SonuclarimRandevuAraEvent(

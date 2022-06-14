@@ -75,7 +75,11 @@ class _CreateAppointmentSummaryScreenState
       from = Atom.queryParameters['from'] as String;
       to = Atom.queryParameters['to'] as String;
       forOnline = Atom.queryParameters['forOnline'] == 'true';
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

@@ -36,7 +36,11 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
             DoctorScaleDietAddEditResult(response: response),
           ),
         );
-      } catch (error) {
+      } catch (error, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(error, stackTrace: stackTrace);
         emit(const DoctorScaleDietAddEditState.failure());
       }
     }
@@ -84,7 +88,11 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
             ),
           );
           emit(const DoctorScaleDietAddEditState.openListScreen());
-        } catch (error) {
+        } catch (error, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(error, stackTrace: stackTrace);
           _emitSuccessFailure(result);
         }
       },
@@ -99,7 +107,11 @@ class DoctorScaleDietAddEditCubit extends Cubit<DoctorScaleDietAddEditState> {
           _emitSuccessLoadInProgress(result);
           await repository.deleteNoteDiet(itemId!);
           emit(const DoctorScaleDietAddEditState.openListScreen());
-        } catch (error) {
+        } catch (error, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(error, stackTrace: stackTrace);
           _emitSuccessFailure(result);
         }
       },

@@ -141,6 +141,10 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
       _stateProcessPatientDetail = LoadingProgress.done;
       notifyListeners();
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       LoggerUtils.instance.e(e.toString());
       debugPrintStack(stackTrace: stk);
       showInformationDialog(LocaleProvider.current.sorry_dont_transaction);
@@ -214,11 +218,14 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   Map<Color, GlucoseMarginsFilter> get colorInfo {
     _colorInfo.putIfAbsent(
         getIt<IAppConfig>().theme.veryLow, () => GlucoseMarginsFilter.veryLow);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.low, () => GlucoseMarginsFilter.low);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.target, () => GlucoseMarginsFilter.target);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.high, () => GlucoseMarginsFilter.high);
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.veryHigh, () => GlucoseMarginsFilter.veryHigh);
+        getIt<IAppConfig>().theme.low, () => GlucoseMarginsFilter.low);
+    _colorInfo.putIfAbsent(
+        getIt<IAppConfig>().theme.target, () => GlucoseMarginsFilter.target);
+    _colorInfo.putIfAbsent(
+        getIt<IAppConfig>().theme.high, () => GlucoseMarginsFilter.high);
+    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.veryHigh,
+        () => GlucoseMarginsFilter.veryHigh);
     return _colorInfo;
   }
 
@@ -250,6 +257,10 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
       updateBgMeasurement();
       notifyListeners();
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
     }
   }
@@ -260,6 +271,10 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
       updateBgMeasurement();
       notifyListeners();
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
     }
   }
@@ -279,6 +294,10 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
 
       notifyListeners();
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
     }
   }

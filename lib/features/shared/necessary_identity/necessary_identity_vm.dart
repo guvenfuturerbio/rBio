@@ -16,7 +16,11 @@ class NecessaryIdentityScreenVm extends RbioVm {
         await getIt<UserManager>().updateIdentityOps(identityNumber);
         hideDialog();
         Atom.dismiss();
-      } catch (e) {
+      } catch (e, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stackTrace);
         hideDialog();
         showWarningDialog(e);
       }

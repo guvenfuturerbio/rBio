@@ -63,7 +63,11 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
   Widget build(BuildContext context) {
     try {
       identityNumber = Atom.queryParameters['identityNumber']!;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

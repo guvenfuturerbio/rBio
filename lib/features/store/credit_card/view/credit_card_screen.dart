@@ -25,7 +25,11 @@ class CreditCardScreen extends StatelessWidget {
       packageName =
           Uri.decodeFull(Atom.queryParameters['packageName'].toString());
       price = Atom.queryParameters['price'].toString();
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

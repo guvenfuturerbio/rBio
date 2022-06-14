@@ -67,7 +67,11 @@ class SymptomsResultPageVm extends ChangeNotifier {
       specialisations = specialisationsList;
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
       progress = LoadingProgress.error;
       notifyListeners();
@@ -103,7 +107,11 @@ class SymptomsResultPageVm extends ChangeNotifier {
         }
       });
       return resultId;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
     }
   }

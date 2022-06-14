@@ -42,7 +42,11 @@ class RequestSuggestionsScreenVm extends RbioVm {
         LocaleProvider.current.info,
         LocaleProvider.current.suggestion_thanks_message,
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       notifyListeners();
     } finally {
       progressOverlay = false;

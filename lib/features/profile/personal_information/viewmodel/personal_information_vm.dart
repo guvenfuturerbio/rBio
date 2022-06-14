@@ -92,6 +92,10 @@ class PersonalInformationScreenVm extends RbioVm {
       );
       Utils.instance.hideKeyboard(mContext);
     } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showDefaultErrorDialog(e, stackTrace);
     } finally {
       showLoadingOverlay = false;
@@ -121,7 +125,11 @@ class PersonalInformationScreenVm extends RbioVm {
         newProfileFile = File(imageFile.path);
         notifyListeners();
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     }
   }
@@ -140,6 +148,10 @@ class PersonalInformationScreenVm extends RbioVm {
         notifyListeners();
       }
     } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showDefaultErrorDialog(e, stackTrace);
     } finally {
       showLoadingOverlay = false;
@@ -162,6 +174,10 @@ class PersonalInformationScreenVm extends RbioVm {
         notifyListeners();
       }
     } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showDefaultErrorDialog(e, stackTrace);
     }
   }
