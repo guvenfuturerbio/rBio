@@ -99,7 +99,11 @@ class ScaleManuelAddCubit extends Cubit<ScaleManuelAddState> {
           } else {
             emit(const ScaleManuelAddState.failure());
           }
-        } catch (e) {
+        } catch (e, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(e, stackTrace: stackTrace);
           emit(const ScaleManuelAddState.failure());
         }
       },

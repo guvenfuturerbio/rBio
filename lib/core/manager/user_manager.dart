@@ -8,7 +8,8 @@ import '../../model/model.dart';
 import '../core.dart';
 
 abstract class UserManager {
-  Future<RbioLoginResponse> login(String userName, String password, String consentId);
+  Future<RbioLoginResponse> login(
+      String userName, String password, String consentId);
   Future<void> saveLoginInfo(
     String userName,
     String password,
@@ -38,7 +39,8 @@ class UserManagerImpl extends UserManager {
   );
 
   @override
-  Future<RbioLoginResponse> login(String userName, String password, String consentId) async {
+  Future<RbioLoginResponse> login(
+      String userName, String password, String consentId) async {
     var either = await _repository.login(userName, password, consentId);
     return either.fold(
       (response) async {
@@ -154,11 +156,12 @@ class UserManagerImpl extends UserManager {
     final token = _sharedPreferencesManager.get(SharedPreferencesKeys.jwtToken);
     final userLoginInfo = getSavedLoginInfo();
     await login(
-      userLoginInfo.username as String,
-      _sharedPreferencesManager
-              .getString(SharedPreferencesKeys.loginPassword) ??
-          '', _sharedPreferencesManager.getString(SharedPreferencesKeys.consentId) ?? ''
-    );
+        userLoginInfo.username as String,
+        _sharedPreferencesManager
+                .getString(SharedPreferencesKeys.loginPassword) ??
+            '',
+        _sharedPreferencesManager.getString(SharedPreferencesKeys.consentId) ??
+            '');
     if (userLoginInfo.username != null &&
         userLoginInfo.password != null &&
         token != null) {
@@ -256,7 +259,10 @@ class UserManagerImpl extends UserManager {
                 );
               },
               onConferenceTerminated: (message, _) async {
-                getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulVideoCallEvent());
+                getIt<IAppConfig>()
+                    .platform
+                    .adjustManager
+                    ?.trackEvent(SuccessfulVideoCallEvent());
                 getIt<FirebaseAnalyticsManager>()
                     .logEvent(VideoCallSuccessfulEvent());
                 await showDialog(
@@ -302,7 +308,11 @@ class UserManagerImpl extends UserManager {
       } else {
         return false;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -332,7 +342,11 @@ class UserManagerImpl extends UserManager {
       kvkkApproveResponse =
           KvkkApproveResponse.fromJson(datum as Map<String, dynamic>);
       return kvkkApproveResponse.isKVKKAprovved!;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }

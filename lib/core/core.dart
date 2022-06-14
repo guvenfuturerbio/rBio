@@ -46,6 +46,7 @@ export 'manager/firebase_messaging_manager.dart';
 export 'manager/adjust_manager.dart';
 export "manager/user_manager.dart";
 export 'manager/url_launcher_manager.dart';
+export 'manager/sentry_manager.dart';
 
 export 'navigation/app_paths.dart';
 

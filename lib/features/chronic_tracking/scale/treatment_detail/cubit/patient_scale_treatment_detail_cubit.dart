@@ -29,7 +29,11 @@ class PatientScaleTreatmentDetailCubit
           PatientScaleTreatmentDetailResult(response: response),
         ),
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       emit(const PatientScaleTreatmentDetailState.failure());
     }
   }
@@ -68,7 +72,11 @@ class PatientScaleTreatmentDetailCubit
             ),
           );
           emit(const PatientScaleTreatmentDetailState.openListScreen());
-        } catch (error) {
+        } catch (error, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(error, stackTrace: stackTrace);
           emit(const PatientScaleTreatmentDetailState.failure());
         }
       },

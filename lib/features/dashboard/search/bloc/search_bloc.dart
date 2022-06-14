@@ -34,7 +34,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     try {
       allSocialList = await repository.getAllSocialResources();
       emit(SearchState.success(allSocialList, socialTypes));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       LoggerUtils.instance.e(error);
       emit(const SearchState.failure());
     }
@@ -57,7 +61,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         searchList.addAll(futureList[0]);
         searchList.addAll(futureList[1]);
         emit(SearchState.success(searchList, socialTypes));
-      } catch (error) {
+      } catch (error, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(error, stackTrace: stackTrace);
         LoggerUtils.instance.e(error);
         emit(const SearchState.failure());
       }
@@ -108,7 +116,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         var tmpList =
             await repository.getPostWithTagsByPlatform(item.xGetTitle);
         result.addAll(tmpList);
-      } catch (error) {
+      } catch (error, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(error, stackTrace: stackTrace);
         LoggerUtils.instance.e(error);
         emit(const SearchState.failure());
       }

@@ -4,7 +4,13 @@ abstract class IAppPlatformConfig {
   FirebaseOptions? options;
   AdjustManager? adjustManager;
   RecaptchaManager? recaptchaManager;
-  IAppPlatformConfig(this.options, this.adjustManager, this.recaptchaManager);
+  late SentryManager sentryManager;
+  IAppPlatformConfig(
+    this.options,
+    this.adjustManager,
+    this.recaptchaManager,
+    this.sentryManager,
+  );
   Widget runApp(String initialRoute);
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager);
   Future<void> sendFirstOpenFirebaseEvent(

@@ -46,8 +46,12 @@ class Repository {
     try {
       final response = await apiService.login(username, password, consentId);
       return left(response);
-    } on RbioClientException catch (e) {
+    } on RbioClientException catch (e, stackTrace) {
       final errorData = e.xGetModel<RbioLoginResponse>(RbioLoginResponse());
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       if (errorData != null) {
         final httpStatusCode = errorData.ssoResponse?.httpStatusCode ?? 200;
         final errorDescription = errorData.ssoResponse?.errorDescription;
@@ -65,7 +69,11 @@ class Repository {
       return right(const LoginExceptions.serverError());
     } on RbioNetworkException {
       return right(const LoginExceptions.networkError());
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return right(const LoginExceptions.undefined());
     }
 
@@ -281,7 +289,11 @@ class Repository {
           return right(const ForgotPasswordExceptions.phoneNumberNotMatch());
         }
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return right(const ForgotPasswordExceptions.undefined());
     }
 
@@ -302,7 +314,11 @@ class Repository {
       } else if (response.datum == R.apiEnums.changePassword.systemError) {
         return right(const ChangePasswordExceptions.systemError());
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return right(const ChangePasswordExceptions.undefined());
     }
 

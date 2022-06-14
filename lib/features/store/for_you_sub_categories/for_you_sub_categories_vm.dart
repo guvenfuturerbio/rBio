@@ -24,7 +24,11 @@ class ForUSubCategoriesScreenVm extends ChangeNotifier {
       categories = await getIt<Repository>().getAllSubCategories(id);
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       progress = LoadingProgress.error;
       showGradientDialog(
         mContext!,

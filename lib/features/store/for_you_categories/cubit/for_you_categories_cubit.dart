@@ -17,7 +17,11 @@ class ForYouCategoriesCubit extends Cubit<ForYouCategoriesState> {
       emit(const ForYouCategoriesState.loadInProgress());
       final categories = await repository.getAllPackage();
       emit(ForYouCategoriesState.success(categories));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       emit(const ForYouCategoriesState.failure());
     }
   }

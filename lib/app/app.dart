@@ -34,8 +34,7 @@ class MobileMyApp extends StatelessWidget with MyApp {
         listener: (context, miScaleStatus) {
           if (miScaleStatus.status == DeviceStatus.connected) {
             if (miScaleStatus.device != null) {
-              BlocProvider.of<MiScaleOpsCubit>(context)
-                  .readValue(miScaleStatus.device!);
+              BlocProvider.of<MiScaleOpsCubit>(context).readValue(miScaleStatus.device!);
             }
           } else if (miScaleStatus.status == DeviceStatus.disconnected) {
             BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
@@ -166,8 +165,12 @@ class _MyAppCommonState extends State<MyAppCommon> {
                       try {
                         Atom.dismiss();
                         data.stopRedirection();
-                      } catch (e) {
+                      } catch (e, stackTrace) {
                         LoggerUtils.instance.i(e);
+                        getIt<IAppConfig>()
+                            .platform
+                            .sentryManager
+                            .captureException(e, stackTrace: stackTrace);
                       }
                     } else {
                       final currentUrl = data.fromUrl ?? "";
@@ -201,8 +204,7 @@ class _MyAppCommonState extends State<MyAppCommon> {
                   //
                   theme: ThemeData(
                     primaryColor: getIt<IAppConfig>().theme.mainColor,
-                    scaffoldBackgroundColor:
-                        getIt<IAppConfig>().theme.scaffoldBackgroundColor,
+                    scaffoldBackgroundColor: getIt<IAppConfig>().theme.scaffoldBackgroundColor,
                     fontFamily: getIt<IAppConfig>().theme.fontFamily,
                     textTheme: getIt<IAppConfig>().theme.textTheme,
                     textSelectionTheme: TextSelectionThemeData(
@@ -222,8 +224,7 @@ class _MyAppCommonState extends State<MyAppCommon> {
                     GlobalCupertinoLocalizations.delegate,
                     DefaultCupertinoLocalizations.delegate
                   ],
-                  supportedLocales:
-                      context.read<LocaleNotifier>().supportedLocales,
+                  supportedLocales: context.read<LocaleNotifier>().supportedLocales,
                   onPop: (vRedirector) async {},
                 );
               },

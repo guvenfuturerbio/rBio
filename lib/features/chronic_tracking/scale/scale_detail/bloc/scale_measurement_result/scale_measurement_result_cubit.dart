@@ -44,7 +44,11 @@ class ScaleMeasurementResultCubit extends Cubit<ScaleMeasurementResultState> {
           } else {
             emit(const ScaleMeasurementResultState.failure());
           }
-        } catch (e) {
+        } catch (e, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(e, stackTrace: stackTrace);
           emit(const ScaleMeasurementResultState.failure());
         }
       },

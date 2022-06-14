@@ -46,7 +46,11 @@ class SymptomsHomeVm extends ChangeNotifier {
           .setString(SharedPreferencesKeys.symtomAuthToken, tokenOfSymptom!);
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       progress = LoadingProgress.error;
       LoggerUtils.instance.i(e);
       notifyListeners();

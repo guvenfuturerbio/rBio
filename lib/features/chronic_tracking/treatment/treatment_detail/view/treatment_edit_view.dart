@@ -50,7 +50,11 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
         throw Exception('treatment_model argument does not exist');
       }
       textEditingController.text = _treatmentModel!.treatment!;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

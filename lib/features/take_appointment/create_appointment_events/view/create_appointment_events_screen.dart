@@ -46,7 +46,11 @@ class _CreateAppointmentEventsScreenState
       widget.resourceName =
           Uri.decodeFull(Atom.queryParameters['resourceName']!);
       widget.forOnline = Atom.queryParameters['forOnline'] == 'true';
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

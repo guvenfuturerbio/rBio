@@ -71,7 +71,11 @@ class BodySublocationsVm extends ChangeNotifier {
       await expControllerCreator();
       notifyListeners();
       await fetchBodySymptoms(bodySubLocationsList, genderId);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
       progress = LoadingProgress.error;
       notifyListeners();
@@ -95,7 +99,11 @@ class BodySublocationsVm extends ChangeNotifier {
       allBodySymptoms = tmpAllSymp;
       symptomControl = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       symptomControl = LoadingProgress.error;
       notifyListeners();
       LoggerUtils.instance.i(e);

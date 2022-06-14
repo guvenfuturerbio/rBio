@@ -63,7 +63,11 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
         );
         _showOverlay = false;
         notifyListeners();
-      } catch (e) {
+      } catch (e, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(e, stackTrace: stackTrace);
         showGradientDialog(LocaleProvider.current.warning,
             LocaleProvider.current.sorry_dont_transaction);
         _showOverlay = false;
@@ -163,7 +167,11 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
             LocaleProvider.of(mContext).card_holder_cannot_empty);
       }
       return isCorrect;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showGradientDialog(LocaleProvider.of(mContext).warning,
           LocaleProvider.of(mContext).check_and_try_again);
       return false;

@@ -17,7 +17,11 @@ class ShoppingCartScreenVm extends ChangeNotifier {
       notifyListeners();
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       progress = LoadingProgress.error;
       showGradientDialog(mContext!, LocaleProvider.current.warning,
           LocaleProvider.current.sorry_dont_transaction);

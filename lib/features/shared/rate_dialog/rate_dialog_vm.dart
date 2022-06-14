@@ -28,7 +28,11 @@ class RateDialogVm extends ChangeNotifier {
               GetAvailabilityRateRequest(availabilityId: availabilityId));
       notifyListeners();
       hideDialog(mContext!);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       hideDialog(mContext!);
     }
   }
@@ -68,7 +72,11 @@ class RateDialogVm extends ChangeNotifier {
       hideDialog(mContext!);
       showGradientDialog(LocaleProvider.current.info,
           LocaleProvider.current.suggestion_thanks_message);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       hideDialog(mContext!);
       LoggerUtils.instance.i("rateAppointment Error " + e.toString());
       Navigator.pop(mContext!);

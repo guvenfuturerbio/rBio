@@ -16,7 +16,11 @@ extension RbioClientExceptionExt on RbioClientException {
       if (data is Map<String, dynamic>) {
         try {
           return GuvenResponseModel.fromJson(data as Map<String, dynamic>);
-        } catch (e) {
+        } catch (e, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(e, stackTrace: stackTrace);
           return null;
         }
       }

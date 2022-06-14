@@ -32,6 +32,10 @@ class DoctorConsultationVm extends RbioVm {
       }
       progress = LoadingProgress.done;
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
       progress = LoadingProgress.error;
       showGradientDialog(

@@ -5,19 +5,21 @@ abstract class IOneDosePlatformConfig extends IAppPlatformConfig {
     FirebaseOptions? options,
     AdjustManager? adjustManager,
     RecaptchaManager? recaptchaManager,
-  ) : super(options, adjustManager, recaptchaManager);
+  ) : super(
+          options,
+          adjustManager,
+          recaptchaManager,
+          OneDoseSentryManagerImpl(),
+        );
 }
 
-class OneDoseMobilePlatformConfig extends IOneDosePlatformConfig
-    with IAppMobilePlatformConfig {
+class OneDoseMobilePlatformConfig extends IOneDosePlatformConfig with IAppMobilePlatformConfig {
   OneDoseMobilePlatformConfig() : super(null, OneDoseAdjustManagerImpl(), null);
 
   @override
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
     String initialRoute = PagePaths.login;
-    final mobileIntroduction =
-        sharedPreferencesManager.getBool(SharedPreferencesKeys.firstLaunch) ??
-            false;
+    final mobileIntroduction = sharedPreferencesManager.getBool(SharedPreferencesKeys.firstLaunch) ?? false;
     if (!mobileIntroduction) {
       initialRoute = PagePaths.onboarding;
     }
@@ -31,8 +33,7 @@ class OneDoseMobilePlatformConfig extends IOneDosePlatformConfig
   bool checkMedimender() => true;
 }
 
-class OneDoseWebPlatformConfig extends IOneDosePlatformConfig
-    with IAppWebPlatformConfig {
+class OneDoseWebPlatformConfig extends IOneDosePlatformConfig with IAppWebPlatformConfig {
   OneDoseWebPlatformConfig()
       : super(
             const FirebaseOptions(

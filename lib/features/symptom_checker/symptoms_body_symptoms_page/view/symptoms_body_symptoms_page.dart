@@ -36,7 +36,11 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
     try {
       AppInheritedWidget.of(context)?.bodyLocationRsp = null;
       AppInheritedWidget.of(context)?.listBodySympRsp = [];
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
     }
     super.dispose();
@@ -54,7 +58,11 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
           int.parse(Atom.queryParameters['selectedGenderId'] as String);
       widget.yearOfBirth = Atom.queryParameters['yearOfBirth'] as String;
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 
@@ -230,7 +238,9 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
               ? () async {
                   AppInheritedWidget.of(context)?.listBodySympRsp =
                       value.selectedBodySymptoms;
-                  getIt<IAppConfig>().platform.adjustManager
+                  getIt<IAppConfig>()
+                      .platform
+                      .adjustManager
                       ?.trackEvent(MySymptomsPage4DepartmentAnalysisEvent());
                   getIt<FirebaseAnalyticsManager>().logEvent(
                     SikayetlerimSayfa4BolumAnaliziYapin(

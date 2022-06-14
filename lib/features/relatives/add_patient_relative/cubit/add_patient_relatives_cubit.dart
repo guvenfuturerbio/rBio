@@ -36,7 +36,11 @@ class AddPatientRelativesCubit extends Cubit<AddPatientRelativesState> {
         _analyticsManager.logEvent(YakinEklemeBasariliEvent(-1));
         emit(state.copyWith(status: AddPatientRelativesStatus.failure));
       }
-    } catch (error) {
+    } catch (error, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(error, stackTrace: stackTrace);
       LoggerUtils.instance.w(error);
       _analyticsManager.logEvent(YakinEklemeHataEvent());
       emit(state.copyWith(status: AddPatientRelativesStatus.failure));

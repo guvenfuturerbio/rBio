@@ -46,7 +46,11 @@ class LocalCacheServiceImpl extends LocalCacheService {
       final jsonString = jsonEncode(cacheModel.toJson());
       await box.put(url, jsonString);
       return true;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -56,7 +60,11 @@ class LocalCacheServiceImpl extends LocalCacheService {
     try {
       await box.delete(url);
       return true;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -66,7 +74,11 @@ class LocalCacheServiceImpl extends LocalCacheService {
     try {
       await box.clear();
       return true;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return false;
     }
   }

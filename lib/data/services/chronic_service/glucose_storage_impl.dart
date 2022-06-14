@@ -132,7 +132,11 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       } else {
         return false;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
       rethrow;
     }
@@ -159,6 +163,10 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
         return false;
       }
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
       LoggerUtils.instance.e(e);
       rethrow;
@@ -196,7 +204,11 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       } else {
         throw Exception('could not find correct data in the bpx');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -261,7 +273,11 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       getIt<ChronicTrackingRepository>().deleteBloodGlucoseValue(
           DeleteBloodGlucoseMeasurementRequest.fromJson(
               deleteMeasurementRequest));
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -294,7 +310,11 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       }
 
       throw Exception("datum isn't int");
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -313,7 +333,11 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
           date: data.date,
         ),
       );
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -325,7 +349,11 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
         getIt<ProfileStorageImpl>().getFirst().id ?? 0,
         measurementId,
       );
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -391,6 +419,10 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       }
       return [];
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
       return [];
     }

@@ -69,7 +69,11 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
     try {
       patientId = int.parse(Atom.queryParameters['patientId'] as String);
       patientName = Atom.queryParameters['patientName'];
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
     MediaQuery.of(context).orientation == Orientation.landscape

@@ -12,7 +12,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
     try {
       final result = localDataSource.readBluetoothStatus();
       return Right(result.map((event) => event.xGetStatus));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }
@@ -23,7 +27,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
     try {
       final result = localDataSource.searchDevices(deviceType);
       return Right(result);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }
@@ -33,7 +41,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
     try {
       localDataSource.stopScan();
       return const Right(null);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }
@@ -43,7 +55,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
     try {
       final result = localDataSource.connect(device.xGetModel);
       return Right(result);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }
@@ -53,7 +69,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
     try {
       final result = localDataSource.disconnect(device.xGetModel);
       return Right(result);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }
@@ -64,7 +84,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
     try {
       final result = localDataSource.readStatus(device.xGetModel);
       return Right(result);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }
@@ -84,7 +108,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
           ),
         ),
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }
@@ -94,7 +122,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
     try {
       localDataSource.miScaleStopListen();
       return const Right(null);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }
@@ -105,7 +137,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
   ) {
     try {
       return Right(localDataSource.getLastStateOfDevice(device.xGetModel));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }
@@ -115,7 +151,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
       DeviceEntity device) {
     try {
       return Right(localDataSource.pillarSmallTrigger(device.xGetModel));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return Left(BluetoothFailure());
     }
   }

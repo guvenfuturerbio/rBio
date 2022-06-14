@@ -28,7 +28,11 @@ class _MagazinesWebViewState extends State<MagazinesWebView> {
   Widget build(BuildContext context) {
     try {
       magazineUrl = Atom.queryParameters['magazineUrl'];
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

@@ -35,7 +35,11 @@ class DoctorScaleTreatmentAddEditCubit
             DoctorScaleTreatmentAddEditResult(response: response),
           ),
         );
-      } catch (error) {
+      } catch (error, stackTrace) {
+        getIt<IAppConfig>()
+            .platform
+            .sentryManager
+            .captureException(error, stackTrace: stackTrace);
         emit(const DoctorScaleTreatmentAddEditState.failure());
       }
     }
@@ -71,7 +75,11 @@ class DoctorScaleTreatmentAddEditCubit
             ),
           );
           emit(const DoctorScaleTreatmentAddEditState.openListScreen());
-        } catch (error) {
+        } catch (error, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(error, stackTrace: stackTrace);
           _emitSuccessFailure(result);
         }
       },
@@ -86,7 +94,11 @@ class DoctorScaleTreatmentAddEditCubit
           _emitSuccessLoadInProgress(result);
           await repository.deleteTreatmentNote(itemId!);
           emit(const DoctorScaleTreatmentAddEditState.openListScreen());
-        } catch (error) {
+        } catch (error, stackTrace) {
+          getIt<IAppConfig>()
+              .platform
+              .sentryManager
+              .captureException(error, stackTrace: stackTrace);
           _emitSuccessFailure(result);
         }
       },

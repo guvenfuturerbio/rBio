@@ -50,6 +50,10 @@ class HealthInformationVm extends RbioVm {
         );
       }
     } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       showDefaultErrorDialog(e, stackTrace);
     } finally {
       showProgressOverlay = false;

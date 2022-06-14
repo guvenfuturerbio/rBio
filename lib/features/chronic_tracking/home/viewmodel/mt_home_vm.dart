@@ -210,6 +210,10 @@ class MeasurementTrackingVm with ChangeNotifier {
         notifyListeners();
       }
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
       _state = LoadingProgress.error;
       notifyListeners();

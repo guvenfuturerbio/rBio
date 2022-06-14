@@ -31,7 +31,11 @@ class _SymptomsBodyLocationsScreenState
           int.parse(Atom.queryParameters['selectedGenderId'] as String);
       yearOfBirth = Atom.queryParameters['yearOfBirth'];
       isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
-    } catch (_) {
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       return const RbioRouteError();
     }
 

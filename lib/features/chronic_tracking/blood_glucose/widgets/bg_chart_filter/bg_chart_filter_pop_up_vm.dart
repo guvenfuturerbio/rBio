@@ -23,11 +23,14 @@ class BgChartFilterPopUpVm extends ChangeNotifier {
   Map<Color, GlucoseMarginsFilter> get colorInfo {
     _colorInfo.putIfAbsent(
         getIt<IAppConfig>().theme.veryLow, () => GlucoseMarginsFilter.veryLow);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.low, () => GlucoseMarginsFilter.low);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.target, () => GlucoseMarginsFilter.target);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.high, () => GlucoseMarginsFilter.high);
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.veryHigh, () => GlucoseMarginsFilter.veryHigh);
+        getIt<IAppConfig>().theme.low, () => GlucoseMarginsFilter.low);
+    _colorInfo.putIfAbsent(
+        getIt<IAppConfig>().theme.target, () => GlucoseMarginsFilter.target);
+    _colorInfo.putIfAbsent(
+        getIt<IAppConfig>().theme.high, () => GlucoseMarginsFilter.high);
+    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.veryHigh,
+        () => GlucoseMarginsFilter.veryHigh);
     return _colorInfo;
   }
 
@@ -44,6 +47,10 @@ class BgChartFilterPopUpVm extends ChangeNotifier {
       });
       notifyListeners();
     } catch (e, stk) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
     }
   }
