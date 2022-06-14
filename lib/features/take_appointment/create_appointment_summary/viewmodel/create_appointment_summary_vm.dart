@@ -256,7 +256,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
             RbioMessageDialog(
               description: LocaleProvider.current.warning,
               buttonTitle: LocaleProvider.current.ok,
-              isAtom: true,
+              isAtom: false,
             ),
             false,
           );
@@ -330,6 +330,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
         return RbioMessageDialog(
           description: text,
           buttonTitle: LocaleProvider.current.ok,
+          isAtom: false,
         );
       },
     ).then(

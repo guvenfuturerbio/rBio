@@ -57,6 +57,7 @@ class RequestSuggestionsScreenVm extends RbioVm {
         return RbioMessageDialog(
           description: text,
           buttonTitle: LocaleProvider.current.ok,
+          isAtom: false,
         );
       },
     ).then((value) {

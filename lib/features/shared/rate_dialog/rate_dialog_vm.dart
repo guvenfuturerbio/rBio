@@ -85,6 +85,7 @@ class RateDialogVm extends ChangeNotifier {
           return RbioMessageDialog(
             description: text,
             buttonTitle: LocaleProvider.current.ok,
+            isAtom: false,
           );
         }).then((value) {
       Atom.to(PagePaths.main, isReplacement: true);
