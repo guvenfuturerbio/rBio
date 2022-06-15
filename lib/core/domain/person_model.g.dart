@@ -121,7 +121,7 @@ Person _$PersonFromJson(Map<String, dynamic> json) => Person(
       yearOfDiagnosis: json['year_of_diagnosis'] as int? ?? 2021,
       smoker: json['smoker'] as bool? ?? false,
       treatmentList: (json['treatment_list'] as List<dynamic>?)
-          ?.map((e) => TreatmentModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => TreatmentModel.fromJson(e))
           .toList(),
     );
 
@@ -144,5 +144,5 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'manufacturer_id': instance.manufacturerId,
       'year_of_diagnosis': instance.yearOfDiagnosis,
       'smoker': instance.smoker,
-      'treatment_list': instance.treatmentList,
+      'treatment_list': instance.treatmentList?.map((e) => e.toJson()).toList(),
     };

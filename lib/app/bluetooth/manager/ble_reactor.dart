@@ -99,16 +99,18 @@ class BleReactorOps extends ChangeNotifier {
   Future<void> saveGlucoseDatas() async {
     var newData = 0;
     late GlucoseData tempData;
+
     for (final item in _gData) {
-      final bool doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
+      final doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
       if (!doesExist) {
         newData++;
         tempData = item;
       }
     }
+
     if (newData > 1) {
       for (final item in _gData) {
-        final bool doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
+        final doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
         if (!doesExist) {
           getIt<GlucoseStorageImpl>().write(item, shouldSendToServer: true);
         }
@@ -123,6 +125,7 @@ class BleReactorOps extends ChangeNotifier {
         barrierDismissible: false,
       );
     }
+
     getIt<LocalNotificationManager>().show(
       LocaleProvider.current.blood_glucose_measurement,
       LocaleProvider.current.blood_glucose_imported,
@@ -233,8 +236,7 @@ class BleReactorOps extends ChangeNotifier {
     bool _lock = false;
     _ble.subscribeToCharacteristic(writeCharacteristic).listen(
       (recordAccessData) async {
-        LoggerUtils.instance
-            .i("record access data " + recordAccessData.toString());
+        LoggerUtils.instance.i("record access data " + recordAccessData.toString());
         LoggerUtils.instance.i("LOCK :$_lock");
 
         if (!_lock) {

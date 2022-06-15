@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:hive/hive.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 import '../../core/core.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
@@ -12,7 +11,6 @@ import '../../features/chronic_tracking/treatment/treatment_detail/model/treatme
 part 'person_model.g.dart';
 
 @HiveType(typeId: 2)
-@JsonSerializable()
 class Person extends HiveObject {
   static const ID = "id";
   static const USER_ID = 'entegration_id';
@@ -42,87 +40,87 @@ class Person extends HiveObject {
   static const MAX_PERSON = 5;
 
   @HiveField(0)
-  @JsonKey(name: ID)
+  // @JsonKey(name: ID)
   int? userId;
 
   @HiveField(1)
-  @JsonKey(name: USER_ID)
+  // @JsonKey(name: USER_ID)
   int? id;
 
   @HiveField(2)
-  @JsonKey(name: IMAGE_URL)
+  // @JsonKey(name: IMAGE_URL)
   String? imageURL;
 
   @HiveField(3)
-  @JsonKey(name: NAME)
+  // @JsonKey(name: NAME)
   String? name;
 
   @HiveField(4)
-  @JsonKey(name: BIRTH_DATE)
+  // @JsonKey(name: BIRTH_DATE)
   String? birthDate;
 
   @HiveField(5)
-  @JsonKey(name: GENDER)
+  // @JsonKey(name: GENDER)
   String? gender;
 
   @HiveField(6)
-  @JsonKey(name: HEIGHT)
+  // @JsonKey(name: HEIGHT)
   String? height;
 
   @HiveField(7)
-  @JsonKey(name: WEIGHT)
+  // @JsonKey(name: WEIGHT)
   String? weight;
 
   @HiveField(8)
-  @JsonKey(name: DIABETES_TYPE)
+  // @JsonKey(name: DIABETES_TYPE)
   String? diabetesType;
 
   @HiveField(9)
-  @JsonKey(name: HYPO)
+  // @JsonKey(name: HYPO)
   int? hypo;
 
   @HiveField(10)
-  @JsonKey(name: RANGE_MIN)
+  // @JsonKey(name: RANGE_MIN)
   int? rangeMin;
 
   @HiveField(11)
-  @JsonKey(name: 'target')
+  // @JsonKey(name: 'target')
   int? target;
 
   @HiveField(12)
-  @JsonKey(name: RANGE_MAX)
+  // @JsonKey(name: RANGE_MAX)
   int? rangeMax;
 
   @HiveField(13)
-  @JsonKey(name: HYPER)
+  // @JsonKey(name: HYPER)
   int? hyper;
 
   @HiveField(14)
-  @JsonKey(name: DEVICE_UUID)
+  // @JsonKey(name: DEVICE_UUID)
   String? deviceUUID;
 
   @HiveField(15)
-  @JsonKey(name: MANUFACTURER_ID)
+  // @JsonKey(name: MANUFACTURER_ID)
   int? manufacturerId;
 
   @HiveField(16)
-  @JsonKey(name: YEAR_OF_DIGANOSIS)
+  // @JsonKey(name: YEAR_OF_DIGANOSIS)
   int? yearOfDiagnosis;
 
   @HiveField(17)
-  @JsonKey(name: SMOKER)
+  // @JsonKey(name: SMOKER)
   bool?
       smoker; // 0 non smoker , 1 smoker, 2 smokes occasionally, 3 smokes often
 
   @HiveField(18)
-  @JsonKey(ignore: true)
+  // @JsonKey(ignore: true)
   bool? isFirstUser;
 
   @HiveField(19)
-  @JsonKey(name: 'treatment_list')
+  // @JsonKey(name: 'treatment_list')
   List<TreatmentModel>? treatmentList;
 
-  @JsonKey(ignore: true)
+  // @JsonKey(ignore: true)
   File profileImage = File("");
 
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
