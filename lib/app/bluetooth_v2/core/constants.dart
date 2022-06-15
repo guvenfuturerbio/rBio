@@ -11,6 +11,16 @@ class BluetoothConstants {
     serviceUuid: "19b10000-e8f2-537e-4f6c-d104768a1214",
     characteristicUuid: "19b10001-e8f2-537e-4f6c-d104768a1214",
   );
+
+  static const accuChekPair = BluetoothUUIDModel(
+    serviceUuid: "00001808-0000-1000-8000-00805f9b34fb",
+    characteristicUuid: "00002a52-0000-1000-8000-00805f9b34fb",
+  );
+
+  static const accuChekReadGlucoseData = BluetoothUUIDModel(
+    serviceUuid: "00001808-0000-1000-8000-00805f9b34fb",
+    characteristicUuid: "00002a18-0000-1000-8000-00805f9b34fb",
+  );
 }
 
 class BluetoothUUIDModel {

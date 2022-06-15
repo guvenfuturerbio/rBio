@@ -268,22 +268,43 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
     DeviceEntity device,
   ) async {
     if (deviceStatusState == DeviceStatus.connected) {
-      Utils.instance.showSuccessSnackbar(
-        context,
-        LocaleProvider.current.pair_successful,
-      );
-
-      await getIt<BluetoothLocalManager>().savePairedDevices(device);
-
-      _stopScan(context);
-
-      Future.delayed(
-        const Duration(seconds: 1),
-        () {
-          Atom.to(PagePaths.main, isReplacement: true);
-        },
-      );
+      if (device.deviceType == DeviceType.accuCheck) {
+        AccuChekReadDataUseCase useCase = AccuChekReadDataUseCase(getIt());
+        final accuChek = useCase.call(DeviceParams(device: device));
+        accuChek.fold(
+          (l) {
+            LoggerUtils.instance.e("device_search_screen.dart : $l");
+          },
+          (r) async {
+            final accuChekResult = await r;
+            if (accuChekResult) {
+              await saveDevice(device);
+            }
+          },
+        );
+        return;
+      } else {
+        await saveDevice(device);
+      }
     }
+  }
+
+  Future<void> saveDevice(DeviceEntity device) async {
+    Utils.instance.showSuccessSnackbar(
+      context,
+      LocaleProvider.current.pair_successful,
+    );
+
+    await getIt<BluetoothLocalManager>().savePairedDevices(device);
+
+    _stopScan(context);
+
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        Atom.to(PagePaths.main, isReplacement: true);
+      },
+    );
   }
 
   Color _getBackColor(DeviceStatus? deviceStatus) {

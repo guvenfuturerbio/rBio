@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:scale_dependencies/scale_dependencies.dart';
 
 import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
@@ -18,6 +17,7 @@ abstract class DeviceLocalDataSource {
   void miScaleStopListen();
   Future<DeviceStatus> getLastStateOfDevice(DeviceModel device);
   Future<bool> pillarSmallTrigger(DeviceModel device);
+  Future<bool> accuCheckServices(DeviceModel device);
 }
 
 class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
@@ -45,11 +45,7 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
               return true;
             }
           } else if (deviceType == DeviceType.accuCheck) {
-            if (element.device.name.contains("meter") &&
-                element.advertisementData.manufacturerData ==
-                    {
-                      368: [215, 33, 0, 1, 0, 1]
-                    }) {
+            if (element.device.name.contains("meter")) {
               return true;
             }
           } else if (deviceType == DeviceType.pillarSmall) {
@@ -199,5 +195,39 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
         BluetoothConstants.pillarSmall.characteristicUuid);
     await characteristic.write([1]);
     return true;
+  }
+
+  @override
+  Future<bool> accuCheckServices(DeviceModel device) async {
+    // Device Information Service UUID        ->    0000180a-0000-1000-8000-00805f9b34fb
+    //    Model Number String (2a24)          ->    958
+    //    Serial Number String (2a25)         ->    95801859844
+    //    Manufacturer Name String (2a29)     ->    Roche
+
+    // Glucoce Service UUID                   ->    00001808-0000-1000-8000-00805f9b34fb
+    //    Glucoce Measurement (2a18)          ->    -
+    //    Record Access Control Point (2a52)  ->    Bluetooth Eşleme İsteği
+
+    final bluetoothDevice = device.toBluetoothDevice();
+    await bluetoothDevice.connect();
+
+    final ble = device.toBluetoothDevice();
+    final services = await ble.discoverServices();
+    BluetoothService relatedService = services.firstWhere((element) =>
+        element.uuid.toString() == BluetoothConstants.accuChekPair.serviceUuid);
+    var pairCharacteristic = relatedService.characteristics.firstWhere(
+        (element) =>
+            element.uuid.toString() ==
+            BluetoothConstants.accuChekPair.characteristicUuid);
+    try {
+      final charCodes = await pairCharacteristic.write('0x31'.codeUnits);
+      if (charCodes == null) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
   }
 }

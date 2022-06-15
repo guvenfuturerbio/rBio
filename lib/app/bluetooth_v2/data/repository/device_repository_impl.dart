@@ -159,4 +159,18 @@ class DeviceRepositoryImpl extends DeviceRepository {
       return Left(BluetoothFailure());
     }
   }
+
+  @override
+  Either<BluetoothFailures, Future<bool>> accuCheckServices(
+      DeviceEntity device) {
+    try {
+      return Right(localDataSource.accuCheckServices(device.xGetModel));
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
+      return Left(BluetoothFailure());
+    }
+  }
 }

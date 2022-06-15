@@ -82,10 +82,7 @@ class DevicesScreen extends StatelessWidget {
       create: (context) => DeviceStatusCubit(getIt())..readStatus(device),
       child: BlocBuilder<DeviceStatusCubit, DeviceStatus?>(
         builder: (context, deviceStatus) {
-          Widget deviceCard({
-            Widget? pillarSmallTrigger,
-          }) =>
-              DeviceCard(
+          Widget deviceCard({Widget? pillarSmallTrigger}) => DeviceCard(
                 name: device.name,
                 background: _getBackgroundColorV2(deviceStatus),
                 image: UtilityManager()
@@ -107,6 +104,11 @@ class DevicesScreen extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         LoggerUtils.instance.i(device.toJson());
+
+                        if (device.deviceType == DeviceType.accuCheck) {
+                          getIt<AccuChekReadDataUseCase>()
+                              .call(DeviceParams(device: device));
+                        }
                       },
                       icon: Icon(
                         Icons.info,

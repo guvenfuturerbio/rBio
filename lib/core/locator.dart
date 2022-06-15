@@ -41,6 +41,8 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
       () => DeviceLastStatusUseCase(getIt()));
   getIt.registerFactory<PillarSmallTriggerUseCase>(
       () => PillarSmallTriggerUseCase(getIt()));
+  getIt.registerFactory<AccuChekReadDataUseCase>(
+      () => AccuChekReadDataUseCase(getIt()));
   getIt.registerLazySingleton<BluetoothLocalManager>(
       () => BluetoothLocalManager(getIt()));
 

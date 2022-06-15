@@ -68,7 +68,8 @@ class AvailableDevices extends StatelessWidget {
       onTap: (device.enable ?? false)
           ? () {
               if (device.deviceType == DeviceType.miScale ||
-                  device.deviceType == DeviceType.pillarSmall) {
+                  device.deviceType == DeviceType.pillarSmall ||
+                  device.deviceType == DeviceType.accuCheck) {
                 Atom.to(
                   PagePaths.deviceSearch,
                   queryParameters: {
@@ -91,7 +92,9 @@ class AvailableDevices extends StatelessWidget {
             : const EdgeInsets.symmetric(horizontal: 8),
         child: Card(
           elevation: R.sizes.defaultElevation,
-          color: (device.enable ?? false) ? null : getIt<IAppConfig>().theme.bgGray,
+          color: (device.enable ?? false)
+              ? null
+              : getIt<IAppConfig>().theme.bgGray,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),
