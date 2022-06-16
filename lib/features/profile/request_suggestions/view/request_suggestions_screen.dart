@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:provider/provider.dart';
+import 'package:onedosehealth/features/profile/request_suggestions/cubit/request_suggestions_cubit.dart';
 
 import '../../../../core/core.dart';
-import '../viewmodel/request_suggestions_vm.dart';
 
-class RequestSuggestionsScreen extends StatefulWidget {
+class RequestSuggestionsScreen extends StatelessWidget {
   const RequestSuggestionsScreen({Key? key}) : super(key: key);
 
   @override
-  _RequestSuggestionsScreenState createState() =>
-      _RequestSuggestionsScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => RequestSuggestionsCubit(),
+      child: const RequestSuggestionsView(),
+    );
+  }
 }
 
-class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
+class RequestSuggestionsView extends StatefulWidget {
+  const RequestSuggestionsView({Key? key}) : super(key: key);
+
+  @override
+  _RequestSuggestionsViewState createState() => _RequestSuggestionsViewState();
+}
+
+class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
   late TextEditingController textEditingController;
   late FocusNode focusNode;
 
@@ -34,23 +45,33 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RequestSuggestionsScreenVm>(
-      create: (context) => RequestSuggestionsScreenVm(context),
-      child: Consumer<RequestSuggestionsScreenVm>(
-        builder: (
-          BuildContext context,
-          RequestSuggestionsScreenVm vm,
-          Widget? child,
-        ) {
-          return KeyboardDismissOnTap(
-            child: RbioStackedScaffold(
-              isLoading: vm.progressOverlay,
-              appbar: _buildAppBar(context),
-              body: _buildBody(vm, context),
-            ),
+    return BlocConsumer<RequestSuggestionsCubit, RequestSuggestionsState>(
+      listener: (BuildContext context, RequestSuggestionsState state) {
+        if (state.status == RequestSuggestionsStatus.success) {
+          showWarningDialog(
+            context,
+            LocaleProvider.current.info,
+            LocaleProvider.current.suggestion_thanks_message,
           );
-        },
-      ),
+        } else if (state.status == RequestSuggestionsStatus.failure) {
+          showWarningDialog(
+            context,
+            LocaleProvider.current.warning,
+            LocaleProvider.current.something_went_wrong,
+          );
+        }
+        ;
+      },
+      builder: (BuildContext context, RequestSuggestionsState state) {
+        return KeyboardDismissOnTap(
+          child: RbioStackedScaffold(
+            isLoading: state.status == RequestSuggestionsStatus.loadInProgress,
+            appbar: _buildAppBar(context),
+            // body: Container(),
+            body: _buildBody(context),
+          ),
+        );
+      },
     );
   }
 
@@ -64,9 +85,11 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
   }
 
   Widget _buildBody(
-    RequestSuggestionsScreenVm vm,
     BuildContext context,
   ) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    String textSuggestion = '';
+
     return SingleChildScrollView(
       padding: EdgeInsets.zero,
       physics: const BouncingScrollPhysics(),
@@ -100,7 +123,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
 
             //
             Form(
-              key: vm.formKey,
+              key: formKey,
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.40,
                 decoration: BoxDecoration(
@@ -110,7 +133,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
                 child: ClipRRect(
                   borderRadius: R.sizes.borderRadiusCircular,
                   child: RbioTextFormField(
-                    autovalidateMode: vm.autovalidateMode,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value?.isNotEmpty ?? false) {
                         return null;
@@ -125,7 +148,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
                     maxLines: null,
                     textInputAction: TextInputAction.newline,
                     onChanged: (text) {
-                      vm.setText(text);
+                      textSuggestion = text;
                     },
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(500),
@@ -140,7 +163,7 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                vm.textLength.toString() + "/500",
+                textSuggestion.length.toString() + "/500",
                 style: context.xHeadline5,
               ),
             ),
@@ -153,8 +176,10 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
               child: RbioElevatedButton(
                 title: LocaleProvider.current.send,
                 onTap: () {
-                  if (vm.formKey?.currentState?.validate() ?? false) {
-                    vm.sendSuggestion();
+                  if (formKey.currentState?.validate() ?? false) {
+                    context
+                        .read<RequestSuggestionsCubit>()
+                        .sendSuggestion(text: textSuggestion);
                   } else {
                     LocaleProvider.current.validation;
                   }
@@ -169,5 +194,21 @@ class _RequestSuggestionsScreenState extends State<RequestSuggestionsScreen> {
         ),
       ),
     );
+  }
+
+  void showWarningDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return RbioMessageDialog(
+          description: text,
+          buttonTitle: LocaleProvider.current.Ok,
+          isAtom: false,
+        );
+      },
+    ).then((value) {
+      Atom.to(PagePaths.main, isReplacement: true);
+    });
   }
 }
