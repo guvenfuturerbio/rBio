@@ -458,6 +458,11 @@ class Repository {
               doMobilePaymentWithVoucherRequest) =>
       apiService.doMobilePaymentWithVoucher(doMobilePaymentWithVoucherRequest);
 
+  Future<GuvenResponseModel> doMobilePayment(
+          DoMobilePaymentWithVoucherRequest
+              doMobilePaymentWithVoucherRequest) =>
+      apiService.doMobilePayment(doMobilePaymentWithVoucherRequest);
+
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
       FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
     final url = getIt<IAppConfig>().endpoints.base.fetchOnlineDepartmentsPath;
