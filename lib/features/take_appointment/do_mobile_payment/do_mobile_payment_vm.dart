@@ -186,6 +186,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
         return RbioMessageDialog(
           description: text,
           buttonTitle: LocaleProvider.of(context).Ok,
+          isAtom: false,
         );
       },
     );

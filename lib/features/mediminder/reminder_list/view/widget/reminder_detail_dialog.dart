@@ -10,15 +10,13 @@ class ReminderDetailDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: context.width - 50,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: context.scaffoldBackgroundColor,
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
-        child: Column(
+    return RbioBaseGreyDialog(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -115,6 +113,7 @@ class ReminderDetailDialog extends StatelessWidget {
             ),
           ],
         ),
+        ],
       ),
     );
   }
