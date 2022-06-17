@@ -180,11 +180,11 @@ class GlucoseData extends HiveObject {
     if (other.isFromHealth) {
       return level == other.level && date == other.date;
     }
-    return jsonEncode(toMap()) == jsonEncode(other.toMap());
+
+    final isEqual = jsonEncode(toMap()) == jsonEncode(other.toMap());
+    return isEqual;
   }
 
   @override
-  // TODO: implement hashCode
   int get hashCode => super.hashCode;
-
 }

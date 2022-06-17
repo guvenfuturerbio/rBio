@@ -100,9 +100,13 @@ class BleReactorOps extends ChangeNotifier {
     var newData = 0;
     late GlucoseData tempData;
 
+    LoggerUtils.instance.i("Step-4");
+
     for (final item in _gData) {
+      LoggerUtils.instance.i("Step-4 - $item");
       final doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
       if (!doesExist) {
+        LoggerUtils.instance.i("Step-4 - $item - $doesExist");
         newData++;
         tempData = item;
       }
@@ -110,13 +114,16 @@ class BleReactorOps extends ChangeNotifier {
 
     if (newData > 1) {
       for (final item in _gData) {
+        LoggerUtils.instance.i("Step-5 - $item - $newData");
         final doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
         if (!doesExist) {
+          LoggerUtils.instance.i("Step-5 - $item - $newData - $doesExist");
           getIt<GlucoseStorageImpl>().write(item, shouldSendToServer: true);
         }
       }
     } else if (newData == 1) {
       tempData.userId = getIt<ProfileStorageImpl>().getFirst().id;
+      LoggerUtils.instance.i("Step-6 - ${tempData.userId}");
       Atom.show(
         BgTaggerPopUp(
           data: tempData,
@@ -130,6 +137,7 @@ class BleReactorOps extends ChangeNotifier {
       LocaleProvider.current.blood_glucose_measurement,
       LocaleProvider.current.blood_glucose_imported,
     );
+    LoggerUtils.instance.i("Step-7 - ${tempData.userId}");
   }
 
   final flutterLocalNotificationsPlugin = ln.FlutterLocalNotificationsPlugin();
@@ -148,6 +156,8 @@ class BleReactorOps extends ChangeNotifier {
 
     // ! DeviceType
     pairedDevice.deviceType = Utils.instance.getDeviceType(device);
+
+    LoggerUtils.instance.i("Step-1 $pairedDevice");
 
     final writeCharacteristic = QualifiedCharacteristic(
       serviceId: Uuid.parse("1808"),
@@ -219,16 +229,20 @@ class BleReactorOps extends ChangeNotifier {
 
     _ble.subscribeToCharacteristic(subsCharacteristic).listen(
       (measurementData) {
+        LoggerUtils.instance.i("Step-2 $measurementData");
+
         _measurements.add(measurementData);
         _gData
             .add(parseGlucoseDataFromReadingInstance(measurementData, device));
         notifyListeners();
       },
       onError: (dynamic error) {
+        LoggerUtils.instance.i("Step-2 $error");
         LoggerUtils.instance.d("subs characteristic error $error");
         LoggerUtils.instance.d(error.toString());
       },
       onDone: () {
+        LoggerUtils.instance.i("Step-2 done");
         LoggerUtils.instance.d("done");
       },
     );
@@ -236,10 +250,13 @@ class BleReactorOps extends ChangeNotifier {
     bool _lock = false;
     _ble.subscribeToCharacteristic(writeCharacteristic).listen(
       (recordAccessData) async {
-        LoggerUtils.instance.i("record access data " + recordAccessData.toString());
+        LoggerUtils.instance.i("Step-3 $recordAccessData");
+        LoggerUtils.instance
+            .i("record access data " + recordAccessData.toString());
         LoggerUtils.instance.i("LOCK :$_lock");
 
         if (!_lock) {
+          LoggerUtils.instance.i("Step-3 - !_lock $_lock");
           _lock = true;
           bool isSucces =
               await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
@@ -248,6 +265,7 @@ class BleReactorOps extends ChangeNotifier {
               : _controlPointResponse.clear();
 
           if (isSucces) {
+            LoggerUtils.instance.i("Step-3 - isSucces $_lock");
             var localUser = getIt<ProfileStorageImpl>().getFirst();
             var newPerson = Person.fromJson(localUser.toJson());
             newPerson.deviceUUID = pairedDevice.deviceId;
@@ -255,6 +273,7 @@ class BleReactorOps extends ChangeNotifier {
               newPerson,
               localUser.key,
             );
+            LoggerUtils.instance.i("Step-3 - done $_lock");
           }
 
           _lock = false;
@@ -262,6 +281,7 @@ class BleReactorOps extends ChangeNotifier {
 
         await saveGlucoseDatas();
         notifyListeners();
+        LoggerUtils.instance.i("Step-3 $_lock");
       },
       onError: (dynamic error) {
         notifyListeners();
@@ -280,15 +300,16 @@ class BleReactorOps extends ChangeNotifier {
         writeCharacteristic,
         value: [0x01, 0x01],
       ).then((value) {
-        // print("deneme");
-        // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-        //   getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
-        // });
+        Atom.to(
+          PagePaths.main,
+          isReplacement: true,
+        );
       }, onError: (e) {
         notifyListeners();
         LoggerUtils.instance.i("write errorrrrrrrr" + e.toString());
       });
     } catch (e, stackTrace) {
+      LoggerUtils.instance.i("Step-10 writeCharacteristicWithResponse $e");
       notifyListeners();
       LoggerUtils.instance.i("write characterisctic error " + e.toString());
       getIt<IAppConfig>()
