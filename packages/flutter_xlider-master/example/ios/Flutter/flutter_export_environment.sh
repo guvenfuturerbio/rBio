@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/future/fvm/versions/stable"
+export "FLUTTER_ROOT=/Users/future/fvm/versions/3.0.1"
 export "FLUTTER_APPLICATION_PATH=/Users/future/rBio/packages/flutter_xlider-master/example"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
