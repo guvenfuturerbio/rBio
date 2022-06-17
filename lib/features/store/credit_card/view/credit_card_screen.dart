@@ -157,9 +157,9 @@ class _CreditCardViewState extends State<CreditCardView> {
             barrierDismissible: true,
             builder: (BuildContext context) {
               return RbioMessageDialog(
-                description: LocaleProvider.current.not_chronic_warning,
+                description: LocaleProvider.current.something_went_wrong,
                 buttonTitle: LocaleProvider.current.ok,
-                isAtom: true,
+                isAtom: false,
               );
             },
           );
