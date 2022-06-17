@@ -229,10 +229,6 @@ class VRouterRoutes {
           ],
         ),
 
-        VWidget(
-          path: PagePaths.doctorCv,
-          widget: DoctorCvScreen(),
-        ),
         // #endregion
 
         // #region Detailed Symptom
@@ -609,6 +605,10 @@ class VRouterRoutes {
               widget: CreateAppointmentScreen(),
               stackedRoutes: [
                 VWidget(
+                  path: PagePaths.doctorCv,
+                  widget: DoctorCvScreen(),
+                ),
+                VWidget(
                   path: PagePaths.createAppointmentEvents,
                   widget: CreateAppointmentEventsScreen(),
                   stackedRoutes: [
@@ -696,7 +696,7 @@ class PagePaths {
 
   // #region Dashboard
   static const main = '/home';
-  static const doctorCv = '/doctor-cv';
+  static const doctorCv = '/create-appointment-doctor-cv';
   // #endregion
 
   // #region Detailed Symptom

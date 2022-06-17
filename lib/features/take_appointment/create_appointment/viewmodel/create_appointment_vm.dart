@@ -330,6 +330,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   // #endregion
 
   // #region fetchDepartments
@@ -643,5 +644,11 @@ class CreateAppointmentVm extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  int whereIndex(List<FilterResourcesResponse> filterResourceResponse, int id) {
+    final index =
+        filterResourceResponse.indexWhere((element) => element.id == id);
+    return index;
   }
 }
