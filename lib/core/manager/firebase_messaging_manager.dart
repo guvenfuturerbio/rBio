@@ -92,8 +92,7 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
       /// We use this channel in the `AndroidManifest.xml` file to override the
       /// default FCM channel to enable heads up notifications.
       await flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(_channel);
 
       /// Update the iOS foreground notification presentation options to allow
@@ -113,10 +112,8 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
     isUserInit = true;
 
     // Android always AuthorizationStatus.authorized.
-    var notificationSettings =
-        await firebaseMessaging.getNotificationSettings();
-    if (notificationSettings.authorizationStatus ==
-        AuthorizationStatus.notDetermined) {
+    var notificationSettings = await firebaseMessaging.getNotificationSettings();
+    if (notificationSettings.authorizationStatus == AuthorizationStatus.notDetermined) {
       notificationSettings = await firebaseMessaging.requestPermission(
         alert: true,
         announcement: true,
@@ -133,31 +130,28 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
         {
           _getToken();
 
-          _selectNotificationStream = localNotificationManager
-              .selectNotificationSubject
-              ?.listen(_selectNotification);
+          _selectNotificationStream = localNotificationManager.selectNotificationSubject?.listen(_selectNotification);
 
           // Uygulama Kapalı İken.
-          await FirebaseMessaging.instance
-              .getInitialMessage()
-              .then((RemoteMessage? message) {
+          await FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
             if (message != null) {
               clickDataHandler(message.data);
             }
           });
 
           // Uygulama Arkaplanda Açıkken
-          _onMessageOpenedAppStream = FirebaseMessaging.onMessageOpenedApp
-              .listen((RemoteMessage message) {
+          _onMessageOpenedAppStream = FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
             clickDataHandler(message.data);
           });
 
           // Uygulama Ekranda Açıkken
-          _onMessageStream =
-              FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+          _onMessageStream = FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
             RemoteNotification? notification = message.notification;
             if (notification != null && !kIsWeb) {
-              showNotification(message);
+              if (Platform.isAndroid) {
+                showNotification(message);
+              }
+
               await _checkChatNotification(message);
             }
           });
@@ -240,8 +234,7 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
           final chatPersonData = data['chatPerson'];
           if (chatPersonData != null) {
             try {
-              final chatPersonModel =
-                  ChatPerson.fromMap(json.decode(chatPersonData));
+              final chatPersonModel = ChatPerson.fromMap(json.decode(chatPersonData));
               if (Atom.url.contains(PagePaths.chat)) {
                 Atom.historyBack();
                 await Future.delayed(const Duration(milliseconds: 100));
@@ -253,12 +246,8 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
                 },
               );
             } catch (e, stackTrace) {
-              LoggerUtils.instance
-                  .e("FirebaseMessagingManager - clickDataHandler() - $e");
-              getIt<IAppConfig>()
-                  .platform
-                  .sentryManager
-                  .captureException(e, stackTrace: stackTrace);
+              LoggerUtils.instance.e("FirebaseMessagingManager - clickDataHandler() - $e");
+              getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
             }
           }
 
@@ -294,12 +283,8 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
       final notificationPayload = jsonDecode(value);
       clickDataHandler(notificationPayload);
     } catch (e, stackTrace) {
-      LoggerUtils.instance
-          .e("FirebaseMessagingManager - _selectNotification() - $e");
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      LoggerUtils.instance.e("FirebaseMessagingManager - _selectNotification() - $e");
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
     }
   }
 
@@ -392,8 +377,7 @@ enum NotificationType {
 }
 
 extension NotificationTypeStringExt on String {
-  NotificationType? get xNotificationTypeKeys => NotificationType.values
-      .firstWhereOrNull((element) => element.xRawValue == this);
+  NotificationType? get xNotificationTypeKeys => NotificationType.values.firstWhereOrNull((element) => element.xRawValue == this);
 }
 
 extension NotificationTypeExt on NotificationType {
