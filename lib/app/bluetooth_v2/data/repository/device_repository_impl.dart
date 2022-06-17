@@ -161,10 +161,23 @@ class DeviceRepositoryImpl extends DeviceRepository {
   }
 
   @override
-  Either<BluetoothFailures, Future<bool>> accuCheckServices(
+  Either<BluetoothFailures, Future<bool>> accuCheckPair(DeviceEntity device) {
+    try {
+      return Right(localDataSource.accuCheckPair(device.xGetModel));
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
+      return Left(BluetoothFailure());
+    }
+  }
+
+  @override
+  Either<BluetoothFailures, Stream<List<int>>> accuCheckReadValues(
       DeviceEntity device) {
     try {
-      return Right(localDataSource.accuCheckServices(device.xGetModel));
+      return Right(localDataSource.accuCheckReadValues(device.xGetModel));
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform

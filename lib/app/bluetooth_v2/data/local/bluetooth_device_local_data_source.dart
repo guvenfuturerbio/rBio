@@ -17,11 +17,14 @@ abstract class DeviceLocalDataSource {
   void miScaleStopListen();
   Future<DeviceStatus> getLastStateOfDevice(DeviceModel device);
   Future<bool> pillarSmallTrigger(DeviceModel device);
-  Future<bool> accuCheckServices(DeviceModel device);
+  Future<bool> accuCheckPair(DeviceModel device);
+  Stream<List<int>> accuCheckReadValues(DeviceModel device);
+  Future<void> deneme(DeviceModel device);
 }
 
 class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
   Timer? miScaleTimer;
+  Timer? accuChekTimer;
 
   @override
   Stream<BluetoothState> readBluetoothStatus() {
@@ -85,9 +88,11 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
   @override
   bool connect(DeviceModel device) {
     final bluetoothDevice = device.toBluetoothDevice();
-    bluetoothDevice.connect().onError(
-          (error, stackTrace) => throw UnableToConnectDeviceFailure(),
-        );
+    try {
+      bluetoothDevice.connect();
+    } catch (e) {
+      throw UnableToConnectDeviceFailure();
+    }
     return true;
   }
 
@@ -198,29 +203,27 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
   }
 
   @override
-  Future<bool> accuCheckServices(DeviceModel device) async {
-    // Device Information Service UUID        ->    0000180a-0000-1000-8000-00805f9b34fb
-    //    Model Number String (2a24)          ->    958
-    //    Serial Number String (2a25)         ->    95801859844
-    //    Manufacturer Name String (2a29)     ->    Roche
-
-    // Glucoce Service UUID                   ->    00001808-0000-1000-8000-00805f9b34fb
-    //    Glucoce Measurement (2a18)          ->    -
-    //    Record Access Control Point (2a52)  ->    Bluetooth Eşleme İsteği
-
+  Future<bool> accuCheckPair(DeviceModel device) async {
     final bluetoothDevice = device.toBluetoothDevice();
     await bluetoothDevice.connect();
 
     final ble = device.toBluetoothDevice();
     final services = await ble.discoverServices();
+
     BluetoothService relatedService = services.firstWhere((element) =>
-        element.uuid.toString() == BluetoothConstants.accuChekPair.serviceUuid);
+        element.uuid.toString() == BluetoothConstants.accuChekGlucoseService);
     var pairCharacteristic = relatedService.characteristics.firstWhere(
         (element) =>
             element.uuid.toString() ==
-            BluetoothConstants.accuChekPair.characteristicUuid);
+            BluetoothConstants.accuChekRecordAccessControlPoint);
+
+    pairCharacteristic.value.listen((event) {
+      LoggerUtils.instance
+          .i("Device Saved Database: $event ${String.fromCharCodes(event)}");
+    });
+
     try {
-      final charCodes = await pairCharacteristic.write('0x31'.codeUnits);
+      final charCodes = await pairCharacteristic.write('0x0101'.codeUnits);
       if (charCodes == null) {
         return true;
       } else {
@@ -229,5 +232,54 @@ class BluetoothDeviceLocalDataSourceImpl extends DeviceLocalDataSource {
     } catch (e) {
       return false;
     }
+  }
+
+  @override
+  Stream<List<int>> accuCheckReadValues(DeviceModel device) async* {
+    yield [];
+  }
+
+  @override
+  Future<void> deneme(DeviceModel device) async {
+    // await characteristic.write('0x0'.codeUnits); // 2a52
+
+    final ble = device.toBluetoothDevice();
+    final services = await ble.discoverServices();
+    BluetoothService deviceService = services.firstWhere((element) =>
+        element.uuid.toString() == BluetoothConstants.accuChekGlucoseService);
+
+    await readCharacteristicsValue(
+      deviceService,
+      BluetoothConstants.accuChekGlucoseMeasurement,
+      'accuChekGlucoseMeasurement',
+    );
+  }
+
+  Future<void> readCharacteristicsValue(
+    BluetoothService service,
+    String characteristicUuid,
+    String name,
+  ) async {
+    var characteristic = service.characteristics.firstWhere(
+      (element) => element.uuid.toString() == characteristicUuid,
+    );
+
+    final value = await characteristic.read();
+    LoggerUtils.instance.i('descriptors: ${characteristic.descriptors}');
+    LoggerUtils.instance.i('lastValue: ${characteristic.lastValue}');
+    LoggerUtils.instance.i('isNotifying: ${characteristic.isNotifying}');
+    LoggerUtils.instance.i('$name: ${String.fromCharCodes(value)} - $value');
+
+    characteristic.value.listen((event) {
+      LoggerUtils.instance.i("event: $event ${String.fromCharCodes(event)}");
+    });
+
+    // if (!characteristic.isNotifying) {
+    //   await characteristic.setNotifyValue(false);
+    // }
+
+    // uuid: 00002a52-0000-1000-8000-00805f9b34fb value: {length = 4, bytes = 0x06003004}
+
+    // await characteristic.write('0x0101'.codeUnits);
   }
 }

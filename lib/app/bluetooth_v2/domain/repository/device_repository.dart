@@ -30,6 +30,8 @@ abstract class DeviceRepository {
   Either<BluetoothFailures, Future<bool>> pillarSmallTrigger(
       DeviceEntity device);
 
-  Either<BluetoothFailures, Future<bool>> accuCheckServices(
+  Either<BluetoothFailures, Future<bool>> accuCheckPair(DeviceEntity device);
+
+  Either<BluetoothFailures, Stream<List<int>>> accuCheckReadValues(
       DeviceEntity device);
 }

@@ -105,10 +105,7 @@ class DevicesScreen extends StatelessWidget {
                       onPressed: () {
                         LoggerUtils.instance.i(device.toJson());
 
-                        if (device.deviceType == DeviceType.accuCheck) {
-                          getIt<AccuChekReadDataUseCase>()
-                              .call(DeviceParams(device: device));
-                        }
+                        getIt<DeviceLocalDataSource>().deneme(device.xGetModel);
                       },
                       icon: Icon(
                         Icons.info,

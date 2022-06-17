@@ -8,6 +8,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
 import 'app/bluetooth_v2/bluetooth_v2.dart';
+import 'app/bluetooth_v2/presentation/bloc/accu_chek_ops/accu_chek_ops_cubit.dart';
 import 'core/core.dart';
 
 Future<void> bootstrap(IAppConfig appConfig) async {
@@ -138,6 +139,11 @@ class MobileApp extends StatelessWidget {
                 //
                 BlocProvider<MiScaleOpsCubit>(
                   create: (context) => MiScaleOpsCubit(getIt(), getIt()),
+                ),
+
+                //
+                BlocProvider<AccuChekOpsCubit>(
+                  create: (context) => AccuChekOpsCubit(getIt()),
                 ),
               ],
               child: myApp.build(context),

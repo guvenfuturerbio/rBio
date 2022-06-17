@@ -4,6 +4,8 @@ import 'package:video_player/video_player.dart';
 
 import '../../../../core/core.dart';
 import '../../bluetooth_v2.dart';
+import '../bloc/accu_chek_ops/accu_chek_ops_cubit.dart';
+import '../bloc/accu_chek_pair/accu_chek_pair_cubit.dart';
 
 part 'widget/setup_dialog.dart';
 
@@ -186,46 +188,63 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
         return BlocProvider<DeviceStatusCubit>(
           create: (context) =>
               DeviceStatusCubit(getIt())..readStatus(discoveredDevice),
-          child: BlocConsumer<DeviceStatusCubit, DeviceStatus?>(
-            listener: (context, deviceStatusState) => _deviceStatusListen(
-              context,
-              deviceStatusState,
-              discoveredDevice,
+          child: BlocProvider<AccuChekPairCubit>(
+            create: (context) =>
+                AccuChekPairCubit(getIt(), context.read<AccuChekOpsCubit>()),
+            child: Builder(
+              builder: (context) {
+                return BlocListener<AccuChekPairCubit, bool?>(
+                  listener: (context, accuChekState) async {
+                    if (accuChekState == true) {
+                      await saveDevice(discoveredDevice);
+                    }
+                  },
+                  child: BlocConsumer<DeviceStatusCubit, DeviceStatus?>(
+                    listener: (context, deviceStatusState) =>
+                        _deviceStatusListen(
+                      context,
+                      deviceStatusState,
+                      discoveredDevice,
+                    ),
+                    builder: (context, deviceStatusState) {
+                      return Card(
+                        key: ValueKey(index),
+                        elevation: R.sizes.defaultElevation,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: R.sizes.borderRadiusCircular,
+                        ),
+                        color: _getBackColor(deviceStatusState),
+                        child: ListTile(
+                          onTap: () => _deviceOnTap(
+                            context,
+                            deviceStatusState,
+                            discoveredDevice,
+                          ),
+                          title: Text(
+                            discoveredDevice.name,
+                            style: context.xHeadline3.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            discoveredDevice.id,
+                            style: context.xHeadline4,
+                          ),
+                          trailing: Visibility(
+                            visible:
+                                deviceStatusState == DeviceStatus.connected,
+                            child: const Icon(
+                              Icons.check,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
-            builder: (context, deviceStatusState) {
-              return Card(
-                key: ValueKey(index),
-                elevation: R.sizes.defaultElevation,
-                shape: RoundedRectangleBorder(
-                  borderRadius: R.sizes.borderRadiusCircular,
-                ),
-                color: _getBackColor(deviceStatusState),
-                child: ListTile(
-                  onTap: () => _deviceOnTap(
-                    context,
-                    deviceStatusState,
-                    discoveredDevice,
-                  ),
-                  title: Text(
-                    discoveredDevice.name,
-                    style: context.xHeadline3.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    discoveredDevice.id,
-                    style: context.xHeadline4,
-                  ),
-                  trailing: Visibility(
-                    visible: deviceStatusState == DeviceStatus.connected,
-                    child: const Icon(
-                      Icons.check,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              );
-            },
           ),
         );
       },
@@ -269,20 +288,7 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
   ) async {
     if (deviceStatusState == DeviceStatus.connected) {
       if (device.deviceType == DeviceType.accuCheck) {
-        AccuChekReadDataUseCase useCase = AccuChekReadDataUseCase(getIt());
-        final accuChek = useCase.call(DeviceParams(device: device));
-        accuChek.fold(
-          (l) {
-            LoggerUtils.instance.e("device_search_screen.dart : $l");
-          },
-          (r) async {
-            final accuChekResult = await r;
-            if (accuChekResult) {
-              await saveDevice(device);
-            }
-          },
-        );
-        return;
+        context.read<AccuChekPairCubit>().pairDevice(device);
       } else {
         await saveDevice(device);
       }
