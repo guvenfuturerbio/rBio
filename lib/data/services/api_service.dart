@@ -141,6 +141,8 @@ abstract class ApiService {
       GetVideoCallPriceRequest getVideoCallPriceRequest);
   Future<GuvenResponseModel> doMobilePaymentWithVoucher(
       DoMobilePaymentWithVoucherRequest doMobilePaymentWithVoucherRequest);
+  Future<GuvenResponseModel> doMobilePayment(
+      DoMobilePaymentWithVoucherRequest doMobilePaymentWithVoucherRequest);
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
       FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest);
   Future<GuvenResponseModel> checkOnlineAppointmentPayment(

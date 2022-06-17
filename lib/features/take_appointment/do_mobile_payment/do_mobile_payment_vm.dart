@@ -30,7 +30,11 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState>? get formKey => _formKey;
 
-  Future<void> doMobilePayment(ERandevuCCResponse cc, int appointmentId) async {
+  Future<void> doMobilePayment(
+    ERandevuCCResponse cc,
+    int appointmentId,
+    String? voucherCode,
+  ) async {
     if (checkRequiredFields(cc)) {
       _showOverlay = true;
       cc.expirationMonth = cc.expirationMonth?.substring(0, 2);
@@ -38,14 +42,26 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
       notifyListeners();
 
       try {
-        _paymentResponse = await getIt<Repository>().doMobilePaymentWithVoucher(
-          DoMobilePaymentWithVoucherRequest(
-            appointmentId: appointmentId,
-            cc: cc,
-            appointmentRequest: appointmentRequest?.saveAppointmentsRequest,
-            voucherCode: voucherCode,
-          ),
-        );
+        if (voucherCode == null) {
+          _paymentResponse = await getIt<Repository>().doMobilePayment(
+            DoMobilePaymentWithVoucherRequest(
+              appointmentId: appointmentId,
+              cc: cc,
+              appointmentRequest: appointmentRequest?.saveAppointmentsRequest,
+              voucherCode: voucherCode,
+            ),
+          );
+        } else {
+          _paymentResponse =
+              await getIt<Repository>().doMobilePaymentWithVoucher(
+            DoMobilePaymentWithVoucherRequest(
+              appointmentId: appointmentId,
+              cc: cc,
+              appointmentRequest: appointmentRequest?.saveAppointmentsRequest,
+              voucherCode: voucherCode,
+            ),
+          );
+        }
 
         final html = Map.from(_paymentResponse.datum)['do_result'];
         final transId = _paymentResponse.datum['trans_id'];

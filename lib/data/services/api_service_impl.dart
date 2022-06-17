@@ -188,7 +188,7 @@ class ApiServiceImpl extends ApiService {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.base.doPackagePaymentPath,
       packagePayment.toJson(),
-      options: authOptions..headers?.addAll(utcHeader),
+      options: authOptions,
     );
     if (response.xIsSuccessful) {
       final doResult = response.xGetMap['do_result'] as String?;
@@ -1178,12 +1178,28 @@ class ApiServiceImpl extends ApiService {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.base.doMobilePaymentWithVoucher,
       doMobilePaymentWithVoucherRequest.toJson(),
-      options: authOptions,
+      options: authOptions..headers?.addAll(utcHeader),
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
       throw Exception('/doMobilePaymentWithVoucher : ${response.isSuccessful}');
+    }
+  }
+
+  @override
+  Future<GuvenResponseModel> doMobilePayment(
+    DoMobilePaymentWithVoucherRequest doMobilePaymentWithVoucherRequest,
+  ) async {
+    final response = await helper.postGuven(
+      getIt<IAppConfig>().endpoints.base.doMobilePaymentPath,
+      doMobilePaymentWithVoucherRequest.toJson(),
+      options: authOptions..headers?.addAll(utcHeader),
+    );
+    if (response.xIsSuccessful) {
+      return response;
+    } else {
+      throw Exception('/doMobilePayment : ${response.isSuccessful}');
     }
   }
 
