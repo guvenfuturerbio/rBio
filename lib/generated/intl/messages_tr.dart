@@ -199,7 +199,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "camera": MessageLookupByLibrary.simpleMessage("Kamera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Vazgeç"),
         "cancel_appo_question": MessageLookupByLibrary.simpleMessage(
-            "Randevunuzu iptal etmek istediğinize emin misiniz ?"),
+            "Randevunuzu iptal etmek istediğinize emin misiniz?"),
         "cancel_call_appo": MessageLookupByLibrary.simpleMessage(
             "Randevuyu iptal etmek için lütfen 444 94 94 arayınız"),
         "cancel_discount":

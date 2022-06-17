@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_sdk/flutter_facebook_sdk.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
@@ -11,7 +10,6 @@ class GuvenDashboardScreen extends StatefulWidget {
   String deepLinkPath;
   final Widget child;
   final int currentIndex;
-  FlutterFacebookSdk? _facebookSdk;
 
   GuvenDashboardScreen({
     Key? key,
@@ -28,11 +26,6 @@ class GuvenDashboardScreen extends StatefulWidget {
 class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
   FocusNode focusSearch = FocusNode();
   List<int> pageQueryHolder = [2];
-  @override
-  void initState() {
-    widget._facebookSdk = FlutterFacebookSdk();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

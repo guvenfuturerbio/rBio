@@ -139,6 +139,7 @@ class BodySublocationsVm extends ChangeNotifier {
           return RbioMessageDialog(
             description: text,
             buttonTitle: LocaleProvider.current.ok,
+            isAtom: false,
           );
         });
   }
