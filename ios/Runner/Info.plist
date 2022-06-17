@@ -22,28 +22,27 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb670176424294583</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<true/>
+	<key>FacebookAppID</key>
+	<string>670176424294583</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<true/>
+	<key>FacebookDisplayName</key>
+	<string>Guven Online</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb670176424294583</string>
-      </array>
-      </dict>
-    </array>
-    <key>FacebookAppID</key>
-    <string>670176424294583</string>
-    <key>FacebookDisplayName</key>
-    <string>Guven Online</string>
-    <key>FacebookAutoLogAppEventsEnabled</key>
-    <true/>
-    <key>FacebookAdvertiserIDCollectionEnabled</key>
-    <true/>
-
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -68,7 +67,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app uses bluetooth to find, connect and transfer data from Medical Devices</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app needs access to your microphone for meetings.</string>
+	<string>We need to access to the microphone to record audio file</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs photo library to live chat with medical support</string>
 	<key>UIBackgroundModes</key>
@@ -100,7 +99,5 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need to access to the microphone to record audio file</string>
 </dict>
 </plist>

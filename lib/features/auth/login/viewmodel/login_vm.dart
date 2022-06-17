@@ -633,9 +633,11 @@ class LoginScreenVm extends ChangeNotifier {
       //
     }
 
-    getIt<ScaleRepository>().fetchScaleData(
-      getIt<ProfileStorageImpl>().getFirst().id ?? 0,
-    );
+    if (getIt<UserNotifier>().isCronic) {
+      getIt<ScaleRepository>().fetchScaleData(
+        getIt<ProfileStorageImpl>().getFirst().id ?? 0,
+      );
+    }
 
     final term = Atom.queryParameters['then'];
     getIt<FirebaseAnalyticsManager>()
