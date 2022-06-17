@@ -8,7 +8,9 @@ part 'request_suggestions_state.dart';
 part 'request_suggestions_cubit.freezed.dart';
 
 class RequestSuggestionsCubit extends Cubit<RequestSuggestionsState> {
-  RequestSuggestionsCubit() : super(const RequestSuggestionsState());
+  RequestSuggestionsCubit(this.repository)
+      : super(const RequestSuggestionsState());
+  late final Repository repository;
 
   Future<void> sendSuggestion({required String text}) async {
     if (text == '') return;
@@ -17,7 +19,7 @@ class RequestSuggestionsCubit extends Cubit<RequestSuggestionsState> {
         status: RequestSuggestionsStatus.loadInProgress));
 
     try {
-      await getIt<Repository>().addSuggestion(
+      await repository.addSuggestion(
         SuggestionRequest(suggestionText: text),
       );
       emit(const RequestSuggestionsState(

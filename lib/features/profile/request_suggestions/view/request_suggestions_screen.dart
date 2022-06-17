@@ -12,7 +12,7 @@ class RequestSuggestionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RequestSuggestionsCubit(),
+      create: (context) => RequestSuggestionsCubit(getIt()),
       child: const RequestSuggestionsView(),
     );
   }
