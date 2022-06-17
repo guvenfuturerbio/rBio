@@ -50,7 +50,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app uses bluetooth to find, connect and transfer data from Medical Devices</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app needs access to your microphone for meetings.</string>
+	<string>We need to access to the microphone to record audio file</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs photo library to live chat with medical support</string>
 	<key>UIBackgroundModes</key>
@@ -82,7 +82,5 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need to access to the microphone to record audio file</string>
 </dict>
 </plist>
