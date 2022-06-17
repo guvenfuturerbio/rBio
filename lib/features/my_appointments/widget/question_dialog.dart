@@ -2,54 +2,68 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
 
-class QuestionDialog extends StatefulWidget {
-  final String title;
-  final String text;
-
+class QuestionDialog extends StatelessWidget {
   const QuestionDialog({
     Key? key,
-    required this.title,
-    required this.text,
   }) : super(key: key);
 
   @override
-  _QuestionDialogState createState() => _QuestionDialogState();
-}
-
-class _QuestionDialogState extends State<QuestionDialog> {
-  @override
   Widget build(BuildContext context) {
-    return GuvenAlert(
-      backgroundColor: Colors.white,
-      title: GuvenAlert.buildTitle(widget.title),
-      actions: [
-        GuvenAlert.buildMaterialAction(
-          LocaleProvider.of(context).yes,
-          () {
-            Navigator.of(context).pop(true);
-          },
-        ),
+    return RbioBaseGreyDialog(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          //
+          Text(
+            LocaleProvider.current.warning,
+            style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+          ),
 
-        //
-        GuvenAlert.buildMaterialAction(
-          LocaleProvider.of(context).no,
-          () {
-            Navigator.of(context).pop(false);
-          },
-        ),
-      ],
+          //
+          R.sizes.hSizer32,
 
-      //
-      content: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            GuvenAlert.buildDescription(widget.text),
-          ],
-        ),
+          //
+          Center(
+            child: Text(
+              LocaleProvider.current.cancel_appo_question,
+              style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+              textAlign: TextAlign.center,
+            ),
+          ),
+
+          //
+          R.sizes.hSizer32,
+
+          //
+          Row(
+            children: [
+              //
+              Expanded(
+                child: RbioSmallDialogButton.red(
+                  title: LocaleProvider.current.no,
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                ),
+              ),
+
+              //
+              R.sizes.wSizer8,
+
+              //
+              Expanded(
+                child: RbioSmallDialogButton.green(
+                  title: LocaleProvider.current.yes,
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -66,11 +66,7 @@ class AppointmentListVm extends RbioVm {
       translator = await getIt<Repository>().getAllTranslator();
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showInfoDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
@@ -89,20 +85,12 @@ class AppointmentListVm extends RbioVm {
         appointmentId,
         translatorPost,
       );
-    } on RbioDisplayException catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+    } on RbioDisplayException catch (e) {
       showInfoDialog(
         LocaleProvider.current.warning,
         e.message,
       );
-    } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showInfoDialog(
         LocaleProvider.current.warning,
         e.toString().replaceAll("Exception: ", ""),
@@ -162,11 +150,7 @@ class AppointmentListVm extends RbioVm {
       );
       progress = LoadingProgress.done;
       notifyListeners();
-    } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       progress = LoadingProgress.error;
       notifyListeners();
       showInfoDialog(
@@ -203,11 +187,7 @@ class AppointmentListVm extends RbioVm {
       }
       showProgressOverlay = false;
       notifyListeners();
-    } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showProgressOverlay = false;
       notifyListeners();
       if (e.toString().contains("show")) {
@@ -246,11 +226,7 @@ class AppointmentListVm extends RbioVm {
         await file.readAsBytes(),
       );
       return true;
-    } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+    } catch (e) {
       showInfoDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.sorry_dont_transaction,
@@ -274,10 +250,6 @@ class AppointmentListVm extends RbioVm {
       showProgressOverlay = false;
       notifyListeners();
     } catch (e, stk) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stk);
       debugPrintStack(stackTrace: stk);
       showInfoDialog(
         LocaleProvider.current.warning,
@@ -293,10 +265,7 @@ class AppointmentListVm extends RbioVm {
         context: mContext,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return QuestionDialog(
-            title: title,
-            text: text,
-          );
+          return const QuestionDialog();
         }).then((value) async {
       if (value) {
         await cancelAppointment();
@@ -401,11 +370,7 @@ class AppointmentListVm extends RbioVm {
             },
           );
         }
-      } catch (e, stackTrace) {
-        getIt<IAppConfig>()
-            .platform
-            .sentryManager
-            .captureException(e, stackTrace: stackTrace);
+      } catch (e) {
         showProgressOverlay = false;
         notifyListeners();
         showInfoDialog(
