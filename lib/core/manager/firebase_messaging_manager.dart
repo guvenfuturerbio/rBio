@@ -188,7 +188,7 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
   }
 
   void showNotification(RemoteMessage message) {
-    /*final notificationType = getNotificationType(message.data);
+    final notificationType = getNotificationType(message.data);
     if (notificationType == null) return;
 
     switch (notificationType) {
@@ -221,7 +221,7 @@ class FirebaseMessagingManagerImpl extends FirebaseMessagingManager {
         {
           break;
         }
-    }*/
+    }
   }
 
   Future<void> clickDataHandler(Map<String, dynamic> data) async {
