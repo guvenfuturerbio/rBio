@@ -16,6 +16,9 @@ class ApiServiceImpl extends ApiService {
         'mobileapiauthkey':
             'b776be7e007b40d38f1f4b73bb53481cf946c0d21c5b4ad7a0842bc1be2b70ce'
       };
+  Map<String, dynamic> get utcHeader => <String, dynamic>{
+        'utc': DateTime.now().toLocal().timeZoneOffset,
+      };
 
   @override
   Future<GuvenResponseModel> addStep1(AddStep1Model addStep1Model) async {
@@ -185,7 +188,7 @@ class ApiServiceImpl extends ApiService {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.base.doPackagePaymentPath,
       packagePayment.toJson(),
-      options: authOptions,
+      options: authOptions..headers?.addAll(utcHeader),
     );
     if (response.xIsSuccessful) {
       final doResult = response.xGetMap['do_result'] as String?;
@@ -432,7 +435,7 @@ class ApiServiceImpl extends ApiService {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.base.saveAppointmentPath,
       appointmentRequest.toJson(),
-      options: authOptions,
+      options: authOptions..headers?.addAll(utcHeader),
     );
     if (response.xIsSuccessful) {
       //1 ise hem pusula hem güven online, 2 ise pusulaya kayıt başarılı ancak güvene başarısız (Redmine 382)
