@@ -204,37 +204,140 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     PatientAppointmentsResponse data,
   ) {
     if (data.type == R.constants.onlineAppointmentType) {
-      if (DateTime.parse(data.from ?? '').isBefore(DateTime.now())) {
+      if (DateTime.parse(data.from ?? '')
+              .isBefore(DateTime.now().add(const Duration(hours: 2))) &&
+          (DateTime.parse(data.from ?? '')
+              .isAfter(DateTime.now().subtract(const Duration(hours: 2))))) {
         if (data.isRated ?? false) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                LocaleProvider.current.rate_thank_you,
-                style: context.xHeadline4.copyWith(
-                  color: getIt<IAppConfig>().theme.mainColor,
-                  fontWeight: FontWeight.bold,
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    LocaleProvider.current.rate_thank_you,
+                    style: context.xHeadline4.copyWith(
+                      color: getIt<IAppConfig>().theme.mainColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+                R.sizes.wSizer40,
+                RbioIconButton(
+                  onPressed: () {
+                    value.handleAppointment(data);
+                  },
+                  icon: SvgPicture.asset(
+                    R.image.startVideo,
+                    color: getIt<IAppConfig>().theme.white,
+                  ),
+                ),
+              ],
             ),
           );
         } else {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: RbioIconButton(
-                onPressed: () {
-                  final itemId = data.id;
-                  if (itemId != null) {
-                    value.showRateDialog(itemId);
-                  }
-                },
-                icon: SvgPicture.asset(
-                  R.image.rate,
-                  color: getIt<IAppConfig>().theme.white,
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 1.0),
+                child: Center(
+                  child: RbioIconButton(
+                    onPressed: () {
+                      final itemId = data.id;
+                      if (itemId != null) {
+                        value.showRateDialog(itemId);
+                      }
+                    },
+                    icon: SvgPicture.asset(
+                      R.image.rate,
+                      color: getIt<IAppConfig>().theme.white,
+                    ),
+                  ),
                 ),
               ),
+              R.sizes.wSizer40,
+              Center(
+                child: RbioIconButton(
+                  onPressed: () {
+                    value.handleAppointment(data);
+                  },
+                  icon: SvgPicture.asset(
+                    R.image.startVideo,
+                    color: getIt<IAppConfig>().theme.white,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+      } else if (!(DateTime.parse(data.from ?? '')
+              .isBefore(DateTime.now().add(const Duration(hours: 2))) &&
+          (DateTime.parse(data.from ?? '')
+              .isAfter(DateTime.now().subtract(const Duration(hours: 2)))))) {
+        if (data.isRated ?? false) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    LocaleProvider.current.rate_thank_you,
+                    style: context.xHeadline4.copyWith(
+                      color: getIt<IAppConfig>().theme.mainColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                R.sizes.wSizer40,
+                RbioIconButton(
+                  backColor: getIt<IAppConfig>().theme.gray,
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    R.image.startVideo,
+                    color: getIt<IAppConfig>().theme.white,
+                  ),
+                ),
+              ],
             ),
+          );
+        } else {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 1.0),
+                child: Center(
+                  child: RbioIconButton(
+                    onPressed: () {
+                      final itemId = data.id;
+                      if (itemId != null) {
+                        value.showRateDialog(itemId);
+                      }
+                    },
+                    icon: SvgPicture.asset(
+                      R.image.rate,
+                      color: getIt<IAppConfig>().theme.white,
+                    ),
+                  ),
+                ),
+              ),
+              R.sizes.wSizer40,
+              Center(
+                child: RbioIconButton(
+                  backColor: getIt<IAppConfig>().theme.gray,
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    R.image.startVideo,
+                    color: getIt<IAppConfig>().theme.white,
+                  ),
+                ),
+              ),
+            ],
           );
         }
       } else {
@@ -279,27 +382,6 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                 // ),
 
                 //
-
-                RbioIconButton(
-                  onPressed: () {
-                    value.showTranslatorSelector(data.id.toString());
-                  },
-                  icon: SvgPicture.asset(
-                    R.image.translator,
-                    color: getIt<IAppConfig>().theme.white,
-                  ),
-                ),
-
-                //
-                RbioIconButton(
-                  onPressed: () {
-                    value.handleAppointment(data);
-                  },
-                  icon: SvgPicture.asset(
-                    R.image.startVideo,
-                    color: getIt<IAppConfig>().theme.white,
-                  ),
-                ),
               ],
             ),
           ),
