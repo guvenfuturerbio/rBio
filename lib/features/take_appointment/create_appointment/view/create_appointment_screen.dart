@@ -221,14 +221,81 @@ class CreateAppointmentScreen extends StatelessWidget {
                         vm.departmentSelected && vm.hospitalSelected ? 1 : 0,
                     child: vm.doctorProgress == LoadingProgress.loading
                         ? const RbioLoading()
-                        : createAppoWidget(
-                            context: context,
-                            header: LocaleProvider.current.doctor_selection,
-                            hint: LocaleProvider.current.pls_select_doctor,
-                            itemList: vm.filterResourceResponse!,
-                            val: vm,
-                            whichField: Fields.doctors,
-                            progress: vm.doctorProgress,
+                        : Row(
+                            children: [
+                              Expanded(
+                                child: createAppoWidget(
+                                  context: context,
+                                  header:
+                                      LocaleProvider.current.doctor_selection,
+                                  hint:
+                                      LocaleProvider.current.pls_select_doctor,
+                                  itemList: vm.filterResourceResponse!,
+                                  val: vm,
+                                  whichField: Fields.doctors,
+                                  progress: vm.doctorProgress,
+                                ),
+                              ),
+                              vm.doctorSelected
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        int index = vm.whereIndex(
+                                            vm.filterResourceResponse!,
+                                            vm.dropdownValueDoctor!.id!);
+
+                                        Atom.to(PagePaths.doctorCv,
+                                            queryParameters: {
+                                              'tenantId': vm
+                                                      .filterResourceResponse?[
+                                                          index]
+                                                      .tenants?[0]
+                                                      .id
+                                                      .toString() ??
+                                                  '',
+                                              'doctorNameNoTitle': vm
+                                                      .filterResourceResponse?[
+                                                          index]
+                                                      .title
+                                                      .toString() ??
+                                                  '',
+                                              'departmentId': vm
+                                                      .filterResourceResponse?[
+                                                          index]
+                                                      .departments?[0]
+                                                      .id
+                                                      .toString() ??
+                                                  '',
+                                              'resourceId': vm
+                                                      .filterResourceResponse?[
+                                                          index]
+                                                      .id
+                                                      .toString() ??
+                                                  '',
+                                              'doctorName': vm
+                                                      .filterResourceResponse?[
+                                                          index]
+                                                      .title
+                                                      .toString() ??
+                                                  '',
+                                              'departmentName': vm
+                                                      .filterResourceResponse?[
+                                                          index]
+                                                      .departments?[0]
+                                                      .title ??
+                                                  ''
+                                            });
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, top: 35, right: 10),
+                                        child: SvgPicture.asset(
+                                          R.image.info,
+                                          width: R.sizes.iconSize2,
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox()
+                            ],
                           ),
                   ),
                 ),
