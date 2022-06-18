@@ -439,7 +439,8 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
       '/Pusula/getResourceVideoCallPriceWithVoucher'.xBaseUrl;
 
   @override
-  String get doMobilePaymentPath => '/Pusula/do-mobile-payment'.xBaseUrl;
+  String get doMobilePaymentPath =>
+      '/Pusula/do-mobile-payment-without-firebase'.xBaseUrl;
 
   @override
   String get doMobilePaymentWithVoucher =>

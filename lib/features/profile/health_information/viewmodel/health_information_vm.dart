@@ -165,7 +165,9 @@ class HealthInformationVm extends RbioVm {
     if (result != null) {
       final _selectedMaxRange = _getMaxRangeList()[result];
       changeMaxRange(_selectedMaxRange);
+      selection.hyper = _selectedMaxRange;
     }
+    notifyListeners();
   }
   // #endregion
 

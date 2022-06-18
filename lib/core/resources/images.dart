@@ -1,9 +1,12 @@
 part of 'resources.dart';
 
 class _Images {
-  final grayBackground = 'https://ak.picdn.net/shutterstock/videos/24223855/thumb/1.jpg';
-  final circlevatar = 'https://www.pinclipart.com/picdir/middle/148-1486972_mystery-man-avatar-circle-clipart.png';
-  final avatarUrl = "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png";
+  final grayBackground =
+      'https://ak.picdn.net/shutterstock/videos/24223855/thumb/1.jpg';
+  final circlevatar =
+      'https://www.pinclipart.com/picdir/middle/148-1486972_mystery-man-avatar-circle-clipart.png';
+  final avatarUrl =
+      "https://miro.medium.com/max/1000/1*vwkVPiu3M2b5Ton6YVywlg.png";
 
   final accuCheckPng = "assets/images/accu_check.png";
   final add = 'assets/images/add_icon.svg';
@@ -90,7 +93,8 @@ class _Images {
   final miScale = "assets/images/mi_scale.png";
   final logo = 'assets/images/ods_logo.svg';
   final omronBloodPressureArm = "assets/images/omron_blood_pressure_arm.png";
-  final omronBloodPressureWrist = "assets/images/omron_blood_pressure_wrist.png";
+  final omronBloodPressureWrist =
+      "assets/images/omron_blood_pressure_wrist.png";
   final omronScale = "assets/images/omron_scale.png";
   final other = "assets/images/other_black.svg";
   final otherIcon = 'assets/images/other_icon.svg';
@@ -121,20 +125,26 @@ class _Images {
   final startVideo = "assets/images/start_video_call.svg";
   final rate = "assets/images/ic_star_blue.svg";
   final icDeleteRed = "assets/images/ic_delete_red.svg";
+  final info = "assets/images/info_icon.svg";
+  final info2 = "assets/images/info_icon2.svg";
   final icGenderSelectionGrey = "assets/images/ic_gender_selection_grey.svg";
 
   //GuvenOnlineDashboard
   final appointmentsRed = "assets/images/guven/dashboard/appointments_red.svg";
-  final appointmentsGrey = "assets/images/guven/dashboard/appointments_grey.svg";
-  final icAppointmentWhite = 'assets/images/guven/dashboard/ic_appointment_white.svg';
+  final appointmentsGrey =
+      "assets/images/guven/dashboard/appointments_grey.svg";
+  final icAppointmentWhite =
+      'assets/images/guven/dashboard/ic_appointment_white.svg';
   final danismaIcon = "assets/images/guven/dashboard/ic_danisma.svg";
   final icEditWhite = 'assets/images/guven/dashboard/ic_edit_white.svg';
   final icHospitalWhite = 'assets/images/guven/dashboard/ic_hospital_white.svg';
   final icPhoneGrey = "assets/images/guven/dashboard/ic_phone_grey.svg";
   final icPhoneRed = "assets/images/guven/dashboard/ic_phone_red.svg";
   final icPriceServices = 'assets/images/guven/dashboard/ic_price_services.svg';
-  final icTabbarServicesWhite = 'assets/images/guven/dashboard/ic_tabbar_services_white.svg';
-  final icTabbarServicesGrey = 'assets/images/guven/dashboard/ic_tabbar_services_grey.svg';
+  final icTabbarServicesWhite =
+      'assets/images/guven/dashboard/ic_tabbar_services_white.svg';
+  final icTabbarServicesGrey =
+      'assets/images/guven/dashboard/ic_tabbar_services_grey.svg';
   final myProfileRed = "assets/images/guven/dashboard/myprofile_red.svg";
   final myProfileGrey = "assets/images/guven/dashboard/myprofile_grey.svg";
   final searchRed = "assets/images/guven/dashboard/search_red.svg";
@@ -156,15 +166,22 @@ class _Images {
   // #endregion
 
   // #region bottom_navigation
-  final bottomNavigationChatGreen = 'assets/images/bottom_navigation/chat_icon_green.svg';
+  final bottomNavigationChatGreen =
+      'assets/images/bottom_navigation/chat_icon_green.svg';
   final bottomNavigationChat = 'assets/images/bottom_navigation/chat_icon.svg';
-  final bottomNavigationGraphGreen = 'assets/images/bottom_navigation/graph_icon_green.svg';
-  final bottomNavigationGraph = 'assets/images/bottom_navigation/graph_icon.svg';
+  final bottomNavigationGraphGreen =
+      'assets/images/bottom_navigation/graph_icon_green.svg';
+  final bottomNavigationGraph =
+      'assets/images/bottom_navigation/graph_icon.svg';
   final bottomNavigationHome = 'assets/images/bottom_navigation/home_icon.svg';
-  final bottomNavigationNotificationGreen = 'assets/images/bottom_navigation/notification_icon_green.svg';
-  final bottomNavigationNotification = 'assets/images/bottom_navigation/notification_icon.svg';
-  final bottomNavigationSearchGreen = 'assets/images/bottom_navigation/search_icon_green.svg';
-  final bottomNavigationSearch = 'assets/images/bottom_navigation/search_icon.svg';
+  final bottomNavigationNotificationGreen =
+      'assets/images/bottom_navigation/notification_icon_green.svg';
+  final bottomNavigationNotification =
+      'assets/images/bottom_navigation/notification_icon.svg';
+  final bottomNavigationSearchGreen =
+      'assets/images/bottom_navigation/search_icon_green.svg';
+  final bottomNavigationSearch =
+      'assets/images/bottom_navigation/search_icon.svg';
   // #endregion
 
   // #region reminders
@@ -192,17 +209,24 @@ class _Images {
 
   // #region Drawer
   final drawerProfile = 'assets/images/drawer/drawer_profile.svg';
-  final drawerLblFindHospital = 'assets/images/drawer/drawer_lbl_find_hospital.svg';
-  final drawerTakeVideoAppointment = 'assets/images/drawer/drawer_take_video_appointment.svg';
-  final drawerChronicTrackHome = 'assets/images/drawer/drawer_chronic_track_home.svg';
-  final drawerMyAppointments = 'assets/images/drawer/drawer_my_appointments.svg';
+  final drawerLblFindHospital =
+      'assets/images/drawer/drawer_lbl_find_hospital.svg';
+  final drawerTakeVideoAppointment =
+      'assets/images/drawer/drawer_take_video_appointment.svg';
+  final drawerChronicTrackHome =
+      'assets/images/drawer/drawer_chronic_track_home.svg';
+  final drawerMyAppointments =
+      'assets/images/drawer/drawer_my_appointments.svg';
   final drawerResults = 'assets/images/drawer/drawer_results.svg';
   final drawerForYou = 'assets/images/drawer/drawer_profile.svg';
-  final drawerSymptomChecker = 'assets/images/drawer/drawer_symptom_checker.svg';
+  final drawerSymptomChecker =
+      'assets/images/drawer/drawer_symptom_checker.svg';
   final drawerDevices = 'assets/images/drawer/drawer_devices.svg';
   final drawerReminders = 'assets/images/drawer/drawer_reminders.svg';
-  final drawerRequestAndSuggestions = 'assets/images/drawer/drawer_request_and_suggestions.svg';
-  final drawerDetailedSymptom = 'assets/images/drawer/drawer_detailed_symptom.svg';
+  final drawerRequestAndSuggestions =
+      'assets/images/drawer/drawer_request_and_suggestions.svg';
+  final drawerDetailedSymptom =
+      'assets/images/drawer/drawer_detailed_symptom.svg';
   final drawerLogOut = 'assets/images/drawer/drawer_log_out.svg';
 
   // #endregion

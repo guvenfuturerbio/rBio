@@ -144,15 +144,6 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                       HealthInformationType.weight,
                     ),
 
-                    // Normal Range
-                    _buildSpacer(),
-                    _buildTitle(LocaleProvider.current.normal_range),
-                    _buildTextField(
-                      vm,
-                      normalRangeController,
-                      HealthInformationType.normalRange,
-                    ),
-
                     // Max Range
                     _buildSpacer(),
                     _buildTitle(LocaleProvider.current.max_range),
@@ -161,6 +152,18 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                       maxRangeController,
                       HealthInformationType.maxRange,
                     ),
+
+                    if (vm.selection.hyper! >= vm.selection.rangeMax! &&
+                        vm.selection.hyper != 0) ...[
+                      // Normal Range
+                      _buildSpacer(),
+                      _buildTitle(LocaleProvider.current.normal_range),
+                      _buildTextField(
+                        vm,
+                        normalRangeController,
+                        HealthInformationType.normalRange,
+                      ),
+                    ],
 
                     // Min Range
                     _buildSpacer(),
@@ -245,6 +248,8 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
 
             case HealthInformationType.normalRange:
               {
+                getIt<ProfileStorageImpl>().getFirst().hyper =
+                    vm.selection.hyper;
                 final result = await Atom.show(
                   RangeSelectionSlider(
                     id: vm.selection.id!,

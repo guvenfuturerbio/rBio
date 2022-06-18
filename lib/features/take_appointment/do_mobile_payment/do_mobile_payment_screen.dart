@@ -419,6 +419,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                                 expirationYear: _expiryDateController.text,
                               ),
                               widget.appointmentId,
+                              widget.voucherCode,
                             );
                           }
                         }
