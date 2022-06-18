@@ -280,7 +280,7 @@ class GuvenBaseEndpoints extends BaseEndpoints {
       '/Package/get-all-sub-category-items/$id'.xBaseUrl;
 
   @override
-  String get doPackagePaymentPath => '/Package/do-mobile-payment'.xBaseUrl;
+  String get doPackagePaymentPath => '/Package/do-mobile-payment-without-firebase'.xBaseUrl;
 
   @override
   String get findResourceAvailableDays =>

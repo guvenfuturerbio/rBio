@@ -76,118 +76,103 @@ class _ReminderAlertView extends StatelessWidget {
 
   // #region _buildSuccess
   Widget _buildSuccess(BuildContext context, ReminderListModel model) {
-    return Center(
-      child: Dialog(
-        elevation: 0,
-        insetPadding: EdgeInsets.zero,
-        backgroundColor: getIt<IAppConfig>().theme.grayColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
-        child: Container(
-          width: context.width - 50,
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+    return RbioBaseGreyDialog(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          //
+          Center(
+            child: Text(
+              _getTitle(model),
+              style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+            ),
+          ),
+          R.sizes.hSizer24,
+
+          Center(
+            child: Text(
+              getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+              style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+            ),
+          ),
+          R.sizes.hSizer8,
+          //
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //
-              Center(
-                child: Text(
-                  _getTitle(model),
-                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
-                ),
-              ),
-              R.sizes.hSizer24,
-
-              Center(
-                child: Text(
-                  getIt<UserNotifier>().getCurrentUserNameAndSurname(),
-                  style: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
-                      .description(context),
-                ),
-              ),
-              R.sizes.hSizer8,
-              //
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    model.title,
-                    style: getIt<IAppConfig>()
-                        .theme
-                        .dialogTheme
-                        .description(context)
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-
-                  Text(
-                    "  -  ",
-                    style: getIt<IAppConfig>()
-                        .theme
-                        .dialogTheme
-                        .description(context)
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  //
-                  Text(
-                    model.scheduledDate.xHourFormat,
-                    style: getIt<IAppConfig>()
-                        .theme
-                        .dialogTheme
-                        .description(context)
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              //
-              R.sizes.hSizer12,
-
-              //
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  if (notificationModel.baseNotificationId == null) ...[
-                    //
-                    const Expanded(
-                      child: _ExpandablePostponeComponent(),
-                    ),
-
-                    //
-                    R.sizes.wSizer8,
-                  ],
-
-                  //
-                  Expanded(
-                    child: RbioSmallDialogButton.green(
-                      onPressed: () {
-                        Atom.dismiss();
-                      },
-                      title: LocaleProvider.current.Ok,
-                    ),
-                  ),
-                ],
+              Text(
+                model.title,
+                style: getIt<IAppConfig>()
+                    .theme
+                    .dialogTheme
+                    .description(context)
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
 
+              Text(
+                "  -  ",
+                style: getIt<IAppConfig>()
+                    .theme
+                    .dialogTheme
+                    .description(context)
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
               //
-              R.sizes.hSizer8,
-
-              //
-              RbioSmallDialogButton.red(
-                title: LocaleProvider.current.discard,
-                onPressed: () {
-                  Atom.dismiss(false);
-                },
+              Text(
+                model.scheduledDate.xHourFormat,
+                style: getIt<IAppConfig>()
+                    .theme
+                    .dialogTheme
+                    .description(context)
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),
-        ),
+          //
+          R.sizes.hSizer12,
+
+          //
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //
+              if (notificationModel.baseNotificationId == null) ...[
+                //
+                const Expanded(
+                  child: _ExpandablePostponeComponent(),
+                ),
+
+                //
+                R.sizes.wSizer8,
+              ],
+
+              //
+              Expanded(
+                child: RbioSmallDialogButton.green(
+                  onPressed: () {
+                    Atom.dismiss();
+                  },
+                  title: LocaleProvider.current.Ok,
+                ),
+              ),
+            ],
+          ),
+
+          //
+          R.sizes.hSizer8,
+
+          //
+          RbioSmallDialogButton.red(
+            title: LocaleProvider.current.discard,
+            onPressed: () {
+              Atom.dismiss(false);
+            },
+          ),
+        ],
       ),
     );
   }
