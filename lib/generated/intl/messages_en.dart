@@ -124,6 +124,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "as_excel": MessageLookupByLibrary.simpleMessage("as Excel"),
         "as_pdf": MessageLookupByLibrary.simpleMessage("as PDF"),
         "as_png": MessageLookupByLibrary.simpleMessage("as PNG"),
+        "available_video_call_button": MessageLookupByLibrary.simpleMessage(
+            "Online video call is only available between 2 hours ago and 2 hours later from the appointment date"),
         "awards": MessageLookupByLibrary.simpleMessage("Awards"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
         "basal_metabolism":
