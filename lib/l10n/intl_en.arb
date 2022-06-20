@@ -271,6 +271,7 @@
   "pick_a_photo_option": "Pick a photo option",
   "allow_permission_gallery": "Please allow access to photos by going to your Settings.",
   "allow_permission_camera": "Please allow access to camera by going to your Settings.",
+  "available_video_call_button": "Online video call is only available between 2 hours ago and 2 hours later from the appointment date",
   "fill_all_field_to_win_lottery": "Please fill out the form to apply for the lottery",
   "video_id": "Video Id",
   "thank_you_for_survey": "Thank you for completing our survey.",

@@ -2770,6 +2770,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Online video call is only available between 2 hours ago and 2 hours later from the appointment date`
+  String get available_video_call_button {
+    return Intl.message(
+      'Online video call is only available between 2 hours ago and 2 hours later from the appointment date',
+      name: 'available_video_call_button',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Please fill out the form to apply for the lottery`
   String get fill_all_field_to_win_lottery {
     return Intl.message(

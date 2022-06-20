@@ -121,6 +121,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "as_excel": MessageLookupByLibrary.simpleMessage("Excel olarak"),
         "as_pdf": MessageLookupByLibrary.simpleMessage("PDF olarak"),
         "as_png": MessageLookupByLibrary.simpleMessage("PNG olarak"),
+        "available_video_call_button": MessageLookupByLibrary.simpleMessage(
+            "Görüntülü konuşma sadece randevudan 2 saat önce ve 2 saat sonraki tarih aralığında mevcuttur"),
         "awards": MessageLookupByLibrary.simpleMessage("Ödüller"),
         "back": MessageLookupByLibrary.simpleMessage("Geri"),
         "basal_metabolism":
