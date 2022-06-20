@@ -205,9 +205,9 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
   ) {
     if (data.type == R.constants.onlineAppointmentType) {
       if (DateTime.parse(data.from ?? '').isBefore(
-              DateTime.now().add(R.constants.videocallboundaryduration)) &&
+              DateTime.now().add(R.constants.videoCallBoundaryDuration)) &&
           (DateTime.parse(data.to ?? '').isAfter(DateTime.now()
-              .subtract(R.constants.videocallboundaryduration)))) {
+              .subtract(R.constants.videoCallBoundaryDuration)))) {
         if (data.isRated ?? false) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -274,9 +274,9 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
           );
         }
       } else if (!(DateTime.parse(data.from ?? '').isBefore(
-              DateTime.now().add(R.constants.videocallboundaryduration))) &&
+              DateTime.now().add(R.constants.videoCallBoundaryDuration))) &&
           (DateTime.parse(data.to ?? '').isAfter(DateTime.now()
-              .subtract(R.constants.videocallboundaryduration)))) {
+              .subtract(R.constants.videoCallBoundaryDuration)))) {
         if (data.isRated ?? false) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
