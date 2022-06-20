@@ -181,7 +181,9 @@ class GlucoseData extends HiveObject {
       return level == other.level && date == other.date;
     }
 
-    final isEqual = jsonEncode(toMap()) == jsonEncode(other.toMap());
+    final thisMap = toMap()..remove(MEASUREMENT_ID);
+    final anotherMap = other.toMap()..remove(MEASUREMENT_ID);
+    final isEqual = jsonEncode(thisMap) == jsonEncode(anotherMap);
     return isEqual;
   }
 
