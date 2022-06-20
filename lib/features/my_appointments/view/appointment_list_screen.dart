@@ -204,10 +204,10 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     PatientAppointmentsResponse data,
   ) {
     if (data.type == R.constants.onlineAppointmentType) {
-      if (DateTime.parse(data.from ?? '')
-              .isBefore(DateTime.now().add(const Duration(hours: 2))) &&
-          (DateTime.parse(data.from ?? '')
-              .isAfter(DateTime.now().subtract(const Duration(hours: 2))))) {
+      if (DateTime.parse(data.from ?? '').isBefore(
+              DateTime.now().add(R.constants.videocallboundaryduration)) &&
+          (DateTime.parse(data.to ?? '').isAfter(DateTime.now()
+              .subtract(R.constants.videocallboundaryduration)))) {
         if (data.isRated ?? false) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -242,7 +242,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Center(
                   child: RbioIconButton(
                     onPressed: () {
@@ -273,10 +273,10 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             ],
           );
         }
-      } else if (!(DateTime.parse(data.from ?? '')
-              .isBefore(DateTime.now().add(const Duration(hours: 2))) &&
-          (DateTime.parse(data.from ?? '')
-              .isAfter(DateTime.now().subtract(const Duration(hours: 2)))))) {
+      } else if (!(DateTime.parse(data.from ?? '').isBefore(
+              DateTime.now().add(R.constants.videocallboundaryduration))) &&
+          (DateTime.parse(data.to ?? '').isAfter(DateTime.now()
+              .subtract(R.constants.videocallboundaryduration)))) {
         if (data.isRated ?? false) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -295,8 +295,20 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                 ),
                 R.sizes.wSizer40,
                 RbioIconButton(
-                  backColor: getIt<IAppConfig>().theme.gray,
-                  onPressed: () {},
+                  backColor: getIt<IAppConfig>().theme.red,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return RbioMessageDialog(
+                          description: LocaleProvider
+                              .current.available_video_call_button,
+                          isAtom: false,
+                        );
+                      },
+                    );
+                  },
                   icon: SvgPicture.asset(
                     R.image.startVideo,
                     color: getIt<IAppConfig>().theme.white,
@@ -310,7 +322,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Center(
                   child: RbioIconButton(
                     onPressed: () {
@@ -330,7 +342,19 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
               Center(
                 child: RbioIconButton(
                   backColor: getIt<IAppConfig>().theme.gray,
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return RbioMessageDialog(
+                          description: LocaleProvider
+                              .current.available_video_call_button,
+                          isAtom: false,
+                        );
+                      },
+                    );
+                  },
                   icon: SvgPicture.asset(
                     R.image.startVideo,
                     color: getIt<IAppConfig>().theme.white,
