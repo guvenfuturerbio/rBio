@@ -271,6 +271,7 @@
   "youtube_stream": "Youtube Yayını",
   "camera": "Kamera",
   "gallery": "Galeri",
+  "available_video_call_button": "Görüntülü konuşma sadece randevudan 2 saat önce ve 2 saat sonraki tarih aralığında mevcuttur",
   "how_to_get_photo": "Fotoğraf nasıl alınsın?",
   "pick_a_photo_option": "Opsiyon seçiniz",
   "allow_permission_gallery": "Fotoğraflara erişim için lütfen Ayarlar'dan izin veriniz",
