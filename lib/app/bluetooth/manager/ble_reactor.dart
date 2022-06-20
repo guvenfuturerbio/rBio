@@ -94,6 +94,7 @@ class BleReactorOps extends ChangeNotifier {
     }.toString());
 
     // İlk önce buradan datalar geliyor daha sonra aşağıdan recordAccessData tetikleniyor.
+    dataStreamSubscription?.cancel();
     dataStreamSubscription =
         _ble.subscribeToCharacteristic(subsCharacteristic).listen(
       (measurementData) {
@@ -116,6 +117,7 @@ class BleReactorOps extends ChangeNotifier {
     );
 
     bool _lock = false;
+    recordStreamSubscription?.cancel();
     recordStreamSubscription =
         _ble.subscribeToCharacteristic(writeCharacteristic).listen(
       (recordAccessData) async {
@@ -323,55 +325,6 @@ class BleReactorOps extends ChangeNotifier {
     } else {
       throw Exception('dataCantParse');
     }
-  }
-
-  void parseGlucoseDataFromReadingInstanceTest() {
-    final data = <int>[
-      11,
-      16,
-      0,
-      230,
-      7,
-      1,
-      19,
-      13,
-      37,
-      0,
-      0,
-      0,
-      142,
-      176,
-      248,
-      0,
-      0
-    ];
-
-    final device = DiscoveredDevice(
-      id: 'id',
-      name: 'name',
-      serviceData: {},
-      manufacturerData: Uint8List.fromList([112]),
-      rssi: 1,
-      serviceUuids: [],
-    );
-    final model = parseGlucoseDataFromReadingInstance(data, device);
-    LoggerUtils.instance.i(model.toMap().toString());
-
-    final newModel = GlucoseData(
-      device: 0,
-      deviceName: 'name',
-      deviceUUID: 'id',
-      imageURL: '',
-      isDeleted: false,
-      isFromHealth: false,
-      level: '142',
-      manual: false,
-      measurementId: null,
-      note: '',
-      tag: 3,
-      time: 1642588620000,
-      userId: null,
-    );
   }
 
   void clearControlPointResponse() {
