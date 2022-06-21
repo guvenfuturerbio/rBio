@@ -65,7 +65,7 @@ class GlucoseData extends HiveObject {
 
   bool isFromHealth;
 
-  PickedFile imageFile = PickedFile("");
+  XFile imageFile = XFile("");
 
   // BG
   String get date => DateTime.fromMillisecondsSinceEpoch(time).toString();
