@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
@@ -153,7 +149,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
                               : _buildCircleBg(context, vm),
                           _buildDateTimeSection(context, vm),
                           _buildTags(context, vm.data.tag, vm.changeTag),
-                          _buildImageSection(context, vm),
+                          //  _buildImageSection(context, vm),
                           _buildNoteSection(context),
                         ],
                       ),
@@ -415,6 +411,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
     );
   }
 
+/*
   // #endregion
   Widget _buildImageSection(BuildContext context, BgTaggerVm value) {
     return GestureDetector(
@@ -459,16 +456,6 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
               ),
             ),
 
-            //
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(
-                  LocaleProvider.current.add_photo,
-                  style: context.xHeadline4,
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -479,55 +466,59 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
   Future<void> takeImage(BuildContext context, BgTaggerVm value) async {
     String title = LocaleProvider.current.how_to_get_photo;
 
-    Atom.show(
-      Platform.isIOS
-          ? CupertinoAlertDialog(
-              title: Text(title),
-              content: Text(LocaleProvider.current.pick_a_photo_option),
-              actions: <Widget>[
-                CupertinoDialogAction(
-                  child: Text(
-                    LocaleProvider.current.camera,
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+       return Platform.isIOS
+            ? CupertinoAlertDialog(
+                title: Text(title),
+                content: Text(LocaleProvider.current.pick_a_photo_option),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text(
+                      LocaleProvider.current.camera,
+                    ),
+                    isDefaultAction: true,
+                    onPressed: () {
+                      value.getPhotoFromSource(ImageSource.camera);
+                    },
                   ),
-                  isDefaultAction: true,
-                  onPressed: () {
-                    value.getPhotoFromSource(ImageSource.camera);
-                  },
-                ),
-                CupertinoDialogAction(
-                  child: Text(
-                    LocaleProvider.current.gallery,
+                  CupertinoDialogAction(
+                    child: Text(
+                      LocaleProvider.current.gallery,
+                    ),
+                    isDefaultAction: true,
+                    onPressed: () {
+                      value.getPhotoFromSource(ImageSource.gallery);
+                    },
                   ),
-                  isDefaultAction: true,
-                  onPressed: () {
-                    value.getPhotoFromSource(ImageSource.gallery);
-                  },
+                ],
+              )
+            : AlertDialog(
+                title: Text(
+                  title,
+                  style: const TextStyle(fontSize: 22),
                 ),
-              ],
-            )
-          : AlertDialog(
-              title: Text(
-                title,
-                style: const TextStyle(fontSize: 22),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text(LocaleProvider.current.camera),
-                  onPressed: () {
-                    value.getPhotoFromSource(ImageSource.camera);
-                  },
-                ),
-                TextButton(
-                  child: Text(LocaleProvider.current.gallery),
-                  onPressed: () {
-                    value.getPhotoFromSource(ImageSource.gallery);
-                  },
-                )
-              ],
-            ),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text(LocaleProvider.current.camera),
+                    onPressed: () {
+                      value.getPhotoFromSource(ImageSource.camera);
+                    },
+                  ),
+                  TextButton(
+                    child: Text(LocaleProvider.current.gallery),
+                    onPressed: () {
+                      value.getPhotoFromSource(ImageSource.gallery);
+                    },
+                  )
+                ],
+              );
+      },
     );
   }
-
+*/
   // #endregion
   Widget _buildNoteSection(BuildContext context) {
     return Padding(
@@ -539,7 +530,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
         ),
         child: TextField(
           focusNode: noteFocusNode,
-          controller: controller,
+          controller: noteController,
           keyboardType: TextInputType.multiline,
           maxLines: null,
           decoration: InputDecoration(
