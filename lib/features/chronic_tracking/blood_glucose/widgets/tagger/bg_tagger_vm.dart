@@ -40,7 +40,7 @@ class BgTaggerVm extends ChangeNotifier {
   }
 
   void getPhotoFromSource(ImageSource imageSource) async {
-    late PermissionStatus photoPerm, cameraPerm;
+    PermissionStatus? photoPerm, cameraPerm;
     final picker = ImagePicker();
 
     try {
@@ -72,7 +72,7 @@ class BgTaggerVm extends ChangeNotifier {
         return;
       }
 
-      final PickedFile? pickedFile = await picker.getImage(source: imageSource);
+      final XFile? pickedFile = await picker.pickImage(source: imageSource);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         Navigator.pop(context);
       });
@@ -95,7 +95,7 @@ class BgTaggerVm extends ChangeNotifier {
     }
   }
 
-  changePic(PickedFile file, String fileName) {
+  changePic(XFile file, String fileName) {
     data.imageFile = file;
     data.imageURL = fileName;
   }
@@ -141,7 +141,6 @@ class BgTaggerVm extends ChangeNotifier {
     } else {
       await getIt<GlucoseStorageImpl>().update(data, key);
     }
-
     Atom.dismiss();
   }
 }
