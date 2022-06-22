@@ -20,9 +20,14 @@ class BleScanner {
   List<String> _pairedDeviceIds = [];
   void setPairedDeviceIds(List<String> value) {
     _pairedDeviceIds = value;
-    Atom.context
-        .read<BluetoothBloc>()
-        .add(BluetoothEvent.updatePairedIdList(_pairedDeviceIds));
+    final widgetsBinding = WidgetsBinding.instance;
+    if (widgetsBinding != null) {
+      widgetsBinding.addPostFrameCallback((_) {
+        Atom.context
+            .read<BluetoothBloc>()
+            .add(BluetoothEvent.updatePairedIdList(_pairedDeviceIds));
+      });
+    }
   }
 
   Stream<BleStatus> listenBleStatus() async* {
@@ -35,7 +40,8 @@ class BleScanner {
     _scanDeviceSubscription?.cancel();
     if (bleStatus == BleStatus.ready) {
       _devices.clear();
-      _scanDeviceSubscription = _ble.scanForDevices(withServices: _supported).listen(
+      _scanDeviceSubscription =
+          _ble.scanForDevices(withServices: _supported).listen(
         (device) async {
           final knownDeviceIndex =
               _devices.indexWhere((d) => d.id == device.id);

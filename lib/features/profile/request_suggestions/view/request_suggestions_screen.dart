@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:onedosehealth/features/profile/request_suggestions/cubit/request_suggestions_cubit.dart';
 
 import '../../../../core/core.dart';
+import '../cubit/request_suggestions_cubit.dart';
 
 class RequestSuggestionsScreen extends StatelessWidget {
   const RequestSuggestionsScreen({Key? key}) : super(key: key);
@@ -26,6 +26,8 @@ class RequestSuggestionsView extends StatefulWidget {
 }
 
 class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   late TextEditingController textEditingController;
   late FocusNode focusNode;
 
@@ -60,7 +62,6 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
             LocaleProvider.current.something_went_wrong,
           );
         }
-        ;
       },
       builder: (BuildContext context, RequestSuggestionsState state) {
         return KeyboardDismissOnTap(
@@ -87,9 +88,6 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
   Widget _buildBody(
     BuildContext context,
   ) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    String textSuggestion = '';
-
     return SingleChildScrollView(
       padding: EdgeInsets.zero,
       physics: const BouncingScrollPhysics(),
@@ -147,9 +145,6 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
                     border: RbioTextFormField.noneBorder(),
                     maxLines: null,
                     textInputAction: TextInputAction.newline,
-                    onChanged: (text) {
-                      textSuggestion = text;
-                    },
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(500),
                     ],
@@ -163,7 +158,7 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                textSuggestion.length.toString() + "/500",
+                textEditingController.text.length.toString() + "/500",
                 style: context.xHeadline5,
               ),
             ),
@@ -177,9 +172,8 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
                 title: LocaleProvider.current.send,
                 onTap: () {
                   if (formKey.currentState?.validate() ?? false) {
-                    context
-                        .read<RequestSuggestionsCubit>()
-                        .sendSuggestion(text: textSuggestion);
+                    context.read<RequestSuggestionsCubit>().sendSuggestion(
+                        text: textEditingController.text.trim());
                   } else {
                     LocaleProvider.current.validation;
                   }

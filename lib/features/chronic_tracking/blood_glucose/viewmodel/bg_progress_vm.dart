@@ -1025,7 +1025,7 @@ class BgProgressVm
     );
   }
 
-  fetchBgMeasurement() {
+  void fetchBgMeasurement() {
     var _bgMeasurement = getIt<GlucoseStorageImpl>().getAll();
     bgMeasurements = _bgMeasurement
         .map((e) => BgMeasurementGlucoseViewModel(bgMeasurement: e))

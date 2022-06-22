@@ -94,7 +94,7 @@ class ProfileStorageImpl extends ChronicStorageService<Person> {
         var person = get(key);
         if (person != null && !person.isEqual(data)) {
           await updateServer(data);
-          box.put(key, data);
+          await box.put(key, data);
         }
 
         return true;

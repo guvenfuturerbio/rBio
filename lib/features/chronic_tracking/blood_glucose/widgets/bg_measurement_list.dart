@@ -40,7 +40,9 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
       controller: widget.scrollController,
       scrollDirection: Axis.vertical,
       floatingHeader: true,
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.only(
+        bottom: R.sizes.defaultBottomValue + 100,
+      ),
       useStickyGroupSeparators: widget.useStickyGroupSeparatorsValue ?? false,
       groupBy: (BgMeasurementGlucoseViewModel bgMeasurementViewModel) =>
           DateTime(
