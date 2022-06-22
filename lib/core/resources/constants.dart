@@ -16,22 +16,22 @@ class _Constants {
   final magazineList = [
     {
       'imagePath': R.image.guvenin_1,
-      "magazineUrl": "https://guvenin.com.tr/dergiler/dergi1.html",
+      "magazineUrl": "https://guvenin.com.tr/dergi/1",
       "sayi": "Sayı 1",
     },
     {
       'imagePath': R.image.guvenin_2,
-      "magazineUrl": "https://guvenin.com.tr/dergiler/dergi2.html",
+      "magazineUrl": "https://guvenin.com.tr/dergi/2",
       "sayi": "Sayı 2",
     },
     {
       'imagePath': R.image.guvenin_3,
-      "magazineUrl": "https://guvenin.com.tr/dergiler/dergi3.html",
+      "magazineUrl": "https://guvenin.com.tr/dergi/3",
       "sayi": "Sayı 3",
     },
     {
       'imagePath': R.image.guvenin_4,
-      "magazineUrl": "https://guvenin.com.tr/dergiler/dergi4.html",
+      "magazineUrl": "https://guvenin.com.tr/dergi/4",
       "sayi": "Sayı 4",
     }
   ];

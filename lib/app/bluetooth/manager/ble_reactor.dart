@@ -171,11 +171,12 @@ class BleReactorOps extends ChangeNotifier {
       ).then(
         (value) async {
           LoggerUtils.instance.i("Cihaz Eşleşme Talebine Cevap Gönderdi.");
-
-          Atom.to(
-            PagePaths.main,
-            isReplacement: true,
-          );
+          if (Atom.url.contains(PagePaths.selectedDevice)) {
+            Atom.to(
+              PagePaths.main,
+              isReplacement: true,
+            );
+          }
         },
         onError: (e) {
           notifyListeners();
@@ -238,22 +239,22 @@ class BleReactorOps extends ChangeNotifier {
         barrierDismissible: false,
       );
       if (dialogResult == true) {
-        Atom.to(
-          PagePaths.main,
-          isReplacement: true,
-        );
+        if (Atom.url.contains(PagePaths.selectedDevice)) {
+          Atom.to(
+            PagePaths.main,
+            isReplacement: true,
+          );
+        }
       }
     }
 
-    if (newItems.isNotEmpty) {
-      LoggerUtils.instance.i(
-        "Kullanıcıya Notification ile Bilgi Verildi.",
-      );
-      await getIt<LocalNotificationManager>().show(
-        LocaleProvider.current.blood_glucose_measurement,
-        LocaleProvider.current.blood_glucose_imported,
-      );
-    }
+    LoggerUtils.instance.i(
+      "Kullanıcıya Notification ile Bilgi Verildi.",
+    );
+    await getIt<LocalNotificationManager>().show(
+      LocaleProvider.current.blood_glucose_measurement,
+      LocaleProvider.current.blood_glucose_imported,
+    );
   }
 
   GlucoseData parseGlucoseDataFromReadingInstance(
