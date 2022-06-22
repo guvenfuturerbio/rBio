@@ -4,6 +4,7 @@ export 'gallery_pop_up/stepper/stepper.dart';
 export 'animated_faded_widget.dart';
 export 'arrow_clipper.dart';
 export 'chronic_error_alert.dart';
+export 'circular_percent_indicator.dart';
 export 'custom_popup_dropdown.dart';
 export 'custom_spakline_widget.dart';
 export 'detailed_gradient_message.dart';

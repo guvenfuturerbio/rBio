@@ -1438,6 +1438,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "<stripCount> stripiniz kaldı"),
         "your_complaints": MessageLookupByLibrary.simpleMessage(
             "Belirttiğiniz şikayetleriniz:"),
+        "your_data_is_synchronizing": MessageLookupByLibrary.simpleMessage(
+            "Verileriniz senkronize ediliyor"),
         "youtube_stream": MessageLookupByLibrary.simpleMessage("Youtube Yayını")
       };
 }

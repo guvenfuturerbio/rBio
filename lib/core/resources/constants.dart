@@ -13,6 +13,29 @@ class _Constants {
     'jpg',
   ];
 
+  final magazineList = [
+    {
+      'imagePath': R.image.guvenin_1,
+      "magazineUrl": "https://guvenin.com.tr/dergiler/dergi1.html",
+      "sayi": "Sayı 1",
+    },
+    {
+      'imagePath': R.image.guvenin_2,
+      "magazineUrl": "https://guvenin.com.tr/dergiler/dergi2.html",
+      "sayi": "Sayı 2",
+    },
+    {
+      'imagePath': R.image.guvenin_3,
+      "magazineUrl": "https://guvenin.com.tr/dergiler/dergi3.html",
+      "sayi": "Sayı 3",
+    },
+    {
+      'imagePath': R.image.guvenin_4,
+      "magazineUrl": "https://guvenin.com.tr/dergiler/dergi4.html",
+      "sayi": "Sayı 4",
+    }
+  ];
+
   final onlineAppointmentType = 256;
   final hospitalAppointmentType = 1;
   final tenantAyranciId = 1;

@@ -169,8 +169,13 @@ class BleReactorOps extends ChangeNotifier {
         writeCharacteristic,
         value: [0x01, 0x01],
       ).then(
-        (value) {
+        (value) async {
           LoggerUtils.instance.i("Cihaz Eşleşme Talebine Cevap Gönderdi.");
+
+          Atom.to(
+            PagePaths.main,
+            isReplacement: true,
+          );
         },
         onError: (e) {
           notifyListeners();
@@ -189,6 +194,15 @@ class BleReactorOps extends ChangeNotifier {
           .sentryManager
           .captureException(e, stackTrace: stackTrace);
     }
+
+    // final dateTime = await _ble.readCharacteristic(
+    //   QualifiedCharacteristic(
+    //     characteristicId: Uuid.parse("2A08"),
+    //     serviceId: Uuid.parse("1808"),
+    //     deviceId: device.id,
+    //   ),
+    // );
+    // LoggerUtils.instance.i(dateTime);
   }
 
   /// user/user-profile-update/entegrationId isteğinden sonra bu metod çağrılıyor.
@@ -219,33 +233,27 @@ class BleReactorOps extends ChangeNotifier {
       );
     } else if (newDataCount > 1) {
       // Cihazın local'inde olmayan bütün verileri hem local'e hemde db'ye yazıyorum.
-      Atom.show(
-        SizedBox.expand(
-          child: Container(
-            color: Colors.black26,
-            child: const RbioLoading(),
-          ),
-        ),
+      final dialogResult = await Atom.show(
+        BloodGlucoseSaveDataDialog(glucoseList: newItems),
+        barrierDismissible: false,
       );
-      for (final item in newItems) {
-        LoggerUtils.instance.i(
-          "Kayıt Edilmemiş Veriler Backend'e Gönderiliyor.",
-        );
-        await getIt<GlucoseStorageImpl>().write(
-          item,
-          shouldSendToServer: true,
+      if (dialogResult == true) {
+        Atom.to(
+          PagePaths.main,
+          isReplacement: true,
         );
       }
-      Atom.dismiss();
     }
 
-    LoggerUtils.instance.i(
-      "Kullanıcıya Notification ile Bilgi Verildi.",
-    );
-    await getIt<LocalNotificationManager>().show(
-      LocaleProvider.current.blood_glucose_measurement,
-      LocaleProvider.current.blood_glucose_imported,
-    );
+    if (newItems.isNotEmpty) {
+      LoggerUtils.instance.i(
+        "Kullanıcıya Notification ile Bilgi Verildi.",
+      );
+      await getIt<LocalNotificationManager>().show(
+        LocaleProvider.current.blood_glucose_measurement,
+        LocaleProvider.current.blood_glucose_imported,
+      );
+    }
   }
 
   GlucoseData parseGlucoseDataFromReadingInstance(

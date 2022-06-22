@@ -307,7 +307,10 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       id: userId,
       value: data.level,
       valueNote: data.note,
-      detail: BloodGlucoseValueDetail(time: dtFrmt, tag: data.tag),
+      detail: BloodGlucoseValueDetail(
+        time: dtFrmt,
+        tag: data.tag,
+      ),
     );
 
     try {

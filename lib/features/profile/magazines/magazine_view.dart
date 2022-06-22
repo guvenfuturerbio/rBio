@@ -4,33 +4,23 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/core.dart';
 
-class MagazineSelectionPage extends StatefulWidget {
+class MagazineSelectionPage extends StatelessWidget {
   const MagazineSelectionPage({Key? key}) : super(key: key);
 
   @override
-  _MagazineSelectionPageState createState() => _MagazineSelectionPageState();
-}
-
-class _MagazineSelectionPageState extends State<MagazineSelectionPage> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: RbioAppBar(
-            title: RbioAppBar.textTitle(
-                context, LocaleProvider.current.magazines)),
-        body: ListView(
-          scrollDirection: Atom.isWeb ? Axis.horizontal : Axis.vertical,
-          children: <Widget>[
-            _magazineWidget(R.image.guvenin_1,
-                "https://www.guvenin.com.tr/sayi1", "Sayı 1"),
-            _magazineWidget(R.image.guvenin_2,
-                "https://www.guvenin.com.tr/sayi2", "Sayı 2"),
-            _magazineWidget(R.image.guvenin_3,
-                "https://www.guvenin.com.tr/sayi3", "Sayı 3"),
-            _magazineWidget(R.image.guvenin_4,
-                "https://www.guvenin.com.tr/sayi4", "Sayı 4"),
-          ],
-        ));
+      appBar: RbioAppBar(
+          title:
+              RbioAppBar.textTitle(context, LocaleProvider.current.magazines)),
+      body: ListView(
+        scrollDirection: Atom.isWeb ? Axis.horizontal : Axis.vertical,
+        children: R.constants.magazineList
+            .map((e) =>
+                _magazineWidget(e["imagePath"]!, e["magazineUrl"]!, e["sayi"]!))
+            .toList(),
+      ),
+    );
   }
 
   Padding _magazineWidget(String imagePath, String magazineUrl, String sayi) {

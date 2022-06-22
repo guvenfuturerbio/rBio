@@ -398,6 +398,7 @@ class BloodPressureStorageImpl
         for (final glucose in list) {
           if (doesExist(glucose)) _dubItem++;
         }
+
         if (_dubItem != list.length) {
           await writeAll(list);
           _hasProgress = false;
