@@ -1452,6 +1452,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You have <stripCount> strips left"),
         "your_complaints":
             MessageLookupByLibrary.simpleMessage("Your complaints:"),
+        "your_data_is_synchronizing":
+            MessageLookupByLibrary.simpleMessage("Your data is synchronizing"),
         "youtube_stream": MessageLookupByLibrary.simpleMessage("Youtube Stream")
       };
 }

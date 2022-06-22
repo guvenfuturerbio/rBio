@@ -72,20 +72,21 @@ class GlucoseData extends HiveObject {
   Color get color =>
       UtilityManager().getGlucoseMeasurementColor(double.parse(level).toInt());
 
-  GlucoseData(
-      {required this.level,
-      this.tag,
-      required this.note,
-      required this.time,
-      required this.device,
-      this.manual = false,
-      this.deviceUUID = "",
-      this.deviceName = "",
-      this.imageURL = "",
-      this.isDeleted = false,
-      this.userId,
-      this.measurementId,
-      this.isFromHealth = false});
+  GlucoseData({
+    required this.level,
+    this.tag,
+    required this.note,
+    required this.time,
+    required this.device,
+    this.manual = false,
+    this.deviceUUID = "",
+    this.deviceName = "",
+    this.imageURL = "",
+    this.isDeleted = false,
+    this.userId,
+    this.measurementId,
+    this.isFromHealth = false,
+  });
 
   GlucoseData fromGlucoseData(GlucoseData glucoseData) {
     return GlucoseData(
@@ -159,11 +160,6 @@ class GlucoseData extends HiveObject {
   }
 
   @override
-  String toString() {
-    return "Time: $time - Level: $level - Tag $tag";
-  }
-
-  @override
   bool operator ==(Object other) {
     if (other is GlucoseData) {
       if (measurementId == null || other.measurementId == null) {
@@ -180,11 +176,23 @@ class GlucoseData extends HiveObject {
     if (other.isFromHealth) {
       return level == other.level && date == other.date;
     }
-    return jsonEncode(toMap()) == jsonEncode(other.toMap());
+
+    final thisMap = toMap()
+      ..remove(MEASUREMENT_ID)
+      ..remove(DEVICE)
+      ..remove(DEVICE_NAME)
+      ..remove(USER_ID);
+    final anotherMap = other.toMap()
+      ..remove(MEASUREMENT_ID)
+      ..remove(DEVICE)
+      ..remove(DEVICE_NAME)
+      ..remove(USER_ID);
+    final isEqual = jsonEncode(thisMap) == jsonEncode(anotherMap);
+    return isEqual;
   }
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
-
+  String toString() {
+    return 'GlucoseData("manual": "$manual", measurementId: $measurementId, level: $level, tag: $tag, note: $note, time: $time, device: $device, manual: $manual, deviceName: $deviceName, deviceUUID: $deviceUUID, imageURL: $imageURL, isDeleted: $isDeleted, userId: $userId, isFromHealth: $isFromHealth)';
+  }
 }

@@ -68,7 +68,10 @@ class MeasurementTrackingVm with ChangeNotifier {
 
     if (succes) {
       List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(
-          DateTime(1997, 11, 9), DateTime.now(), _healthDataTypes);
+        DateTime(1997, 11, 9),
+        DateTime.now(),
+        _healthDataTypes,
+      );
 
       List<HealthDataPoint> glucoseData = healthData
           .where((e) => e.type == HealthDataType.BLOOD_GLUCOSE)
@@ -98,9 +101,10 @@ class MeasurementTrackingVm with ChangeNotifier {
     }
   }
 
-  saveGlucoseData(List<HealthDataPoint> data) {
+  void saveGlucoseData(List<HealthDataPoint> data) {
     List<GlucoseData> glucoseData = data
-        .map((e) => GlucoseData(
+        .map(
+          (e) => GlucoseData(
             level: e.value.toString(),
             tag: 3,
             time: e.dateTo.millisecondsSinceEpoch,
@@ -109,7 +113,9 @@ class MeasurementTrackingVm with ChangeNotifier {
             deviceUUID: e.deviceId,
             manual: false,
             isFromHealth: true,
-            device: 4))
+            device: 4,
+          ),
+        )
         .toList();
 
     getIt<GlucoseStorageImpl>().writeAll(glucoseData, isFromHealth: false);
