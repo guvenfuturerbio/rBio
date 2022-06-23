@@ -28,19 +28,31 @@ class MobileMyApp extends StatelessWidget with MyApp {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
-      listener: (context, state) => _miScaleListener(context, state),
-      child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
-        listener: (context, miScaleStatus) {
-          if (miScaleStatus.status == DeviceStatus.connected) {
-            if (miScaleStatus.device != null) {
-              BlocProvider.of<MiScaleOpsCubit>(context).readValue(miScaleStatus.device!);
-            }
-          } else if (miScaleStatus.status == DeviceStatus.disconnected) {
-            BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
+    return BlocListener<BluetoothStatusCubit, BluetoothStatus>(
+      listener: (BuildContext context, BluetoothStatus bluetoothState) {
+        final miScaleDevices = context.read<MiScaleStatusCubit>().state.device;
+        if (miScaleDevices != null) {
+          if (bluetoothState == BluetoothStatus.on) {
+            context.read<DeviceSelectedCubit>().connect(miScaleDevices);
+          } else if (bluetoothState == BluetoothStatus.off) {
+            context.read<DeviceSelectedCubit>().disconnect(miScaleDevices);
           }
-        },
-        child: MyAppCommon(initialRoute: initialRoute),
+        }
+      },
+      child: BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
+        listener: (BuildContext context, MiScaleOpsState state) => _miScaleListener(context, state),
+        child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
+          listener: (BuildContext context, MiScaleStatus miScaleStatus) {
+            if (miScaleStatus.status == DeviceStatus.connected) {
+              if (miScaleStatus.device != null) {
+                BlocProvider.of<MiScaleOpsCubit>(context).readValue(miScaleStatus.device!);
+              }
+            } else if (miScaleStatus.status == DeviceStatus.disconnected) {
+              BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
+            }
+          },
+          child: MyAppCommon(initialRoute: initialRoute),
+        ),
       ),
     );
   }
@@ -53,7 +65,7 @@ class MobileMyApp extends StatelessWidget with MyApp {
       initial: () {
         //
       },
-      showLoading: (scaleEntity) {
+      showLoading: (ScaleEntity scaleEntity) {
         if (!Atom.isDialogShow) {
           Atom.show(const ScaleMeasurementPopup());
         }
@@ -167,10 +179,7 @@ class _MyAppCommonState extends State<MyAppCommon> {
                         data.stopRedirection();
                       } catch (e, stackTrace) {
                         LoggerUtils.instance.i(e);
-                        getIt<IAppConfig>()
-                            .platform
-                            .sentryManager
-                            .captureException(e, stackTrace: stackTrace);
+                        getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
                       }
                     } else {
                       final currentUrl = data.fromUrl ?? "";

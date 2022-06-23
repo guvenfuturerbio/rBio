@@ -32,14 +32,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (Atom.url == PagePaths.loginWithSuccessChangePassword()) {
       final widgetsBinding = WidgetsBinding.instance;
-      if (widgetsBinding != null) {
-        widgetsBinding.addPostFrameCallback((_) {
-          Utils.instance.showSuccessSnackbar(
-            context,
-            LocaleProvider.of(context).succefully_created_pass,
-          );
-        });
-      }
+      widgetsBinding.addPostFrameCallback((_) {
+        Utils.instance.showSuccessSnackbar(
+          context,
+          LocaleProvider.of(context).succefully_created_pass,
+        );
+      });
     }
 
     super.initState();
@@ -67,11 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
           Widget? child,
         ) {
           _userNameEditingController.text = value.userId;
-          _userNameEditingController.selection =
-              TextSelection.collapsed(offset: value.userId.length);
+          _userNameEditingController.selection = TextSelection.collapsed(offset: value.userId.length);
           _passwordEditingController.text = value.password;
-          _passwordEditingController.selection =
-              TextSelection.collapsed(offset: value.password.length);
+          _passwordEditingController.selection = TextSelection.collapsed(offset: value.password.length);
 
           return _buildScreen(value);
         },
@@ -448,8 +444,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 //
                 Container(
-                  child: value.versionCheckProgress ==
-                          VersionCheckProgress.loading
+                  child: value.versionCheckProgress == VersionCheckProgress.loading
                       ? Column(
                           children: <Widget>[
                             LoadingDialog(),
@@ -461,12 +456,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       : Utils.instance.button(
                           text: LocaleProvider.of(context).btn_sign_in,
                           onPressed: () {
-                            value.login(
-                                _userNameEditingController.text,
-                                _passwordEditingController.text,
-                                getIt<ISharedPreferencesManager>().getString(
-                                        SharedPreferencesKeys.consentId) ??
-                                    '');
+                            value.login(_userNameEditingController.text, _passwordEditingController.text,
+                                getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.consentId) ?? '');
                           },
                         ),
                 ),
@@ -503,8 +494,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 5, bottom: 10),
-                  child: value.versionCheckProgress ==
-                          VersionCheckProgress.loading
+                  child: value.versionCheckProgress == VersionCheckProgress.loading
                       ? Column(
                           children: <Widget>[
                             LoadingDialog(),
@@ -513,27 +503,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         )
-                      : value.versionCheckProgress ==
-                                  VersionCheckProgress.done &&
-                              value.needForceUpdate == false
+                      : value.versionCheckProgress == VersionCheckProgress.done && value.needForceUpdate == false
                           ? Utils.instance.button(
                               text: LocaleProvider.of(context).btn_sign_in,
                               onPressed: () {
-                                if (value.formKey?.currentState?.validate() ??
-                                    false) {
-                                  value.login(
-                                      _userNameEditingController.text,
-                                      _passwordEditingController.text,
-                                      getIt<ISharedPreferencesManager>()
-                                              .getString(SharedPreferencesKeys
-                                                  .consentId) ??
-                                          '');
+                                if (value.formKey?.currentState?.validate() ?? false) {
+                                  value.login(_userNameEditingController.text, _passwordEditingController.text,
+                                      getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.consentId) ?? '');
                                 }
                               },
                             )
-                          : value.needForceUpdate == true &&
-                                  value.versionCheckProgress !=
-                                      VersionCheckProgress.error
+                          : value.needForceUpdate == true && value.versionCheckProgress != VersionCheckProgress.error
                               ? Utils.instance.button(
                                   onPressed: () {
                                     value.startAppVersionOperation();

@@ -21,10 +21,10 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
   void connect(DeviceEntity device) {
     final result = connectDeviceUseCase.call(DeviceParams(device: device));
     result.fold(
-      (l) {
+      (BluetoothFailures l) {
         emit(DeviceSelectedState.error("Something went wrong"));
       },
-      (r) {
+      (bool r) {
         emit(DeviceSelectedState.done(device, true));
       },
     );
@@ -44,6 +44,10 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
         emit(DeviceSelectedState.done(device, false));
       },
     );
+
+    if (device.deviceType == DeviceType.miScale) {
+      miScaleStatusCubit.chasngas();
+    }
   }
 
   void connectAndListen(BuildContext context) {
