@@ -65,12 +65,14 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
 
   @override
   Future<GuvenResponseModel> insertNewBloodGlucoseValue(
-    BloodGlucoseValue bodyPages,
-  ) async {
+    BloodGlucoseValue bodyPages, {
+    CancelToken? cancelToken,
+  }) async {
     final response = await helper.postGuven(
       getIt<IAppConfig>().endpoints.devApi.ctInsertNewBloodGlucoseValue,
       bodyPages.toJson(),
       options: authOptions,
+      cancelToken: cancelToken,
     );
     if (response.xIsSuccessful) {
       return response;

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 
 import '../../../../../core/core.dart';
 
@@ -19,23 +20,44 @@ class BloodGlucoseSaveDataDialogCubit
   late final List<GlucoseData> glucoseList;
   late final GlucoseStorageImpl glucoseStorage;
 
+  final _cancelToken = CancelToken();
+
   FutureOr<void> savedItems() async {
-    for (var item in glucoseList) {
-      LoggerUtils.instance.i(state);
-      final isSuccess = await glucoseStorage.write(
-        item,
-        shouldSendToServer: true,
-      );
-      if (isSuccess) {
-        LoggerUtils.instance.i(
-          "Success: $state ${glucoseList.length == state.savedItemsCount + 1}",
+    try {
+      for (var item in glucoseList) {
+        final isSuccess = await glucoseStorage.write(
+          item,
+          shouldSendToServer: true,
+          cancelToken: _cancelToken,
         );
-        emit(
-          state.incrementSavedItems(
-            isDone: glucoseList.length == state.savedItemsCount + 1,
-          ),
-        );
+        if (isSuccess) {
+          emit(
+            state.incrementSavedItems(
+              isDone: glucoseList.length == state.savedItemsCount + 1,
+            ),
+          );
+        }
       }
+    } catch (e) {
+      LoggerUtils.instance.e(
+        "BloodGlucoseSaveDataDialogCubit-savedItems() : $e",
+      );
+
+      if (e is DioError) {
+        if (e.type == DioErrorType.cancel) {
+          emit(state.copyWith(isDone: true));
+        }
+      } else {
+        emit(state.copyWith(isError: true));
+      }
+    }
+  }
+
+  void cancelOperations() {
+    _cancelToken.cancel('cancelled');
+    final currentState = state;
+    if (currentState.savedItemsCount == currentState.totalItemsCount) {
+      emit(currentState.copyWith(isDone: true));
     }
   }
 }

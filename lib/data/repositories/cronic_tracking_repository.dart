@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../features/mediminder/mediminder.dart';
 import '../../../model/bg_measurement/blood_glucose_report_body.dart';
@@ -29,9 +31,11 @@ class ChronicTrackingRepository {
           int entegrationId, String? deviceUUID) =>
       apiService.getUserStrip(entegrationId, deviceUUID);
   Future<GuvenResponseModel> insertNewBloodGlucoseValue(
-    BloodGlucoseValue bodyPages,
-  ) =>
-      apiService.insertNewBloodGlucoseValue(bodyPages);
+    BloodGlucoseValue bodyPages, {
+    CancelToken? cancelToken,
+  }) =>
+      apiService.insertNewBloodGlucoseValue(bodyPages,
+          cancelToken: cancelToken);
   Future<GuvenResponseModel> deleteBloodGlucoseValue(
     DeleteBloodGlucoseMeasurementRequest deleteBloodGlucoseMeasurementRequest,
   ) =>
