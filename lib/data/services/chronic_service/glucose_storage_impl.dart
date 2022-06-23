@@ -103,6 +103,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   Future<bool> write(
     GlucoseData data, {
     bool shouldSendToServer = false,
+    CancelToken? cancelToken,
   }) async {
     try {
       if (box.isOpen && !doesExist(data)) {
@@ -122,7 +123,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
         }
 
         if (shouldSendToServer) {
-          var id = await sendToServer(data);
+          var id = await sendToServer(data, cancelToken: cancelToken);
           data.measurementId = id;
           LoggerUtils.instance.i(
             "Veri Yazılmadan Önce, box.length : ${box.length}",
@@ -297,7 +298,10 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  Future<int> sendToServer(GlucoseData data) async {
+  Future<int> sendToServer(
+    GlucoseData data, {
+    CancelToken? cancelToken,
+  }) async {
     final DateTime dt = DateTime.fromMillisecondsSinceEpoch(data.time);
     final int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
     final String dtFrmt = dt.toString();
@@ -314,9 +318,12 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     );
 
     try {
-      final datum = (await getIt<ChronicTrackingRepository>()
-              .insertNewBloodGlucoseValue(bloodGlucoseValue))
-          .datum;
+      final datum =
+          (await getIt<ChronicTrackingRepository>().insertNewBloodGlucoseValue(
+        bloodGlucoseValue,
+        cancelToken: cancelToken,
+      ))
+              .datum;
 
       if (datum is int?) {
         if (datum == null) {
