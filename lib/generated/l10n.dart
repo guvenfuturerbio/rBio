@@ -9019,6 +9019,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Your data is synchronizing`
+  String get your_data_is_synchronizing {
+    return Intl.message(
+      'Your data is synchronizing',
+      name: 'your_data_is_synchronizing',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

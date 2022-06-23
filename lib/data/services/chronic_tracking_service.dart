@@ -27,8 +27,9 @@ abstract class ChronicTrackingApiService {
   );
   Future<StripDetailModel> getUserStrip(int entegrationId, String? deviceUUID);
   Future<GuvenResponseModel> insertNewBloodGlucoseValue(
-    BloodGlucoseValue bodyPages,
-  );
+    BloodGlucoseValue bodyPages, {
+    CancelToken? cancelToken,
+  });
   Future<GuvenResponseModel> deleteBloodGlucoseValue(
     DeleteBloodGlucoseMeasurementRequest deleteBloodGlucoseMeasurementRequest,
   );

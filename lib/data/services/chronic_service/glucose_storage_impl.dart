@@ -103,6 +103,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   Future<bool> write(
     GlucoseData data, {
     bool shouldSendToServer = false,
+    CancelToken? cancelToken,
   }) async {
     try {
       if (box.isOpen && !doesExist(data)) {
@@ -122,9 +123,18 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
         }
 
         if (shouldSendToServer) {
-          var id = await sendToServer(data);
+          var id = await sendToServer(data, cancelToken: cancelToken);
           data.measurementId = id;
-          await box.add(data);
+          LoggerUtils.instance.i(
+            "Veri Yazılmadan Önce, box.length : ${box.length}",
+          );
+          final boxResponse = await box.add(data);
+          LoggerUtils.instance.d(
+            "data.measurementId : ${data.measurementId} || boxResponse : $boxResponse || doesExist : ${doesExist(data)}",
+          );
+          LoggerUtils.instance.i(
+            "Veri Yazıldıktan Sonta, box.length : ${box.length}",
+          );
         }
 
         notifyListeners();
@@ -143,8 +153,10 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  Future<bool> writeAll(List<GlucoseData> data,
-      {bool isFromHealth = false}) async {
+  Future<bool> writeAll(
+    List<GlucoseData> data, {
+    bool isFromHealth = false,
+  }) async {
     try {
       if (box.isOpen) {
         for (var item in data) {
@@ -154,7 +166,7 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
               item.measurementId = id;
             }
 
-            box.add(item);
+            await box.add(item);
           }
         }
 
@@ -213,8 +225,11 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
     }
   }
 
-  Future<bool> getAndWriteGlucoseData(
-      {DateTime? beginDate, DateTime? endDate, int? count}) async {
+  Future<bool> getAndWriteGlucoseData({
+    DateTime? beginDate,
+    DateTime? endDate,
+    int? count,
+  }) async {
     if (!_hasProgress) {
       _hasProgress = true;
       var glucoseDataList = await getBloodGlucoseDataOfPerson(
@@ -283,7 +298,10 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
   }
 
   @override
-  Future<int> sendToServer(GlucoseData data) async {
+  Future<int> sendToServer(
+    GlucoseData data, {
+    CancelToken? cancelToken,
+  }) async {
     final DateTime dt = DateTime.fromMillisecondsSinceEpoch(data.time);
     final int userId = getIt<ProfileStorageImpl>().getFirst().id ?? 0;
     final String dtFrmt = dt.toString();
@@ -293,13 +311,19 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
       id: userId,
       value: data.level,
       valueNote: data.note,
-      detail: BloodGlucoseValueDetail(time: dtFrmt, tag: data.tag),
+      detail: BloodGlucoseValueDetail(
+        time: dtFrmt,
+        tag: data.tag,
+      ),
     );
 
     try {
-      final datum = (await getIt<ChronicTrackingRepository>()
-              .insertNewBloodGlucoseValue(bloodGlucoseValue))
-          .datum;
+      final datum =
+          (await getIt<ChronicTrackingRepository>().insertNewBloodGlucoseValue(
+        bloodGlucoseValue,
+        cancelToken: cancelToken,
+      ))
+              .datum;
 
       if (datum is int?) {
         if (datum == null) {
@@ -403,20 +427,26 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
             String deviceId = bgMeasurement['device_id'];
             int measurementId = bgMeasurement["id"];
             GlucoseData glucoseData = GlucoseData(
-                time: time,
-                userId: entegrationId,
-                level: level,
-                note: note,
-                tag: tag,
-                manual: manual,
-                measurementId: measurementId,
-                device: 103,
-                deviceUUID: deviceId);
+              time: time,
+              userId: entegrationId,
+              level: level,
+              note: note,
+              tag: tag,
+              manual: manual,
+              measurementId: measurementId,
+              device: 103,
+              deviceUUID: deviceId,
+            );
             glucoseDataList.add(glucoseData);
           }
+
+          LoggerUtils.instance.i(
+            "Api'den Şeker Verileri Geldi. Eleman Sayısı : ${glucoseDataList.length}",
+          );
           return glucoseDataList;
         }
       }
+
       return [];
     } catch (e, stk) {
       getIt<IAppConfig>()

@@ -16,6 +16,247 @@ class BleReactorOps extends ChangeNotifier {
   ScaleEntity? scaleEntity;
   StreamSubscription<List<int>>? scaleSubs;
 
+  final flutterLocalNotificationsPlugin = ln.FlutterLocalNotificationsPlugin();
+
+  StreamSubscription<List<int>>? dataStreamSubscription;
+  StreamSubscription<List<int>>? recordStreamSubscription;
+
+  /// MG2
+  Future<void> write(DiscoveredDevice device) async {
+    _measurements.clear();
+    _gData.clear();
+    _controlPointResponse = <int>[];
+    notifyListeners();
+
+    final writeCharacteristic = QualifiedCharacteristic(
+      serviceId: Uuid.parse("1808"),
+      characteristicId: Uuid.parse("2a52"),
+      deviceId: device.id,
+    );
+
+    final subsCharacteristic = QualifiedCharacteristic(
+      serviceId: Uuid.parse("1808"),
+      characteristicId: Uuid.parse("2a18"),
+      deviceId: device.id,
+    );
+
+    if (Platform.isAndroid) {
+      await _ble.requestConnectionPriority(
+        deviceId: device.id,
+        priority: ConnectionPriority.highPerformance,
+      );
+    }
+
+    final PairedDevice pairedDevice = PairedDevice();
+
+    // DeviceId
+    pairedDevice.deviceId = device.id;
+
+    // DeviceType
+    pairedDevice.deviceType = Utils.instance.getDeviceType(device);
+
+    // Model Name
+    final modelName = await _ble.readCharacteristic(
+      QualifiedCharacteristic(
+        characteristicId: Uuid.parse("2a24"),
+        serviceId: Uuid.parse("180a"),
+        deviceId: device.id,
+      ),
+    );
+    pairedDevice.modelName = String.fromCharCodes(modelName);
+
+    // Serial Number
+    final serialNumber = await _ble.readCharacteristic(
+      QualifiedCharacteristic(
+        characteristicId: Uuid.parse("2a25"),
+        serviceId: Uuid.parse("180a"),
+        deviceId: device.id,
+      ),
+    );
+    pairedDevice.serialNumber = String.fromCharCodes(serialNumber);
+
+    // Manufacturer Name
+    final manufacturerName = await _ble.readCharacteristic(
+      QualifiedCharacteristic(
+        characteristicId: Uuid.parse("2a29"),
+        serviceId: Uuid.parse("180a"),
+        deviceId: device.id,
+      ),
+    );
+    pairedDevice.manufacturerName = String.fromCharCodes(manufacturerName);
+
+    LoggerUtils.instance.i({
+      'deviceId': pairedDevice.deviceId,
+      'deviceType': pairedDevice.deviceType,
+      'modelName': pairedDevice.modelName,
+      'serialNumber': pairedDevice.serialNumber,
+      'manufacturerName': pairedDevice.manufacturerName,
+    }.toString());
+
+    // İlk önce buradan datalar geliyor daha sonra aşağıdan recordAccessData tetikleniyor.
+    dataStreamSubscription?.cancel();
+    dataStreamSubscription =
+        _ble.subscribeToCharacteristic(subsCharacteristic).listen(
+      (measurementData) {
+        LoggerUtils.instance.i(
+          "Cihazdaki Veriler Aktarılırıyor... $measurementData",
+        );
+        _measurements.add(measurementData);
+        _gData
+            .add(parseGlucoseDataFromReadingInstance(measurementData, device));
+        notifyListeners();
+      },
+      onError: (dynamic error) {
+        LoggerUtils.instance.d(
+          "Cihazdaki Veriler Aktarılırken Hata Oluştu - ${error.toString()}",
+        );
+      },
+      onDone: () {
+        LoggerUtils.instance.d("Cihazdaki Veriler Aktarıldı");
+      },
+    );
+
+    bool _lock = false;
+    recordStreamSubscription?.cancel();
+    recordStreamSubscription =
+        _ble.subscribeToCharacteristic(writeCharacteristic).listen(
+      (recordAccessData) async {
+        LoggerUtils.instance.i(
+          "Cihaz ile Bağlantı Kuruldu ${recordAccessData.toString()}",
+        );
+
+        if (!_lock) {
+          _lock = true;
+          bool isSucces =
+              await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
+          isSucces
+              ? _controlPointResponse = recordAccessData
+              : _controlPointResponse.clear();
+
+          if (isSucces) {
+            var localUser = getIt<ProfileStorageImpl>().getFirst();
+            var newPerson = Person.fromJson(localUser.toJson());
+            newPerson.deviceUUID = pairedDevice.deviceId;
+            await getIt<ProfileStorageImpl>().update(
+              newPerson,
+              localUser.key,
+            );
+            LoggerUtils.instance.i("Cihaz Bilgisi Backend'e Gönderildi");
+          }
+
+          _lock = false;
+        }
+
+        await saveGlucoseDatas();
+        notifyListeners();
+      },
+      onError: (dynamic error) {
+        notifyListeners();
+        LoggerUtils.instance.i(
+          "Cihaz ile Bağlantı Kurulurken Hata Oluştu. ${error.toString()}",
+        );
+      },
+      onDone: () {
+        LoggerUtils.instance.i(
+          "Cihaz ile Bağlantı Kurulumu İşlemi Tamamlandı.",
+        );
+      },
+    );
+
+    try {
+      LoggerUtils.instance.i("Cihaza Eşleşme Talebi Gönderildi");
+      _ble.writeCharacteristicWithResponse(
+        writeCharacteristic,
+        value: [0x01, 0x01],
+      ).then(
+        (value) async {
+          LoggerUtils.instance.i("Cihaz Eşleşme Talebine Cevap Gönderdi.");
+          if (Atom.url.contains(PagePaths.selectedDevice)) {
+            Atom.to(
+              PagePaths.main,
+              isReplacement: true,
+            );
+          }
+        },
+        onError: (e) {
+          notifyListeners();
+          LoggerUtils.instance.i(
+            "Cihaz Eşleşme Talebi Sırasında Hata Oluştu - onError. ${e.toString()}",
+          );
+        },
+      );
+    } catch (e, stackTrace) {
+      notifyListeners();
+      LoggerUtils.instance.i(
+        "Cihaz Eşleşme Talebi Sırasında Hata Oluştu - catch. ${e.toString()}",
+      );
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
+    }
+
+    // final dateTime = await _ble.readCharacteristic(
+    //   QualifiedCharacteristic(
+    //     characteristicId: Uuid.parse("2A08"),
+    //     serviceId: Uuid.parse("1808"),
+    //     deviceId: device.id,
+    //   ),
+    // );
+    // LoggerUtils.instance.i(dateTime);
+  }
+
+  /// user/user-profile-update/entegrationId isteğinden sonra bu metod çağrılıyor.
+  Future<void> saveGlucoseDatas() async {
+    var newDataCount = 0;
+    GlucoseData? tempData;
+    var newItems = <GlucoseData>[];
+
+    LoggerUtils.instance.i("Cihazdan Gelen Veriler Kontrol Ediliyor");
+
+    // Cihazdan gelen bütün verileri dönüyoruz.
+    for (final item in _gData) {
+      // Cihazın local database'inde yoksa newData counter'ı 1 artıyor ve tempData bu item oluyor.
+      final doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
+      if (!doesExist) {
+        newDataCount++;
+        tempData = item;
+        newItems.add(item);
+      }
+    }
+
+    if (newDataCount == 1) {
+      tempData?.userId = getIt<ProfileStorageImpl>().getFirst().id;
+      Atom.show(
+        BgTaggerPopUp(data: tempData),
+        barrierColor: Colors.transparent,
+        barrierDismissible: false,
+      );
+    } else if (newDataCount > 1) {
+      // Cihazın local'inde olmayan bütün verileri hem local'e hemde db'ye yazıyorum.
+      final dialogResult = await Atom.show(
+        BloodGlucoseSaveDataDialog(glucoseList: newItems),
+        barrierDismissible: false,
+      );
+      if (dialogResult == true) {
+        if (Atom.url.contains(PagePaths.selectedDevice)) {
+          Atom.to(
+            PagePaths.main,
+            isReplacement: true,
+          );
+        }
+      }
+    }
+
+    LoggerUtils.instance.i(
+      "Kullanıcıya Notification ile Bilgi Verildi.",
+    );
+    await getIt<LocalNotificationManager>().show(
+      LocaleProvider.current.blood_glucose_measurement,
+      LocaleProvider.current.blood_glucose_imported,
+    );
+  }
+
   GlucoseData parseGlucoseDataFromReadingInstance(
     List<int> data,
     DiscoveredDevice device,
@@ -92,209 +333,6 @@ class BleReactorOps extends ChangeNotifier {
       );
     } else {
       throw Exception('dataCantParse');
-    }
-  }
-
-  /// MG2
-  Future<void> saveGlucoseDatas() async {
-    var newData = 0;
-    late GlucoseData tempData;
-
-    for (final item in _gData) {
-      final doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
-      if (!doesExist) {
-        newData++;
-        tempData = item;
-      }
-    }
-
-    if (newData > 1) {
-      for (final item in _gData) {
-        final doesExist = getIt<GlucoseStorageImpl>().doesExist(item);
-        if (!doesExist) {
-          getIt<GlucoseStorageImpl>().write(item, shouldSendToServer: true);
-        }
-      }
-    } else if (newData == 1) {
-      tempData.userId = getIt<ProfileStorageImpl>().getFirst().id;
-      Atom.show(
-        BgTaggerPopUp(
-          data: tempData,
-        ),
-        barrierColor: Colors.transparent,
-        barrierDismissible: false,
-      );
-    }
-
-    getIt<LocalNotificationManager>().show(
-      LocaleProvider.current.blood_glucose_measurement,
-      LocaleProvider.current.blood_glucose_imported,
-    );
-  }
-
-  final flutterLocalNotificationsPlugin = ln.FlutterLocalNotificationsPlugin();
-
-  /// MG2
-  Future<void> write(DiscoveredDevice device) async {
-    _measurements.clear();
-    _gData.clear();
-    _controlPointResponse = <int>[];
-    notifyListeners();
-
-    final PairedDevice pairedDevice = PairedDevice();
-
-    // ! DeviceId
-    pairedDevice.deviceId = device.id;
-
-    // ! DeviceType
-    pairedDevice.deviceType = Utils.instance.getDeviceType(device);
-
-    final writeCharacteristic = QualifiedCharacteristic(
-      serviceId: Uuid.parse("1808"),
-      characteristicId: Uuid.parse("2a52"),
-      deviceId: device.id,
-    );
-
-    final subsCharacteristic = QualifiedCharacteristic(
-      serviceId: Uuid.parse("1808"),
-      characteristicId: Uuid.parse("2a18"),
-      deviceId: device.id,
-    );
-
-    if (Platform.isAndroid) {
-      await _ble.requestConnectionPriority(
-        deviceId: device.id,
-        priority: ConnectionPriority.highPerformance,
-      );
-    }
-
-    // * Read ilgili unique id içerisindeki değeri okumamızı sağlayan parametre. byteArray - List<int> olarak döner.
-    _ble
-        .readCharacteristic(
-      QualifiedCharacteristic(
-        characteristicId: Uuid.parse("2a24"),
-        serviceId: Uuid.parse("180a"),
-        deviceId: device.id,
-      ),
-    )
-        .then((value) {
-      final List<int> charCodes = value;
-      LoggerUtils.instance
-          .d("2a24 model name ${String.fromCharCodes(charCodes)}");
-      LoggerUtils.instance.d("2a24$value");
-      pairedDevice.modelName = String.fromCharCodes(charCodes);
-    });
-
-    _ble
-        .readCharacteristic(
-      QualifiedCharacteristic(
-        characteristicId: Uuid.parse("2a25"),
-        serviceId: Uuid.parse("180a"),
-        deviceId: device.id,
-      ),
-    )
-        .then((value) {
-      final List<int> charCodes = value;
-      LoggerUtils.instance
-          .d("2a25 serial number ${String.fromCharCodes(charCodes)}");
-      LoggerUtils.instance.d("2a25$value");
-      pairedDevice.serialNumber = String.fromCharCodes(charCodes);
-    });
-
-    _ble
-        .readCharacteristic(
-      QualifiedCharacteristic(
-        characteristicId: Uuid.parse("2a29"),
-        serviceId: Uuid.parse("180a"),
-        deviceId: device.id,
-      ),
-    )
-        .then((value) {
-      final List<int> charCodes = value;
-      LoggerUtils.instance
-          .d("2a29 manufacturer namr ${String.fromCharCodes(charCodes)}");
-      LoggerUtils.instance.d("2a29$value");
-      pairedDevice.manufacturerName = String.fromCharCodes(charCodes);
-    });
-
-    _ble.subscribeToCharacteristic(subsCharacteristic).listen(
-      (measurementData) {
-        _measurements.add(measurementData);
-        _gData
-            .add(parseGlucoseDataFromReadingInstance(measurementData, device));
-        notifyListeners();
-      },
-      onError: (dynamic error) {
-        LoggerUtils.instance.d("subs characteristic error $error");
-        LoggerUtils.instance.d(error.toString());
-      },
-      onDone: () {
-        LoggerUtils.instance.d("done");
-      },
-    );
-
-    bool _lock = false;
-    _ble.subscribeToCharacteristic(writeCharacteristic).listen(
-      (recordAccessData) async {
-        LoggerUtils.instance.i("record access data " + recordAccessData.toString());
-        LoggerUtils.instance.i("LOCK :$_lock");
-
-        if (!_lock) {
-          _lock = true;
-          bool isSucces =
-              await getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
-          isSucces
-              ? _controlPointResponse = recordAccessData
-              : _controlPointResponse.clear();
-
-          if (isSucces) {
-            var localUser = getIt<ProfileStorageImpl>().getFirst();
-            var newPerson = Person.fromJson(localUser.toJson());
-            newPerson.deviceUUID = pairedDevice.deviceId;
-            await getIt<ProfileStorageImpl>().update(
-              newPerson,
-              localUser.key,
-            );
-          }
-
-          _lock = false;
-        }
-
-        await saveGlucoseDatas();
-        notifyListeners();
-      },
-      onError: (dynamic error) {
-        notifyListeners();
-        LoggerUtils.instance
-            .i("write characteristic error " + error.toString());
-        //user need to press device button for 3 seconds to pairing operation.
-      },
-      onDone: () {
-        LoggerUtils.instance.i("done");
-      },
-    );
-
-    try {
-      // Cihazının servis karakteristiklerinin içerisine veri yazmamızı sağlayan metod.
-      _ble.writeCharacteristicWithResponse(
-        writeCharacteristic,
-        value: [0x01, 0x01],
-      ).then((value) {
-        // print("deneme");
-        // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-        //   getIt<BleDeviceManager>().savePairedDevices(pairedDevice);
-        // });
-      }, onError: (e) {
-        notifyListeners();
-        LoggerUtils.instance.i("write errorrrrrrrr" + e.toString());
-      });
-    } catch (e, stackTrace) {
-      notifyListeners();
-      LoggerUtils.instance.i("write characterisctic error " + e.toString());
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
     }
   }
 
