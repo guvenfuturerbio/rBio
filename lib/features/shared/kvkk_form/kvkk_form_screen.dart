@@ -50,71 +50,69 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                 ),
                 child: Consumer<KvkkFormScreenVm>(
                   builder: (context, value, child) {
-                    return Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Center(
-                            child: Text(
-                              LocaleProvider.current.one_dose_kvkk_url_text,
-                              style: getIt<IAppConfig>()
-                                  .theme
-                                  .dialogTheme
-                                  .description(context),
-                              textAlign: TextAlign.center,
-                            ),
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Center(
+                          child: Text(
+                            getIt<IAppConfig>().constants.kvkkUrl(context),
+                            style: getIt<IAppConfig>()
+                                .theme
+                                .dialogTheme
+                                .description(context),
+                            textAlign: TextAlign.center,
                           ),
-                          //
+                        ),
+                        //
 
-                          //
+                        //
 
-                          //
-                          Row(
-                            children: [
-                              Container(
-                                alignment: Alignment.bottomLeft,
-                                child: Checkbox(
-                                  value: value.clickedConsentForm,
-                                  checkColor: Colors.white,
-                                  onChanged: (newValue) {
-                                    value.toggleConsentFormState();
-                                  },
-                                  activeColor: getIt<IAppConfig>()
-                                      .theme
-                                      .mainColor, //  <-- leading Checkbox
-                                ),
-                              ),
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () {
-                                    value.toggleConsentFormState();
-                                  },
-                                  child: GuvenAlert.buildSmallDescription(
-                                    LocaleProvider.of(context)
-                                        .read_understood_kvkk,
-                                    textAlign: TextAlign.start,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          //
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Center(
-                              child: GuvenAlert.buildBigMaterialAction(
-                                LocaleProvider.current.Ok.toUpperCase(),
-                                () {
-                                  value.saveFormState();
+                        //
+                        Row(
+                          children: [
+                            Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Checkbox(
+                                value: value.clickedConsentForm,
+                                checkColor: Colors.white,
+                                onChanged: (newValue) {
+                                  value.toggleConsentFormState();
                                 },
+                                activeColor: getIt<IAppConfig>()
+                                    .theme
+                                    .mainColor, //  <-- leading Checkbox
                               ),
                             ),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  value.toggleConsentFormState();
+                                },
+                                child: GuvenAlert.buildSmallDescription(
+                                  LocaleProvider.of(context)
+                                      .read_understood_kvkk,
+                                  textAlign: TextAlign.start,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        //
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Center(
+                            child: GuvenAlert.buildBigMaterialAction(
+                              LocaleProvider.current.Ok.toUpperCase(),
+                              () {
+                                value.saveFormState();
+                              },
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     );
                   },
                 ),
