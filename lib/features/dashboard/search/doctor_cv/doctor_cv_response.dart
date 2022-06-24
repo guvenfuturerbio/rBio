@@ -190,6 +190,10 @@ class DoctorCvResponse extends IBaseModel<DoctorCvResponse> {
   DoctorCvResponse fromJson(Map<String, dynamic> json) {
     return DoctorCvResponse.fromJson(json);
   }
+
+  factory DoctorCvResponse.empty() {
+    return DoctorCvResponse();
+  }
 }
 
 class Awards {

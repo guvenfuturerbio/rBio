@@ -382,7 +382,7 @@ class ApiServiceImpl extends ApiService {
         .common
         .getDoctorCvDetailsPath(doctorWebID));
     if (response == null) {
-      throw Exception('Doctor CV Empty');
+      return DoctorCvResponse.empty();
     }
 
     if (response is Map<String, dynamic>) {
@@ -391,10 +391,10 @@ class ApiServiceImpl extends ApiService {
         if ((doctorCv.id ?? -1) != -1) {
           return doctorCv;
         } else {
-          throw Exception('Doctor CV Empty');
+          return DoctorCvResponse.empty();
         }
       } on Exception {
-        throw Exception('Doctor CV Empty');
+        return DoctorCvResponse.empty();
       }
     }
 
