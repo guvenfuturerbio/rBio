@@ -245,19 +245,27 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<String> getProfilePicture() async {
-    final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getProfilePicturePath,
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      final datum = response.datum as String?;
-      if (datum != null) {
-        return datum;
-      }
+    try {
+      final response = await helper.getGuven(
+        getIt<IAppConfig>().endpoints.base.getProfilePicturePath,
+        options: authOptions,
+      );
+      if (response.xIsSuccessful) {
+        final datum = response.datum as String?;
+        if (datum != null) {
+          return datum;
+        }
 
-      throw Exception('/getProfilePicture : ${response.isSuccessful}');
-    } else {
-      throw Exception('/getProfilePicture : ${response.isSuccessful}');
+        throw Exception('/getProfilePicture : ${response.isSuccessful}');
+      } else {
+        throw Exception('/getProfilePicture : ${response.isSuccessful}');
+      }
+    } catch (e) {
+      if (e.toString() ==
+          "type 'String' is not a subtype of type 'GuvenResponseModel' in type cast") {
+        return '';
+      }
+      rethrow;
     }
   }
 
