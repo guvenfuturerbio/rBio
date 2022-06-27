@@ -26,11 +26,7 @@ class DoctorCvScreen extends StatelessWidget {
       doctorName = Atom.queryParameters['doctorName']!;
       departmentName = Atom.queryParameters['departmentName']!;
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return BlocProvider(

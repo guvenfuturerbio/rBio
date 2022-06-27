@@ -36,6 +36,31 @@ class _Constants {
     }
   ];
 
+  final drTitles = [
+    "prof.dr.",
+    "uzm.dr.",
+    "dr.",
+    "dr",
+    "dt.",
+    "dt",
+    "prof. dr.",
+    "doc. dr.",
+    "dyt.",
+    "psk.",
+    "fzt.",
+    "hem.",
+    "dan.",
+    "*",
+    "doç.dr.",
+    "doc.dr.",
+    "doc.",
+    "uzm",
+    "-danismanlik",
+    "danismanlik",
+    " ()",
+    "()",
+  ];
+
   final onlineAppointmentType = 256;
   final hospitalAppointmentType = 1;
   final tenantAyranciId = 1;

@@ -33,11 +33,7 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
       widget.webConsultAppId = Atom.queryParameters['webConsultAppId']!;
       widget.availability = int.parse(Atom.queryParameters['availability']!);
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return RbioScaffold(

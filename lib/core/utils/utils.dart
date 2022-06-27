@@ -470,11 +470,20 @@ class Utils {
       );
 
   String clearDoctorTitle(String text) {
-    if (text.contains('dr.')) {
-      return text.split('dr.')[1];
-    } else {
-      return text;
+    var result = text;
+    for (var title in R.constants.drTitles) {
+      result = result.replaceAll(title, "");
     }
+    result = result.trim();
+    if (result[0] == '.') {
+      result = result.substring(2, result.length);
+    }
+    return result;
+    // if (text.contains('dr.')) {
+    //   return text.split('dr.')[1];
+    // } else {
+    //   return text;
+    // }
   }
 
   Color fetchMeasurementColor({

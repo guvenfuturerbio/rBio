@@ -4,10 +4,22 @@ import 'package:flutter_svg/svg.dart';
 import '../core.dart';
 
 class RbioRouteError extends StatelessWidget {
-  const RbioRouteError({Key? key}) : super(key: key);
+  final Object e;
+  final StackTrace stackTrace;
+
+  const RbioRouteError({
+    Key? key,
+    required this.e,
+    required this.stackTrace,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    getIt<IAppConfig>()
+        .platform
+        .sentryManager
+        .captureException(e, stackTrace: stackTrace);
+
     return RbioScaffold(
       appbar: RbioAppBar(),
       body: const RbioBodyError(),

@@ -76,11 +76,7 @@ class _CreateAppointmentSummaryScreenState
       to = Atom.queryParameters['to'] as String;
       forOnline = Atom.queryParameters['forOnline'] == 'true';
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return ChangeNotifierProvider<CreateAppointmentSummaryVm>(

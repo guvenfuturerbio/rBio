@@ -21,11 +21,7 @@ class ForYouSubCategoriesDetailScreen extends StatelessWidget {
       itemId = int.parse(Atom.queryParameters['subCategoryId'] as String);
       title = Uri.decodeFull(Atom.queryParameters['title'] as String);
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return BlocProvider(

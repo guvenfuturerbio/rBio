@@ -22,11 +22,7 @@ class DoctorScaleDietAddEditScreen extends StatelessWidget {
       }
       patientId = int.parse(Atom.queryParameters['patientId']!);
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return BlocProvider<DoctorScaleDietAddEditCubit>(

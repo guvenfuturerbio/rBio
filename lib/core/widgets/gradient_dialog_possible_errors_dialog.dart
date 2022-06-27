@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
 
-import '../../app/config/abstract/app_config.dart';
-import '../../generated/l10n.dart';
-import '../locator.dart';
-import '../resources/resources.dart';
-import 'guven_alert.dart';
+import '../core.dart';
 
 class DialogForPossibleErrorDialog extends StatefulWidget {
   final String title;
