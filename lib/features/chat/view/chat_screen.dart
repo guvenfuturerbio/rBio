@@ -81,11 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       otherPerson = ChatPerson.fromJson(Atom.queryParameters['otherPerson']!);
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     final chatVm = Provider.of<ChatVm>(context)

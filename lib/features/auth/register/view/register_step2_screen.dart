@@ -82,11 +82,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
       registerCountryCode =
           Uri.decodeFull(Atom.queryParameters['registerCountryCode']!);
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return ChangeNotifierProvider<RegisterStep2ScreenVm>(

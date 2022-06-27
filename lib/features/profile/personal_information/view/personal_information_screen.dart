@@ -63,11 +63,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     try {
       userAccount = getIt<UserNotifier>().getUserAccount();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     final xIsTCNationality = userAccount.nationality?.xIsTCNationality;

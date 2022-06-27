@@ -37,11 +37,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
       userRegistrationStep2Model = UserRegistrationStep2Model.fromJson(
           jsonDecode(Atom.queryParameters['userRegistrationStep2Model']!));
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return DefaultTabController(

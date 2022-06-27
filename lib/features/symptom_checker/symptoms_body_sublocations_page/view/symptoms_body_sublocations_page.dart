@@ -49,11 +49,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
       widget.yearOfBirth = Atom.queryParameters['yearOfBirth'];
       widget.isFromVoice = Atom.queryParameters['isFromVoice'] == 'true';
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return ChangeNotifierProvider(
