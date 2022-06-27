@@ -443,10 +443,7 @@ class VRouterRoutes {
 
         VWidget(
           path: PagePaths.profile,
-          widget: ChangeNotifierProvider<ProfileVm>(
-            create: (context) => ProfileVm(context),
-            child: const ProfileScreen(),
-          ),
+          widget: const ProfileScreen(),
           stackedRoutes: [
             VWidget(
               path: PagePaths.suggestResult,
