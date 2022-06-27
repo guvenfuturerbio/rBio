@@ -77,10 +77,7 @@ class GuvenDashboardNavigation extends IProductDashboard {
           VWidget(
             path: account,
             name: account,
-            widget: ChangeNotifierProvider<ProfileVm>(
-              create: (context) => ProfileVm(context),
-              child: const ProfileScreen(isFromDashboard: true),
-            ),
+            widget: const ProfileScreen(isFromDashboard: true),
           ),
         ],
       ),
