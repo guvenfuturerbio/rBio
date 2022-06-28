@@ -42,6 +42,7 @@ import '../../features/relatives/add_patient_relative/view/add_relative_screen.d
 import '../../features/relatives/patient_relatives/relatives.dart';
 import '../../features/results/results.dart';
 import '../../features/shared/full_pdf_viewer_screen.dart';
+import '../../features/shared/jailbroken/view/jailbroken_screen.dart';
 import '../../features/shared/webview_screen.dart';
 import '../../features/store/credit_card/view/credit_card_screen.dart';
 import '../../features/store/for_you_categories/view/for_you_categories_screen.dart';
@@ -644,6 +645,11 @@ class VRouterRoutes {
           widget: const AudioRecordScreen(),
         ),
 
+        VWidget(
+          path: PagePaths.jailbroken,
+          widget: const JailbrokenScreen(),
+        ),
+
         //
         // :_ is a path parameters named _
         // .+ is a regexp to match any path
@@ -784,6 +790,7 @@ class PagePaths {
   static const visitDetail = '/visit-detail';
   // #endregion
 
+  static const jailbroken = '/jailbroken';
   static const webView = '/webview';
   static const fullPdfViewer = '/full-pdf-viewer';
   static const iyzicoResponseSmsPayment = '/form-submit';

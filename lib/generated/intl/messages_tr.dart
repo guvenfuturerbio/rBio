@@ -571,6 +571,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Güven Çayyolu Kampüsü"),
         "guven_hospital_ayranci":
             MessageLookupByLibrary.simpleMessage("Güven Hastanesi Ayrancı"),
+        "guven_jailbreak_warning": MessageLookupByLibrary.simpleMessage(
+            "Güven Online, güvenlik standartları gereği Root yada Jailbreak\'li cihazlarda kullanılamaz."),
         "guven_journal": MessageLookupByLibrary.simpleMessage("GÜVENin"),
         "guven_journal_url":
             MessageLookupByLibrary.simpleMessage("https://www.guvenin.com.tr"),
@@ -943,6 +945,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "one_time_a_day": MessageLookupByLibrary.simpleMessage("Günde 1 kez"),
         "one_time_dose_question": MessageLookupByLibrary.simpleMessage(
             "Bir kerede kaç doz alınacak?"),
+        "onedosehealth_jailbreak_warning": MessageLookupByLibrary.simpleMessage(
+            "OneDoseHealth, güvenlik standartları gereği Root yada Jailbreak\'li cihazlarda kullanılamaz."),
         "online_appo": MessageLookupByLibrary.simpleMessage("Online Görüşme"),
         "online_appo_error_0": MessageLookupByLibrary.simpleMessage(
             "Görüşme sonlanmıştır. Katılamazsınız"),

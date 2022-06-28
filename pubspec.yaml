@@ -45,6 +45,7 @@ dependencies:
   flutter_datetime_picker:
     git: https://github.com/tushardubey121/flutter_datetime_picker.git
   flutter_dotenv: ^5.0.2
+  flutter_jailbreak_detection: ^1.8.0
   flutter_keyboard_visibility: ^5.2.0
   flutter_linkify: ^5.0.2
   flutter_localizations:
