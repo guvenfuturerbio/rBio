@@ -159,20 +159,19 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       if (patientDetail?.id == null) {
         SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest =
             SynchronizeOneDoseUserRequest(
-                birthDate: oneDoseAccount.patients?.first.birthDate,
-                email: oneDoseAccount.electronicMail,
-                firstName: oneDoseAccount.name,
-                gender: oneDoseAccount.patients?.first.gender,
-                gsm: oneDoseAccount.phoneNumber,
-                // countryCode: oneDoseAccount.c,
-                //TODO       countryCode: oneDoseAccount.,
-                hasEtkApproval: true,
-                hasKvkkApproval: true,
-                identityNumber: oneDoseAccount.identificationNumber,
-                lastName: oneDoseAccount.surname,
-                nationalityId: int.parse(oneDoseAccount.nationality!),
-                passportNumber: oneDoseAccount.passaportNumber,
-                patientType: 1);
+          birthDate: oneDoseAccount.patients?.first.birthDate,
+          email: oneDoseAccount.electronicMail,
+          firstName: oneDoseAccount.name,
+          gender: oneDoseAccount.patients?.first.gender,
+          gsm: oneDoseAccount.phoneNumber,
+          hasEtkApproval: true,
+          hasKvkkApproval: true,
+          identityNumber: oneDoseAccount.identificationNumber,
+          lastName: oneDoseAccount.surname,
+          nationalityId: int.parse(oneDoseAccount.nationality!),
+          passportNumber: oneDoseAccount.passaportNumber,
+          patientType: 1,
+        );
         await getIt<Repository>()
             .synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
         final patientDetailResponse =

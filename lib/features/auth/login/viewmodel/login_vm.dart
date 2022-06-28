@@ -423,10 +423,12 @@ class LoginScreenVm extends ChangeNotifier {
 
     try {
       final profilImage = await getIt<Repository>().getProfilePicture();
-      await getIt<ISharedPreferencesManager>().setString(
-        SharedPreferencesKeys.profileImage,
-        profilImage,
-      );
+      if (profilImage.isNotEmpty) {
+        await getIt<ISharedPreferencesManager>().setString(
+          SharedPreferencesKeys.profileImage,
+          profilImage,
+        );
+      }
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform
@@ -621,10 +623,12 @@ class LoginScreenVm extends ChangeNotifier {
 
     try {
       final profilImage = await getIt<Repository>().getProfilePicture();
-      await getIt<ISharedPreferencesManager>().setString(
-        SharedPreferencesKeys.profileImage,
-        profilImage,
-      );
+      if (profilImage.isNotEmpty) {
+        await getIt<ISharedPreferencesManager>().setString(
+          SharedPreferencesKeys.profileImage,
+          profilImage,
+        );
+      }
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform

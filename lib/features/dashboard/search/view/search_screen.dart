@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -243,7 +242,7 @@ class _SocialCard extends StatelessWidget {
 
   Future<void> clickPost(int postId, String url) async {
     getIt<Repository>().clickPost(postId);
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    await getIt<UrlLauncherManager>().launch(url);
   }
 }
 

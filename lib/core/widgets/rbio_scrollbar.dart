@@ -32,17 +32,23 @@ class RbioScrollbar extends StatelessWidget {
       context: context,
       removeTop: true,
       removeBottom: true,
-      child: Scrollbar(
-        controller: controller,
-        hoverThickness: hoverThickness,
-        interactive: interactive,
-        isAlwaysShown: isAlwaysShown,
-        notificationPredicate: notificationPredicate,
-        scrollbarOrientation: scrollbarOrientation,
-        radius: radius,
-        showTrackOnHover: showTrackOnHover,
-        thickness: thickness,
-        child: child,
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          scrollbarTheme: Theme.of(context).scrollbarTheme.copyWith(
+                thickness: MaterialStateProperty.all(hoverThickness),
+                trackVisibility: MaterialStateProperty.all(showTrackOnHover),
+              ),
+        ),
+        child: Scrollbar(
+          controller: controller,
+          interactive: interactive,
+          thumbVisibility: true,
+          notificationPredicate: notificationPredicate,
+          scrollbarOrientation: scrollbarOrientation,
+          radius: radius,
+          thickness: thickness,
+          child: child,
+        ),
       ),
     );
   }

@@ -178,18 +178,15 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _scrollAnimateToEnd() {
-    final widgetsBinding = WidgetsBinding.instance;
-    if (widgetsBinding != null) {
-      widgetsBinding.addPostFrameCallback((_) {
-        Future.delayed(
-          const Duration(milliseconds: 100),
-          () {
-            _scrollController.jumpTo(
-                _scrollController.position.maxScrollExtent + topPadding + 300);
-          },
-        );
-      });
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(
+        const Duration(milliseconds: 100),
+        () {
+          _scrollController.jumpTo(
+              _scrollController.position.maxScrollExtent + topPadding + 300);
+        },
+      );
+    });
   }
 
   Widget _buildInputArea(ChatVm chatVm) {
@@ -290,7 +287,7 @@ class _ChatScreenState extends State<ChatScreen> {
         Expanded(
           child: Scrollbar(
             thickness: 3,
-            isAlwaysShown: true,
+            thumbVisibility: true,
             radius: const Radius.circular(5),
             controller: _scrollController,
             child: ListView.builder(

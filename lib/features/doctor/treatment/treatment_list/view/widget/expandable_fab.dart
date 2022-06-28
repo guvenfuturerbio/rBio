@@ -1,14 +1,14 @@
 part of '../doctor_scale_treatment_list_screen.dart';
 
 class _ExpandableFab extends StatefulWidget {
-  final bool? initialOpen;
+  final bool initialOpen;
   final double distance;
   final ValueNotifier<bool> fabNotifier;
   final List<_ColorfulExpandedFab> children;
 
   const _ExpandableFab({
     Key? key,
-    this.initialOpen,
+    this.initialOpen = false,
     required this.fabNotifier,
     required this.distance,
     required this.children,
@@ -27,7 +27,7 @@ class __ExpandableFabState extends State<_ExpandableFab>
   @override
   void initState() {
     super.initState();
-    _open = widget.initialOpen ?? false;
+    _open = widget.initialOpen;
     _controller = AnimationController(
       value: _open ? 1.0 : 0.0,
       duration: const Duration(milliseconds: 250),

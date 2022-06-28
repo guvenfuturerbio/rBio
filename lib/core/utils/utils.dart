@@ -822,8 +822,6 @@ Future<void> showCompulsoryUpdateDialog({
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      String btnLabel = LocaleProvider.of(context).update_now;
-
       return RbioBaseGreyDialog(
         child: SingleChildScrollView(
           child: Column(
