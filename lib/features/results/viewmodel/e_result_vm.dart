@@ -35,11 +35,6 @@ class EResultScreenVm extends RbioVm {
   }
 
   bool hasResult = true;
-  void toggleHasResult() {
-    hasResult = !hasResult;
-    fetchVisits();
-    notifyListeners();
-  }
 
   EResultScreenVm(this.mContext) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
