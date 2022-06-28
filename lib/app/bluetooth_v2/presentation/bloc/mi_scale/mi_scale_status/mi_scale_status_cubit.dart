@@ -37,7 +37,7 @@ class MiScaleStatusCubit extends Cubit<MiScaleStatus> {
     emit(MiScaleStatus());
   }
 
-  void chasngas() {
+  void disconnect() {
     emit(state.copyWith(status: DeviceStatus.disconnected));
   }
 }

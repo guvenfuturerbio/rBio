@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../bluetooth_v2.dart';
@@ -11,12 +13,16 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
     this.disconnectDeviceUseCase,
     this.bluetoothLocalManager,
     this.deviceLastStatusUseCase,
+    this.searchDeviceUseCase,
   ) : super(DeviceSelectedState.initial());
   final MiScaleStatusCubit miScaleStatusCubit;
   final ConnectDeviceUseCase connectDeviceUseCase;
   final DisconnectDeviceUseCase disconnectDeviceUseCase;
   final BluetoothLocalManager bluetoothLocalManager;
   final DeviceLastStatusUseCase deviceLastStatusUseCase;
+  final SearchDeviceUseCase searchDeviceUseCase;
+
+  StreamSubscription<List<DeviceEntity>>? searchDeviceSubscription;
 
   void connect(DeviceEntity device) {
     final result = connectDeviceUseCase.call(DeviceParams(device: device));
@@ -46,7 +52,7 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
     );
 
     if (device.deviceType == DeviceType.miScale) {
-      miScaleStatusCubit.chasngas();
+      miScaleStatusCubit.disconnect();
     }
   }
 
@@ -54,7 +60,20 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
     final pairedDevices = bluetoothLocalManager.getPairedDevices();
     for (var element in pairedDevices) {
       if (element.deviceType == DeviceType.miScale) {
-        context.read<DeviceSelectedCubit>().connect(element);
+        final stream = searchDeviceUseCase.call(SearchParams(deviceType: DeviceType.miScale));
+        stream.fold(
+          (BluetoothFailures l) {},
+          (Stream<List<DeviceEntity>> r) {
+            searchDeviceSubscription?.cancel();
+            searchDeviceSubscription = r.listen(
+              (event) {
+                if (event.any((DeviceEntity item) => item.id == element.id)) {
+                  context.read<DeviceSelectedCubit>().connect(element);
+                }
+              },
+            );
+          },
+        );
       }
     }
   }
