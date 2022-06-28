@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../../../../../core/core.dart';
 import '../../../../bluetooth_v2.dart';
-
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'mi_scale_ops_cubit.freezed.dart';
 part 'mi_scale_ops_state.dart';
@@ -58,9 +58,7 @@ class MiScaleOpsCubit extends Cubit<MiScaleOpsState> {
               }
             }
 
-            final popUpCanClose = (Atom.isDialogShow) &&
-                (scaleEntity.weightRemoved == true) &&
-                (scaleEntity.measurementComplete == false);
+            final popUpCanClose = (Atom.isDialogShow) && (scaleEntity.weightRemoved == true) && (scaleEntity.measurementComplete == false);
             if (popUpCanClose) {
               if (_isSuccessShow) {
                 return;

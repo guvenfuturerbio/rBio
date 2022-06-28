@@ -25,7 +25,7 @@ class DeviceSearchCubit extends Cubit<DeviceSearchState> {
     result.fold((l) {
       emit(const DeviceSearchState.error("Something went wrong"));
     }, (stream) {
-      _streamSubs = stream.listen((event) {
+      _streamSubs = stream.listen((List<DeviceEntity> event) {
         emit(DeviceSearchState.done(event));
       });
     });
