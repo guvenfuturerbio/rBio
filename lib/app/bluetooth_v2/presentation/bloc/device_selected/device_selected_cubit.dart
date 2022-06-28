@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../bluetooth_v2.dart';
@@ -11,20 +13,24 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
     this.disconnectDeviceUseCase,
     this.bluetoothLocalManager,
     this.deviceLastStatusUseCase,
+    this.searchDeviceUseCase,
   ) : super(DeviceSelectedState.initial());
   final MiScaleStatusCubit miScaleStatusCubit;
   final ConnectDeviceUseCase connectDeviceUseCase;
   final DisconnectDeviceUseCase disconnectDeviceUseCase;
   final BluetoothLocalManager bluetoothLocalManager;
   final DeviceLastStatusUseCase deviceLastStatusUseCase;
+  final SearchDeviceUseCase searchDeviceUseCase;
+
+  StreamSubscription<List<DeviceEntity>>? searchDeviceSubscription;
 
   void connect(DeviceEntity device) {
     final result = connectDeviceUseCase.call(DeviceParams(device: device));
     result.fold(
-      (l) {
+      (BluetoothFailures l) {
         emit(DeviceSelectedState.error("Something went wrong"));
       },
-      (r) {
+      (bool r) {
         emit(DeviceSelectedState.done(device, true));
       },
     );
@@ -44,13 +50,30 @@ class DeviceSelectedCubit extends Cubit<DeviceSelectedState> {
         emit(DeviceSelectedState.done(device, false));
       },
     );
+
+    if (device.deviceType == DeviceType.miScale) {
+      miScaleStatusCubit.disconnect();
+    }
   }
 
   void connectAndListen(BuildContext context) {
     final pairedDevices = bluetoothLocalManager.getPairedDevices();
     for (var element in pairedDevices) {
       if (element.deviceType == DeviceType.miScale) {
-        context.read<DeviceSelectedCubit>().connect(element);
+        final stream = searchDeviceUseCase.call(SearchParams(deviceType: DeviceType.miScale));
+        stream.fold(
+          (BluetoothFailures l) {},
+          (Stream<List<DeviceEntity>> r) {
+            searchDeviceSubscription?.cancel();
+            searchDeviceSubscription = r.listen(
+              (event) {
+                if (event.any((DeviceEntity item) => item.id == element.id)) {
+                  context.read<DeviceSelectedCubit>().connect(element);
+                }
+              },
+            );
+          },
+        );
       }
     }
   }

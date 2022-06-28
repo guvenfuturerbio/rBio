@@ -143,6 +143,7 @@ class MobileApp extends StatelessWidget {
                     getIt(),
                     getIt(),
                     getIt(),
+                    getIt(),
                   ),
                 ),
 
