@@ -50,74 +50,72 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                 child: Consumer<ConsentFormDialogVm>(
                   builder: (BuildContext context, ConsentFormDialogVm value,
                       Widget? child) {
-                    return Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Center(
-                            child: Text(
-                              LocaleProvider
-                                  .current.application_consent_form_text,
-                              style: getIt<IAppConfig>()
-                                  .theme
-                                  .dialogTheme
-                                  .description(context),
-                              textAlign: TextAlign.center,
-                            ),
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Center(
+                          child: Text(
+                            LocaleProvider
+                                .current.application_consent_form_text,
+                            style: getIt<IAppConfig>()
+                                .theme
+                                .dialogTheme
+                                .description(context),
+                            textAlign: TextAlign.center,
                           ),
+                        ),
 
-                          R.sizes.hSizer8,
+                        R.sizes.hSizer8,
 
-                          //
-                          Row(
-                            children: [
-                              //
-                              Container(
-                                alignment: Alignment.bottomLeft,
-                                child: Checkbox(
-                                  value: value.clickedConsentForm,
-                                  checkColor: Colors.white,
-                                  onChanged: (newValue) {
-                                    value.toggleConsentFormState();
-                                  },
-                                  activeColor:
-                                      getIt<IAppConfig>().theme.mainColor,
-                                ),
-                              ),
-
-                              //
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () {
-                                    value.toggleConsentFormState();
-                                  },
-                                  child: GuvenAlert.buildSmallDescription(
-                                    LocaleProvider.of(context)
-                                        .accept_application_consent_form,
-                                    textAlign: TextAlign.start,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          //
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Center(
-                              child: GuvenAlert.buildBigMaterialAction(
-                                LocaleProvider.current.Ok.toUpperCase(),
-                                () {
-                                  value.saveConsentFormState();
+                        //
+                        Row(
+                          children: [
+                            //
+                            Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Checkbox(
+                                value: value.clickedConsentForm,
+                                checkColor: Colors.white,
+                                onChanged: (newValue) {
+                                  value.toggleConsentFormState();
                                 },
+                                activeColor:
+                                    getIt<IAppConfig>().theme.mainColor,
                               ),
                             ),
+
+                            //
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  value.toggleConsentFormState();
+                                },
+                                child: GuvenAlert.buildSmallDescription(
+                                  LocaleProvider.of(context)
+                                      .accept_application_consent_form,
+                                  textAlign: TextAlign.start,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        //
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Center(
+                            child: GuvenAlert.buildBigMaterialAction(
+                              LocaleProvider.current.Ok.toUpperCase(),
+                              () {
+                                value.saveConsentFormState();
+                              },
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     );
                   },
                 ),

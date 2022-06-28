@@ -163,27 +163,28 @@ class Person extends HiveObject {
         isFirstUser: false);
   }
 
-  Person(
-      {this.id = 1,
-      this.imageURL = '',
-      this.name = "",
-      this.gender = '',
-      this.birthDate = '',
-      this.weight = '',
-      this.height = '',
-      this.diabetesType = '',
-      this.rangeMin = 90,
-      this.rangeMax = 160,
-      this.hyper = 200,
-      this.hypo = 50,
-      this.target = 120,
-      this.userId = 1,
-      this.deviceUUID = "",
-      this.manufacturerId = 0,
-      this.yearOfDiagnosis = 2021,
-      this.smoker = false,
-      this.isFirstUser = false,
-      this.treatmentList});
+  Person({
+    this.id = 1,
+    this.imageURL = '',
+    this.name = "",
+    this.gender = '',
+    this.birthDate = '',
+    this.weight = '',
+    this.height = '',
+    this.diabetesType = '',
+    this.rangeMin = 90,
+    this.rangeMax = 160,
+    this.hyper = 200,
+    this.hypo = 50,
+    this.target = 120,
+    this.userId = 1,
+    this.deviceUUID = "",
+    this.manufacturerId = 0,
+    this.yearOfDiagnosis = 2021,
+    this.smoker = false,
+    this.isFirstUser = false,
+    this.treatmentList,
+  });
 
   Person copy() {
     final _json = toJson();
@@ -224,66 +225,49 @@ class Person extends HiveObject {
         isFirstUser.hashCode;
   }
 }
-/* 
+
 Person _$PersonFromJson(Map<String, dynamic> json) => Person(
-    id: json['entegration_id'] as int,
-    imageURL: json['image_url'] as String,
-    name: json['name'] as String,
-    gender: json['gender'] as String,
-    birthDate: json['birth_day'] as String,
-    weight: json['weight'] as String,
-    height: json['height'] as String,
-    diabetesType: json['diabetes_type'] as String,
-    rangeMin: json['range_min'] as int,
-    rangeMax: json['range_max'] as int,
-    hyper: json['hyper'] as int,
-    hypo: json['hypo'] as int,
-    target: json['target'] as int,
-    userId: json['id'] as int,
-    deviceUUID: json['device_uuid'] as String,
-    manufacturerId: json['manufacturer_id'] as int,
-    yearOfDiagnosis: json['year_of_diagnosis'] as int,
-    smoker: json['smoker'] == null
-        ? false
-        : json['smoker'] == 0
-            ? false
-            : true,
-    isFirstUser: json['is_first_user'] == null
-        ? false
-        : json['is_first_user'] == 0
-            ? false
-            : true,
-    treatmentList: json['treatment_list'] != null
-        ? (json['treatment_list'] as List)
-            .map((e) => TreatmentModel.fromJson(e as Map<String, dynamic>))
-            .toList()
-        : []);
+      id: json['entegration_id'] as int? ?? 1,
+      imageURL: json['image_url'] as String? ?? '',
+      name: json['name'] as String? ?? "",
+      gender: json['gender'] as String? ?? '',
+      birthDate: json['birth_day'] as String? ?? '',
+      weight: json['weight'] as String? ?? '',
+      height: json['height'] as String? ?? '',
+      diabetesType: json['diabetes_type'] as String? ?? '',
+      rangeMin: json['range_min'] as int? ?? 90,
+      rangeMax: json['range_max'] as int? ?? 160,
+      hyper: json['hyper'] as int? ?? 200,
+      hypo: json['hypo'] as int? ?? 50,
+      target: json['target'] as int? ?? 120,
+      userId: json['id'] as int? ?? 1,
+      deviceUUID: json['device_uuid'] as String? ?? "",
+      manufacturerId: json['manufacturer_id'] as int? ?? 0,
+      yearOfDiagnosis: json['year_of_diagnosis'] as int? ?? 2021,
+      smoker: json['smoker'] as bool? ?? false,
+      treatmentList: (json['treatment_list'] as List<dynamic>?)
+          ?.map((e) => TreatmentModel.fromJson(e))
+          .toList(),
+    );
 
-Map<String, dynamic> _$PersonToJson(Person instance, String? treatment) {
-  var map = <String, dynamic>{
-    'id': instance.userId,
-    'entegration_id': instance.id,
-    'image_url': instance.imageURL,
-    'name': instance.name,
-    'birth_day': instance.birthDate,
-    'gender': instance.gender,
-    'height': instance.height,
-    'weight': instance.weight,
-    'diabetes_type': instance.diabetesType,
-    'hypo': instance.hypo,
-    'range_min': instance.rangeMin,
-    'target': instance.target,
-    'range_max': instance.rangeMax,
-    'hyper': instance.hyper,
-    'device_uuid': instance.deviceUUID,
-    'manufacturer_id': instance.manufacturerId,
-    'year_of_diagnosis': instance.yearOfDiagnosis,
-    'smoker': instance.smoker,
-    'is_first_user': instance.isFirstUser,
-  };
-
-  if (treatment != null) {
-    map['treatment'] = treatment;
-  }
-  return map;
-} */
+Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
+      'id': instance.userId,
+      'entegration_id': instance.id,
+      'image_url': instance.imageURL,
+      'name': instance.name,
+      'birth_day': instance.birthDate,
+      'gender': instance.gender,
+      'height': instance.height,
+      'weight': instance.weight,
+      'diabetes_type': instance.diabetesType,
+      'hypo': instance.hypo,
+      'range_min': instance.rangeMin,
+      'target': instance.target,
+      'range_max': instance.rangeMax,
+      'hyper': instance.hyper,
+      'device_uuid': instance.deviceUUID,
+      'manufacturer_id': instance.manufacturerId,
+      'year_of_diagnosis': instance.yearOfDiagnosis,
+      'smoker': instance.smoker,
+      'treatment_list': instance.treatmentList?.map((e) => e.toJson()).toList(),
+    };

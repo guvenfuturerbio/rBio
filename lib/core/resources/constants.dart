@@ -3,6 +3,8 @@ part of 'resources.dart';
 class _Constants {
   final date2000 = DateTime(2000, 1, 1, 0, 0, 0);
 
+  final guvenTel = "tel://4449494";
+
   final supportedFileExtensions = [
     'docx',
     'pdf',

@@ -29,12 +29,9 @@ class AllFilesVm extends RbioVm {
   }
 
   AllFilesVm(this.mContext) {
-    final widgetsBinding = WidgetsBinding.instance;
-    if (widgetsBinding != null) {
-      widgetsBinding.addPostFrameCallback((_) {
-        fetchAllFiles();
-      });
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchAllFiles();
+    });
   }
 
   List<ServerFile> fileLists = [];

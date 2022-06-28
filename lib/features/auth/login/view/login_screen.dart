@@ -31,15 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
     getIt<IAppConfig>().platform.recaptchaManager?.showBadge();
 
     if (Atom.url == PagePaths.loginWithSuccessChangePassword()) {
-      final widgetsBinding = WidgetsBinding.instance;
-      if (widgetsBinding != null) {
-        widgetsBinding.addPostFrameCallback((_) {
-          Utils.instance.showSuccessSnackbar(
-            context,
-            LocaleProvider.of(context).succefully_created_pass,
-          );
-        });
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Utils.instance.showSuccessSnackbar(
+          context,
+          LocaleProvider.of(context).succefully_created_pass,
+        );
+      });
     }
 
     super.initState();

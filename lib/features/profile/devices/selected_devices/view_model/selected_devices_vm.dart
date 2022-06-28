@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 part of '../../devices.dart';
 
 class SelectedDeviceVm extends ChangeNotifier {

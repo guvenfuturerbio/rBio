@@ -37,7 +37,7 @@ class _UserDetailCard extends StatelessWidget {
               topPadding: false,
             ),
 
-            //æ
+            //
             _buildValueRow(
               context,
               leftValue: patientDetail.identificationNumber ?? "",
@@ -62,6 +62,8 @@ class _UserDetailCard extends StatelessWidget {
               leftTitle: LocaleProvider.current.normal_range,
               rightTitle: LocaleProvider.current.weight,
             ),
+
+            //
             _buildEditableValueRow(
               context,
               leftValue: (patientDetail.rangeMin ?? "").toString() +
@@ -80,6 +82,8 @@ class _UserDetailCard extends StatelessWidget {
               leftTitle: LocaleProvider.current.hypo,
               rightTitle: LocaleProvider.current.last_hba1c,
             ),
+
+            //
             _buildEditableValueRow(
               context,
               leftValue: (patientDetail.hypo ?? "-").toString() + " mg/dL",
@@ -95,6 +99,8 @@ class _UserDetailCard extends StatelessWidget {
               leftTitle: LocaleProvider.current.hyper,
               rightTitle: LocaleProvider.current.year_of_diagnosis,
             ),
+
+            //
             _buildEditableValueRow(
               context,
               leftValue: (patientDetail.hyper ?? "-").toString() + " mg/dL",
@@ -110,6 +116,8 @@ class _UserDetailCard extends StatelessWidget {
               leftTitle: LocaleProvider.current.phone_number,
               rightTitle: LocaleProvider.current.smoking,
             ),
+
+            //
             _buildValueRow(
               context,
               leftValue: patientDetail.phoneNumber ?? "",
@@ -121,16 +129,21 @@ class _UserDetailCard extends StatelessWidget {
             ),
 
             //
-            _buildTitleRow(context,
-                leftTitle: LocaleProvider.current.strip_number_2,
-                rightTitle: ''),
+            _buildTitleRow(
+              context,
+              leftTitle: LocaleProvider.current.strip_number_2,
+              rightTitle: '',
+            ),
+
+            //
             _buildValueRow(
               context,
               leftValue: "200",
               rightValue: '',
               rightOnTap: () {
                 if (patientDetail.phoneNumber != null) {
-                  launch("tel://${patientDetail.phoneNumber}");
+                  getIt<UrlLauncherManager>()
+                      .launch("tel://${patientDetail.phoneNumber}");
                 }
               },
             ),

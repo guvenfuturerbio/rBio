@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/demo/audio_recorder/view/audio_record_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -15,6 +14,7 @@ import '../../features/chronic_tracking/scale/scale.dart';
 import '../../features/chronic_tracking/treatment/treatment_detail/view/treatment_edit_view.dart';
 import '../../features/chronic_tracking/treatment/treatment_process/view/treatment_process_screen.dart';
 import '../../features/dashboard/search/doctor_cv/doctor_cv_screen.dart';
+import '../../features/demo/audio_recorder/view/audio_record_screen.dart';
 import '../../features/detailed_symptom/detailed_symptom_checker.dart';
 import '../../features/doctor/home/view/doctor_home_screen.dart';
 import '../../features/doctor/patient_detail/blood_glucose/blood_glucose.dart';
@@ -36,7 +36,6 @@ import '../../features/profile/magazines/magazine_detail.dart';
 import '../../features/profile/magazines/magazine_view.dart';
 import '../../features/profile/personal_information/view/personal_information_screen.dart';
 import '../../features/profile/profile/view/profile_screen.dart';
-import '../../features/profile/profile/viewmodel/profile_vm.dart';
 import '../../features/profile/request_suggestions/view/request_suggestions_screen.dart';
 import '../../features/profile/terms_and_privacy/terms_and_privacy.dart';
 import '../../features/relatives/add_patient_relative/view/add_relative_screen.dart';
@@ -603,7 +602,7 @@ class VRouterRoutes {
               stackedRoutes: [
                 VWidget(
                   path: PagePaths.doctorCv,
-                  widget: DoctorCvScreen(),
+                  widget: const DoctorCvScreen(),
                 ),
                 VWidget(
                   path: PagePaths.createAppointmentEvents,
@@ -791,7 +790,6 @@ class PagePaths {
   static const magazines = '/magazine-detail';
   static const magazinselection = '/magazines';
 
-  // TODO : SILLL
   static const demoAudioRecord = '/demoAudioRecord';
 }
 
