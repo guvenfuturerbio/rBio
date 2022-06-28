@@ -28,8 +28,7 @@ abstract class SentryManager {
 }
 
 class GuvenOnlineSentryManagerImpl extends SentryManager {
-  final String _dsn =
-      'https://f54e64bc5a8a4c9bbcddf7bb771c5967@o983734.ingest.sentry.io/5940445';
+  final String _dsn = 'https://f54e64bc5a8a4c9bbcddf7bb771c5967@o983734.ingest.sentry.io/5940445';
   final String _release = 'com.guvenfuture.online@';
 
   @override
@@ -43,9 +42,7 @@ class GuvenOnlineSentryManagerImpl extends SentryManager {
         options.enablePrintBreadcrumbs = true;
         options.attachStacktrace = true;
         options.release = _release + version;
-        options.environment = kDebugMode
-            ? Environment.dev.toString()
-            : Environment.prod.toString();
+        options.environment = kDebugMode ? Environment.dev.toString() : Environment.prod.toString();
         options.diagnosticLevel = SentryLevel.debug;
         options.sendDefaultPii = true;
       },
@@ -55,16 +52,17 @@ class GuvenOnlineSentryManagerImpl extends SentryManager {
 
   @override
   Widget wrapBundle(Widget child) {
-    return DefaultAssetBundle(
-      bundle: SentryAssetBundle(enableStructuredDataTracing: true),
-      child: child,
-    );
+    return kIsWeb
+        ? child
+        : DefaultAssetBundle(
+            bundle: SentryAssetBundle(enableStructuredDataTracing: true),
+            child: child,
+          );
   }
 }
 
 class OneDoseSentryManagerImpl extends SentryManager {
-  final String _dsn =
-      'https://cdaf2769f32349d8baf6fa2f97d04aa5@o983734.ingest.sentry.io/6511487';
+  final String _dsn = 'https://cdaf2769f32349d8baf6fa2f97d04aa5@o983734.ingest.sentry.io/6511487';
   final String _release = 'com.guvenfuture.onedosehealth@';
 
   @override
@@ -78,9 +76,7 @@ class OneDoseSentryManagerImpl extends SentryManager {
         options.enablePrintBreadcrumbs = true;
         options.attachStacktrace = true;
         options.release = _release + version;
-        options.environment = kDebugMode
-            ? Environment.dev.toString()
-            : Environment.prod.toString();
+        options.environment = kDebugMode ? Environment.dev.toString() : Environment.prod.toString();
         options.diagnosticLevel = SentryLevel.debug;
         options.sendDefaultPii = true;
       },
