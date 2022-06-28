@@ -160,7 +160,7 @@ class GlucoseData extends HiveObject {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant Object other) {
     if (other is GlucoseData) {
       if (measurementId == null || other.measurementId == null) {
         return time == other.time;

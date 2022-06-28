@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../../core/core.dart';
 import '../../my_appointments/view/view.dart';
 import '../../profile/profile/view/profile_screen.dart';
-import '../../profile/profile/viewmodel/profile_vm.dart';
 import '../search/view/search_screen.dart';
 import 'contact_us/contact_us_screen.dart';
 import 'dashboard_screen.dart';
@@ -77,10 +75,7 @@ class GuvenDashboardNavigation extends IProductDashboard {
           VWidget(
             path: account,
             name: account,
-            widget: ChangeNotifierProvider<ProfileVm>(
-              create: (context) => ProfileVm(context),
-              child: const ProfileScreen(isFromDashboard: true),
-            ),
+            widget: const ProfileScreen(isFromDashboard: true),
           ),
         ],
       ),

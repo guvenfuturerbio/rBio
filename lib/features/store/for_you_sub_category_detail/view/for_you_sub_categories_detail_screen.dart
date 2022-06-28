@@ -9,39 +9,43 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../core/core.dart';
 import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../cubit/cubit.dart';
+import '../model/for_you_sub_category_detail_response.dart';
 
 class ForYouSubCategoriesDetailScreen extends StatelessWidget {
-  var itemId;
-  String? title;
-  ForYouSubCategoriesDetailScreen({Key? key}) : super(key: key);
+  const ForYouSubCategoriesDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final int itemId;
+    final String title;
+
     try {
-      itemId = int.parse(Atom.queryParameters['subCategoryId'] as String);
-      title = Uri.decodeFull(Atom.queryParameters['title'] as String);
+      itemId = int.parse(Atom.queryParameters['subCategoryId']!);
+      title = Uri.decodeFull(Atom.queryParameters['title']!);
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return BlocProvider(
       create: (context) =>
           ForYouSubCategoryDetailCubit(getIt())..fetchSubCategoryDetail(itemId),
-      child: ForYouSubCategoriesDetailView(itemId, title),
+      child: ForYouSubCategoriesDetailView(
+        itemId: itemId,
+        title: title,
+      ),
     );
   }
 }
 
 class ForYouSubCategoriesDetailView extends StatefulWidget {
-  var itemId;
-  String? title;
+  final int itemId;
+  final String title;
 
-  ForYouSubCategoriesDetailView(this.itemId, this.title, {Key? key})
-      : super(key: key);
+  const ForYouSubCategoriesDetailView({
+    Key? key,
+    required this.itemId,
+    required this.title,
+  }) : super(key: key);
 
   @override
   _ForYouSubCategoriesDetailViewState createState() =>
@@ -67,160 +71,170 @@ class _ForYouSubCategoriesDetailViewState
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          widget.title!,
-        ),
-      ),
+      appbar: _buildAppBar(context),
       body: _buildBody(),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      title: RbioAppBar.textTitle(
+        context,
+        widget.title,
+      ),
     );
   }
 
   Widget _buildBody() {
     return BlocBuilder<ForYouSubCategoryDetailCubit,
-        ForYouSubCategoryDetailState>(builder: (context, state) {
-      return state.when(
-          initial: () => const SizedBox(),
-          loadInProgress: () => const RbioLoading(),
-          success: (list) => Padding(
-                padding: kIsWeb
-                    ? EdgeInsets.only(
-                        top: 50,
-                        left: Atom.size.width < 800
-                            ? Atom.size.width * 0.03
-                            : Atom.size.width * 0.10,
-                        right: Atom.size.width < 800
-                            ? Atom.size.width * 0.03
-                            : Atom.size.width * 0.10,
-                      )
-                    : EdgeInsets.zero,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      //
-                      Row(
-                        children: [
-                          //
-                          Expanded(
-                            child: _buildBuyPackageButton(
-                              context,
-                              () {
-                                getIt<IAppConfig>()
-                                    .platform
-                                    .adjustManager
-                                    ?.trackEvent(
-                                        ForYouPackageSummaryClickedEvent());
-                                getIt<FirebaseAnalyticsManager>().logEvent(
-                                  SizeOzelAltKategoriOzeteTiklandiEvent(
-                                    widget.itemId.toString(),
-                                  ),
-                                );
-                                Atom.to(
-                                  PagePaths.forYouOrderSummary,
-                                  queryParameters: {
-                                    'subCategoryId':
-                                        (widget.itemId ?? '').toString(),
-                                    'categoryName': widget.title ?? '',
-                                  },
-                                );
-                              },
-                              LocaleProvider.current.buy_package,
-                            ),
-                          ),
-                        ],
-                      ),
+        ForYouSubCategoryDetailState>(
+      builder: (context, state) {
+        return state.when(
+            initial: () => const SizedBox(),
+            loadInProgress: () => const RbioLoading(),
+            success: (list) => _buildSuccess(context, list),
+            failure: () => const RbioBodyError());
+      },
+    );
+  }
 
-                      //
-                      Column(
-                        children: [
-                          CarouselSlider(
-                            carouselController: controller,
-                            options: CarouselOptions(
-                              enlargeCenterPage: true,
-                              enableInfiniteScroll: false,
-                              height: MediaQuery.of(context).size.height * 0.68,
-                              aspectRatio: 2.0,
-                              onPageChanged: (index, reason) => {
-                                setState(() {
-                                  _currentIndex = index;
-                                })
-                              },
-                            ),
-                            items: list.map(
-                              (card) {
-                                return Builder(
-                                  builder: (BuildContext context) {
-                                    return SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.30,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Card(
-                                        elevation: R.sizes.defaultElevation,
-                                        child: ListCard(
-                                          image: card.image!,
-                                          title: card.title!,
-                                          text: card.text!,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ).toList(),
-                          ),
+  Widget _buildSuccess(
+    BuildContext context,
+    List<ForYouSubCategoryDetailResponse> list,
+  ) {
+    return Padding(
+      padding: kIsWeb
+          ? EdgeInsets.only(
+              top: 50,
+              left: Atom.size.width < 800
+                  ? Atom.size.width * 0.03
+                  : Atom.size.width * 0.10,
+              right: Atom.size.width < 800
+                  ? Atom.size.width * 0.03
+                  : Atom.size.width * 0.10,
+            )
+          : EdgeInsets.zero,
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            //
+            Row(
+              children: [
+                //
+                Expanded(
+                  child: _buildBuyPackageButton(
+                    context,
+                    () {
+                      getIt<IAppConfig>()
+                          .platform
+                          .adjustManager
+                          ?.trackEvent(ForYouPackageSummaryClickedEvent());
+                      getIt<FirebaseAnalyticsManager>().logEvent(
+                        SizeOzelAltKategoriOzeteTiklandiEvent(
+                          widget.itemId.toString(),
+                        ),
+                      );
 
-                          //
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: map<Widget>(
-                              list,
-                              (index, url) {
-                                return Container(
-                                  width: 10.0,
-                                  height: 10.0,
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 2.0),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: _currentIndex == index
-                                        ? getIt<IAppConfig>().theme.mainColor
-                                        : getIt<IAppConfig>()
-                                            .theme
-                                            .textColorSecondary
-                                            .withOpacity(0.5),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              if (list.length > 1) ...[
-                                IconButton(
-                                    icon: const Icon(Icons.arrow_left),
-                                    onPressed: () {
-                                      controller.previousPage();
-                                    }),
-                                IconButton(
-                                  icon: const Icon(Icons.arrow_right),
-                                  onPressed: () {
-                                    controller.nextPage();
-                                  },
-                                ),
-                              ],
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
+                      Atom.to(
+                        PagePaths.forYouOrderSummary,
+                        queryParameters: {
+                          'subCategoryId': (widget.itemId).toString(),
+                          'categoryName': widget.title,
+                        },
+                      );
+                    },
+                    LocaleProvider.current.buy_package,
                   ),
                 ),
-              ),
-          failure: () => const RbioBodyError());
-    });
+              ],
+            ),
+
+            //
+            Column(
+              children: [
+                CarouselSlider(
+                  carouselController: controller,
+                  options: CarouselOptions(
+                    enlargeCenterPage: true,
+                    enableInfiniteScroll: false,
+                    height: MediaQuery.of(context).size.height * 0.68,
+                    aspectRatio: 2.0,
+                    onPageChanged: (index, reason) => {
+                      setState(() {
+                        _currentIndex = index;
+                      })
+                    },
+                  ),
+                  items: list.map(
+                    (card) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.30,
+                            width: MediaQuery.of(context).size.width,
+                            child: Card(
+                              elevation: R.sizes.defaultElevation,
+                              child: ListCard(
+                                image: card.image!,
+                                title: card.title!,
+                                text: card.text!,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ).toList(),
+                ),
+
+                //
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: map<Widget>(
+                    list,
+                    (index, url) {
+                      return Container(
+                        width: 10.0,
+                        height: 10.0,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 2.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentIndex == index
+                              ? getIt<IAppConfig>().theme.mainColor
+                              : getIt<IAppConfig>()
+                                  .theme
+                                  .textColorSecondary
+                                  .withOpacity(0.5),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (list.length > 1) ...[
+                      IconButton(
+                          icon: const Icon(Icons.arrow_left),
+                          onPressed: () {
+                            controller.previousPage();
+                          }),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_right),
+                        onPressed: () {
+                          controller.nextPage();
+                        },
+                      ),
+                    ],
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildBuyPackageButton(

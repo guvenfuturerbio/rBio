@@ -18,7 +18,7 @@ class RbioErrorScreenBody extends StatelessWidget {
       children: [
         Linkify(
           onOpen: (link) async {
-            await getIt<UrlLauncherManager>().canLaunch(link.url);
+            await getIt<UrlLauncherManager>().launch(link.url);
           },
           text: errorMsg,
           style: context.xHeadline2,

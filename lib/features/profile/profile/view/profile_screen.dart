@@ -6,29 +6,29 @@ import 'package:provider/provider.dart';
 import '../../../../core/core.dart';
 import '../viewmodel/profile_vm.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   final bool isFromDashboard;
-
   const ProfileScreen({
     Key? key,
     this.isFromDashboard = false,
   }) : super(key: key);
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ProfileVm>(
+      create: (context) => ProfileVm(context)..getNumbers(),
+      child: ProfileView(isFromDashboard: isFromDashboard),
+    );
+  }
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  void initState() {
-    super.initState();
-    final widgetsBinding = WidgetsBinding.instance;
-    if (widgetsBinding != null) {
-      widgetsBinding.addPostFrameCallback((_) {
-        Provider.of<ProfileVm>(context, listen: false).getNumbers();
-      });
-    }
-  }
+class ProfileView extends StatelessWidget {
+  final bool isFromDashboard;
+
+  const ProfileView({
+    Key? key,
+    this.isFromDashboard = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +36,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (BuildContext context, ProfileVm vm, Widget? child) {
         return RbioStackedScaffold(
           isLoading: vm.showProgressOverlay,
-          appbar: _buildAppBar(),
-          body: _buildBody(vm),
+          appbar: _buildAppBar(context),
+          body: _buildBody(vm, context),
         );
       },
     );
   }
 
-  RbioAppBar _buildAppBar() {
+  RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
-      leading: widget.isFromDashboard ? const SizedBox() : null,
-      leadingWidth: widget.isFromDashboard ? 0 : null,
+      leading: isFromDashboard ? const SizedBox() : null,
+      leadingWidth: isFromDashboard ? 0 : null,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.profile,
@@ -66,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildBody(ProfileVm vm) {
+  Widget _buildBody(ProfileVm vm, BuildContext context) {
     switch (vm.state) {
       case LoadingProgress.loading:
         return const RbioLoading();
@@ -157,6 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     if (context.read<UserNotifier>().isDoctor) ...[
                       _buildListItem(
+                        context,
                         LocaleProvider.current.healthcare_employee,
                         () {
                           Atom.to(PagePaths.doctorHome);
@@ -166,6 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     if (getIt<IAppConfig>().functionality.relatives)
                       _buildListItem(
+                        context,
                         LocaleProvider.current.relatives,
                         () {
                           Atom.to(PagePaths.relatives);
@@ -174,6 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     //
                     _buildListItem(
+                      context,
                       LocaleProvider.current.lbl_personal_information,
                       () {
                         Atom.to(PagePaths.personalInformation);
@@ -183,6 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     getIt<IAppConfig>().functionality.chronicTracking
                         ? _buildListItem(
+                            context,
                             LocaleProvider.current.health_information,
                             () {
                               Atom.to(PagePaths.healthInformation);
@@ -194,6 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         getIt<UserNotifier>().isCronic &&
                         getIt<IAppConfig>().functionality.chronicTracking)
                       _buildListItem(
+                        context,
                         LocaleProvider.current.devices,
                         () {
                           Atom.to(PagePaths.devices);
@@ -203,6 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     //
                     if (getIt<IAppConfig>().platform.checkMedimender())
                       _buildListItem(
+                        context,
                         LocaleProvider.current.reminders,
                         () {
                           Atom.to(PagePaths.reminderList);
@@ -211,6 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     //
                     _buildListItem(
+                      context,
                       LocaleProvider.current.change_password,
                       () {
                         Atom.to(PagePaths.changePassword);
@@ -219,6 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     if (getIt<IAppConfig>().functionality.magazines) ...[
                       _buildListItem(
+                        context,
                         LocaleProvider.current.magazines,
                         () {
                           Atom.to(PagePaths.magazinselection);
@@ -228,6 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     //
                     _buildListItem(
+                      context,
                       LocaleProvider.current.request_and_suggestions,
                       () {
                         Atom.to(PagePaths.suggestResult);
@@ -236,6 +245,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     //
                     _buildListItem(
+                      context,
                       LocaleProvider.current.terms_and_privacy,
                       () {
                         Atom.to(PagePaths.termsAndPrivacy);
@@ -300,6 +310,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildVerticalGap() => SizedBox(height: Atom.height * 0.015);
 
   Widget _buildListItem(
+    BuildContext context,
     String title,
     VoidCallback onTap, {
     bool isDivider = true,

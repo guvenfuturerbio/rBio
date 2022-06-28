@@ -13,11 +13,7 @@ class SelectedDevicesScreen extends StatelessWidget {
         deviceType = deviceTypeStr.toType;
       }
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return RbioStackedScaffold(

@@ -21,11 +21,7 @@ class MedicationReminderAddEditScreen extends StatelessWidget {
         createdDate = int.tryParse(routeParam);
       }
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return BlocProvider<MedicationReminderAddEditCubit>(

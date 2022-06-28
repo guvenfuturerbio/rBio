@@ -26,7 +26,7 @@ class StripVm with ChangeNotifier {
     // await Future.delayed(const Duration(milliseconds: 200));
 
     try {
-      // TODO
+      // TODO loadValues
       stripDetailModel.alarmCount = 10;
       stripDetailModel.currentCount = 50;
       stripDetailModel.deviceUUID = "ID";

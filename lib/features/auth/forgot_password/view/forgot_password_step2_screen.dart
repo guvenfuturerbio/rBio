@@ -64,11 +64,7 @@ class _ForgotPasswordStep2ScreenState extends State<ForgotPasswordStep2Screen> {
     try {
       identityNumber = Atom.queryParameters['identityNumber']!;
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return ChangeNotifierProvider<ForgotPasswordStep2ScreenVm>(

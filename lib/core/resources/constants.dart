@@ -3,6 +3,8 @@ part of 'resources.dart';
 class _Constants {
   final date2000 = DateTime(2000, 1, 1, 0, 0, 0);
 
+  final guvenTel = "tel://4449494";
+
   final supportedFileExtensions = [
     'docx',
     'pdf',
@@ -34,6 +36,31 @@ class _Constants {
       "magazineUrl": "https://guvenin.com.tr/dergi/4",
       "sayi": "Sayı 4",
     }
+  ];
+
+  final drTitles = [
+    "prof.dr.",
+    "uzm.dr.",
+    "dr.",
+    "dr",
+    "dt.",
+    "dt",
+    "prof. dr.",
+    "doc. dr.",
+    "dyt.",
+    "psk.",
+    "fzt.",
+    "hem.",
+    "dan.",
+    "*",
+    "doç.dr.",
+    "doc.dr.",
+    "doc.",
+    "uzm",
+    "-danismanlik",
+    "danismanlik",
+    " ()",
+    "()",
   ];
 
   final onlineAppointmentType = 256;

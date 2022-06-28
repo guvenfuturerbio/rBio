@@ -24,13 +24,6 @@ class DoNotAskAgainDialog extends StatefulWidget {
 class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
   bool doNotAskAgain = false;
 
-  Future<void> _updateDoNotShowAgain() async {
-    await getIt<ISharedPreferencesManager>().setBool(
-      SharedPreferencesKeys.updateDialog,
-      false,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return RbioBaseGreyDialog(

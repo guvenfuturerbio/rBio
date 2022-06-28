@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../core.dart';
 
@@ -36,7 +35,7 @@ class DetailedGradientMessageWidget extends StatelessWidget {
         //
         GestureDetector(
           onTap: () {
-            launch("tel://4449494");
+            getIt<UrlLauncherManager>().launch(R.constants.guvenTel);
           },
           child: Center(
             child: Padding(

@@ -23,11 +23,7 @@ class Hba1cReminderAddEditScreen extends StatelessWidget {
         notificationId = int.tryParse(routeParam);
       }
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return BlocProvider<Hba1cReminderAddEditCubit>(

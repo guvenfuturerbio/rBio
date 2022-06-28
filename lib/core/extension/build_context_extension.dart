@@ -61,9 +61,9 @@ extension BuildContextThemeExtensions on BuildContext {
   Color get scaffoldBackgroundColor => Theme.of(this).scaffoldBackgroundColor;
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
   Color get primary => Theme.of(this).colorScheme.primary;
-  Color get primaryVariant => Theme.of(this).colorScheme.primaryVariant;
+  Color get primaryVariant => Theme.of(this).colorScheme.primaryContainer;
   Color get secondary => Theme.of(this).colorScheme.secondary;
-  Color get secondaryVariant => Theme.of(this).colorScheme.secondaryVariant;
+  Color get secondaryVariant => Theme.of(this).colorScheme.secondaryContainer;
   Color get surface => Theme.of(this).colorScheme.surface;
   Color get background => Theme.of(this).colorScheme.background;
   Color get error => Theme.of(this).colorScheme.error;

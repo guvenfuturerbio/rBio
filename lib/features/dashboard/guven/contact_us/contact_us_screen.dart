@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/core.dart';
@@ -66,7 +65,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         ? const SizedBox()
                         : InkWell(
                             onTap: () {
-                              launch("tel://4449494");
+                              getIt<UrlLauncherManager>()
+                                  .launch(R.constants.guvenTel);
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -140,6 +140,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                               maxWidth: context.width * 0.6,
                               maxHeight: context.height * 0.6),
                           child: (!Platform.isAndroid && !Platform.isIOS)
+                              // ignore: prefer_const_constructors
                               ? HtmlElementView(viewType: 'tawkto')
                               : WebView(
                                   initialUrl:

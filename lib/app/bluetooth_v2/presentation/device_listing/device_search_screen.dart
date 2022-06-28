@@ -28,19 +28,12 @@ class DeviceSearchScreen extends StatelessWidget {
           return DeviceSearchView(deviceType: deviceType!);
         }
 
-        return RbioScaffold(
-          appbar: RbioAppBar(),
-          body: Container(),
-        );
+        return RbioScaffold(appbar: RbioAppBar(), body: Container());
       }
 
-      return const RbioRouteError();
+      return RbioScaffold(appbar: RbioAppBar(), body: Container());
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      return const RbioRouteError();
+      return RbioRouteError(e: e, stackTrace: stackTrace);
     }
   }
 }

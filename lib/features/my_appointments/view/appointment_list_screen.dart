@@ -370,7 +370,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+              children: const [
                 // RbioIconButton(
                 //   onPressed: () async {
                 //     File? fileBytes = await value.getSelectedFile();

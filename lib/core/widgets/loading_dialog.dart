@@ -18,6 +18,7 @@ class LoadingDialog extends StatefulWidget {
   }
 
   @override
+  // ignore: no_logic_in_create_state
   createState() => state = LoadingDialogState();
 }
 

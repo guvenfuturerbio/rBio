@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/core.dart';
 import '../utils/home_sizer.dart';
@@ -63,7 +62,8 @@ class _HomeSliderState extends State<HomeSlider> {
                                       .destinationUrl;
                                   if (destinationUrl != null) {
                                     if (destinationUrl.contains('http')) {
-                                      launch(destinationUrl);
+                                      getIt<UrlLauncherManager>()
+                                          .launch(destinationUrl);
                                     } else {
                                       Atom.to(destinationUrl);
                                     }
