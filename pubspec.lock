@@ -684,6 +684,13 @@ packages:
       url: "https://github.com/abdoosaed/flutter_facebook_sdk.git"
     source: git
     version: "1.0.0"
+  flutter_jailbreak_detection:
+    dependency: "direct main"
+    description:
+      name: flutter_jailbreak_detection
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.8.0"
   flutter_keyboard_visibility:
     dependency: "direct main"
     description:

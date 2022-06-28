@@ -9029,6 +9029,26 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `The devices which have Root or Jailbreak, are not allowed to use OneDoseHealth App`
+  String get onedosehealth_jailbreak_warning {
+    return Intl.message(
+      'The devices which have Root or Jailbreak, are not allowed to use OneDoseHealth App',
+      name: 'onedosehealth_jailbreak_warning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The devices which have Root or Jailbreak, are not allowed to use Guven Online App`
+  String get guven_jailbreak_warning {
+    return Intl.message(
+      'The devices which have Root or Jailbreak, are not allowed to use Guven Online App',
+      name: 'guven_jailbreak_warning',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

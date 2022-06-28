@@ -48,6 +48,7 @@ dependencies:
   flutter_facebook_sdk:
     git:
       url: https://github.com/abdoosaed/flutter_facebook_sdk.git
+  flutter_jailbreak_detection: ^1.8.0
   flutter_keyboard_visibility: ^5.2.0
   flutter_linkify: ^5.0.2
   flutter_localizations:
