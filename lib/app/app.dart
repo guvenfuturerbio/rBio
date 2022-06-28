@@ -15,13 +15,18 @@ import '../features/doctor/notifiers/patient_notifiers.dart';
 import 'bluetooth_v2/bluetooth_v2.dart';
 
 abstract class MyApp {
+  bool jailbroken = false;
+  void setJailbroken(bool value) {
+    jailbroken = value;
+  }
+
   Widget build(BuildContext context);
 }
 
 class MobileMyApp extends StatelessWidget with MyApp {
   final String initialRoute;
 
-  const MobileMyApp({
+  MobileMyApp({
     Key? key,
     required this.initialRoute,
   }) : super(key: key);
@@ -51,7 +56,10 @@ class MobileMyApp extends StatelessWidget with MyApp {
               BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
             }
           },
-          child: MyAppCommon(initialRoute: initialRoute),
+          child: MyAppCommon(
+            initialRoute: initialRoute,
+            jailbroken: super.jailbroken,
+          ),
         ),
       ),
     );
@@ -86,7 +94,7 @@ class MobileMyApp extends StatelessWidget with MyApp {
 class WebMyApp extends StatelessWidget with MyApp {
   final String initialRoute;
 
-  const WebMyApp({
+  WebMyApp({
     Key? key,
     required this.initialRoute,
   }) : super(key: key);
@@ -99,10 +107,12 @@ class WebMyApp extends StatelessWidget with MyApp {
 
 class MyAppCommon extends StatefulWidget {
   final String initialRoute;
+  final bool jailbroken;
 
   const MyAppCommon({
     Key? key,
     required this.initialRoute,
+    this.jailbroken = false,
   }) : super(key: key);
 
   @override
@@ -170,8 +180,9 @@ class _MyAppCommonState extends State<MyAppCommon> {
                 AppInheritedWidget.of(context)?.changeOrientation(orientation);
 
                 return AtomMaterialApp(
-                  initialUrl: widget.initialRoute,
+                  initialUrl: widget.jailbroken == true ? PagePaths.jailbroken : widget.initialRoute,
                   routes: VRouterRoutes.routes(getIt<IAppConfig>()),
+                  onPop: (vRedirector) async {},
                   onSystemPop: (data) async {
                     if (Atom.isDialogShow) {
                       try {
@@ -234,7 +245,6 @@ class _MyAppCommonState extends State<MyAppCommon> {
                     DefaultCupertinoLocalizations.delegate
                   ],
                   supportedLocales: context.read<LocaleNotifier>().supportedLocales,
-                  onPop: (vRedirector) async {},
                 );
               },
             );

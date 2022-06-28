@@ -579,6 +579,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Güven Çayyolu Campus"),
         "guven_hospital_ayranci":
             MessageLookupByLibrary.simpleMessage("Güven Hospital Ayrancı"),
+        "guven_jailbreak_warning": MessageLookupByLibrary.simpleMessage(
+            "The devices which have Root or Jailbreak, are not allowed to use Guven Online App"),
         "guven_journal": MessageLookupByLibrary.simpleMessage("GÜVENin"),
         "guven_journal_url":
             MessageLookupByLibrary.simpleMessage("https://www.guvenin.com.tr"),
@@ -955,6 +957,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("One time a day"),
         "one_time_dose_question": MessageLookupByLibrary.simpleMessage(
             "How many doses will be taken at once?"),
+        "onedosehealth_jailbreak_warning": MessageLookupByLibrary.simpleMessage(
+            "The devices which have Root or Jailbreak, are not allowed to use OneDoseHealth App"),
         "online_appo":
             MessageLookupByLibrary.simpleMessage("Online Appointment"),
         "online_appo_error_0": MessageLookupByLibrary.simpleMessage(
