@@ -52,12 +52,10 @@ class GuvenOnlineSentryManagerImpl extends SentryManager {
 
   @override
   Widget wrapBundle(Widget child) {
-    return kIsWeb
-        ? child
-        : DefaultAssetBundle(
-            bundle: SentryAssetBundle(enableStructuredDataTracing: true),
-            child: child,
-          );
+    return DefaultAssetBundle(
+      bundle: SentryAssetBundle(),
+      child: child,
+    );
   }
 }
 
@@ -87,7 +85,7 @@ class OneDoseSentryManagerImpl extends SentryManager {
   @override
   Widget wrapBundle(Widget child) {
     return DefaultAssetBundle(
-      bundle: SentryAssetBundle(enableStructuredDataTracing: true),
+      bundle: SentryAssetBundle(),
       child: child,
     );
   }
