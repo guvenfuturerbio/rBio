@@ -265,6 +265,9 @@ class Utils {
     String localData;
     try {
       localData = await localCacheService.get(cacheUrl);
+      if (localData.isEmpty) {
+        return [];
+      }
       final localModel = json.decode(localData);
       if (localModel is List) {
         return localModel.map((e) => model.fromJson(e)).cast<T>().toList();

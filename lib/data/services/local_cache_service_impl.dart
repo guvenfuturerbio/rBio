@@ -11,27 +11,37 @@ class LocalCacheServiceImpl extends LocalCacheService {
 
   @override
   Future<String> get(String url) async {
-    final jsonString = box.get(url) as String?;
+    try {
+      final jsonString = box.get(url) as String?;
 
-    if (jsonString != null && jsonString != '') {
-      final jsonModel = jsonDecode(jsonString) as Map<String, dynamic>;
-      final cacheModel = NetworkCacheModel.fromJson(jsonModel);
-      final now = DateTime.now();
+      if (jsonString != null && jsonString != '') {
+        final jsonModel = jsonDecode(jsonString) as Map<String, dynamic>;
+        final cacheModel = NetworkCacheModel.fromJson(jsonModel);
+        final now = DateTime.now();
 
-      if (jsonModel['appVersion'] == null) {
-        await remove(url);
-      } else {
-        final appVersion = getIt<GuvenSettings>().version;
-        if ((now.isBefore(cacheModel.expirationTime)) &&
-            (Version.parse(appVersion) <=
-                Version.parse(cacheModel.appVersion))) {
-          return cacheModel.data;
-        } else {
+        if (jsonModel['appVersion'] == null) {
           await remove(url);
+        } else {
+          final appVersion = getIt<GuvenSettings>().version;
+          if ((now.isBefore(cacheModel.expirationTime)) &&
+              (Version.parse(appVersion) <=
+                  Version.parse(cacheModel.appVersion))) {
+            return cacheModel.data;
+          } else {
+            await remove(url);
+          }
         }
       }
+      if (url.isNotEmpty) {
+        return url;
+      } else{
+        return "";
     }
-
+    } catch (e) {
+      if (e.toString() == "local cache null") {
+        return "";
+      }
+    }
     throw Exception("$url local cache null");
   }
 
