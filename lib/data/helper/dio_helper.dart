@@ -12,8 +12,11 @@ const String postMethod = 'POST';
 const String patchMethod = 'PATCH';
 
 class DioHelper with DioMixin implements Dio, IDioHelper {
+  @override
+  late bool isTest;
+
   // #region Settings
-  DioHelper() {
+  DioHelper(this.isTest) {
     options = BaseOptions(
       connectTimeout: 60000,
       receiveTimeout: 60000,
@@ -89,7 +92,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
         onError: (DioError error, ErrorInterceptorHandler handler) async {
           final statusCode = error.response?.statusCode;
           if (statusCode != null) {
-            if (statusCode == 401) {
+            if (statusCode == 401 && !isTest) {
               if (!Atom.url.contains(PagePaths.login)) {
                 final password = getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.loginPassword);
