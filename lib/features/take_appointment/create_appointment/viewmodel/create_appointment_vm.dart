@@ -46,20 +46,11 @@ class CreateAppointmentVm extends ChangeNotifier {
   // #region Getters
 
   DateTime get startDate {
-    return DateTime(
-        _startDate?.year ?? DateTime.now().year - 1,
-        _startDate?.month ?? DateTime.now().month,
-        _startDate?.day ?? DateTime.now().day);
+    return DateTime(_startDate?.year ?? DateTime.now().year - 1, _startDate?.month ?? DateTime.now().month, _startDate?.day ?? DateTime.now().day);
   }
 
   DateTime get endDate {
-    return DateTime(
-        _endDate?.year ?? DateTime.now().year + 1,
-        _endDate?.month ?? DateTime.now().month,
-        _endDate?.day ?? DateTime.now().day,
-        23,
-        59,
-        59);
+    return DateTime(_endDate?.year ?? DateTime.now().year + 1, _endDate?.month ?? DateTime.now().month, _endDate?.day ?? DateTime.now().day, 23, 59, 59);
   }
 
   // #endregion
@@ -133,10 +124,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         }
       }
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e("fillFromSymptom: $e");
     }
   }
@@ -167,10 +155,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         }
       }
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e("fillFromSearch: $e");
     }
   }
@@ -186,25 +171,19 @@ class CreateAppointmentVm extends ChangeNotifier {
       }
 
       for (var department in filterDepartmentResponse!) {
-        if (department.id ==
-            holderForFavorites[index].resources?.first.departmentId) {
-          LoggerUtils.instance.i(
-              'departman : ${department.title} --> departmanId : ${department.id}');
+        if (department.id == holderForFavorites[index].resources?.first.departmentId) {
+          LoggerUtils.instance.i('departman : ${department.title} --> departmanId : ${department.id}');
           await departmentSelection(department);
         }
       }
 
       for (var doctor in filterResourceResponse!) {
-        if (doctor.id ==
-            holderForFavorites[index].resources?.first.resourceId) {
+        if (doctor.id == holderForFavorites[index].resources?.first.resourceId) {
           doctorSelection(doctor);
         }
       }
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e("fillFromFavorites: $e");
     }
 
@@ -216,16 +195,12 @@ class CreateAppointmentVm extends ChangeNotifier {
     progress = LoadingProgress.loading;
     notifyListeners();
     try {
-      tenantsFilterResponse = await getIt<Repository>()
-          .filterTenants(FilterTenantsRequest(departmanId: null));
+      tenantsFilterResponse = await getIt<Repository>().filterTenants(FilterTenantsRequest(departmanId: null));
       tenantsFilterResponse = removeOtherTenants(tenantsFilterResponse!);
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -244,8 +219,7 @@ class CreateAppointmentVm extends ChangeNotifier {
 
     try {
       relativeResponse = await getIt<Repository>().getAllRelatives();
-      if (relativeResponse == null ||
-          relativeResponse?.patientRelatives == []) {
+      if (relativeResponse == null || relativeResponse?.patientRelatives == []) {
         relativeResponse = PatientRelativeInfoResponse([]);
       }
       final currentPatient = getIt<UserNotifier>().getUserAccount();
@@ -263,10 +237,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       relativeProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -286,8 +257,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       progress = LoadingProgress.loading;
       departmentProgress = LoadingProgress.loading;
       notifyListeners();
-      filterDepartmentResponse = await getIt<Repository>()
-          .fetchOnlineDepartments(filterOnlineDepartmentsRequest);
+      filterDepartmentResponse = await getIt<Repository>().fetchOnlineDepartments(filterOnlineDepartmentsRequest);
       List<String> string = [];
       for (var element in filterDepartmentResponse!) {
         string.add(element.title ?? '');
@@ -315,10 +285,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       departmentProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -342,8 +309,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       notifyListeners();
       List<String> string = [];
 
-      filterDepartmentResponse =
-          await getIt<Repository>().filterDepartments(filterDepartmentsRequest);
+      filterDepartmentResponse = await getIt<Repository>().filterDepartments(filterDepartmentsRequest);
       filterDepartmentResponse?.forEach((element) {
         string.add(element.title ?? "");
       });
@@ -370,10 +336,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       departmentProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -393,10 +356,9 @@ class CreateAppointmentVm extends ChangeNotifier {
     notifyListeners();
 
     try {
-      filterResourceResponse =
-          await getIt<Repository>().filterResources(filterResourcesRequest);
+      filterResourceResponse = await getIt<Repository>().filterResources(filterResourcesRequest);
 
-      filterResourceResponse!.sort((a, b) {
+      filterResourceResponse!.sort((FilterResourcesResponse a, FilterResourcesResponse b) {
         return (a.title ?? '').compareTo((b.title ?? ''));
       });
 
@@ -418,10 +380,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       doctorProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -434,13 +393,11 @@ class CreateAppointmentVm extends ChangeNotifier {
   // #endregion
 
   // #region hospitalSelection
-  Future<void> hospitalSelection(
-      FilterTenantsResponse selectionResponse) async {
+  Future<void> hospitalSelection(FilterTenantsResponse selectionResponse) async {
     clearFunc(Fields.tenant);
     dropdownValueTenant = selectionResponse;
     if (selectionResponse.id != -2) {
-      await fetchDepartments(FilterDepartmentsRequest(
-          search: null, tenantId: selectionResponse.id));
+      await fetchDepartments(FilterDepartmentsRequest(search: null, tenantId: selectionResponse.id));
       hospitalSelected = true;
       notifyListeners();
     } else {
@@ -452,8 +409,7 @@ class CreateAppointmentVm extends ChangeNotifier {
 
   // #region departmentSelection
   // try
-  Future<void> departmentSelection(
-      FilterDepartmentsResponse selectionResponse) async {
+  Future<void> departmentSelection(FilterDepartmentsResponse selectionResponse) async {
     clearFunc(Fields.department);
     dropdownValueDepartment = selectionResponse;
     if (selectionResponse.id != -2) {
@@ -525,9 +481,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       var removedTenants = <FilterTenantsResponse>[];
       for (var data in tenantsResponse) {
         if (data.id == 1 || data.id == 7) {
-          data.id == 1
-              ? data.title = "Güven Hastanesi Ayrancı"
-              : data.title = "Güven Hastanesi Çayyolu";
+          data.id == 1 ? data.title = "Güven Hastanesi Ayrancı" : data.title = "Güven Hastanesi Çayyolu";
           removedTenants.add(data);
         }
       }
@@ -542,10 +496,7 @@ class CreateAppointmentVm extends ChangeNotifier {
       //removedTenants.add(onlineAppoTenant);
       return removedTenants;
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       progress = LoadingProgress.error;
     }
     return null;
@@ -574,8 +525,7 @@ class CreateAppointmentVm extends ChangeNotifier {
     try {
       if (_patientId != null) {
         if (getIt<UserNotifier>().isDefaultUser ?? true) {
-          patientAppointments =
-              await getIt<Repository>().getPatientAppointments(
+          patientAppointments = await getIt<Repository>().getPatientAppointments(
             PatientAppointmentRequest(
               patientId: _patientId,
               to: endDate.toString(),
@@ -587,21 +537,12 @@ class CreateAppointmentVm extends ChangeNotifier {
 
       await holderListFillFunc();
       for (var element in holderForFavorites) {
-        final doctorId = slugify(Utils.instance.clearDoctorTitle(element
-            .resources!.first.resource!
-            .toLowerCase()
-            .xTurkishCharacterToEnglish));
+        final doctorId = slugify(Utils.instance.clearDoctorTitle(element.resources!.first.resource!.toLowerCase().xTurkishCharacterToEnglish));
         try {
-          DoctorCvResponse tmpResp =
-              await getIt<Repository>().getDoctorCvDetails(doctorId);
-          doctorsImageUrls.add(getIt<KeyManager>().get(Keys.dev4Guven) +
-              "/storage/app/media/" +
-              tmpResp.image1!);
+          DoctorCvResponse tmpResp = await getIt<Repository>().getDoctorCvDetails(doctorId);
+          doctorsImageUrls.add(getIt<KeyManager>().get(Keys.dev4Guven) + "/storage/app/media/" + tmpResp.image1!);
         } catch (e, stackTrace) {
-          getIt<IAppConfig>()
-              .platform
-              .sentryManager
-              .captureException(e, stackTrace: stackTrace);
+          getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
           doctorsImageUrls.add(R.image.circlevatar);
         }
       }
@@ -609,15 +550,11 @@ class CreateAppointmentVm extends ChangeNotifier {
       progress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.i(e);
       progress = LoadingProgress.error;
       notifyListeners();
-      showGradientDialog(context, LocaleProvider.current.warning,
-          LocaleProvider.current.sorry_dont_transaction);
+      showGradientDialog(context, LocaleProvider.current.warning, LocaleProvider.current.sorry_dont_transaction);
     }
   }
 
@@ -629,26 +566,22 @@ class CreateAppointmentVm extends ChangeNotifier {
     }
     LoggerUtils.instance.i('Current doctor ids: -->' + _doctorsIds.toString());
     _doctorsIds = _doctorsIds.toSet().toList();
-    LoggerUtils.instance
-        .i('Removed duplicates ids: -->' + _doctorsIds.toString());
+    LoggerUtils.instance.i('Removed duplicates ids: -->' + _doctorsIds.toString());
 
     if (_doctorsIds.length >= 4) {
       for (var index = 0; index < 4; index++) {
-        holderForFavorites.add(patientAppointments!.firstWhere((element) =>
-            element.resources?.first.resourceId == _doctorsIds[index]));
+        holderForFavorites.add(patientAppointments!.firstWhere((element) => element.resources?.first.resourceId == _doctorsIds[index]));
       }
     } else {
       for (var index = 0; index < _doctorsIds.length; index++) {
-        holderForFavorites.add(patientAppointments!.firstWhere((element) =>
-            element.resources?.first.resourceId == _doctorsIds[index]));
+        holderForFavorites.add(patientAppointments!.firstWhere((element) => element.resources?.first.resourceId == _doctorsIds[index]));
       }
     }
     notifyListeners();
   }
 
   int whereIndex(List<FilterResourcesResponse> filterResourceResponse, int id) {
-    final index =
-        filterResourceResponse.indexWhere((element) => element.id == id);
+    final index = filterResourceResponse.indexWhere((element) => element.id == id);
     return index;
   }
 }

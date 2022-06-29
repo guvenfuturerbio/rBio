@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -164,9 +166,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                         context: context,
                         header: LocaleProvider.current.appo_for,
                         hint: LocaleProvider.current.pls_select_person,
-                        itemList: vm.relativeResponse == null
-                            ? []
-                            : vm.relativeResponse!.patientRelatives,
+                        itemList: vm.relativeResponse == null ? [] : vm.relativeResponse!.patientRelatives,
                         val: vm,
                         whichField: Fields.relative,
                         progress: vm.relativeProgress,
@@ -176,9 +176,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                 createAppoWidget(
                   context: context,
                   header: LocaleProvider.current.hosp_selection,
-                  hint: forOnline
-                      ? LocaleProvider.current.get_online_appointment
-                      : LocaleProvider.current.pls_select_hosp,
+                  hint: forOnline ? LocaleProvider.current.get_online_appointment : LocaleProvider.current.pls_select_hosp,
                   itemList: vm.tenantsFilterResponse ?? [],
                   val: vm,
                   whichField: Fields.tenant,
@@ -213,8 +211,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                   child: AnimatedOpacity(
                     duration: const Duration(milliseconds: 1300),
                     curve: Curves.ease,
-                    opacity:
-                        vm.departmentSelected && vm.hospitalSelected ? 1 : 0,
+                    opacity: vm.departmentSelected && vm.hospitalSelected ? 1 : 0,
                     child: vm.doctorProgress == LoadingProgress.loading
                         ? const RbioLoading()
                         : Row(
@@ -222,10 +219,8 @@ class CreateAppointmentScreen extends StatelessWidget {
                               Expanded(
                                 child: createAppoWidget(
                                   context: context,
-                                  header:
-                                      LocaleProvider.current.doctor_selection,
-                                  hint:
-                                      LocaleProvider.current.pls_select_doctor,
+                                  header: LocaleProvider.current.doctor_selection,
+                                  hint: LocaleProvider.current.pls_select_doctor,
                                   itemList: vm.filterResourceResponse!,
                                   val: vm,
                                   whichField: Fields.doctors,
@@ -235,59 +230,29 @@ class CreateAppointmentScreen extends StatelessWidget {
                               vm.doctorSelected
                                   ? GestureDetector(
                                       onTap: () {
-                                        int index = vm.whereIndex(
-                                            vm.filterResourceResponse!,
-                                            vm.dropdownValueDoctor!.id!);
+                                        int index = vm.whereIndex(vm.filterResourceResponse!, vm.dropdownValueDoctor!.id!);
+                                        log(vm.filterResourceResponse?[index].cvLink ?? "null");
 
-                                        Atom.to(PagePaths.doctorCv,
-                                            queryParameters: {
-                                              'tenantId': vm
-                                                      .filterResourceResponse?[
-                                                          index]
-                                                      .tenants?[0]
-                                                      .id
-                                                      .toString() ??
-                                                  '',
-                                              'doctorNameNoTitle': vm
-                                                      .filterResourceResponse?[
-                                                          index]
-                                                      .title
-                                                      .toString() ??
-                                                  '',
-                                              'departmentId': vm
-                                                      .filterResourceResponse?[
-                                                          index]
-                                                      .departments?[0]
-                                                      .id
-                                                      .toString() ??
-                                                  '',
-                                              'resourceId': vm
-                                                      .filterResourceResponse?[
-                                                          index]
-                                                      .id
-                                                      .toString() ??
-                                                  '',
-                                              'doctorName': vm
-                                                      .filterResourceResponse?[
-                                                          index]
-                                                      .title
-                                                      .toString() ??
-                                                  '',
-                                              'departmentName': vm
-                                                      .filterResourceResponse?[
-                                                          index]
-                                                      .departments?[0]
-                                                      .title ??
-                                                  ''
-                                            });
+                                        Atom.to(PagePaths.doctorCv, queryParameters: {
+                                          'tenantId': vm.filterResourceResponse?[index].tenants?[0].id.toString() ?? '',
+                                          'doctorNameNoTitle': vm.filterResourceResponse?[index].title.toString() ?? '',
+                                          'departmentId': vm.filterResourceResponse?[index].departments?[0].id.toString() ?? '',
+                                          'resourceId': vm.filterResourceResponse?[index].id.toString() ?? '',
+                                          'doctorName': vm.filterResourceResponse?[index].title.toString() ?? '',
+                                          'departmentName': vm.filterResourceResponse?[index].departments?[0].title ?? '',
+                                          'cvLink': vm.filterResourceResponse?[index].cvLink ?? ''
+                                        });
                                       },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, top: 35, right: 10),
-                                        child: SvgPicture.asset(
-                                          R.image.info,
-                                          width: R.sizes.iconSize2,
-                                        ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 10, top: 35, right: 10),
+                                            child: SvgPicture.asset(
+                                              R.image.info,
+                                              width: R.sizes.iconSize2,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     )
                                   : const SizedBox()
@@ -319,8 +284,7 @@ class CreateAppointmentScreen extends StatelessWidget {
                       R.sizes.defaultBottomPadding,
                     ]
                   : [
-                      if (getIt<IAppConfig>().productType ==
-                          ProductType.oneDose) ...[
+                      if (getIt<IAppConfig>().productType == ProductType.oneDose) ...[
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5.0),
                           child: Center(
@@ -360,31 +324,22 @@ class CreateAppointmentScreen extends StatelessWidget {
           val.dropdownValueDoctor!.title.toString(),
         ),
       );
-      getIt<IAppConfig>()
-          .platform
-          .adjustManager
-          ?.trackEvent(SearchCreateAppointmentEvent());
+      getIt<IAppConfig>().platform.adjustManager?.trackEvent(SearchCreateAppointmentEvent());
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.wtf('wtf');
     }
 
     Atom.to(
       PagePaths.createAppointmentEvents,
       queryParameters: {
-        'patientName': Uri.encodeFull(
-            '${val.dropdownValueRelative?.name ?? ""} ${val.dropdownValueRelative?.surname}'),
+        'patientName': Uri.encodeFull('${val.dropdownValueRelative?.name ?? ""} ${val.dropdownValueRelative?.surname}'),
         'tenantId': val.dropdownValueTenant!.id!.toString(),
         'tenantName': Uri.encodeFull(val.dropdownValueTenant!.title.toString()),
         'departmentId': val.dropdownValueDepartment!.id.toString(),
-        'departmentName':
-            Uri.encodeFull(val.dropdownValueDepartment!.title.toString()),
+        'departmentName': Uri.encodeFull(val.dropdownValueDepartment!.title.toString()),
         'resourceId': val.dropdownValueDoctor!.id.toString(),
-        'resourceName':
-            Uri.encodeFull(val.dropdownValueDoctor!.title.toString()),
+        'resourceName': Uri.encodeFull(val.dropdownValueDoctor!.title.toString()),
         'forOnline': forOnline.toString(),
       },
     );
