@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
@@ -15,7 +13,6 @@ Widget createAppoWidget({
   required List<dynamic> itemList,
   bool isOnline = false,
 }) {
-  
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
