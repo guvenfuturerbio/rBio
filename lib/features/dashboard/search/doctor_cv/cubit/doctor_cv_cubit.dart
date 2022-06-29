@@ -15,18 +15,17 @@ class DoctorCvCubit extends Cubit<DoctorCvState> {
 
   String _imageUrl = "";
 
-  Future<void> fetchDoctorCv(String doctorName) async {
+  Future<void> fetchDoctorCv({required String doctorName, required String cvLink}) async {
     emit(const DoctorCvState.loading());
 
     try {
-      final doctorId = slugify(Utils.instance.clearDoctorTitle(
-          doctorName.toLowerCase().xTurkishCharacterToEnglish));
+      final String doctorId = cvLink == ''
+          ? slugify(
+              Utils.instance.clearDoctorTitle(doctorName.toLowerCase().xTurkishCharacterToEnglish),
+            )
+          : cvLink;
       response = await getIt<Repository>().getDoctorCvDetails(doctorId);
-      _imageUrl = response.image1 == null
-          ? ''
-          : getIt<KeyManager>().get(Keys.dev4Guven) +
-              "/storage/app/media/" +
-              response.image1!;
+      _imageUrl = response.image1 == null ? '' : getIt<KeyManager>().get(Keys.dev4Guven) + "/storage/app/media/" + response.image1!;
       emit(DoctorCvState.success(response));
     } catch (e) {
       emit(const DoctorCvState.error(null));

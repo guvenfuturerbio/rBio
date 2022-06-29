@@ -1,9 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import '../../core/core.dart';
 import '../../features/dashboard/search/bloc/search_bloc.dart';
 import '../../features/take_appointment/create_appointment/model/filter_tenants_response.dart';
 
-class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse>
-    with SearchModel {
+class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse> with SearchModel {
   List<FilterTenantsResponse>? departments;
   bool? enabled;
   String? gender;
@@ -14,6 +14,7 @@ class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse>
   String? title;
   bool? isOnline; //hekim aktiflik durum
   bool? isOnlineForWeb; //webden randevu kabul edip etmemesi
+  String? cvLink;
 
   FilterResourcesResponse({
     this.departments,
@@ -26,14 +27,14 @@ class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse>
     this.title,
     this.isOnline,
     this.isOnlineForWeb,
+    this.cvLink,
   });
 
   FilterResourcesResponse.fromJson(Map<String, dynamic> json) {
     if (json['departments'] != null) {
       departments = <FilterTenantsResponse>[];
       json['departments'].forEach((v) {
-        departments
-            ?.add(FilterTenantsResponse.fromJson(v as Map<String, dynamic>));
+        departments?.add(FilterTenantsResponse.fromJson(v as Map<String, dynamic>));
       });
     }
     enabled = json['enabled'] as bool?;
@@ -50,6 +51,7 @@ class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse>
     title = json['title'] as String?;
     isOnline = json['isOnline'] as bool?;
     isOnlineForWeb = json['isOnlineForWeb'] as bool?;
+    cvLink = json['cvLink'] as String?;
   }
 
   @override
@@ -69,11 +71,17 @@ class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse>
     data['title'] = title;
     data['isOnline'] = isOnline;
     data['isOnlineForWeb'] = isOnlineForWeb;
+    data['cvLink'] = cvLink;
     return data;
   }
 
   @override
   FilterResourcesResponse fromJson(Map<String, dynamic> json) {
     return FilterResourcesResponse.fromJson(json);
+  }
+
+  @override
+  String toString() {
+    return 'FilterResourcesResponse(departments: $departments, enabled: $enabled, gender: $gender, id: $id, isSSIContractor: $isSSIContractor, isTSSContractor: $isTSSContractor, tenants: $tenants, title: $title, isOnline: $isOnline, isOnlineForWeb: $isOnlineForWeb, cvLink: $cvLink)';
   }
 }

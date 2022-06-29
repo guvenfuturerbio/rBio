@@ -17,6 +17,7 @@ class DoctorCvScreen extends StatelessWidget {
     late int resourceId;
     late String doctorName;
     late String departmentName;
+    late String cvLink;
 
     try {
       tenantId = int.parse(Atom.queryParameters['tenantId']!);
@@ -25,12 +26,13 @@ class DoctorCvScreen extends StatelessWidget {
       resourceId = int.parse(Atom.queryParameters['resourceId']!);
       doctorName = Atom.queryParameters['doctorName']!;
       departmentName = Atom.queryParameters['departmentName']!;
+      cvLink = Atom.queryParameters['cvLink']!;
     } catch (e, stackTrace) {
       return RbioRouteError(e: e, stackTrace: stackTrace);
     }
 
     return BlocProvider(
-      create: (context) => DoctorCvCubit()..fetchDoctorCv(doctorName),
+      create: (context) => DoctorCvCubit()..fetchDoctorCv(doctorName: doctorName, cvLink: cvLink),
       child: DoctorCvView(
         doctorNameNoTitle: doctorNameNoTitle,
         tenantId: tenantId,
@@ -124,9 +126,7 @@ class DoctorCvView extends StatelessWidget {
       scrollDirection: Axis.vertical,
       physics: const BouncingScrollPhysics(),
       child: Container(
-        padding: MediaQuery.of(context).size.width > 800
-            ? const EdgeInsets.all(64)
-            : const EdgeInsets.only(top: 16),
+        padding: MediaQuery.of(context).size.width > 800 ? const EdgeInsets.all(64) : const EdgeInsets.only(top: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -147,8 +147,7 @@ class DoctorCvView extends StatelessWidget {
                       ),
                     );
                   },
-                  loadingBuilder: (BuildContext context, Widget? child,
-                      ImageChunkEvent? loadingProgress) {
+                  loadingBuilder: (BuildContext context, Widget? child, ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) {
                       return Utils.instance.customCircleAvatar(
                         child: Container(
@@ -216,12 +215,9 @@ class DoctorCvView extends StatelessWidget {
               children: [
                 //
                 Visibility(
-                  visible:
-                      (result.specialties?.length ?? 0) == 0 ? false : true,
+                  visible: (result.specialties?.length ?? 0) == 0 ? false : true,
                   child: ListTile(
-                    title: Text(LocaleProvider.of(context).specialities,
-                        style: context.xHeadline3
-                            .copyWith(fontWeight: FontWeight.bold)),
+                    title: Text(LocaleProvider.of(context).specialities, style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold)),
                     subtitle: ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
@@ -262,8 +258,7 @@ class DoctorCvView extends StatelessWidget {
 
                 //
                 Visibility(
-                  visible:
-                      (result.experiences?.length ?? 0) == 0 ? false : true,
+                  visible: (result.experiences?.length ?? 0) == 0 ? false : true,
                   child: ListTile(
                     title: Text(LocaleProvider.of(context).experiences,
                         style: context.xHeadline3.copyWith(
@@ -309,8 +304,7 @@ class DoctorCvView extends StatelessWidget {
 
                 //
                 Visibility(
-                  visible:
-                      (result.publications?.length ?? 0) == 0 ? false : true,
+                  visible: (result.publications?.length ?? 0) == 0 ? false : true,
                   child: ListTile(
                     title: Text(LocaleProvider.of(context).publications,
                         style: context.xHeadline3.copyWith(
@@ -333,8 +327,7 @@ class DoctorCvView extends StatelessWidget {
 
                 //
                 Visibility(
-                  visible:
-                      (result.memberships?.length ?? 0) == 0 ? false : true,
+                  visible: (result.memberships?.length ?? 0) == 0 ? false : true,
                   child: ListTile(
                     title: Text(LocaleProvider.of(context).memberships,
                         style: context.xHeadline3.copyWith(
