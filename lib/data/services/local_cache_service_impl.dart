@@ -20,6 +20,7 @@ class LocalCacheServiceImpl extends LocalCacheService {
 
       if (jsonModel['appVersion'] == null) {
         await remove(url);
+        return "";
       } else {
         final appVersion = getIt<GuvenSettings>().version;
         if ((now.isBefore(cacheModel.expirationTime)) &&
@@ -28,11 +29,12 @@ class LocalCacheServiceImpl extends LocalCacheService {
           return cacheModel.data;
         } else {
           await remove(url);
+          return "";
         }
       }
     }
 
-    throw Exception("$url local cache null");
+    return "";
   }
 
   @override

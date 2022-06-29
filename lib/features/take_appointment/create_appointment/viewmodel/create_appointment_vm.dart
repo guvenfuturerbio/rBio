@@ -251,11 +251,11 @@ class CreateAppointmentVm extends ChangeNotifier {
       final currentPatient = getIt<UserNotifier>().getUserAccount();
       relativeResponse = PatientRelativeInfoResponse(
         [
-          PatientRelative(
-            name: currentPatient.name,
-            surname: currentPatient.surname,
-            tcNo: currentPatient.identificationNumber,
-          ),
+          // PatientRelative(
+          //   name: currentPatient.name,
+          //   surname: currentPatient.surname,
+          //   tcNo: currentPatient.identificationNumber,
+          // ),
           ...relativeResponse!.patientRelatives,
         ],
       );
