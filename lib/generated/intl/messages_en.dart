@@ -293,6 +293,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "Kan şekeri sonucunu görüntüleyin."),
         "contour_plus_blood_sugar":
             MessageLookupByLibrary.simpleMessage("Contour Plus Blood Glucose"),
+        "council_requests":
+            MessageLookupByLibrary.simpleMessage("Council Requests"),
+        "council_results":
+            MessageLookupByLibrary.simpleMessage("Council Results"),
         "country": MessageLookupByLibrary.simpleMessage("Countries"),
         "covid_text_1": MessageLookupByLibrary.simpleMessage(
             "Viruses that can cause disease in humans and animals and have many types are called \"Coronavirus\". These viruses, which usually cause colds in humans, can also cause loss of life. The SARS-CoV virus epidemic that started in Guangdong Province of China in 2002 has spread to 17 countries worldwide. In this epidemic, 8098 people got the disease and 774 people died. The MERS-CoV virus epidemic, which started in Saudi Arabia in 2012, affected 27 countries worldwide, 861 out of 2499 people caught in the epidemic died."),
@@ -326,6 +330,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search Appointment"),
         "create_appointment_events":
             MessageLookupByLibrary.simpleMessage("Create Appointment"),
+        "create_new_council_request":
+            MessageLookupByLibrary.simpleMessage("Create New Council Request"),
         "create_password":
             MessageLookupByLibrary.simpleMessage("Create Password"),
         "create_reminder":
@@ -478,8 +484,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "drug_count": MessageLookupByLibrary.simpleMessage("Drug Count"),
         "drug_search": MessageLookupByLibrary.simpleMessage("Drug search"),
         "e_council": MessageLookupByLibrary.simpleMessage("E-Council"),
-        "e_council_requests":
-            MessageLookupByLibrary.simpleMessage("Council Requests"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "educations": MessageLookupByLibrary.simpleMessage("Educations"),

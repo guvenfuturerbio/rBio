@@ -9081,10 +9081,10 @@ class LocaleProvider {
   }
 
   /// `Council Requests`
-  String get e_council_requests {
+  String get council_requests {
     return Intl.message(
       'Council Requests',
-      name: 'e_council_requests',
+      name: 'council_requests',
       desc: '',
       args: [],
     );
@@ -9135,6 +9135,26 @@ class LocaleProvider {
     return Intl.message(
       'Appointment Ready',
       name: 'appointment_ready',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Council Results`
+  String get council_results {
+    return Intl.message(
+      'Council Results',
+      name: 'council_results',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create New Council Request`
+  String get create_new_council_request {
+    return Intl.message(
+      'Create New Council Request',
+      name: 'create_new_council_request',
       desc: '',
       args: [],
     );

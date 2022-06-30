@@ -898,11 +898,13 @@
   "what_is_the_e_council": "E-Konsey Nedir?",
   "how_to_use_the_e_council": "E-Konsey nasıl kullanılır?",
   "e_council": "E-Konsey",
-  "e_council_requests": "Konsey Taleplerim",
+  "council_requests": "Konsey Taleplerim",
   "pending_approval": "Onay bekleyen",
   "pending_payment": "Ödeme bekleyen",
   "pending_inspection": "Tetkik bekleyen",
   "rejected": "Reddedilen",
-  "appointment_ready": "Randevu Hazır"
+  "appointment_ready": "Randevu Hazır",
+  "council_results": "Konsey Sonuçlarım",
+  "create_new_council_request": "Yeni Konsey Talebi Oluştur"
 
 }

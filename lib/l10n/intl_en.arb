@@ -903,11 +903,13 @@
   "what_is_the_e_council": "What is the E-Council?",
   "how_to_use_the_e_council": "How to use the E-Council?",
   "e_council": "E-Council",
-  "e_council_requests": "Council Requests",
+  "council_requests": "Council Requests",
   "pending_approval": "Pending approval",
   "pending_inspection": "Pending Inspection",
   "pending_payment": "Pending Payment",
   "rejected": "Rejected",
-  "appointment_ready": "Appointment Ready"
+  "appointment_ready": "Appointment Ready",
+  "council_results": "Council Results",
+  "create_new_council_request": "Create New Council Request"
 
 }

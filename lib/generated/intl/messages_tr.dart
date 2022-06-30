@@ -287,6 +287,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "Kan şekeri sonucunu görüntüleyin."),
         "contour_plus_blood_sugar":
             MessageLookupByLibrary.simpleMessage("Contour Plus Şeker Ölçüm"),
+        "council_requests":
+            MessageLookupByLibrary.simpleMessage("Konsey Taleplerim"),
+        "council_results":
+            MessageLookupByLibrary.simpleMessage("Konsey Sonuçlarım"),
         "country": MessageLookupByLibrary.simpleMessage("Ülke"),
         "covid_text_1": MessageLookupByLibrary.simpleMessage(
             "İnsanlarda ve hayvanlarda hastalığa yol açabilen ve birçok türü bulunan virüslere “Koronavirus” denilmektedir. İnsanlarda genellikle soğuk algınlığına yol açan bu virüsler hayat kayıplarına varan tablolara da neden olabilmektedir. 2002 yılında Çin’in Guangdong Eyaleti’nde başlayan SARS-CoV virüsü salgını dünya genelinde 17 ülkeye yayılmıştır. Bu salgında 8098 kişi hastalığa yakalanmış ve 774 kişi hayatını kaybetmiştir. 2012 yılında Suudi Arabistan’da başlayan MERS-CoV virüsü salgını ise dünya genelinde 27 ülkeyi etkilemiş, salgına yakalanan 2499 kişiden 861’i hayatını kaybetmiştir."),
@@ -319,6 +323,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "create_appo": MessageLookupByLibrary.simpleMessage("Randevu Ara"),
         "create_appointment_events":
             MessageLookupByLibrary.simpleMessage("Randevu Oluştur"),
+        "create_new_council_request":
+            MessageLookupByLibrary.simpleMessage("Yeni Konsey Talebi Oluştur"),
         "create_password":
             MessageLookupByLibrary.simpleMessage("Şifre Oluştur"),
         "create_reminder":
@@ -469,8 +475,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "drug_count": MessageLookupByLibrary.simpleMessage("İlaç adedi"),
         "drug_search": MessageLookupByLibrary.simpleMessage("İlaç arama"),
         "e_council": MessageLookupByLibrary.simpleMessage("E-Konsey"),
-        "e_council_requests":
-            MessageLookupByLibrary.simpleMessage("Konsey Taleplerim"),
         "edit": MessageLookupByLibrary.simpleMessage("Düzenle"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("Profili Düzenle"),
         "educations": MessageLookupByLibrary.simpleMessage("Eğitimleri"),
