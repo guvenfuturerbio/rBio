@@ -1,5 +1,7 @@
 import 'package:onedosehealth/core/core.dart';
 
+import 'sp_test_manager.dart';
+
 void initializeLocatorTest(ProductType type) {
   if (type == ProductType.oneDose) {
     getIt
@@ -7,6 +9,8 @@ void initializeLocatorTest(ProductType type) {
   }
 
   getIt.registerSingleton<IAppConfig>(OneDoseConfig());
+  getIt.registerSingleton<ISharedPreferencesManager>(
+      SharedPreferencesTestManager());
 }
 
 ApiService getTestApiService() => ApiServiceImpl(DioHelper(true));

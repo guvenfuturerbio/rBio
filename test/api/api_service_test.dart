@@ -20,9 +20,7 @@ void main() {
   const _smsCode = "403283";
   const _wrongSmsCode = "222222";
   const _bbPassword = "4";
-  const _path = "getIt<IAppConfig>().endpoints.base.getAllPackagePath";
   const _testEmptyPath = "";
-
 
   group(
     "Login",
@@ -55,7 +53,7 @@ void main() {
     () {
       test('Login Success Test', () async {
         final result = await apiService.loginStarter(
-          _userNameString, 
+          _userNameString,
           _bbPassword,
         );
         expect(result.isSuccessful, true);
@@ -64,9 +62,9 @@ void main() {
       test('Login Failure Test', () async {
         try {
           await apiService.loginStarter(
-            _userNameString, 
+            _userNameString,
             _testWrongPassword,
-        );
+          );
         } on RbioClientException catch (e) {
           expect(e, isNotNull);
         }
@@ -98,50 +96,36 @@ void main() {
     },
   );
 
-group(
-    "For you",
+  group(
+    "For You",
     () {
       test('Get Packages', () async {
         final result = await apiService.getAllPackage(
-          _path,
+          getIt<IAppConfig>().endpoints.base.getAllPackagePath,
         );
         expect(result, isNotEmpty);
-      });
-
-      test('can not get Packages', () async {
-        try {
-          await apiService.getAllPackage(
-            _testEmptyPath,
-          );
-        } on RbioClientException catch (e) {
-          expect(e, isNotEmpty);
-        }
       });
     },
   );
 
-      test('Get Packages', () async {
-        final result = await apiService.getAllSubCategories(
-          _path,
-        );
-        expect(result, isNotEmpty);
-      });
+  // test('Get Packages', () async {
+  //   final result = await apiService.getAllSubCategories(
+  //     _path,
+  //   );
+  //   expect(result, isNotEmpty);
+  // });
 
-          test('Get Packages', () async {
-        final result = await apiService.getSubCategoryDetail(
-          _path,
-        );
-        expect(result, isNotEmpty);
-      });
+  // test('Get Packages', () async {
+  //   final result = await apiService.getSubCategoryDetail(
+  //     _path,
+  //   );
+  //   expect(result, isNotEmpty);
+  // });
 
-
-      test('Get Packages', () async {
-        final result = await apiService.getSubCategoryItems(
-          _path,
-        );
-        expect(result, isNotEmpty);
-      });
-
-      
-
+  // test('Get Packages', () async {
+  //   final result = await apiService.getSubCategoryItems(
+  //     _path,
+  //   );
+  //   expect(result, isNotEmpty);
+  // });
 }
