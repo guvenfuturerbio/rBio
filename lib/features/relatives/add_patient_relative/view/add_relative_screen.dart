@@ -197,8 +197,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]')),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, tcNoFNode, nameFNode);
+                Utils.instance.fieldFocusChange(context, tcNoFNode, nameFNode);
               },
             ),
 
@@ -216,8 +215,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\t\r]')),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, nameFNode, surnameFNode);
+                Utils.instance.fieldFocusChange(context, nameFNode, surnameFNode);
               },
             ),
 
@@ -235,8 +233,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\t\r]')),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, surnameFNode, phoneFNode);
+                Utils.instance.fieldFocusChange(context, surnameFNode, phoneFNode);
               },
             ),
 
@@ -262,8 +259,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]')),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, phoneFNode, emailFNode);
+                Utils.instance.fieldFocusChange(context, phoneFNode, emailFNode);
               },
             ),
 
@@ -288,7 +284,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 TabToNextFieldTextInputFormatter(context, emailFNode, null),
               ],
               onFieldSubmitted: (String term) {
-                UtilityManager().fieldFocusChange(context, emailFNode, null);
+                Utils.instance.fieldFocusChange(context, emailFNode, null);
               },
             ),
 
@@ -306,8 +302,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                     RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
               ],
               onFieldSubmitted: (term) {
-                UtilityManager()
-                    .fieldFocusChange(context, birthDateFNode, null);
+                Utils.instance.fieldFocusChange(context, birthDateFNode, null);
               },
               onTap: () async {
                 final DateTime? picked = await showRbioDatePicker(
@@ -343,7 +338,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 TabToNextFieldTextInputFormatter(context, genderFNode, null),
               ],
               onFieldSubmitted: (String term) {
-                UtilityManager().fieldFocusChange(context, genderFNode, null);
+                Utils.instance.fieldFocusChange(context, genderFNode, null);
               },
               onTap: () async {
                 var res = await showRbioSelectBottomSheet(

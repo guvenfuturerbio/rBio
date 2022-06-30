@@ -9,7 +9,7 @@ enum ReminderPeriod {
 }
 
 extension ReminderPeriodExtensions on ReminderPeriod {
-  String get xRawValue => getEnumValue(this);
+  String get xRawValue => Utils.instance.getEnumValue(this);
 
   String toShortString() {
     switch (this) {

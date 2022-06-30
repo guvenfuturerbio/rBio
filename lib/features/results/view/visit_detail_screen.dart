@@ -1,11 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../../core/core.dart';
@@ -581,10 +580,11 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                           Expanded(
                             child: Text(
                               state.radiologyResults[index].reportState == 6
-                                  ? Utils.instance.getFormattedDateWithTime(
-                                      state.radiologyResults[index]
+                                  ? DateTime.parse((state
+                                              .radiologyResults[index]
                                               .approvedAt ??
-                                          "-")
+                                          ''))
+                                      .xFormatTime3()
                                   : "-",
                               style: context.xHeadline3,
                             ),
@@ -622,7 +622,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                                   }
                                 },
                               )
-                            : Utils.instance.passiveButton(
+                            : passiveButton(
                                 text: LocaleProvider.current.show_result,
                                 onPressed: () {},
                               ),
@@ -649,7 +649,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                                   }
                                 },
                               )
-                            : Utils.instance.passiveButton(
+                            : passiveButton(
                                 text: LocaleProvider.current.show_report,
                                 onPressed: () {},
                               ),
@@ -667,4 +667,34 @@ class _VisitDetailViewState extends State<VisitDetailView> {
     }
   }
   // #endregion
+
+  Widget passiveButton({
+    required String text,
+    required Function onPressed,
+    double height = 16,
+    double width = 200,
+  }) =>
+      GradientButton(
+        callback: onPressed(),
+        increaseWidthBy: width,
+        increaseHeightBy: height,
+        shadowColor: Colors.black.withAlpha(50),
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+        ),
+        textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: getIt<IAppConfig>().theme.grey,
+        ),
+        gradient: LinearGradient(
+          colors: [
+            getIt<IAppConfig>().theme.mainColor.withAlpha(15),
+            getIt<IAppConfig>().theme.mainColor.withAlpha(15)
+          ],
+          begin: Alignment.bottomLeft,
+          end: Alignment.centerRight,
+        ),
+      );
 }

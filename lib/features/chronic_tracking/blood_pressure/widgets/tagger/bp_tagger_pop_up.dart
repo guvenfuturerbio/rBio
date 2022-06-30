@@ -232,18 +232,17 @@ class BpTaggerPopUp extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                //
                 Expanded(
                   child: Text(
-                    UtilityManager().getReadableDate(
-                      value.bpModel?.date ?? DateTime.now(),
-                    ),
+                    (value.bpModel?.date ?? DateTime.now()).xGetReadableDate,
                     style: context.xHeadline4,
                   ),
                 ),
+
+                //
                 Text(
-                  UtilityManager().getReadableHour(
-                    value.bpModel?.date ?? DateTime.now(),
-                  ),
+                  (value.bpModel?.date ?? DateTime.now()).xGetReadableHour,
                   style: context.xHeadline4,
                 ),
               ],

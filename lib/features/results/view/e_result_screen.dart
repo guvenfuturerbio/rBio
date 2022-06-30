@@ -103,6 +103,7 @@ class EResultView extends StatelessWidget {
             : RbioEmptyText(
                 title: LocaleProvider.current.no_result_selected_date,
               );
+
       case RbioLoadingProgress.failure:
         return const RbioBodyError();
     }

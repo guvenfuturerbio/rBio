@@ -381,5 +381,5 @@ extension NotificationTypeStringExt on String {
 }
 
 extension NotificationTypeExt on NotificationType {
-  String get xRawValue => getEnumValue(this);
+  String get xRawValue => Utils.instance.getEnumValue(this);
 }
