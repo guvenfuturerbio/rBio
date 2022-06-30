@@ -98,7 +98,9 @@ class _BuildCouncilButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Atom.to(PagePaths.eCouncilResultPage);
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
           child: Row(
@@ -110,15 +112,6 @@ class _BuildCouncilButton extends StatelessWidget {
               const Icon(Icons.arrow_forward_ios_outlined),
             ],
           ),
-          // child: ListTile(
-          //   contentPadding: EdgeInsets.zero,
-          //   leading: SvgPicture.asset(R.image.councilResults),
-          //   trailing: const Icon(Icons.arrow_forward_ios_outlined, color: Colors.black),
-          //   title: Text(
-          //     LocaleProvider.of(context).council_results,
-          //     style: Theme.of(context).textTheme.headline4,
-          //   ),
-          // ),
         ),
       ),
     );

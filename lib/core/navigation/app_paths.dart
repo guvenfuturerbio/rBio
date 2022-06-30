@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/e_concil/e_concil_results/e_couincil_results.dart';
 import 'package:onedosehealth/features/e_concil/e_council_home/view/e_council_home_screen.dart';
 import 'package:onedosehealth/features/e_concil/information_pages/view/e_council_information_screen.dart';
 import 'package:provider/provider.dart';
@@ -650,7 +651,11 @@ class VRouterRoutes {
         ),
         VWidget(
           path: PagePaths.eCouncilHomePage,
-          widget: ECouncilHomeScreen(),
+          widget: const ECouncilHomeScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilResultPage,
+          widget: const ECouncilResultScreen(),
         ),
 
         // #endregion
@@ -803,6 +808,7 @@ class PagePaths {
   // #region E-Council
   static const eCouncilInformationPage = '/e-council-information';
   static const eCouncilHomePage = '/e-council-home';
+  static const eCouncilResultPage = '/council-result';
 
   // #endregion
 

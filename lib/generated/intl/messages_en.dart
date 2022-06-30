@@ -293,6 +293,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Kan şekeri sonucunu görüntüleyin."),
         "contour_plus_blood_sugar":
             MessageLookupByLibrary.simpleMessage("Contour Plus Blood Glucose"),
+        "council_report":
+            MessageLookupByLibrary.simpleMessage("Council Report"),
         "council_requests":
             MessageLookupByLibrary.simpleMessage("Council Requests"),
         "council_results":
@@ -392,6 +394,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "depart_selection":
             MessageLookupByLibrary.simpleMessage("Department selection :"),
         "department": MessageLookupByLibrary.simpleMessage("Deparment"),
+        "department_manager":
+            MessageLookupByLibrary.simpleMessage("Department Manager"),
         "des_forgot_password": MessageLookupByLibrary.simpleMessage(
             "We just need your registered Email to  send you password reset intruction"),
         "des_forgot_password_other": MessageLookupByLibrary.simpleMessage(
@@ -447,6 +451,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diabetes_type": MessageLookupByLibrary.simpleMessage("Diabetes Type"),
         "diabetes_type_1": MessageLookupByLibrary.simpleMessage("Type 1"),
         "diabetes_type_2": MessageLookupByLibrary.simpleMessage("Type 2"),
+        "diagnosis": MessageLookupByLibrary.simpleMessage("Diagnosis"),
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Diagnosis Date"),
         "didnt_reach_goals":
             MessageLookupByLibrary.simpleMessage("Alert values"),

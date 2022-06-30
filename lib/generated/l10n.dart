@@ -9159,6 +9159,36 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Council Report`
+  String get council_report {
+    return Intl.message(
+      'Council Report',
+      name: 'council_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diagnosis`
+  String get diagnosis {
+    return Intl.message(
+      'Diagnosis',
+      name: 'diagnosis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Department Manager`
+  String get department_manager {
+    return Intl.message(
+      'Department Manager',
+      name: 'department_manager',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

@@ -905,6 +905,9 @@
   "rejected": "Reddedilen",
   "appointment_ready": "Randevu Hazır",
   "council_results": "Konsey Sonuçlarım",
-  "create_new_council_request": "Yeni Konsey Talebi Oluştur"
+  "create_new_council_request": "Yeni Konsey Talebi Oluştur",
+  "council_report": "Konsey Raporu",
+  "diagnosis": "Teşhis",
+  "department_manager": "Bölüm Sorumlusu"
 
 }

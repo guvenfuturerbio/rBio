@@ -201,4 +201,10 @@ class OneDoseTheme extends IAppTheme {
   Color get eCouncilRejected => const Color(0xFFD93832);
   @override
   Color get eCouncilAppointmentReady => const Color(0xFF00A147);
+  @override
+  Color get eCouncilResultCardTitleBackground => const Color(0xFFCAEAD8);
+  @override
+  Color get eCouncilScafoldBackground => const Color(0xFFEDEDED);
+
+  // E-Konsey
 }

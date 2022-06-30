@@ -910,6 +910,9 @@
   "rejected": "Rejected",
   "appointment_ready": "Appointment Ready",
   "council_results": "Council Results",
-  "create_new_council_request": "Create New Council Request"
+  "create_new_council_request": "Create New Council Request",
+  "council_report": "Council Report",
+  "diagnosis": "Diagnosis",
+  "department_manager": "Department Manager"
 
 }
