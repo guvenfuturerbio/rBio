@@ -18,8 +18,8 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
 
   @override
   void initState() {
-    _identityController = TextEditingController();
     super.initState();
+    _identityController = TextEditingController();
   }
 
   @override
@@ -66,6 +66,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
+
                   //
                   Container(
                     child: RbioTextFormField(
@@ -82,8 +83,10 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                     margin: const EdgeInsets.only(bottom: 10, top: 20),
                   ),
 
+                  //
                   R.sizes.hSizer8,
 
+                  //
                   Row(
                     children: [
                       R.sizes.wSizer12,
@@ -98,11 +101,11 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                       R.sizes.wSizer8,
                       Expanded(
                         child: RbioSmallDialogButton.green(
-                            title: LocaleProvider.current.Ok,
-                            onPressed: () {
-                              Atom.dismiss();
-                              Atom.to(PagePaths.healthInformation);
-                            }),
+                          title: LocaleProvider.current.Ok,
+                          onPressed: () {
+                            value.updateIdentity(_identityController.text);
+                          },
+                        ),
                       ),
                       R.sizes.wSizer12,
                     ],
