@@ -196,7 +196,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         ),
                       ],
                       onFieldSubmitted: (term) {
-                        UtilityManager().fieldFocusChange(
+                        Utils.instance.fieldFocusChange(
                           context,
                           _identityFocusNode,
                           _emailFocusNode,
@@ -245,7 +245,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         ),
                       ],
                       onFieldSubmitted: (term) {
-                        UtilityManager().fieldFocusChange(
+                        Utils.instance.fieldFocusChange(
                           context,
                           _emailFocusNode,
                           null,
@@ -297,7 +297,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         }
                       },
                       onFieldSubmitted: (term) {
-                        UtilityManager().fieldFocusChange(
+                        Utils.instance.fieldFocusChange(
                           context,
                           _passwordFocusNode,
                           _passwordAgainFocusNode,
@@ -349,7 +349,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                         vm.passwordAgainFetcher(value);
                       },
                       onFieldSubmitted: (term) {
-                        UtilityManager().fieldFocusChange(
+                        Utils.instance.fieldFocusChange(
                           context,
                           _passwordAgainFocusNode,
                           null,

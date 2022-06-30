@@ -132,7 +132,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
     String packageName,
     String currentDate,
   ) async {
-    final tmpContexHolder = fillAllFields(
+    final tmpContexHolder = Utils.instance.fillAllFields(
       formContext,
       userNameAndSurname,
       userEmail,

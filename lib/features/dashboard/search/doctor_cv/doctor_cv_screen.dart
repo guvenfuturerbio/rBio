@@ -32,7 +32,8 @@ class DoctorCvScreen extends StatelessWidget {
     }
 
     return BlocProvider(
-      create: (context) => DoctorCvCubit()..fetchDoctorCv(doctorName: doctorName, cvLink: cvLink),
+      create: (context) => DoctorCvCubit()
+        ..fetchDoctorCv(doctorName: doctorName, cvLink: cvLink),
       child: DoctorCvView(
         doctorNameNoTitle: doctorNameNoTitle,
         tenantId: tenantId,
@@ -126,7 +127,9 @@ class DoctorCvView extends StatelessWidget {
       scrollDirection: Axis.vertical,
       physics: const BouncingScrollPhysics(),
       child: Container(
-        padding: MediaQuery.of(context).size.width > 800 ? const EdgeInsets.all(64) : const EdgeInsets.only(top: 16),
+        padding: MediaQuery.of(context).size.width > 800
+            ? const EdgeInsets.all(64)
+            : const EdgeInsets.only(top: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -139,7 +142,7 @@ class DoctorCvView extends StatelessWidget {
                   context.read<DoctorCvCubit>().imageUrl,
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) {
-                    return Utils.instance.customCircleAvatar(
+                    return customCircleAvatar(
                       size: 120,
                       child: SvgPicture.asset(
                         R.image.doctorAvatar,
@@ -147,9 +150,10 @@ class DoctorCvView extends StatelessWidget {
                       ),
                     );
                   },
-                  loadingBuilder: (BuildContext context, Widget? child, ImageChunkEvent? loadingProgress) {
+                  loadingBuilder: (BuildContext context, Widget? child,
+                      ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) {
-                      return Utils.instance.customCircleAvatar(
+                      return customCircleAvatar(
                         child: Container(
                           child: child,
                         ),
@@ -215,9 +219,12 @@ class DoctorCvView extends StatelessWidget {
               children: [
                 //
                 Visibility(
-                  visible: (result.specialties?.length ?? 0) == 0 ? false : true,
+                  visible:
+                      (result.specialties?.length ?? 0) == 0 ? false : true,
                   child: ListTile(
-                    title: Text(LocaleProvider.of(context).specialities, style: context.xHeadline3.copyWith(fontWeight: FontWeight.bold)),
+                    title: Text(LocaleProvider.of(context).specialities,
+                        style: context.xHeadline3
+                            .copyWith(fontWeight: FontWeight.bold)),
                     subtitle: ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
@@ -258,7 +265,8 @@ class DoctorCvView extends StatelessWidget {
 
                 //
                 Visibility(
-                  visible: (result.experiences?.length ?? 0) == 0 ? false : true,
+                  visible:
+                      (result.experiences?.length ?? 0) == 0 ? false : true,
                   child: ListTile(
                     title: Text(LocaleProvider.of(context).experiences,
                         style: context.xHeadline3.copyWith(
@@ -304,7 +312,8 @@ class DoctorCvView extends StatelessWidget {
 
                 //
                 Visibility(
-                  visible: (result.publications?.length ?? 0) == 0 ? false : true,
+                  visible:
+                      (result.publications?.length ?? 0) == 0 ? false : true,
                   child: ListTile(
                     title: Text(LocaleProvider.of(context).publications,
                         style: context.xHeadline3.copyWith(
@@ -327,7 +336,8 @@ class DoctorCvView extends StatelessWidget {
 
                 //
                 Visibility(
-                  visible: (result.memberships?.length ?? 0) == 0 ? false : true,
+                  visible:
+                      (result.memberships?.length ?? 0) == 0 ? false : true,
                   child: ListTile(
                     title: Text(LocaleProvider.of(context).memberships,
                         style: context.xHeadline3.copyWith(
@@ -399,6 +409,20 @@ class DoctorCvView extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget customCircleAvatar({
+    required double size,
+    required Widget child,
+  }) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size),
+        child: child,
       ),
     );
   }

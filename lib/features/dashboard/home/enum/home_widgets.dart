@@ -13,7 +13,7 @@ enum HomeWidgets {
 }
 
 extension HomeWidgetsExt on HomeWidgets {
-  String get xRawValue => getEnumValue(this);
+  String get xRawValue => Utils.instance.getEnumValue(this);
   bool isShowDefault() => this != HomeWidgets.detailedSymptom;
 }
 

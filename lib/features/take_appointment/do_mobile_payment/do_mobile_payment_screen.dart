@@ -173,7 +173,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                         ),
                       ],
                       onFieldSubmitted: (term) {
-                        UtilityManager().fieldFocusChange(
+                        Utils.instance.fieldFocusChange(
                           context,
                           _cardHolderNameFNode,
                           _cardNumberFNode,
@@ -215,7 +215,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                         )
                       ],
                       onFieldSubmitted: (term) {
-                        UtilityManager().fieldFocusChange(
+                        Utils.instance.fieldFocusChange(
                           context,
                           _cardNumberFNode,
                           _cardCcvFNode,
@@ -258,7 +258,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                         ),
                       ],
                       onFieldSubmitted: (term) {
-                        UtilityManager().fieldFocusChange(
+                        Utils.instance.fieldFocusChange(
                           context,
                           _cardCcvFNode,
                           _cardExpirityDateFNode,
@@ -302,7 +302,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                         ),
                       ],
                       onFieldSubmitted: (term) {
-                        UtilityManager().fieldFocusChange(
+                        Utils.instance.fieldFocusChange(
                           context,
                           _cardExpirityDateFNode,
                           null,

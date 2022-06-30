@@ -195,7 +195,7 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-  Padding _dateTimeSection(BuildContext context) {
+  Widget _dateTimeSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
@@ -205,18 +205,24 @@ class ScaleTagger extends StatelessWidget {
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: Container(
-            width: double.infinity,
-            padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(UtilityManager().getReadableDate(
-                    DateTime.parse(scaleModel.occurrenceTime!))),
-                Text(UtilityManager().getReadableHour(
-                    DateTime.parse(scaleModel.occurrenceTime!)))
-              ],
-            )),
+          width: double.infinity,
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              //
+              Text(
+                DateTime.parse(scaleModel.occurrenceTime!).xGetReadableDate,
+              ),
+
+              //
+              Text(
+                DateTime.parse(scaleModel.occurrenceTime!).xGetReadableHour,
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

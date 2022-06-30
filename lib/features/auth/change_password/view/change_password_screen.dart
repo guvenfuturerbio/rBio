@@ -155,7 +155,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ),
                   ],
                   onFieldSubmitted: (term) {
-                    UtilityManager().fieldFocusChange(
+                    Utils.instance.fieldFocusChange(
                       context,
                       _oldPasswordFocusNode,
                       _passwordFocusNode,
@@ -199,7 +199,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ),
                   ],
                   onFieldSubmitted: (term) {
-                    UtilityManager().fieldFocusChange(
+                    Utils.instance.fieldFocusChange(
                       context,
                       _passwordFocusNode,
                       _passwordAgainFocusNode,
@@ -246,7 +246,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ),
                   ],
                   onFieldSubmitted: (term) {
-                    UtilityManager().fieldFocusChange(
+                    Utils.instance.fieldFocusChange(
                       context,
                       _passwordAgainFocusNode,
                       null,

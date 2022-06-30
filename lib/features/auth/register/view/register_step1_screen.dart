@@ -165,7 +165,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                               textInputAction: TextInputAction.next,
                               hintText: LocaleProvider.of(context).name,
                               onFieldSubmitted: (term) {
-                                UtilityManager().fieldFocusChange(
+                                Utils.instance.fieldFocusChange(
                                   context,
                                   _nameFocusNode,
                                   _surnameFocusNode,
@@ -218,7 +218,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                                 textInputAction: TextInputAction.next,
                                 hintText: LocaleProvider.of(context).surname,
                                 onFieldSubmitted: (term) {
-                                  UtilityManager().fieldFocusChange(
+                                  Utils.instance.fieldFocusChange(
                                     context,
                                     _surnameFocusNode,
                                     null,
@@ -427,7 +427,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                                   RegExp(r'[0-9\t\r]'))
                             ],
                             onFieldSubmitted: (term) {
-                              UtilityManager().fieldFocusChange(
+                              Utils.instance.fieldFocusChange(
                                 context,
                                 _phoneNumberFocusNode,
                                 null,

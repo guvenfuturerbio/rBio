@@ -494,10 +494,7 @@ class VRouterRoutes {
         // #region EResult
         VWidget(
           path: PagePaths.eResult,
-          widget: ChangeNotifierProvider<EResultScreenVm>(
-            create: (context) => EResultScreenVm(context),
-            child: const EResultScreen(),
-          ),
+          widget: const EResultScreen(),
         ),
 
         VWidget(

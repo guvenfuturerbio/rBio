@@ -46,12 +46,8 @@ class Repository {
     try {
       final response = await apiService.login(username, password, consentId);
       return left(response);
-    } on RbioClientException catch (e, stackTrace) {
+    } on RbioClientException catch (e) {
       final errorData = e.xGetModel<RbioLoginResponse>(RbioLoginResponse());
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
       if (errorData != null) {
         final httpStatusCode = errorData.ssoResponse?.httpStatusCode ?? 200;
         final errorDescription = errorData.ssoResponse?.errorDescription;

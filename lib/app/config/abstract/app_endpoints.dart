@@ -216,13 +216,4 @@ extension EndpointsExtension on String {
       throw Exception('SecretKeys.devApiTest null');
     }
   }
-
-  String get xApiGuven {
-    final String? path = getIt<KeyManager>().get(Keys.apiGuven);
-    if (path != null) {
-      return path + this;
-    } else {
-      throw Exception('SecretKeys.ApiGuven null');
-    }
-  }
 }
