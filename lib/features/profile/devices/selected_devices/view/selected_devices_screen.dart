@@ -95,7 +95,7 @@ class SelectedDevicesScreen extends StatelessWidget {
                                         DeviceConnectionState.connecting
                                     ? getIt<IAppConfig>().theme.high
                                     : Colors.white,
-                            image: UtilityManager().getDeviceImageFromType(
+                            image: Utils.instance.getDeviceImageFromType(
                                     _selectedDeviceVm.deviceType) ??
                                 const SizedBox(),
                             name: device.name,

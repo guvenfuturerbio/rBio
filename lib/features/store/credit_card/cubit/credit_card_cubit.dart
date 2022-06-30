@@ -137,7 +137,7 @@ class CreditCardCubit extends Cubit<CreditCardState> {
     String packageName,
     String currentDate,
   ) {
-    String tmpContexHolder = fillAllFields(
+    String tmpContexHolder = Utils.instance.fillAllFields(
       formContext,
       userNameAndSurname,
       userEmail,

@@ -41,7 +41,7 @@ extension TextScaleTypeExtensions on TextScaleType {
     }
   }
 
-  String get xRawValue => getEnumValue(this);
+  String get xRawValue => Utils.instance.getEnumValue(this);
 }
 
 extension TextScaleTypeStringExt on String {

@@ -121,7 +121,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
                   hintText: LocaleProvider.of(context).sms_verification_code,
                   focusNode: focus,
                   onFieldSubmitted: (term) {
-                    UtilityManager().fieldFocusChange(context, focus, null);
+                    Utils.instance.fieldFocusChange(context, focus, null);
                   },
                 ),
               ),

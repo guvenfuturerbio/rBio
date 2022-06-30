@@ -203,7 +203,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                       ),
                     ],
                     onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
+                      Utils.instance.fieldFocusChange(
                         context,
                         cardHolderNameFNode,
                         cardNumberFNode,
@@ -247,7 +247,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                       ),
                     ],
                     onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
+                      Utils.instance.fieldFocusChange(
                         context,
                         cardNumberFNode,
                         cardCcvFNode,
@@ -289,7 +289,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                       ),
                     ],
                     onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
+                      Utils.instance.fieldFocusChange(
                         context,
                         cardCcvFNode,
                         cardExpirityDateFNode,
@@ -333,7 +333,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                       ),
                     ],
                     onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
+                      Utils.instance.fieldFocusChange(
                         context,
                         cardExpirityDateFNode,
                         null,

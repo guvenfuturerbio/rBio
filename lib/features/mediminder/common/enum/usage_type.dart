@@ -8,7 +8,7 @@ enum UsageType {
 }
 
 extension UsageTypeExtension on UsageType {
-  String get xRawValue => getEnumValue(this);
+  String get xRawValue => Utils.instance.getEnumValue(this);
 
   String toShortString() {
     switch (this) {

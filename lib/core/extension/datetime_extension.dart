@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, unnecessary_brace_in_string_interps
 
 import 'package:intl/intl.dart';
 
@@ -50,6 +50,14 @@ extension LocaleDateFromString on String {
 }
 
 extension DateTimeExtensions on DateTime {
+  String get xGetReadableHour {
+    return "${hour > 9 ? hour : "0" + hour.toString()}:${minute > 9 ? minute : "0" + minute.toString()}";
+  }
+
+  String get xGetReadableDate {
+    return "${day}/${month}/${year}";
+  }
+
   /// timeZoneOffset = +11:00:00.000000 - Currie
   ///
   /// Input  = 2022-01-28 16:20:00.000

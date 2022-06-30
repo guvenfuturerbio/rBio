@@ -101,7 +101,7 @@ class BgTaggerVm extends ChangeNotifier {
   }
 
   void permissionDeniedDialog() {
-    UtilityManager().showConfirmationAlertDialog(
+    showConfirmationAlertDialog(
       context,
       LocaleProvider.current.warning,
       LocaleProvider.current.allow_permission_gallery,
