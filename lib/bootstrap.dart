@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
@@ -42,6 +43,11 @@ Future<void> bootstrap(IAppConfig appConfig) async {
     );
   };
 
+  var jailbroken = false;
+  if (!Atom.isWeb) {
+    jailbroken = await FlutterJailbreakDetection.jailbroken;
+  }
+
   runZonedGuarded(
     () async {
       appConfig.platform.sentryManager.init(
@@ -55,6 +61,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
                     appConfig.platform.getInitialRoute(
                       getIt<ISharedPreferencesManager>(),
                     ),
+                    jailbroken,
                   ),
                 ),
               ),
@@ -85,20 +92,24 @@ class WebApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    myApp.setJailbroken(false);
     return myApp.build(context);
   }
 }
 
 class MobileApp extends StatelessWidget {
   final MyApp myApp;
+  final bool jailbroken;
 
   const MobileApp({
     Key? key,
     required this.myApp,
+    required this.jailbroken,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    myApp.setJailbroken(jailbroken);
     return BlocProvider<BluetoothBloc>(
       lazy: false,
       create: (context) => BluetoothBloc(
@@ -128,6 +139,7 @@ class MobileApp extends StatelessWidget {
                 BlocProvider<DeviceSelectedCubit>(
                   create: (context) => DeviceSelectedCubit(
                     context.read<MiScaleStatusCubit>(),
+                    getIt(),
                     getIt(),
                     getIt(),
                     getIt(),

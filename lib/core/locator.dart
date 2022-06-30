@@ -115,7 +115,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   // #endregion
 
   // #region Helper
-  getIt.registerSingleton<IDioHelper>(DioHelper());
+  getIt.registerSingleton<IDioHelper>(DioHelper(false));
   // #endregion
 
   // #region Service

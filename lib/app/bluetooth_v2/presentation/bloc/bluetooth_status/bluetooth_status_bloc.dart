@@ -16,8 +16,8 @@ class BluetoothStatusCubit extends Cubit<BluetoothStatus> {
     _streamSubs?.cancel();
     final result = useCase.call(NoParams());
     result.fold(
-      (l) => LoggerUtils.instance.i("[BluetoothStatusCubit] - listen() - $l"),
-      (r) {
+      (BluetoothFailures l) => LoggerUtils.instance.i("[BluetoothStatusCubit] - listen() - $l"),
+      (Stream<BluetoothStatus> r) {
         _streamSubs = r.listen((event) {
           emit(event);
         });

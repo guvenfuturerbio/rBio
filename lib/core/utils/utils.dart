@@ -262,23 +262,30 @@ class Utils {
             ? '/${getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.selectedLocale)}'
             : '');
 
-    String localData;
     try {
-      localData = await localCacheService.get(cacheUrl);
-      final localModel = json.decode(localData);
-      if (localModel is List) {
-        return localModel.map((e) => model.fromJson(e)).cast<T>().toList();
+      var localData = await localCacheService.get(cacheUrl);
+      if (localData.isEmpty) {
+        final apiData = await apiCall();
+        await localCacheService.write(
+          cacheUrl,
+          json.encode(apiData),
+          cacheDuration,
+        );
+        return apiData;
+      } else {
+        final localModel = json.decode(localData);
+        if (localModel is List) {
+          return localModel.map((e) => model.fromJson(e)).cast<T>().toList();
+        }
       }
+
       return [];
     } catch (e, stackTrace) {
-      final apiData = await apiCall();
-      await localCacheService.write(
-          cacheUrl, json.encode(apiData), cacheDuration);
       getIt<IAppConfig>()
           .platform
           .sentryManager
           .captureException(e, stackTrace: stackTrace);
-      return apiData;
+      rethrow;
     }
   }
   // #endregion

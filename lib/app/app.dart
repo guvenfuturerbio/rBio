@@ -15,32 +15,52 @@ import '../features/doctor/notifiers/patient_notifiers.dart';
 import 'bluetooth_v2/bluetooth_v2.dart';
 
 abstract class MyApp {
+  bool jailbroken = false;
+  void setJailbroken(bool value) {
+    jailbroken = value;
+  }
+
   Widget build(BuildContext context);
 }
 
 class MobileMyApp extends StatelessWidget with MyApp {
   final String initialRoute;
 
-  const MobileMyApp({
+  MobileMyApp({
     Key? key,
     required this.initialRoute,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
-      listener: (context, state) => _miScaleListener(context, state),
-      child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
-        listener: (context, miScaleStatus) {
-          if (miScaleStatus.status == DeviceStatus.connected) {
-            if (miScaleStatus.device != null) {
-              BlocProvider.of<MiScaleOpsCubit>(context).readValue(miScaleStatus.device!);
-            }
-          } else if (miScaleStatus.status == DeviceStatus.disconnected) {
-            BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
+    return BlocListener<BluetoothStatusCubit, BluetoothStatus>(
+      listener: (BuildContext context, BluetoothStatus bluetoothState) {
+        final miScaleDevices = context.read<MiScaleStatusCubit>().state.device;
+        if (miScaleDevices != null) {
+          if (bluetoothState == BluetoothStatus.on) {
+            context.read<DeviceSelectedCubit>().connect(miScaleDevices);
+          } else if (bluetoothState == BluetoothStatus.off) {
+            context.read<DeviceSelectedCubit>().disconnect(miScaleDevices);
           }
-        },
-        child: MyAppCommon(initialRoute: initialRoute),
+        }
+      },
+      child: BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
+        listener: (BuildContext context, MiScaleOpsState state) => _miScaleListener(context, state),
+        child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
+          listener: (BuildContext context, MiScaleStatus miScaleStatus) {
+            if (miScaleStatus.status == DeviceStatus.connected) {
+              if (miScaleStatus.device != null) {
+                BlocProvider.of<MiScaleOpsCubit>(context).readValue(miScaleStatus.device!);
+              }
+            } else if (miScaleStatus.status == DeviceStatus.disconnected) {
+              BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
+            }
+          },
+          child: MyAppCommon(
+            initialRoute: initialRoute,
+            jailbroken: super.jailbroken,
+          ),
+        ),
       ),
     );
   }
@@ -53,7 +73,7 @@ class MobileMyApp extends StatelessWidget with MyApp {
       initial: () {
         //
       },
-      showLoading: (scaleEntity) {
+      showLoading: (ScaleEntity scaleEntity) {
         if (!Atom.isDialogShow) {
           Atom.show(const ScaleMeasurementPopup());
         }
@@ -74,7 +94,7 @@ class MobileMyApp extends StatelessWidget with MyApp {
 class WebMyApp extends StatelessWidget with MyApp {
   final String initialRoute;
 
-  const WebMyApp({
+  WebMyApp({
     Key? key,
     required this.initialRoute,
   }) : super(key: key);
@@ -87,10 +107,12 @@ class WebMyApp extends StatelessWidget with MyApp {
 
 class MyAppCommon extends StatefulWidget {
   final String initialRoute;
+  final bool jailbroken;
 
   const MyAppCommon({
     Key? key,
     required this.initialRoute,
+    this.jailbroken = false,
   }) : super(key: key);
 
   @override
@@ -158,8 +180,9 @@ class _MyAppCommonState extends State<MyAppCommon> {
                 AppInheritedWidget.of(context)?.changeOrientation(orientation);
 
                 return AtomMaterialApp(
-                  initialUrl: widget.initialRoute,
+                  initialUrl: widget.jailbroken == true ? PagePaths.jailbroken : widget.initialRoute,
                   routes: VRouterRoutes.routes(getIt<IAppConfig>()),
+                  onPop: (vRedirector) async {},
                   onSystemPop: (data) async {
                     if (Atom.isDialogShow) {
                       try {
@@ -167,10 +190,7 @@ class _MyAppCommonState extends State<MyAppCommon> {
                         data.stopRedirection();
                       } catch (e, stackTrace) {
                         LoggerUtils.instance.i(e);
-                        getIt<IAppConfig>()
-                            .platform
-                            .sentryManager
-                            .captureException(e, stackTrace: stackTrace);
+                        getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
                       }
                     } else {
                       final currentUrl = data.fromUrl ?? "";
@@ -225,7 +245,6 @@ class _MyAppCommonState extends State<MyAppCommon> {
                     DefaultCupertinoLocalizations.delegate
                   ],
                   supportedLocales: context.read<LocaleNotifier>().supportedLocales,
-                  onPop: (vRedirector) async {},
                 );
               },
             );

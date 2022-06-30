@@ -897,5 +897,7 @@
   "city": "City",
   "where_will_you_attend_the_meeting": "Where will you attend the meeting ?",
   "magazines": "Magazines",
-  "your_data_is_synchronizing": "Your data is synchronizing"
+  "your_data_is_synchronizing": "Your data is synchronizing",
+  "onedosehealth_jailbreak_warning": "The devices which have Root or Jailbreak, are not allowed to use OneDoseHealth App",
+  "guven_jailbreak_warning": "The devices which have Root or Jailbreak, are not allowed to use Guven Online App"
 }

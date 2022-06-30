@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:guven_service/guven_service.dart';
 
 abstract class IDioHelper {
+  final bool isTest;
+  IDioHelper(this.isTest);
+
   Future<GuvenResponseModel> getGuven(
     String path, {
     Map<String, dynamic>? queryParameters,
