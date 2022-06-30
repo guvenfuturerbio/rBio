@@ -894,5 +894,15 @@
   "magazines": "Dergiler",
   "your_data_is_synchronizing": "Verileriniz senkronize ediliyor",
   "onedosehealth_jailbreak_warning": "OneDoseHealth, güvenlik standartları gereği Root yada Jailbreak'li cihazlarda kullanılamaz.",
-  "guven_jailbreak_warning": "Güven Online, güvenlik standartları gereği Root yada Jailbreak'li cihazlarda kullanılamaz."
+  "guven_jailbreak_warning": "Güven Online, güvenlik standartları gereği Root yada Jailbreak'li cihazlarda kullanılamaz.",
+  "what_is_the_e_council": "E-Konsey Nedir?",
+  "how_to_use_the_e_council": "E-Konsey nasıl kullanılır?",
+  "e_council": "E-Konsey",
+  "e_council_requests": "Konsey Taleplerim",
+  "pending_approval": "Onay bekleyen",
+  "pending_payment": "Ödeme bekleyen",
+  "pending_inspection": "Tetkik bekleyen",
+  "rejected": "Reddedilen",
+  "appointment_ready": "Randevu Hazır"
+
 }

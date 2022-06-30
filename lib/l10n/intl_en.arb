@@ -899,5 +899,15 @@
   "magazines": "Magazines",
   "your_data_is_synchronizing": "Your data is synchronizing",
   "onedosehealth_jailbreak_warning": "The devices which have Root or Jailbreak, are not allowed to use OneDoseHealth App",
-  "guven_jailbreak_warning": "The devices which have Root or Jailbreak, are not allowed to use Guven Online App"
+  "guven_jailbreak_warning": "The devices which have Root or Jailbreak, are not allowed to use Guven Online App",
+  "what_is_the_e_council": "What is the E-Council?",
+  "how_to_use_the_e_council": "How to use the E-Council?",
+  "e_council": "E-Council",
+  "e_council_requests": "Council Requests",
+  "pending_approval": "Pending approval",
+  "pending_inspection": "Pending Inspection",
+  "pending_payment": "Pending Payment",
+  "rejected": "Rejected",
+  "appointment_ready": "Appointment Ready"
+
 }

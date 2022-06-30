@@ -14,8 +14,7 @@ class OneDoseTheme extends IAppTheme {
   String get appLogo => 'assets/images/oneDose/onedose_logo.svg';
 
   @override
-  String get successAppointmentImage =>
-      'assets/images/oneDose/success_appointment.svg';
+  String get successAppointmentImage => 'assets/images/oneDose/success_appointment.svg';
 
   @override
   double get appBarLogoHeight => 50;
@@ -190,4 +189,16 @@ class OneDoseTheme extends IAppTheme {
 
   @override
   Color get pink => const Color(0xFFEBCAF3);
+
+  // E-Konsey
+  @override
+  Color get eCouncilPendingApproval => const Color(0xFF787878);
+  @override
+  Color get eCouncilPendingPayment => const Color(0xFFFFCD00);
+  @override
+  Color get eCouncilPendingInspection => const Color(0xFF5CD2FF);
+  @override
+  Color get eCouncilRejected => const Color(0xFFD93832);
+  @override
+  Color get eCouncilAppointmentReady => const Color(0xFF00A147);
 }

@@ -117,6 +117,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Appointment Files"),
         "appointment_files":
             MessageLookupByLibrary.simpleMessage("Appointment Files"),
+        "appointment_ready":
+            MessageLookupByLibrary.simpleMessage("Appointment Ready"),
         "appointments": MessageLookupByLibrary.simpleMessage("Appointments"),
         "approve_consent_form": MessageLookupByLibrary.simpleMessage(
             "You have to confirm the application consent form."),
@@ -475,6 +477,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "dose_interval": MessageLookupByLibrary.simpleMessage("Dose Interval"),
         "drug_count": MessageLookupByLibrary.simpleMessage("Drug Count"),
         "drug_search": MessageLookupByLibrary.simpleMessage("Drug search"),
+        "e_council": MessageLookupByLibrary.simpleMessage("E-Council"),
+        "e_council_requests":
+            MessageLookupByLibrary.simpleMessage("Council Requests"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "educations": MessageLookupByLibrary.simpleMessage("Educations"),
@@ -619,6 +624,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "how_often": MessageLookupByLibrary.simpleMessage("How often"),
         "how_to_get_photo":
             MessageLookupByLibrary.simpleMessage("How to get the photo?"),
+        "how_to_use_the_e_council":
+            MessageLookupByLibrary.simpleMessage("How to use the E-Council?"),
         "how_video_doctor": MessageLookupByLibrary.simpleMessage(
             "Are you satisfied with your specialist?"),
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
@@ -1032,6 +1039,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment transaction is successful. Your appointment has been created successfully"),
         "pdf_filename":
             MessageLookupByLibrary.simpleMessage("MyBloodGlucoseReport.pdf"),
+        "pending_approval":
+            MessageLookupByLibrary.simpleMessage("Pending approval"),
+        "pending_inspection":
+            MessageLookupByLibrary.simpleMessage("Pending Inspection"),
+        "pending_payment":
+            MessageLookupByLibrary.simpleMessage("Pending Payment"),
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "personal_data_policy": MessageLookupByLibrary.simpleMessage(
             "Privacy Statement and Personal Data Protection Policy"),
@@ -1097,6 +1110,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "recover_your_password":
             MessageLookupByLibrary.simpleMessage("Recover your password"),
         "refreshment": MessageLookupByLibrary.simpleMessage("Refreshment"),
+        "rejected": MessageLookupByLibrary.simpleMessage("Rejected"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Further operations will be completed by the selected user, do you confirm?"),
         "relative_identity_number":
@@ -1428,6 +1442,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "weight_text": MessageLookupByLibrary.simpleMessage("Weight"),
         "weight_tracking":
             MessageLookupByLibrary.simpleMessage("Weight Tracking"),
+        "what_is_the_e_council":
+            MessageLookupByLibrary.simpleMessage("What is the E-Council?"),
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
             "When would you like to be notified?"),

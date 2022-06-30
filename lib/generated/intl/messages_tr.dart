@@ -114,6 +114,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Randevu Dosyaları"),
         "appointment_files":
             MessageLookupByLibrary.simpleMessage("Randevu Dosyaları"),
+        "appointment_ready":
+            MessageLookupByLibrary.simpleMessage("Randevu Hazır"),
         "appointments": MessageLookupByLibrary.simpleMessage("Randevular"),
         "approve_consent_form": MessageLookupByLibrary.simpleMessage(
             "Uygulama Onam Formunu Onaylamanız Gerekiyor"),
@@ -466,6 +468,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "dose_interval": MessageLookupByLibrary.simpleMessage("Doz Aralığı"),
         "drug_count": MessageLookupByLibrary.simpleMessage("İlaç adedi"),
         "drug_search": MessageLookupByLibrary.simpleMessage("İlaç arama"),
+        "e_council": MessageLookupByLibrary.simpleMessage("E-Konsey"),
+        "e_council_requests":
+            MessageLookupByLibrary.simpleMessage("Konsey Taleplerim"),
         "edit": MessageLookupByLibrary.simpleMessage("Düzenle"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("Profili Düzenle"),
         "educations": MessageLookupByLibrary.simpleMessage("Eğitimleri"),
@@ -611,6 +616,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "how_often": MessageLookupByLibrary.simpleMessage("Ne sıklıkla"),
         "how_to_get_photo":
             MessageLookupByLibrary.simpleMessage("Fotoğraf nasıl alınsın?"),
+        "how_to_use_the_e_council":
+            MessageLookupByLibrary.simpleMessage("E-Konsey nasıl kullanılır?"),
         "how_video_doctor": MessageLookupByLibrary.simpleMessage(
             "Uzmanınızdan memnun kaldınız mı?"),
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
@@ -1018,6 +1025,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ödeme işlemi başarılı. Randevunuz başarıyla oluşturulmuştur"),
         "pdf_filename":
             MessageLookupByLibrary.simpleMessage("KanSekerOlcumRaporu.pdf"),
+        "pending_approval":
+            MessageLookupByLibrary.simpleMessage("Onay bekleyen"),
+        "pending_inspection":
+            MessageLookupByLibrary.simpleMessage("Tetkik bekleyen"),
+        "pending_payment":
+            MessageLookupByLibrary.simpleMessage("Ödeme bekleyen"),
         "person": MessageLookupByLibrary.simpleMessage("Kişi"),
         "personal_data_policy": MessageLookupByLibrary.simpleMessage(
             "Gizlilik Bildirimi ve Kişisel Veri Koruma Politikası"),
@@ -1085,6 +1098,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "recover_your_password":
             MessageLookupByLibrary.simpleMessage("Şifremi Kurtar"),
         "refreshment": MessageLookupByLibrary.simpleMessage("Ara"),
+        "rejected": MessageLookupByLibrary.simpleMessage("Reddedilen"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Bundan sonraki işlemleriniz seçilen kullanıcı ile yapılacaktır, onaylıyor musunuz?"),
         "relative_identity_number":
@@ -1415,6 +1429,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "weight": MessageLookupByLibrary.simpleMessage("Kilo"),
         "weight_text": MessageLookupByLibrary.simpleMessage("Ağırlık"),
         "weight_tracking": MessageLookupByLibrary.simpleMessage("Kilo Takibi"),
+        "what_is_the_e_council":
+            MessageLookupByLibrary.simpleMessage("E-Konsey Nedir?"),
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
             "Kaç strip kaldığında hatırlatılsın"),

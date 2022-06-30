@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/e_concil/e_council_home/view/e_council_home_screen.dart';
+import 'package:onedosehealth/features/e_concil/information_pages/view/e_council_information_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -102,8 +104,7 @@ class VRouterRoutes {
         // #region Chat
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!(getIt<UserNotifier>().isCronic ||
-                getIt<UserNotifier>().isDoctor)) {
+            if (!(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)) {
               vRedirector.stopRedirection();
               Atom.show(const NotChronicWarning());
             }
@@ -332,8 +333,7 @@ class VRouterRoutes {
                 Future<void> showAlert() async {
                   await Atom.show(
                     GuvenAlert(
-                      backgroundColor:
-                          getIt<IAppConfig>().theme.cardBackgroundColor,
+                      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
                       title: GuvenAlert.buildTitle(LocaleProvider.current.info),
                       content: GuvenAlert.buildDescription(
                         LocaleProvider.current.device_register,
@@ -352,15 +352,12 @@ class VRouterRoutes {
                   );
                 }
 
-                final pairedDevices =
-                    getIt<BleDeviceManager>().getPairedDevices();
+                final pairedDevices = getIt<BleDeviceManager>().getPairedDevices();
                 if (pairedDevices.isEmpty) {
                   await showAlert();
                   //vRedirector.stopRedirection();
                 } else {
-                  final hasSugarDevice = pairedDevices.any((item) =>
-                      item.deviceType == DeviceType.accuCheck ||
-                      item.deviceType == DeviceType.contourPlusOne);
+                  final hasSugarDevice = pairedDevices.any((item) => item.deviceType == DeviceType.accuCheck || item.deviceType == DeviceType.contourPlusOne);
                   if (!hasSugarDevice) {
                     await showAlert();
                     vRedirector.stopRedirection();
@@ -533,7 +530,7 @@ class VRouterRoutes {
 
         VWidget(
           path: PagePaths.forYouSubCategoriesDetail,
-          widget: ForYouSubCategoriesDetailScreen(),
+          widget: const ForYouSubCategoriesDetailScreen(),
         ),
 
         VWidget(
@@ -589,8 +586,7 @@ class VRouterRoutes {
               if (!getIt<IAppConfig>().functionality.takeOnlineAppointment) {
                 vRedirector.to(PagePaths.main);
               }
-            } else if (vRedirector.toUrl?.contains('forOnline=false') ??
-                false) {
+            } else if (vRedirector.toUrl?.contains('forOnline=false') ?? false) {
               if (!getIt<IAppConfig>().functionality.takeHospitalAppointment) {
                 vRedirector.to(PagePaths.main);
               }
@@ -650,6 +646,18 @@ class VRouterRoutes {
           widget: const JailbrokenScreen(),
         ),
 
+        // #region E-Council
+        VWidget(
+          path: PagePaths.eCouncilInformationPage,
+          widget: const ECouncilInformationScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilHomePage,
+          widget: ECouncilHomeScreen(),
+        ),
+
+        // #endregion
+
         //
         // :_ is a path parameters named _
         // .+ is a regexp to match any path
@@ -688,12 +696,9 @@ class PagePaths {
   static const patientScaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-manuel-add';
 
-  static const patientScaleTreatmentList =
-      "/scale-detail/patient-scale-treatment-list";
-  static const patientScaleDietDetail =
-      "/scale-detail/patient-scale-diet-detail";
-  static const patientScaleTreatmentDetail =
-      "/scale-detail/patient-scale-treatment-detail";
+  static const patientScaleTreatmentList = "/scale-detail/patient-scale-treatment-list";
+  static const patientScaleDietDetail = "/scale-detail/patient-scale-diet-detail";
+  static const patientScaleTreatmentDetail = "/scale-detail/patient-scale-treatment-detail";
   // #endregion
 
   // #region Dashboard
@@ -718,8 +723,7 @@ class PagePaths {
   static const doctorScaleTreatmentList = '/doctor-scale-treatment-list';
   static const doctorScaleDietAddEdit = '/doctor-scale-diet-add-edit';
   static const doctorScaleTreatmentAddEdit = '/doctor-scale-treatment-add-edit';
-  static const doctorScaleDoctorNoteAddEdit =
-      '/doctor-scale-doctor-note-add-edit';
+  static const doctorScaleDoctorNoteAddEdit = '/doctor-scale-doctor-note-add-edit';
   // #endregion
 
   // #region Mediminder
@@ -798,6 +802,13 @@ class PagePaths {
   static const magazinselection = '/magazines';
 
   static const demoAudioRecord = '/demoAudioRecord';
+
+  // #region E-Council
+  static const eCouncilInformationPage = '/e-council-information';
+  static const eCouncilHomePage = '/e-council-home';
+
+  // #endregion
+
 }
 
 void openDefaultScreen(VRedirector vRedirector) {

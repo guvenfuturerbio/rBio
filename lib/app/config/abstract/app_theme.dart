@@ -51,6 +51,13 @@ abstract class IAppTheme {
   Color get chartGray;
   Color get darkRed;
   Color get graphRangeColor;
+
+  // E-Konsey
+  Color get eCouncilPendingApproval;
+  Color get eCouncilPendingPayment;
+  Color get eCouncilPendingInspection;
+  Color get eCouncilRejected;
+  Color get eCouncilAppointmentReady;
 }
 
 abstract class IAppDialogTheme {

@@ -9049,6 +9049,96 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `What is the E-Council?`
+  String get what_is_the_e_council {
+    return Intl.message(
+      'What is the E-Council?',
+      name: 'what_is_the_e_council',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How to use the E-Council?`
+  String get how_to_use_the_e_council {
+    return Intl.message(
+      'How to use the E-Council?',
+      name: 'how_to_use_the_e_council',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-Council`
+  String get e_council {
+    return Intl.message(
+      'E-Council',
+      name: 'e_council',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Council Requests`
+  String get e_council_requests {
+    return Intl.message(
+      'Council Requests',
+      name: 'e_council_requests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending approval`
+  String get pending_approval {
+    return Intl.message(
+      'Pending approval',
+      name: 'pending_approval',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending Inspection`
+  String get pending_inspection {
+    return Intl.message(
+      'Pending Inspection',
+      name: 'pending_inspection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending Payment`
+  String get pending_payment {
+    return Intl.message(
+      'Pending Payment',
+      name: 'pending_payment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rejected`
+  String get rejected {
+    return Intl.message(
+      'Rejected',
+      name: 'rejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Appointment Ready`
+  String get appointment_ready {
+    return Intl.message(
+      'Appointment Ready',
+      name: 'appointment_ready',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {
