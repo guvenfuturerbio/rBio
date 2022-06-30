@@ -14,7 +14,10 @@ void main() {
   const _testPassword = "Numlock1234!!";
   const _testWrongPassword = "Numlock1234!!*";
   const _testConsentId = "2";
-
+  const _userName = 34954617212;
+  const _userId = 67193;
+  const _smsCode = "175234";
+  const _wrongSmsCode = "222222";
   group(
     "Login",
     () {
@@ -33,6 +36,30 @@ void main() {
             _testUsername,
             _testWrongPassword,
             _testConsentId,
+          );
+        } on RbioClientException catch (e) {
+          expect(e, isNotNull);
+        }
+      });
+    },
+  );
+
+  group(
+    "2 FA Login",
+    () {
+      test('Get Hospital Appointment', () async {
+        final result = await apiService.verifyConfirmation2fa(
+          _smsCode,
+          _userId,
+        );
+        expect(result.isSuccessful, true);
+      });
+
+      test('2 FA Login Failure Test', () async {
+        try {
+          await apiService.verifyConfirmation2fa(
+            _wrongSmsCode,
+            _userId,
           );
         } on RbioClientException catch (e) {
           expect(e, isNotNull);
