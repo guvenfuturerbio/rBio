@@ -14,10 +14,16 @@ void main() {
   const _testPassword = "Numlock1234!!";
   const _testWrongPassword = "Numlock1234!!*";
   const _testConsentId = "2";
+  const _userNameString = "34954617212";
   const _userName = 34954617212;
   const _userId = 67193;
-  const _smsCode = "175234";
+  const _smsCode = "403283";
   const _wrongSmsCode = "222222";
+  const _bbPassword = "4";
+  const _path = "getIt<IAppConfig>().endpoints.base.getAllPackagePath";
+  const _testEmptyPath = "";
+
+
   group(
     "Login",
     () {
@@ -45,14 +51,38 @@ void main() {
   );
 
   group(
+    "loginStarter",
+    () {
+      test('Login Success Test', () async {
+        final result = await apiService.loginStarter(
+          _userNameString, 
+          _bbPassword,
+        );
+        expect(result.isSuccessful, true);
+      });
+
+      test('Login Failure Test', () async {
+        try {
+          await apiService.loginStarter(
+            _userNameString, 
+            _testWrongPassword,
+        );
+        } on RbioClientException catch (e) {
+          expect(e, isNotNull);
+        }
+      });
+    },
+  );
+
+  group(
     "2 FA Login",
     () {
-      test('Get Hospital Appointment', () async {
+      test('2 FA Login', () async {
         final result = await apiService.verifyConfirmation2fa(
           _smsCode,
           _userId,
         );
-        expect(result.isSuccessful, true);
+        expect(result, true);
       });
 
       test('2 FA Login Failure Test', () async {
@@ -67,4 +97,51 @@ void main() {
       });
     },
   );
+
+group(
+    "For you",
+    () {
+      test('Get Packages', () async {
+        final result = await apiService.getAllPackage(
+          _path,
+        );
+        expect(result, isNotEmpty);
+      });
+
+      test('can not get Packages', () async {
+        try {
+          await apiService.getAllPackage(
+            _testEmptyPath,
+          );
+        } on RbioClientException catch (e) {
+          expect(e, isNotEmpty);
+        }
+      });
+    },
+  );
+
+      test('Get Packages', () async {
+        final result = await apiService.getAllSubCategories(
+          _path,
+        );
+        expect(result, isNotEmpty);
+      });
+
+          test('Get Packages', () async {
+        final result = await apiService.getSubCategoryDetail(
+          _path,
+        );
+        expect(result, isNotEmpty);
+      });
+
+
+      test('Get Packages', () async {
+        final result = await apiService.getSubCategoryItems(
+          _path,
+        );
+        expect(result, isNotEmpty);
+      });
+
+      
+
 }
