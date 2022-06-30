@@ -88,8 +88,7 @@ class DevicesScreen extends StatelessWidget {
               DeviceCard(
                 name: device.name,
                 background: _getBackgroundColorV2(deviceStatus),
-                image: UtilityManager()
-                        .getDeviceImageFromType(device.deviceType!) ??
+                image: Utils.instance.getDeviceImageFromType(device.deviceType!) ??
                     const SizedBox(),
                 onTap: () async {
                   if (deviceStatus == DeviceStatus.connected) {
@@ -203,8 +202,7 @@ class DevicesScreen extends StatelessWidget {
   Widget _buildV1Card(BuildContext context, PairedDevice device, DevicesVm vm) {
     return DeviceCard(
       background: getIt<IAppConfig>().theme.cardBackgroundColor,
-      image: UtilityManager().getDeviceImageFromType(device.deviceType!) ??
-          const SizedBox(),
+      image: Utils.instance.getDeviceImageFromType(device.deviceType!) ?? const SizedBox(),
       name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
       trailing: Row(
         children: [

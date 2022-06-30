@@ -182,10 +182,10 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        color: UtilityManager()
+        color: Utils.instance
             .getGlucoseMeasurementColor(double.parse(value.data.level).toInt()),
         border: Border.all(
-          color: UtilityManager().getGlucoseMeasurementColor(
+          color: Utils.instance.getGlucoseMeasurementColor(
             double.parse(
               value.data.level,
             ).toInt(),
@@ -206,11 +206,11 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: value.data.tag == 2
-            ? UtilityManager().getGlucoseMeasurementColor(
+            ? Utils.instance.getGlucoseMeasurementColor(
                 double.parse(value.data.level).toInt())
             : Colors.white,
         border: Border.all(
-          color: UtilityManager().getGlucoseMeasurementColor(
+          color: Utils.instance.getGlucoseMeasurementColor(
             double.parse(value.data.level).toInt(),
           ),
           width: 10.0,
@@ -311,14 +311,17 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                //
                 Expanded(
                   child: Text(
-                    UtilityManager().getReadableDate(vm.date),
+                    vm.date.xGetReadableDate,
                     style: context.xHeadline4,
                   ),
                 ),
+
+                //
                 Text(
-                  UtilityManager().getReadableHour(vm.date),
+                  vm.date.xGetReadableHour,
                   style: context.xHeadline4,
                 )
               ],

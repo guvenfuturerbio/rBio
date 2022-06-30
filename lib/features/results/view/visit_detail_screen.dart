@@ -1,68 +1,98 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../../core/core.dart';
-import '../results.dart';
+import '../cubit/visit_detail_cubit.dart';
 
-class VisitDetailScreen extends StatefulWidget {
+class VisitDetailScreen extends StatelessWidget {
+  int? countOfRadiologyResults;
+  int? countOfPathologyResults;
+  int? countOfLaboratoryResult;
+  int? visitId;
+  int? patientId;
+  VisitDetailScreen(
+      {this.countOfLaboratoryResult,
+      this.countOfPathologyResults,
+      this.countOfRadiologyResults,
+      this.visitId,
+      this.patientId,
+      Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    try {
+      countOfRadiologyResults =
+          int.parse(Atom.queryParameters['countOfRadiologyResults']!);
+      countOfPathologyResults =
+          int.parse(Atom.queryParameters['countOfPathologyResults']!);
+      countOfLaboratoryResult =
+          int.parse(Atom.queryParameters['countOfLaboratoryResult']!);
+      visitId = int.parse(Atom.queryParameters['visitId']!);
+      patientId = int.parse(Atom.queryParameters['patientId']!);
+    } catch (e, stackTrace) {
+      return RbioRouteError(e: e, stackTrace: stackTrace);
+    }
+    return BlocProvider(
+      create: (context) => VisitDetailCubit(getIt(),
+          countOfLaboratoryResults: countOfLaboratoryResult!,
+          countOfPathologyResults: countOfPathologyResults!,
+          countOfRadiologyResults: countOfRadiologyResults!,
+          visitId: visitId!,
+          patientId: patientId!),
+      child: VisitDetailView(
+        countOfLaboratoryResult: countOfLaboratoryResult,
+        countOfPathologyResults: countOfPathologyResults,
+        countOfRadiologyResults: countOfRadiologyResults,
+        visitId: visitId,
+        patientId: patientId,
+      ),
+    );
+  }
+}
+
+class VisitDetailView extends StatefulWidget {
   int? countOfRadiologyResults;
   int? countOfPathologyResults;
   int? countOfLaboratoryResult;
   int? visitId;
   int? patientId;
 
-  VisitDetailScreen({Key? key}) : super(key: key);
+  VisitDetailView({
+    Key? key,
+    this.countOfRadiologyResults,
+    this.countOfPathologyResults,
+    this.countOfLaboratoryResult,
+    this.visitId,
+    this.patientId,
+  }) : super(key: key);
 
   @override
-  _VisitDetailScreenState createState() => _VisitDetailScreenState();
+  _VisitDetailViewState createState() => _VisitDetailViewState();
 }
 
-class _VisitDetailScreenState extends State<VisitDetailScreen> {
+class _VisitDetailViewState extends State<VisitDetailView> {
   @override
   Widget build(BuildContext context) {
-    try {
-      widget.countOfRadiologyResults =
-          int.parse(Atom.queryParameters['countOfRadiologyResults']!);
-      widget.countOfPathologyResults =
-          int.parse(Atom.queryParameters['countOfPathologyResults']!);
-      widget.countOfLaboratoryResult =
-          int.parse(Atom.queryParameters['countOfLaboratoryResult']!);
-      widget.visitId = int.parse(Atom.queryParameters['visitId']!);
-      widget.patientId = int.parse(Atom.queryParameters['patientId']!);
-    } catch (e, stackTrace) {
-      return RbioRouteError(e: e, stackTrace: stackTrace);
-    }
-
-    return ChangeNotifierProvider<VisitDetailScreenVm>(
-      create: (context) => VisitDetailScreenVm(
-        context,
-        countOfLaboratoryResults: widget.countOfLaboratoryResult!,
-        countOfPathologyResults: widget.countOfPathologyResults!,
-        countOfRadiologyResults: widget.countOfRadiologyResults!,
-        visitId: widget.visitId!,
-        patientId: widget.patientId!,
-      ),
-      child: Consumer<VisitDetailScreenVm>(
-        builder: (
-          BuildContext context,
-          VisitDetailScreenVm value,
-          Widget? child,
-        ) {
-          return RbioScaffold(
-            appbar: _buildAppBar(value),
-            body: _buildBody(value),
-          );
-        },
-      ),
+    return BlocBuilder<VisitDetailCubit, VisitDetailState>(
+      builder: (context, state) {
+        return RbioStackedScaffold(
+          isLoading: state.isLoading,
+          appbar: _buildAppBar(),
+          body: _buildBody(state),
+        );
+      },
     );
   }
 
   // #region _buildAppBar
-  RbioAppBar _buildAppBar(VisitDetailScreenVm value) {
+  RbioAppBar _buildAppBar() {
     return RbioAppBar(
       title: RbioAppBar.textTitle(
         context,
@@ -79,7 +109,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
             ),
           ),
           onTap: () {
-            value.shareFile();
+            context.read<VisitDetailCubit>().shareFile();
           },
         ),
       ],
@@ -88,18 +118,18 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   // #endregion
 
   // #region _buildBody
-  Widget _buildBody(VisitDetailScreenVm vm) {
+  Widget _buildBody(VisitDetailState state) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
+        R.sizes.stackedTopPadding(context),
         //
-        _buildTab(vm),
-
+        _buildTab(state),
         //
         Expanded(
-          child: _buildStateToWidget(vm),
+          child: _buildStateToWidget(state),
         ),
       ],
     );
@@ -107,27 +137,33 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   // #endregion
 
   // #region _buildTab
-  Widget _buildTab(VisitDetailScreenVm vm) {
+  Widget _buildTab(VisitDetailState state) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
       children: [
         _buildTabButton(
-          onPressed: () => vm.togglePathologySelected(),
+          onPressed: () => context
+              .read<VisitDetailCubit>()
+              .togglePathologySelected(state.pathologySelected),
           text: LocaleProvider.current.pathology_result,
-          isActive: vm.pathologySelected,
+          isActive: state.pathologySelected,
           visibility: widget.countOfPathologyResults! > 0 ? true : false,
         ),
         _buildTabButton(
-          onPressed: () => vm.toggleRadiologySelected(),
+          onPressed: () => context
+              .read<VisitDetailCubit>()
+              .toggleRadiologySelected(state.radiologySelected),
           text: LocaleProvider.current.radiology_result,
-          isActive: vm.radiologySelected,
+          isActive: state.radiologySelected,
           visibility: widget.countOfRadiologyResults! > 0 ? true : false,
         ),
         _buildTabButton(
-          onPressed: () => vm.toggleLaboratorySelected(),
+          onPressed: () => context
+              .read<VisitDetailCubit>()
+              .toggleLaboratorySelected(state.laboratorySelected),
           text: LocaleProvider.current.laboratory_result,
-          isActive: vm.laboratorySelected,
+          isActive: state.laboratorySelected,
           visibility: widget.countOfLaboratoryResult! > 0 ? true : false,
         )
       ],
@@ -185,15 +221,18 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   // #endregion
 
   // #region _buildStateToWidget
-  Widget _buildStateToWidget(VisitDetailScreenVm vm) {
-    switch (vm.progress) {
-      case LoadingProgress.loading:
+  Widget _buildStateToWidget(VisitDetailState state) {
+    switch (state.status) {
+      case RbioLoadingProgress.initial:
+        return const SizedBox();
+
+      case RbioLoadingProgress.loadInProgress:
         return const RbioLoading();
 
-      case LoadingProgress.done:
-        return _buildDone(vm);
+      case RbioLoadingProgress.success:
+        return _buildDone(state);
 
-      case LoadingProgress.error:
+      case RbioLoadingProgress.failure:
         return const RbioBodyError();
 
       default:
@@ -203,14 +242,14 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
   // #endregion
 
   // #region _buildDone
-  Widget _buildDone(VisitDetailScreenVm vm) {
-    if (vm.laboratorySelected) {
-      if (vm.laboratoryFileBytes == null) {
+  Widget _buildDone(VisitDetailState state) {
+    if (state.laboratorySelected) {
+      if (state.laboratoryFileBytes == null) {
         return const RbioLoading();
       }
 
       return SfPdfViewer.memory(
-        base64.decode(vm.laboratoryFileBytes!),
+        base64.decode(state.laboratoryFileBytes!),
         canShowPaginationDialog: false,
       );
 
@@ -361,11 +400,11 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
       //     );
       //   },
       // );
-    } else if (vm.pathologySelected) {
+    } else if (state.pathologySelected) {
       return ListView.builder(
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
-        itemCount: vm.pathologyResults.length,
+        itemCount: state.pathologyResults.length,
         itemBuilder: (context, index) {
           return Container(
             width: double.infinity,
@@ -397,7 +436,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        vm.pathologyResults[index].procedures ?? '',
+                        state.pathologyResults[index].procedures ?? '',
                         style: context.xHeadline3.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -410,7 +449,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10, top: 4),
                   child: Text(
-                    vm.pathologyResults[index].status ?? '',
+                    state.pathologyResults[index].status ?? '',
                     style: context.xHeadline4.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -421,12 +460,12 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
           );
         },
       );
-    } else if (vm.radiologySelected) {
+    } else if (state.radiologySelected) {
       return ListView.builder(
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.only(top: 12),
-        itemCount: vm.radiologyResults.length,
+        itemCount: state.radiologyResults.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             width: double.infinity,
@@ -459,7 +498,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        vm.radiologyResults[index].takenAt
+                        state.radiologyResults[index].takenAt
                                 ?.xGetUTCLocalDate() ??
                             "",
                         style: context.xHeadline4.copyWith(
@@ -488,7 +527,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
 
                       //
                       Text(
-                        vm.radiologyResults[index].name ?? "-",
+                        state.radiologyResults[index].name ?? "-",
                         style: context.xHeadline3,
                       ),
 
@@ -532,7 +571,7 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                           //
                           Expanded(
                             child: Text(
-                              vm.radiologyResults[index].group ?? "-",
+                              state.radiologyResults[index].group ?? "-",
                               style: context.xHeadline3,
                             ),
                           ),
@@ -540,10 +579,12 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                           //
                           Expanded(
                             child: Text(
-                              vm.radiologyResults[index].reportState == 6
-                                  ? Utils.instance.getFormattedDateWithTime(
-                                      vm.radiologyResults[index].approvedAt ??
-                                          "-")
+                              state.radiologyResults[index].reportState == 6
+                                  ? DateTime.parse((state
+                                              .radiologyResults[index]
+                                              .approvedAt ??
+                                          ''))
+                                      .xFormatTime3()
                                   : "-",
                               style: context.xHeadline3,
                             ),
@@ -564,20 +605,24 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8),
-                        child: vm.radiologyResults[index].reportState == 6
+                        child: state.radiologyResults[index].reportState == 6
                             ? Utils.instance.button(
                                 text: LocaleProvider.current.show_result,
                                 width: 130,
                                 onPressed: () {
-                                  final name = vm.radiologyResults[index].name;
+                                  final name =
+                                      state.radiologyResults[index].name;
                                   final reportLink =
-                                      vm.radiologyResults[index].reportLink;
+                                      state.radiologyResults[index].reportLink;
                                   if (name != null && reportLink != null) {
-                                    vm.showResult(name, reportLink);
+                                    context.read<VisitDetailCubit>().showResult(
+                                          name,
+                                          reportLink,
+                                        );
                                   }
                                 },
                               )
-                            : Utils.instance.passiveButton(
+                            : passiveButton(
                                 text: LocaleProvider.current.show_result,
                                 onPressed: () {},
                               ),
@@ -588,19 +633,23 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8, left: 10),
-                        child: vm.radiologyResults[index].report != null &&
-                                vm.radiologyResults[index].reportState == 6
+                        child: state.radiologyResults[index].report != null &&
+                                state.radiologyResults[index].reportState == 6
                             ? Utils.instance.button(
                                 text: LocaleProvider.current.show_report,
                                 onPressed: () {
                                   final processId =
-                                      vm.radiologyResults[index].id;
+                                      state.radiologyResults[index].id;
                                   if (processId != null) {
-                                    vm.getRadiologyResultsAsPdf(processId);
+                                    context
+                                        .read<VisitDetailCubit>()
+                                        .getRadiologyResultsAsPdf(
+                                          processId,
+                                        );
                                   }
                                 },
                               )
-                            : Utils.instance.passiveButton(
+                            : passiveButton(
                                 text: LocaleProvider.current.show_report,
                                 onPressed: () {},
                               ),
@@ -618,4 +667,34 @@ class _VisitDetailScreenState extends State<VisitDetailScreen> {
     }
   }
   // #endregion
+
+  Widget passiveButton({
+    required String text,
+    required Function onPressed,
+    double height = 16,
+    double width = 200,
+  }) =>
+      GradientButton(
+        callback: onPressed(),
+        increaseWidthBy: width,
+        increaseHeightBy: height,
+        shadowColor: Colors.black.withAlpha(50),
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+        ),
+        textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: getIt<IAppConfig>().theme.grey,
+        ),
+        gradient: LinearGradient(
+          colors: [
+            getIt<IAppConfig>().theme.mainColor.withAlpha(15),
+            getIt<IAppConfig>().theme.mainColor.withAlpha(15)
+          ],
+          begin: Alignment.bottomLeft,
+          end: Alignment.centerRight,
+        ),
+      );
 }

@@ -13,7 +13,7 @@ extension ThemeTypeStringExt on String {
 }
 
 extension ThemeTypeExt on ThemeType {
-  String get xRawValue => getEnumValue(this);
+  String get xRawValue => Utils.instance.getEnumValue(this);
 
   IAppTheme get xGetTheme {
     switch (this) {

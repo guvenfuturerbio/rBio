@@ -1,121 +1,153 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:path_provider/path_provider.dart';
+
+import '../../../core/core.dart';
+
+import '../model/model.dart';
 import 'package:universal_html/html.dart' as html;
 
-import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+part 'visit_detail_state.dart';
 
-class VisitDetailScreenVm extends RbioVm {
-  @override
-  BuildContext mContext;
-
-  static const String _documentPath = 'PDFs/Guide-v4.pdf';
+class VisitDetailCubit extends Cubit<VisitDetailState> {
+  VisitDetailCubit(this.repository,
+      {required this.countOfLaboratoryResults,
+      required this.countOfPathologyResults,
+      required this.countOfRadiologyResults,
+      required this.visitId,
+      required this.patientId})
+      : super(VisitDetailState()) {
+    {
+      visitDetailRequest = VisitDetailRequest(
+        patientId: patientId,
+        visitId: visitId,
+      );
+      final currentState = state;
+      if (countOfLaboratoryResults > 0) {
+        final currentState = state;
+        toggleLaboratorySelected(currentState.laboratorySelected);
+      } else if (countOfRadiologyResults > 0) {
+        toggleRadiologySelected(currentState.radiologySelected);
+      } else if (countOfPathologyResults > 0) {
+        togglePathologySelected(currentState.pathologySelected);
+      }
+    }
+  }
+  late final int countOfLaboratoryResults;
+  late final int countOfPathologyResults;
+  late final int countOfRadiologyResults;
+  late final int visitId;
+  late final int patientId;
+  late final Repository repository;
 
   late VisitDetailRequest visitDetailRequest;
-
-  String? laboratoryFileBytes;
   String? mobiletempDocumentPath;
-
-  bool pathologySelected = false;
-  bool radiologySelected = false;
-  bool laboratorySelected = false;
-
-  List<LaboratoryResponse> laboratoryResults = [LaboratoryResponse()];
-  List<PathologyResponse> pathologyResults = [PathologyResponse()];
-  List<RadiologyResponse> radiologyResults = [RadiologyResponse()];
   LaboratoryPdfResultRequest? laboratoryPdfResultRequest;
+  static const String _documentPath = 'PDFs/Guide-v4.pdf';
 
-  VisitDetailScreenVm(
-    this.mContext, {
-    required int countOfLaboratoryResults,
-    required int countOfPathologyResults,
-    required int countOfRadiologyResults,
-    required int visitId,
-    required int patientId,
-  }) {
-    visitDetailRequest = VisitDetailRequest(
-      patientId: patientId,
-      visitId: visitId,
+  Future<void> toggleRadiologySelected(bool value) async {
+    emit(
+      state.copyWith(
+        radiologySelected: !value,
+        laboratorySelected: false,
+        pathologySelected: false,
+      ),
     );
-    if (countOfLaboratoryResults > 0) {
-      toggleLaboratorySelected();
-    } else if (countOfRadiologyResults > 0) {
-      toggleRadiologySelected();
-    } else if (countOfPathologyResults > 0) {
-      togglePathologySelected();
-    }
-  }
-
-  Future<void> togglePathologySelected() async {
-    pathologySelected = !pathologySelected;
-    if (pathologySelected) {
-      laboratorySelected = false;
-      radiologySelected = false;
-      await fetchPathologyResults();
-    }
-    notifyListeners();
-  }
-
-  Future<void> toggleRadiologySelected() async {
-    radiologySelected = !radiologySelected;
-    if (radiologySelected) {
-      laboratorySelected = false;
-      pathologySelected = false;
+    if (!value) {
       await fetchRadiologyResults();
     }
-
-    notifyListeners();
   }
 
-  Future<void> toggleLaboratorySelected() async {
-    laboratorySelected = !laboratorySelected;
-    if (laboratorySelected) {
-      pathologySelected = false;
-      radiologySelected = false;
+  Future<void> toggleLaboratorySelected(bool value) async {
+    emit(
+      state.copyWith(
+        laboratorySelected: !value,
+        pathologySelected: false,
+        radiologySelected: false,
+      ),
+    );
+    if (!value) {
       await fetchLaboratoryResults();
       await getLaboratoryResultsAsPdf();
     } else {
-      laboratoryFileBytes = null;
+      emit(
+        state.copyWith(laboratoryFileBytes: null),
+      );
     }
+  }
 
-    notifyListeners();
+  Future<void> togglePathologySelected(bool value) async {
+    emit(
+      state.copyWith(
+        pathologySelected: !value,
+        laboratorySelected: false,
+        radiologySelected: false,
+      ),
+    );
+    if (!value) {
+      await fetchPathologyResults();
+    }
   }
 
   Future<void> fetchPathologyResults() async {
-    progress = LoadingProgress.loading;
-    notifyListeners();
+    final currentState = state;
+    emit(currentState.copyWith(status: RbioLoadingProgress.loadInProgress));
 
     try {
-      pathologyResults =
+      final pathologyResults =
           await getIt<Repository>().getPathologyResults(visitDetailRequest);
-      progress = LoadingProgress.done;
+      emit(currentState.copyWith(
+          pathologyResults: pathologyResults,
+          status: RbioLoadingProgress.success));
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform
           .sentryManager
           .captureException(e, stackTrace: stackTrace);
-      progress = LoadingProgress.error;
+      emit(currentState.copyWith(status: RbioLoadingProgress.failure));
     }
   }
 
   Future<void> fetchRadiologyResults() async {
-    progress = LoadingProgress.loading;
-
+    final currentState = state;
+    emit(currentState.copyWith(status: RbioLoadingProgress.loadInProgress));
     try {
-      radiologyResults =
+      final radiologyResults =
           await getIt<Repository>().getRadiologyResults(visitDetailRequest);
-      progress = LoadingProgress.done;
+      emit(currentState.copyWith(
+          radiologyResults: radiologyResults,
+          status: RbioLoadingProgress.success));
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform
           .sentryManager
           .captureException(e, stackTrace: stackTrace);
-      progress = LoadingProgress.error;
+      emit(currentState.copyWith(status: RbioLoadingProgress.failure));
+    }
+  }
+
+  Future<void> fetchLaboratoryResults() async {
+    final currentState = state;
+    emit(currentState.copyWith(status: RbioLoadingProgress.loadInProgress));
+
+    try {
+      final laboratoryResults =
+          await getIt<Repository>().getLaboratoryResults(visitDetailRequest);
+      setLaboratoryPdfResultRequest();
+      emit(currentState.copyWith(
+          laboratoryResults: laboratoryResults,
+          status: RbioLoadingProgress.success));
+    } catch (e, stackTrace) {
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
+      emit(currentState.copyWith(status: RbioLoadingProgress.failure));
+      LoggerUtils.instance.e(e);
     }
   }
 
@@ -123,9 +155,9 @@ class VisitDetailScreenVm extends RbioVm {
     try {
       if (isLab) {
         final decodedBytes = base64Decode(pdfBytes);
-        var name = laboratoryResults.first.patient;
+        var name = state.laboratoryResults.first.patient;
         name = name?.replaceAll(' ', '_');
-        var date = laboratoryResults.first.takenAt;
+        var date = state.laboratoryResults.first.takenAt;
         html.Blob blob = html.Blob([decodedBytes]);
         final url = html.Url.createObjectUrlFromBlob(blob);
         final anchor = html.AnchorElement()
@@ -141,10 +173,10 @@ class VisitDetailScreenVm extends RbioVm {
         html.Url.revokeObjectUrl(url);
       } else {
         final decodedBytes = base64Decode(pdfBytes);
-        var name = radiologyResults.first.patient;
+        var name = state.radiologyResults.first.patient;
         name = name?.replaceAll(' ', '_');
 
-        var date = radiologyResults.first.takenAt;
+        var date = state.radiologyResults.first.takenAt;
         html.Blob blob = html.Blob([decodedBytes]);
         final url = html.Url.createObjectUrlFromBlob(blob);
         final anchor = html.AnchorElement()
@@ -166,29 +198,13 @@ class VisitDetailScreenVm extends RbioVm {
     }
   }
 
-  Future<void> fetchLaboratoryResults() async {
-    progress = LoadingProgress.loading;
-
-    try {
-      laboratoryResults =
-          await getIt<Repository>().getLaboratoryResults(visitDetailRequest);
-      setLaboratoryPdfResultRequest();
-      progress = LoadingProgress.done;
-    } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      progress = LoadingProgress.error;
-      LoggerUtils.instance.e(e);
-    }
-  }
-
   Future<void> shareFile() async {
-    if (laboratoryFileBytes != null && mobiletempDocumentPath != null) {
-      if (kIsWeb) {
-        downloadPdf(laboratoryFileBytes!, true);
-      } else {
+    if (kIsWeb) {
+      if (state.laboratoryFileBytes != null) {
+        downloadPdf(state.laboratoryFileBytes!, true);
+      }
+    } else {
+      if (state.laboratoryFileBytes != null && mobiletempDocumentPath != null) {
         await FlutterShare.shareFile(
           title: LocaleProvider.current.share,
           text: LocaleProvider.current.detailed_report,
@@ -199,11 +215,12 @@ class VisitDetailScreenVm extends RbioVm {
   }
 
   Future<void> getLaboratoryResultsAsPdf() async {
+    final currentState = state;
     if (laboratoryPdfResultRequest == null) return;
 
     String pdfByte = await getIt<Repository>()
         .getLaboratoryPdfResult(laboratoryPdfResultRequest!);
-    laboratoryFileBytes = pdfByte;
+    emit(currentState.copyWith(laboratoryFileBytes: pdfByte));
     if (!kIsWeb) {
       final decodedBytes = base64Decode(pdfByte);
       final tempDir = await getTemporaryDirectory();
@@ -212,28 +229,46 @@ class VisitDetailScreenVm extends RbioVm {
       file.writeAsBytesSync(decodedBytes);
       mobiletempDocumentPath = tempDocumentPath;
     }
-    notifyListeners();
   }
 
-  Future<void> getRadiologyResultsAsPdf(int processId) async {
+  Future<void> getRadiologyResultsAsPdf(
+    int processId,
+  ) async {
     try {
+      emit(
+        state.copyWith(
+          isLoading: true,
+        ),
+      );
       String pdfByte = await getIt<Repository>().getRadiologyPdfResult(
         RadiologyPdfRequest(processId: processId),
       );
-
+      emit(
+        state.copyWith(
+          status: RbioLoadingProgress.success,
+          isLoading: false,
+        ),
+      );
       kIsWeb ? downloadPdf(pdfByte, false) : goPdfPage(pdfByte);
-      notifyListeners();
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform
           .sentryManager
           .captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
-      notifyListeners();
+      emit(
+        state.copyWith(
+          status: RbioLoadingProgress.failure,
+          isLoading: false,
+        ),
+      );
     }
   }
 
-  void showResult(String testName, String url) {
+  void showResult(
+    String testName,
+    String url,
+  ) {
     try {
       if (kIsWeb) {
         html.window.open(url, 'new tab');
@@ -256,8 +291,9 @@ class VisitDetailScreenVm extends RbioVm {
   }
 
   void setLaboratoryPdfResultRequest() {
+    final currentState = state;
     List<int> processList = <int>[];
-    for (var data in laboratoryResults) {
+    for (var data in currentState.laboratoryResults) {
       final itemId = data.id;
       if (itemId != null) {
         processList.add(itemId);
@@ -267,7 +303,6 @@ class VisitDetailScreenVm extends RbioVm {
       visitId: visitDetailRequest.visitId,
       processes: processList,
     );
-    notifyListeners();
   }
 
   Future<void> goPdfPage(String img64) async {

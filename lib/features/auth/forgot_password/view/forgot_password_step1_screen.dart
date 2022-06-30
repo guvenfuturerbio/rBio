@@ -121,7 +121,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                       ),
                     ],
                     onFieldSubmitted: (term) {
-                      UtilityManager().fieldFocusChange(
+                      Utils.instance.fieldFocusChange(
                         context,
                         tcNoFNode,
                         phoneNumberFNode,
@@ -180,7 +180,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                             ),
                           ],
                           onFieldSubmitted: (term) {
-                            UtilityManager().fieldFocusChange(
+                            Utils.instance.fieldFocusChange(
                               context,
                               phoneNumberFNode,
                               null,
@@ -213,8 +213,9 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
                       ),
                       child: RbioElevatedButton(
                         infinityWidth: true,
-                        title:
-                            LocaleProvider.of(context).btn_send_code.toUpperCase(),
+                        title: LocaleProvider.of(context)
+                            .btn_send_code
+                            .toUpperCase(),
                         onTap: () {
                           UserRegistrationStep1Model userRegisterStep1 =
                               UserRegistrationStep1Model();

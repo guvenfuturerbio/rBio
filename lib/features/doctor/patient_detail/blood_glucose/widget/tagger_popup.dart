@@ -41,15 +41,16 @@ class _TaggerPopUp extends StatelessWidget {
   // InputSection #start
   Widget getSquareBg(BuildContext context) {
     var level = double.parse((data.result == '' ? '0' : data.result)!).toInt();
+
     return Container(
       height: 130 * context.textScale,
       width: 130 * context.textScale,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        color: UtilityManager().getGlucoseMeasurementColor(level),
+        color: Utils.instance.getGlucoseMeasurementColor(level),
         border: Border.all(
-          color: UtilityManager().getGlucoseMeasurementColor(level),
+          color: Utils.instance.getGlucoseMeasurementColor(level),
           width: 5.0,
         ),
       ),
@@ -66,11 +67,9 @@ class _TaggerPopUp extends StatelessWidget {
       height: 130 * context.textScale,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: data.tag == 2
-            ? UtilityManager().getGlucoseMeasurementColor(level)
-            : Colors.white,
+        color: data.tag == 2 ? Utils.instance.getGlucoseMeasurementColor(level) : Colors.white,
         border: Border.all(
-          color: UtilityManager().getGlucoseMeasurementColor(level),
+          color: Utils.instance.getGlucoseMeasurementColor(level),
           width: 10.0,
         ),
       ),
@@ -78,7 +77,7 @@ class _TaggerPopUp extends StatelessWidget {
     );
   }
 
-  Padding boxInsideSection(BuildContext context, bool isFill) {
+  Widget boxInsideSection(BuildContext context, bool isFill) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -105,9 +104,10 @@ class _TaggerPopUp extends StatelessWidget {
     return Text(
       data.result!,
       style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.bold,
-          color: isFill ? Colors.white : Colors.black),
+        fontSize: 25,
+        fontWeight: FontWeight.bold,
+        color: isFill ? Colors.white : Colors.black,
+      ),
     );
   }
   // InputSection #end
@@ -135,16 +135,19 @@ class _TaggerPopUp extends StatelessWidget {
     );
   }
 
-  Row readableDateTime(DateTime date) {
+  Widget readableDateTime(DateTime date) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
+        //
         Expanded(
           flex: 2,
-          child: Text(UtilityManager().getReadableDate(date)),
+          child: Text(date.xGetReadableDate),
         ),
+
+        //
         Expanded(
-          child: Text(UtilityManager().getReadableHour(date)),
+          child: Text(date.xGetReadableHour),
         )
       ],
     );
@@ -152,7 +155,7 @@ class _TaggerPopUp extends StatelessWidget {
   // DateTimePickerSection #end
 
   // TagSection #begin
-  Wrap getTagState(int currentTag) {
+  Widget getTagState(int currentTag) {
     return Wrap(
       alignment: WrapAlignment.center,
       children: <Widget>[
@@ -178,7 +181,9 @@ class _TaggerPopUp extends StatelessWidget {
   Widget getTagElement(bool isCurrent, String icon, String title) {
     return Card(
       elevation: R.sizes.defaultElevation,
-      color: isCurrent ? getIt<IAppConfig>().theme.mainColor : getIt<IAppConfig>().theme.white,
+      color: isCurrent
+          ? getIt<IAppConfig>().theme.mainColor
+          : getIt<IAppConfig>().theme.white,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),
