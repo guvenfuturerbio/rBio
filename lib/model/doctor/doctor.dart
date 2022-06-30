@@ -1,13 +1,3 @@
-export 'appointment/appointment_model.dart';
-export 'appointment/availability_model.dart';
-export 'appointment/department_model.dart';
-export 'appointment/doctor_hospital_department_model.dart';
-export 'appointment/hospital_department_model.dart';
-export 'appointment/hospital_model.dart';
-export 'appointment/part_model.dart';
-export 'appointment/patient_for_appointment_model.dart';
-export 'appointment/user_for_appointment_model.dart';
-export 'appointment/zoom_model.dart';
 export 'bg_measurement.dart';
 export 'bg_measurements_view_model.dart';
 export 'blood_glucose/blood_glucose.dart';
