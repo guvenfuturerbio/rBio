@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import '../../core/core.dart';
-import '../../features/dashboard/search/bloc/search_bloc.dart';
-import '../../features/take_appointment/create_appointment/model/filter_tenants_response.dart';
+
+import '../../../../core/core.dart';
+import '../../../take_appointment/create_appointment/model/filter_tenants_response.dart';
+import '../bloc/search_bloc.dart';
 
 class FilterResourcesResponse extends IBaseModel<FilterResourcesResponse> with SearchModel {
   List<FilterTenantsResponse>? departments;
