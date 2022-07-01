@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/features/store/credit_card/model/package_payment_request.dart';
+import 'package:onedosehealth/features/store/credit_card/model/payment_cc_request.dart';
 
 import '../setup/locator_setup.dart';
 
@@ -20,7 +22,11 @@ void main() {
   const _smsCode = "403283";
   const _wrongSmsCode = "222222";
   const _bbPassword = "4";
-  const _testEmptyPath = "";
+  // const _cardHolder = "test";
+  // const _cardNumber = "test";
+  // const _ccv = "test";
+  // const _expirationMonth = "02";
+  // const _expirationYear = "24";
 
   group(
     "Login",
@@ -125,6 +131,26 @@ void main() {
         );
         expect(result, isNotEmpty);
       });
+
+      test('getSubCategoryItems', () async {
+        final result =
+            await apiService.getSubCategoryItems("22" // Masaj Paketleri
+                );
+        expect(result, isNotEmpty);
+      });
+
+      // test('doPackagePayment', () async {
+      //   final result = await apiService.doPackagePayment(PackagePaymentRequest(
+      //       subPackageItemId: "22",
+      //       cc: PaymentCCRequest(
+      //           cardHolder: _cardHolder,
+      //           cardNumber: _cardNumber,
+      //           cvv: _ccv,
+      //           expirationMonth: _expirationMonth,
+      //           expirationYear: _expirationYear))); // Masaj Paketleri
+
+      //   expect(result, isNotEmpty);
+      // });
     },
   );
 }
