@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: constant_identifier_names
 
 import 'dart:convert';
@@ -223,6 +224,52 @@ class Person extends HiveObject {
         yearOfDiagnosis.hashCode ^
         smoker.hashCode ^
         isFirstUser.hashCode;
+  }
+
+  Person copyWith({
+    int? userId,
+    int? id,
+    String? imageURL,
+    String? name,
+    String? birthDate,
+    String? gender,
+    String? height,
+    String? weight,
+    String? diabetesType,
+    int? hypo,
+    int? rangeMin,
+    int? target,
+    int? rangeMax,
+    int? hyper,
+    String? deviceUUID,
+    int? manufacturerId,
+    int? yearOfDiagnosis,
+    bool? smoker,
+    bool? isFirstUser,
+    List<TreatmentModel>? treatmentList,
+  }) {
+    return Person(
+      userId: userId ?? this.userId,
+      id: id ?? this.id,
+      imageURL: imageURL ?? this.imageURL,
+      name: name ?? this.name,
+      birthDate: birthDate ?? this.birthDate,
+      gender: gender ?? this.gender,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
+      diabetesType: diabetesType ?? this.diabetesType,
+      hypo: hypo ?? this.hypo,
+      rangeMin: rangeMin ?? this.rangeMin,
+      target: target ?? this.target,
+      rangeMax: rangeMax ?? this.rangeMax,
+      hyper: hyper ?? this.hyper,
+      deviceUUID: deviceUUID ?? this.deviceUUID,
+      manufacturerId: manufacturerId ?? this.manufacturerId,
+      yearOfDiagnosis: yearOfDiagnosis ?? this.yearOfDiagnosis,
+      smoker: smoker ?? this.smoker,
+      isFirstUser: isFirstUser ?? this.isFirstUser,
+      treatmentList: treatmentList ?? this.treatmentList,
+    );
   }
 }
 
