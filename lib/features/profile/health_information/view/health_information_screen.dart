@@ -1,20 +1,31 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:provider/provider.dart';
-
+import 'package:onedosehealth/features/profile/health_information/cubit/health_information_cubit.dart';
 import '../../../../core/core.dart';
-import '../viewmodel/health_information_vm.dart';
 import '../widget/range_selection_slider.dart';
 
-class HealthInformationScreen extends StatefulWidget {
+class HealthInformationScreen extends StatelessWidget {
   const HealthInformationScreen({Key? key}) : super(key: key);
 
   @override
-  _HealthInformationScreenState createState() =>
-      _HealthInformationScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => HealthInformationCubit(),
+      child: const HealthInformationView(),
+    );
+  }
 }
 
-class _HealthInformationScreenState extends State<HealthInformationScreen> {
+class HealthInformationView extends StatefulWidget {
+  const HealthInformationView({Key? key}) : super(key: key);
+
+  @override
+  _HealthInformationViewState createState() => _HealthInformationViewState();
+}
+
+class _HealthInformationViewState extends State<HealthInformationView> {
   late TextEditingController diabetTypeController;
   late TextEditingController weightController;
   late TextEditingController normalRangeController;
@@ -54,34 +65,39 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<HealthInformationVm>(
-      create: (context) => HealthInformationVm(context),
-      child: Consumer<HealthInformationVm>(
-        builder: (
-          BuildContext context,
-          HealthInformationVm vm,
-          Widget? child,
-        ) {
-          vm.changeTextFiels(
-            diabetTypeController: diabetTypeController,
-            heightController: heightController,
-            maxRangeController: maxRangeController,
-            minRangeController: minRangeController,
-            normalRangeController: normalRangeController,
-            smokerController: smokerController,
-            weightController: weightController,
-            yearofDiagnosisController: yearofDiagnosisController,
+    return BlocConsumer<HealthInformationCubit, HealthInformationState>(
+      listener: (context, state) {
+        if (state.status == RbioLoadingProgress.success) {
+          Utils.instance.showSuccessSnackbar(
+            context,
+            LocaleProvider.of(context).personal_update_success,
           );
-
-          return KeyboardDismissOnTap(
-            child: RbioStackedScaffold(
-              isLoading: vm.showProgressOverlay,
-              appbar: _buildAppBar(context),
-              body: _buildBody(vm),
-            ),
+        } else if (state.status == RbioLoadingProgress.failure) {
+          Utils.instance.showErrorSnackbar(
+            context,
+            LocaleProvider.of(context).something_went_wrong,
           );
-        },
-      ),
+        }
+      },
+      builder: (context, state) {
+        context.read<HealthInformationCubit>().changeTextFiels(
+              diabetTypeController: diabetTypeController,
+              weightController: weightController,
+              heightController: heightController,
+              normalRangeController: normalRangeController,
+              maxRangeController: maxRangeController,
+              minRangeController: minRangeController,
+              smokerController: smokerController,
+              yearofDiagnosisController: yearofDiagnosisController,
+            );
+        return KeyboardDismissOnTap(
+          child: RbioStackedScaffold(
+            isLoading: state.showProgressOverlay,
+            appbar: _buildAppBar(context),
+            body: _buildBody(state),
+          ),
+        );
+      },
     );
   }
 
@@ -94,7 +110,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
     );
   }
 
-  Widget _buildBody(HealthInformationVm vm) {
+  Widget _buildBody(HealthInformationState state) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -121,7 +137,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     // Diabet Type
                     _buildTitle(LocaleProvider.current.diabet_type),
                     _buildTextField(
-                      vm,
+                      state,
                       diabetTypeController,
                       HealthInformationType.diabetType,
                     ),
@@ -130,7 +146,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildSpacer(),
                     _buildTitle(LocaleProvider.current.height),
                     _buildTextField(
-                      vm,
+                      state,
                       heightController,
                       HealthInformationType.height,
                     ),
@@ -139,7 +155,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildSpacer(),
                     _buildTitle(LocaleProvider.current.weight),
                     _buildTextField(
-                      vm,
+                      state,
                       weightController,
                       HealthInformationType.weight,
                     ),
@@ -148,18 +164,18 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildSpacer(),
                     _buildTitle(LocaleProvider.current.max_range),
                     _buildTextField(
-                      vm,
+                      state,
                       maxRangeController,
                       HealthInformationType.maxRange,
                     ),
 
-                    if (vm.selection.hyper! >= vm.selection.rangeMax! &&
-                        vm.selection.hyper != 0) ...[
+                    if (state.selection!.hyper! >= state.selection!.rangeMax! &&
+                        state.selection!.hyper != 0) ...[
                       // Normal Range
                       _buildSpacer(),
                       _buildTitle(LocaleProvider.current.normal_range),
                       _buildTextField(
-                        vm,
+                        state,
                         normalRangeController,
                         HealthInformationType.normalRange,
                       ),
@@ -169,7 +185,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildSpacer(),
                     _buildTitle(LocaleProvider.current.min_range),
                     _buildTextField(
-                      vm,
+                      state,
                       minRangeController,
                       HealthInformationType.minRange,
                     ),
@@ -178,7 +194,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildSpacer(),
                     _buildTitle(LocaleProvider.current.do_you_smoke),
                     _buildTextField(
-                      vm,
+                      state,
                       smokerController,
                       HealthInformationType.smoker,
                     ),
@@ -187,7 +203,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
                     _buildSpacer(),
                     _buildTitle(LocaleProvider.current.year_of_diagnosis),
                     _buildTextField(
-                      vm,
+                      state,
                       yearofDiagnosisController,
                       HealthInformationType.yearofDiagnosis,
                     ),
@@ -207,8 +223,10 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
             child: RbioElevatedButton(
               infinityWidth: true,
               title: LocaleProvider.current.update_information,
-              onTap: () {
-                vm.updateInformation(vm.selection);
+              onTap: () async {
+                await context
+                    .read<HealthInformationCubit>()
+                    .updateInformation(state.selection!);
               },
             ),
           ),
@@ -231,7 +249,7 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
       );
 
   Widget _buildTextField(
-    HealthInformationVm vm,
+    HealthInformationState state,
     TextEditingController controller,
     HealthInformationType type,
   ) =>
@@ -239,50 +257,52 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
         onTap: () async {
           switch (type) {
             case HealthInformationType.diabetType:
-              vm.showDiabetsSheet();
+              showDiabetsSheet(state);
               break;
 
             case HealthInformationType.weight:
-              vm.showWeightSheet();
+              showWeightSheet(state);
               break;
 
             case HealthInformationType.normalRange:
               {
                 getIt<ProfileStorageImpl>().getFirst().hyper =
-                    vm.selection.hyper;
+                    state.selection!.hyper;
                 final result = await Atom.show(
                   RangeSelectionSlider(
-                    id: vm.selection.id!,
-                    lowerValue: vm.selection.rangeMin!.toDouble(),
-                    upperValue: vm.selection.rangeMax!.toDouble(),
+                    id: state.selection!.id!,
+                    lowerValue: state.selection!.rangeMin!.toDouble(),
+                    upperValue: state.selection!.rangeMax!.toDouble(),
                   ),
                 );
                 if (result != null) {
                   if (result is Map) {
-                    vm.changeNormalRange(result);
+                    context
+                        .read<HealthInformationCubit>()
+                        .changeNormalRange(result);
                   }
                 }
                 break;
               }
 
             case HealthInformationType.height:
-              vm.showHeightSheet();
+              showHeightSheet(state);
               break;
 
             case HealthInformationType.maxRange:
-              vm.showMaxRangeSheet();
+              showMaxRangeSheet(state);
               break;
 
             case HealthInformationType.minRange:
-              vm.showMinRangeSheet();
+              showMinRangeSheet(state);
               break;
 
             case HealthInformationType.smoker:
-              vm.showSmokerSheet();
+              showSmokerSheet(state);
               break;
 
             case HealthInformationType.yearofDiagnosis:
-              vm.showDiagnosisSheet();
+              showDiagnosisSheet(state);
               break;
           }
         },
@@ -293,4 +313,325 @@ class _HealthInformationScreenState extends State<HealthInformationScreen> {
           ),
         ),
       );
+  // #region showDiabetsSheet
+  Future<void> showDiabetsSheet(HealthInformationState state) async {
+    final result = await showRbioSelectBottomSheet(
+      context,
+      title: LocaleProvider.current.diabet_type,
+      children: _getChildren(HealthInformationType.diabetType, state),
+      initialItem: _getInitialItem(HealthInformationType.diabetType, state),
+    );
+
+    if (result != null) {
+      switch (result) {
+        case 1:
+          context
+              .read<HealthInformationCubit>()
+              .changeDiabetsType(LocaleProvider.current.diabetes_type_1);
+          break;
+
+        case 2:
+          context
+              .read<HealthInformationCubit>()
+              .changeDiabetsType(LocaleProvider.current.diabetes_type_2);
+          break;
+
+        default:
+          context
+              .read<HealthInformationCubit>()
+              .changeDiabetsType(LocaleProvider.current.non_diabetes);
+      }
+    }
+  }
+
+  // #region showHeightSheet
+  Future<void> showHeightSheet(HealthInformationState state) async {
+    final result = await showRbioSelectBottomSheet(
+      context,
+      title: LocaleProvider.current.height,
+      children: _getChildren(HealthInformationType.height, state),
+      initialItem: _getInitialItem(HealthInformationType.height, state),
+    );
+
+    if (result != null) {
+      final selectedHeight = result;
+      context.read<HealthInformationCubit>().changeHeight(selectedHeight);
+    }
+  }
+
+  // #endregion
+  // #region showWeightSheet
+  Future<void> showWeightSheet(HealthInformationState state) async {
+    final result = await showRbioSelectBottomSheet(
+      context,
+      title: LocaleProvider.current.weight,
+      children: _getChildren(HealthInformationType.weight, state),
+      initialItem: _getInitialItem(HealthInformationType.weight, state),
+    );
+
+    if (result != null) {
+      final selectedWeight = result;
+      context.read<HealthInformationCubit>().changeWeight(selectedWeight);
+    }
+  }
+
+  // #endregion
+  // #region showMaxRangeSheet
+  Future<void> showMaxRangeSheet(HealthInformationState state) async {
+    final result = await showRbioSelectBottomSheet(
+      context,
+      title: LocaleProvider.current.max_range,
+      children: _getChildren(HealthInformationType.maxRange, state),
+      initialItem: _getInitialItem(HealthInformationType.maxRange, state),
+    );
+
+    if (result != null) {
+      final _selectedMaxRange =
+          context.read<HealthInformationCubit>().getMaxRangeList()[result];
+      context.read<HealthInformationCubit>().changeMaxRange(_selectedMaxRange);
+      state.selection!.hyper = _selectedMaxRange;
+    }
+  }
+
+  // #endregion
+  // #region showMinRangeSheet
+  Future<void> showMinRangeSheet(HealthInformationState state) async {
+    final result = await showRbioSelectBottomSheet(
+      context,
+      title: LocaleProvider.current.min_range,
+      children: _getChildren(HealthInformationType.minRange, state),
+      initialItem: _getInitialItem(HealthInformationType.minRange, state),
+    );
+
+    if (result != null) {
+      final _selectedMinRange = result;
+      context.read<HealthInformationCubit>().changeMinRange(_selectedMinRange);
+    }
+  }
+  // #endregion
+
+  // #region showDiagnosisSheet
+  Future<void> showDiagnosisSheet(HealthInformationState state) async {
+    {
+      final result = await showRbioSelectBottomSheet(
+        context,
+        title: LocaleProvider.current.year_of_diagnosis,
+        children: _getChildren(HealthInformationType.yearofDiagnosis, state),
+        initialItem:
+            _getInitialItem(HealthInformationType.yearofDiagnosis, state),
+      );
+
+      if (result != null) {
+        final selectedYear = (DateTime.now().year - result).toInt();
+        context.read<HealthInformationCubit>().changeDiagnosis(selectedYear);
+      }
+    }
+  }
+
+  // #endregion
+  // #region _getChildren
+  List<Widget> _getChildren(
+      HealthInformationType type, HealthInformationState state) {
+    TextStyle _bottomTextStyle =
+        CupertinoTheme.of(context).textTheme.dateTimePickerTextStyle;
+
+    switch (type) {
+      case HealthInformationType.diabetType:
+        {
+          return [
+            Center(
+              child: Text(
+                LocaleProvider.current.non_diabetes,
+                style: _bottomTextStyle,
+              ),
+            ),
+            Center(
+              child: Text(
+                LocaleProvider.current.diabetes_type_1,
+                style: _bottomTextStyle,
+              ),
+            ),
+            Center(
+              child: Text(
+                LocaleProvider.current.diabetes_type_2,
+                style: _bottomTextStyle,
+              ),
+            ),
+          ];
+        }
+
+      case HealthInformationType.height:
+        {
+          return List.generate(
+            250,
+            (index) => Center(
+              child: Text(
+                '$index cm',
+                style: _bottomTextStyle,
+              ),
+            ),
+          );
+        }
+
+      case HealthInformationType.weight:
+        {
+          return List.generate(
+            250,
+            (index) => Center(
+              child: Text(
+                '$index kg',
+                style: _bottomTextStyle,
+              ),
+            ),
+          );
+        }
+
+      case HealthInformationType.smoker:
+        {
+          return [
+            Center(
+              child: Text(
+                LocaleProvider.current.non_smoker,
+                style: _bottomTextStyle,
+              ),
+            ),
+            Center(
+              child: Text(
+                LocaleProvider.current.smoker,
+                style: _bottomTextStyle,
+              ),
+            ),
+          ];
+        }
+
+      case HealthInformationType.yearofDiagnosis:
+        {
+          return List.generate(
+            100,
+            (index) => Center(
+              child: Text(
+                '${DateTime.now().year - index}',
+                style: _bottomTextStyle,
+              ),
+            ),
+          );
+        }
+
+      case HealthInformationType.maxRange:
+        {
+          return context
+              .read<HealthInformationCubit>()
+              .getMaxRangeList()
+              .map(
+                (e) => Center(
+                  child: Text(
+                    (e).toString() + " mg/dL.",
+                    style: _bottomTextStyle,
+                  ),
+                ),
+              )
+              .toList();
+        }
+
+      case HealthInformationType.minRange:
+        {
+          return List.generate(
+            (state.selection?.rangeMin ?? 50 + 10) ~/ 10,
+            (index) => Center(
+              child: Text(
+                (index * 10).toString() + " mg/dL.",
+                style: _bottomTextStyle,
+              ),
+            ),
+          );
+        }
+
+      default:
+        throw Exception('Undefined type.');
+    }
+  }
+  // #endregion
+
+  // #region _getInitialItem
+  int _getInitialItem(
+      HealthInformationType type, HealthInformationState state) {
+    switch (type) {
+      case HealthInformationType.diabetType:
+        {
+          return (state.selection?.diabetesType == "Type 1" ||
+                  state.selection?.diabetesType == "Tip 1")
+              ? 1
+              : ((state.selection!.diabetesType == "Type 2" ||
+                      state.selection!.diabetesType == "Tip 2")
+                  ? 2
+                  : 0);
+        }
+
+      case HealthInformationType.height:
+        {
+          return int.tryParse(state.selection?.height ?? '170') ?? 150;
+        }
+
+      case HealthInformationType.weight:
+        return state.selection?.weight == 'null'
+            ? 0
+            : int.tryParse(state.selection?.weight ?? '70') ?? 50;
+
+      case HealthInformationType.smoker:
+        {
+          return state.selection?.smoker == null
+              ? 0
+              : state.selection?.smoker ?? false
+                  ? 1
+                  : 0;
+        }
+
+      case HealthInformationType.yearofDiagnosis:
+        {
+          return state.selection?.yearOfDiagnosis != null
+              ? DateTime.now().year - (state.selection?.yearOfDiagnosis ?? 2001)
+              : 0;
+        }
+
+      case HealthInformationType.maxRange:
+        {
+          return context
+              .read<HealthInformationCubit>()
+              .getMaxRangeList()
+              .indexOf(state.selection!.hyper!);
+        }
+
+      case HealthInformationType.minRange:
+        {
+          return state.selection!.hypo! ~/ 10;
+        }
+
+      default:
+        throw Exception('Undefined type.');
+    }
+  }
+
+  // #endregion
+  // #region showSmokerSheet
+  Future<void> showSmokerSheet(HealthInformationState state) async {
+    final result = await showRbioSelectBottomSheet(
+      context,
+      title: LocaleProvider.current.do_you_smoke,
+      children: _getChildren(HealthInformationType.smoker, state),
+      initialItem: _getInitialItem(HealthInformationType.smoker, state),
+    );
+
+    if (result != null) {
+      switch (result) {
+        case 0:
+          context.read<HealthInformationCubit>().changeSmokerType(false);
+          break;
+
+        default:
+          context.read<HealthInformationCubit>().changeSmokerType(true);
+      }
+    }
+  }
+  // #endregion
+
 }
