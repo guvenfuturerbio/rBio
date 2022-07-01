@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
-import '../../../model/model.dart';
+import '../../../../core/core.dart';
+import '../../../../model/model.dart';
+import '../model/get_availability_rate_request.dart';
+import '../model/get_availability_rate_response.dart';
 
 class RateDialogVm extends ChangeNotifier {
   BuildContext? mContext;

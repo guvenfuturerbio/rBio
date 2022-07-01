@@ -22,25 +22,6 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       );
 
   @override
-  Future<GuvenResponseModel> saveAndRetrieveToken(
-    SaveAndRetrieveTokenModel saveAndRetrieveToken,
-    String token,
-  ) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.ctSaveAndRetrieveToken,
-      saveAndRetrieveToken.toJson(),
-      options: Options(
-        headers: {'Authorization': token, 'Lang': Intl.getCurrentLocale()},
-      ),
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/saveAndRetrieveToken : ${response.isSuccessful}');
-    }
-  }
-
-  @override
   Future<StripDetailModel> getUserStrip(
     int entegrationId,
     String? deviceUUID,

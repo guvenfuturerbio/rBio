@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
 import '../../shared/necessary_identity/necessary_identity_screen.dart';
-import '../../shared/rate_dialog/rate_dialog.dart';
+import '../../shared/rate_dialog/view/rate_dialog.dart';
 import '../my_appointments.dart';
 
 class AppointmentListVm extends RbioVm {

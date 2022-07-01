@@ -5,7 +5,7 @@ import 'package:onedosehealth/features/take_appointment/create_appointment_summa
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/shared/country_list_response.dart';
+import '../model/country_list_response.dart';
 import '../viewmodel/create_appointment_summary_vm.dart';
 import 'qr_code_scanner_screen.dart';
 

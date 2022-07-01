@@ -36,7 +36,6 @@ Future<void> bootstrap(IAppConfig appConfig) async {
   );
 
   FlutterError.onError = (details) {
-    log(details.exceptionAsString(), stackTrace: details.stack);
     appConfig.platform.sentryManager.captureException(
       details.exception,
       stackTrace: details.stack,
@@ -69,7 +68,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
             blocObserver: AppBlocObserver(),
           );
         },
-        '1.0.32+48',
+        '1.0.34+51',
       );
     },
     (error, stackTrace) async {
