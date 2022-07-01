@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../bloc/search_bloc.dart';
+import '../model/filter_resources_response.dart';
 import '../model/search_social_type.dart';
 import '../utils/debouncer.dart';
 

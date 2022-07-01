@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/core.dart';
-import 'rate_dialog_vm.dart';
+import '../../../../core/core.dart';
+import '../viewmodel/rate_dialog_vm.dart';
 
 class RateDialog extends StatefulWidget {
   final int availabilityId;
