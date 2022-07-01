@@ -105,27 +105,26 @@ void main() {
         );
         expect(result, isNotEmpty);
       });
+
+      test('getAllSubCategories', () async {
+        final result = await apiService.getAllSubCategories(
+          getIt<IAppConfig>()
+              .endpoints
+              .base
+              .getAllSubCategoriesPath(13), // Masaj Paketleri
+        );
+        expect(result, isNotEmpty);
+      });
+
+      test('getSubCategoryDetail', () async {
+        final result = await apiService.getSubCategoryDetail(
+          getIt<IAppConfig>()
+              .endpoints
+              .base
+              .getSubCategoryDetailPath(22), // Masaj Paketleri
+        );
+        expect(result, isNotEmpty);
+      });
     },
   );
-
-  // test('Get Packages', () async {
-  //   final result = await apiService.getAllSubCategories(
-  //     _path,
-  //   );
-  //   expect(result, isNotEmpty);
-  // });
-
-  // test('Get Packages', () async {
-  //   final result = await apiService.getSubCategoryDetail(
-  //     _path,
-  //   );
-  //   expect(result, isNotEmpty);
-  // });
-
-  // test('Get Packages', () async {
-  //   final result = await apiService.getSubCategoryItems(
-  //     _path,
-  //   );
-  //   expect(result, isNotEmpty);
-  // });
 }
