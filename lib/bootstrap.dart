@@ -68,7 +68,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
             blocObserver: AppBlocObserver(),
           );
         },
-        '1.0.35+52',
+        getIt<GuvenSettings>().appVersion,
       );
     },
     (error, stackTrace) async {
