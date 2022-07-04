@@ -1,7 +1,12 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
+<<<<<<< HEAD
 export "FLUTTER_ROOT=/Users/berkaybeken/fvm/versions/3.0.3"
 export "FLUTTER_APPLICATION_PATH=/Users/berkaybeken/rBio/packages/keyboard_avoider-fix-mounted-bug/example"
+=======
+export "FLUTTER_ROOT=/Users/haydardemir/fvm/versions/stable"
+export "FLUTTER_APPLICATION_PATH=/Users/haydardemir/rBio/packages/keyboard_avoider-fix-mounted-bug/example"
+>>>>>>> master
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"

@@ -20,7 +20,6 @@ class TestOneDoseKeyManager extends KeyManager {
     map.addAll(
       {
         Keys.baseUrl: "https://rbio.guven.com.tr/api/v1",
-        Keys.apiGuven: "https://api.guven.com.tr/api/v1",
         Keys.devApiTest: "https://apitestbeta.onedosehealth.com/api/v1",
         Keys.doctorBaseUrl: "https://apitestbeta.onedosehealth.com",
         Keys.clientId: "CerebrumPlusProductionExternal",
