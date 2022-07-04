@@ -293,6 +293,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Kan şekeri sonucunu görüntüleyin."),
         "contour_plus_blood_sugar":
             MessageLookupByLibrary.simpleMessage("Contour Plus Blood Glucose"),
+        "copied": MessageLookupByLibrary.simpleMessage("Copied"),
+        "council_appointment":
+            MessageLookupByLibrary.simpleMessage("Council Appointment"),
+        "council_connection_link":
+            MessageLookupByLibrary.simpleMessage("Council Connection Link"),
         "council_report":
             MessageLookupByLibrary.simpleMessage("Council Report"),
         "council_requests":
@@ -359,6 +364,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Cvv code must be at least 3 digits"),
         "daily": MessageLookupByLibrary.simpleMessage("Daily"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
+        "date_and_hour": MessageLookupByLibrary.simpleMessage("Date and Hour"),
         "date_filter": MessageLookupByLibrary.simpleMessage("Date Filter : "),
         "date_of_birth": MessageLookupByLibrary.simpleMessage("Date of birth"),
         "day": MessageLookupByLibrary.simpleMessage("Day"),
@@ -538,6 +544,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("MyBloodGlucoseReport.xlsx"),
         "existing_relative_add": MessageLookupByLibrary.simpleMessage(
             "Existing User Saved Into Relatives."),
+        "expected_inspection":
+            MessageLookupByLibrary.simpleMessage("Expected Inspection"),
         "experiences": MessageLookupByLibrary.simpleMessage("Experiences"),
         "expiration_date_should_be": MessageLookupByLibrary.simpleMessage(
             "Expiration date should be written in mm/yy format"),
@@ -920,6 +928,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_done": MessageLookupByLibrary.simpleMessage("Not Done"),
         "not_found": MessageLookupByLibrary.simpleMessage("Not Found"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Not Specified"),
+        "note": MessageLookupByLibrary.simpleMessage(" Note"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "notification": MessageLookupByLibrary.simpleMessage("Notification"),
         "notification_inbox_empty": MessageLookupByLibrary.simpleMessage(
@@ -1037,6 +1046,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "patient_name_2": MessageLookupByLibrary.simpleMessage("Patient Name"),
         "patients": MessageLookupByLibrary.simpleMessage("Patients"),
         "pay": MessageLookupByLibrary.simpleMessage("Make Payment"),
+        "pay2": MessageLookupByLibrary.simpleMessage("Pay"),
         "payment": MessageLookupByLibrary.simpleMessage("Payment"),
         "payment_not_successful": MessageLookupByLibrary.simpleMessage(
             "Your payment is not successful.\nPlease call 444 25 25"),

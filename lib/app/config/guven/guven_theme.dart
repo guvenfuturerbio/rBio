@@ -204,7 +204,7 @@ class GuvenTheme extends IAppTheme {
   @override
   Color get eCouncilAppointmentReady => const Color(0xFF00A147);
   @override
-  Color get eCouncilResultCardTitleBackground => const Color(0xFFCAEAD8);
+  int get eCouncilReportCardTitleBackground => 0xFFCAEAD8;
   @override
   Color get eCouncilScafoldBackground => const Color(0xFFEDEDED);
 

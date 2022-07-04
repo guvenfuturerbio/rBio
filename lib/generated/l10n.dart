@@ -4600,6 +4600,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Date and Hour`
+  String get date_and_hour {
+    return Intl.message(
+      'Date and Hour',
+      name: 'date_and_hour',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Date of birth`
   String get date_of_birth {
     return Intl.message(
@@ -7630,6 +7640,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Pay`
+  String get pay2 {
+    return Intl.message(
+      'Pay',
+      name: 'pay2',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add discount code`
   String get add_discount_code {
     return Intl.message(
@@ -8930,6 +8950,16 @@ class LocaleProvider {
     );
   }
 
+  /// ` Note`
+  String get note {
+    return Intl.message(
+      ' Note',
+      name: 'note',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Special note`
   String get special_note {
     return Intl.message(
@@ -9100,21 +9130,21 @@ class LocaleProvider {
     );
   }
 
-  /// `Pending Inspection`
-  String get pending_inspection {
-    return Intl.message(
-      'Pending Inspection',
-      name: 'pending_inspection',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Pending Payment`
   String get pending_payment {
     return Intl.message(
       'Pending Payment',
       name: 'pending_payment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending Inspection`
+  String get pending_inspection {
+    return Intl.message(
+      'Pending Inspection',
+      name: 'pending_inspection',
       desc: '',
       args: [],
     );
@@ -9185,6 +9215,46 @@ class LocaleProvider {
     return Intl.message(
       'Department Manager',
       name: 'department_manager',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Council Appointment`
+  String get council_appointment {
+    return Intl.message(
+      'Council Appointment',
+      name: 'council_appointment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expected Inspection`
+  String get expected_inspection {
+    return Intl.message(
+      'Expected Inspection',
+      name: 'expected_inspection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Council Connection Link`
+  String get council_connection_link {
+    return Intl.message(
+      'Council Connection Link',
+      name: 'council_connection_link',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied`
+  String get copied {
+    return Intl.message(
+      'Copied',
+      name: 'copied',
       desc: '',
       args: [],
     );

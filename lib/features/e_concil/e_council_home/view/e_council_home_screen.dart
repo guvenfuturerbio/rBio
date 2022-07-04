@@ -171,7 +171,12 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                   ),
 
                   //
-                  const Icon(Icons.arrow_forward_ios_outlined)
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward_ios_outlined),
+                    onPressed: () {
+                      Atom.to(PagePaths.eCouncilRequestPage);
+                    },
+                  )
                 ],
               ),
             ),
@@ -236,8 +241,7 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
   }
 }
 
-/// E-Konsey Card List Tile
-/// Onay bekleyen, Odeme bekleyen, ....
+/// E-Konsey Taleplerim
 class _BuildECouncilListTile extends StatelessWidget {
   /// E-Konsey Card List Tile
   const _BuildECouncilListTile({

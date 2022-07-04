@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/e_concil/e_concil_results/e_couincil_results.dart';
+import 'package:onedosehealth/features/e_concil/e_concil_results/couincil_results_screen.dart';
+import 'package:onedosehealth/features/e_concil/e_couincil_requests/view/council_requests_screen.dart';
 import 'package:onedosehealth/features/e_concil/e_council_home/view/e_council_home_screen.dart';
+import 'package:onedosehealth/features/e_concil/e_council_results_detail/view/council_results_detail_screen.dart';
 import 'package:onedosehealth/features/e_concil/information_pages/view/e_council_information_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
@@ -655,7 +657,15 @@ class VRouterRoutes {
         ),
         VWidget(
           path: PagePaths.eCouncilResultPage,
-          widget: const ECouncilResultScreen(),
+          widget: const CouncilResultScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilRequestPage,
+          widget: const CouncilRequestsScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilResultDetailPage,
+          widget: const CouncilResultsDetailScreen(),
         ),
 
         // #endregion
@@ -809,6 +819,8 @@ class PagePaths {
   static const eCouncilInformationPage = '/e-council-information';
   static const eCouncilHomePage = '/e-council-home';
   static const eCouncilResultPage = '/council-result';
+  static const eCouncilRequestPage = '/council-requests';
+  static const eCouncilResultDetailPage = '/council-result-detail';
 
   // #endregion
 

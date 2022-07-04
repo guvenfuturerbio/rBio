@@ -287,6 +287,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Kan şekeri sonucunu görüntüleyin."),
         "contour_plus_blood_sugar":
             MessageLookupByLibrary.simpleMessage("Contour Plus Şeker Ölçüm"),
+        "copied": MessageLookupByLibrary.simpleMessage("Kopyalandı"),
+        "council_appointment":
+            MessageLookupByLibrary.simpleMessage("Konsey Randevusu"),
+        "council_connection_link":
+            MessageLookupByLibrary.simpleMessage("Konsey Bağlantı Linki"),
         "council_report": MessageLookupByLibrary.simpleMessage("Konsey Raporu"),
         "council_requests":
             MessageLookupByLibrary.simpleMessage("Konsey Taleplerim"),
@@ -351,6 +356,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Cvv kod en az 3 haneli olmalıdır"),
         "daily": MessageLookupByLibrary.simpleMessage("Günlük"),
         "date": MessageLookupByLibrary.simpleMessage("Tarih"),
+        "date_and_hour": MessageLookupByLibrary.simpleMessage("Tarih ve Saat"),
         "date_filter": MessageLookupByLibrary.simpleMessage("Tarih Aralığı:"),
         "date_of_birth": MessageLookupByLibrary.simpleMessage("Doğum Tarihi"),
         "day": MessageLookupByLibrary.simpleMessage("Gün"),
@@ -528,6 +534,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("KanSekerOlcumRaporu.xlsx"),
         "existing_relative_add": MessageLookupByLibrary.simpleMessage(
             "Var Olan Kullanıcı Profilinize Eklenmiştir."),
+        "expected_inspection":
+            MessageLookupByLibrary.simpleMessage("Beklenen Tetkik"),
         "experiences": MessageLookupByLibrary.simpleMessage("Deneyimleri"),
         "expiration_date_should_be": MessageLookupByLibrary.simpleMessage(
             "Son kullanma tarihi aa/yy formatında yazılmalıdır"),
@@ -908,6 +916,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_done": MessageLookupByLibrary.simpleMessage("Yapılmayan"),
         "not_found": MessageLookupByLibrary.simpleMessage("Bulunamadı"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Belirtilmemiş"),
+        "note": MessageLookupByLibrary.simpleMessage("Not"),
         "notes": MessageLookupByLibrary.simpleMessage("Notlar"),
         "notification": MessageLookupByLibrary.simpleMessage("Bildirim"),
         "notification_inbox_empty":
@@ -1022,6 +1031,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "patient_name_2": MessageLookupByLibrary.simpleMessage("Hasta Adı"),
         "patients": MessageLookupByLibrary.simpleMessage("Hastalar"),
         "pay": MessageLookupByLibrary.simpleMessage("Ödeme yap"),
+        "pay2": MessageLookupByLibrary.simpleMessage("Öde"),
         "payment": MessageLookupByLibrary.simpleMessage("Ödeme"),
         "payment_not_successful": MessageLookupByLibrary.simpleMessage(
             "Ödeme başarısız.\nLütfen 444 25 25 arayınız"),
@@ -1034,11 +1044,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "pdf_filename":
             MessageLookupByLibrary.simpleMessage("KanSekerOlcumRaporu.pdf"),
         "pending_approval":
-            MessageLookupByLibrary.simpleMessage("Onay bekleyen"),
+            MessageLookupByLibrary.simpleMessage("Onay bekleyeniyor"),
         "pending_inspection":
-            MessageLookupByLibrary.simpleMessage("Tetkik bekleyen"),
+            MessageLookupByLibrary.simpleMessage("Tetkik bekleyeniyor"),
         "pending_payment":
-            MessageLookupByLibrary.simpleMessage("Ödeme bekleyen"),
+            MessageLookupByLibrary.simpleMessage("Ödeme bekleyeniyor"),
         "person": MessageLookupByLibrary.simpleMessage("Kişi"),
         "personal_data_policy": MessageLookupByLibrary.simpleMessage(
             "Gizlilik Bildirimi ve Kişisel Veri Koruma Politikası"),
@@ -1106,7 +1116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "recover_your_password":
             MessageLookupByLibrary.simpleMessage("Şifremi Kurtar"),
         "refreshment": MessageLookupByLibrary.simpleMessage("Ara"),
-        "rejected": MessageLookupByLibrary.simpleMessage("Reddedilen"),
+        "rejected": MessageLookupByLibrary.simpleMessage("Reddedildi"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Bundan sonraki işlemleriniz seçilen kullanıcı ile yapılacaktır, onaylıyor musunuz?"),
         "relative_identity_number":
