@@ -14,7 +14,6 @@ enum Keys {
   devApiTest,
   doctorClientId,
   doctorClientSecret,
-  apiGuven,
 }
 
 extension KeysStringExt on String {
