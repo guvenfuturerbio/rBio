@@ -327,7 +327,7 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
 
   @override
   String changeUserPasswordUiPath(String oldPassword, String password) =>
-      '/user/mobile-change-user-password/$oldPassword/$password'.xBaseUrl;
+      '/user/mobile-change-user-password/$oldPassword/$password'.xDevApiTest;
 
   @override
   String getRoomStatusUiPath(String roomId) =>
