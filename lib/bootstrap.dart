@@ -69,6 +69,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
           );
         },
         getIt<GuvenSettings>().appVersion,
+        getIt<KeyManager>().get(Keys.sentryDsn),
       );
     },
     (error, stackTrace) async {
