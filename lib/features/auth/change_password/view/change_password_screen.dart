@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:provider/provider.dart';
+import 'package:onedosehealth/features/auth/change_password/cubit/change_password_cubit.dart';
 
 import '../../../../core/core.dart';
-import '../viewmodel/change_password_vm.dart';
 
-class ChangePasswordScreen extends StatefulWidget {
+class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
 
   @override
-  _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ChangePasswordCubit(getIt()),
+      child: const ChangePasswordView(),
+    );
+  }
 }
 
-class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+class ChangePasswordView extends StatefulWidget {
+  const ChangePasswordView({Key? key}) : super(key: key);
+
+  @override
+  _ChangePasswordViewState createState() => _ChangePasswordViewState();
+}
+
+class _ChangePasswordViewState extends State<ChangePasswordView> {
   late TextEditingController _passwordController;
   late TextEditingController _passwordAgainController;
   late TextEditingController _oldPasswordController;
@@ -50,31 +62,62 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     super.dispose();
   }
 
+  final AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction;
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ChangePasswordScreenVm>(
-      create: (context) => ChangePasswordScreenVm(context),
-      child: DefaultTabController(
-        length: 2,
-        child: KeyboardDismissOnTap(
-          child: _buildScreen(),
-        ),
+    return DefaultTabController(
+      length: 2,
+      child: KeyboardDismissOnTap(
+        child: _buildScreen(),
       ),
     );
   }
 
   Widget _buildScreen() {
-    return Consumer<ChangePasswordScreenVm>(
-      builder: (
-        BuildContext context,
-        ChangePasswordScreenVm vm,
-        Widget? child,
-      ) {
+    return BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
+      listener: (context, state) {
+        if (state.status == ChangePasswordStatus.showDialog) {
+          if (state.dialogTitle != null && state.dialogMessage != null) {
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) {
+                return RbioMessageDialog(
+                  description: state.dialogMessage!,
+                  buttonTitle: LocaleProvider.current.Ok,
+                  isAtom: false,
+                );
+              },
+            );
+          }
+        } else if (state.status == ChangePasswordStatus.done) {
+          formKey = GlobalKey<FormState>();
+          _oldPasswordController.text = '';
+          _passwordAgainController.text = '';
+          _passwordController.text = '';
+        } else if (state.status == ChangePasswordStatus.failure) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) {
+              return RbioMessageDialog(
+                description: LocaleProvider.current.something_went_wrong,
+                buttonTitle: LocaleProvider.current.Ok,
+                isAtom: false,
+              );
+            },
+          );
+        }
+      },
+      builder: (context, state) {
         return RbioStackedScaffold(
           resizeToAvoidBottomInset: true,
-          isLoading: vm.showProgressOverlay,
+          isLoading: state.showProgressOverlay,
           appbar: _buildAppBar(),
-          body: _buildBody(vm),
+          body: _buildBody(state),
         );
       },
     );
@@ -89,7 +132,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-  Widget _buildBody(ChangePasswordScreenVm value) {
+  Widget _buildBody(ChangePasswordState state) {
     return KeyboardAvoider(
       autoScroll: true,
       child: RbioKeyboardActions(
@@ -99,7 +142,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           _passwordAgainFocusNode,
         ],
         child: Form(
-          key: value.formKey,
+          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -124,7 +167,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               Container(
                 margin: const EdgeInsets.only(bottom: 20, top: 20),
                 child: RbioTextFormField(
-                  autovalidateMode: value.autovalidateMode,
+                  autovalidateMode: autovalidateMode,
                   validator: (value) {
                     if (value?.isNotEmpty ?? false) {
                       return null;
@@ -135,16 +178,19 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   focusNode: _oldPasswordFocusNode,
                   controller: _oldPasswordController,
                   textInputAction: TextInputAction.next,
-                  obscureText: value.oldPasswordVisibility ? false : true,
+                  obscureText: state.oldPasswordVisibility ? false : true,
                   hintText: LocaleProvider.of(context).hint_input_old_password,
                   prefixIcon: SvgPicture.asset(
                     R.image.passwordSmall,
                     fit: BoxFit.none,
                   ),
                   suffixIcon: RbioVisibilitySuffixIcon(
-                    eyesOpen: value.oldPasswordVisibility,
+                    eyesOpen: state.oldPasswordVisibility,
                     onTap: () {
-                      value.toggleOldPasswordVisibility();
+                      context
+                          .read<ChangePasswordCubit>()
+                          .toggleOldPasswordVisibility(
+                              state.oldPasswordVisibility);
                     },
                   ),
                   inputFormatters: <TextInputFormatter>[
@@ -170,7 +216,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 child: RbioTextFormField(
                   focusNode: _passwordFocusNode,
                   controller: _passwordController,
-                  autovalidateMode: value.autovalidateMode,
+                  autovalidateMode: autovalidateMode,
                   validator: (value) {
                     if (value?.isNotEmpty ?? false) {
                       return null;
@@ -179,7 +225,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     }
                   },
                   textInputAction: TextInputAction.next,
-                  obscureText: value.passwordVisibility ? false : true,
+                  obscureText: state.passwordVisibility ? false : true,
                   hintText: LocaleProvider.of(context).hint_input_password,
                   prefixIcon: SvgPicture.asset(
                     R.image.passwordAgain,
@@ -187,9 +233,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                   suffixIcon: RbioVisibilitySuffixIcon(
                     onTap: () {
-                      value.togglePasswordVisibility();
+                      context
+                          .read<ChangePasswordCubit>()
+                          .togglePasswordVisibility(state.passwordVisibility);
                     },
-                    eyesOpen: value.passwordVisibility,
+                    eyesOpen: state.passwordVisibility,
                   ),
                   inputFormatters: <TextInputFormatter>[
                     TabToNextFieldTextInputFormatter(
@@ -206,7 +254,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     );
                   },
                   onChanged: (text) {
-                    value.checkPasswordCapability(text);
+                    context
+                        .read<ChangePasswordCubit>()
+                        .checkPasswordCapability(text);
                   },
                 ),
               ),
@@ -217,7 +267,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 child: RbioTextFormField(
                   focusNode: _passwordAgainFocusNode,
                   controller: _passwordAgainController,
-                  autovalidateMode: value.autovalidateMode,
+                  autovalidateMode: autovalidateMode,
                   validator: (value) {
                     if (value?.isNotEmpty ?? false) {
                       return null;
@@ -226,7 +276,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     }
                   },
                   textInputAction: TextInputAction.done,
-                  obscureText: value.passwordAgainVisibility ? false : true,
+                  obscureText: state.passwordAgainVisibility ? false : true,
                   hintText: LocaleProvider.of(context).password_again,
                   prefixIcon: SvgPicture.asset(
                     R.image.passwordAgain,
@@ -234,9 +284,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                   suffixIcon: RbioVisibilitySuffixIcon(
                     onTap: () {
-                      value.togglePasswordAgainVisibility();
+                      context
+                          .read<ChangePasswordCubit>()
+                          .togglePasswordAgainVisibility(
+                              state.passwordAgainVisibility);
                     },
-                    eyesOpen: value.passwordAgainVisibility,
+                    eyesOpen: state.passwordAgainVisibility,
                   ),
                   inputFormatters: <TextInputFormatter>[
                     TabToNextFieldTextInputFormatter(
@@ -257,31 +310,31 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
               //
               _buildRow(
-                value.checkNumeric,
+                state.checkNumeric,
                 LocaleProvider.of(context).must_contain_digit,
               ),
 
               //
               _buildRow(
-                value.checkUpperCase,
+                state.checkUpperCase,
                 LocaleProvider.of(context).must_contain_uppercase,
               ),
 
               //
               _buildRow(
-                value.checkLowerCase,
+                state.checkLowerCase,
                 LocaleProvider.of(context).must_contain_lowercase,
               ),
 
               //
               _buildRow(
-                value.checkSpecial,
+                state.checkSpecial,
                 LocaleProvider.of(context).must_contain_special,
               ),
 
               //
               _buildRow(
-                value.checkLength,
+                state.checkLength,
                 LocaleProvider.of(context).password_must_8_char,
               ),
 
@@ -294,14 +347,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
                 child: RbioElevatedButton(
                   infinityWidth: true,
-                  title: LocaleProvider.of(context).btn_done.toUpperCase(),
+                  title: LocaleProvider.of(context).update.toUpperCase(),
                   onTap: () {
-                    if (value.formKey?.currentState?.validate() ?? false) {
-                      value.changePassword(
-                        oldPassword: _oldPasswordController.text.trim(),
-                        password: _passwordController.text.trim(),
-                        passwordAgain: _passwordAgainController.text.trim(),
-                      );
+                    if (formKey.currentState?.validate() ?? false) {
+                      context.read<ChangePasswordCubit>().changePassword(
+                            oldPassword: _oldPasswordController.text.trim(),
+                            password: _passwordController.text.trim(),
+                            passwordAgain: _passwordAgainController.text.trim(),
+                          );
                     }
                   },
                 ),

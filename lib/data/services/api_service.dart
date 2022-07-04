@@ -20,6 +20,10 @@ import '../../../features/take_appointment/create_appointment_summary/model/sync
 import '../../../features/take_appointment/do_mobile_payment/do_mobil_payment_voucher.dart';
 import '../../../model/model.dart';
 import '../../core/core.dart';
+import '../../features/dashboard/search/model/filter_resources_request.dart';
+import '../../features/dashboard/search/model/filter_resources_response.dart';
+import '../../features/shared/rate_dialog/model/get_availability_rate_request.dart';
+import '../../features/shared/rate_dialog/model/get_availability_rate_response.dart';
 
 part 'api_service_impl.dart';
 

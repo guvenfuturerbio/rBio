@@ -4,6 +4,8 @@ import 'package:turkish/turkish.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../../../dashboard/search/model/filter_resources_request.dart';
+import '../../../dashboard/search/model/filter_resources_response.dart';
 import '../model/filter_tenants_response.dart';
 
 enum Fields { department, tenant, doctors, relative }

@@ -244,6 +244,8 @@ class GuvenSettings {
     required this.buildNumber,
     this.appDocDirectory,
   });
+
+  String get appVersion => '$version+$buildNumber';
 }
 
 Future<void> registerStorage() async {
