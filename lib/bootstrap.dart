@@ -68,7 +68,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
             blocObserver: AppBlocObserver(),
           );
         },
-        '1.0.34+51',
+        '1.0.35+52',
       );
     },
     (error, stackTrace) async {
