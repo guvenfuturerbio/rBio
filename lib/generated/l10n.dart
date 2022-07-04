@@ -9049,6 +9049,16 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Not Now`
+  String get not_now {
+    return Intl.message(
+      'Not Now',
+      name: 'not_now',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

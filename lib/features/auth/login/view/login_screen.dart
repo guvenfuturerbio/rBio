@@ -127,6 +127,18 @@ class _LoginScreenState extends State<LoginScreen> {
             _buildRememberMe(value),
 
             //
+            RbioElevatedButton(
+              title: "Permission.camera",
+              onTap: () async {
+                final result = await getIt<PermissionManager>().request(
+                  permission: CameraPermissionStrategy(),
+                  context: context,
+                );
+                LoggerUtils.instance.i(result);
+              },
+            ),
+
+            //
             Padding(
               padding: EdgeInsets.symmetric(horizontal: context.width * 0.1),
               child: Column(

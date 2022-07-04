@@ -903,6 +903,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please contact us from 444 94 94 for Health Tracker services"),
         "not_done": MessageLookupByLibrary.simpleMessage("Not Done"),
         "not_found": MessageLookupByLibrary.simpleMessage("Not Found"),
+        "not_now": MessageLookupByLibrary.simpleMessage("Not Now"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Not Specified"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "notification": MessageLookupByLibrary.simpleMessage("Notification"),

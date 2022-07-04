@@ -894,5 +894,6 @@
   "magazines": "Dergiler",
   "your_data_is_synchronizing": "Verileriniz senkronize ediliyor",
   "onedosehealth_jailbreak_warning": "OneDoseHealth, güvenlik standartları gereği Root yada Jailbreak'li cihazlarda kullanılamaz.",
-  "guven_jailbreak_warning": "Güven Online, güvenlik standartları gereği Root yada Jailbreak'li cihazlarda kullanılamaz."
+  "guven_jailbreak_warning": "Güven Online, güvenlik standartları gereği Root yada Jailbreak'li cihazlarda kullanılamaz.",
+  "not_now": "Şimdi Değil"
 }

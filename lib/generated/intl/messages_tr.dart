@@ -892,6 +892,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sağlık Takibi özelliğini kullanmak için lütfen 4449494 numaralı telefondan bize ulaşın"),
         "not_done": MessageLookupByLibrary.simpleMessage("Yapılmayan"),
         "not_found": MessageLookupByLibrary.simpleMessage("Bulunamadı"),
+        "not_now": MessageLookupByLibrary.simpleMessage("Şimdi Değil"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Belirtilmemiş"),
         "notes": MessageLookupByLibrary.simpleMessage("Notlar"),
         "notification": MessageLookupByLibrary.simpleMessage("Bildirim"),
