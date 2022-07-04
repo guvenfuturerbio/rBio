@@ -46,8 +46,8 @@ android {
         applicationId "com.guvenfuture.mobile"
         minSdkVersion 23 //Required for Jitsi
         targetSdkVersion 31
-        versionCode 116
-        versionName "3.3.26"
+        versionCode 117
+        versionName "3.3.27"
     }
 
     compileOptions {
