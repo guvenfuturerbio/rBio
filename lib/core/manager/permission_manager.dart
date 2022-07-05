@@ -12,8 +12,88 @@ abstract class PermissionManager {
     required BuildContext context,
     String? message,
   });
+}
 
-  Future<void> openSettingsDialog(
+class PermissionManagerImpl extends PermissionManager {
+  @override
+  Future<bool> request({
+    required RbioPermissionStrategy permission,
+    required BuildContext context,
+    String? message,
+  }) async {
+    if (Platform.isIOS) {
+      if (permission.iosResponse != null) {
+        return permission.iosResponse!;
+      }
+    } else {
+      if (permission.androidResponse != null) {
+        return permission.androidResponse!;
+      }
+    }
+
+    final permissionStatus = await permission.permission.status;
+    late bool result;
+
+    switch (permissionStatus) {
+      case PermissionStatus.granted:
+      case PermissionStatus.limited: // iOS
+        result = true;
+        break;
+
+      case PermissionStatus.permanentlyDenied: // iOS
+        {
+          await _openSettingsDialog(
+            context,
+            message ?? permission.permanentlyDeniedMessage,
+          );
+          result = false;
+          break;
+        }
+
+      default:
+        {
+          final permissionResult = await permission.permission.request();
+
+          if (Platform.isAndroid) {
+            final shouldShowRequestRationale =
+                await permission.permission.shouldShowRequestRationale;
+            if (!shouldShowRequestRationale &&
+                permissionResult == PermissionStatus.permanentlyDenied) {
+              await _openSettingsDialog(
+                context,
+                message ?? permission.permanentlyDeniedMessage,
+              );
+              result = false;
+            } else {
+              result = permissionResult == PermissionStatus.granted ||
+                  permissionResult == PermissionStatus.limited;
+            }
+          } else {
+            result = permissionResult == PermissionStatus.granted ||
+                permissionResult == PermissionStatus.limited;
+          }
+
+          break;
+        }
+    }
+
+    return result;
+
+    // Android ve iOS'da uygulama ilk açıldığında -> PermissionStatus.denied
+    //
+    // Android
+    // Açılan dialog'un dışarısında bir yere dokunursan false dönüyor. (PermissionStatus.permanentlyDenied)
+    // 1-) While using the app (Allow only while using the app)  -> seçeneğine dokun 'true' dönüyor. Tekrardan metodu çalıştırırsan "PermissionStatus.granted" durumundadur.
+    // 2-) Only this time      (Ask Every Time)                  -> seçeneğine dokun 'true' dönüyor. Tekrardan metodu çalıştırırsan "PermissionStatus.granted" durumundadur. Uygulama her kapatılıp - açıldığında tekrardan soruyor.
+    // 3-) Deny                (Deny)                            -> seçeneğine dokun 'false' dönüyor. Tekrardan metodu çalıştırırsan "PermissionStatus.denied" durumundadur. Tekrardan metodu çalıştırırsan "PermissionStatus.permanentlyDenied" durumundadur. Tekrardan kullanıcıya alert çıkartmaz.
+    //
+    // iOS
+    // Açılan dialog'da
+    // 1-) Don't allow -> seçeneğine dokun 'false' dönüyor. Tekrardan metodu çalıştırırsan 'PermissionStatus.permanentlyDenied' case'ine düşüyor.
+    // 2-) Ok          -> seçeneğine dokun 'true' dönüyor. Tekrardan metodu çalıştırırsan "PermissionStatus.granted" durumundadur.
+  }
+
+  Future<void> _openSettingsDialog(
     BuildContext context,
     String message, {
     AsyncCallback? callback,
@@ -53,7 +133,10 @@ abstract class PermissionManager {
                 //
                 Row(
                   children: [
+                    //
                     R.sizes.wSizer12,
+
+                    //
                     Expanded(
                       child: RbioSmallDialogButton.red(
                         title: LocaleProvider.current.not_now,
@@ -62,7 +145,11 @@ abstract class PermissionManager {
                         },
                       ),
                     ),
+
+                    //
                     R.sizes.wSizer8,
+
+                    //
                     Expanded(
                       child: RbioSmallDialogButton.green(
                         title: LocaleProvider.current.settings,
@@ -77,6 +164,8 @@ abstract class PermissionManager {
                         },
                       ),
                     ),
+
+                    //
                     R.sizes.wSizer12,
                   ],
                 ),
@@ -86,97 +175,6 @@ abstract class PermissionManager {
         );
       },
     );
-  }
-}
-
-class PermissionManagerImpl extends PermissionManager {
-  @override
-  Future<bool> request({
-    required RbioPermissionStrategy permission,
-    required BuildContext context,
-    String? message,
-  }) =>
-      _request(
-        context: context,
-        item: permission,
-        message: message,
-      );
-
-  Future<bool> _request({
-    required BuildContext context,
-    required RbioPermissionStrategy item,
-    String? message,
-  }) async {
-    if (Platform.isIOS) {
-      if (item.iosResponse != null) {
-        return item.iosResponse!;
-      }
-    } else {
-      if (item.androidResponse != null) {
-        return item.androidResponse!;
-      }
-    }
-
-    final permissionStatus = await item.permission.status;
-    late bool result;
-
-    switch (permissionStatus) {
-      case PermissionStatus.granted:
-      case PermissionStatus.limited: // iOS
-        result = true;
-        break;
-
-      case PermissionStatus.permanentlyDenied: // iOS
-        {
-          await getIt<PermissionManager>().openSettingsDialog(
-            context,
-            message ?? item.permanentlyDeniedMessage,
-          );
-          result = false;
-          break;
-        }
-
-      default:
-        {
-          final permissionResult = await item.permission.request();
-
-          if (Platform.isAndroid) {
-            final shouldShowRequestRationale =
-                await item.permission.shouldShowRequestRationale;
-            if (!shouldShowRequestRationale &&
-                permissionResult == PermissionStatus.permanentlyDenied) {
-              await getIt<PermissionManager>().openSettingsDialog(
-                context,
-                message ?? item.permanentlyDeniedMessage,
-              );
-              result = false;
-            } else {
-              result = permissionResult == PermissionStatus.granted ||
-                  permissionResult == PermissionStatus.limited;
-            }
-          } else {
-            result = permissionResult == PermissionStatus.granted ||
-                permissionResult == PermissionStatus.limited;
-          }
-
-          break;
-        }
-    }
-
-    return result;
-
-    // Android ve iOS'da uygulama ilk açıldığında -> PermissionStatus.denied
-    //
-    // Android
-    // Açılan dialog'un dışarısında bir yere dokunursan false dönüyor. (PermissionStatus.permanentlyDenied)
-    // 1-) While using the app (Allow only while using the app)  -> seçeneğine dokun 'true' dönüyor. Tekrardan metodu çalıştırırsan "PermissionStatus.granted" durumundadur.
-    // 2-) Only this time      (Ask Every Time)                  -> seçeneğine dokun 'true' dönüyor. Tekrardan metodu çalıştırırsan "PermissionStatus.granted" durumundadur. Uygulama her kapatılıp - açıldığında tekrardan soruyor.
-    // 3-) Deny                (Deny)                            -> seçeneğine dokun 'false' dönüyor. Tekrardan metodu çalıştırırsan "PermissionStatus.denied" durumundadur. Tekrardan metodu çalıştırırsan "PermissionStatus.permanentlyDenied" durumundadur. Tekrardan kullanıcıya alert çıkartmaz.
-    //
-    // iOS
-    // Açılan dialog'da
-    // 1-) Don't allow -> seçeneğine dokun 'false' dönüyor. Tekrardan metodu çalıştırırsan 'PermissionStatus.permanentlyDenied' case'ine düşüyor.
-    // 2-) Ok          -> seçeneğine dokun 'true' dönüyor. Tekrardan metodu çalıştırırsan "PermissionStatus.granted" durumundadur.
   }
 }
 
@@ -196,35 +194,36 @@ abstract class RbioPermissionStrategy {
 }
 
 class CameraPermissionStrategy extends RbioPermissionStrategy {
-  CameraPermissionStrategy()
-      : super(Permission.camera, _PermissionMessages.permissionCamera);
+  CameraPermissionStrategy(LocaleProvider localeProvider, IAppConfig appConfig)
+      : super(
+          Permission.camera,
+          Atom.isIOS
+              ? localeProvider.permission_camera_message_ios(appConfig.title)
+              : localeProvider
+                  .permission_camera_message_android(appConfig.title),
+        );
 }
 
 class MicrophonePermissionStrategy extends RbioPermissionStrategy {
-  MicrophonePermissionStrategy()
-      : super(Permission.microphone, _PermissionMessages.permissionMicrophone);
+  MicrophonePermissionStrategy(
+      LocaleProvider localeProvider, IAppConfig appConfig)
+      : super(
+          Permission.microphone,
+          Atom.isIOS
+              ? localeProvider
+                  .permission_microphone_message_ios(appConfig.title)
+              : localeProvider
+                  .permission_microphone_message_android(appConfig.title),
+        );
 }
 
 class GalleryPermissionStrategy extends RbioPermissionStrategy {
-  GalleryPermissionStrategy()
-      : super(Platform.isAndroid ? Permission.storage : Permission.photos,
-            _PermissionMessages.permissionGallery);
-}
-
-class _PermissionMessages {
-  _PermissionMessages._();
-
-  static const String app = 'OneDoseHealth\'in';
-
-  static String permissionCamera = Platform.isIOS
-      ? '$app kameranıza erişimi yok. Erişime izin vermek için, Ayarlar\'a dokunun ve Kamera\'yı etkinleştirin.'
-      : 'Fotoğraf ve video çekmek için $app kameranıza erişimine izin verin. Ayarlar > İzinler\'e dokunun ve Kamera\'yı açık konuma getirin.';
-
-  static String permissionMicrophone = Platform.isIOS
-      ? 'Sesli video kaydedebilmek için $app mikrofona erişmesi gerekiyor. Erişime izin vermek için, Ayarlar\'a dokunun ve Mikrofon\'u açın.'
-      : 'Videoları sesli mi kaydetmek istiyorsunuz? $app mikrofununuza erişimine izin verin. Ayarlar > İzinler\'e giderek Mikrofon\'u açık konuma getirin.';
-
-  static String permissionGallery = Platform.isIOS
-      ? '$app fotoğraflarınıza veya videolarınıza erişimi yok. Erişime izin vermek için, Ayarlar\'a dokunun ve Fotoğraflar\'ı açın.'
-      : '$app fotoğraf, medya ve dosyalara erişimi yok. Ayarlar > İzinler\'e dokunun ve Depolama\'yı açık konuma getirin.';
+  GalleryPermissionStrategy(LocaleProvider localeProvider, IAppConfig appConfig)
+      : super(
+          Atom.isAndroid ? Permission.storage : Permission.photos,
+          Atom.isIOS
+              ? localeProvider.permission_gallery_message_ios(appConfig.title)
+              : localeProvider
+                  .permission_gallery_message_android(appConfig.title),
+        );
 }
