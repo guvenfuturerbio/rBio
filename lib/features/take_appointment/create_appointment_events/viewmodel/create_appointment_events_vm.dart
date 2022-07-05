@@ -83,7 +83,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       availableDates.sort();
       if (isFirstLaunch && availableDates.isNotEmpty) {
         //? Şimdiki tarihden önce gelen günler takvimi patlattığı için önceki günler silindi..
-        availableDates.removeWhere((DateTime element) => element.isBefore(DateTime.now()));
+        availableDates.removeWhere(
+            (DateTime element) => element.isBefore(DateTime.now()));
         initDate = availableDates.first;
       }
 
@@ -91,13 +92,17 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       availableDatesProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       availableDatesProgress = LoadingProgress.error;
       notifyListeners();
     }
   }
 
-  Future<List<DateTime>> getAvailableLists(DateTime date, bool isOnline, int tenantId) async {
+  Future<List<DateTime>> getAvailableLists(
+      DateTime date, bool isOnline, int tenantId) async {
     return (await getIt<Repository>().findResourceAvailableDays(
       FindResourceAvailableDaysRequest(
         appointmentType: isOnline ? 256 : 1,
@@ -106,7 +111,10 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
           departmentId: departmentId,
           resourceId: resourceId,
           from: date.toIso8601String(),
-          to: date.add(const Duration(days: 30)).xLastDayOfMonth.toIso8601String(),
+          to: date
+              .add(const Duration(days: 30))
+              .xLastDayOfMonth
+              .toIso8601String(),
         ),
       ),
     ))
@@ -128,8 +136,10 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   }
 
   void setFilterRangeDate(DateTime dateTime) {
-    final filterFromDate = DateTime(dateTime.year, dateTime.month, dateTime.day, 0, 0, 0);
-    final filterToDate = DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59);
+    final filterFromDate =
+        DateTime(dateTime.year, dateTime.month, dateTime.day, 0, 0, 0);
+    final filterToDate =
+        DateTime(dateTime.year, dateTime.month, dateTime.day, 23, 59, 59);
     this.filterFromDate = convertDatetime(filterFromDate);
     this.filterToDate = convertDatetime(filterToDate);
   }
@@ -137,7 +147,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   String convertDatetime(DateTime dateTime) => dateTime.xFormatTime6();
 
   String getToDateNextMonth(DateTime dateTime) {
-    final dateNextMonth = DateTime(dateTime.year, dateTime.month + 1, dateTime.day - 1, 0, 0, 0);
+    final dateNextMonth =
+        DateTime(dateTime.year, dateTime.month + 1, dateTime.day - 1, 0, 0, 0);
     return dateNextMonth.xFormatTime6();
   }
 
@@ -178,7 +189,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
         );
         availableSlots = await compute(
           calculateAppointmentHours,
-          _EventArgs(getOnlineEventsResponse, true, filterFromDate, filterToDate, selectedDate),
+          _EventArgs(getOnlineEventsResponse, true, filterFromDate,
+              filterToDate, selectedDate),
         );
         // availableSlots = await calculateAppointmentHours(
         //   _EventArgs(
@@ -200,7 +212,8 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
           );
           availableSlots = await compute(
             calculateAppointmentHours,
-            _EventArgs(getEventsResponse, false, filterFromDate, filterToDate, selectedDate),
+            _EventArgs(getEventsResponse, false, filterFromDate, filterToDate,
+                selectedDate),
           );
           // availableSlots = await calculateAppointmentHours(
           //   _EventArgs(
@@ -217,23 +230,34 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
       slotsProgress = LoadingProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>()
+          .platform
+          .sentryManager
+          .captureException(e, stackTrace: stackTrace);
       slotsProgress = LoadingProgress.error;
       notifyListeners();
     }
   }
 
-  bool dateContains(DateTime dayy) =>
-      availableDates.where((element) => element.year == dayy.year && element.month == dayy.month && element.day == dayy.day).toList().isNotEmpty;
+  bool dateContains(DateTime dayy) => availableDates
+      .where((element) =>
+          element.year == dayy.year &&
+          element.month == dayy.month &&
+          element.day == dayy.day)
+      .toList()
+      .isNotEmpty;
 }
 
-Future<Map<String, List<ResourcesRequest>>> calculateAppointmentHours(_EventArgs args) async {
+Future<Map<String, List<ResourcesRequest>>> calculateAppointmentHours(
+    _EventArgs args) async {
   final appointments = <ResourcesRequest>[];
 
   try {
     for (var data in args.getEventsResponse) {
-      DateTime dayStart = DateTime.parse(args.filterFromDate); // "2021-11-05T00:00:00"
-      DateTime dayEnd = DateTime.parse(args.filterToDate); // "2021-11-05T23:59:59"
+      DateTime dayStart =
+          DateTime.parse(args.filterFromDate); // "2021-11-05T00:00:00"
+      DateTime dayEnd =
+          DateTime.parse(args.filterToDate); // "2021-11-05T23:59:59"
       List<DateTime> availableSlotsList = [];
 
       if (data.serviceTime != 0) {
@@ -285,7 +309,8 @@ Future<Map<String, List<ResourcesRequest>>> calculateAppointmentHours(_EventArgs
             }
           }
         }
-        availableSlotsList = availableSlotsList.toSet().difference(removedList.toSet()).toList();
+        availableSlotsList =
+            availableSlotsList.toSet().difference(removedList.toSet()).toList();
 
         if (availableSlotsList.isNotEmpty) {
           for (var element in availableSlotsList) {
@@ -319,7 +344,10 @@ Future<Map<String, List<ResourcesRequest>>> calculateAppointmentHours(_EventArgs
       (m) => m.from!.substring(11, 16).substring(0, 2),
     );
   } catch (e, stackTrace) {
-    getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
+    getIt<IAppConfig>()
+        .platform
+        .sentryManager
+        .captureException(e, stackTrace: stackTrace);
     LoggerUtils.instance.e(e);
     return {};
   }
@@ -334,13 +362,15 @@ class _EventArgs {
   String filterToDate;
   DateTime? selectedDateTime;
 
-  _EventArgs(this.getEventsResponse, this.forOnline, this.filterFromDate, this.filterToDate, this.selectedDateTime);
+  _EventArgs(this.getEventsResponse, this.forOnline, this.filterFromDate,
+      this.filterToDate, this.selectedDateTime);
 }
 
 extension EventListExtension on List<ResourcesRequest> {
   List<ResourcesRequest> xToLocalDateHandler(DateTime selectedDate) {
     final result = where((item) {
-      final itemDate = DateTime.parse(item.from.toString()).xTurkishTimeToLocal();
+      final itemDate =
+          DateTime.parse(item.from.toString()).xTurkishTimeToLocal();
       return itemDate.xIsSameDate(selectedDate);
     }).toList();
     return result;

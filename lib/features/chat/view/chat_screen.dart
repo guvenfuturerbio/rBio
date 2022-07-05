@@ -205,9 +205,24 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: getIt<IAppConfig>().theme.mainColor,
                 width: 25,
               ),
-              onPressed: () {
-                chatVm.getImage(1, getCurrentUserId, otherPerson.id!,
-                    getCurrentPerson, otherPerson.firebaseToken!);
+              onPressed: () async {
+                if (!await getIt<PermissionManager>().request(
+                  permission: CameraPermissionStrategy(
+                    LocaleProvider.of(context),
+                    getIt<IAppConfig>(),
+                  ),
+                  context: context,
+                )) {
+                  return;
+                }
+
+                chatVm.getImage(
+                  1,
+                  getCurrentUserId,
+                  otherPerson.id!,
+                  getCurrentPerson,
+                  otherPerson.firebaseToken!,
+                );
               },
             ),
 
@@ -216,9 +231,24 @@ class _ChatScreenState extends State<ChatScreen> {
                 Icons.image_outlined,
                 color: getIt<IAppConfig>().theme.mainColor,
               ),
-              onPressed: () {
-                chatVm.getImage(0, getCurrentUserId, otherPerson.id!,
-                    getCurrentPerson, otherPerson.firebaseToken!);
+              onPressed: () async {
+                if (!await getIt<PermissionManager>().request(
+                  permission: GalleryPermissionStrategy(
+                    LocaleProvider.of(context),
+                    getIt<IAppConfig>(),
+                  ),
+                  context: context,
+                )) {
+                  return;
+                }
+
+                chatVm.getImage(
+                  0,
+                  getCurrentUserId,
+                  otherPerson.id!,
+                  getCurrentPerson,
+                  otherPerson.firebaseToken!,
+                );
               },
             ),
             //

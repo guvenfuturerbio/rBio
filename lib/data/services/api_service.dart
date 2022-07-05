@@ -163,4 +163,7 @@ abstract class ApiService {
 
   Future<GuvenResponseModel> getPostWithTagsByText(String search);
   Future<GuvenResponseModel> getPostWithTagsByPlatform(String search);
+
+  Future<void> sendOnlineAppointmentNotificationPusula(
+      String appointmentId, String fromDate);
 }

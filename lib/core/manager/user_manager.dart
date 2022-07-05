@@ -23,6 +23,7 @@ abstract class UserManager {
     BuildContext context,
     String webConsultantId,
     int availabilityId,
+    String fromDate,
   );
   Future setApplicationConsentFormState(bool isChecked);
   bool getApplicationConsentFormState();
@@ -188,6 +189,7 @@ class UserManagerImpl extends UserManager {
     BuildContext context,
     String webConsultantId,
     int availabilityId,
+    String fromDate,
   ) async {
     final token = _sharedPreferencesManager.get(SharedPreferencesKeys.jwtToken);
     const String streamType = "Jitsi";
@@ -244,7 +246,12 @@ class UserManagerImpl extends UserManager {
           );
         },
       ).then((value) async {
-        if (value != null && value as bool) {
+        if (value == true) {
+          await getIt<Repository>().sendOnlineAppointmentNotificationPusula(
+            availabilityId.toString(),
+            fromDate,
+          );
+
           await JitsiMeetWrapper.joinMeeting(
             options: options,
             listener: JitsiMeetingListener(
