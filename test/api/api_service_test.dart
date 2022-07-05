@@ -1,7 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/store/credit_card/model/package_payment_request.dart';
-import 'package:onedosehealth/features/store/credit_card/model/payment_cc_request.dart';
+import 'package:onedosehealth/features/dashboard/search/model/filter_resources_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/model/filter_departments_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/model/filter_tenants_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment_events/model/resources_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment_summary/model/save_appointment_request.dart';
+import 'package:onedosehealth/features/take_appointment/do_mobile_payment/appointment_request.dart';
+// import 'package:onedosehealth/features/store/credit_card/model/package_payment_request.dart';
+// import 'package:onedosehealth/features/store/credit_card/model/payment_cc_request.dart';
 
 import '../setup/locator_setup.dart';
 
@@ -18,15 +24,29 @@ void main() {
   const _testConsentId = "2";
   const _userNameString = "34954617212";
   const _userName = 34954617212;
-  const _userId = 67193;
+  const _userId = 54775;
   const _smsCode = "403283";
   const _wrongSmsCode = "222222";
-  const _bbPassword = "4";
+  const _bbPassword = "Berkay1!";
   // const _cardHolder = "test";
   // const _cardNumber = "test";
   // const _ccv = "test";
   // const _expirationMonth = "02";
   // const _expirationYear = "24";
+  const _identityNumber = "34954617212";
+  const _cayyoluTenantId = 7;
+  const _dietDepartmentId = 119;
+  const _appointmentDietResourceId = 863;
+  const _patientIdBerkay = 677379;
+  const _fromAppointmentStart = "2022-08-31T13:30:00";
+  const _toAppointmentStart = "2022-08-31T14:15:00";
+  const _resourceRequestId = null;
+  const _appointmentHospitalType = 1;
+  const _appointmentStatus = 1;
+  const _appointmentPatientType = 0;
+  const _appointmentSource = 3;
+  const _hospitalVideoCallLink = null;
+  const _hospitalVoucherCode = null;
 
   group(
     "Login",
@@ -153,4 +173,59 @@ void main() {
       // });
     },
   );
+
+  // test('updateUserSystemName', () async {
+  //   final result =
+  //       await apiService.updateUserSystemName(_identityNumber
+  //           );
+  //   expect(result, isNotEmpty);
+  // });
+
+  // test('filterTenants', () async {
+  //   final result = await apiService.filterTenants(
+  //       getIt<IAppConfig>().endpoints.base.filterTenantsPath,
+  //       FilterTenantsRequest(departmanId: 7));
+  //   expect(result, true);
+  // });
+
+  // test('filterDepartments', () async {
+  //   final result = await apiService.filterDepartments(FilterDepartmentsRequest(
+  //       tenantId: 7, search: "Instance of 'SearchObject"));
+  //   expect(result.isNotEmpty, true);
+  // });
+
+  // test('filterResources', () async {
+  //   final result = await apiService.filterResources(FilterResourcesRequest(
+  //       departmentId: 13,
+  //       tenantId: 1,
+  //       search: "Instance of 'SearchObject'",
+  //       appointmentType: 1));
+  //   expect(result, true);
+  // });
+
+  test('saveAppointment', () async {
+    final result = await apiService.saveAppointment(
+      AppointmentRequest(
+        saveAppointmentsRequest: SaveAppointmentsRequest(
+            tenantId: _cayyoluTenantId,
+            patientId: _patientIdBerkay,
+            resourcesRequestList: [
+              ResourcesRequest(
+                  tenantId: _cayyoluTenantId,
+                  departmentId: _dietDepartmentId,
+                  resourceId: _appointmentDietResourceId,
+                  from: _fromAppointmentStart,
+                  to: _toAppointmentStart,
+                  id: _resourceRequestId)
+            ],
+            type: _appointmentHospitalType,
+            status: _appointmentStatus,
+            patientType: _appointmentPatientType,
+            appointmentSource: _appointmentSource,
+            videoCallLink: _hospitalVideoCallLink),
+        voucherCode: _hospitalVoucherCode,
+      ),
+    );
+    expect(result, true);
+  });
 }
