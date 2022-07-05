@@ -215,24 +215,16 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
-                  child: Text(
-                    LocaleProvider.current.rate_thank_you,
-                    style: context.xHeadline4.copyWith(
-                      color: getIt<IAppConfig>().theme.mainColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                R.sizes.wSizer40,
-                RbioIconButton(
+                _buildThankYouText(),
+
+                //
+                _build40Gap(),
+
+                //
+                _buildStartVideoButton(
                   onPressed: () {
                     value.handleAppointment(data);
                   },
-                  icon: SvgPicture.asset(
-                    R.image.startVideo,
-                    color: getIt<IAppConfig>().theme.white,
-                  ),
                 ),
               ],
             ),
@@ -241,33 +233,18 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Center(
-                  child: RbioIconButton(
-                    onPressed: () {
-                      final itemId = data.id;
-                      if (itemId != null) {
-                        value.showRateDialog(itemId);
-                      }
-                    },
-                    icon: SvgPicture.asset(
-                      R.image.rate,
-                      color: getIt<IAppConfig>().theme.white,
-                    ),
-                  ),
-                ),
-              ),
-              R.sizes.wSizer40,
+              //
+              _buildRateButton(data, value),
+
+              //
+              _build40Gap(),
+
+              //
               Center(
-                child: RbioIconButton(
+                child: _buildStartVideoButton(
                   onPressed: () {
                     value.handleAppointment(data);
                   },
-                  icon: SvgPicture.asset(
-                    R.image.startVideo,
-                    color: getIt<IAppConfig>().theme.white,
-                  ),
                 ),
               ),
             ],
@@ -284,17 +261,14 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
-                  child: Text(
-                    LocaleProvider.current.rate_thank_you,
-                    style: context.xHeadline4.copyWith(
-                      color: getIt<IAppConfig>().theme.mainColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                R.sizes.wSizer40,
-                RbioIconButton(
+                //
+                _buildThankYouText(),
+
+                //
+                _build40Gap(),
+
+                //
+                _buildStartVideoButton(
                   backColor: getIt<IAppConfig>().theme.red,
                   onPressed: () {
                     showDialog(
@@ -309,10 +283,6 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                       },
                     );
                   },
-                  icon: SvgPicture.asset(
-                    R.image.startVideo,
-                    color: getIt<IAppConfig>().theme.white,
-                  ),
                 ),
               ],
             ),
@@ -321,26 +291,15 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Center(
-                  child: RbioIconButton(
-                    onPressed: () {
-                      final itemId = data.id;
-                      if (itemId != null) {
-                        value.showRateDialog(itemId);
-                      }
-                    },
-                    icon: SvgPicture.asset(
-                      R.image.rate,
-                      color: getIt<IAppConfig>().theme.white,
-                    ),
-                  ),
-                ),
-              ),
-              R.sizes.wSizer40,
+              //
+              _buildRateButton(data, value),
+
+              //
+              _build40Gap(),
+
+              //
               Center(
-                child: RbioIconButton(
+                child: _buildStartVideoButton(
                   backColor: getIt<IAppConfig>().theme.gray,
                   onPressed: () {
                     showDialog(
@@ -355,10 +314,6 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                       },
                     );
                   },
-                  icon: SvgPicture.asset(
-                    R.image.startVideo,
-                    color: getIt<IAppConfig>().theme.white,
-                  ),
                 ),
               ),
             ],
@@ -414,5 +369,56 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
     } else {
       return null;
     }
+  }
+
+  Widget _buildThankYouText() {
+    return Center(
+      child: Text(
+        LocaleProvider.current.rate_thank_you,
+        style: context.xHeadline4.copyWith(
+          color: getIt<IAppConfig>().theme.mainColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _build40Gap() => R.sizes.wSizer40;
+
+  Widget _buildStartVideoButton({
+    Color? backColor,
+    required void Function() onPressed,
+  }) {
+    return RbioIconButton(
+      backColor: backColor,
+      onPressed: onPressed,
+      icon: SvgPicture.asset(
+        R.image.startVideo,
+        color: getIt<IAppConfig>().theme.white,
+      ),
+    );
+  }
+
+  Widget _buildRateButton(
+    PatientAppointmentsResponse data,
+    AppointmentListVm value,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Center(
+        child: RbioIconButton(
+          onPressed: () {
+            final itemId = data.id;
+            if (itemId != null) {
+              value.showRateDialog(itemId);
+            }
+          },
+          icon: SvgPicture.asset(
+            R.image.rate,
+            color: getIt<IAppConfig>().theme.white,
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -465,6 +465,12 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
   @override
   String get ctSaveAndRetrieveToken =>
       '/AccessToken/validate-remote-token'.xBaseUrl;
+
+  @override
+  String sendOnlineAppointmentNotificationPusula(
+          String appointmentId, String fromDate) =>
+      "/Notification/send-online-appointment-notification-pusula/$appointmentId/$fromDate"
+          .xBaseUrl;
 }
 
 class OneDoseDoctorEndpoints extends DoctorEndpoints {

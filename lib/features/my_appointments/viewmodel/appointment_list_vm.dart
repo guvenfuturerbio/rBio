@@ -305,6 +305,11 @@ class AppointmentListVm extends RbioVm {
   Future<void> handleAppointment(PatientAppointmentsResponse data) async {
     if (data.type == R.constants.onlineAppointmentType) {
       try {
+        await getIt<Repository>().sendOnlineAppointmentNotificationPusula(
+          data.id.toString(),
+          data.resources?.first.from ?? '',
+        );
+
         late bool result;
         if (data.id != null) {
           result = await isOnlineAppointmentPaid(data.id!);

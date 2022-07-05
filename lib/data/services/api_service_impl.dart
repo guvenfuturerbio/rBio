@@ -1378,4 +1378,25 @@ class ApiServiceImpl extends ApiService {
       throw Exception('/synchronizeOneDoseUser : ${response.isSuccessful}');
     }
   }
+
+  @override
+  Future<void> sendOnlineAppointmentNotificationPusula(
+    String appointmentId,
+    String fromDate,
+  ) async {
+    try {
+      await helper.postGuven(
+        getIt<IAppConfig>()
+            .endpoints
+            .base
+            .sendOnlineAppointmentNotificationPusula(appointmentId, fromDate),
+        {},
+        options: authOptions,
+      );
+    } catch (e) {
+      LoggerUtils.instance.e(
+        "apiServiceImpl - sendOnlineAppointmentNotificationPusula($appointmentId, $fromDate)",
+      );
+    }
+  }
 }
