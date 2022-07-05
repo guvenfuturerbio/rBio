@@ -31,8 +31,9 @@ class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
   List<int> pageQueryHolder = [2];
   @override
   void initState() {
-    widget._facebookSdk = FlutterFacebookSdk();
     super.initState();
+    widget._facebookSdk = FlutterFacebookSdk();
+    getIt<FirebaseMessagingManager>().userInit();
   }
 
   @override
