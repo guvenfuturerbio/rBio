@@ -34,7 +34,7 @@ class AppointmentListVm extends RbioVm {
       }
 
       if (jitsiRoomId != null) {
-        await joinMeeting(jitsiRoomId, null);
+        await joinMeeting(jitsiRoomId, null, "");
       }
     });
   }
@@ -160,7 +160,11 @@ class AppointmentListVm extends RbioVm {
     }
   }
 
-  Future<void> joinMeeting(String webConsultantId, int? availabilityId) async {
+  Future<void> joinMeeting(
+    String webConsultantId,
+    int? availabilityId,
+    String fromDate,
+  ) async {
     //webConsultantId = webConsultantId.substring(webConsultantId.indexOf('='));
     showProgressOverlay = true;
     notifyListeners();
@@ -173,6 +177,7 @@ class AppointmentListVm extends RbioVm {
             queryParameters: {
               'webConsultAppId': webConsultantId.toString(),
               'availability': availabilityId.toString(),
+              'fromDate': fromDate.toString(),
             },
           );
         }
@@ -182,6 +187,7 @@ class AppointmentListVm extends RbioVm {
             mContext,
             webConsultantId,
             availabilityId,
+            fromDate,
           );
         }
       }
@@ -305,11 +311,6 @@ class AppointmentListVm extends RbioVm {
   Future<void> handleAppointment(PatientAppointmentsResponse data) async {
     if (data.type == R.constants.onlineAppointmentType) {
       try {
-        await getIt<Repository>().sendOnlineAppointmentNotificationPusula(
-          data.id.toString(),
-          data.resources?.first.from ?? '',
-        );
-
         late bool result;
         if (data.id != null) {
           result = await isOnlineAppointmentPaid(data.id!);
@@ -317,7 +318,11 @@ class AppointmentListVm extends RbioVm {
 
         if (result) {
           if (data.videoGuid != null) {
-            joinMeeting(data.videoGuid!, data.id);
+            joinMeeting(
+              data.videoGuid!,
+              data.id,
+              data.resources?.first.from ?? '',
+            );
           }
         } else {
           showDialog(
