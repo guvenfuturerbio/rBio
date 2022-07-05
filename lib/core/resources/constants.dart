@@ -68,7 +68,7 @@ class _Constants {
   final tenantAyranciId = 1;
   final tenantCayyoluId = 7;
   final tenantOnlineId = -1;
-  final videoCallBoundaryDuration = const Duration(hours: 2000000);
+  final videoCallBoundaryDuration = const Duration(hours: 2);
 
   final accuCheckSetup = "assets/device/accu_check.mp4";
   final contourPlusOneSetup = "assets/device/contour_plus_one.mp4";
