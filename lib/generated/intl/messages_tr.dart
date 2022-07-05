@@ -20,6 +20,24 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'tr';
 
+  static String m0(appName) =>
+      "Fotoğraf ve video çekmek için ${appName} kameranıza erişimine izin verin. Ayarlar > İzinler\'e dokunun ve Kamera\'yı açık konuma getirin.";
+
+  static String m1(appName) =>
+      "${appName} kameranıza erişimi yok. Erişime izin vermek için, Ayarlar\'a dokunun ve Kamera\'yı etkinleştirin.";
+
+  static String m2(appName) =>
+      "${appName} fotoğraf, medya ve dosyalara erişimi yok. Ayarlar > İzinler\'e dokunun ve Depolama\'yı açık konuma getirin.";
+
+  static String m3(appName) =>
+      "${appName} fotoğraflarınıza veya videolarınıza erişimi yok. Erişime izin vermek için, Ayarlar\'a dokunun ve Fotoğraflar\'ı açın.";
+
+  static String m4(appName) =>
+      "Videoları sesli mi kaydetmek istiyorsunuz? ${appName} mikrofununuza erişimine izin verin. Ayarlar > İzinler\'e giderek Mikrofon\'u açık konuma getirin.";
+
+  static String m5(appName) =>
+      "Sesli video kaydedebilmek için ${appName} mikrofona erişmesi gerekiyor. Erişime izin vermek için, Ayarlar\'a dokunun ve Mikrofon\'u açın.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Ok": MessageLookupByLibrary.simpleMessage("Tamam"),
@@ -892,6 +910,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sağlık Takibi özelliğini kullanmak için lütfen 4449494 numaralı telefondan bize ulaşın"),
         "not_done": MessageLookupByLibrary.simpleMessage("Yapılmayan"),
         "not_found": MessageLookupByLibrary.simpleMessage("Bulunamadı"),
+        "not_now": MessageLookupByLibrary.simpleMessage("Şimdi Değil"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Belirtilmemiş"),
         "notes": MessageLookupByLibrary.simpleMessage("Notlar"),
         "notification": MessageLookupByLibrary.simpleMessage("Bildirim"),
@@ -1018,6 +1037,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ödeme işlemi başarılı. Randevunuz başarıyla oluşturulmuştur"),
         "pdf_filename":
             MessageLookupByLibrary.simpleMessage("KanSekerOlcumRaporu.pdf"),
+        "permission_camera_message_android": m0,
+        "permission_camera_message_ios": m1,
+        "permission_gallery_message_android": m2,
+        "permission_gallery_message_ios": m3,
+        "permission_microphone_message_android": m4,
+        "permission_microphone_message_ios": m5,
         "person": MessageLookupByLibrary.simpleMessage("Kişi"),
         "personal_data_policy": MessageLookupByLibrary.simpleMessage(
             "Gizlilik Bildirimi ve Kişisel Veri Koruma Politikası"),

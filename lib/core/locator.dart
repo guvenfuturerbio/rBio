@@ -17,6 +17,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   await getIt<KeyManager>().setup(appConfig.endpoints.envPath);
 
   getIt.registerSingleton<IAppConfig>(appConfig);
+  getIt.registerSingleton<PermissionManager>(PermissionManagerImpl());
   getIt.registerSingleton<CacheClient>(CacheClient());
   getIt.registerSingleton<UrlLauncherManager>(UrlLauncherManagerImpl());
   getIt.registerSingleton<FirebaseAnalyticsManager>(FirebaseAnalyticsManager());

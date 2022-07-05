@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../../../core/core.dart';
 
@@ -29,73 +25,17 @@ class BgTaggerVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  onChangeDate(DateTime value) {
+  void onChangeDate(DateTime value) {
     data.time = value.millisecondsSinceEpoch;
     notifyListeners();
   }
 
-  changeTag(int tag) {
+  void changeTag(int tag) {
     data.tag = tag;
     notifyListeners();
   }
 
-  void getPhotoFromSource(ImageSource imageSource) async {
-    PermissionStatus? photoPerm, cameraPerm;
-    final picker = ImagePicker();
-
-    try {
-      try {
-        if (imageSource == ImageSource.gallery) {
-          photoPerm = await Permission.storage.request();
-
-          if (Platform.isAndroid) {
-            photoPerm = await Permission.storage.request();
-          }
-        } else {
-          cameraPerm = await Permission.camera.request();
-        }
-      } catch (e, stackTrace) {
-        getIt<IAppConfig>()
-            .platform
-            .sentryManager
-            .captureException(e, stackTrace: stackTrace);
-        LoggerUtils.instance.e(e);
-      }
-
-      if (photoPerm == PermissionStatus.denied ||
-          photoPerm == PermissionStatus.permanentlyDenied) {
-        permissionDeniedDialog();
-        return;
-      } else if (cameraPerm == PermissionStatus.denied ||
-          cameraPerm == PermissionStatus.permanentlyDenied) {
-        permissionDeniedDialog();
-        return;
-      }
-
-      final XFile? pickedFile = await picker.pickImage(source: imageSource);
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        Navigator.pop(context);
-      });
-
-      if (pickedFile != null) {
-        final fileName = basename(pickedFile.path);
-        final file = File(fileName);
-        await file.copy('${getIt<GuvenSettings>().appDocDirectory}/$fileName');
-        changePic(pickedFile, fileName);
-      } else {
-        LoggerUtils.instance.e('No image selected.');
-      }
-    } catch (e, stk) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stk);
-      LoggerUtils.instance.e(e);
-      debugPrintStack(stackTrace: stk);
-    }
-  }
-
-  changePic(XFile file, String fileName) {
+  void changePic(XFile file, String fileName) {
     data.imageFile = file;
     data.imageURL = fileName;
   }

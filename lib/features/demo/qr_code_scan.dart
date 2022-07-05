@@ -96,17 +96,18 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
       backgroundColor: Colors.green,
       body: Center(
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              RbioElevatedButton(
-                title: 'ScanQrCode',
-                onTap: () {
-                  getPhotoFromSource(ImageSource.gallery);
-                },
-              ),
-              Text(text!),
-            ]),
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            RbioElevatedButton(
+              title: 'ScanQrCode',
+              onTap: () {
+                getPhotoFromSource(ImageSource.gallery);
+              },
+            ),
+            Text(text!),
+          ],
+        ),
       ),
     );
   }

@@ -327,7 +327,7 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
 
   @override
   String changeUserPasswordUiPath(String oldPassword, String password) =>
-      '/user/mobile-change-user-password/$oldPassword/$password'.xBaseUrl;
+      '/user/mobile-change-user-password/$oldPassword/$password'.xDevApiTest;
 
   @override
   String getRoomStatusUiPath(String roomId) =>
@@ -465,6 +465,12 @@ class OneDoseBaseEndpoints extends BaseEndpoints {
   @override
   String get ctSaveAndRetrieveToken =>
       '/AccessToken/validate-remote-token'.xBaseUrl;
+
+  @override
+  String sendOnlineAppointmentNotificationPusula(
+          String appointmentId, String fromDate) =>
+      "/Notification/send-online-appointment-notification-pusula/$appointmentId/$fromDate"
+          .xBaseUrl;
 }
 
 class OneDoseDoctorEndpoints extends DoctorEndpoints {

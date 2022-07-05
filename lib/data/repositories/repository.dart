@@ -476,4 +476,11 @@ class Repository {
     return filteredSocialResources;
   }
   // #endregion
+
+  Future<void> sendOnlineAppointmentNotificationPusula(
+    String appointmentId,
+    String fromDate,
+  ) =>
+      apiService.sendOnlineAppointmentNotificationPusula(
+          appointmentId, fromDate);
 }

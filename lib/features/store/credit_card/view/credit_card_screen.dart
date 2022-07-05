@@ -128,7 +128,7 @@ class _CreditCardViewState extends State<CreditCardView> {
               builder: (BuildContext context) {
                 return RbioMessageDialog(
                   description: state.result.dialogMessage!,
-                  buttonTitle: LocaleProvider.current.ok,
+                  buttonTitle: LocaleProvider.current.Ok,
                   isAtom: false,
                 );
               },
@@ -154,7 +154,7 @@ class _CreditCardViewState extends State<CreditCardView> {
             builder: (BuildContext context) {
               return RbioMessageDialog(
                 description: LocaleProvider.current.something_went_wrong,
-                buttonTitle: LocaleProvider.current.ok,
+                buttonTitle: LocaleProvider.current.Ok,
                 isAtom: false,
               );
             },
