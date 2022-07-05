@@ -653,6 +653,12 @@ PODS:
     - SDWebImage
     - SwiftyGif
   - DTTJailbreakDetection (0.4.0)
+  - FBSDKCoreKit (9.1.0):
+    - FBSDKCoreKit/Basics (= 9.1.0)
+    - FBSDKCoreKit/Core (= 9.1.0)
+  - FBSDKCoreKit/Basics (9.1.0)
+  - FBSDKCoreKit/Core (9.1.0):
+    - FBSDKCoreKit/Basics
   - file_picker (0.0.1):
     - DKImagePickerController/PhotoGallery
     - Flutter
@@ -772,6 +778,9 @@ PODS:
   - flutter_blue_plus/Protos (0.0.1):
     - Flutter
     - Protobuf (~> 3.11)
+  - flutter_facebook_sdk (0.0.1):
+    - FBSDKCoreKit (~> 9.1.0)
+    - Flutter
   - flutter_jailbreak_detection (1.0.0):
     - DTTJailbreakDetection
     - Flutter
@@ -1016,6 +1025,7 @@ DEPENDENCIES:
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
   - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
+  - flutter_facebook_sdk (from `.symlinks/plugins/flutter_facebook_sdk/ios`)
   - flutter_jailbreak_detection (from `.symlinks/plugins/flutter_jailbreak_detection/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
@@ -1053,6 +1063,7 @@ SPEC REPOS:
     - DKImagePickerController
     - DKPhotoGallery
     - DTTJailbreakDetection
+    - FBSDKCoreKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -1121,6 +1132,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_blue_plus:
     :path: ".symlinks/plugins/flutter_blue_plus/ios"
+  flutter_facebook_sdk:
+    :path: ".symlinks/plugins/flutter_facebook_sdk/ios"
   flutter_jailbreak_detection:
     :path: ".symlinks/plugins/flutter_jailbreak_detection/ios"
   flutter_keyboard_visibility:
@@ -1191,6 +1204,7 @@ SPEC CHECKSUMS:
   DKImagePickerController: 72fd378f244cef3d27288e0aebf217a4467e4012
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
+  FBSDKCoreKit: a00fe2efd780c195a5e09201bf51c56106245b40
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
   firebase_analytics: 99eefffcacf3ab694db7926dd1291833e1300853
@@ -1210,6 +1224,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: 8019af461599b2c3bc61c6a5dbdfa3d2de66a4d9
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_blue_plus: 6787777145d615de01828f3a9fa423c3c702f0b3
+  flutter_facebook_sdk: 82c8d10c6226b66de5459d6115ab02d1ecd66cd9
   flutter_jailbreak_detection: f6c01e4bc73641c6b69c5112e50301240601abb4
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
