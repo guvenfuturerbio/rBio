@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:provider/provider.dart';
+import 'package:onedosehealth/features/auth/forgot_password/cubit/forgot_password_step1_cubit/forgot_password_step1_cubit.dart';
 
 import '../../../../core/core.dart';
 import '../../auth.dart';
 
-class ForgotPasswordStep1Screen extends StatefulWidget {
+class ForgotPasswordStep1Screen extends StatelessWidget {
   const ForgotPasswordStep1Screen({Key? key}) : super(key: key);
 
   @override
-  _ForgotPasswordStep1ScreenState createState() =>
-      _ForgotPasswordStep1ScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ForgotPasswordStep1Cubit(getIt()),
+      child: const ForgotPasswordStep1View(),
+    );
+  }
 }
 
-class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
+class ForgotPasswordStep1View extends StatefulWidget {
+  const ForgotPasswordStep1View({Key? key}) : super(key: key);
+
+  @override
+  _ForgotPasswordStep1ViewState createState() =>
+      _ForgotPasswordStep1ViewState();
+}
+
+class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
   late TextEditingController _tcIdentityEditingController;
   late TextEditingController _tcPhoneNumberEditingController;
   late FocusNode tcNoFNode;
@@ -43,27 +56,41 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ForgotPasswordStep1ScreenVm>(
-      create: (context) => ForgotPasswordStep1ScreenVm(context),
-      child: Consumer<ForgotPasswordStep1ScreenVm>(
-        builder: (
-          BuildContext context,
-          ForgotPasswordStep1ScreenVm value,
-          Widget? child,
-        ) {
-          return KeyboardDismissOnTap(
-            child: RbioScaffold(
-              resizeToAvoidBottomInset: true,
-              appbar: RbioAppBar(),
-              body: _buildBody(context, value),
-            ),
-          );
-        },
-      ),
+    return BlocConsumer<ForgotPasswordStep1Cubit, ForgotPasswordStep1State>(
+      listener: (context, state) {
+        if (state.isError ) {
+          if (state.dialogMessage != null) {
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) {
+                return RbioMessageDialog(
+                  description: state.dialogMessage!,
+                  buttonTitle: LocaleProvider.current.Ok,
+                  isAtom: false,
+                );
+              },
+            );
+          }
+        }
+      },
+      builder: (context, state) {
+        return KeyboardDismissOnTap(
+          child: RbioStackedScaffold(
+            isLoading: state.isLoading,
+            resizeToAvoidBottomInset: true,
+            appbar: RbioAppBar(),
+            body: _buildBody(context, state),
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildBody(BuildContext context, ForgotPasswordStep1ScreenVm value) {
+  Widget _buildBody(
+    BuildContext context,
+    ForgotPasswordStep1State state,
+  ) {
     return KeyboardAvoider(
       autoScroll: true,
       child: RbioKeyboardActions(
@@ -76,6 +103,7 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            R.sizes.stackedTopPadding(context),
             //
             const SizedBox(
               height: 20,
@@ -227,12 +255,13 @@ class _ForgotPasswordStep1ScreenState extends State<ForgotPasswordStep1Screen> {
 
                           if (_tcPhoneNumberEditingController.text.isNotEmpty &&
                               _tcIdentityEditingController.text.isNotEmpty) {
-                            value.forgotPassStep1(userRegisterStep1);
+                            context
+                                .read<ForgotPasswordStep1Cubit>()
+                                .forgotPassStep1(userRegisterStep1);
                           } else {
-                            value.showInfoDialog(
-                              LocaleProvider.of(context).warning,
-                              LocaleProvider.of(context).fill_all_field,
-                            );
+                            context.read<ForgotPasswordStep1Cubit>().showDialog(
+                                  LocaleProvider.of(context).fill_all_field,
+                                );
                           }
                         },
                       ),
