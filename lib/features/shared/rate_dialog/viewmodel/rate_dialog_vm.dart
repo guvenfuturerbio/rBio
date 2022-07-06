@@ -8,10 +8,12 @@ import '../model/get_availability_rate_response.dart';
 class RateDialogVm extends ChangeNotifier {
   BuildContext? mContext;
   int? availabilityIdVm;
-  int? videoQuality;
-  int? doctorQuality;
+  int videoQuality = 3;
+  int doctorQuality = 3;
   bool? showLoadingOverLay;
   LoadingDialog? loadingDialog;
+
+  bool firstLoad = false;
   GetAvailabilityRateResponse? getAvailabilityRateResponse;
 
   RateDialogVm({required BuildContext context, required int availabilityId}) {
@@ -22,12 +24,14 @@ class RateDialogVm extends ChangeNotifier {
     });
   }
 
-  fetchAvailabilityRate(int availabilityId) async {
+  Future<void> fetchAvailabilityRate(int availabilityId) async {
     showLoadingDialog(mContext!);
     try {
-      getAvailabilityRateResponse = await getIt<Repository>()
-          .getAvailabilityRate(
-              GetAvailabilityRateRequest(availabilityId: availabilityId));
+      getAvailabilityRateResponse =
+          await getIt<Repository>().getAvailabilityRate(
+        GetAvailabilityRateRequest(availabilityId: availabilityId),
+      );
+      firstLoad = true;
       notifyListeners();
       hideDialog(mContext!);
     } catch (e, stackTrace) {
@@ -39,48 +43,39 @@ class RateDialogVm extends ChangeNotifier {
     }
   }
 
-  setVideoQuality(int value) {
+  void setVideoQuality(int value) {
     videoQuality = value;
     notifyListeners();
   }
 
-  setDoctorQuality(int value) {
+  void setDoctorQuality(int value) {
     doctorQuality = value;
     notifyListeners();
   }
 
-/*
-  int get videoQuality => _videoQuality;
-
-  int get doctorQuality => _doctorQuality;
-
-  bool get showLoadingOverlay => _showLoadingOverLay;
-
-  int get availabilityId => _availabilityId;
-
-  GetAvailabilityRateResponse get getAvailabilityRateResponse =>
-      _getAvailabilityRateResponse;
-
-*/
-  Future rateAppointment(String comment) async {
+  Future<void> rateAppointment(String comment) async {
     showLoadingDialog(mContext!);
     await Future.delayed(const Duration(milliseconds: 300));
     try {
-      await getIt<Repository>().rateOnlineCall(CallRateRequest(
+      await getIt<Repository>().rateOnlineCall(
+        CallRateRequest(
           availabilityId: availabilityIdVm,
           suggestionAndRequest: comment,
           doctorRate: doctorQuality,
-          videoConferanceRate: videoQuality));
+          videoConferanceRate: videoQuality,
+        ),
+      );
       hideDialog(mContext!);
-      showGradientDialog(LocaleProvider.current.info,
-          LocaleProvider.current.suggestion_thanks_message);
+      showGradientDialog(
+        LocaleProvider.current.info,
+        LocaleProvider.current.suggestion_thanks_message,
+      );
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform
           .sentryManager
           .captureException(e, stackTrace: stackTrace);
       hideDialog(mContext!);
-      LoggerUtils.instance.i("rateAppointment Error " + e.toString());
       Navigator.pop(mContext!);
       showLoadingOverLay = false;
       notifyListeners();
@@ -89,25 +84,27 @@ class RateDialogVm extends ChangeNotifier {
 
   void showGradientDialog(String title, String text) {
     showDialog(
-        context: mContext!,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return RbioMessageDialog(
-            description: text,
-            buttonTitle: LocaleProvider.current.ok,
-            isAtom: false,
-          );
-        }).then((value) {
+      context: mContext!,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return RbioMessageDialog(
+          description: text,
+          buttonTitle: LocaleProvider.current.ok,
+          isAtom: false,
+        );
+      },
+    ).then((value) {
       Atom.to(PagePaths.main, isReplacement: true);
     });
   }
 
   void showLoadingDialog(BuildContext context) async {
     await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          loadingDialog = loadingDialog ?? LoadingDialog(),
+    );
   }
 
   void hideDialog(BuildContext context) {
