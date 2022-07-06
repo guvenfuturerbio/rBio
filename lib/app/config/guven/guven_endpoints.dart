@@ -280,7 +280,8 @@ class GuvenBaseEndpoints extends BaseEndpoints {
       '/Package/get-all-sub-category-items/$id'.xBaseUrl;
 
   @override
-  String get doPackagePaymentPath => '/Package/do-mobile-payment-without-firebase'.xBaseUrl;
+  String get doPackagePaymentPath =>
+      '/Package/do-mobile-payment-without-firebase'.xBaseUrl;
 
   @override
   String get findResourceAvailableDays =>
@@ -470,6 +471,12 @@ class GuvenBaseEndpoints extends BaseEndpoints {
   @override
   String uploadPatientDocumentsPath(String webAppoId) =>
       '/file/upload-patient-document-for-appoinment/$webAppoId'.xBaseUrl;
+
+  @override
+  String sendOnlineAppointmentNotificationPusula(
+          String appointmentId, String fromDate) =>
+      "/Notification/send-online-appointment-notification-pusula/$appointmentId/$fromDate"
+          .xBaseUrl;
 }
 
 class GuvenDoctorEndpoints extends DoctorEndpoints {

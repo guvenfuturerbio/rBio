@@ -9329,6 +9329,76 @@ class LocaleProvider {
       args: [],
     );
   }
+
+  /// `Not Now`
+  String get not_now {
+    return Intl.message(
+      'Not Now',
+      name: 'not_now',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{appName} does not have access to your camera. To enable access, tap Settings and turn on Camera.`
+  String permission_camera_message_ios(String appName) {
+    return Intl.message(
+      '$appName does not have access to your camera. To enable access, tap Settings and turn on Camera.',
+      name: 'permission_camera_message_ios',
+      desc: '',
+      args: [appName],
+    );
+  }
+
+  /// `To capture photos and videos, allow {appName} access to your camera. Tap Settings > Permissions, and turn Camera on.`
+  String permission_camera_message_android(String appName) {
+    return Intl.message(
+      'To capture photos and videos, allow $appName access to your camera. Tap Settings > Permissions, and turn Camera on.',
+      name: 'permission_camera_message_android',
+      desc: '',
+      args: [appName],
+    );
+  }
+
+  /// `To record videos with sound, {appName} needs microphone access. To enable access, tap Settings and turn on Microphone.`
+  String permission_microphone_message_ios(String appName) {
+    return Intl.message(
+      'To record videos with sound, $appName needs microphone access. To enable access, tap Settings and turn on Microphone.',
+      name: 'permission_microphone_message_ios',
+      desc: '',
+      args: [appName],
+    );
+  }
+
+  /// `Want to record videos with sound? Allow {appName} access to your microphone. Tap Settings > Permissions and turn Microphone on.`
+  String permission_microphone_message_android(String appName) {
+    return Intl.message(
+      'Want to record videos with sound? Allow $appName access to your microphone. Tap Settings > Permissions and turn Microphone on.',
+      name: 'permission_microphone_message_android',
+      desc: '',
+      args: [appName],
+    );
+  }
+
+  /// `{appName} does not have access to your photos or videos. To enable access, tap Settings and turn on Photos.`
+  String permission_gallery_message_ios(String appName) {
+    return Intl.message(
+      '$appName does not have access to your photos or videos. To enable access, tap Settings and turn on Photos.',
+      name: 'permission_gallery_message_ios',
+      desc: '',
+      args: [appName],
+    );
+  }
+
+  /// `To capture photos and videos, allow {appName} access to your device's photos, media, and files. Tap Settings > Permissions, and turn "Files and media" on.`
+  String permission_gallery_message_android(String appName) {
+    return Intl.message(
+      'To capture photos and videos, allow $appName access to your device\'s photos, media, and files. Tap Settings > Permissions, and turn "Files and media" on.',
+      name: 'permission_gallery_message_android',
+      desc: '',
+      args: [appName],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<LocaleProvider> {

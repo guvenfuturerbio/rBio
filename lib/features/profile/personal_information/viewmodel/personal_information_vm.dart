@@ -113,6 +113,30 @@ class PersonalInformationScreenVm extends RbioVm {
     BuildContext actionSheetContext,
     ImageSource imageSource,
   ) async {
+    if (imageSource == ImageSource.gallery) {
+      if (!await getIt<PermissionManager>().request(
+        permission: GalleryPermissionStrategy(
+          LocaleProvider.of(actionSheetContext),
+          getIt<IAppConfig>(),
+        ),
+        context: actionSheetContext,
+      )) {
+        Navigator.of(actionSheetContext).pop();
+        return;
+      }
+    } else {
+      if (!await getIt<PermissionManager>().request(
+        permission: CameraPermissionStrategy(
+          LocaleProvider.of(actionSheetContext),
+          getIt<IAppConfig>(),
+        ),
+        context: actionSheetContext,
+      )) {
+        Navigator.of(actionSheetContext).pop();
+        return;
+      }
+    }
+
     Navigator.of(actionSheetContext).pop();
     try {
       final imageFile = await imagePicker.pickImage(

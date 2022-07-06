@@ -26,6 +26,11 @@ class GuvenDashboardScreen extends StatefulWidget {
 class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
   FocusNode focusSearch = FocusNode();
   List<int> pageQueryHolder = [2];
+  @override
+  void initState() {
+    super.initState();
+    getIt<FirebaseMessagingManager>().userInit();
+  }
 
   @override
   Widget build(BuildContext context) {

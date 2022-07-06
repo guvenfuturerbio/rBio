@@ -181,7 +181,7 @@
   "file_uploaded": "Dosya başarıyla yüklendi",
   "relatives": "Yakınlarım",
   "add_new_relative": "Yeni Yakın Ekle",
-  "add_relative_request" : "Yakın ekleme talebiniz alınmıştır.",
+  "add_relative_request": "Yakın ekleme talebiniz alınmıştır.",
   "saved_relatives": "Kayıtlı Yakınlarım",
   "relative_identity_number": "Yakının T.C Kimlik Numarası",
   "save": "Kaydet",
@@ -923,6 +923,55 @@
   "enter_your_illness_history": "Hastalık hikayenizi giriniz",
   "press_and_hold_the_microphone": "Mikrofona basılı tutunuz",
   "slide_to_cancel": "İptal etmek için kaydırın",
-  "please_select_the_file_you_want_to_upload": "Lütfen yüklemek istediğiniz dosyayı seçiniz"
-
+  "please_select_the_file_you_want_to_upload": "Lütfen yüklemek istediğiniz dosyayı seçiniz",
+  
+  "not_now": "Şimdi Değil",
+  "permission_camera_message_ios": "{appName} kameranıza erişimi yok. Erişime izin vermek için, Ayarlar'a dokunun ve Kamera'yı etkinleştirin.",
+  "@permission_camera_message_ios": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "permission_camera_message_android": "Fotoğraf ve video çekmek için {appName} kameranıza erişimine izin verin. Ayarlar > İzinler'e dokunun ve Kamera'yı açık konuma getirin.",
+  "@permission_camera_message_android": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "permission_microphone_message_ios": "Sesli video kaydedebilmek için {appName} mikrofona erişmesi gerekiyor. Erişime izin vermek için, Ayarlar'a dokunun ve Mikrofon'u açın.",
+  "@permission_microphone_message_ios": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "permission_microphone_message_android": "Videoları sesli mi kaydetmek istiyorsunuz? {appName} mikrofununuza erişimine izin verin. Ayarlar > İzinler'e giderek Mikrofon'u açık konuma getirin.",
+  "@permission_microphone_message_android": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "permission_gallery_message_ios": "{appName} fotoğraflarınıza veya videolarınıza erişimi yok. Erişime izin vermek için, Ayarlar'a dokunun ve Fotoğraflar'ı açın.",
+  "@permission_gallery_message_ios": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "permission_gallery_message_android": "{appName} fotoğraf, medya ve dosyalara erişimi yok. Ayarlar > İzinler'e dokunun ve Depolama'yı açık konuma getirin.",
+  "@permission_gallery_message_android": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  }
 }

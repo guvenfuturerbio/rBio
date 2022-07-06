@@ -145,6 +145,8 @@ abstract class BaseEndpoints {
   String get getAvailabilityRatePath;
   String uploadPatientDocumentsPath(String webAppoId);
   String get ctSaveAndRetrieveToken;
+  String sendOnlineAppointmentNotificationPusula(
+      String appointmentId, String fromDate);
 }
 
 abstract class DoctorEndpoints {

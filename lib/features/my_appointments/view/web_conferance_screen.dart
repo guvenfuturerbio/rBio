@@ -5,6 +5,7 @@ import '../../../../core/core.dart';
 class WebConferanceScreen extends StatefulWidget {
   String? webConsultAppId;
   int? availability;
+  String? fromDate;
 
   WebConferanceScreen({Key? key}) : super(key: key);
 
@@ -22,6 +23,7 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
           context,
           widget.webConsultAppId ?? '',
           widget.availability ?? 0,
+          widget.fromDate ?? '',
         );
       },
     );
@@ -32,6 +34,7 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
     try {
       widget.webConsultAppId = Atom.queryParameters['webConsultAppId']!;
       widget.availability = int.parse(Atom.queryParameters['availability']!);
+      widget.fromDate = Atom.queryParameters['fromDate']!;
     } catch (e, stackTrace) {
       return RbioRouteError(e: e, stackTrace: stackTrace);
     }
