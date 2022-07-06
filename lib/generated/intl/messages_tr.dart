@@ -568,6 +568,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "female": MessageLookupByLibrary.simpleMessage("Kadın"),
         "file_deleted":
             MessageLookupByLibrary.simpleMessage("Dosya başarıyla silindi"),
+        "file_description":
+            MessageLookupByLibrary.simpleMessage("Dosya açıklaması"),
         "file_uploaded":
             MessageLookupByLibrary.simpleMessage("Dosya başarıyla yüklendi"),
         "files": MessageLookupByLibrary.simpleMessage("Dosyalar"),

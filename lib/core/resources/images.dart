@@ -213,6 +213,7 @@ class _Images {
   final councilCalendar = 'assets/images/e_council/council_calendar.svg';
   final councilResults = 'assets/images/e_council/council_results.svg';
   final councilRecord = 'assets/images/e_council/council_record.svg';
+  final councilUpload = 'assets/images/e_council/council_upload.svg';
 
   // #endregion
 }

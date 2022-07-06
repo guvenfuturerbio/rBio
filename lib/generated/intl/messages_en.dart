@@ -578,6 +578,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "female": MessageLookupByLibrary.simpleMessage("Female"),
         "file_deleted": MessageLookupByLibrary.simpleMessage(
             "File has been successfully deleted"),
+        "file_description":
+            MessageLookupByLibrary.simpleMessage("File Description"),
         "file_uploaded": MessageLookupByLibrary.simpleMessage(
             "File has been successfully uploaded"),
         "files": MessageLookupByLibrary.simpleMessage("Files"),

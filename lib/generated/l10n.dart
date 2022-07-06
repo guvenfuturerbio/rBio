@@ -9330,6 +9330,16 @@ class LocaleProvider {
     );
   }
 
+  /// `File Description`
+  String get file_description {
+    return Intl.message(
+      'File Description',
+      name: 'file_description',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Not Now`
   String get not_now {
     return Intl.message(

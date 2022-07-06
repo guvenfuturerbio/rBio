@@ -924,6 +924,7 @@
   "press_and_hold_the_microphone": "Mikrofona basılı tutunuz",
   "slide_to_cancel": "İptal etmek için kaydırın",
   "please_select_the_file_you_want_to_upload": "Lütfen yüklemek istediğiniz dosyayı seçiniz",
+  "file_description": "Dosya açıklaması",
   
   "not_now": "Şimdi Değil",
   "permission_camera_message_ios": "{appName} kameranıza erişimi yok. Erişime izin vermek için, Ayarlar'a dokunun ve Kamera'yı etkinleştirin.",

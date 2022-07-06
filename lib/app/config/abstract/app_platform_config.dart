@@ -44,7 +44,8 @@ abstract class IAppMobilePlatformConfig {
   Widget runApp(String initialRoute, bool jailbroken) {
     return MobileApp(
       myApp: MobileMyApp(
-        initialRoute: initialRoute,
+        // TODO : Unutma !! initialRoute
+        initialRoute: PagePaths.eCouncilHomePage,
       ),
       jailbroken: jailbroken,
     );
@@ -55,10 +56,8 @@ abstract class IAppMobilePlatformConfig {
     FirebaseAnalyticsManager firebaseAnalyticsManager,
     AdjustManager? adjustManager,
   ) async {
-    if (sharedPreferencesManager.get(SharedPreferencesKeys.appDownload) ==
-        null) {
-      await sharedPreferencesManager.setBool(
-          SharedPreferencesKeys.appDownload, false);
+    if (sharedPreferencesManager.get(SharedPreferencesKeys.appDownload) == null) {
+      await sharedPreferencesManager.setBool(SharedPreferencesKeys.appDownload, false);
       firebaseAnalyticsManager.logEvent(NewDownloadEvent());
       adjustManager?.trackEvent(NewDownloadsEvent());
     }
