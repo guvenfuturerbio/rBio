@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onedosehealth/features/take_appointment/create_appointment_summary/view/widget/location_info_card.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
 import '../model/country_list_response.dart';
 import '../viewmodel/create_appointment_summary_vm.dart';
 import 'qr_code_scanner_screen.dart';
+import 'widget/location_info_card.dart';
 
 class CreateAppointmentSummaryScreen extends StatefulWidget {
   const CreateAppointmentSummaryScreen({Key? key}) : super(key: key);
@@ -127,119 +127,125 @@ class _CreateAppointmentSummaryScreenState
             mainAxisSize: MainAxisSize.min,
             children: [
               //
-              R.sizes.stackedTopPadding(context),
-
-              //
-              if (vm.appointmentSuccess) ...[
-                Center(
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.zero,
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       //
-                      R.sizes.hSizer8,
+                      R.sizes.stackedTopPadding(context),
 
                       //
-                      SvgPicture.asset(
-                        getIt<IAppConfig>().theme.successAppointmentImage,
-                        width: Atom.width * 0.2,
-                        height: Atom.height * .2,
-                      ),
+                      if (vm.appointmentSuccess) ...[
+                        Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              //
+                              R.sizes.hSizer8,
+
+                              //
+                              SvgPicture.asset(
+                                getIt<IAppConfig>()
+                                    .theme
+                                    .successAppointmentImage,
+                                width: Atom.width * 0.2,
+                                height: Atom.height * .2,
+                              ),
+
+                              //
+                              R.sizes.hSizer4,
+
+                              //
+                              Text(
+                                LocaleProvider.current.appo_created,
+                                textAlign: TextAlign.center,
+                                style: context.xHeadline3.copyWith(
+                                  color: getIt<IAppConfig>().theme.mainColor,
+                                ),
+                              ),
+
+                              //
+                              R.sizes.hSizer12,
+                            ],
+                          ),
+                        ),
+                      ],
 
                       //
-                      R.sizes.hSizer4,
+                      R.sizes.hSizer16,
 
                       //
                       Text(
-                        LocaleProvider.current.appo_created,
-                        textAlign: TextAlign.center,
-                        style: context.xHeadline3.copyWith(
-                          color: getIt<IAppConfig>().theme.mainColor,
-                        ),
+                        LocaleProvider.current.appointment_details,
+                        textAlign: TextAlign.start,
+                        style: context.xHeadline3,
                       ),
 
                       //
-                      R.sizes.hSizer12,
+                      const SizedBox(
+                        height: 12,
+                      ),
+
+                      //
+                      _buildInfoCard(vm),
+
+                      const SizedBox(height: 15),
+
+                      if (forOnline &&
+                          getIt<IAppConfig>()
+                              .functionality
+                              .createOnlineAppointmentWithCountrySelection)
+                        LocationInfoCard(
+                          countryController: _countryController,
+                          cityController: _cityController,
+                          isCityVisible:
+                              selectedCountry.id == 213 ? true : false,
+                          countryOnTap: () async {
+                            var res = await showRbioSelectBottomSheet(
+                              context,
+                              title: LocaleProvider.current.country,
+                              children: [
+                                for (var item in vm.countryList.countries ?? [])
+                                  Center(child: Text(item.name)),
+                              ],
+                              initialItem: 0,
+                            );
+
+                            _countryController.text =
+                                vm.countryList.countries![res].name!;
+
+                            setState(() {
+                              selectedCountry = vm.countryList.countries![res];
+                            });
+                          },
+                          cityOnTap: () async {
+                            var res = await showRbioSelectBottomSheet(
+                              context,
+                              title: LocaleProvider.current.city,
+                              children: [
+                                for (var item in vm.province)
+                                  Center(child: Text(item))
+                              ],
+                              initialItem: 0,
+                            );
+
+                            _cityController.text = vm.province[res];
+                            selectedCity = _cityController.text;
+                            setState(() {});
+                          },
+                        ),
                     ],
                   ),
                 ),
-              ],
-
-              //
-              R.sizes.hSizer16,
-
-              //
-              Text(
-                LocaleProvider.current.appointment_details,
-                textAlign: TextAlign.start,
-                style: context.xHeadline3,
               ),
 
               //
-              const SizedBox(
-                height: 12,
-              ),
-
-              //
-              RbioSwitcher(
-                showFirstChild: !isKeyboardVisible,
-                child1: _buildInfoCard(vm),
-                child2: const SizedBox(),
-              ),
-
-              const SizedBox(height: 15),
-
-              if (forOnline &&
-                  getIt<IAppConfig>()
-                      .functionality
-                      .createOnlineAppointmentWithCountrySelection)
-                LocationInfoCard(
-                  countryController: _countryController,
-                  cityController: _cityController,
-                  isCityVisible: selectedCountry.id == 213 ? true : false,
-                  countryOnTap: () async {
-                    var res = await showRbioSelectBottomSheet(
-                      context,
-                      title: LocaleProvider.current.country,
-                      children: [
-                        for (var item in vm.countryList.countries ?? [])
-                          Center(child: Text(item.name)),
-                      ],
-                      initialItem: 0,
-                    );
-
-                    _countryController.text =
-                        vm.countryList.countries![res].name!;
-
-                    setState(() {
-                      selectedCountry = vm.countryList.countries![res];
-                    });
-                  },
-                  cityOnTap: () async {
-                    var res = await showRbioSelectBottomSheet(
-                      context,
-                      title: LocaleProvider.current.city,
-                      children: [
-                        for (var item in vm.province) Center(child: Text(item))
-                      ],
-                      initialItem: 0,
-                    );
-
-                    _cityController.text = vm.province[res];
-                    selectedCity = _cityController.text;
-                    setState(() {});
-                  },
-                ),
-
-              //
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SingleChildScrollView(
-                    child:
-                        _buildKeyboardVisibilityBuilder(vm, isKeyboardVisible),
-                  ),
-                ),
-              ),
+              _buildKeyboardVisibilityBuilder(vm, isKeyboardVisible),
             ],
           ),
         );
@@ -599,7 +605,7 @@ class _CreateAppointmentSummaryScreenState
 
     switch (vm.summaryButton) {
       case SummaryButtons.add:
-        title = LocaleProvider.current.add_discount_code;
+        title = LocaleProvider.current.discount_code;
         onTap = () {
           vm.showCodeField = true;
           vm.summaryButton = SummaryButtons.applyPassive;
