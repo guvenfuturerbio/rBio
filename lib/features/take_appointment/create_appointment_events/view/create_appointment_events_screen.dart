@@ -64,7 +64,8 @@ class _CreateAppointmentEventsScreenState
           CreateAppointmentEventsVm val,
           Widget? child,
         ) {
-          return RbioScaffold(
+          return RbioStackedScaffold(
+            isLoading: val.centerLoading,
             appbar: RbioAppBar(
               title: RbioAppBar.textTitle(
                 context,
@@ -86,6 +87,8 @@ class _CreateAppointmentEventsScreenState
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
+        R.sizes.stackedTopPadding(context),
+        R.sizes.hSizer8,
         //
         // _buildHeaderInfo(),
 
@@ -93,10 +96,12 @@ class _CreateAppointmentEventsScreenState
 
         //
         if (val.availableDatesProgress == LoadingProgress.loading) ...[
-          SizedBox(
-            height: Atom.height * 0.35,
-            child: const RbioLoading(),
-          ),
+          if (!val.centerLoading) ...[
+            SizedBox(
+              height: Atom.height * 0.35,
+              child: const RbioLoading(),
+            ),
+          ]
         ] else if (val.availableDatesProgress == LoadingProgress.done) ...[
           _TableCalendar(
             val: val,
@@ -114,7 +119,9 @@ class _CreateAppointmentEventsScreenState
 
         //
         if (val.slotsProgress == LoadingProgress.loading) ...[
-          const Expanded(child: RbioLoading()),
+          if (!val.centerLoading) ...[
+            const Expanded(child: RbioLoading()),
+          ]
         ] else if (val.slotsProgress == LoadingProgress.done) ...[
           Expanded(
             child: ListBody(
