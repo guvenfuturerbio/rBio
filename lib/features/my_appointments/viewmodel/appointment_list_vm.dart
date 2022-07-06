@@ -252,9 +252,10 @@ class AppointmentListVm extends RbioVm {
       showProgressOverlay = true;
       notifyListeners();
       await getIt<Repository>().cancelAppointment(cancelAppointmentRequest!);
-      await fetchPatientAppointments();
       showProgressOverlay = false;
       notifyListeners();
+      await Future.delayed(const Duration(milliseconds: 300));
+      await fetchPatientAppointments();
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
       showInfoDialog(
