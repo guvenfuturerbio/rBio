@@ -4,8 +4,8 @@ import 'package:onedosehealth/features/e_concil/e_concil_results/model/council_c
 
 import '../shared/widget/council_card.dart';
 
-class CouncilResultScreen extends StatelessWidget {
-  const CouncilResultScreen({Key? key}) : super(key: key);
+class ECouncilResultScreen extends StatelessWidget {
+  const ECouncilResultScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

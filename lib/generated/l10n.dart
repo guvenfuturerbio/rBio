@@ -9110,11 +9110,11 @@ class LocaleProvider {
     );
   }
 
-  /// `Council Requests`
-  String get council_requests {
+  /// `Council Demands`
+  String get council_demands {
     return Intl.message(
-      'Council Requests',
-      name: 'council_requests',
+      'Council Demands',
+      name: 'council_demands',
       desc: '',
       args: [],
     );
@@ -9180,11 +9180,11 @@ class LocaleProvider {
     );
   }
 
-  /// `Create New Council Request`
-  String get create_new_council_request {
+  /// `Create New Council Demand`
+  String get create_new_council_demand {
     return Intl.message(
-      'Create New Council Request',
-      name: 'create_new_council_request',
+      'Create New Council Demand',
+      name: 'create_new_council_demand',
       desc: '',
       args: [],
     );
@@ -9255,6 +9255,76 @@ class LocaleProvider {
     return Intl.message(
       'Copied',
       name: 'copied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Select Your Diagnosis`
+  String get please_select_your_diagnosis {
+    return Intl.message(
+      'Please Select Your Diagnosis',
+      name: 'please_select_your_diagnosis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid Diagnosis`
+  String get inlavid_diagnosis {
+    return Intl.message(
+      'Invalid Diagnosis',
+      name: 'inlavid_diagnosis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Demand`
+  String get create_demand {
+    return Intl.message(
+      'Create Demand',
+      name: 'create_demand',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your illness history`
+  String get enter_your_illness_history {
+    return Intl.message(
+      'Enter your illness history',
+      name: 'enter_your_illness_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Press and hold the microphone`
+  String get press_and_hold_the_microphone {
+    return Intl.message(
+      'Press and hold the microphone',
+      name: 'press_and_hold_the_microphone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Slide to cancel`
+  String get slide_to_cancel {
+    return Intl.message(
+      'Slide to cancel',
+      name: 'slide_to_cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select the file you want to upload`
+  String get please_select_the_file_you_want_to_upload {
+    return Intl.message(
+      'Please select the file you want to upload',
+      name: 'please_select_the_file_you_want_to_upload',
       desc: '',
       args: [],
     );

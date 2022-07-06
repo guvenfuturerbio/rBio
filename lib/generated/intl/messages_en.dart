@@ -298,10 +298,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Council Appointment"),
         "council_connection_link":
             MessageLookupByLibrary.simpleMessage("Council Connection Link"),
+        "council_demands":
+            MessageLookupByLibrary.simpleMessage("Council Demands"),
         "council_report":
             MessageLookupByLibrary.simpleMessage("Council Report"),
-        "council_requests":
-            MessageLookupByLibrary.simpleMessage("Council Requests"),
         "council_results":
             MessageLookupByLibrary.simpleMessage("Council Results"),
         "country": MessageLookupByLibrary.simpleMessage("Countries"),
@@ -337,8 +337,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search Appointment"),
         "create_appointment_events":
             MessageLookupByLibrary.simpleMessage("Create Appointment"),
-        "create_new_council_request":
-            MessageLookupByLibrary.simpleMessage("Create New Council Request"),
+        "create_demand": MessageLookupByLibrary.simpleMessage("Create Demand"),
+        "create_new_council_demand":
+            MessageLookupByLibrary.simpleMessage("Create New Council Demand"),
         "create_password":
             MessageLookupByLibrary.simpleMessage("Create Password"),
         "create_reminder":
@@ -516,6 +517,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter the code"),
         "enter_weight":
             MessageLookupByLibrary.simpleMessage("Enter the weight"),
+        "enter_your_illness_history":
+            MessageLookupByLibrary.simpleMessage("Enter your illness history"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "error_empty_dosage_name": MessageLookupByLibrary.simpleMessage(
             "Please enter the dosage required"),
@@ -671,6 +674,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Informed consent forṁ"),
         "informed_consent_form_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/onam_en.html"),
+        "inlavid_diagnosis":
+            MessageLookupByLibrary.simpleMessage("Invalid Diagnosis"),
         "insufficient": MessageLookupByLibrary.simpleMessage("Insufficient"),
         "intermittent_days":
             MessageLookupByLibrary.simpleMessage("Intermittent Days"),
@@ -1079,6 +1084,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "pick_time": MessageLookupByLibrary.simpleMessage("Pick Time"),
         "piece": MessageLookupByLibrary.simpleMessage("piece"),
         "pillar_small": MessageLookupByLibrary.simpleMessage("Pillar small"),
+        "please_select_the_file_you_want_to_upload":
+            MessageLookupByLibrary.simpleMessage(
+                "Please select the file you want to upload"),
+        "please_select_your_diagnosis": MessageLookupByLibrary.simpleMessage(
+            "Please Select Your Diagnosis"),
         "pls_select": MessageLookupByLibrary.simpleMessage("Choose"),
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Please select department"),
@@ -1097,6 +1107,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "premium": MessageLookupByLibrary.simpleMessage("Premium"),
         "preselection":
             MessageLookupByLibrary.simpleMessage("Choose your preselection:"),
+        "press_and_hold_the_microphone": MessageLookupByLibrary.simpleMessage(
+            "Press and hold the microphone"),
         "press_plus_to_add_medicine":
             MessageLookupByLibrary.simpleMessage("Press + to add a Reminder"),
         "price": MessageLookupByLibrary.simpleMessage("Fee"),
@@ -1232,6 +1244,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sign in with Google"),
         "single_day": MessageLookupByLibrary.simpleMessage("Single Day"),
         "six_months": MessageLookupByLibrary.simpleMessage("6 months"),
+        "slide_to_cancel":
+            MessageLookupByLibrary.simpleMessage("Slide to cancel"),
         "smoker": MessageLookupByLibrary.simpleMessage("Smoker"),
         "smoker_type": MessageLookupByLibrary.simpleMessage("Smoker Type"),
         "smokes_occasionally":

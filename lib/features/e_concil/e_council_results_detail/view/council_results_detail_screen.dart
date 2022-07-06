@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class CouncilResultsDetailScreen extends StatelessWidget {
-  const CouncilResultsDetailScreen({Key? key}) : super(key: key);
+class ECouncilResultsDetailScreen extends StatelessWidget {
+  const ECouncilResultsDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

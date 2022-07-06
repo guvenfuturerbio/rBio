@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onedosehealth/core/core.dart';
 
 import '../../SIL_DELETE_DELETE_SIL/sil.dart';
-import '../../information_pages/view/e_council_information_screen.dart';
+import '../../e_council_information_pages/view/e_council_information_screen.dart';
 
 class ECouncilHomeScreen extends StatelessWidget {
   const ECouncilHomeScreen({Key? key}) : super(key: key);
@@ -74,8 +74,10 @@ class ECouncilHomeScreen extends StatelessWidget {
             ),
           ),
           RbioElevatedButton(
-            title: LocaleProvider.of(context).create_new_council_request,
-            onTap: () {},
+            title: LocaleProvider.of(context).create_new_council_demand,
+            onTap: () {
+              Atom.to(PagePaths.eCouncilCreateCouncilRequestPage);
+            },
           ),
         ],
       ),
@@ -165,7 +167,7 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                   //
                   Expanded(
                     child: Text(
-                      LocaleProvider.of(context).council_requests,
+                      LocaleProvider.of(context).council_demands,
                       style: context.xHeadline4,
                     ),
                   ),

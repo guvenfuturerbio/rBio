@@ -292,9 +292,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Konsey Randevusu"),
         "council_connection_link":
             MessageLookupByLibrary.simpleMessage("Konsey Bağlantı Linki"),
-        "council_report": MessageLookupByLibrary.simpleMessage("Konsey Raporu"),
-        "council_requests":
+        "council_demands":
             MessageLookupByLibrary.simpleMessage("Konsey Taleplerim"),
+        "council_report": MessageLookupByLibrary.simpleMessage("Konsey Raporu"),
         "council_results":
             MessageLookupByLibrary.simpleMessage("Konsey Sonuçlarım"),
         "country": MessageLookupByLibrary.simpleMessage("Ülke"),
@@ -329,7 +329,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "create_appo": MessageLookupByLibrary.simpleMessage("Randevu Ara"),
         "create_appointment_events":
             MessageLookupByLibrary.simpleMessage("Randevu Oluştur"),
-        "create_new_council_request":
+        "create_demand": MessageLookupByLibrary.simpleMessage("Talep Oluştur"),
+        "create_new_council_demand":
             MessageLookupByLibrary.simpleMessage("Yeni Konsey Talebi Oluştur"),
         "create_password":
             MessageLookupByLibrary.simpleMessage("Şifre Oluştur"),
@@ -506,6 +507,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enter_the_code":
             MessageLookupByLibrary.simpleMessage("Lütfen kodu giriniz"),
         "enter_weight": MessageLookupByLibrary.simpleMessage("Değer girme"),
+        "enter_your_illness_history":
+            MessageLookupByLibrary.simpleMessage("Hastalık hikayenizi giriniz"),
         "error": MessageLookupByLibrary.simpleMessage("Hata"),
         "error_empty_dosage_name":
             MessageLookupByLibrary.simpleMessage("Lütfen dozu giriniz."),
@@ -662,6 +665,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aydınlatılmış Onam Belgesi̇"),
         "informed_consent_form_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/onam_tr.html"),
+        "inlavid_diagnosis":
+            MessageLookupByLibrary.simpleMessage("Geçersiz Teşhis"),
         "insufficient": MessageLookupByLibrary.simpleMessage("Yetersiz"),
         "intermittent_days":
             MessageLookupByLibrary.simpleMessage("Aralıklı Günler"),
@@ -1065,6 +1070,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "pick_time": MessageLookupByLibrary.simpleMessage("Zaman Seç"),
         "piece": MessageLookupByLibrary.simpleMessage("adet"),
         "pillar_small": MessageLookupByLibrary.simpleMessage("İlaç kutusu"),
+        "please_select_the_file_you_want_to_upload":
+            MessageLookupByLibrary.simpleMessage(
+                "Lütfen yüklemek istediğiniz dosyayı seçiniz"),
+        "please_select_your_diagnosis":
+            MessageLookupByLibrary.simpleMessage("Lütfen teşhisinizi seçiniz"),
         "pls_select": MessageLookupByLibrary.simpleMessage("Seçiniz"),
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Lütfen departman seçiniz"),
@@ -1083,6 +1093,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "premium": MessageLookupByLibrary.simpleMessage("Premium"),
         "preselection":
             MessageLookupByLibrary.simpleMessage("Ön seçiminizi belirleyin:"),
+        "press_and_hold_the_microphone":
+            MessageLookupByLibrary.simpleMessage("Mikrofona basılı tutunuz"),
         "press_plus_to_add_medicine": MessageLookupByLibrary.simpleMessage(
             "Hatırlatıcı eklemek için + butonuna basın"),
         "price": MessageLookupByLibrary.simpleMessage("Fiyat"),
@@ -1222,6 +1234,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Google ile Giriş Yap"),
         "single_day": MessageLookupByLibrary.simpleMessage("Tek Gün"),
         "six_months": MessageLookupByLibrary.simpleMessage("6 aylık"),
+        "slide_to_cancel":
+            MessageLookupByLibrary.simpleMessage("İptal etmek için kaydırın"),
         "smoker": MessageLookupByLibrary.simpleMessage("İçiyor"),
         "smoker_type": MessageLookupByLibrary.simpleMessage("Sigara Geçmişi"),
         "smokes_occasionally":

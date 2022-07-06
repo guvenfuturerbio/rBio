@@ -4,13 +4,13 @@ import 'package:onedosehealth/features/e_concil/e_couincil_requests/model/counci
 
 import '../../shared/widget/council_card.dart';
 
-class CouncilRequestsScreen extends StatelessWidget {
-  const CouncilRequestsScreen({Key? key}) : super(key: key);
+class ECouncilRequestsScreen extends StatelessWidget {
+  const ECouncilRequestsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: RbioAppBar(title: Text(LocaleProvider.of(context).council_requests)),
+      appBar: RbioAppBar(title: Text(LocaleProvider.of(context).council_demands)),
       body: _buildBody(context),
     );
   }

@@ -32,7 +32,7 @@ class CouincilCard extends StatelessWidget {
                 topRight: Radius.circular(10.0),
               ),
             ),
-            child: _getTitleChild(context),
+            child: _getCardTitleChil(context),
           ),
           //? Body
           Container(
@@ -144,7 +144,7 @@ class CouincilCard extends StatelessWidget {
         ],
       );
 
-  Padding _getTitleChild(BuildContext context) {
+  Padding _getCardTitleChil(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 2),
       child: Row(
