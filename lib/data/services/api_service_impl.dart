@@ -520,7 +520,10 @@ class ApiServiceImpl extends ApiService {
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/changePasswordUi : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        getIt<IAppConfig>().endpoints.devApi.changePassword,
+        response,
+      );
     }
   }
 

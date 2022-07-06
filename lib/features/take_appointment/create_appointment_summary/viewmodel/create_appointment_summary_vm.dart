@@ -69,7 +69,11 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
       hospitalName = LocaleProvider.current.online_appo;
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
         await getResourceVideoCallPrice();
-        await getCountries();
+        if (getIt<IAppConfig>()
+            .functionality
+            .createOnlineAppointmentWithCountrySelection) {
+          await getCountries();
+        }
       });
     } else if (tenantId == 1) {
       hospitalName = LocaleProvider.current.guven_hospital_ayranci;
