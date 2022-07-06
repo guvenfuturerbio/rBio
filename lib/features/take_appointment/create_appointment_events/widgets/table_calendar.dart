@@ -249,7 +249,20 @@ class _TableCalendarState extends State<_TableCalendar> {
               _onDaySelected(widget.val, selectedDay, focusedDay),
           onFormatChanged: (format) {},
           onPageChanged: (focusedDay) {
-            widget.val.getAvailableDates(focusedDay, false);
+            bool isAvailable = false;
+            for (var element in widget.val.availableDates) {
+              if (element.month == focusedDay.month) {
+                isAvailable = true;
+                break;
+              }
+            }
+            var newDate =
+                DateTime(focusedDay.year, focusedDay.month + 1, focusedDay.day);
+            if (!isAvailable && kLastDay.isAfter(newDate)) {
+              widget.val.getAvailableDates(newDate, false);
+            } else {
+              widget.val.getAvailableDates(focusedDay, false);
+            }
             _focusedDay = focusedDay;
           },
         ),
