@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/features/chat/model/chat_notification.dart';
+import 'package:onedosehealth/features/chat/model/notification_model.dart';
 import 'package:onedosehealth/features/dashboard/search/model/filter_resources_request.dart';
 import 'package:onedosehealth/features/take_appointment/create_appointment/model/filter_tenants_request.dart';
 import 'package:onedosehealth/features/take_appointment/create_appointment/model/filter_departments_request.dart';
@@ -8,6 +10,7 @@ import 'package:onedosehealth/features/take_appointment/create_appointment_summa
 import 'package:onedosehealth/features/take_appointment/do_mobile_payment/appointment_request.dart';
 import 'package:onedosehealth/features/store/credit_card/model/package_payment_request.dart';
 import 'package:onedosehealth/features/store/credit_card/model/payment_cc_request.dart';
+import 'package:onedosehealth/model/shared/add_firebase_token_request.dart';
 
 import '../setup/locator_setup.dart';
 
@@ -48,6 +51,26 @@ void main() {
   const _appointmentSource = 3;
   const _hospitalVideoCallLink = null;
   const _hospitalVoucherCode = null;
+  const _chatNotificationModelTo = null;
+  const _chatNotificationModelContentAvailable = null;
+  const _chatNotificationModelNotification = null;
+  const _chatNotificationModelData = null;
+  const _notificationModelTitle = null;
+  const _notificationModelBody = null;
+  const _notificationDataType = null;
+  const _notificationDataTitle = null;
+  const _notificationDataBody = null;
+  const _chatPersonName = null;
+  const _chatPersonId = null;
+  const _chatPersonLastMessage = null;
+  const _chatPersonLastMessageSender = null;
+  const _chatPersonLastMessageType = null;
+  const _chatPersonMessageTime = null;
+  const _chatPersonHasRead = null;
+  const _chatPersonOtherHasRead = null;
+  const _chatPersonTimestamp = null;
+  const _chatPersonUrl = null;
+  const _chatPersonFirebaseToken = null;
 
   group(
     "Login",
@@ -228,13 +251,24 @@ void main() {
     expect(result, true);
   });
 
-  // test('Get Countries Test', () async {
-  //   final result = await apiService.getCountries();
-  //   expect(result.isSuccessful, true);
-  // });   // test('Get Countries Test', () async {
-  //   final result = await apiService.getCountries();
+  test('Get Countries Test', () async {
+    final result = await apiService.getCountries();
+    expect(result.isSuccessful, true);
+  });
+
+  // test('addFirebaseTokenUi', () async {
+  //   final result = await apiService.addFirebaseTokenUi(
+  //       AddFirebaseTokenRequest(firebaseId: firebase, phoneInfo: null));
   //   expect(result.isSuccessful, true);
   // });
 
-//
+  // test('Send Notification', () async {
+  //   final result = await apiService.sendNotification(ChatNotificationModel(
+  //     to: _chatNotificationModelTo,
+  //     contentAvailable: _chatNotificationModelContentAvailable,
+  //     notification: NotificationModel(title: _notificationModelTitle, body: _notificationModelBody),
+
+  //   ));
+  //   expect(result.isSuccessful, true);
+  // });
 }
