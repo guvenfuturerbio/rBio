@@ -87,6 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "aft": MessageLookupByLibrary.simpleMessage("Aft."),
         "after": MessageLookupByLibrary.simpleMessage("After"),
         "after_meal": MessageLookupByLibrary.simpleMessage("Full"),
+        "after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests":
+            MessageLookupByLibrary.simpleMessage(
+                "After payment, you can reach the details of your council appointment and the council connection link from your Council Requests."),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "alert": MessageLookupByLibrary.simpleMessage("Alert"),
         "all_appointment_file":
@@ -316,10 +319,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Council Appointment"),
         "council_connection_link":
             MessageLookupByLibrary.simpleMessage("Council Connection Link"),
-        "council_demands":
-            MessageLookupByLibrary.simpleMessage("Council Demands"),
         "council_report":
             MessageLookupByLibrary.simpleMessage("Council Report"),
+        "council_requests":
+            MessageLookupByLibrary.simpleMessage("Council Requests"),
         "council_results":
             MessageLookupByLibrary.simpleMessage("Council Results"),
         "country": MessageLookupByLibrary.simpleMessage("Countries"),
@@ -355,13 +358,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search Appointment"),
         "create_appointment_events":
             MessageLookupByLibrary.simpleMessage("Create Appointment"),
-        "create_demand": MessageLookupByLibrary.simpleMessage("Create Demand"),
-        "create_new_council_demand":
-            MessageLookupByLibrary.simpleMessage("Create New Council Demand"),
+        "create_new_council_request":
+            MessageLookupByLibrary.simpleMessage("Create new council request"),
         "create_password":
             MessageLookupByLibrary.simpleMessage("Create Password"),
         "create_reminder":
             MessageLookupByLibrary.simpleMessage("Create Reminder"),
+        "create_request":
+            MessageLookupByLibrary.simpleMessage("Create request"),
         "created_by": MessageLookupByLibrary.simpleMessage("Created By"),
         "credential_already_exist": MessageLookupByLibrary.simpleMessage(
             "Credentials already exist linked to an account. First of all, it must be deleted from the account it is linked to"),
@@ -959,6 +963,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notification": MessageLookupByLibrary.simpleMessage("Notification"),
         "notification_inbox_empty": MessageLookupByLibrary.simpleMessage(
             "You don\'t have any notifications yet"),
+        "number_of_doctors_to_attend":
+            MessageLookupByLibrary.simpleMessage("Number of doctors to attend"),
         "oauth_credential_error":
             MessageLookupByLibrary.simpleMessage("OAuth credential error"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
@@ -1532,6 +1538,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "You have <stripCount> strips left"),
         "your_complaints":
             MessageLookupByLibrary.simpleMessage("Your complaints:"),
+        "your_council_request_has_been_accepted_by_our_doctors_below_are_the_details":
+            MessageLookupByLibrary.simpleMessage(
+                "Your council request has been accepted by our doctors. Below are the details."),
         "your_data_is_synchronizing":
             MessageLookupByLibrary.simpleMessage("Your data is synchronizing"),
         "youtube_stream": MessageLookupByLibrary.simpleMessage("Youtube Stream")

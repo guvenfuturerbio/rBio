@@ -1,4 +1,4 @@
-import 'dart:developer';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,7 +8,19 @@ import 'package:searchfield/searchfield.dart';
 import '../../SIL_DELETE_DELETE_SIL/sil.dart';
 
 class ECouncilCreateCouncilRequestScreen extends StatelessWidget {
-  ECouncilCreateCouncilRequestScreen({Key? key}) : super(key: key);
+  const ECouncilCreateCouncilRequestScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RbioScaffold(
+      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).create_new_council_request)),
+      body: _BuildBody(),
+    );
+  }
+}
+
+class _BuildBody extends StatelessWidget {
+  _BuildBody({Key? key}) : super(key: key);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -16,13 +28,6 @@ class ECouncilCreateCouncilRequestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(title: Text(LocaleProvider.of(context).create_new_council_demand)),
-      body: _buildBody(context),
-    );
-  }
-
-  SingleChildScrollView _buildBody(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
       child: Form(
@@ -38,9 +43,9 @@ class ECouncilCreateCouncilRequestScreen extends StatelessWidget {
             R.sizes.hSizer16,
             const _BuildRecordField(),
             R.sizes.hSizer16,
-            _BuildUploadField(),
+            const _BuildUploadField(),
             R.sizes.hSizer16,
-            _BuildCreateDemandButton(formKey: _formKey),
+            _BuildCreateRequestButton(formKey: _formKey),
           ],
         ),
       ),
@@ -142,12 +147,6 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
   Color borderColor = Colors.transparent;
 
   late AnimationController controller;
-
-  List<String> silRecordList = [
-    'Ses dosyasi',
-    'Ses dosyasi',
-    'Ses dosyasi',
-  ];
 
   @override
   void initState() {
@@ -260,9 +259,9 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
                     children: [
                       IconButton(
                         onPressed: () {},
-                        iconSize: 14,
-                        icon: const Icon(Icons.close, size: 14),
-                        splashRadius: 18,
+                        iconSize: 10,
+                        icon: const Icon(Icons.close),
+                        splashRadius: 10,
                       ),
                       Text(e),
                     ],
@@ -275,17 +274,9 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
 }
 
 class _BuildUploadField extends StatelessWidget {
-  _BuildUploadField({
+  const _BuildUploadField({
     Key? key,
   }) : super(key: key);
-
-  List<String> silFileList = [
-    'Dosya adi - aciklamasi',
-    'Dosya adi - aciklamasi',
-    'Dosya adi - aciklamasi',
-    'Dosya adi - aciklamasi',
-    'Dosya adi - aciklamasi',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -299,9 +290,7 @@ class _BuildUploadField extends StatelessWidget {
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
           ),
-          onTap: () {
-            log('Open file picker');
-          },
+          onTap: () {},
           suffixIcon: Padding(padding: const EdgeInsets.all(10.0), child: SvgPicture.asset(R.image.councilUpload)),
         ),
         const Divider(height: 2, thickness: 2),
@@ -314,19 +303,9 @@ class _BuildUploadField extends StatelessWidget {
           child: Text(LocaleProvider.of(context).please_select_the_file_you_want_to_upload, style: context.xHeadline3),
         ),
         ...silFileList
-            .map<Widget>((String e) => SizedBox(
-                  height: 25,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        iconSize: 14,
-                        icon: const Icon(Icons.close, size: 14),
-                        splashRadius: 18,
-                      ),
-                      Text(e),
-                    ],
-                  ),
+            .map<Widget>((String e) => CouncilCardFilesWidget(
+                  title: e,
+                  onPressed: () {},
                 ))
             .toList(),
       ],
@@ -334,8 +313,37 @@ class _BuildUploadField extends StatelessWidget {
   }
 }
 
-class _BuildCreateDemandButton extends StatelessWidget {
-  const _BuildCreateDemandButton({
+class CouncilCardFilesWidget extends StatelessWidget {
+  const CouncilCardFilesWidget({
+    Key? key,
+    required this.title,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final String title;
+  final Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 25,
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: onPressed,
+            iconSize: 10,
+            icon: const Icon(Icons.close),
+            splashRadius: 10,
+          ),
+          Text(title),
+        ],
+      ),
+    );
+  }
+}
+
+class _BuildCreateRequestButton extends StatelessWidget {
+  const _BuildCreateRequestButton({
     Key? key,
     required GlobalKey<FormState> formKey,
   })  : _formKey = formKey,
@@ -346,7 +354,7 @@ class _BuildCreateDemandButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RbioElevatedButton(
-      title: LocaleProvider.of(context).create_demand,
+      title: LocaleProvider.of(context).create_request,
       onTap: () {
         if (_formKey.currentState!.validate()) {
           // Geçerli form

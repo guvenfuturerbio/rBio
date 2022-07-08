@@ -10,21 +10,26 @@ class ECouncilHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(
+    return RbioScaffold(
+      appbar: RbioAppBar(
         title: Text(LocaleProvider.of(context).e_council),
       ),
-      body: _buildBody(context),
+      body: _BuildBody(),
     );
   }
+}
 
-  Widget _buildBody(BuildContext context) {
-    var textStyle = TextStyle(
-      decoration: TextDecoration.underline,
-      color: getIt<IAppConfig>().theme.mainColor,
-      fontSize: 14,
-    );
+class _BuildBody extends StatelessWidget {
+  _BuildBody({Key? key}) : super(key: key);
 
+  TextStyle textStyle = TextStyle(
+    decoration: TextDecoration.underline,
+    color: getIt<IAppConfig>().theme.mainColor,
+    fontSize: 14,
+  );
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -74,7 +79,7 @@ class ECouncilHomeScreen extends StatelessWidget {
             ),
           ),
           RbioElevatedButton(
-            title: LocaleProvider.of(context).create_new_council_demand,
+            title: LocaleProvider.of(context).create_new_council_request,
             onTap: () {
               Atom.to(PagePaths.eCouncilCreateCouncilRequestPage);
             },
@@ -167,7 +172,7 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                   //
                   Expanded(
                     child: Text(
-                      LocaleProvider.of(context).council_demands,
+                      LocaleProvider.of(context).council_requests,
                       style: context.xHeadline4,
                     ),
                   ),

@@ -1,29 +1,32 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:onedosehealth/features/e_concil/e_concil_results/model/council_card_report_model.dart';
+import 'package:onedosehealth/core/core.dart';
 
-import '../../../../core/core.dart';
-import '../../e_couincil_requests/model/council_card_models.dart';
-import 'icouncil_card_model.dart';
+import '../../../e_concil_results/model/council_card_report_model.dart';
+import '../../../e_couincil_requests/model/council_request_card_models.dart';
+import '../../model/council_card_payment_model.dart';
+import '../../model/icouncil_card_model.dart';
 
 class CouincilCard extends StatelessWidget {
   const CouincilCard({
     Key? key,
     required this.model,
+    this.padding,
   }) : super(key: key);
 
   final ICouncilCardModel model;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: padding ?? const EdgeInsets.all(15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           //? Title
-          _BuildCouncilCardTitle(model: model),
+          if (model is! CouncilCardPaymentModel) _BuildCouncilCardTitle(model: model),
           //? Body
           _BuildCouncilCardBody(model: model),
         ],
@@ -44,7 +47,6 @@ class _BuildCouncilCardTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
       decoration: BoxDecoration(
         color: Color(model.color),
         borderRadius: const BorderRadius.only(
@@ -53,23 +55,31 @@ class _BuildCouncilCardTitle extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 2),
+        padding: const EdgeInsets.only(left: 16.0, right: 2, top: 2, bottom: 2),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(model.title, style: context.xHeadline3.copyWith(color: model is CouncilCardReportModel ? Colors.black : Colors.white)),
             //? Ode
-            if (model is CouncilCardPPaymentModel)
+            if (model is CouncilCardPendingPaymentModel)
               _BuildCouncilCardTitleButton(
                 text: LocaleProvider.of(context).pay2,
                 textColor: model.color,
-                onPressed: () {},
+                onPressed: () {
+                  Atom.to(PagePaths.eCouncilPaymentPreviewPage);
+                },
               ),
             //? Yukle
-            if (model is CouncilCardPInspectionModel)
+            if (model is CouncilCardPendingInspectionModel)
               _BuildCouncilCardTitleButton(
                 text: LocaleProvider.of(context).upload,
+                textColor: model.color,
+                onPressed: () {},
+              ),
+            if (model is CouncilCardAppoitmentModel)
+              _BuildCouncilCardTitleButton(
+                text: LocaleProvider.of(context).join,
                 textColor: model.color,
                 onPressed: () {},
               ),
@@ -129,11 +139,13 @@ class _BuildCouncilCardBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10.0),
-          bottomRight: Radius.circular(10.0),
+          topLeft: model is CouncilCardPaymentModel ? const Radius.circular(10.0) : const Radius.circular(0.0),
+          topRight: model is CouncilCardPaymentModel ? const Radius.circular(10.0) : const Radius.circular(0.0),
+          bottomLeft: const Radius.circular(10.0),
+          bottomRight: const Radius.circular(10.0),
         ),
       ),
       padding: const EdgeInsets.all(14.0),
@@ -155,18 +167,51 @@ class _BuildCouncilCardBody extends StatelessWidget {
           Text(model.departmentManager, style: context.xSubtitle2),
 
           //? Tarih
-          if (model is CouncilCardReportModel || model is CouncilCardPPaymentModel || model is CouncilCardPApprovalModel || model is CouncilCardAppoitmentModel)
+          if (model is CouncilCardReportModel ||
+              model is CouncilCardPendingPaymentModel ||
+              model is CouncilCardPendingApprovalModel ||
+              model is CouncilCardAppoitmentModel ||
+              model is CouncilCardPaymentModel)
             _BuildCouncilCardDate(model: model),
-          //? Fiyat
-          if (model is CouncilCardPPaymentModel) _BuildCouncilCardPrice(model: model),
+
           //? Tetkik
-          if (model is CouncilCardPInspectionModel) _BuildCouncilCardInspection(model: model),
+          if (model is CouncilCardPendingInspectionModel) _BuildCouncilCardInspection(model: model),
           //? Reddedilen
           if (model is CouncilCardRejectedModel) _BuildCouncilCardNote(model: model),
           //? Konsey baglanti linki
-          if (model is CouncilCardPApprovalModel || model is CouncilCardAppoitmentModel) _BuildCouncilCardConnectionLink(model: model),
+          if (model is CouncilCardPendingApprovalModel || model is CouncilCardAppoitmentModel) _BuildCouncilCardConnectionLink(model: model),
+          //? Katilacak Doktor Sayisi
+          if (model is CouncilCardPaymentModel) _BuildCouncilCardNumberOfDoctorsToAttend(model: model),
+          //? Fiyat
+          if (model is CouncilCardPendingPaymentModel || model is CouncilCardPaymentModel) _BuildCouncilCardPrice(model: model),
         ],
       ),
+    );
+  }
+}
+
+//! BodyInspection - BodyInspection - BodyInspection - BodyInspection - BodyInspection - BodyInspection
+
+class _BuildCouncilCardInspection extends StatelessWidget {
+  const _BuildCouncilCardInspection({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+
+  final ICouncilCardModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        R.sizes.hSizer4,
+        Text(
+          LocaleProvider.of(context).expected_inspection,
+          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+        ),
+        Text((model as CouncilCardPendingInspectionModel).expectedInspection, style: context.xSubtitle2),
+      ],
     );
   }
 }
@@ -193,11 +238,13 @@ class _BuildCouncilCardDate extends StatelessWidget {
             ),
             if (model is CouncilCardReportModel)
               Text((model as CouncilCardReportModel).dateToString((model as CouncilCardReportModel).date), style: context.xSubtitle2),
-            if (model is CouncilCardPPaymentModel)
-              Text((model as CouncilCardPPaymentModel).dateToString((model as CouncilCardPPaymentModel).date), style: context.xSubtitle2),
-            if (model is CouncilCardPApprovalModel) Text((model as CouncilCardPApprovalModel).date, style: context.xSubtitle2),
+            if (model is CouncilCardPendingPaymentModel)
+              Text((model as CouncilCardPendingPaymentModel).dateToString((model as CouncilCardPendingPaymentModel).date), style: context.xSubtitle2),
+            if (model is CouncilCardPendingApprovalModel) Text((model as CouncilCardPendingApprovalModel).date, style: context.xSubtitle2),
             if (model is CouncilCardAppoitmentModel)
               Text((model as CouncilCardAppoitmentModel).dateToString((model as CouncilCardAppoitmentModel).date), style: context.xSubtitle2),
+            if (model is CouncilCardPaymentModel)
+              Text((model as CouncilCardPaymentModel).dateToString((model as CouncilCardPaymentModel).date), style: context.xSubtitle2),
           ],
         ),
 
@@ -236,33 +283,9 @@ class _BuildCouncilCardPrice extends StatelessWidget {
           LocaleProvider.of(context).price,
           style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
         ),
-        Text('${(model as CouncilCardPPaymentModel).price.toStringAsFixed(0)} TL', style: context.xSubtitle2),
-      ],
-    );
-  }
-}
-
-//! BodyInspection - BodyInspection - BodyInspection - BodyInspection - BodyInspection - BodyInspection
-
-class _BuildCouncilCardInspection extends StatelessWidget {
-  const _BuildCouncilCardInspection({
-    Key? key,
-    required this.model,
-  }) : super(key: key);
-
-  final ICouncilCardModel model;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        R.sizes.hSizer4,
-        Text(
-          LocaleProvider.of(context).expected_inspection,
-          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
-        ),
-        Text((model as CouncilCardPInspectionModel).expectedInspection, style: context.xSubtitle2),
+        if (model is CouncilCardPendingPaymentModel)
+          Text('${(model as CouncilCardPendingPaymentModel).price.toStringAsFixed(2)} TL', style: context.xSubtitle2),
+        if (model is CouncilCardPaymentModel) Text('${(model as CouncilCardPaymentModel).price.toStringAsFixed(2)} TL', style: context.xSubtitle2),
       ],
     );
   }
@@ -317,15 +340,19 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (model is CouncilCardPApprovalModel)
-              Flexible(child: Text((model as CouncilCardPApprovalModel).councilConnectionUrl, style: context.xSubtitle2.copyWith(color: Colors.grey))),
+            if (model is CouncilCardPendingApprovalModel)
+              Flexible(
+                  child: FittedBox(
+                      child: Text((model as CouncilCardPendingApprovalModel).councilConnectionUrl, style: context.xSubtitle2.copyWith(color: Colors.grey)))),
             if (model is CouncilCardAppoitmentModel)
-              Flexible(child: Text((model as CouncilCardAppoitmentModel).councilConnectionUrl, style: context.xSubtitle2.copyWith(color: Colors.blue))),
+              Flexible(
+                  child: FittedBox(
+                      child: Text((model as CouncilCardAppoitmentModel).councilConnectionUrl, style: context.xSubtitle2.copyWith(color: Colors.blue)))),
             IconButton(
               icon: const Icon(Icons.copy, color: Colors.grey),
               onPressed: () async {
-                if (model is CouncilCardPApprovalModel) {
-                  await Clipboard.setData(ClipboardData(text: (model as CouncilCardPApprovalModel).councilConnectionUrl));
+                if (model is CouncilCardPendingApprovalModel) {
+                  await Clipboard.setData(ClipboardData(text: (model as CouncilCardPendingApprovalModel).councilConnectionUrl));
                 } else if (model is CouncilCardAppoitmentModel) {
                   await Clipboard.setData(ClipboardData(text: (model as CouncilCardAppoitmentModel).councilConnectionUrl));
                 }
@@ -340,6 +367,32 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
             ),
           ],
         ),
+      ],
+    );
+  }
+}
+
+//! BodyNumberOfDoctorsToAttend - BodyNumberOfDoctorsToAttend - BodyNumberOfDoctorsToAttend - BodyNumberOfDoctorsToAttend - BodyNumberOfDoctorsToAttend
+
+class _BuildCouncilCardNumberOfDoctorsToAttend extends StatelessWidget {
+  const _BuildCouncilCardNumberOfDoctorsToAttend({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+
+  final ICouncilCardModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        R.sizes.hSizer4,
+        Text(
+          LocaleProvider.of(context).number_of_doctors_to_attend,
+          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+        ),
+        Text((model as CouncilCardPaymentModel).numberOfDoctorsToAttend.toString(), style: context.xSubtitle2, textAlign: TextAlign.justify),
       ],
     );
   }

@@ -1,14 +1,14 @@
 import 'package:onedosehealth/features/e_concil/shared/core/couincil_mixins.dart';
 
-import '../../shared/widget/icouncil_card_model.dart';
+import '../../shared/model/icouncil_card_model.dart';
 
 /// Odeme Bekleniyor Kart Modeli
-class CouncilCardPPaymentModel extends ICouncilCardModel with CouncilCardDateToString {
+class CouncilCardPendingPaymentModel extends ICouncilCardModel with CouncilCardDateToString {
   final DateTime date;
   final double price;
 
   /// Odeme Bekleniyor Kart Modeli
-  CouncilCardPPaymentModel({
+  CouncilCardPendingPaymentModel({
     required super.diagnosis,
     required super.departmentManager,
     required super.title,
@@ -19,11 +19,11 @@ class CouncilCardPPaymentModel extends ICouncilCardModel with CouncilCardDateToS
 }
 
 /// Tetkik Bekleniyor Kart Modeli
-class CouncilCardPInspectionModel extends ICouncilCardModel {
+class CouncilCardPendingInspectionModel extends ICouncilCardModel {
   final String expectedInspection;
 
   /// Tetkik Bekleniyor Kart Modeli
-  CouncilCardPInspectionModel({
+  CouncilCardPendingInspectionModel({
     required super.diagnosis,
     required super.departmentManager,
     required super.title,
@@ -47,12 +47,12 @@ class CouncilCardRejectedModel extends ICouncilCardModel {
 }
 
 /// Onay Bekleniyor Kart Modeli
-class CouncilCardPApprovalModel extends ICouncilCardModel with CouncilCardDateToString {
+class CouncilCardPendingApprovalModel extends ICouncilCardModel with CouncilCardDateToString {
   final String date;
   final String councilConnectionUrl;
 
   /// Onay Bekleniyor Kart Modeli
-  CouncilCardPApprovalModel({
+  CouncilCardPendingApprovalModel({
     required super.diagnosis,
     required super.departmentManager,
     required super.title,

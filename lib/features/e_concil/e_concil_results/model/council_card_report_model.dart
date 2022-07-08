@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/features/e_concil/shared/widget/icouncil_card_model.dart';
 
 import '../../shared/core/couincil_mixins.dart';
+import '../../shared/model/icouncil_card_model.dart';
 
 class CouncilCardReportModel extends ICouncilCardModel with CouncilCardDateToString {
   final DateTime date;

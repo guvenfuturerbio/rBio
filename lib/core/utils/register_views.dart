@@ -50,6 +50,15 @@ class RegisterViews {
         ..src = LocaleProvider.current.iptal_url
         ..style.border = 'none',
     );
+
+     MobileWebInterface.registerViewFactory(
+      'councilResultDetail',
+      (int viewId) => IFrameElement()
+        ..width = '640'
+        ..height = '360'
+        ..src = 'https://flutter.dev'
+        ..style.border = 'none',
+    );
   }
 
   void doMobilePayment(String html) {

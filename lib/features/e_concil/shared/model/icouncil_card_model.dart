@@ -16,6 +16,6 @@ abstract class ICouncilCardModel {
     required this.title,
     required this.diagnosis,
     required this.departmentManager,
-    required this.color,
+    this.color = 0x00000000,
   });
 }

@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/e_concil/e_couincil_requests/model/council_card_models.dart';
 
-import '../../shared/widget/council_card.dart';
+import '../../../../core/core.dart';
+import '../../shared/view/widget/council_card.dart';
+import '../model/council_request_card_models.dart';
 
 class ECouncilRequestsScreen extends StatelessWidget {
   const ECouncilRequestsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(title: Text(LocaleProvider.of(context).council_demands)),
-      body: _buildBody(context),
+    return RbioScaffold(
+      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).council_requests)),
+      body: const _BuildBody(),
     );
   }
+}
 
-  SingleChildScrollView _buildBody(BuildContext context) {
+class _BuildBody extends StatelessWidget {
+  const _BuildBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: Column(
         children: [
           CouincilCard(
-            model: CouncilCardPPaymentModel(
+            model: CouncilCardPendingPaymentModel(
               title: LocaleProvider.of(context).pending_payment,
               diagnosis: 'Bel Agrisi',
               departmentManager: 'Prof. Dr. Ismet OZEL',
@@ -30,7 +35,7 @@ class ECouncilRequestsScreen extends StatelessWidget {
             ),
           ),
           CouincilCard(
-            model: CouncilCardPInspectionModel(
+            model: CouncilCardPendingInspectionModel(
               title: LocaleProvider.of(context).pending_inspection,
               diagnosis: 'Bel Agrisi',
               departmentManager: 'Prof. Dr. Ismet OZEL',
@@ -46,7 +51,7 @@ class ECouncilRequestsScreen extends StatelessWidget {
             ),
           ),
           CouincilCard(
-            model: CouncilCardPApprovalModel(
+            model: CouncilCardPendingApprovalModel(
               title: LocaleProvider.of(context).pending_approval,
               diagnosis: 'Bel Agrisi',
               departmentManager: 'Prof. Dr. Ismet OZEL',

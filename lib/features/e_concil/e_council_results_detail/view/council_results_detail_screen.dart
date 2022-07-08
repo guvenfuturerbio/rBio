@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -7,8 +8,8 @@ class ECouncilResultsDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(title: Text(LocaleProvider.of(context).council_report)),
+    return RbioScaffold(
+      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).council_report)),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -35,9 +36,13 @@ class ECouncilResultsDetailScreen extends StatelessWidget {
             const Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                child: WebView(
-                  initialUrl: 'https://flutter.dev',
-                ),
+                child: kIsWeb
+                    ? HtmlElementView(
+                        viewType: 'councilResultDetail',
+                      )
+                    : WebView(
+                        initialUrl: 'https://flutter.dev',
+                      ),
               ),
             ),
           ],

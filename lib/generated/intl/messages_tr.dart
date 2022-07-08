@@ -86,6 +86,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "aft": MessageLookupByLibrary.simpleMessage("Son."),
         "after": MessageLookupByLibrary.simpleMessage("Sonra"),
         "after_meal": MessageLookupByLibrary.simpleMessage("Tok"),
+        "after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests":
+            MessageLookupByLibrary.simpleMessage(
+                "Ödeme yaptıktan sonra konsey randevunuz ile ilgili detaylara ve konsey bağlantı adresine Konsey Taleplerim bölümünden ulaşabilirsiniz."),
         "age": MessageLookupByLibrary.simpleMessage("Yaş"),
         "alert": MessageLookupByLibrary.simpleMessage("Alarm"),
         "all_appointment_file":
@@ -310,9 +313,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Konsey Randevusu"),
         "council_connection_link":
             MessageLookupByLibrary.simpleMessage("Konsey Bağlantı Linki"),
-        "council_demands":
-            MessageLookupByLibrary.simpleMessage("Konsey Taleplerim"),
         "council_report": MessageLookupByLibrary.simpleMessage("Konsey Raporu"),
+        "council_requests":
+            MessageLookupByLibrary.simpleMessage("Konsey Taleplerim"),
         "council_results":
             MessageLookupByLibrary.simpleMessage("Konsey Sonuçlarım"),
         "country": MessageLookupByLibrary.simpleMessage("Ülke"),
@@ -347,13 +350,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "create_appo": MessageLookupByLibrary.simpleMessage("Randevu Ara"),
         "create_appointment_events":
             MessageLookupByLibrary.simpleMessage("Randevu Oluştur"),
-        "create_demand": MessageLookupByLibrary.simpleMessage("Talep Oluştur"),
-        "create_new_council_demand":
+        "create_new_council_request":
             MessageLookupByLibrary.simpleMessage("Yeni Konsey Talebi Oluştur"),
         "create_password":
             MessageLookupByLibrary.simpleMessage("Şifre Oluştur"),
         "create_reminder":
             MessageLookupByLibrary.simpleMessage("Hatırlatıcı oluştur"),
+        "create_request": MessageLookupByLibrary.simpleMessage("Talep Oluştur"),
         "created_by": MessageLookupByLibrary.simpleMessage("Oluşturan"),
         "credential_already_exist": MessageLookupByLibrary.simpleMessage(
             "Kimlik bilgileri bir hesaba bağlı olarak zaten mevcuttur. Öncelikle bağlı olduğu hesabın altından silinmesi gereklidir"),
@@ -947,6 +950,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notification": MessageLookupByLibrary.simpleMessage("Bildirim"),
         "notification_inbox_empty":
             MessageLookupByLibrary.simpleMessage("Henüz bildiriminiz yok"),
+        "number_of_doctors_to_attend":
+            MessageLookupByLibrary.simpleMessage("Katılacak doktor sayısı"),
         "oauth_credential_error":
             MessageLookupByLibrary.simpleMessage("OAuth credential error"),
         "ok": MessageLookupByLibrary.simpleMessage("Onay"),
@@ -1517,6 +1522,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "<stripCount> stripiniz kaldı"),
         "your_complaints": MessageLookupByLibrary.simpleMessage(
             "Belirttiğiniz şikayetleriniz:"),
+        "your_council_request_has_been_accepted_by_our_doctors_below_are_the_details":
+            MessageLookupByLibrary.simpleMessage(
+                "Konsey talebiniz doktorlarımız tarafından kabul edilmiştir. Aşağıda detaylar yer almaktadır."),
         "your_data_is_synchronizing": MessageLookupByLibrary.simpleMessage(
             "Verileriniz senkronize ediliyor"),
         "youtube_stream": MessageLookupByLibrary.simpleMessage("Youtube Yayını")

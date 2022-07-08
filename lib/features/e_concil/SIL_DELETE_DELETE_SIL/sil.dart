@@ -10,3 +10,17 @@ const List<String> listOfSearchItems = [
   'Disosiyatif bozukluklar',
   'Beslenme ve yeme bozuklukları',
 ];
+
+List<String> silRecordList = [
+  'Ses dosyasi',
+  'Ses dosyasi',
+  'Ses dosyasi',
+];
+
+List<String> silFileList = [
+  'Dosya adi - aciklamasi',
+  'Dosya adi - aciklamasi',
+  'Dosya adi - aciklamasi',
+  'Dosya adi - aciklamasi',
+  'Dosya adi - aciklamasi',
+];

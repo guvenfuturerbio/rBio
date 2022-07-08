@@ -9110,11 +9110,11 @@ class LocaleProvider {
     );
   }
 
-  /// `Council Demands`
-  String get council_demands {
+  /// `Council Requests`
+  String get council_requests {
     return Intl.message(
-      'Council Demands',
-      name: 'council_demands',
+      'Council Requests',
+      name: 'council_requests',
       desc: '',
       args: [],
     );
@@ -9180,11 +9180,11 @@ class LocaleProvider {
     );
   }
 
-  /// `Create New Council Demand`
-  String get create_new_council_demand {
+  /// `Create new council request`
+  String get create_new_council_request {
     return Intl.message(
-      'Create New Council Demand',
-      name: 'create_new_council_demand',
+      'Create new council request',
+      name: 'create_new_council_request',
       desc: '',
       args: [],
     );
@@ -9280,11 +9280,11 @@ class LocaleProvider {
     );
   }
 
-  /// `Create Demand`
-  String get create_demand {
+  /// `Create request`
+  String get create_request {
     return Intl.message(
-      'Create Demand',
-      name: 'create_demand',
+      'Create request',
+      name: 'create_request',
       desc: '',
       args: [],
     );
@@ -9335,6 +9335,40 @@ class LocaleProvider {
     return Intl.message(
       'File Description',
       name: 'file_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of doctors to attend`
+  String get number_of_doctors_to_attend {
+    return Intl.message(
+      'Number of doctors to attend',
+      name: 'number_of_doctors_to_attend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your council request has been accepted by our doctors. Below are the details.`
+  String
+      get your_council_request_has_been_accepted_by_our_doctors_below_are_the_details {
+    return Intl.message(
+      'Your council request has been accepted by our doctors. Below are the details.',
+      name:
+          'your_council_request_has_been_accepted_by_our_doctors_below_are_the_details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `After payment, you can reach the details of your council appointment and the council connection link from your Council Requests.`
+  String
+      get after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests {
+    return Intl.message(
+      'After payment, you can reach the details of your council appointment and the council connection link from your Council Requests.',
+      name:
+          'after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests',
       desc: '',
       args: [],
     );

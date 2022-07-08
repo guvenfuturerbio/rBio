@@ -2,21 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/features/e_concil/e_concil_results/model/council_card_report_model.dart';
 
-import '../shared/widget/council_card.dart';
+import '../shared/view/widget/council_card.dart';
 
 class ECouncilResultScreen extends StatelessWidget {
   const ECouncilResultScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return RbioScaffold(
       // backgroundColor: getIt<IAppConfig>().theme.eCouncilScafoldBackground,
-      appBar: RbioAppBar(title: Text(LocaleProvider.of(context).council_results)),
-      body: _buildBody(context),
+      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).council_results)),
+      body: const _BuildBody(),
     );
   }
+}
 
-  SingleChildScrollView _buildBody(BuildContext context) {
+class _BuildBody extends StatelessWidget {
+  const _BuildBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [

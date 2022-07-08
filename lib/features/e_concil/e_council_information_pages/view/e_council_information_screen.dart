@@ -12,23 +12,33 @@ class ECouncilInformationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RbioAppBar(title: Text(LocaleProvider.of(context).e_council)),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(Atom.queryParameters[eCouncilInformationPageTitleKey] ?? '', style: TextStyle(color: getIt<IAppConfig>().theme.mainColor, fontSize: 16)),
-              const SizedBox(height: 16),
-              Text(
-                Atom.queryParameters[eCouncilInformationPageInformationKey] ?? '',
-                style: const TextStyle(fontSize: 14),
-                textAlign: TextAlign.justify,
-              ),
-            ],
-          ),
+    return RbioScaffold(
+      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).e_council)),
+      body: const _BuildBody(),
+    );
+  }
+}
+
+class _BuildBody extends StatelessWidget {
+  const _BuildBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(Atom.queryParameters[ECouncilInformationScreen.eCouncilInformationPageTitleKey] ?? '',
+                style: TextStyle(color: getIt<IAppConfig>().theme.mainColor, fontSize: 16)),
+            const SizedBox(height: 16),
+            Text(
+              Atom.queryParameters[ECouncilInformationScreen.eCouncilInformationPageInformationKey] ?? '',
+              style: const TextStyle(fontSize: 14),
+              textAlign: TextAlign.justify,
+            ),
+          ],
         ),
       ),
     );

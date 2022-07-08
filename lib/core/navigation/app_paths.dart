@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/e_concil/e_concil_results/couincil_results_screen.dart';
-import 'package:onedosehealth/features/e_concil/e_couincil_requests/view/council_requests_screen.dart';
-import 'package:onedosehealth/features/e_concil/e_council_create_council_request/view/e_council_create_council_request_screen.dart';
-import 'package:onedosehealth/features/e_concil/e_council_home/view/e_council_home_screen.dart';
-import 'package:onedosehealth/features/e_concil/e_council_results_detail/view/council_results_detail_screen.dart';
+import 'package:onedosehealth/features/e_concil/e_council_payment/view/e_council_payment_screen.dart';
+import 'package:onedosehealth/features/e_concil/e_council_payment_preview/view/e_council_payment_preview_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -32,7 +29,12 @@ import '../../features/doctor/treatment/doctor_note_add_edit/doctor_note_add_edi
 import '../../features/doctor/treatment/treatment_add_edit/view/doctor_scale_treatment_add_edit_screen.dart';
 import '../../features/doctor/treatment/treatment_list/view/doctor_scale_treatment_list_screen.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
+import '../../features/e_concil/e_concil_results/couincil_results_screen.dart';
+import '../../features/e_concil/e_couincil_requests/view/council_requests_screen.dart';
+import '../../features/e_concil/e_council_create_council_request/view/e_council_create_council_request_screen.dart';
+import '../../features/e_concil/e_council_home/view/e_council_home_screen.dart';
 import '../../features/e_concil/e_council_information_pages/view/e_council_information_screen.dart';
+import '../../features/e_concil/e_council_results_detail/view/council_results_detail_screen.dart';
 import '../../features/mediminder/mediminder.dart';
 import '../../features/my_appointments/my_appointments.dart';
 import '../../features/onboarding/view/onboarding_screen.dart';
@@ -670,7 +672,15 @@ class VRouterRoutes {
         ),
         VWidget(
           path: PagePaths.eCouncilCreateCouncilRequestPage,
-          widget: ECouncilCreateCouncilRequestScreen(),
+          widget: const ECouncilCreateCouncilRequestScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilPaymentPreviewPage,
+          widget: const ECouncilPaymentPreviewScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilPaymentPage,
+          widget: const ECouncilPaymentScreen(),
         ),
 
         // #endregion
@@ -827,6 +837,8 @@ class PagePaths {
   static const eCouncilRequestPage = '/council-requests';
   static const eCouncilResultDetailPage = '/council-result-detail';
   static const eCouncilCreateCouncilRequestPage = '/council-create-council-request';
+  static const eCouncilPaymentPreviewPage = '/council-payment-preview-page';
+  static const eCouncilPaymentPage = '/council-payment-page';
 
   // #endregion
 
