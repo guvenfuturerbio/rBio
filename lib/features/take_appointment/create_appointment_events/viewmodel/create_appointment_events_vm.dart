@@ -21,6 +21,12 @@ class CreateAppointmentEventsVm extends ChangeNotifier {
   late String filterFromDate;
   late String filterToDate;
 
+  bool get centerLoading {
+    final l1 = availableDatesProgress == LoadingProgress.loading;
+    final l2 = slotsProgress == LoadingProgress.loading;
+    return l1 && l2;
+  }
+
   LoadingProgress? slotsProgress;
   LoadingProgress? availableDatesProgress;
   List<ResourcesRequest> resourceRequestList = [];

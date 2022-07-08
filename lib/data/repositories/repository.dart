@@ -305,21 +305,31 @@ class Repository {
   ) async {
     try {
       final response = await apiService.changePassword(changePasswordModel);
-      if (response.datum == R.apiEnums.changePassword.success) {
-        return left(response);
-      } else if (response.datum == R.apiEnums.changePassword.oldError) {
-        return right(const ChangePasswordExceptions.oldError());
-      } else if (response.datum == R.apiEnums.changePassword.confirmError) {
-        return right(const ChangePasswordExceptions.confirmError());
-      } else if (response.datum == R.apiEnums.changePassword.systemError) {
-        return right(const ChangePasswordExceptions.systemError());
-      }
+      return _checkChangePassword(response);
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform
           .sentryManager
           .captureException(e, stackTrace: stackTrace);
+
+      if (e is RbioNotSuccessfulException<GuvenResponseModel>) {
+        final errorData = e.data;
+        return _checkChangePassword(errorData);
+      }
       return right(const ChangePasswordExceptions.undefined());
+    }
+  }
+
+  Either<GuvenResponseModel, ChangePasswordExceptions>
+      _checkChangePassword(GuvenResponseModel response) {
+    if (response.datum == R.apiEnums.changePassword.success) {
+      return left(response);
+    } else if (response.datum == R.apiEnums.changePassword.oldError) {
+      return right(const ChangePasswordExceptions.oldError());
+    } else if (response.datum == R.apiEnums.changePassword.confirmError) {
+      return right(const ChangePasswordExceptions.confirmError());
+    } else if (response.datum == R.apiEnums.changePassword.systemError) {
+      return right(const ChangePasswordExceptions.systemError());
     }
 
     return right(const ChangePasswordExceptions.undefined());
