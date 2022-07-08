@@ -89,7 +89,7 @@ class ProfileView extends StatelessWidget {
 
               //
               RbioUserTile(
-                name: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+                name: getIt<UserFacade>().getNameAndSurname(),
                 imageBytes: getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.profileImage),
                 leadingImage: UserLeadingImage.circle,
@@ -155,7 +155,9 @@ class ProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (context.read<UserNotifier>().isDoctor) ...[
+                    if (getIt<UserNotifier>()
+                        .user
+                        .xGetHealthcareEmployeeOrFalse) ...[
                       _buildListItem(
                         context,
                         LocaleProvider.current.healthcare_employee,
@@ -195,7 +197,7 @@ class ProfileView extends StatelessWidget {
                         : const SizedBox(),
 
                     if (!Atom.isWeb &&
-                        getIt<UserNotifier>().isCronic &&
+                        getIt<UserNotifier>().user.xGetChronicTrackingOrFalse &&
                         getIt<IAppConfig>().functionality.chronicTracking)
                       _buildListItem(
                         context,

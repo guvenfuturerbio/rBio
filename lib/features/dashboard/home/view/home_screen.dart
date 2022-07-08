@@ -42,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
         kAutoConnect = false;
       }
     } else {
-      final allUsersModel = getIt<UserNotifier>().getHomeWidgets(getIt<UserNotifier>().firebaseEmail ?? "");
+      final allUsersModel = getIt<UserFacade>()
+          .getHomeWidgets(getIt<UserNotifier>().firebaseEmail ?? "");
       context.read<HomeVm>().init(allUsersModel);
     }
     super.initState();

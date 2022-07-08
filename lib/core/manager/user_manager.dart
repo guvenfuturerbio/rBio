@@ -57,7 +57,7 @@ class UserManagerImpl extends UserManager {
 
             _loginToFirebase(loginResponse);
             //Update user notifier depending on roles
-            getIt<UserNotifier>().userTypeFetcher(loginResponse);
+            getIt<UserNotifier>().handleUserType(loginResponse.roles);
             return loginResponse;
           }
         }
@@ -71,8 +71,8 @@ class UserManagerImpl extends UserManager {
   }
 
   Future<void> _loginToFirebase(RbioLoginResponse? response) async {
-    getIt<UserNotifier>().firebaseEmail = response?.firebaseUserEmail;
-    getIt<UserNotifier>().firebasePassword = response?.firebaseUserSalt;
+    getIt<UserNotifier>().setFirebaseEmail(response?.firebaseUserEmail);
+    getIt<UserNotifier>().setFirebasePassword(response?.firebaseUserSalt);
     await getIt<FirestoreManager>().loginFirebase();
   }
 
@@ -180,7 +180,7 @@ class UserManagerImpl extends UserManager {
   @override
   Future<UserAccount> getUserProfile() async {
     final response = await _repository.getUserProfile();
-    await getIt<UserNotifier>().setUserAccount(response);
+    await getIt<UserFacade>().setUserAccount(response);
     return response;
   }
 

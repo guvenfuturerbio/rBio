@@ -14,8 +14,8 @@ class ProfileVm extends RbioVm {
             .getBool(SharedPreferencesKeys.isTwoFactorAuth) ??
         false;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      getIt<UserNotifier>().isDefaultUser = getIt<ISharedPreferencesManager>()
-          .getBool(SharedPreferencesKeys.isDefaultUser);
+      getIt<UserNotifier>().setDefaultUser(getIt<ISharedPreferencesManager>()
+          .getBool(SharedPreferencesKeys.isDefaultUser));
     });
   }
 
@@ -59,7 +59,7 @@ class ProfileVm extends RbioVm {
 
     try {
       PatientResponse? patient = await getIt<Repository>().getPatientDetail();
-      var pusulaAccount = getIt<UserNotifier>().getPatient();
+      var pusulaAccount = getIt<UserFacade>().getPatient();
       if (patient == null || patient.patientType == null) return;
       var changeInfo = ChangeContactInfoRequest();
       changeInfo.gsm = patient.gsm;
@@ -109,7 +109,7 @@ class ProfileVm extends RbioVm {
       await getIt<ISharedPreferencesManager>()
           .setBool(SharedPreferencesKeys.isDefaultUser, true);
 
-      getIt<UserNotifier>().isDefaultUser = true;
+      getIt<UserNotifier>().setDefaultUser(true);
 
       Atom.to(PagePaths.main, isReplacement: true, historyState: {});
       return;

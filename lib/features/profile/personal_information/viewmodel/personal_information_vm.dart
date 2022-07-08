@@ -55,8 +55,8 @@ class PersonalInformationScreenVm extends RbioVm {
 
     try {
       var changeInfo = ChangeContactInfoRequest();
-      var sharedUserAccount = getIt<UserNotifier>().getUserAccount();
-      var pusulaAccount = getIt<UserNotifier>().getPatient();
+      var sharedUserAccount = getIt<UserFacade>().getUserAccount();
+      var pusulaAccount = getIt<UserFacade>().getPatient();
       if (pusulaAccount.id != null) {
         changeInfo.gsm = newPhoneNumber;
         changeInfo.gsmCountryCode = countryCode;
@@ -84,7 +84,7 @@ class PersonalInformationScreenVm extends RbioVm {
         phoneNumber: newPhoneNumber,
         electronicMail: newEmail,
       );
-      await getIt<UserNotifier>().setUserAccount(sharedUserAccount);
+      await getIt<UserFacade>().setUserAccount(sharedUserAccount);
       await savePhoto();
       Utils.instance.showSuccessSnackbar(
         mContext,

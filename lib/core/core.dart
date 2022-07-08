@@ -57,5 +57,6 @@ export 'utils/mixin/state_mixin.dart';
 export "utils/password_advisor.dart";
 export "utils/register_views.dart";
 export "utils/text_input_formatters.dart";
+export 'utils/user_facade.dart';
 export 'utils/utils.dart';
 export "widgets/widgets.dart";
