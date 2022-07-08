@@ -30,6 +30,11 @@ class _BuildBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String text =
+        LocaleProvider.of(context).after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests;
+
+    List<String> splitList = text.split(LocaleProvider.of(context).council_requests);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -49,11 +54,17 @@ class _BuildBody extends StatelessWidget {
           ),
           const Spacer(),
           //? Konsey Taleprim bilgilendirme yazisi
-          Text(
-            LocaleProvider.of(context)
-                .after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests,
-            textAlign: TextAlign.justify,
-            style: context.xHeadline4,
+          RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(text: splitList[0]),
+                TextSpan(
+                  text: LocaleProvider.of(context).council_requests,
+                  style: context.xSubtitle1.copyWith(color: getIt<IAppConfig>().theme.mainColor),
+                ),
+                TextSpan(text: splitList[1]),
+              ],
+            ),
           ),
           R.sizes.hSizer12,
           //? Fiyat alani
@@ -61,6 +72,30 @@ class _BuildBody extends StatelessWidget {
           R.sizes.hSizer12,
           //? Button alani
           const _BuildButtonsField(),
+        ],
+      ),
+    );
+  }
+}
+
+class _BuildPriceField extends StatelessWidget {
+  const _BuildPriceField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(LocaleProvider.of(context).price, style: context.xHeadline2.copyWith(fontWeight: FontWeight.bold)),
+          Text('1500.00 TL', style: context.xHeadline1.copyWith(color: getIt<IAppConfig>().theme.mainColor, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -128,30 +163,6 @@ class _BuildButtonsFieldState extends State<_BuildButtonsField> {
           ],
         ),
       ],
-    );
-  }
-}
-
-class _BuildPriceField extends StatelessWidget {
-  const _BuildPriceField({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(LocaleProvider.of(context).price, style: context.xHeadline2.copyWith(fontWeight: FontWeight.bold)),
-          Text('1500.00 TL', style: context.xHeadline1.copyWith(color: getIt<IAppConfig>().theme.mainColor, fontWeight: FontWeight.bold)),
-        ],
-      ),
     );
   }
 }

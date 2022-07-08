@@ -573,6 +573,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Dosya başarıyla silindi"),
         "file_description":
             MessageLookupByLibrary.simpleMessage("Dosya açıklaması"),
+        "file_name": MessageLookupByLibrary.simpleMessage("Dosya adı"),
         "file_uploaded":
             MessageLookupByLibrary.simpleMessage("Dosya başarıyla yüklendi"),
         "files": MessageLookupByLibrary.simpleMessage("Dosyalar"),
@@ -1192,6 +1193,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("İstek ve Önerileriniz"),
         "request_and_suggestions_text": MessageLookupByLibrary.simpleMessage(
             "Bu Form; sizlere daha iyi hizmet verebilmek amacıyla uygulamada yaşadığınız ve gözlemlediğiniz sorunları / önerilerinizi ve teşekkürlerinizi bildirmeniz için hazırlanmıştır. Bildiriminiz Hastane Yönetimi tarafından en kısa sürede incelenecek, alınan önlemler ve yapılacak düzenlemeler hakkında size bilgi verilecektir. İlgilerinize ve katkılarınıza teşekkür ederiz."),
+        "requested_inspections":
+            MessageLookupByLibrary.simpleMessage("İstenilen Tetkikler"),
         "required_area": MessageLookupByLibrary.simpleMessage("alanı zorunlu"),
         "required_user_height_info_message":
             MessageLookupByLibrary.simpleMessage(

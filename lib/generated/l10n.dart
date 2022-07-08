@@ -9374,6 +9374,26 @@ class LocaleProvider {
     );
   }
 
+  /// `Requested Inspections`
+  String get requested_inspections {
+    return Intl.message(
+      'Requested Inspections',
+      name: 'requested_inspections',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File name`
+  String get file_name {
+    return Intl.message(
+      'File name',
+      name: 'file_name',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Not Now`
   String get not_now {
     return Intl.message(

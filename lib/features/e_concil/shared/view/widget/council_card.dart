@@ -75,8 +75,11 @@ class _BuildCouncilCardTitle extends StatelessWidget {
               _BuildCouncilCardTitleButton(
                 text: LocaleProvider.of(context).upload,
                 textColor: model.color,
-                onPressed: () {},
+                onPressed: () {
+                  Atom.to(PagePaths.eCouncilInspectionUploadPage);
+                },
               ),
+            //? Katil
             if (model is CouncilCardAppoitmentModel)
               _BuildCouncilCardTitleButton(
                 text: LocaleProvider.of(context).join,

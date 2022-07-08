@@ -584,6 +584,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "File has been successfully deleted"),
         "file_description":
             MessageLookupByLibrary.simpleMessage("File Description"),
+        "file_name": MessageLookupByLibrary.simpleMessage("File name"),
         "file_uploaded": MessageLookupByLibrary.simpleMessage(
             "File has been successfully uploaded"),
         "files": MessageLookupByLibrary.simpleMessage("Files"),
@@ -1204,6 +1205,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Requests and Suggestions"),
         "request_and_suggestions_text": MessageLookupByLibrary.simpleMessage(
             "This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in application and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution."),
+        "requested_inspections":
+            MessageLookupByLibrary.simpleMessage("Requested Inspections"),
         "required_area": MessageLookupByLibrary.simpleMessage("are required"),
         "required_user_height_info_message":
             MessageLookupByLibrary.simpleMessage(

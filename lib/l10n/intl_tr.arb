@@ -928,7 +928,9 @@
   "number_of_doctors_to_attend": "Katılacak doktor sayısı",
   "your_council_request_has_been_accepted_by_our_doctors_below_are_the_details": "Konsey talebiniz doktorlarımız tarafından kabul edilmiştir. Aşağıda detaylar yer almaktadır.",
   "after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests": "Ödeme yaptıktan sonra konsey randevunuz ile ilgili detaylara ve konsey bağlantı adresine Konsey Taleplerim bölümünden ulaşabilirsiniz.",
-  
+  "requested_inspections": "İstenilen Tetkikler",
+  "file_name": "Dosya adı",
+
   "not_now": "Şimdi Değil",
   "permission_camera_message_ios": "{appName} kameranıza erişimi yok. Erişime izin vermek için, Ayarlar'a dokunun ve Kamera'yı etkinleştirin.",
   "@permission_camera_message_ios": {

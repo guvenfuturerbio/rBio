@@ -931,7 +931,8 @@
   "number_of_doctors_to_attend": "Number of doctors to attend",
   "your_council_request_has_been_accepted_by_our_doctors_below_are_the_details": "Your council request has been accepted by our doctors. Below are the details.",
   "after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests": "After payment, you can reach the details of your council appointment and the council connection link from your Council Requests.",
-
+  "requested_inspections": "Requested Inspections",
+  "file_name": "File name",
 
 
   "not_now": "Not Now",

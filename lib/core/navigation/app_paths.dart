@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onedosehealth/features/e_concil/e_council_inspection_upload/view/e_council_inspection_upload_screen.dart';
 import 'package:onedosehealth/features/e_concil/e_council_payment/view/e_council_payment_screen.dart';
 import 'package:onedosehealth/features/e_concil/e_council_payment_preview/view/e_council_payment_preview_screen.dart';
 import 'package:provider/provider.dart';
@@ -682,6 +683,10 @@ class VRouterRoutes {
           path: PagePaths.eCouncilPaymentPage,
           widget: const ECouncilPaymentScreen(),
         ),
+        VWidget(
+          path: PagePaths.eCouncilInspectionUploadPage,
+          widget: const ECouncilInspectionUploadScreen(),
+        ),
 
         // #endregion
 
@@ -837,8 +842,9 @@ class PagePaths {
   static const eCouncilRequestPage = '/council-requests';
   static const eCouncilResultDetailPage = '/council-result-detail';
   static const eCouncilCreateCouncilRequestPage = '/council-create-council-request';
-  static const eCouncilPaymentPreviewPage = '/council-payment-preview-page';
-  static const eCouncilPaymentPage = '/council-payment-page';
+  static const eCouncilPaymentPreviewPage = '/council-payment-preview';
+  static const eCouncilPaymentPage = '/council-payment';
+  static const eCouncilInspectionUploadPage = '/council-inspection-upload';
 
   // #endregion
 
