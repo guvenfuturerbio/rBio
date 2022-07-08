@@ -19,7 +19,7 @@ mixin _$DoctorCvState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(DoctorCvResponse result) success,
+    required TResult Function(DoctorCvResponse result, String imageUrl) success,
     required TResult Function() loading,
     required TResult Function(DoctorCvResponse? result) error,
   }) =>
@@ -27,7 +27,7 @@ mixin _$DoctorCvState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
   }) =>
@@ -35,7 +35,7 @@ mixin _$DoctorCvState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
     required TResult orElse(),
@@ -127,7 +127,7 @@ class _$_InitialState implements _InitialState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(DoctorCvResponse result) success,
+    required TResult Function(DoctorCvResponse result, String imageUrl) success,
     required TResult Function() loading,
     required TResult Function(DoctorCvResponse? result) error,
   }) {
@@ -138,7 +138,7 @@ class _$_InitialState implements _InitialState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
   }) {
@@ -149,7 +149,7 @@ class _$_InitialState implements _InitialState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
     required TResult orElse(),
@@ -207,7 +207,7 @@ abstract class _$$_SuccessStateCopyWith<$Res> {
   factory _$$_SuccessStateCopyWith(
           _$_SuccessState value, $Res Function(_$_SuccessState) then) =
       __$$_SuccessStateCopyWithImpl<$Res>;
-  $Res call({DoctorCvResponse result});
+  $Res call({DoctorCvResponse result, String imageUrl});
 }
 
 /// @nodoc
@@ -224,12 +224,17 @@ class __$$_SuccessStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? result = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$_SuccessState(
       result == freezed
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as DoctorCvResponse,
+      imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -237,14 +242,16 @@ class __$$_SuccessStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SuccessState implements _SuccessState {
-  const _$_SuccessState(this.result);
+  const _$_SuccessState(this.result, this.imageUrl);
 
   @override
   final DoctorCvResponse result;
+  @override
+  final String imageUrl;
 
   @override
   String toString() {
-    return 'DoctorCvState.success(result: $result)';
+    return 'DoctorCvState.success(result: $result, imageUrl: $imageUrl)';
   }
 
   @override
@@ -252,12 +259,15 @@ class _$_SuccessState implements _SuccessState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SuccessState &&
-            const DeepCollectionEquality().equals(other.result, result));
+            const DeepCollectionEquality().equals(other.result, result) &&
+            const DeepCollectionEquality().equals(other.imageUrl, imageUrl));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(result));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(result),
+      const DeepCollectionEquality().hash(imageUrl));
 
   @JsonKey(ignore: true)
   @override
@@ -268,35 +278,35 @@ class _$_SuccessState implements _SuccessState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(DoctorCvResponse result) success,
+    required TResult Function(DoctorCvResponse result, String imageUrl) success,
     required TResult Function() loading,
     required TResult Function(DoctorCvResponse? result) error,
   }) {
-    return success(result);
+    return success(result, imageUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
   }) {
-    return success?.call(result);
+    return success?.call(result, imageUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(result);
+      return success(result, imageUrl);
     }
     return orElse();
   }
@@ -340,9 +350,11 @@ class _$_SuccessState implements _SuccessState {
 }
 
 abstract class _SuccessState implements DoctorCvState {
-  const factory _SuccessState(final DoctorCvResponse result) = _$_SuccessState;
+  const factory _SuccessState(
+      final DoctorCvResponse result, final String imageUrl) = _$_SuccessState;
 
   DoctorCvResponse get result => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_SuccessStateCopyWith<_$_SuccessState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -390,7 +402,7 @@ class _$_LoadingState implements _LoadingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(DoctorCvResponse result) success,
+    required TResult Function(DoctorCvResponse result, String imageUrl) success,
     required TResult Function() loading,
     required TResult Function(DoctorCvResponse? result) error,
   }) {
@@ -401,7 +413,7 @@ class _$_LoadingState implements _LoadingState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
   }) {
@@ -412,7 +424,7 @@ class _$_LoadingState implements _LoadingState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
     required TResult orElse(),
@@ -531,7 +543,7 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(DoctorCvResponse result) success,
+    required TResult Function(DoctorCvResponse result, String imageUrl) success,
     required TResult Function() loading,
     required TResult Function(DoctorCvResponse? result) error,
   }) {
@@ -542,7 +554,7 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
   }) {
@@ -553,7 +565,7 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(DoctorCvResponse result)? success,
+    TResult Function(DoctorCvResponse result, String imageUrl)? success,
     TResult Function()? loading,
     TResult Function(DoctorCvResponse? result)? error,
     required TResult orElse(),
