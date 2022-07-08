@@ -98,7 +98,7 @@ class DoctorCvView extends StatelessWidget {
       builder: (context, state) {
         return state.when(
             initial: () => const SizedBox(),
-            success: (result) => result.id == null
+            success: (result, imageUrl) => result.id == null
                 ? RbioEmptyText(
                     title: LocaleProvider.current.empty_cv,
                   )
@@ -108,7 +108,7 @@ class DoctorCvView extends StatelessWidget {
                     tenantId: tenantId,
                     departmentName: departmentName,
                     result: result,
-                  ),
+                    imageUrl: imageUrl),
             loading: () => const RbioLoading(),
             error: (result) => const RbioBodyError());
       },
@@ -121,6 +121,7 @@ class DoctorCvView extends StatelessWidget {
     required int tenantId,
     required String departmentName,
     required DoctorCvResponse result,
+    required String imageUrl,
   }) {
     return SingleChildScrollView(
       padding: EdgeInsets.zero,
@@ -139,7 +140,7 @@ class DoctorCvView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.network(
-                  context.read<DoctorCvCubit>().imageUrl,
+                  imageUrl,
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) {
                     return customCircleAvatar(
