@@ -340,11 +340,31 @@ class LocaleProvider {
     );
   }
 
-  /// `Please contact us from 444 94 94 for Health Tracker services`
-  String get not_chronic_warning {
+  /// ` Please contact us from `
+  String get not_chronic_warning_1 {
     return Intl.message(
-      'Please contact us from 444 94 94 for Health Tracker services',
-      name: 'not_chronic_warning',
+      ' Please contact us from ',
+      name: ' not_chronic_warning_1 ',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `444 94 94`
+  String get not_chronic_warning_url {
+    return Intl.message(
+      ' 444 94 94 ',
+      name: 'not_chronic_warning_url ',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `for Health Tracker services`
+  String get not_chronic_warning_2 {
+    return Intl.message(
+      ' for Health Tracker services ',
+      name: 'not_chronic_warning_2 ',
       desc: '',
       args: [],
     );

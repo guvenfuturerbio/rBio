@@ -105,7 +105,8 @@ class VRouterRoutes {
             if (!(getIt<UserNotifier>().isCronic ||
                 getIt<UserNotifier>().isDoctor)) {
               vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+              Atom.show(NotChronicWarningDialog(
+                  title: LocaleProvider.current.warning));
             }
           },
           stackedRoutes: [
@@ -133,7 +134,8 @@ class VRouterRoutes {
               openDefaultScreen(vRedirector);
             } else if (!getIt<UserNotifier>().isCronic) {
               vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+              Atom.show(NotChronicWarningDialog(
+                  title: LocaleProvider.current.warning));
             }
           },
           stackedRoutes: [
@@ -182,7 +184,8 @@ class VRouterRoutes {
           beforeEnter: (vRedirector) async {
             if (!getIt<UserNotifier>().isCronic) {
               vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+              Atom.show(NotChronicWarningDialog(
+                  title: LocaleProvider.current.warning));
             }
           },
           stackedRoutes: [
@@ -197,7 +200,8 @@ class VRouterRoutes {
           beforeEnter: (vRedirector) async {
             if (!getIt<UserNotifier>().isCronic) {
               vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+              Atom.show(NotChronicWarningDialog(
+                  title: LocaleProvider.current.warning));
             }
           },
           stackedRoutes: [
@@ -410,7 +414,8 @@ class VRouterRoutes {
           beforeEnter: (vRedirector) async {
             if (!getIt<UserNotifier>().isCronic) {
               vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+              Atom.show(NotChronicWarningDialog(
+                  title: LocaleProvider.current.warning));
             }
           },
           stackedRoutes: [
@@ -425,7 +430,8 @@ class VRouterRoutes {
           beforeEnter: (vRedirector) async {
             if (!getIt<UserNotifier>().isCronic) {
               vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+              Atom.show(NotChronicWarningDialog(
+                  title: LocaleProvider.current.warning));
             }
           },
           stackedRoutes: [
