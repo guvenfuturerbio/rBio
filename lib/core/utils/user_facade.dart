@@ -8,10 +8,6 @@ import '../../model/model.dart';
 import '../core.dart';
 
 abstract class UserFacade {
-  Future<void> logout(
-    BuildContext context,
-    void Function() clearFunc,
-  );
   Future<void> saveHomeWidgets(
     List<String> userWidgets, {
     bool isSharedClear = false,
@@ -24,6 +20,13 @@ abstract class UserFacade {
   Future<bool> checkAccessToken();
   bool canAccessHospital();
   String getNameAndSurname();
+  Future<bool?> logOutConfirmationDialog(
+    BuildContext context,
+  );
+  Future<void> logout(
+    BuildContext context,
+    void Function() clearFunc,
+  );
 }
 
 class UserFacadeImpl extends UserFacade {
@@ -156,50 +159,6 @@ class UserFacadeImpl extends UserFacade {
       false;
 
   @override
-  Future<void> logout(
-    BuildContext context,
-    void Function() clearFunc,
-  ) async {
-    final hasLogout = await _showConfirmationDialog(context) ?? false;
-    if (!hasLogout) return;
-
-    try {
-      Atom.show(RbioLoading.progressIndicator());
-      final localDevices = bluetoothLocalManager.getPairedDevices();
-      if (localDevices.isNotEmpty) {
-        for (var item in localDevices) {
-          if (item.deviceType == DeviceType.miScale) {
-            context.read<DeviceSelectedCubit>().disconnect(item);
-          }
-        }
-      }
-      await firebaseMessagingManager.saveTokenServer("");
-      await _widgetsSave();
-      await sharedPreferencesManager.reload();
-      await repository.localCacheService.removeAll();
-      clearFunc();
-      await localNotificationManager.cancelAllNotifications();
-      await firebaseMessagingManager.userLogout();
-      glucoseStorageImpl.clear();
-      bloodPressureStorageImpl.clear();
-      profileStorageImpl.clear();
-      await scaleRepository.clear();
-      AppInheritedWidget.of(context)?.cancelStreamLocalNotification();
-      kAutoConnect = true;
-    } catch (e, stackTrace) {
-      appConfig.platform.sentryManager.captureException(
-        e,
-        stackTrace: stackTrace,
-      );
-    } finally {
-      Atom.dismiss();
-      appConfig.platform.adjustManager?.trackEvent(LogOutEvent());
-      firebaseAnalyticsManager.logEvent(UygulamaCikisEvent());
-      Atom.to(PagePaths.login, isReplacement: true);
-    }
-  }
-
-  @override
   Future<void> saveHomeWidgets(
     List<String> userWidgets, {
     bool isSharedClear = false,
@@ -248,7 +207,10 @@ class UserFacadeImpl extends UserFacade {
     }
   }
 
-  Future<bool?> _showConfirmationDialog(BuildContext context) async {
+  @override
+  Future<bool?> logOutConfirmationDialog(
+    BuildContext context,
+  ) async {
     final result = await Atom.show(
       RbioBaseGreyDialog(
         child: SingleChildScrollView(
@@ -306,6 +268,47 @@ class UserFacadeImpl extends UserFacade {
     );
 
     return result ?? false;
+  }
+
+  @override
+  Future<void> logout(
+    BuildContext context,
+    void Function() clearFunc,
+  ) async {
+    try {
+      Atom.show(RbioLoading.progressIndicator());
+      final localDevices = bluetoothLocalManager.getPairedDevices();
+      if (localDevices.isNotEmpty) {
+        for (var item in localDevices) {
+          if (item.deviceType == DeviceType.miScale) {
+            context.read<DeviceSelectedCubit>().disconnect(item);
+          }
+        }
+      }
+      await firebaseMessagingManager.saveTokenServer("");
+      await _widgetsSave();
+      await sharedPreferencesManager.reload();
+      await repository.localCacheService.removeAll();
+      clearFunc();
+      await localNotificationManager.cancelAllNotifications();
+      await firebaseMessagingManager.userLogout();
+      glucoseStorageImpl.clear();
+      bloodPressureStorageImpl.clear();
+      profileStorageImpl.clear();
+      await scaleRepository.clear();
+      AppInheritedWidget.of(context)?.cancelStreamLocalNotification();
+      kAutoConnect = true;
+    } catch (e, stackTrace) {
+      appConfig.platform.sentryManager.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
+    } finally {
+      Atom.dismiss();
+      appConfig.platform.adjustManager?.trackEvent(LogOutEvent());
+      firebaseAnalyticsManager.logEvent(UygulamaCikisEvent());
+      Atom.to(PagePaths.login, isReplacement: true);
+    }
   }
 
   //

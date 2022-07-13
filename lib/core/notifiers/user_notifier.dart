@@ -27,6 +27,9 @@ class UserNotifier extends ChangeNotifier {
   }
 
   Future<void> logout(BuildContext context) async {
+    final hasLogout =
+        await userFacade.logOutConfirmationDialog(context) ?? false;
+    if (!hasLogout) return;
     await userFacade.logout(context, _setInitialState);
     notifyListeners();
   }
