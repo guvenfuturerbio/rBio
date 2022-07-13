@@ -12,9 +12,13 @@ class PatientRelativesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          PatientRelativesCubit(getIt(), getIt(), getIt(), getIt())
-            ..fetchPatientReletives(),
+      create: (context) => PatientRelativesCubit(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      )..fetchPatientReletives(),
       child: const PatientRelativesView(),
     );
   }

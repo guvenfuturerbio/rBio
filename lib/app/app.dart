@@ -45,12 +45,14 @@ class MobileMyApp extends StatelessWidget with MyApp {
         }
       },
       child: BlocListener<MiScaleOpsCubit, MiScaleOpsState>(
-        listener: (BuildContext context, MiScaleOpsState state) => _miScaleListener(context, state),
+        listener: (BuildContext context, MiScaleOpsState state) =>
+            _miScaleListener(context, state),
         child: BlocListener<MiScaleStatusCubit, MiScaleStatus>(
           listener: (BuildContext context, MiScaleStatus miScaleStatus) {
             if (miScaleStatus.status == DeviceStatus.connected) {
               if (miScaleStatus.device != null) {
-                BlocProvider.of<MiScaleOpsCubit>(context).readValue(miScaleStatus.device!);
+                BlocProvider.of<MiScaleOpsCubit>(context)
+                    .readValue(miScaleStatus.device!);
               }
             } else if (miScaleStatus.status == DeviceStatus.disconnected) {
               BlocProvider.of<MiScaleOpsCubit>(context).stopListen();
@@ -144,7 +146,14 @@ class _MyAppCommonState extends State<MyAppCommon> {
             create: (context) => BgMeasurementsNotifierDoc(),
           ),
           ChangeNotifierProvider<HomeVm>(
-            create: (context) => HomeVm(context),
+            create: (context) => HomeVm(
+              mContext: context,
+              appConfig: getIt(),
+              repository: getIt(),
+              userFacade: getIt(),
+              userNotifier: getIt(),
+              sharedPreferencesManager: getIt(),
+            ),
           ),
           ChangeNotifierProvider<ThemeNotifier>(
             create: (context) => ThemeNotifier(),
@@ -180,7 +189,9 @@ class _MyAppCommonState extends State<MyAppCommon> {
                 AppInheritedWidget.of(context)?.changeOrientation(orientation);
 
                 return AtomMaterialApp(
-                  initialUrl: widget.jailbroken == true ? PagePaths.jailbroken : widget.initialRoute,
+                  initialUrl: widget.jailbroken == true
+                      ? PagePaths.jailbroken
+                      : widget.initialRoute,
                   routes: VRouterRoutes.routes(getIt<IAppConfig>()),
                   onPop: (vRedirector) async {},
                   onSystemPop: (data) async {
@@ -190,7 +201,10 @@ class _MyAppCommonState extends State<MyAppCommon> {
                         data.stopRedirection();
                       } catch (e, stackTrace) {
                         LoggerUtils.instance.i(e);
-                        getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
+                        getIt<IAppConfig>()
+                            .platform
+                            .sentryManager
+                            .captureException(e, stackTrace: stackTrace);
                       }
                     } else {
                       final currentUrl = data.fromUrl ?? "";
@@ -224,7 +238,8 @@ class _MyAppCommonState extends State<MyAppCommon> {
                   //
                   theme: ThemeData(
                     primaryColor: getIt<IAppConfig>().theme.mainColor,
-                    scaffoldBackgroundColor: getIt<IAppConfig>().theme.scaffoldBackgroundColor,
+                    scaffoldBackgroundColor:
+                        getIt<IAppConfig>().theme.scaffoldBackgroundColor,
                     fontFamily: getIt<IAppConfig>().theme.fontFamily,
                     textTheme: getIt<IAppConfig>().theme.textTheme,
                     textSelectionTheme: TextSelectionThemeData(
@@ -244,7 +259,8 @@ class _MyAppCommonState extends State<MyAppCommon> {
                     GlobalCupertinoLocalizations.delegate,
                     DefaultCupertinoLocalizations.delegate
                   ],
-                  supportedLocales: context.read<LocaleNotifier>().supportedLocales,
+                  supportedLocales:
+                      context.read<LocaleNotifier>().supportedLocales,
                 );
               },
             );

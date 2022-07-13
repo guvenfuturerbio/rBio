@@ -109,8 +109,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           //
                           Expanded(
                             child: Text(
-                              getIt<UserNotifier>()
-                                  .getCurrentUserNameAndSurname(),
+                              getIt<UserFacade>().getNameAndSurname(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: context.xHeadline4.copyWith(
@@ -437,6 +436,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.profile);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
           svgPath: R.image.drawerLblFindHospital,
@@ -457,6 +458,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             );
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.take_video_appointment,
           svgPath: R.image.drawerTakeVideoAppointment,
@@ -477,6 +480,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             );
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.chronic_track_home,
           svgPath: R.image.drawerChronicTrackHome,
@@ -490,6 +495,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.measurementTrackingHome);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.my_appointments,
           svgPath: R.image.drawerMyAppointments,
@@ -503,6 +510,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.appointment);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.results,
           svgPath: R.image.drawerResults,
@@ -516,6 +525,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.eResult);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.for_you,
           svgPath: R.image.drawerForYou,
@@ -529,6 +540,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.forYouCategories);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.symptom_checker,
           svgPath: R.image.drawerSymptomChecker,
@@ -542,7 +555,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.symptomMainMenu);
           },
         ),
-        if (getIt<IAppConfig>().platform.checkDevices())
+
+        //
+        if (!Atom.isWeb && getIt<IAppConfig>().platform.checkDevices())
           DrawerModel(
             title: LocaleProvider.current.devices,
             svgPath: R.image.drawerDevices,
@@ -556,6 +571,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Atom.to(PagePaths.devices);
             },
           ),
+
+        //
         if (getIt<IAppConfig>().platform.checkMedimender())
           DrawerModel(
             title: LocaleProvider.current.reminders,
@@ -570,6 +587,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Atom.to(PagePaths.reminderList);
             },
           ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
           svgPath: R.image.drawerRequestAndSuggestions,
@@ -583,6 +602,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.suggestResult);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.detailed_symptom,
           svgPath: R.image.drawerDetailedSymptom,

@@ -60,7 +60,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
 
               Center(
                 child: Text(
-                  getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+                  getIt<UserFacade>().getNameAndSurname(),
                   style: getIt<IAppConfig>()
                       .theme
                       .dialogTheme
