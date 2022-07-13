@@ -37,49 +37,8 @@ class ProfileView extends StatelessWidget {
         if (state.status == ProfileStatus.logout) {
           await getIt<UserNotifier>().logout(context);
         } else if (state.status == ProfileStatus.changeUserToDefault) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const RbioLoading();
-            },
-          );
-          try {
-            final response =
-                await getIt<Repository>().getRelativeRelationships();
-            var userId = response.datum["id"];
-
-            await getIt<Repository>()
-                .changeActiveUserToRelative(userId.toString());
-
-            Atom.historyBack();
-
-            FirebaseAnalyticsManager()
-                .logEvent(YakinlarimAnaHesabaGecisBasariliEvent());
-            await getIt<ISharedPreferencesManager>()
-                .setBool(SharedPreferencesKeys.isDefaultUser, true);
-
-            getIt<UserNotifier>().isDefaultUser = true;
-
-            Atom.to(PagePaths.main, isReplacement: true, historyState: {});
-            return;
-          } on Exception {
-            FirebaseAnalyticsManager()
-                .logEvent(YakinlarimAnaHesapGecisHataEvent());
-            showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (BuildContext context) {
-                return RbioMessageDialog(
-                  description:
-                      LocaleProvider.of(context).sorry_dont_transaction,
-                  buttonTitle: LocaleProvider.current.ok,
-                  isAtom: false,
-                );
-              },
-            );
-          }
-
-          Navigator.pop(context);
+          Atom.historyBack();
+          Atom.to(PagePaths.main, isReplacement: true, historyState: {});
         } else if (state.status == ProfileStatus.showDefaultErrorDialog) {
           showDialog(
             context: context,
@@ -167,35 +126,42 @@ class ProfileView extends StatelessWidget {
                       showDialog(
                         context: context,
                         barrierDismissible: true,
-                        builder: (BuildContext context) {
-                          return GuvenAlert(
-                            backgroundColor: Colors.white,
-                            title: GuvenAlert.buildTitle(
-                                LocaleProvider.of(context).warning),
-                            actions: [
-                              GuvenAlert.buildMaterialAction(
-                                LocaleProvider.of(context).Ok,
-                                () {
-                                  context
-                                      .read<ProfileCubit>()
-                                      .changeUserToDefault();
-                                },
-                              ),
-                            ],
-                            content: Container(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  GuvenAlert.buildDescription(
-                                    LocaleProvider.of(context)
-                                        .relative_change_message,
+                        builder: (ctx) {
+                          return BlocProvider.value(
+                            value: context.read<ProfileCubit>(),
+                            child: Builder(builder: (context) {
+                              return GuvenAlert(
+                                backgroundColor: Colors.white,
+                                title: GuvenAlert.buildTitle(
+                                    LocaleProvider.of(context).warning),
+                                actions: [
+                                  GuvenAlert.buildMaterialAction(
+                                    LocaleProvider.of(context).Ok,
+                                    () {
+                                      Navigator.pop(context);
+                                      context
+                                          .read<ProfileCubit>()
+                                          .changeUserToDefault();
+                                    },
                                   ),
                                 ],
-                              ),
-                            ),
+                                content: Container(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      GuvenAlert.buildDescription(
+                                        LocaleProvider.of(context)
+                                            .relative_change_message,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
                           );
                         },
                       );

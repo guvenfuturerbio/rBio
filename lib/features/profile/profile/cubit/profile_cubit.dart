@@ -77,6 +77,30 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future changeUserToDefault() async {
-    emit(state.copyWith(status: ProfileStatus.changeUserToDefault));
+    emit(state.copyWith(isLoading: true,),);
+    try {
+      final response = await getIt<Repository>().getRelativeRelationships();
+      var userId = response.datum["id"];
+      await getIt<Repository>().changeActiveUserToRelative(userId.toString());
+      FirebaseAnalyticsManager()
+          .logEvent(YakinlarimAnaHesabaGecisBasariliEvent());
+      await getIt<ISharedPreferencesManager>()
+          .setBool(SharedPreferencesKeys.isDefaultUser, true);
+      getIt<UserNotifier>().isDefaultUser = true;
+      emit(
+        state.copyWith(
+          status: ProfileStatus.changeUserToDefault,
+          isLoading: false,
+        ),
+      );
+    } on Exception {
+      FirebaseAnalyticsManager().logEvent(YakinlarimAnaHesapGecisHataEvent());
+      emit(
+        state.copyWith(
+          status: ProfileStatus.showDefaultErrorDialog,
+          isLoading: false,
+        ),
+      );
+    }
   }
 }
