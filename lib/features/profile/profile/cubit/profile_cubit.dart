@@ -1,61 +1,49 @@
-import 'package:flutter/material.dart';
+import 'package:bloc/bloc.dart';
 
-import '../../../../core/core.dart';
+import 'package:onedosehealth/core/core.dart';
+
 import '../../../../model/model.dart';
+import '../model/profile_numbers.dart';
 
-part '../model/profile_numbers.dart';
+part 'profile_state.dart';
 
-class ProfileVm extends RbioVm {
-  @override
-  BuildContext mContext;
-  late bool isTwoFactorAuth;
-  ProfileVm(this.mContext) {
-    isTwoFactorAuth = getIt<ISharedPreferencesManager>()
+class ProfileCubit extends Cubit<ProfileState> {
+  ProfileCubit() : super(ProfileState()) {
+    bool isTwoFactorAuth = getIt<ISharedPreferencesManager>()
             .getBool(SharedPreferencesKeys.isTwoFactorAuth) ??
         false;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      getIt<UserNotifier>().isDefaultUser = getIt<ISharedPreferencesManager>()
-          .getBool(SharedPreferencesKeys.isDefaultUser);
-    });
-  }
-
-  LoadingProgress _state = LoadingProgress.loading;
-  LoadingProgress get state => _state;
-  set state(LoadingProgress value) {
-    _state = value;
-    notifyListeners();
-  }
-
-  bool _showProgressOverlay = false;
-  bool get showProgressOverlay => _showProgressOverlay;
-  set showProgressOverlay(bool value) {
-    _showProgressOverlay = value;
-    notifyListeners();
+    emit(
+      state.copyWith(
+        isTwoFactorAuth: isTwoFactorAuth,
+      ),
+    );
+    getIt<UserNotifier>().isDefaultUser = getIt<ISharedPreferencesManager>()
+        .getBool(SharedPreferencesKeys.isDefaultUser);
   }
 
   ProfileNumbers? numbers;
 
   Future<void> getNumbers() async {
     try {
-      state = LoadingProgress.loading;
+      emit(state.copyWith(status: ProfileStatus.loadingProgress));
       await Future.delayed(const Duration(seconds: 1));
       numbers = ProfileNumbers(relatives: 3, followers: 10, subscriptions: 50);
-      state = LoadingProgress.done;
+      emit(state.copyWith(status: ProfileStatus.success));
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform
           .sentryManager
           .captureException(e, stackTrace: stackTrace);
-      state = LoadingProgress.error;
+      emit(state.copyWith(status: ProfileStatus.error));
     }
   }
 
-  Future<void> logout(BuildContext context) async {
-    await getIt<UserNotifier>().logout(context);
+  Future<void> logout() async {
+    emit(state.copyWith(status: ProfileStatus.logout));
   }
 
   Future<void> update2FA(bool newValue) async {
-    showProgressOverlay = true;
+    emit(state.copyWith(isLoading: true));
 
     try {
       PatientResponse? patient = await getIt<Repository>().getPatientDetail();
@@ -77,49 +65,42 @@ class ProfileVm extends RbioVm {
         SharedPreferencesKeys.isTwoFactorAuth,
         newValue,
       );
-      isTwoFactorAuth = newValue;
+      emit(state.copyWith(isTwoFactorAuth: newValue, isLoading: false));
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform
           .sentryManager
           .captureException(e, stackTrace: stackTrace);
-      showDefaultErrorDialog(e, stackTrace);
-    } finally {
-      showProgressOverlay = false;
+      emit(state.copyWith(
+          isLoading: false, status: ProfileStatus.showDefaultErrorDialog));
     }
   }
 
-  Future changeUserToDefault(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const RbioLoading();
-      },
-    );
+  Future changeUserToDefault() async {
+    emit(state.copyWith(isLoading: true,),);
     try {
       final response = await getIt<Repository>().getRelativeRelationships();
       var userId = response.datum["id"];
-
       await getIt<Repository>().changeActiveUserToRelative(userId.toString());
-
-      Atom.historyBack();
-
       FirebaseAnalyticsManager()
           .logEvent(YakinlarimAnaHesabaGecisBasariliEvent());
       await getIt<ISharedPreferencesManager>()
           .setBool(SharedPreferencesKeys.isDefaultUser, true);
-
       getIt<UserNotifier>().isDefaultUser = true;
-
-      Atom.to(PagePaths.main, isReplacement: true, historyState: {});
-      return;
+      emit(
+        state.copyWith(
+          status: ProfileStatus.changeUserToDefault,
+          isLoading: false,
+        ),
+      );
     } on Exception {
       FirebaseAnalyticsManager().logEvent(YakinlarimAnaHesapGecisHataEvent());
-
-      showGradientDialog(
-          "", LocaleProvider.of(context).sorry_dont_transaction, true);
+      emit(
+        state.copyWith(
+          status: ProfileStatus.showDefaultErrorDialog,
+          isLoading: false,
+        ),
+      );
     }
-
-    Navigator.pop(context);
   }
 }
