@@ -326,7 +326,9 @@ class UserFacadeImpl extends UserFacade {
             false;
     await sharedPreferencesManager.clear();
     await sharedPreferencesManager.setBool(
-        SharedPreferencesKeys.firstLaunch, firstLaunch);
+      SharedPreferencesKeys.firstLaunch,
+      firstLaunch,
+    );
     await sharedPreferencesManager.setString(
       SharedPreferencesKeys.allUsers,
       jsonEncode(sharedMap),
