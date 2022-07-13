@@ -17,7 +17,6 @@ abstract class UserFacade {
     bool isSharedClear = false,
   });
   AllUsersModel? getHomeWidgets(String tcEmailPassport);
-
   PatientResponse getPatient();
   Future<void> setPatient(PatientResponse patient);
   Future<void> setUserAccount(UserAccount userAccount);
