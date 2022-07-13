@@ -11,7 +11,7 @@ class EResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ResultsCubit(getIt())..fetchVisits(),
+      create: (context) => ResultsCubit(getIt(), getIt())..fetchVisits(),
       child: const EResultView(),
     );
   }

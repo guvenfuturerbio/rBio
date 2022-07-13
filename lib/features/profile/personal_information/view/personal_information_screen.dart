@@ -61,7 +61,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   @override
   Widget build(BuildContext context) {
     try {
-      userAccount = getIt<UserNotifier>().getUserAccount();
+      userAccount = getIt<UserFacade>().getUserAccount();
     } catch (e, stackTrace) {
       return RbioRouteError(e: e, stackTrace: stackTrace);
     }

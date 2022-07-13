@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../viewmodel/profile_vm.dart';
+import '../cubit/profile_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
   final bool isFromDashboard;
@@ -15,8 +15,14 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ProfileVm>(
-      create: (context) => ProfileVm(context)..getNumbers(),
+    return BlocProvider<ProfileCubit>(
+      create: (context) => ProfileCubit(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt<IAppConfig>().platform.sentryManager,
+        getIt(),
+      ),
       child: ProfileView(isFromDashboard: isFromDashboard),
     );
   }
@@ -32,12 +38,30 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProfileVm>(
-      builder: (BuildContext context, ProfileVm vm, Widget? child) {
+    return BlocConsumer<ProfileCubit, ProfileState>(
+      listener: (context, state) async {
+        if (state.status == ProfileStatus.changeUserToDefault) {
+          Atom.historyBack();
+          Atom.to(PagePaths.main, isReplacement: true, historyState: {});
+        } else if (state.status == ProfileStatus.showDefaultErrorDialog) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return RbioMessageDialog(
+                description: LocaleProvider.current.sorry_dont_transaction,
+                buttonTitle: LocaleProvider.current.ok,
+                isAtom: false,
+              );
+            },
+          );
+        }
+      },
+      builder: (context, state) {
         return RbioStackedScaffold(
-          isLoading: vm.showProgressOverlay,
+          isLoading: state.isLoading,
           appbar: _buildAppBar(context),
-          body: _buildBody(vm, context),
+          body: _buildBody(state, context),
         );
       },
     );
@@ -66,12 +90,12 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(ProfileVm vm, BuildContext context) {
-    switch (vm.state) {
-      case LoadingProgress.loading:
+  Widget _buildBody(ProfileState state, BuildContext context) {
+    switch (state.status) {
+      case ProfileStatus.loadingProgress:
         return const RbioLoading();
 
-      case LoadingProgress.done:
+      case ProfileStatus.success:
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: const BouncingScrollPhysics(),
@@ -89,7 +113,7 @@ class ProfileView extends StatelessWidget {
 
               //
               RbioUserTile(
-                name: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+                name: getIt<UserFacade>().getNameAndSurname(),
                 imageBytes: getIt<ISharedPreferencesManager>()
                     .getString(SharedPreferencesKeys.profileImage),
                 leadingImage: UserLeadingImage.circle,
@@ -106,32 +130,44 @@ class ProfileView extends StatelessWidget {
                       showDialog(
                         context: context,
                         barrierDismissible: true,
-                        builder: (BuildContext context) {
-                          return GuvenAlert(
-                            backgroundColor: Colors.white,
-                            title: GuvenAlert.buildTitle(
-                                LocaleProvider.of(context).warning),
-                            actions: [
-                              GuvenAlert.buildMaterialAction(
-                                LocaleProvider.of(context).Ok,
-                                () {
-                                  vm.changeUserToDefault(context);
-                                },
-                              ),
-                            ],
-                            content: Container(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  GuvenAlert.buildDescription(
-                                    LocaleProvider.of(context)
-                                        .relative_change_message,
+                        builder: (ctx) {
+                          return BlocProvider.value(
+                            value: context.read<ProfileCubit>(),
+                            child: Builder(
+                              builder: (context) {
+                                return GuvenAlert(
+                                  backgroundColor: Colors.white,
+                                  title: GuvenAlert.buildTitle(
+                                      LocaleProvider.of(context).warning),
+                                  actions: [
+                                    GuvenAlert.buildMaterialAction(
+                                      LocaleProvider.of(context).Ok,
+                                      () {
+                                        Navigator.pop(context);
+                                        context
+                                            .read<ProfileCubit>()
+                                            .changeUserToDefault();
+                                      },
+                                    ),
+                                  ],
+                                  content: Container(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        GuvenAlert.buildDescription(
+                                          LocaleProvider.of(context)
+                                              .relative_change_message,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
+                                );
+                              },
                             ),
                           );
                         },
@@ -155,7 +191,9 @@ class ProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (context.read<UserNotifier>().isDoctor) ...[
+                    if (getIt<UserNotifier>()
+                        .user
+                        .xGetHealthcareEmployeeOrFalse) ...[
                       _buildListItem(
                         context,
                         LocaleProvider.current.healthcare_employee,
@@ -195,7 +233,7 @@ class ProfileView extends StatelessWidget {
                         : const SizedBox(),
 
                     if (!Atom.isWeb &&
-                        getIt<UserNotifier>().isCronic &&
+                        getIt<UserNotifier>().user.xGetChronicTrackingOrFalse &&
                         getIt<IAppConfig>().functionality.chronicTracking)
                       _buildListItem(
                         context,
@@ -257,6 +295,8 @@ class ProfileView extends StatelessWidget {
 
               // 2FA
               R.sizes.hSizer8,
+
+              //
               Padding(
                 padding: R.sizes.screenPadding(context).copyWith(top: 0),
                 child: Row(
@@ -274,9 +314,9 @@ class ProfileView extends StatelessWidget {
 
                     //
                     CupertinoSwitch(
-                      value: vm.isTwoFactorAuth,
+                      value: state.isTwoFactorAuth,
                       onChanged: (newValue) {
-                        vm.update2FA(newValue);
+                        context.read<ProfileCubit>().update2FA(newValue);
                       },
                       activeColor: getIt<IAppConfig>().theme.mainColor,
                     ),
@@ -286,10 +326,12 @@ class ProfileView extends StatelessWidget {
 
               //
               _buildVerticalGap(),
+
+              //
               RbioElevatedButton(
                 title: LocaleProvider.current.log_out,
                 onTap: () {
-                  vm.logout(context);
+                  context.read<ProfileCubit>().logout(context);
                 },
               ),
 
@@ -299,7 +341,7 @@ class ProfileView extends StatelessWidget {
           ),
         );
 
-      case LoadingProgress.error:
+      case ProfileStatus.error:
         return const RbioBodyError();
 
       default:

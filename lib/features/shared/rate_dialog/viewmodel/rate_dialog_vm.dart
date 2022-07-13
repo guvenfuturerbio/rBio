@@ -94,7 +94,8 @@ class RateDialogVm extends ChangeNotifier {
         );
       },
     ).then((value) {
-      Atom.to(PagePaths.main, isReplacement: true);
+      // Atom.to(PagePaths.main, isReplacement: true);
+      Navigator.pop(mContext!);
     });
   }
 

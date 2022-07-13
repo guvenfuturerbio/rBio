@@ -40,7 +40,7 @@ class _MeasurementTrackingHomeScreenState
 
   @override
   Widget build(BuildContext context) {
-    return !getIt<UserNotifier>().isCronic
+    return !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse
         ? NotChronicScreen(
             title: LocaleProvider.current.chronic_track_home,
             drawerKey: widget.drawerKey,
