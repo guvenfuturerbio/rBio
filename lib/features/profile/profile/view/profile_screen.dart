@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
+import 'package:onedosehealth/features/profile/profile/cubit/profile_cubit.dart';
 
 import '../../../../core/core.dart';
-import '../viewmodel/profile_vm.dart';
 
 class ProfileScreen extends StatelessWidget {
   final bool isFromDashboard;
@@ -15,8 +15,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ProfileVm>(
-      create: (context) => ProfileVm(context)..getNumbers(),
+    return BlocProvider<ProfileCubit>(
+      create: (context) => ProfileCubit()..getNumbers(),
       child: ProfileView(isFromDashboard: isFromDashboard),
     );
   }
@@ -32,12 +32,73 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProfileVm>(
-      builder: (BuildContext context, ProfileVm vm, Widget? child) {
+    return BlocConsumer<ProfileCubit, ProfileState>(
+      listener: (context, state) async {
+        if (state.status == ProfileStatus.logout) {
+          await getIt<UserNotifier>().logout(context);
+        } else if (state.status == ProfileStatus.changeUserToDefault) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const RbioLoading();
+            },
+          );
+          try {
+            final response =
+                await getIt<Repository>().getRelativeRelationships();
+            var userId = response.datum["id"];
+
+            await getIt<Repository>()
+                .changeActiveUserToRelative(userId.toString());
+
+            Atom.historyBack();
+
+            FirebaseAnalyticsManager()
+                .logEvent(YakinlarimAnaHesabaGecisBasariliEvent());
+            await getIt<ISharedPreferencesManager>()
+                .setBool(SharedPreferencesKeys.isDefaultUser, true);
+
+            getIt<UserNotifier>().isDefaultUser = true;
+
+            Atom.to(PagePaths.main, isReplacement: true, historyState: {});
+            return;
+          } on Exception {
+            FirebaseAnalyticsManager()
+                .logEvent(YakinlarimAnaHesapGecisHataEvent());
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) {
+                return RbioMessageDialog(
+                  description:
+                      LocaleProvider.of(context).sorry_dont_transaction,
+                  buttonTitle: LocaleProvider.current.ok,
+                  isAtom: false,
+                );
+              },
+            );
+          }
+
+          Navigator.pop(context);
+        } else if (state.status == ProfileStatus.showDefaultErrorDialog) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return RbioMessageDialog(
+                description: LocaleProvider.current.sorry_dont_transaction,
+                buttonTitle: LocaleProvider.current.ok,
+                isAtom: false,
+              );
+            },
+          );
+        }
+      },
+      builder: (context, state) {
         return RbioStackedScaffold(
-          isLoading: vm.showProgressOverlay,
+          isLoading: state.isLoading,
           appbar: _buildAppBar(context),
-          body: _buildBody(vm, context),
+          body: _buildBody(state, context),
         );
       },
     );
@@ -66,12 +127,12 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(ProfileVm vm, BuildContext context) {
-    switch (vm.state) {
-      case LoadingProgress.loading:
+  Widget _buildBody(ProfileState state, BuildContext context) {
+    switch (state.status) {
+      case ProfileStatus.loadingProgress:
         return const RbioLoading();
 
-      case LoadingProgress.done:
+      case ProfileStatus.success:
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: const BouncingScrollPhysics(),
@@ -115,7 +176,9 @@ class ProfileView extends StatelessWidget {
                               GuvenAlert.buildMaterialAction(
                                 LocaleProvider.of(context).Ok,
                                 () {
-                                  vm.changeUserToDefault(context);
+                                  context
+                                      .read<ProfileCubit>()
+                                      .changeUserToDefault();
                                 },
                               ),
                             ],
@@ -274,9 +337,9 @@ class ProfileView extends StatelessWidget {
 
                     //
                     CupertinoSwitch(
-                      value: vm.isTwoFactorAuth,
+                      value: state.isTwoFactorAuth,
                       onChanged: (newValue) {
-                        vm.update2FA(newValue);
+                        context.read<ProfileCubit>().update2FA(newValue);
                       },
                       activeColor: getIt<IAppConfig>().theme.mainColor,
                     ),
@@ -289,7 +352,7 @@ class ProfileView extends StatelessWidget {
               RbioElevatedButton(
                 title: LocaleProvider.current.log_out,
                 onTap: () {
-                  vm.logout(context);
+                  context.read<ProfileCubit>().logout();
                 },
               ),
 
@@ -299,7 +362,7 @@ class ProfileView extends StatelessWidget {
           ),
         );
 
-      case LoadingProgress.error:
+      case ProfileStatus.error:
         return const RbioBodyError();
 
       default:
