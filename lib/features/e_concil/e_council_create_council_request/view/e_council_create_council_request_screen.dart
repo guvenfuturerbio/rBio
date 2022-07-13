@@ -206,7 +206,8 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
                   });
                 },
                 onLongPressMoveUpdate: (LongPressMoveUpdateDetails detail) {
-                  if (detail.localPosition.distance >= 150) {
+                  // log(detail.localPosition.dx.toString());
+                  if (detail.localPosition.distance >= 242) {
                     setState(() {
                       borderColor = Colors.red;
                     });
@@ -253,20 +254,26 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
           ),
         ),
         ...silRecordList
-            .map<Widget>((String e) => SizedBox(
-                  height: 25,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        iconSize: 10,
-                        icon: const Icon(Icons.close),
-                        splashRadius: 10,
-                      ),
-                      Text(e),
-                    ],
-                  ),
-                ))
+            .map<Widget>(
+              (String e) => Padding(
+                padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      iconSize: 20,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      icon: const Icon(Icons.close),
+                      splashRadius: 14,
+                    ),
+                    R.sizes.wSizer8,
+                    Text(e, style: context.xSubtitle1),
+                  ],
+                ),
+              ),
+            )
             .toList(),
       ],
     );
@@ -325,17 +332,21 @@ class CouncilCardFilesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 25,
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, top: 8.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           IconButton(
             onPressed: onPressed,
-            iconSize: 10,
+            iconSize: 20,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
             icon: const Icon(Icons.close),
-            splashRadius: 10,
+            splashRadius: 14,
           ),
-          Text(title),
+          R.sizes.wSizer8,
+          Text(title, style: context.xSubtitle1),
         ],
       ),
     );

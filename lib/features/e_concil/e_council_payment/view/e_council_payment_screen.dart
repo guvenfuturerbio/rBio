@@ -35,45 +35,56 @@ class _BuildBody extends StatelessWidget {
 
     List<String> splitList = text.split(LocaleProvider.of(context).council_requests);
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          //? Konsey Karti
-          CouincilCard(
-            padding: EdgeInsets.zero,
-            model: CouncilCardPaymentModel(
-              diagnosis: 'Bel Ağrısı',
-              departmentManager: 'Prof. Dr. İsmet Özel',
-              title: '',
-              date: DateTime.now(),
-              numberOfDoctorsToAttend: 4,
-              price: 1500,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: constraints.maxWidth, minHeight: constraints.maxHeight - 32),
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  //? Konsey Karti
+                  CouincilCard(
+                    padding: EdgeInsets.zero,
+                    model: CouncilCardPaymentModel(
+                      diagnosis: 'Bel Ağrısı',
+                      departmentManager: 'Prof. Dr. İsmet Özel',
+                      title: '',
+                      date: DateTime.now(),
+                      numberOfDoctorsToAttend: 4,
+                      price: 1500,
+                    ),
+                  ),
+                  R.sizes.hSizer12,
+                  const Spacer(),
+                  //? Konsey Taleprim bilgilendirme yazisi
+                  RichText(
+                    textAlign: TextAlign.justify,
+                    text: TextSpan(
+                      style: context.xBodyText1.copyWith(fontSize: 11),
+                      children: <TextSpan>[
+                        TextSpan(text: splitList[0]),
+                        TextSpan(
+                          text: LocaleProvider.of(context).council_requests,
+                          style: context.xBodyText1.copyWith(color: getIt<IAppConfig>().theme.mainColor),
+                        ),
+                        TextSpan(text: splitList[1]),
+                      ],
+                    ),
+                  ),
+                  R.sizes.hSizer12,
+                  //? Fiyat alani
+                  const _BuildPriceField(),
+                  R.sizes.hSizer12,
+                  //? Button alani
+                  const _BuildButtonsField(),
+                ],
+              ),
             ),
           ),
-          const Spacer(),
-          //? Konsey Taleprim bilgilendirme yazisi
-          RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(text: splitList[0]),
-                TextSpan(
-                  text: LocaleProvider.of(context).council_requests,
-                  style: context.xSubtitle1.copyWith(color: getIt<IAppConfig>().theme.mainColor),
-                ),
-                TextSpan(text: splitList[1]),
-              ],
-            ),
-          ),
-          R.sizes.hSizer12,
-          //? Fiyat alani
-          const _BuildPriceField(),
-          R.sizes.hSizer12,
-          //? Button alani
-          const _BuildButtonsField(),
-        ],
-      ),
+        );
+      },
     );
   }
 }

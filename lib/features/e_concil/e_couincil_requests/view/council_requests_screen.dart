@@ -47,7 +47,7 @@ class _BuildBody extends StatelessWidget {
               title: LocaleProvider.of(context).rejected,
               diagnosis: 'Bel Agrisi',
               departmentManager: 'Prof. Dr. Ismet OZEL',
-              note: 'Hastalığınız E-Konsey sistemine uymamaktadır.Hastalığınız E-Konsey sistemine uymamaktadır.',
+              note: 'Hastalığınız E-Konsey sistemine uymamaktadır.',
             ),
           ),
           CouincilCard(

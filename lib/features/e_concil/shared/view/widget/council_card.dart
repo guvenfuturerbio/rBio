@@ -47,6 +47,7 @@ class _BuildCouncilCardTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 40,
       decoration: BoxDecoration(
         color: Color(model.color),
         borderRadius: const BorderRadius.only(
@@ -57,10 +58,11 @@ class _BuildCouncilCardTitle extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 2, top: 2, bottom: 2),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(model.title, style: context.xHeadline3.copyWith(color: model is CouncilCardReportModel ? Colors.black : Colors.white)),
+            Center(child: Text(model.title, style: context.xHeadline3.copyWith(color: model is CouncilCardReportModel ? Colors.black : Colors.white))),
+
             //? Ode
             if (model is CouncilCardPendingPaymentModel)
               _BuildCouncilCardTitleButton(
@@ -70,6 +72,7 @@ class _BuildCouncilCardTitle extends StatelessWidget {
                   Atom.to(PagePaths.eCouncilPaymentPreviewPage);
                 },
               ),
+
             //? Yukle
             if (model is CouncilCardPendingInspectionModel)
               _BuildCouncilCardTitleButton(
@@ -79,6 +82,7 @@ class _BuildCouncilCardTitle extends StatelessWidget {
                   Atom.to(PagePaths.eCouncilInspectionUploadPage);
                 },
               ),
+
             //? Katil
             if (model is CouncilCardAppoitmentModel)
               _BuildCouncilCardTitleButton(
@@ -156,18 +160,16 @@ class _BuildCouncilCardBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //? Teşhis
-          Text(
-            LocaleProvider.of(context).diagnosis,
-            style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+          _BuildCouncilCardTile(
+            title: LocaleProvider.of(context).diagnosis,
+            data: model.diagnosis,
           ),
-          Text(model.diagnosis, style: context.xSubtitle2),
-          R.sizes.hSizer4,
+
           //? Bölüm Sorumlusu
-          Text(
-            LocaleProvider.of(context).department_manager,
-            style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+          _BuildCouncilCardTile(
+            title: LocaleProvider.of(context).department_manager,
+            data: model.departmentManager,
           ),
-          Text(model.departmentManager, style: context.xSubtitle2),
 
           //? Tarih
           if (model is CouncilCardReportModel ||
@@ -204,19 +206,8 @@ class _BuildCouncilCardInspection extends StatelessWidget {
   final ICouncilCardModel model;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        R.sizes.hSizer4,
-        Text(
-          LocaleProvider.of(context).expected_inspection,
-          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
-        ),
-        Text((model as CouncilCardPendingInspectionModel).expectedInspection, style: context.xSubtitle2),
-      ],
-    );
-  }
+  Widget build(BuildContext context) =>
+      _BuildCouncilCardTile(title: LocaleProvider.of(context).expected_inspection, data: (model as CouncilCardPendingInspectionModel).expectedInspection);
 }
 
 //! BodyDate - BodyDate - BodyDate - BodyDate - BodyDate - BodyDate
@@ -234,20 +225,31 @@ class _BuildCouncilCardDate extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            R.sizes.hSizer4,
-            Text(
-              model is CouncilCardReportModel ? LocaleProvider.of(context).date : LocaleProvider.of(context).date_and_hour,
-              style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+            _BuildCouncilCardTile(
+              title: model is CouncilCardReportModel ? LocaleProvider.of(context).date : LocaleProvider.of(context).date_and_hour,
+              //? Konsey Raporu
+              data: model is CouncilCardReportModel
+                  ? (model as CouncilCardReportModel).dateToString(
+                      (model as CouncilCardReportModel).date,
+                    )
+                  //? Odeme bekleniyor
+                  : model is CouncilCardPendingPaymentModel
+                      ? (model as CouncilCardPendingPaymentModel).dateToString(
+                          (model as CouncilCardPendingPaymentModel).date,
+                        )
+                      //? Onay bekleniyor
+                      : model is CouncilCardPendingApprovalModel
+                          ? (model as CouncilCardPendingApprovalModel).date
+                          //? Randevu
+                          : model is CouncilCardAppoitmentModel
+                              ? (model as CouncilCardAppoitmentModel).dateToString((model as CouncilCardAppoitmentModel).date)
+                              //? Odeme
+                              : model is CouncilCardPaymentModel
+                                  ? (model as CouncilCardPaymentModel).dateToString(
+                                      (model as CouncilCardPaymentModel).date,
+                                    )
+                                  : null,
             ),
-            if (model is CouncilCardReportModel)
-              Text((model as CouncilCardReportModel).dateToString((model as CouncilCardReportModel).date), style: context.xSubtitle2),
-            if (model is CouncilCardPendingPaymentModel)
-              Text((model as CouncilCardPendingPaymentModel).dateToString((model as CouncilCardPendingPaymentModel).date), style: context.xSubtitle2),
-            if (model is CouncilCardPendingApprovalModel) Text((model as CouncilCardPendingApprovalModel).date, style: context.xSubtitle2),
-            if (model is CouncilCardAppoitmentModel)
-              Text((model as CouncilCardAppoitmentModel).dateToString((model as CouncilCardAppoitmentModel).date), style: context.xSubtitle2),
-            if (model is CouncilCardPaymentModel)
-              Text((model as CouncilCardPaymentModel).dateToString((model as CouncilCardPaymentModel).date), style: context.xSubtitle2),
           ],
         ),
 
@@ -281,14 +283,14 @@ class _BuildCouncilCardPrice extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        R.sizes.hSizer4,
-        Text(
-          LocaleProvider.of(context).price,
-          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+        _BuildCouncilCardTile(
+          title: LocaleProvider.of(context).price,
+          data: model is CouncilCardPendingPaymentModel
+              ? '${(model as CouncilCardPendingPaymentModel).price.toStringAsFixed(2)} TL'
+              : model is CouncilCardPaymentModel
+                  ? '${(model as CouncilCardPaymentModel).price.toStringAsFixed(2)} TL'
+                  : '',
         ),
-        if (model is CouncilCardPendingPaymentModel)
-          Text('${(model as CouncilCardPendingPaymentModel).price.toStringAsFixed(2)} TL', style: context.xSubtitle2),
-        if (model is CouncilCardPaymentModel) Text('${(model as CouncilCardPaymentModel).price.toStringAsFixed(2)} TL', style: context.xSubtitle2),
       ],
     );
   }
@@ -309,12 +311,10 @@ class _BuildCouncilCardNote extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        R.sizes.hSizer4,
-        Text(
-          LocaleProvider.of(context).note,
-          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+        _BuildCouncilCardTile(
+          title: LocaleProvider.of(context).note,
+          data: (model as CouncilCardRejectedModel).note,
         ),
-        Text((model as CouncilCardRejectedModel).note, style: context.xSubtitle2, textAlign: TextAlign.justify),
       ],
     );
   }
@@ -335,7 +335,6 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        R.sizes.hSizer4,
         Text(
           LocaleProvider.of(context).council_connection_link,
           style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
@@ -351,22 +350,27 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
               Flexible(
                   child: FittedBox(
                       child: Text((model as CouncilCardAppoitmentModel).councilConnectionUrl, style: context.xSubtitle2.copyWith(color: Colors.blue)))),
-            IconButton(
-              icon: const Icon(Icons.copy, color: Colors.grey),
-              onPressed: () async {
-                if (model is CouncilCardPendingApprovalModel) {
-                  await Clipboard.setData(ClipboardData(text: (model as CouncilCardPendingApprovalModel).councilConnectionUrl));
-                } else if (model is CouncilCardAppoitmentModel) {
-                  await Clipboard.setData(ClipboardData(text: (model as CouncilCardAppoitmentModel).councilConnectionUrl));
-                }
+            SizedBox(
+              height: 20,
+              child: IconButton(
+                icon: const Icon(Icons.copy, color: Colors.grey),
+                iconSize: 20,
+                padding: EdgeInsets.zero,
+                onPressed: () async {
+                  if (model is CouncilCardPendingApprovalModel) {
+                    await Clipboard.setData(ClipboardData(text: (model as CouncilCardPendingApprovalModel).councilConnectionUrl));
+                  } else if (model is CouncilCardAppoitmentModel) {
+                    await Clipboard.setData(ClipboardData(text: (model as CouncilCardAppoitmentModel).councilConnectionUrl));
+                  }
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(LocaleProvider.of(context).copied),
-                    duration: const Duration(seconds: 1),
-                  ),
-                );
-              },
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(LocaleProvider.of(context).copied),
+                      duration: const Duration(seconds: 1),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -390,12 +394,42 @@ class _BuildCouncilCardNumberOfDoctorsToAttend extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        R.sizes.hSizer4,
+        _BuildCouncilCardTile(
+          title: LocaleProvider.of(context).number_of_doctors_to_attend,
+          data: (model as CouncilCardPaymentModel).numberOfDoctorsToAttend.toString(),
+        ),
+      ],
+    );
+  }
+}
+
+//! BodyCouncilCardTile - BodyCouncilCardTile - BodyCouncilCardTile - BodyCouncilCardTile - BodyCouncilCardTile
+
+class _BuildCouncilCardTile extends StatelessWidget {
+  const _BuildCouncilCardTile({
+    Key? key,
+    required this.title,
+    this.data,
+  }) : super(key: key);
+
+  final String title;
+  final String? data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         Text(
-          LocaleProvider.of(context).number_of_doctors_to_attend,
+          title,
           style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
         ),
-        Text((model as CouncilCardPaymentModel).numberOfDoctorsToAttend.toString(), style: context.xSubtitle2, textAlign: TextAlign.justify),
+        Text(
+          data ?? '',
+          textAlign: TextAlign.justify,
+          style: context.xSubtitle2,
+        ),
+        R.sizes.hSizer4,
       ],
     );
   }
