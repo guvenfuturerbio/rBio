@@ -102,10 +102,8 @@ class VRouterRoutes {
         // #region Chat
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!(getIt<UserNotifier>().isCronic ||
-                getIt<UserNotifier>().isDoctor)) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+            if (!(getIt<UserNotifier>().user?.chat ?? false)) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },
           stackedRoutes: [
@@ -131,9 +129,8 @@ class VRouterRoutes {
           beforeEnter: (vRedirector) async {
             if (!getIt<IAppConfig>().functionality.chronicTracking) {
               openDefaultScreen(vRedirector);
-            } else if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+            } else if (!getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },
           stackedRoutes: [
@@ -175,36 +172,18 @@ class VRouterRoutes {
                 ),
               ],
             ),
-          ],
-        ),
 
-        VGuard(
-          beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
-            }
-          },
-          stackedRoutes: [
+            //
             VWidget(
               path: PagePaths.treatmentEditProgress,
               widget: const TreatmentEditView(),
             ),
-          ],
-        ),
 
-        VGuard(
-          beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
-            }
-          },
-          stackedRoutes: [
+            //
             VWidget(
               path: PagePaths.treatmentProgress,
               widget: const TreatmentProcessScreen(),
-            )
+            ),
           ],
         ),
         // #endregion
@@ -213,7 +192,7 @@ class VRouterRoutes {
         VGuard(
           beforeEnter: (vRedirector) async {
             if (getIt<IAppConfig>().functionality.relatives) {
-              if ((await getIt<UserNotifier>().checkAccessToken()) == false) {
+              if ((await getIt<UserFacade>().checkAccessToken()) == false) {
                 vRedirector.to(PagePaths.login);
               }
             }
@@ -408,9 +387,9 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+            if (!Atom.isWeb &&
+                !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },
           stackedRoutes: [
@@ -423,9 +402,8 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+            if (!getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },
           stackedRoutes: [
@@ -655,6 +633,11 @@ class VRouterRoutes {
           redirectTo: '/home',
         ),
       ];
+
+  static void _stopRedirectionShowNotChronicDialog(VRedirector vRedirector) {
+    vRedirector.stopRedirection();
+    Atom.show(const NotChronicWarning());
+  }
 }
 
 class PagePaths {

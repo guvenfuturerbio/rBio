@@ -159,7 +159,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     showOverlayLoading = true;
     try {
       final patientDetail = await getIt<Repository>().getPatientDetail();
-      final oneDoseAccount = getIt<UserNotifier>().getUserAccount();
+      final oneDoseAccount = getIt<UserFacade>().getUserAccount();
       if (patientDetail?.id == null) {
         SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest =
             SynchronizeOneDoseUserRequest(

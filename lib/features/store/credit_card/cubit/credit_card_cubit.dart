@@ -8,10 +8,15 @@ part 'credit_card_state.dart';
 part 'credit_card_cubit.freezed.dart';
 
 class CreditCardCubit extends Cubit<CreditCardState> {
-  CreditCardCubit(this.userNotifier, this.repository)
-      : super(const CreditCardState());
+  CreditCardCubit(
+    this.userNotifier,
+    this.userFacade,
+    this.repository,
+  ) : super(const CreditCardState());
   late final UserNotifier userNotifier;
+  late final UserFacade userFacade;
   late final Repository repository;
+
   void toggleDistanceContract() {
     emit(
       CreditCardState(
@@ -34,7 +39,7 @@ class CreditCardCubit extends Cubit<CreditCardState> {
     required String packageName,
     required String price,
   }) async {
-    final userAccount = userNotifier.getUserAccount();
+    final userAccount = userFacade.getUserAccount();
     String filledForm = fillAllFormFields(
       LocaleProvider.current.distance_sales_contract_context,
       (userAccount.name! + ' ' + userAccount.surname!),
@@ -50,7 +55,7 @@ class CreditCardCubit extends Cubit<CreditCardState> {
     required String packageName,
     required String price,
   }) async {
-    final userAccount = getIt<UserNotifier>().getUserAccount();
+    final userAccount = userFacade.getUserAccount();
     String filledForm = fillAllFormFields(
       LocaleProvider.current.preinformation_form_context,
       (userAccount.name! + ' ' + userAccount.surname!),

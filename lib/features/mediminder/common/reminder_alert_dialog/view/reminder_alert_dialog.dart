@@ -93,7 +93,7 @@ class _ReminderAlertView extends StatelessWidget {
 
           Center(
             child: Text(
-              getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+              getIt<UserFacade>().getNameAndSurname(),
               style: getIt<IAppConfig>().theme.dialogTheme.description(context),
             ),
           ),

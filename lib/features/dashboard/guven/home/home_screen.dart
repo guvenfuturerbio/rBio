@@ -57,8 +57,7 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
                           child: Text(
                             LocaleProvider.of(context).lbl_hello +
                                 " " +
-                                getIt<UserNotifier>()
-                                    .getCurrentUserNameAndSurname(),
+                                getIt<UserFacade>().getNameAndSurname(),
                             style: TextStyle(
                               color: getIt<IAppConfig>().theme.black,
                               fontWeight: FontWeight.w600,

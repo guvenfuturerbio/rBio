@@ -22,11 +22,11 @@ class AppointmentListVm extends RbioVm {
   CancelAppointmentRequest? cancelAppointmentRequest;
 
   AppointmentListVm(this.mContext, {String? jitsiRoomId}) {
-    _patientId = getIt<UserNotifier>().getPatient().id ?? 0;
+    _patientId = getIt<UserFacade>().getPatient().id ?? 0;
     showProgressOverlay = false;
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (getIt<UserNotifier>().canAccessHospital()) {
+      if (getIt<UserFacade>().canAccessHospital()) {
         await fetchAllTranslator();
         await fetchPatientAppointments();
       } else {

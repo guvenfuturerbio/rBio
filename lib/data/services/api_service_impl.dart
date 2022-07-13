@@ -310,7 +310,7 @@ class ApiServiceImpl extends ApiService {
       if (patient.id == 0) {
         patient.id = null;
       }
-      await getIt<UserNotifier>().setPatient(patient);
+      await getIt<UserFacade>().setPatient(patient);
       return patient;
     } else {
       return null;

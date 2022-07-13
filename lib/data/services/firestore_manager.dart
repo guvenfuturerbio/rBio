@@ -37,7 +37,7 @@ class FirestoreManager {
       );
       final User? user = userCredential.user;
       if (user != null) {
-        getIt<UserNotifier>().firebaseID = user.uid;
+        getIt<UserNotifier>().setFirebaseID(user.uid);
       }
     } else {
       if (getIt<IAppConfig>().productType == ProductType.oneDose) {
@@ -228,11 +228,11 @@ class FirestoreManager {
         contentAvailable: true,
         notification: NotificationModel(
           body: message.type == 0 ? message.message : "Media",
-          title: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+          title: getIt<UserFacade>().getNameAndSurname(),
         ),
         data: NotificationData(
           body: message.type == 0 ? message.message : "Media",
-          title: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+          title: getIt<UserFacade>().getNameAndSurname(),
           chatPerson: currentUser,
           type: 'chat',
         ),
