@@ -100,7 +100,7 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer16,
+        R.widgets.hSizer16,
 
         //
         Row(
@@ -152,7 +152,7 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer16,
+        R.widgets.hSizer16,
 
         //
         Text(
@@ -161,7 +161,7 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer16,
+        R.widgets.hSizer16,
 
         //
         RbioElevatedButton(

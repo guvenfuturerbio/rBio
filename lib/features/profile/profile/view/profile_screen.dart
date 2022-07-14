@@ -105,8 +105,8 @@ class ProfileView extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               //
-              R.sizes.stackedTopPadding(context),
-              R.sizes.hSizer8,
+              R.widgets.stackedTopPadding(context),
+              R.widgets.hSizer8,
 
               //
               const RbioLocaleDropdown(),
@@ -293,12 +293,12 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
 
-              // 2FA
-              R.sizes.hSizer8,
+              //
+              R.widgets.hSizer8,
 
               //
               Padding(
-                padding: R.sizes.screenPadding(context).copyWith(top: 0),
+                padding: R.utils.screenPadding(context).copyWith(top: 0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -336,7 +336,7 @@ class ProfileView extends StatelessWidget {
               ),
 
               //
-              R.sizes.defaultBottomPadding,
+              R.widgets.defaultBottomPadding,
             ],
           ),
         );

@@ -75,7 +75,7 @@ class _BloodGlucoseBody extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer8,
+        R.widgets.hSizer8,
 
         //
         if (model.reminderPeriod != ReminderPeriod.oneTime) ...[

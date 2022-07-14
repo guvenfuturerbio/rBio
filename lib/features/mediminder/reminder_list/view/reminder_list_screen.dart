@@ -4,7 +4,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../core/core.dart';
-import '../../../../../core/utils/tz_helper.dart';
+import '../../../../core/utils/helper/tz_helper.dart';
 import '../../mediminder.dart';
 
 part 'widget/filter_dialog.dart';
@@ -101,7 +101,7 @@ class _ReminderListView extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer8,
+        R.widgets.hSizer8,
 
         //
         list.isEmpty

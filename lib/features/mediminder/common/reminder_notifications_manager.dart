@@ -6,7 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart';
 
 import '../../../core/core.dart';
-import '../../../core/utils/tz_helper.dart';
+import '../../../core/utils/helper/tz_helper.dart';
 import '../mediminder.dart';
 
 abstract class ReminderNotificationsManager {

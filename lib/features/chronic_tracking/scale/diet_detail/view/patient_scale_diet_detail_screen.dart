@@ -134,20 +134,20 @@ class _PatientScaleDietDetailViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildTitle(
             context,
             LocaleProvider.of(context).refreshment,
           ),
+
           _buildTextFormField(
             _breakfastRefreshmentEditingController,
             R.image.clockRefreshment,
           ),
 
-          //
-          R.sizes.hSizer8,
+          //widgets.hSizer8,
 
           //
           _buildTitle(
@@ -160,7 +160,7 @@ class _PatientScaleDietDetailViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildTitle(
@@ -173,7 +173,7 @@ class _PatientScaleDietDetailViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildTitle(
@@ -186,7 +186,7 @@ class _PatientScaleDietDetailViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildTitle(

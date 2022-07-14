@@ -70,19 +70,19 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
               ..._buildPersonalList(),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
 
               //
               ..._buildStatusList(),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
 
               //
               ..._buildTypeList(),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
 
               //
               _buildButtons(),
@@ -221,7 +221,7 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
         ),
 
         //
-        R.sizes.wSizer8,
+        R.widgets.wSizer8,
 
         //
         Expanded(
@@ -296,7 +296,7 @@ class _FilterRowState extends State<FilterRow> {
           ),
 
           //
-          R.sizes.wSizer8,
+          R.widgets.wSizer8,
 
           //
           Text(

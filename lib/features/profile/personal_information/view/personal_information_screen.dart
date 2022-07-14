@@ -128,241 +128,246 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   }
 
   Widget _builBody(BuildContext context, PersonalInformationScreenVm vm) {
-    return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //
-          Expanded(
-            child: RbioKeyboardActions(
-              focusList: [
-                _phoneNumberFocus,
-                _emailFocus,
-              ],
-              child: KeyboardAvoider(
-                autoScroll: true,
-                duration: const Duration(seconds: 1),
-                child: Form(
-                  key: vm.formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      //
-                      R.sizes.stackedTopPadding(context),
-                      R.sizes.hSizer16,
+    return KeyboardVisibilityBuilder(
+      builder: (context, isKeyboardVisible) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //
+            Expanded(
+              child: RbioKeyboardActions(
+                focusList: [
+                  _phoneNumberFocus,
+                  _emailFocus,
+                ],
+                child: KeyboardAvoider(
+                  autoScroll: true,
+                  duration: const Duration(seconds: 1),
+                  child: Form(
+                    key: vm.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        //
+                        R.widgets.stackedTopPadding(context),
+                        R.widgets.hSizer16,
 
-                      //
-                      Center(
-                        child: Column(
+                        //
+                        Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              //
+                              CircleAvatar(
+                                backgroundImage: vm.getProfileImage,
+                                radius: R.sizes.iconSize * 1.3,
+                                backgroundColor: getIt<IAppConfig>()
+                                    .theme
+                                    .cardBackgroundColor,
+                              ),
+
+                              //
+                              TextButton(
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.all(
+                                    getIt<IAppConfig>().theme.textColorPassive,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  _openCupertinoModalPopup(vm);
+                                },
+                                child: Text(
+                                  LocaleProvider.current.change,
+                                  style: context.xHeadline5.copyWith(
+                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        _buildSpacer(),
+
+                        // Identity Number
+                        _buildTitle(
+                          (userAccount.nationality?.xIsTCNationality ?? false)
+                              ? LocaleProvider.of(context).tc_identity_number
+                              : LocaleProvider.of(context).passport_number,
+                        ),
+                        _buildDisabledTextField(
+                          _identityEditingController,
+                        ),
+
+                        // Name
+                        _buildSpacer(),
+                        _buildTitle(
+                          LocaleProvider.of(context).name,
+                        ),
+                        _buildDisabledTextField(
+                          _nameEditingController,
+                        ),
+
+                        // Birthday
+                        _buildSpacer(),
+                        _buildTitle(
+                          LocaleProvider.of(context).birth_date,
+                        ),
+                        _buildDisabledTextField(
+                          _birthdayEditingController,
+                        ),
+
+                        // Phone Number
+                        _buildSpacer(),
+                        _buildTitle(
+                          LocaleProvider.of(context).phone_number,
+                        ),
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             //
-                            CircleAvatar(
-                              backgroundImage: vm.getProfileImage,
-                              radius: R.sizes.iconSize * 1.3,
-                              backgroundColor:
-                                  getIt<IAppConfig>().theme.cardBackgroundColor,
+                            RbioCountryCodePicker(
+                              initialSelection: userAccount.countryCode == null
+                                  ? '+90'
+                                  : userAccount.countryCode!.contains('+')
+                                      ? userAccount.countryCode
+                                      : '+' + userAccount.countryCode!,
+                              onChanged: (code) {
+                                countryCode = code.dialCode!;
+                              },
                             ),
 
                             //
-                            TextButton(
-                              style: ButtonStyle(
-                                overlayColor: MaterialStateProperty.all(
-                                  getIt<IAppConfig>().theme.textColorPassive,
-                                ),
-                              ),
-                              onPressed: () {
-                                _openCupertinoModalPopup(vm);
-                              },
-                              child: Text(
-                                LocaleProvider.current.change,
-                                style: context.xHeadline5.copyWith(
-                                  color: getIt<IAppConfig>().theme.mainColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+
+                            //
+                            Expanded(
+                              child: RbioTextFormField(
+                                validator: (value) {
+                                  if (value?.isNotEmpty ?? false) {
+                                    return null;
+                                  } else {
+                                    return LocaleProvider.current.validation;
+                                  }
+                                },
+                                autovalidateMode: vm.autovalidateMode,
+                                focusNode: _phoneNumberFocus,
+                                controller: _phoneNumberEditingController,
+                                keyboardType: TextInputType.phone,
+                                textInputAction: TextInputAction.done,
+                                hintText:
+                                    LocaleProvider.of(context).phone_number,
+                                inputFormatters: <TextInputFormatter>[
+                                  TabToNextFieldTextInputFormatter(
+                                    context,
+                                    _phoneNumberFocus,
+                                    _emailFocus,
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                      ),
 
-                      _buildSpacer(),
-
-                      // Identity Number
-                      _buildTitle(
-                        (userAccount.nationality?.xIsTCNationality ?? false)
-                            ? LocaleProvider.of(context).tc_identity_number
-                            : LocaleProvider.of(context).passport_number,
-                      ),
-                      _buildDisabledTextField(
-                        _identityEditingController,
-                      ),
-
-                      // Name
-                      _buildSpacer(),
-                      _buildTitle(
-                        LocaleProvider.of(context).name,
-                      ),
-                      _buildDisabledTextField(
-                        _nameEditingController,
-                      ),
-
-                      // Birthday
-                      _buildSpacer(),
-                      _buildTitle(
-                        LocaleProvider.of(context).birth_date,
-                      ),
-                      _buildDisabledTextField(
-                        _birthdayEditingController,
-                      ),
-
-                      // Phone Number
-                      _buildSpacer(),
-                      _buildTitle(
-                        LocaleProvider.of(context).phone_number,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          //
-                          RbioCountryCodePicker(
-                            initialSelection: userAccount.countryCode == null
-                                ? '+90'
-                                : userAccount.countryCode!.contains('+')
-                                    ? userAccount.countryCode
-                                    : '+' + userAccount.countryCode!,
-                            onChanged: (code) {
-                              countryCode = code.dialCode!;
-                            },
-                          ),
-
-                          //
-                          const SizedBox(
-                            width: 5,
-                          ),
-
-                          //
-                          Expanded(
-                            child: RbioTextFormField(
-                              validator: (value) {
-                                if (value?.isNotEmpty ?? false) {
-                                  return null;
-                                } else {
-                                  return LocaleProvider.current.validation;
-                                }
-                              },
-                              autovalidateMode: vm.autovalidateMode,
-                              focusNode: _phoneNumberFocus,
-                              controller: _phoneNumberEditingController,
-                              keyboardType: TextInputType.phone,
-                              textInputAction: TextInputAction.done,
-                              hintText: LocaleProvider.of(context).phone_number,
-                              inputFormatters: <TextInputFormatter>[
-                                TabToNextFieldTextInputFormatter(
-                                  context,
-                                  _phoneNumberFocus,
-                                  _emailFocus,
-                                ),
-                              ],
+                        // E-mail
+                        _buildSpacer(),
+                        _buildTitle(
+                          LocaleProvider.of(context).email_address,
+                        ),
+                        RbioTextFormField(
+                          validator: (value) {
+                            if (value?.isNotEmpty ?? false) {
+                              return null;
+                            } else {
+                              return LocaleProvider.current.validation;
+                            }
+                          },
+                          autovalidateMode: vm.autovalidateMode,
+                          focusNode: _emailFocus,
+                          controller: _emailEditingController,
+                          textInputAction: TextInputAction.done,
+                          hintText: LocaleProvider.of(context).email_address,
+                          inputFormatters: <TextInputFormatter>[
+                            TabToNextFieldTextInputFormatter(
+                              context,
+                              _emailFocus,
+                              _phoneNumberFocus,
                             ),
-                          ),
-                        ],
-                      ),
-
-                      // E-mail
-                      _buildSpacer(),
-                      _buildTitle(
-                        LocaleProvider.of(context).email_address,
-                      ),
-                      RbioTextFormField(
-                        validator: (value) {
-                          if (value?.isNotEmpty ?? false) {
-                            return null;
-                          } else {
-                            return LocaleProvider.current.validation;
-                          }
-                        },
-                        autovalidateMode: vm.autovalidateMode,
-                        focusNode: _emailFocus,
-                        controller: _emailEditingController,
-                        textInputAction: TextInputAction.done,
-                        hintText: LocaleProvider.of(context).email_address,
-                        inputFormatters: <TextInputFormatter>[
-                          TabToNextFieldTextInputFormatter(
-                            context,
-                            _emailFocus,
-                            _phoneNumberFocus,
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
-          //
-          if (!isKeyboardVisible)
-            Container(
-              padding: const EdgeInsets.only(top: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //
-                  Expanded(
-                    child: RbioElevatedButton(
-                      title: LocaleProvider.current.btn_cancel,
-                      onTap: () {
-                        Atom.historyBack();
-                      },
-                      backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-                      textColor: getIt<IAppConfig>().theme.textColorSecondary,
-                      fontWeight: FontWeight.bold,
+            //
+            if (!isKeyboardVisible)
+              Container(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    //
+                    Expanded(
+                      child: RbioElevatedButton(
+                        title: LocaleProvider.current.btn_cancel,
+                        onTap: () {
+                          Atom.historyBack();
+                        },
+                        backColor:
+                            getIt<IAppConfig>().theme.cardBackgroundColor,
+                        textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
 
-                  //
-                  R.sizes.wSizer12,
+                    //
+                    R.widgets.wSizer12,
 
-                  //
-                  Expanded(
-                    child: RbioElevatedButton(
-                      title: LocaleProvider.current.update,
-                      onTap: () {
-                        if (vm.formKey?.currentState?.validate() ?? false) {
-                          vm.updateValues(
-                            countryCode: countryCode,
-                            newPhoneNumber:
-                                _phoneNumberEditingController.text.trim(),
-                            newEmail: _emailEditingController.text.trim(),
-                          );
-                        } else {
-                          LocaleProvider.current.validation;
-                        }
-                      },
-                      fontWeight: FontWeight.bold,
+                    //
+                    Expanded(
+                      child: RbioElevatedButton(
+                        title: LocaleProvider.current.update,
+                        onTap: () {
+                          if (vm.formKey?.currentState?.validate() ?? false) {
+                            vm.updateValues(
+                              countryCode: countryCode,
+                              newPhoneNumber:
+                                  _phoneNumberEditingController.text.trim(),
+                              newEmail: _emailEditingController.text.trim(),
+                            );
+                          } else {
+                            LocaleProvider.current.validation;
+                          }
+                        },
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-          //
-          R.sizes.defaultBottomPadding,
-        ],
-      );
-    });
+            //
+            R.widgets.defaultBottomPadding,
+          ],
+        );
+      },
+    );
   }
 
   Widget _buildSpacer() => const SizedBox(height: 16);

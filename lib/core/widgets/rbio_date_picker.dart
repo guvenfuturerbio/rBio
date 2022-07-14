@@ -135,7 +135,7 @@ class _RbioDatePickerState extends State<RbioDatePicker> {
         ),
 
         //
-        R.sizes.hSizer8,
+        R.widgets.hSizer8,
 
         //
         if (widget.mode != CupertinoDatePickerMode.time)
@@ -190,7 +190,7 @@ class _RbioDatePickerState extends State<RbioDatePicker> {
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }

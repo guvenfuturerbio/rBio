@@ -291,7 +291,9 @@ class AnimatedIntroCard extends StatelessWidget {
                     children: [
                       //
                       const Spacer(),
-                      R.sizes.hSizer8,
+
+                      //
+                      R.widgets.hSizer8,
 
                       //
                       Text(
@@ -306,7 +308,7 @@ class AnimatedIntroCard extends StatelessWidget {
                       ),
 
                       //
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
 
                       //
                       Text(
@@ -348,7 +350,7 @@ class AnimatedIntroCard extends StatelessWidget {
                       ),
 
                       //
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
                     ],
                   ),
                 );
@@ -406,7 +408,7 @@ class IntroCard extends StatelessWidget {
           ),
 
           //
-          R.sizes.hSizer16,
+          R.widgets.hSizer16,
 
           //
           Text(

@@ -6,34 +6,35 @@ import '../../../change_password/model/change_password_model.dart';
 part 'forgot_password_step2_state.dart';
 
 class ForgotPasswordStep2Cubit extends Cubit<ForgotPasswordStep2State> {
-  ForgotPasswordStep2Cubit() : super(ForgotPasswordStep2State());
+  ForgotPasswordStep2Cubit({
+    required this.repository,
+  }) : super(ForgotPasswordStep2State());
+  late final Repository repository;
 
-  final PasswordAdvisor passwordAdvisor = PasswordAdvisor();
+  final PasswordHelper passwordHelper = PasswordHelper();
 
   void togglePasswordVisibility(bool value) {
     emit(state.copyWith(passwordVisibility: !value));
   }
 
   void checkPasswordCapability(String newPassword) {
-    passwordAdvisor.checkPassword(newPassword);
+    passwordHelper.checkPassword(newPassword);
     emit(
       state.copyWith(
-        checkLength: passwordAdvisor.lengthValue,
-        checkLowerCase: passwordAdvisor.lowerCaseValue,
-        checkNumeric: passwordAdvisor.numericValue,
-        checkSpecial: passwordAdvisor.specialValue,
-        checkUpperCase: passwordAdvisor.upperCaseValue,
+        checkLength: passwordHelper.lengthValue,
+        checkLowerCase: passwordHelper.lowerCaseValue,
+        checkNumeric: passwordHelper.numericValue,
+        checkSpecial: passwordHelper.specialValue,
+        checkUpperCase: passwordHelper.upperCaseValue,
       ),
     );
   }
 
   void forgotPassStep2(ChangePasswordModel changePasswordModel) async {
-    if (passwordAdvisor.validateStructure()) {
+    if (passwordHelper.validateStructure()) {
       emit(state.copyWith(isLoading: true));
 
-      final either =
-          await getIt<Repository>().changePassword(changePasswordModel);
-
+      final either = await repository.changePassword(changePasswordModel);
       await either.fold(
         (response) async {
           emit(

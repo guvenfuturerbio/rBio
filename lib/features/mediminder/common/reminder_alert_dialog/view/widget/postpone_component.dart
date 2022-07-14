@@ -90,7 +90,7 @@ class __ExpandablePostponeComponentState
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            R.sizes.hSizer4,
+            R.widgets.hSizer4,
 
             //
             Center(
@@ -102,7 +102,7 @@ class __ExpandablePostponeComponentState
             ),
 
             //
-            R.sizes.hSizer4,
+            R.widgets.hSizer4,
 
             //
             Container(
@@ -115,7 +115,7 @@ class __ExpandablePostponeComponentState
             ),
 
             //
-            R.sizes.hSizer4,
+            R.widgets.hSizer4,
           ],
         ),
       );

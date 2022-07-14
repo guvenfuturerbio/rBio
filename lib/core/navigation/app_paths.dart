@@ -75,7 +75,7 @@ class VRouterRoutes {
 
         VWidget(
           path: PagePaths.forgotPasswordStep2,
-          widget: ForgotPasswordStep2Screen(),
+          widget: const ForgotPasswordStep2Screen(),
         ),
 
         VWidget(
