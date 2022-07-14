@@ -1,55 +1,107 @@
 part of 'app_config.dart';
 
 abstract class IAppTheme {
-  IAppDialogTheme get dialogTheme;
+  IAppTheme() {
+    textTheme = TextTheme(
+      headline1: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(60),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      headline2: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(55),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      headline3: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(50),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      headline4: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(45),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      headline5: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(40),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      bodyText1: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(35),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      bodyText2: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(30),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      caption: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(25),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+    );
+  }
+
+  late TextTheme textTheme;
+  IAppDialogTheme dialogTheme = AppDialogThemeImpl();
   String get fontFamily;
   String get appLogo;
   String get successAppointmentImage;
   double get appBarLogoHeight;
-
   Color get mainColor;
   Color get secondaryColor;
-  Color get scaffoldBackgroundColor;
-  Color get textColor;
-  Color get textColorSecondary;
-  Color get textColorPassive;
-  TextTheme get textTheme;
-  Color get cardBackgroundColor;
-  Color get grey;
-  Color get blackForItem;
-  Color get iconColor;
-  Color get iconSecondaryColor;
-  Color get grayColor;
   Color get textContrastColor;
-  Color get danisma;
-  Color get danismaLight;
-  Color get red;
-  Color get lightRed;
-  Color get darkRedGuven;
-  Color get onlineAppointment;
-  Color get lightOnlineAppointment;
 
-  Color get yellow;
-  Color get blue;
-  Color get pink;
-
-  // Common
-  Color get gray;
-  Color get black;
-  Color get white;
-  Color get darkBlack;
-  Color get darkWhite;
-  Color get high;
-  Color get veryHigh;
-  Color get target;
-  Color get low;
-  Color get veryLow;
-  Color get graphPlotRange;
-  Color get stateColor;
-  Color get bgGray;
-  Color get chartGray;
-  Color get darkRed;
-  Color get graphRangeColor;
+  // ! --------- --------- Common --------- ---------
+  Color grey = R.colors.grey;
+  Color blue = R.colors.frenchPass;
+  Color yellow = R.colors.kournikova;
+  Color pink = R.colors.frenchLilac;
+  Color scaffoldBackgroundColor = R.colors.gallery;
+  Color textColor = R.colors.white;
+  Color textColorSecondary = R.colors.black;
+  Color textColorPassive = R.colors.silver;
+  Color cardBackgroundColor = R.colors.white;
+  Color blackForItem = R.colors.black;
+  Color iconColor = R.colors.black;
+  Color iconSecondaryColor = R.colors.white;
+  Color grayColor = R.colors.gallery;
+  Color danisma = R.colors.fountainBlue;
+  Color danismaLight = R.colors.aquaIsland;
+  Color red = R.colors.fuzzyWuzzyBrown;
+  Color lightRed = R.colors.fuzzyWuzzyBrown;
+  Color darkRedGuven = R.colors.burntUmber;
+  Color onlineAppointment = R.colors.ultramarine;
+  Color lightOnlineAppointment = R.colors.cornflowerBlue;
+  Color darkBlack = R.colors.black;
+  Color darkRed = R.colors.punch;
+  Color darkWhite = R.colors.mercury;
+  Color black = R.colors.codGray;
+  Color gray = R.colors.dustyGray;
+  Color white = R.colors.white;
+  Color high = R.colors.energyYellow;
+  Color veryHigh = R.colors.casablanca;
+  Color target = R.colors.deYork;
+  Color low = R.colors.tonysPink;
+  Color veryLow = R.colors.roman;
+  Color stateColor = R.colors.boulder;
+  Color bgGray = R.colors.concrete;
+  Color chartGray = R.colors.iron;
+  Color graphPlotRange = R.colors.skeptic;
+  Color graphRangeColor = R.colors.skeptic;
+  double convertFontSize(double value) => value / 2.85;
 }
 
 abstract class IAppDialogTheme {
