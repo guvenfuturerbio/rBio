@@ -1,4 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+
+/// [ECouncilInspectionUploadScreen] ekranında istenilen tetkiklerin modelidir.
 class CouncilInspectionUploadModel {
   final String inspectionName;
   final bool isUploaded;

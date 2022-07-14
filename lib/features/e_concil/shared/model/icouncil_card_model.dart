@@ -1,6 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+/// E-Konsey sayfalarina yer alan bütün kartların super sınıfıdır.
+/// Tüm kartların ortak özellikleri olan [title], [diagnosis],
+/// [departmentManager] ve [color] özelliklerini içerir.
+///
+/// İleride eklenecek herhangi bir özellik tüm kartlar için ortak ise bu class'a eklenebilir.
 abstract class ICouncilCardModel {
-  /// Card Başlığı
+  /// Kart Başlığı
   final String title;
 
   /// Teşhis

@@ -30,7 +30,7 @@ import '../../features/doctor/treatment/doctor_note_add_edit/doctor_note_add_edi
 import '../../features/doctor/treatment/treatment_add_edit/view/doctor_scale_treatment_add_edit_screen.dart';
 import '../../features/doctor/treatment/treatment_list/view/doctor_scale_treatment_list_screen.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
-import '../../features/e_concil/e_concil_results/couincil_results_screen.dart';
+import '../../features/e_concil/e_concil_results/view/couincil_results_screen.dart';
 import '../../features/e_concil/e_couincil_requests/view/council_requests_screen.dart';
 import '../../features/e_concil/e_council_create_council_request/view/e_council_create_council_request_screen.dart';
 import '../../features/e_concil/e_council_home/view/e_council_home_screen.dart';

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import '../../shared/core/couincil_mixins.dart';
 import '../../shared/model/icouncil_card_model.dart';
 
+/// [ECouncilResultScreen]  ekranında yer alan Konsey Raporu kart modelidir.
 class CouncilCardReportModel extends ICouncilCardModel with CouncilCardDateToString {
   final DateTime date;
 

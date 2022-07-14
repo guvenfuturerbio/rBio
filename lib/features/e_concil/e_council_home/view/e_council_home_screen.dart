@@ -152,9 +152,11 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
           //
           GestureDetector(
             onTap: () {
-              setState(() {
-                isExpanded = !isExpanded;
-              });
+              //! Animasyon  tasarim ekibi isteği üzerine iptal edildi.
+              // setState(() {
+              //   isExpanded = !isExpanded;
+              // });
+              Atom.to(PagePaths.eCouncilRequestPage);
             },
             child: Container(
               color: Colors.transparent,
@@ -177,13 +179,14 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                     ),
                   ),
 
-                  //
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward_ios_outlined),
-                    onPressed: () {
-                      Atom.to(PagePaths.eCouncilRequestPage);
-                    },
-                  )
+                  //! Animasyon  tasarim ekibi isteği üzerine iptal edildi.
+                  const Icon(Icons.arrow_forward_ios_outlined),
+                  // IconButton(
+                  //   icon: const Icon(Icons.arrow_forward_ios_outlined),
+                  //   onPressed: () {
+                  // Atom.to(PagePaths.eCouncilRequestPage);
+                  //   },
+                  // ),
                 ],
               ),
             ),

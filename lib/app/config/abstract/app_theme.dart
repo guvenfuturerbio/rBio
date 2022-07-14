@@ -58,7 +58,7 @@ abstract class IAppTheme {
   Color get eCouncilPendingInspection;
   Color get eCouncilRejected;
   Color get eCouncilAppointmentReady;
-  int get eCouncilReportCardTitleBackground;
+  Color get eCouncilReportCardTitleBackground;
   Color get eCouncilScafoldBackground;
   // E-Konsey
 }

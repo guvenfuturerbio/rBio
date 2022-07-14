@@ -1,6 +1,8 @@
 import '../core/couincil_mixins.dart';
 import 'icouncil_card_model.dart';
 
+/// [ECouncilPaymentScreen] ve [ECouncilPaymentPreviewScreen] ekranlarında yer alan
+/// kartların modelidir.
 class CouncilCardPaymentModel extends ICouncilCardModel with CouncilCardDateToString {
   final DateTime date;
   final int numberOfDoctorsToAttend;

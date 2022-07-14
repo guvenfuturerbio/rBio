@@ -7,7 +7,6 @@ class CouncilCardPendingPaymentModel extends ICouncilCardModel with CouncilCardD
   final DateTime date;
   final double price;
 
-  /// Odeme Bekleniyor Kart Modeli
   CouncilCardPendingPaymentModel({
     required super.diagnosis,
     required super.departmentManager,
@@ -22,7 +21,6 @@ class CouncilCardPendingPaymentModel extends ICouncilCardModel with CouncilCardD
 class CouncilCardPendingInspectionModel extends ICouncilCardModel {
   final String expectedInspection;
 
-  /// Tetkik Bekleniyor Kart Modeli
   CouncilCardPendingInspectionModel({
     required super.diagnosis,
     required super.departmentManager,
@@ -36,7 +34,6 @@ class CouncilCardPendingInspectionModel extends ICouncilCardModel {
 class CouncilCardRejectedModel extends ICouncilCardModel {
   final String note;
 
-  /// Reddedilen Kart Modeli
   CouncilCardRejectedModel({
     required super.diagnosis,
     required super.departmentManager,
@@ -51,7 +48,6 @@ class CouncilCardPendingApprovalModel extends ICouncilCardModel with CouncilCard
   final String date;
   final String councilConnectionUrl;
 
-  /// Onay Bekleniyor Kart Modeli
   CouncilCardPendingApprovalModel({
     required super.diagnosis,
     required super.departmentManager,
@@ -67,7 +63,6 @@ class CouncilCardAppoitmentModel extends ICouncilCardModel with CouncilCardDateT
   final DateTime date;
   final String councilConnectionUrl;
 
-  /// Konsey Randevusu Kart Modeli
   CouncilCardAppoitmentModel({
     required super.diagnosis,
     required super.departmentManager,

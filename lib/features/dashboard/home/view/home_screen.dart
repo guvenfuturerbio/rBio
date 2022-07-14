@@ -127,12 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Column(
         children: [
-          ElevatedButton(
-            child: const Text('Info'),
-            onPressed: () {
-              Atom.to(PagePaths.eCouncilHomePage);
-            },
-          ),
           ReorderableWrap(
             alignment: WrapAlignment.center,
             buildDraggableFeedback: (_, __, children) {

@@ -44,8 +44,7 @@ abstract class IAppMobilePlatformConfig {
   Widget runApp(String initialRoute, bool jailbroken) {
     return MobileApp(
       myApp: MobileMyApp(
-        // TODO : Unutma !! initialRoute
-        initialRoute: PagePaths.eCouncilHomePage,
+        initialRoute: initialRoute,
       ),
       jailbroken: jailbroken,
     );
