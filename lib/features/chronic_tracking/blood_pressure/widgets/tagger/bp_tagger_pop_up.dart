@@ -93,7 +93,7 @@ class BpTaggerPopUp extends StatelessWidget {
               ),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
               SizedBox(height: Atom.safeBottom),
             ],
           ),
@@ -302,7 +302,7 @@ class BpTaggerPopUp extends StatelessWidget {
         ),
 
         //
-        R.sizes.wSizer8,
+        R.widgets.wSizer8,
 
         //
         _buildActionButton(

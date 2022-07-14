@@ -56,7 +56,7 @@ class _BuildBody extends StatelessWidget {
                       price: 1500,
                     ),
                   ),
-                  R.sizes.hSizer12,
+                  R.widgets.hSizer12,
                   const Spacer(),
                   //? Konsey Taleprim bilgilendirme yazisi
                   RichText(
@@ -73,10 +73,10 @@ class _BuildBody extends StatelessWidget {
                       ],
                     ),
                   ),
-                  R.sizes.hSizer12,
+                  R.widgets.hSizer12,
                   //? Fiyat alani
                   const _BuildPriceField(),
-                  R.sizes.hSizer12,
+                  R.widgets.hSizer12,
                   //? Button alani
                   const _BuildButtonsField(),
                 ],
@@ -146,7 +146,7 @@ class _BuildButtonsFieldState extends State<_BuildButtonsField> {
                   ),
           ),
         ),
-        R.sizes.hSizer12,
+        R.widgets.hSizer12,
         //? Inidirim ve onayla butonlari
         Row(
           children: [

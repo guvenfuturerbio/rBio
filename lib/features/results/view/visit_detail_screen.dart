@@ -124,7 +124,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        R.sizes.stackedTopPadding(context),
+        R.widgets.stackedTopPadding(context),
         //
         _buildTab(state),
         //

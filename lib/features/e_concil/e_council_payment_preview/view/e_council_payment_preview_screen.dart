@@ -33,7 +33,7 @@ class _BuildBody extends StatelessWidget {
             textAlign: TextAlign.center,
             style: context.xHeadline4,
           ),
-          R.sizes.hSizer12,
+          R.widgets.hSizer12,
           CouincilCard(
             padding: EdgeInsets.zero,
             model: CouncilCardPaymentModel(

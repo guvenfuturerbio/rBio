@@ -71,14 +71,14 @@ class _ScaleMeasurementResultView extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: R.sizes.screenPadding(context),
+        padding: R.utils.screenPadding(context),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
             //
-            R.sizes.hSizer28,
+            R.widgets.hSizer28,
             _buildTitle(context),
 
             //
@@ -101,7 +101,7 @@ class _ScaleMeasurementResultView extends StatelessWidget {
             ),
 
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
             _buildButtons(context),
           ],
         ),
@@ -136,7 +136,7 @@ class _ScaleMeasurementResultView extends StatelessWidget {
         ),
 
         //
-        R.sizes.wSizer12,
+        R.widgets.wSizer12,
 
         //
         Expanded(

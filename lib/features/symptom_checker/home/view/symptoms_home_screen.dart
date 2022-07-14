@@ -229,7 +229,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }

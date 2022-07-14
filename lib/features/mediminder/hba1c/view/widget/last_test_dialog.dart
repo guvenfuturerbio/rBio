@@ -56,11 +56,11 @@ class _LastTestDialogState extends State<_LastTestDialog> {
               ),
 
               //
-              R.sizes.hSizer40,
+              R.widgets.hSizer40,
 
               Center(
                 child: Text(
-                  getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+                  getIt<UserFacade>().getNameAndSurname(),
                   style: getIt<IAppConfig>()
                       .theme
                       .dialogTheme
@@ -68,7 +68,8 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                 ),
               ),
 
-              R.sizes.hSizer8,
+              //
+              R.widgets.hSizer8,
 
               //
               Padding(
@@ -87,7 +88,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
               ),
 
               //
-              R.sizes.hSizer40,
+              R.widgets.hSizer40,
 
               //
               if (context.xTextScaleType == TextScaleType.small) ...[
@@ -107,7 +108,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                     ),
 
                     //
-                    R.sizes.wSizer8,
+                    R.widgets.wSizer8,
 
                     //
                     Expanded(
@@ -126,7 +127,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                 ),
               ] else ...[
                 _buildCancelButton(infinityWidth: true),
-                R.sizes.hSizer12,
+                R.widgets.hSizer12,
                 _buildConfirmButton(infinityWidth: true),
               ],
 

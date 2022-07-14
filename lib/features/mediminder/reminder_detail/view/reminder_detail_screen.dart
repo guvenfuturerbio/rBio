@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../../../core/core.dart';
-import '../../../../core/utils/tz_helper.dart';
+import '../../../../core/utils/helper/tz_helper.dart';
 import '../../mediminder.dart';
 
 part 'widget/add_medicine_dialog.dart';
@@ -128,7 +128,7 @@ class _ReminderDetailView extends StatelessWidget {
         _buildButtons(context, result),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }
@@ -183,7 +183,7 @@ class _ReminderDetailView extends StatelessWidget {
                         ),
 
                         //
-                        R.sizes.hSizer8,
+                        R.widgets.hSizer8,
                       ],
                     );
                   } else {
@@ -231,7 +231,7 @@ class _ReminderDetailView extends StatelessWidget {
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           RbioRedButton(
@@ -259,7 +259,7 @@ Widget _buildDetailsTitle(BuildContext context) {
       ),
 
       //
-      R.sizes.hSizer8
+      R.widgets.hSizer8
     ],
   );
 }
@@ -302,4 +302,4 @@ Widget _buildTitleRow(
   );
 }
 
-Widget _buildGap() => R.sizes.hSizer8;
+Widget _buildGap() => R.widgets.hSizer8;

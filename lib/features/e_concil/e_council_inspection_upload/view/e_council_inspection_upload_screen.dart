@@ -25,7 +25,7 @@ class _BuildBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _RequestedInseptionsCard(),
-        R.sizes.hSizer12,
+        R.widgets.hSizer12,
         const _BuildFilesCard(),
       ],
     );
@@ -79,7 +79,7 @@ class _RequestedInseptionsCardState extends State<_RequestedInseptionsCard> {
                                 });
                               },
                             ),
-                      R.sizes.wSizer40,
+                      R.widgets.wSizer40,
                     ],
                   ),
                 ],

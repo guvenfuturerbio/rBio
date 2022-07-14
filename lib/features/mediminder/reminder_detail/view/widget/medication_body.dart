@@ -74,10 +74,10 @@ class _MedicationBody extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer8,
+        R.widgets.hSizer8,
 
         //
-        R.sizes.hSizer8,
+        R.widgets.hSizer8,
 
         //
         if (model.reminderPeriod != ReminderPeriod.oneTime)

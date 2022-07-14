@@ -111,7 +111,7 @@ class AvailableDevices extends StatelessWidget {
                 ),
 
                 //
-                R.sizes.wSizer4,
+                R.widgets.wSizer4,
 
                 //
                 Expanded(

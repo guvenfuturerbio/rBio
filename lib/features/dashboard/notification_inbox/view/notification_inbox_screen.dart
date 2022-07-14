@@ -34,7 +34,7 @@ class NotificationInboxStateScreen extends State<NotificationInboxScreen> {
 
   Widget _buildBody() => Column(
         children: [
-          R.sizes.stackedTopPadding(context),
+          R.widgets.stackedTopPadding(context),
           RbioEmptyText(title: LocaleProvider.current.notification_inbox_empty),
         ],
       );

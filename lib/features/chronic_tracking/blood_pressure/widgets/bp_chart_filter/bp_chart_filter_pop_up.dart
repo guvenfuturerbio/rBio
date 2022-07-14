@@ -43,7 +43,7 @@ class BpChartFilterPopUp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
             ListView(
@@ -79,7 +79,7 @@ class BpChartFilterPopUp extends StatelessWidget {
                 ),
 
                 //
-                R.sizes.wSizer8,
+                R.widgets.wSizer8,
 
                 //
                 RbioElevatedButton(
@@ -99,7 +99,7 @@ class BpChartFilterPopUp extends StatelessWidget {
             ),
 
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
           ],
         );
       },

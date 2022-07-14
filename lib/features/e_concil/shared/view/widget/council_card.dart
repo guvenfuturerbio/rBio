@@ -429,7 +429,7 @@ class _BuildCouncilCardTile extends StatelessWidget {
           textAlign: TextAlign.justify,
           style: context.xSubtitle2,
         ),
-        R.sizes.hSizer4,
+        R.widgets.hSizer4,
       ],
     );
   }

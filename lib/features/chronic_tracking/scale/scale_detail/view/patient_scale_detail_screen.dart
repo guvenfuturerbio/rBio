@@ -194,7 +194,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
   Widget _buildBottomBody(ScaleDetailSuccessResult result) {
     return Container(
       width: double.infinity,
-      padding: R.sizes.screenPaddingOnlyHorizontal(context),
+      padding: R.utils.screenPaddingOnlyHorizontal(context),
       color: getIt<IAppConfig>().theme.scaffoldBackgroundColor,
       child: Column(
         children: [
@@ -340,7 +340,7 @@ class ScaleCard extends StatelessWidget {
                     ),
 
                     //
-                    R.sizes.wSizer4,
+                    R.widgets.wSizer4,
 
                     //
                     Expanded(

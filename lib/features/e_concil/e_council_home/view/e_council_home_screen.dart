@@ -113,7 +113,7 @@ class _BuildCouncilButton extends StatelessWidget {
           child: Row(
             children: [
               SvgPicture.asset(R.image.councilResults),
-              R.sizes.wSizer16,
+              R.widgets.wSizer16,
               Text(LocaleProvider.of(context).council_results, style: context.xHeadline4),
               const Spacer(),
               const Icon(Icons.arrow_forward_ios_outlined),
@@ -168,7 +168,7 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                     R.image.councilCalendar,
                     width: R.sizes.iconSize3,
                   ),
-                  R.sizes.wSizer16,
+                  R.widgets.wSizer16,
                   //
                   Expanded(
                     child: Text(
@@ -269,7 +269,7 @@ class _BuildECouncilListTile extends StatelessWidget {
       child: Row(
         children: [
           Text(text, style: Theme.of(context).textTheme.headline3!.copyWith(color: color)),
-          R.sizes.hSizer16,
+          R.widgets.hSizer16,
           const Spacer(),
           Container(
             width: 18,

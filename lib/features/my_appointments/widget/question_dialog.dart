@@ -22,7 +22,7 @@ class QuestionDialog extends StatelessWidget {
           ),
 
           //
-          R.sizes.hSizer32,
+          R.widgets.hSizer32,
 
           //
           Center(
@@ -34,7 +34,7 @@ class QuestionDialog extends StatelessWidget {
           ),
 
           //
-          R.sizes.hSizer32,
+          R.widgets.hSizer32,
 
           //
           Row(
@@ -50,7 +50,7 @@ class QuestionDialog extends StatelessWidget {
               ),
 
               //
-              R.sizes.wSizer8,
+              R.widgets.wSizer8,
 
               //
               Expanded(

@@ -84,7 +84,7 @@ class VRouterRoutes {
 
         VWidget(
           path: PagePaths.forgotPasswordStep2,
-          widget: ForgotPasswordStep2Screen(),
+          widget: const ForgotPasswordStep2Screen(),
         ),
 
         VWidget(
@@ -111,9 +111,8 @@ class VRouterRoutes {
         // #region Chat
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+            if (!(getIt<UserNotifier>().user?.chat ?? false)) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },
           stackedRoutes: [
@@ -139,9 +138,8 @@ class VRouterRoutes {
           beforeEnter: (vRedirector) async {
             if (!getIt<IAppConfig>().functionality.chronicTracking) {
               openDefaultScreen(vRedirector);
-            } else if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+            } else if (!getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },
           stackedRoutes: [
@@ -157,62 +155,53 @@ class VRouterRoutes {
                   path: PagePaths.bpProgress,
                   widget: const BpProgressScreen(),
                 ),
+
+                //
                 VGuard(
                   stackedRoutes: [
                     VWidget(
                       path: PagePaths.patientScaleDetail,
                       widget: const PatientScaleDetailScreen(),
-                    ),
-                    VWidget(
-                      path: PagePaths.patientScaleTreatmentList,
-                      widget: const PatientScaleTreatmentListScreen(),
-                    ),
-                    VWidget(
-                      path: PagePaths.patientScaleDietDetail,
-                      widget: const PatientScaleDietDetailScreen(),
-                    ),
-                    VWidget(
-                      path: PagePaths.patientScaleTreatmentDetail,
-                      widget: const PatientScaleTreatmentDetailScreen(),
+                      stackedRoutes: [
+                        //
+                        VWidget(
+                          path: PagePaths.patientScaleTreatmentList,
+                          widget: const PatientScaleTreatmentListScreen(),
+                          stackedRoutes: [
+                            VWidget(
+                              path: PagePaths.patientScaleDietDetail,
+                              widget: const PatientScaleDietDetailScreen(),
+                            ),
+                            VWidget(
+                              path: PagePaths.patientScaleTreatmentDetail,
+                              widget: const PatientScaleTreatmentDetailScreen(),
+                            ),
+                          ],
+                        ),
+
+                        //
+                        VWidget(
+                          path: PagePaths.scaleManuelAdd,
+                          widget: const ScaleManuelAddScreen(),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                VWidget(
-                  path: PagePaths.scaleManuelAdd,
-                  widget: const ScaleManuelAddScreen(),
-                ),
               ],
             ),
-          ],
-        ),
 
-        VGuard(
-          beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
-            }
-          },
-          stackedRoutes: [
+            //
             VWidget(
               path: PagePaths.treatmentEditProgress,
               widget: const TreatmentEditView(),
             ),
-          ],
-        ),
 
-        VGuard(
-          beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
-            }
-          },
-          stackedRoutes: [
+            //
             VWidget(
               path: PagePaths.treatmentProgress,
               widget: const TreatmentProcessScreen(),
-            )
+            ),
           ],
         ),
         // #endregion
@@ -221,7 +210,7 @@ class VRouterRoutes {
         VGuard(
           beforeEnter: (vRedirector) async {
             if (getIt<IAppConfig>().functionality.relatives) {
-              if ((await getIt<UserNotifier>().checkAccessToken()) == false) {
+              if ((await getIt<UserFacade>().checkAccessToken()) == false) {
                 vRedirector.to(PagePaths.login);
               }
             }
@@ -412,9 +401,9 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+            if (!Atom.isWeb &&
+                !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },
           stackedRoutes: [
@@ -427,9 +416,8 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(const NotChronicWarning());
+            if (!getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },
           stackedRoutes: [
@@ -698,6 +686,11 @@ class VRouterRoutes {
           redirectTo: '/home',
         ),
       ];
+
+  static void _stopRedirectionShowNotChronicDialog(VRedirector vRedirector) {
+    vRedirector.stopRedirection();
+    Atom.show(const NotChronicWarning());
+  }
 }
 
 class PagePaths {
@@ -726,7 +719,7 @@ class PagePaths {
   static const treatmentProgress = '/treatment-progress';
   static const treatmentEditProgress = '/tretment-edit-progress';
   static const patientScaleDetail = '/scale-detail';
-  static const scaleManuelAdd = '/scale-manuel-add';
+  static const scaleManuelAdd = '/scale-detail/scale-manuel-add';
 
   static const patientScaleTreatmentList = "/scale-detail/patient-scale-treatment-list";
   static const patientScaleDietDetail = "/scale-detail/patient-scale-diet-detail";

@@ -24,7 +24,7 @@ class RegisterViews {
         ..style.border = 'none',
     );
 
-     MobileWebInterface.registerViewFactory(
+    MobileWebInterface.registerViewFactory(
       'detailed_symptom',
       (int viewId) => IFrameElement()
         ..width = '640'

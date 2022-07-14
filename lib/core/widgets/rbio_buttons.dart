@@ -100,7 +100,7 @@ class RbioElevatedButton extends StatelessWidget {
               style: context.xHeadline3.copyWith(
                 color: textColor ?? getIt<IAppConfig>().theme.textColor,
                 fontWeight: fontWeight,
-                fontSize: R.sizes.textScaleHandler<double>(
+                fontSize: R.utils.textScaleHandler<double>(
                   context,
                   small: context.xHeadline3.fontSize ?? 24,
                   medium: context.xHeadline4.fontSize ?? 24,

@@ -36,15 +36,15 @@ class _BuildBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _BuildSearchField(textController: _textController),
-            R.sizes.hSizer16,
+            R.widgets.hSizer16,
             const _BuildNameSurnameField(),
-            R.sizes.hSizer24,
+            R.widgets.hSizer24,
             const _BuildIllnessHistoryField(),
-            R.sizes.hSizer16,
+            R.widgets.hSizer16,
             const _BuildRecordField(),
-            R.sizes.hSizer16,
+            R.widgets.hSizer16,
             const _BuildUploadField(),
-            R.sizes.hSizer16,
+            R.widgets.hSizer16,
             _BuildCreateRequestButton(formKey: _formKey),
           ],
         ),
@@ -100,7 +100,7 @@ class _BuildNameSurnameField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(LocaleProvider.of(context).name_surname, style: context.xHeadline4),
-        R.sizes.hSizer4,
+        R.widgets.hSizer4,
         RbioTextFormField(
           validator: (String? p0) {
             if (p0!.isEmpty) {
@@ -125,7 +125,7 @@ class _BuildIllnessHistoryField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(LocaleProvider.of(context).enter_your_illness_history, style: context.xHeadline4),
-        R.sizes.hSizer4,
+        R.widgets.hSizer4,
         const RbioTextFormField(minLines: 4, maxLines: 4),
       ],
     );
@@ -268,7 +268,7 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
                       icon: const Icon(Icons.close),
                       splashRadius: 14,
                     ),
-                    R.sizes.wSizer8,
+                    R.widgets.wSizer8,
                     Text(e, style: context.xSubtitle1),
                   ],
                 ),
@@ -345,7 +345,7 @@ class CouncilCardFilesWidget extends StatelessWidget {
             icon: const Icon(Icons.close),
             splashRadius: 14,
           ),
-          R.sizes.wSizer8,
+          R.widgets.wSizer8,
           Text(title, style: context.xSubtitle1),
         ],
       ),

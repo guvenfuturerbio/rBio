@@ -41,7 +41,7 @@ class BgChartFilterPopUp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
             ...vm.colorInfo.keys
@@ -92,7 +92,7 @@ class BgChartFilterPopUp extends StatelessWidget {
                 ),
 
                 //
-                R.sizes.wSizer8,
+                R.widgets.wSizer8,
 
                 //
                 RbioElevatedButton(

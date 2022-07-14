@@ -40,9 +40,11 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                 textAlign: TextAlign.center,
               ),
             ),
-            //
-            R.sizes.hSizer24,
 
+            //
+            R.widgets.hSizer24,
+
+            //
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Center(
@@ -58,7 +60,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
             ),
 
             //
-            R.sizes.hSizer16,
+            R.widgets.hSizer16,
 
             //
             Center(
@@ -100,12 +102,15 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
               ),
             ),
 
-            R.sizes.hSizer16,
+            //
+            R.widgets.hSizer16,
 
+            //
             Center(
               child: RbioSmallDialogButton.green(
-                  title: LocaleProvider.current.update_now,
-                  onPressed: widget.onPositiveButtonClicked),
+                title: LocaleProvider.current.update_now,
+                onPressed: widget.onPositiveButtonClicked,
+              ),
             ),
           ],
         ),

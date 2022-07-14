@@ -1,4 +1,4 @@
-part of '../viewmodel/profile_vm.dart';
+
 
 class ProfileNumbers {
   int? followers;

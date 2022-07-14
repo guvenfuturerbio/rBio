@@ -96,7 +96,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
     required String packageName,
     required String price,
   }) async {
-    UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
+    UserAccount userAccount = getIt<UserFacade>().getUserAccount();
     String filledForm = await fillAllFormFields(
       LocaleProvider.current.distance_sales_contract_context,
       (userAccount.name! + ' ' + userAccount.surname!),
@@ -112,7 +112,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
     required String packageName,
     required String price,
   }) async {
-    UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
+    UserAccount userAccount = getIt<UserFacade>().getUserAccount();
     String filledForm = await fillAllFormFields(
       LocaleProvider.current.preinformation_form_context,
       (userAccount.name! + ' ' + userAccount.surname!),

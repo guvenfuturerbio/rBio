@@ -30,7 +30,11 @@ class CreditCardScreen extends StatelessWidget {
     }
 
     return BlocProvider<CreditCardCubit>(
-      create: (context) => CreditCardCubit(getIt(), getIt()),
+      create: (context) => CreditCardCubit(
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
       child: CreditCardView(
         paymentObjectCode: paymentObjectCode,
         paymentType: paymentType,
