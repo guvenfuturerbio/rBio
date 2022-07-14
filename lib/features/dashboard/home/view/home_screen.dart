@@ -125,23 +125,27 @@ class _HomeScreenState extends State<HomeScreen> {
           vm.changeStatus();
         }
       },
-      child: ReorderableWrap(
-        alignment: WrapAlignment.center,
-        buildDraggableFeedback: (_, __, children) {
-          return children;
-        },
-        spacing: HomeSizer.instance.getRunSpacing(),
-        runSpacing: HomeSizer.instance.getBodyGapHeight(),
-        needsLongPressDraggable: true,
-        children: vm.widgetsInUse,
-        onReorder: vm.onReorder,
-        scrollDirection: Axis.vertical,
-        maxMainAxisCount: 2,
-        minMainAxisCount: 1,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        padding: EdgeInsets.only(
-          bottom: R.sizes.bottomNavigationBarHeight + 16,
-        ),
+      child: Column(
+        children: [
+          ReorderableWrap(
+            alignment: WrapAlignment.center,
+            buildDraggableFeedback: (_, __, children) {
+              return children;
+            },
+            spacing: HomeSizer.instance.getRunSpacing(),
+            runSpacing: HomeSizer.instance.getBodyGapHeight(),
+            needsLongPressDraggable: true,
+            children: vm.widgetsInUse,
+            onReorder: vm.onReorder,
+            scrollDirection: Axis.vertical,
+            maxMainAxisCount: 2,
+            minMainAxisCount: 1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            padding: EdgeInsets.only(
+              bottom: R.sizes.bottomNavigationBarHeight + 16,
+            ),
+          ),
+        ],
       ),
     );
   }

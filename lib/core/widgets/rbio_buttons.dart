@@ -93,17 +93,19 @@ class RbioElevatedButton extends StatelessWidget {
         ),
         child: Padding(
           padding: padding ?? defaultPadding(),
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: context.xHeadline3.copyWith(
-              color: textColor ?? getIt<IAppConfig>().theme.textColor,
-              fontWeight: fontWeight,
-              fontSize: R.utils.textScaleHandler<double>(
-                context,
-                small: context.xHeadline3.fontSize ?? 24,
-                medium: context.xHeadline4.fontSize ?? 24,
-                large: context.xHeadline5.fontSize ?? 24,
+          child: FittedBox(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: context.xHeadline3.copyWith(
+                color: textColor ?? getIt<IAppConfig>().theme.textColor,
+                fontWeight: fontWeight,
+                fontSize: R.utils.textScaleHandler<double>(
+                  context,
+                  small: context.xHeadline3.fontSize ?? 24,
+                  medium: context.xHeadline4.fontSize ?? 24,
+                  large: context.xHeadline5.fontSize ?? 24,
+                ),
               ),
             ),
           ),
@@ -215,9 +217,7 @@ class RbioIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          color: backColor ?? getIt<IAppConfig>().theme.mainColor,
-          shape: BoxShape.circle),
+      decoration: BoxDecoration(color: backColor ?? getIt<IAppConfig>().theme.mainColor, shape: BoxShape.circle),
       child: IconButton(
         onPressed: onPressed,
         icon: icon,

@@ -102,6 +102,16 @@ abstract class IAppTheme {
   Color graphPlotRange = R.colors.skeptic;
   Color graphRangeColor = R.colors.skeptic;
   double convertFontSize(double value) => value / 2.85;
+
+  // E-Konsey
+  Color get eCouncilPendingApproval;
+  Color get eCouncilPendingPayment;
+  Color get eCouncilPendingInspection;
+  Color get eCouncilRejected;
+  Color get eCouncilAppointmentReady;
+  Color get eCouncilReportCardTitleBackground;
+  Color get eCouncilScafoldBackground;
+  // E-Konsey
 }
 
 abstract class IAppDialogTheme {
