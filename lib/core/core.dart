@@ -48,7 +48,6 @@ export 'rbio_custom_icons.dart';
 export 'resources/resources.dart';
 export 'theme/text_scale_type.dart';
 export 'theme/theme_notifier.dart';
-export 'theme/theme_type.dart';
 export 'utils/dialogs.dart';
 export 'utils/helper/deep_link_helper.dart';
 export "utils/helper/logger_helper.dart";

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../core.dart';
 
-export 'colors.dart';
-
 part 'api_enums.dart';
+part 'colors.dart';
 part 'constants.dart';
 part 'images.dart';
 part 'regexp.dart';
@@ -14,6 +13,7 @@ part 'widgets.dart';
 
 class R {
   static final apiEnums = _ApiEnums();
+  static final colors = _Colors();
   static final constants = _Constants();
   static final image = _Images();
   static final regExp = _RegExp();

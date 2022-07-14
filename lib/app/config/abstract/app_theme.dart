@@ -1,7 +1,6 @@
 part of 'app_config.dart';
 
 abstract class IAppTheme {
-  ThemeType get type;
   IAppDialogTheme get dialogTheme;
   String get fontFamily;
   String get appLogo;
