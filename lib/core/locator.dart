@@ -130,7 +130,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
     () => BloodPressureStorageImpl(),
   );
   getIt.registerLazySingleton<ApiService>(
-    () => ApiServiceImpl(getIt<IDioHelper>()),
+    () => ApiServiceImpl(getIt<IDioHelper>(), appConfig.endpoints),
   );
   getIt.registerLazySingleton<ChronicTrackingApiService>(
     () => ChronicTrackingApiServiceImpl(

@@ -146,29 +146,38 @@ class VRouterRoutes {
                   path: PagePaths.bpProgress,
                   widget: const BpProgressScreen(),
                 ),
+
+                //
                 VGuard(
                   stackedRoutes: [
                     VWidget(
                       path: PagePaths.patientScaleDetail,
                       widget: const PatientScaleDetailScreen(),
-                    ),
-                    VWidget(
-                      path: PagePaths.patientScaleTreatmentList,
-                      widget: const PatientScaleTreatmentListScreen(),
-                    ),
-                    VWidget(
-                      path: PagePaths.patientScaleDietDetail,
-                      widget: const PatientScaleDietDetailScreen(),
-                    ),
-                    VWidget(
-                      path: PagePaths.patientScaleTreatmentDetail,
-                      widget: const PatientScaleTreatmentDetailScreen(),
+                      stackedRoutes: [
+                        //
+                        VWidget(
+                          path: PagePaths.patientScaleTreatmentList,
+                          widget: const PatientScaleTreatmentListScreen(),
+                          stackedRoutes: [
+                            VWidget(
+                              path: PagePaths.patientScaleDietDetail,
+                              widget: const PatientScaleDietDetailScreen(),
+                            ),
+                            VWidget(
+                              path: PagePaths.patientScaleTreatmentDetail,
+                              widget: const PatientScaleTreatmentDetailScreen(),
+                            ),
+                          ],
+                        ),
+
+                        //
+                        VWidget(
+                          path: PagePaths.scaleManuelAdd,
+                          widget: const ScaleManuelAddScreen(),
+                        ),
+                      ],
                     ),
                   ],
-                ),
-                VWidget(
-                  path: PagePaths.scaleManuelAdd,
-                  widget: const ScaleManuelAddScreen(),
                 ),
               ],
             ),
@@ -666,7 +675,7 @@ class PagePaths {
   static const treatmentProgress = '/treatment-progress';
   static const treatmentEditProgress = '/tretment-edit-progress';
   static const patientScaleDetail = '/scale-detail';
-  static const scaleManuelAdd = '/scale-manuel-add';
+  static const scaleManuelAdd = '/scale-detail/scale-manuel-add';
 
   static const patientScaleTreatmentList =
       "/scale-detail/patient-scale-treatment-list";

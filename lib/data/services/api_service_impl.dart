@@ -3,7 +3,8 @@ part of 'api_service.dart';
 class ApiServiceImpl extends ApiService {
   @override
   final IDioHelper helper;
-  ApiServiceImpl(this.helper) : super(helper);
+  final IAppEndpoints endpoints;
+  ApiServiceImpl(this.helper, this.endpoints) : super(helper);
 
   String? get getToken => getIt<ISharedPreferencesManager>()
       .getString(SharedPreferencesKeys.jwtToken);
@@ -23,7 +24,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> addStep1(AddStep1Model addStep1Model) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.addStep1,
+      endpoints.devApi.addStep1,
       addStep1Model.toJson(),
       options: authOptions,
     );
@@ -31,7 +32,7 @@ class ApiServiceImpl extends ApiService {
       return response;
     } else {
       throw RbioNotSuccessfulException<GuvenResponseModel>(
-        getIt<IAppConfig>().endpoints.devApi.addStep1,
+        endpoints.devApi.addStep1,
         response,
       );
     }
@@ -42,14 +43,17 @@ class ApiServiceImpl extends ApiService {
     UserRegistrationStep2Model userRegistrationStep2,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.addStep2,
+      endpoints.devApi.addStep2,
       userRegistrationStep2.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/registerStep2Ui : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.devApi.addStep2,
+        response,
+      );
     }
   }
 
@@ -58,7 +62,7 @@ class ApiServiceImpl extends ApiService {
     UserRegistrationStep3Model userRegistrationStep3,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.addStep3,
+      endpoints.devApi.addStep3,
       userRegistrationStep3.toJson(),
       options: authOptions,
     );
@@ -71,7 +75,7 @@ class ApiServiceImpl extends ApiService {
     String password,
   ) async {
     final response = await helper.dioPost(
-      getIt<IAppConfig>().endpoints.base.userLoginStarter,
+      endpoints.base.userLoginStarter,
       [],
       queryParameters: <String, dynamic>{
         'userName': username,
@@ -88,7 +92,7 @@ class ApiServiceImpl extends ApiService {
     int userId,
   ) async {
     final response = await helper.dioPost(
-      getIt<IAppConfig>().endpoints.base.verifyConfirmation2fa,
+      endpoints.base.verifyConfirmation2fa,
       [],
       queryParameters: <String, dynamic>{
         'pSmsCode': smsCode,
@@ -103,7 +107,7 @@ class ApiServiceImpl extends ApiService {
   Future<GuvenResponseModel> login(
       String username, String password, String consentId) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.loginPath,
+      endpoints.devApi.loginPath,
       <String, dynamic>{},
       queryParameters: {
         'userName': username,
@@ -114,13 +118,19 @@ class ApiServiceImpl extends ApiService {
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/login : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.devApi.loginPath,
+        response,
+      );
     }
   }
 
   @override
   Future<List<ForYouCategoryResponse>> getAllPackage(String path) async {
-    final response = await helper.getGuven(path, options: authOptions);
+    final response = await helper.getGuven(
+      path,
+      options: authOptions,
+    );
     if (response.xIsSuccessful) {
       final result = response.xGetMapList
           .map((item) => ForYouCategoryResponse.fromJson(item))
@@ -128,7 +138,10 @@ class ApiServiceImpl extends ApiService {
           .toList();
       return result;
     } else {
-      throw Exception('/getAllPackage : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        path,
+        response,
+      );
     }
   }
 
@@ -142,7 +155,10 @@ class ApiServiceImpl extends ApiService {
           .toList();
       return result;
     } else {
-      throw Exception('/getAllSubCategories : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        path,
+        response,
+      );
     }
   }
 
@@ -158,7 +174,10 @@ class ApiServiceImpl extends ApiService {
           .toList();
       return result;
     } else {
-      throw Exception('/getSubCategoryDetail/ : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        path,
+        response,
+      );
     }
   }
 
@@ -167,7 +186,7 @@ class ApiServiceImpl extends ApiService {
     String id,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getSubCategoryItemsPath(id),
+      endpoints.base.getSubCategoryItemsPath(id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -177,7 +196,10 @@ class ApiServiceImpl extends ApiService {
           .toList();
       return result;
     } else {
-      throw Exception('/getSubCategoryItems/$id : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getSubCategoryItemsPath(id),
+        response,
+      );
     }
   }
 
@@ -186,7 +208,7 @@ class ApiServiceImpl extends ApiService {
     //return "\r\n\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head id=\"Head1\"><title>\r\n\tPayment MPI Service\r\n</title></head>\r\n<body>\r\n    <form method=\"post\" action=\"https://goguvenliodeme.bkm.com.tr/troy/approve\" id=\"step1Form\">\r\n<div class=\"aspNetHidden\">\r\n<input type=\"hidden\" name=\"goreq\" id=\"goreq\" value=\"eyJpZCI6IjAxMTEyOWVkYjA2Ni1iMzM1LTQ5ZjMtYTUxOS1hYTNkMzNmMzlmZjYiLCJ0aW1lIjoiMjAyMTAzMDYxMzI2MjUiLCJ2ZXJzaW9uIjoiMC4wMyIsImV4cGlyeSI6IjI0MTAiLCJnb1N0YW1wIjoiZXlKaGJHY2lPaUpJVXpVeE1pSjkuZXlKemRXSWlPaUl3T1RFM01EQXdNREF3TVRVME1EUWlMQ0owYVcxbGIzVjBVMlZqYjI1a2N5STZORE15TURBd01EQXNJbkp2YkdWeklqb2lJaXdpWlhod0lqb3hOalU0TWpJMk16ZzFmUS5FUEJMeXpTclpTaHh2Tkljb0dhdGRGbkVfbTZEUVlhdTVuUWg4T0V6cExMbjA2Vm1JV2FiOTBVa1NnaEo0UTBjZ2JfcFg1ekxkUWkxUks1U1ZTUHpWUSIsIm1hYyI6Inh5WXNQRC81SENxR3pQeEt3VkhhTDFRemc5TTgyYUllRUJlNFk2akV4MlF2U2k1dWVMSWdjRVJibzh3WkZ1V3VwQ2JUUkxHb3NlOGFHZlVSSVhjdHRrWWUrN3pYUkJIendLQXhPNzBnU2J2VDNYd1MydDF3dzRJY0tTbTlWcnVrc0ZxUUFXdWFHWXIwY0h2bzQwWStNa1QrSkRkQ0VXWVErK1hVY1FvSTE0c2tqTENOOVlxZ1lRVFY5Q3V2NzErbkhvVWpPNCsvaFFPeFFHREpUaktTb2xEVG96V3U4L05qb0VFRVN4elRvaEZqdEZrczlCMkZtQ25OWEV6OFphNXlTc1F2V2Z0NXAvUGlQZ0pBalRSdFAwUTg4cG9rWENoZnpHZ1NtcXNmU3ZsSndrRmlRRWNxYlVzMzZXQk1WaGNabHQ4dGxUNjdXcXQvWXJZREtsR1lRQT09In0=\" />\r\n\r\n</div>\r\n\r\n<script type='text/javascript'>var frm = document.getElementById('step1Form');frm.action = 'https://goguvenliodeme.bkm.com.tr/troy/approve' ;frm.method = \"POST\";frm.submit();</script>\r\n    \r\n<div class=\"aspNetHidden\">\r\n\r\n\t<input type=\"hidden\" name=\"__VIEWSTATEGENERATOR\" id=\"__VIEWSTATEGENERATOR\" value=\"BFED9D85\" />\r\n</div></form>\r\n</body>\r\n</html>\r\n";
 
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.doPackagePaymentPath,
+      endpoints.base.doPackagePaymentPath,
       packagePayment.toJson(),
       options: authOptions,
     );
@@ -198,48 +220,60 @@ class ApiServiceImpl extends ApiService {
 
       throw Exception('/doPackagePayment : ${response.isSuccessful}');
     } else {
-      throw Exception('/doPackagePayment : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.doPackagePaymentPath,
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> updateUserSystemName(String identityNumber) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.updateUserSystemNamePath,
+      endpoints.base.updateUserSystemNamePath,
       {'identityNumber': identityNumber},
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/updateUserSystemName : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.updateUserSystemNamePath,
+        response,
+      );
     }
   }
 
   @override
   Future<UserAccount> getUserProfile() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.devApi.getUserProfilePath,
+      endpoints.devApi.getUserProfilePath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       final result = UserAccount.fromJson(response.xGetMap);
       return result;
     } else {
-      throw Exception('/getUserProfile : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.devApi.getUserProfilePath,
+        response,
+      );
     }
   }
 
   @override
   Future<Map<String, dynamic>> getActiveStream() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getActiveStreamPath,
+      endpoints.base.getActiveStreamPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response.xGetMap;
     } else {
-      throw Exception('/getActiveStream : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getActiveStreamPath,
+        response,
+      );
     }
   }
 
@@ -247,7 +281,7 @@ class ApiServiceImpl extends ApiService {
   Future<String> getProfilePicture() async {
     try {
       final response = await helper.getGuven(
-        getIt<IAppConfig>().endpoints.base.getProfilePicturePath,
+        endpoints.base.getProfilePicturePath,
         options: authOptions,
       );
       if (response.xIsSuccessful) {
@@ -258,7 +292,10 @@ class ApiServiceImpl extends ApiService {
 
         throw Exception('/getProfilePicture : ${response.isSuccessful}');
       } else {
-        throw Exception('/getProfilePicture : ${response.isSuccessful}');
+        throw RbioNotSuccessfulException<GuvenResponseModel>(
+          endpoints.base.getProfilePicturePath,
+          response,
+        );
       }
     } catch (e) {
       if (e.toString() ==
@@ -272,32 +309,34 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<ConsentForm> getConsentForm() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>()
-          .endpoints
-          .common
+      endpoints.common
           .consentFormPath(Intl.getCurrentLocale().xCurrentTrimLocale),
     );
 
     if (response.xIsSuccessful) {
       final datum = ConsentForm.fromJson(response.datum);
-
       return datum;
     } else {
-      throw Exception('/consentForm : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.common
+            .consentFormPath(Intl.getCurrentLocale().xCurrentTrimLocale),
+        response,
+      );
     }
   }
 
   @override
   Future<ApplicationVersionResponse> getCurrentApplicationVersion() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.doctor.getCurrentApplicationVersionPath,
+      endpoints.doctor.getCurrentApplicationVersionPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return ApplicationVersionResponse.fromJson(response.xGetMap);
     } else {
-      throw Exception(
-        '/getCurrentApplicationVersion : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.doctor.getCurrentApplicationVersionPath,
+        response,
       );
     }
   }
@@ -334,7 +373,10 @@ class ApiServiceImpl extends ApiService {
           .toList();
       return result;
     } else {
-      throw Exception('/filterTenants : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        path,
+        response,
+      );
     }
   }
 
@@ -343,7 +385,7 @@ class ApiServiceImpl extends ApiService {
     FilterDepartmentsRequest filterDepartmentsRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.filterDepartmentsPath,
+      endpoints.base.filterDepartmentsPath,
       filterDepartmentsRequest.toJson(),
       options: authOptions,
     );
@@ -354,7 +396,10 @@ class ApiServiceImpl extends ApiService {
           .toList();
       return result;
     } else {
-      throw Exception('/filterDepartments : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.filterDepartmentsPath,
+        response,
+      );
     }
   }
 
@@ -363,7 +408,7 @@ class ApiServiceImpl extends ApiService {
     FilterResourcesRequest filterResourcesRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.filterResourcesPath,
+      endpoints.base.filterResourcesPath,
       filterResourcesRequest.toJson(),
       options: authOptions,
     );
@@ -379,16 +424,17 @@ class ApiServiceImpl extends ApiService {
       }
       return filterResources;
     } else {
-      throw Exception('/filterResources : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.filterResourcesPath,
+        response,
+      );
     }
   }
 
   @override
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
-    final response = await helper.dioGet(getIt<IAppConfig>()
-        .endpoints
-        .common
-        .getDoctorCvDetailsPath(doctorWebID));
+    final response = await helper
+        .dioGet(endpoints.common.getDoctorCvDetailsPath(doctorWebID));
     if (response == null) {
       return DoctorCvResponse.empty();
     }
@@ -414,7 +460,7 @@ class ApiServiceImpl extends ApiService {
     GetEventsRequest getEventsRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getEventsPath,
+      endpoints.base.getEventsPath,
       getEventsRequest.toJson(),
       options: authOptions,
     );
@@ -434,14 +480,17 @@ class ApiServiceImpl extends ApiService {
 
       throw Exception('/getEvents : ${response.isSuccessful}');
     } else {
-      throw Exception('/getEvents : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getEventsPath,
+        response,
+      );
     }
   }
 
   @override
   Future<int> saveAppointment(AppointmentRequest appointmentRequest) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.saveAppointmentPath,
+      endpoints.base.saveAppointmentPath,
       appointmentRequest.toJson(),
       options: authOptions..headers?.addAll(utcHeader),
     );
@@ -458,7 +507,10 @@ class ApiServiceImpl extends ApiService {
         throw Exception('/saveAppointment : $datum');
       }
     } else {
-      throw Exception('/saveAppointment : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.saveAppointmentPath,
+        response,
+      );
     }
   }
 
@@ -467,28 +519,34 @@ class ApiServiceImpl extends ApiService {
     GetAllRelativesRequest bodyPages,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.relative.getAllRelativesPath,
+      endpoints.relative.getAllRelativesPath,
       bodyPages.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return PatientRelativeInfoResponse.fromJson(response.xGetMap);
     } else {
-      throw Exception('/getAllRelatives : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.relative.getAllRelativesPath,
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getCountries() async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getCountriesPath,
+      endpoints.base.getCountriesPath,
       {},
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/getCountries : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getCountriesPath,
+        response,
+      );
     }
   }
 
@@ -497,14 +555,17 @@ class ApiServiceImpl extends ApiService {
     UserRegistrationStep1Model userRegistrationStep1,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.forgotPassword,
+      endpoints.devApi.forgotPassword,
       userRegistrationStep1.toJson(),
       options: emptyAuthOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/forgotPassword : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.devApi.forgotPassword,
+        response,
+      );
     }
   }
 
@@ -513,7 +574,7 @@ class ApiServiceImpl extends ApiService {
     ChangePasswordModel changePasswordModel,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.changePassword,
+      endpoints.devApi.changePassword,
       changePasswordModel.toJson(),
       options: authOptions,
     );
@@ -521,7 +582,7 @@ class ApiServiceImpl extends ApiService {
       return response;
     } else {
       throw RbioNotSuccessfulException<GuvenResponseModel>(
-        getIt<IAppConfig>().endpoints.devApi.changePassword,
+        endpoints.devApi.changePassword,
         response,
       );
     }
@@ -532,14 +593,17 @@ class ApiServiceImpl extends ApiService {
     ChangeContactInfoRequest changeContactInfo,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.updateContactInfoPath,
+      endpoints.devApi.updateContactInfoPath,
       changeContactInfo.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/updateContactInfo : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.devApi.updateContactInfoPath,
+        response,
+      );
     }
   }
 
@@ -548,14 +612,17 @@ class ApiServiceImpl extends ApiService {
     ChangeContactInfoRequest changeContactInfo,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.updatePusulaContactInfoPath,
+      endpoints.base.updatePusulaContactInfoPath,
       changeContactInfo.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/updateContactInfo : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.updatePusulaContactInfoPath,
+        response,
+      );
     }
   }
 
@@ -565,10 +632,7 @@ class ApiServiceImpl extends ApiService {
     String password,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>()
-          .endpoints
-          .base
-          .changeUserPasswordUiPath(oldPassword, password),
+      endpoints.base.changeUserPasswordUiPath(oldPassword, password),
       options: authOptions,
     );
     return response;
@@ -579,40 +643,49 @@ class ApiServiceImpl extends ApiService {
     AddFirebaseTokenRequest addFirebaseToken,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.addFirebaseTokenUiPath,
+      endpoints.devApi.addFirebaseTokenUiPath,
       addFirebaseToken.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/addFirebaseTokenUi : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.devApi.addFirebaseTokenUiPath,
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getRoomStatusUi(String roomId) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getRoomStatusUiPath(roomId),
+      endpoints.base.getRoomStatusUiPath(roomId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/getRoomStatusUi/$roomId : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getRoomStatusUiPath(roomId),
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getOnlineAppoFilesPath(roomId),
+      endpoints.base.getOnlineAppoFilesPath(roomId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/getOnlineAppoFiles/$roomId : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getOnlineAppoFilesPath(roomId),
+        response,
+      );
     }
   }
 
@@ -622,17 +695,15 @@ class ApiServiceImpl extends ApiService {
     String fileName,
   ) async {
     final response = await helper.deleteGuven(
-      getIt<IAppConfig>()
-          .endpoints
-          .base
-          .deleteOnlineAppoFilePath(webAppoId, fileName),
+      endpoints.base.deleteOnlineAppoFilePath(webAppoId, fileName),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception(
-        '/deleteOnlineAppoFile/$webAppoId/$fileName : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.deleteOnlineAppoFilePath(webAppoId, fileName),
+        response,
       );
     }
   }
@@ -640,39 +711,48 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getAllTranslator() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getAllTranslatorPath,
+      endpoints.base.getAllTranslatorPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/getAllTranslator : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getAllTranslatorPath,
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getUserKvkkInfo() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getUserKvkkInfoPath,
+      endpoints.base.getUserKvkkInfoPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/getUserKvkkInfo : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getUserKvkkInfoPath,
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> updateUserKvkkInfo() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.updateUserKvkkInfoPath,
+      endpoints.base.updateUserKvkkInfoPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/updateUserKvkkInfo : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.updateUserKvkkInfoPath,
+        response,
+      );
     }
   }
 
@@ -681,27 +761,33 @@ class ApiServiceImpl extends ApiService {
     SuggestionRequest suggestionRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.addSuggestionPath,
+      endpoints.base.addSuggestionPath,
       suggestionRequest.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/addSuggestion : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.addSuggestionPath,
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getCourseId() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getCourseIdPath,
+      endpoints.base.getCourseIdPath,
       options: authOptions..headers?.addAll(getCourseHeader),
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/getCourseId : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getCourseIdPath,
+        response,
+      );
     }
   }
 
@@ -710,17 +796,15 @@ class ApiServiceImpl extends ApiService {
     String webConsultantId,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>()
-          .endpoints
-          .base
-          .setJitsiWebConsultantIdPath(webConsultantId),
+      endpoints.base.setJitsiWebConsultantIdPath(webConsultantId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception(
-        '/setJitsiWebConsultantId/$webConsultantId : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.setJitsiWebConsultantIdPath(webConsultantId),
+        response,
       );
     }
   }
@@ -728,13 +812,16 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> deleteProfilePicture() async {
     final response = await helper.deleteGuven(
-      getIt<IAppConfig>().endpoints.base.deleteProfilePicturePath,
+      endpoints.base.deleteProfilePicturePath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/deleteProfilePicture : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.deleteProfilePicturePath,
+        response,
+      );
     }
   }
 
@@ -747,14 +834,17 @@ class ApiServiceImpl extends ApiService {
     });
 
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.uploadProfilePicturePath,
+      endpoints.base.uploadProfilePicturePath,
       formData,
       options: authOptions..headers?.addAll($headers),
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/uploadProfilePicture : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.uploadProfilePicturePath,
+        response,
+      );
     }
   }
 
@@ -764,17 +854,15 @@ class ApiServiceImpl extends ApiService {
     String path,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>()
-          .endpoints
-          .base
-          .downloadAppointmentSingleFilePath(folder, path),
+      endpoints.base.downloadAppointmentSingleFilePath(folder, path),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception(
-        '/downloadAppointmentSingleFile : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.downloadAppointmentSingleFilePath(folder, path),
+        response,
       );
     }
   }
@@ -782,13 +870,16 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getAllFiles() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.getAllFilesPath,
+      endpoints.base.getAllFilesPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/getAllFiles : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getAllFilesPath,
+        response,
+      );
     }
   }
 
@@ -798,40 +889,47 @@ class ApiServiceImpl extends ApiService {
     String name,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.downloadAppointmentFilePath(id, name),
+      endpoints.base.downloadAppointmentFilePath(id, name),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/downloadAppointmentFile : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.downloadAppointmentFilePath(id, name),
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getRelativeRelationships() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.relative.getRelativeRelationshipsPath,
+      endpoints.relative.getRelativeRelationshipsPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/getRelativeRelationships : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.relative.getRelativeRelationshipsPath,
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> changeActiveUserToRelative(String id) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.relative.changeActiveUserToRelativePath(id),
+      endpoints.relative.changeActiveUserToRelativePath(id),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception(
-        '/changeActiveUserToRelative/$id : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.relative.changeActiveUserToRelativePath(id),
+        response,
       );
     }
   }
@@ -839,40 +937,47 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> clickPost(int postId) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.base.clickPostPath(postId),
+      endpoints.base.clickPostPath(postId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/clickPost/$postId : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.clickPostPath(postId),
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getPostWithTagsByText(String search) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.search.getPostWithTagsByText(search),
+      endpoints.search.getPostWithTagsByText(search),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/filterSocialPosts/$search : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.search.getPostWithTagsByText(search),
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getPostWithTagsByPlatform(String search) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.search.getPostWithTagsByPlatform(search),
+      endpoints.search.getPostWithTagsByPlatform(search),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception(
-        '/filterSocialPostsPlatform/$search : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.search.getPostWithTagsByPlatform(search),
+        response,
       );
     }
   }
@@ -883,10 +988,7 @@ class ApiServiceImpl extends ApiService {
     String groupName,
   ) async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>()
-          .endpoints
-          .devApi
-          .getBannerTab(applicationName, groupName),
+      endpoints.devApi.getBannerTab(applicationName, groupName),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -897,8 +999,9 @@ class ApiServiceImpl extends ApiService {
       }
       return bannerTabs;
     } else {
-      throw Exception(
-        '/getBannerTab/$applicationName/$groupName : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.devApi.getBannerTab(applicationName, groupName),
+        response,
       );
     }
   }
@@ -906,30 +1009,31 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> socialResource() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.search.getAllPosts,
+      endpoints.search.getAllPosts,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/socialResource : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.search.getAllPosts,
+        response,
+      );
     }
   }
 
   @override
   Future<GuvenResponseModel> getAppointmentTypeViaWebConsultantId() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>()
-          .endpoints
-          .base
-          .getAppointmentTypeViaWebConsultantIdPath,
+      endpoints.base.getAppointmentTypeViaWebConsultantIdPath,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception(
-        '/getAppointmentTypeViaWebConsultantId : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getAppointmentTypeViaWebConsultantIdPath,
+        response,
       );
     }
   }
@@ -940,7 +1044,7 @@ class ApiServiceImpl extends ApiService {
     TranslatorRequest translatorPost,
   ) async {
     final response = await helper.patchGuven(
-      getIt<IAppConfig>().endpoints.base.requestTranslatorPath(appoId),
+      endpoints.base.requestTranslatorPath(appoId),
       data: translatorPost.toJson(),
       options: authOptions,
     );
@@ -968,21 +1072,24 @@ class ApiServiceImpl extends ApiService {
       "file": await MultipartFile.fromFile(file.path, filename: fileName),
     });
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.uploadFileToAppoPath(webAppoId),
+      endpoints.base.uploadFileToAppoPath(webAppoId),
       formData,
       options: authOptions..headers?.addAll($headers),
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/uploadFileToAppo : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.uploadFileToAppoPath(webAppoId),
+        response,
+      );
     }
   }
 
   @override
   Future<List<VisitResponse>> getVisits(VisitRequest visitRequestBody) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getVisitsPath,
+      endpoints.base.getVisitsPath,
       visitRequestBody.toJson(),
       options: authOptions,
     );
@@ -992,7 +1099,10 @@ class ApiServiceImpl extends ApiService {
           .cast<VisitResponse>()
           .toList();
     } else {
-      throw Exception('/getVisits : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getVisitsPath,
+        response,
+      );
     }
   }
 
@@ -1001,7 +1111,7 @@ class ApiServiceImpl extends ApiService {
     VisitDetailRequest detailRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getLaboratoryResultsPath,
+      endpoints.base.getLaboratoryResultsPath,
       detailRequest.toJson(),
       options: authOptions,
     );
@@ -1020,7 +1130,10 @@ class ApiServiceImpl extends ApiService {
       }
       return laboratoryResults;
     } else {
-      throw Exception('/getLaboratoryResults : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getLaboratoryResultsPath,
+        response,
+      );
     }
   }
 
@@ -1029,14 +1142,17 @@ class ApiServiceImpl extends ApiService {
     CallRateRequest callRateRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.rateOnlineCallPath,
+      endpoints.base.rateOnlineCallPath,
       callRateRequest.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/rateOnlineCall : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.rateOnlineCallPath,
+        response,
+      );
     }
   }
 
@@ -1045,7 +1161,7 @@ class ApiServiceImpl extends ApiService {
     VisitDetailRequest detailRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getRadiologyResultsPath,
+      endpoints.base.getRadiologyResultsPath,
       detailRequest.toJson(),
       options: authOptions,
     );
@@ -1055,7 +1171,10 @@ class ApiServiceImpl extends ApiService {
           .cast<RadiologyResponse>()
           .toList();
     } else {
-      throw Exception('/getRadiologyResults : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getRadiologyResultsPath,
+        response,
+      );
     }
   }
 
@@ -1063,7 +1182,7 @@ class ApiServiceImpl extends ApiService {
   Future<List<PathologyResponse>> getPathologyResults(
       VisitDetailRequest detailRequest) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getPathologyResultsPath,
+      endpoints.base.getPathologyResultsPath,
       detailRequest.toJson(),
       options: authOptions,
     );
@@ -1073,7 +1192,10 @@ class ApiServiceImpl extends ApiService {
           .cast<PathologyResponse>()
           .toList();
     } else {
-      throw Exception('/getPathologyResults : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getPathologyResultsPath,
+        response,
+      );
     }
   }
 
@@ -1082,7 +1204,7 @@ class ApiServiceImpl extends ApiService {
     LaboratoryPdfResultRequest laboratoryPdfResultRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getLaboratoryPdfResultPath,
+      endpoints.base.getLaboratoryPdfResultPath,
       laboratoryPdfResultRequest.toJson(),
       options: authOptions,
     );
@@ -1096,7 +1218,10 @@ class ApiServiceImpl extends ApiService {
 
       throw Exception('/getLaboratoryPdfResult : ${response.isSuccessful}');
     } else {
-      throw Exception('/getLaboratoryPdfResult : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getLaboratoryPdfResultPath,
+        response,
+      );
     }
   }
 
@@ -1105,7 +1230,7 @@ class ApiServiceImpl extends ApiService {
     RadiologyPdfRequest radiologyPdfResultRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getRadiologyPdfResultPath,
+      endpoints.base.getRadiologyPdfResultPath,
       radiologyPdfResultRequest.toJson(),
       options: authOptions,
     );
@@ -1119,7 +1244,10 @@ class ApiServiceImpl extends ApiService {
 
       throw Exception('/getRadiologyPdfResult : ${response.isSuccessful}');
     } else {
-      throw Exception('/getRadiologyPdfResult : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getRadiologyPdfResultPath,
+        response,
+      );
     }
   }
 
@@ -1128,7 +1256,7 @@ class ApiServiceImpl extends ApiService {
     PatientAppointmentRequest patientAppointmentRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getPatientAppointmentsPath,
+      endpoints.base.getPatientAppointmentsPath,
       patientAppointmentRequest.toJson(),
       options: authOptions,
     );
@@ -1146,7 +1274,10 @@ class ApiServiceImpl extends ApiService {
 
       return getPatientAppointmentsResponse;
     } else {
-      throw Exception('/getPatientAppointments : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getPatientAppointmentsPath,
+        response,
+      );
     }
   }
 
@@ -1155,14 +1286,17 @@ class ApiServiceImpl extends ApiService {
     CancelAppointmentRequest cancelAppointmentRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.cancelAppointmentPath,
+      endpoints.base.cancelAppointmentPath,
       cancelAppointmentRequest.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return true;
     } else {
-      throw Exception('/cancelAppointment : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.cancelAppointmentPath,
+        response,
+      );
     }
   }
 
@@ -1171,14 +1305,17 @@ class ApiServiceImpl extends ApiService {
     GetVideoCallPriceRequest getVideoCallPriceRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getResourceVideoCallPricePath,
+      endpoints.base.getResourceVideoCallPricePath,
       getVideoCallPriceRequest.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return GetVideoCallPriceResponse.fromJson(response.xGetMap);
     } else {
-      throw Exception('/getResourceVideoCallPrice : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getResourceVideoCallPricePath,
+        response,
+      );
     }
   }
 
@@ -1187,14 +1324,17 @@ class ApiServiceImpl extends ApiService {
     DoMobilePaymentWithVoucherRequest doMobilePaymentWithVoucherRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.doMobilePaymentWithVoucher,
+      endpoints.base.doMobilePaymentWithVoucher,
       doMobilePaymentWithVoucherRequest.toJson(),
       options: authOptions..headers?.addAll(utcHeader),
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/doMobilePaymentWithVoucher : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.doMobilePaymentWithVoucher,
+        response,
+      );
     }
   }
 
@@ -1203,14 +1343,17 @@ class ApiServiceImpl extends ApiService {
     DoMobilePaymentWithVoucherRequest doMobilePaymentWithVoucherRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.doMobilePaymentPath,
+      endpoints.base.doMobilePaymentPath,
       doMobilePaymentWithVoucherRequest.toJson(),
       options: authOptions..headers?.addAll(utcHeader),
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/doMobilePayment : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.doMobilePaymentPath,
+        response,
+      );
     }
   }
 
@@ -1219,7 +1362,7 @@ class ApiServiceImpl extends ApiService {
     FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.fetchOnlineDepartmentsPath,
+      endpoints.base.fetchOnlineDepartmentsPath,
       filterOnlineDepartmentsRequest.toJson(),
       options: authOptions,
     );
@@ -1229,7 +1372,10 @@ class ApiServiceImpl extends ApiService {
           .cast<FilterDepartmentsResponse>()
           .toList();
     } else {
-      throw Exception('/fetchOnlineDepartments : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.fetchOnlineDepartmentsPath,
+        response,
+      );
     }
   }
 
@@ -1238,15 +1384,16 @@ class ApiServiceImpl extends ApiService {
     CheckPaymentRequest request,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.checkOnlineAppointmentPaymentPath,
+      endpoints.base.checkOnlineAppointmentPaymentPath,
       request.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception(
-        '/checkOnlineAppointmentPayment : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.checkOnlineAppointmentPaymentPath,
+        response,
       );
     }
   }
@@ -1256,14 +1403,17 @@ class ApiServiceImpl extends ApiService {
     GetAvailabilityRateRequest getAvailabilityRateRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getAvailabilityRatePath,
+      endpoints.base.getAvailabilityRatePath,
       getAvailabilityRateRequest.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return GetAvailabilityRateResponse.fromJson(response.xGetMap);
     } else {
-      throw Exception('/getAvailabilityRate : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getAvailabilityRatePath,
+        response,
+      );
     }
   }
 
@@ -1271,14 +1421,17 @@ class ApiServiceImpl extends ApiService {
   Future<GuvenResponseModel> addNewPatientRelative(
       UserRelativePatientModel addPatientRelative) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.relative.addNewPatientRelativePath,
+      endpoints.relative.addNewPatientRelativePath,
       addPatientRelative.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/addNewPatientRelative : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.relative.addNewPatientRelativePath,
+        response,
+      );
     }
   }
 
@@ -1293,14 +1446,17 @@ class ApiServiceImpl extends ApiService {
           filename: DateTime.now().xFormatTime6()),
     });
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.uploadPatientDocumentsPath(webAppoId),
+      endpoints.base.uploadPatientDocumentsPath(webAppoId),
       formData,
       options: authOptions..headers?.addAll($headers),
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/uploadPatientDocuments : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.uploadPatientDocumentsPath(webAppoId),
+        response,
+      );
     }
   }
 
@@ -1309,7 +1465,7 @@ class ApiServiceImpl extends ApiService {
     FindResourceAvailableDaysRequest findResourceAvailableDaysRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.findResourceAvailableDays,
+      endpoints.base.findResourceAvailableDays,
       findResourceAvailableDaysRequest.toJson(),
       options: authOptions,
     );
@@ -1319,7 +1475,10 @@ class ApiServiceImpl extends ApiService {
           .cast<AvailableDate>()
           .toList();
     } else {
-      throw Exception('/findResourceAvailableDays : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.findResourceAvailableDays,
+        response,
+      );
     }
   }
 
@@ -1328,15 +1487,16 @@ class ApiServiceImpl extends ApiService {
     VoucherPriceRequest voucherPriceRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.getResourceVideoCallPriceWithVoucher,
+      endpoints.base.getResourceVideoCallPriceWithVoucher,
       voucherPriceRequest.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception(
-        '/getResourceVideoCallPriceVoucher : ${response.isSuccessful}',
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.getResourceVideoCallPriceWithVoucher,
+        response,
       );
     }
   }
@@ -1344,7 +1504,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<GuvenResponseModel> getChatContacts() async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.getChatContacts,
+      endpoints.devApi.getChatContacts,
       {'isActiveChats': 'true'},
       options: authOptions,
     );
@@ -1356,14 +1516,17 @@ class ApiServiceImpl extends ApiService {
     ChatNotificationModel model,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.sendNotification,
+      endpoints.devApi.sendNotification,
       model.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/sendNotification : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.devApi.sendNotification,
+        response,
+      );
     }
   }
 
@@ -1371,14 +1534,17 @@ class ApiServiceImpl extends ApiService {
   Future<GuvenResponseModel> synchronizeOneDoseUser(
       SynchronizeOneDoseUserRequest synchronizeOnedoseUserRequest) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.base.syncronizeOneDoseUser,
+      endpoints.base.syncronizeOneDoseUser,
       synchronizeOnedoseUserRequest.toJson(),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
       return response;
     } else {
-      throw Exception('/synchronizeOneDoseUser : ${response.isSuccessful}');
+      throw RbioNotSuccessfulException<GuvenResponseModel>(
+        endpoints.base.syncronizeOneDoseUser,
+        response,
+      );
     }
   }
 
@@ -1389,9 +1555,7 @@ class ApiServiceImpl extends ApiService {
   ) async {
     try {
       await helper.postGuven(
-        getIt<IAppConfig>()
-            .endpoints
-            .base
+        endpoints.base
             .sendOnlineAppointmentNotificationPusula(appointmentId, fromDate),
         {},
         options: authOptions,
