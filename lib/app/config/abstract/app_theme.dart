@@ -103,15 +103,15 @@ abstract class IAppTheme {
   Color graphRangeColor = R.colors.skeptic;
   double convertFontSize(double value) => value / 2.85;
 
-  // E-Konsey
-  Color get eCouncilPendingApproval;
-  Color get eCouncilPendingPayment;
-  Color get eCouncilPendingInspection;
-  Color get eCouncilRejected;
-  Color get eCouncilAppointmentReady;
-  Color get eCouncilReportCardTitleBackground;
-  Color get eCouncilScafoldBackground;
-  // E-Konsey
+  // #region eCouncil
+  Color eCouncilPendingApproval = R.colors.boulder;
+  Color eCouncilPendingPayment = R.colors.supernova;
+  Color eCouncilPendingInspection = R.colors.malibu;
+  Color eCouncilRejected = R.colors.punch;
+  Color eCouncilAppointmentReady = R.colors.greenHaze;
+  Color eCouncilReportCardTitleBackground = R.colors.skeptic;
+  Color eCouncilScafoldBackground = R.colors.gallery;
+  // #endregion
 }
 
 abstract class IAppDialogTheme {

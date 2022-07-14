@@ -31,4 +31,6 @@ class _Colors {
   final Color frenchPass = const Color.fromARGB(255, 186, 236, 255); // 0xFFBAECFF
   final Color kournikova = const Color.fromARGB(255, 255, 229, 123); // 0xFFFFE57B
   final Color frenchLilac = const Color.fromARGB(255, 235, 202, 243); // 0xFFEBCAF3
+  final Color supernova = const Color.fromARGB(255, 255, 205, 0); // 0xFFFFCD00
+  final Color malibu = const Color.fromARGB(255, 92, 210, 255); // 0xFF5CD2FF
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/core.dart';
 
+import '../../../../core/core.dart';
 import '../../SIL_DELETE_DELETE_SIL/sil.dart';
 import '../../e_council_information_pages/view/e_council_information_screen.dart';
 

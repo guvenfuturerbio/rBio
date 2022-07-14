@@ -1,8 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:onedosehealth/core/core.dart';
 
+import '../../../../../core/core.dart';
 import '../../../e_concil_results/model/council_card_report_model.dart';
 import '../../../e_couincil_requests/model/council_request_card_models.dart';
 import '../../model/council_card_payment_model.dart';
@@ -14,7 +13,6 @@ class CouincilCard extends StatelessWidget {
     required this.model,
     this.padding,
   }) : super(key: key);
-
   final ICouncilCardModel model;
   final EdgeInsets? padding;
 
@@ -26,7 +24,8 @@ class CouincilCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           //? Title
-          if (model is! CouncilCardPaymentModel) _BuildCouncilCardTitle(model: model),
+          if (model is! CouncilCardPaymentModel)
+            _BuildCouncilCardTitle(model: model),
           //? Body
           _BuildCouncilCardBody(model: model),
         ],
@@ -41,7 +40,6 @@ class _BuildCouncilCardTitle extends StatelessWidget {
     Key? key,
     required this.model,
   }) : super(key: key);
-
   final ICouncilCardModel model;
 
   @override
@@ -50,9 +48,9 @@ class _BuildCouncilCardTitle extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         color: Color(model.color),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(10.0),
-          topRight: Radius.circular(10.0),
+        borderRadius: BorderRadius.only(
+          topLeft: R.sizes.radiusCircular,
+          topRight: R.sizes.radiusCircular,
         ),
       ),
       child: Padding(
@@ -61,7 +59,16 @@ class _BuildCouncilCardTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Center(child: Text(model.title, style: context.xHeadline3.copyWith(color: model is CouncilCardReportModel ? Colors.black : Colors.white))),
+            Center(
+              child: Text(
+                model.title,
+                style: context.xHeadline3.copyWith(
+                  color: model is CouncilCardReportModel
+                      ? Colors.black
+                      : Colors.white,
+                ),
+              ),
+            ),
 
             //? Ode
             if (model is CouncilCardPendingPaymentModel)
@@ -98,7 +105,6 @@ class _BuildCouncilCardTitle extends StatelessWidget {
 }
 
 //! TitleButton - TitleButton - TitleButton - TitleButton - TitleButton - TitleButton
-
 /// Konsey kart'larinin baslik kisminda yer alan button
 class _BuildCouncilCardTitleButton extends StatelessWidget {
   /// Konsey kart'larinin baslik kisminda yer alan button
@@ -116,11 +122,13 @@ class _BuildCouncilCardTitleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text(text, style: context.xHeadline3.copyWith(color: Color(textColor))),
+      child: Text(text,
+          style: context.xHeadline3.copyWith(color: Color(textColor))),
       style: ButtonStyle(
         elevation: MaterialStateProperty.all(0.0),
         backgroundColor: MaterialStateProperty.all(Colors.white),
-        overlayColor: MaterialStateProperty.all(Color(textColor).withOpacity(.3)),
+        overlayColor:
+            MaterialStateProperty.all(Color(textColor).withOpacity(.3)),
         shape: MaterialStateProperty.all(
           const RoundedRectangleBorder(
             // Change your radius here
@@ -149,8 +157,12 @@ class _BuildCouncilCardBody extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: model is CouncilCardPaymentModel ? const Radius.circular(10.0) : const Radius.circular(0.0),
-          topRight: model is CouncilCardPaymentModel ? const Radius.circular(10.0) : const Radius.circular(0.0),
+          topLeft: model is CouncilCardPaymentModel
+              ? const Radius.circular(10.0)
+              : const Radius.circular(0.0),
+          topRight: model is CouncilCardPaymentModel
+              ? const Radius.circular(10.0)
+              : const Radius.circular(0.0),
           bottomLeft: const Radius.circular(10.0),
           bottomRight: const Radius.circular(10.0),
         ),
@@ -180,15 +192,22 @@ class _BuildCouncilCardBody extends StatelessWidget {
             _BuildCouncilCardDate(model: model),
 
           //? Tetkik
-          if (model is CouncilCardPendingInspectionModel) _BuildCouncilCardInspection(model: model),
+          if (model is CouncilCardPendingInspectionModel)
+            _BuildCouncilCardInspection(model: model),
           //? Reddedilen
-          if (model is CouncilCardRejectedModel) _BuildCouncilCardNote(model: model),
+          if (model is CouncilCardRejectedModel)
+            _BuildCouncilCardNote(model: model),
           //? Konsey baglanti linki
-          if (model is CouncilCardPendingApprovalModel || model is CouncilCardAppoitmentModel) _BuildCouncilCardConnectionLink(model: model),
+          if (model is CouncilCardPendingApprovalModel ||
+              model is CouncilCardAppoitmentModel)
+            _BuildCouncilCardConnectionLink(model: model),
           //? Katilacak Doktor Sayisi
-          if (model is CouncilCardPaymentModel) _BuildCouncilCardNumberOfDoctorsToAttend(model: model),
+          if (model is CouncilCardPaymentModel)
+            _BuildCouncilCardNumberOfDoctorsToAttend(model: model),
           //? Fiyat
-          if (model is CouncilCardPendingPaymentModel || model is CouncilCardPaymentModel) _BuildCouncilCardPrice(model: model),
+          if (model is CouncilCardPendingPaymentModel ||
+              model is CouncilCardPaymentModel)
+            _BuildCouncilCardPrice(model: model),
         ],
       ),
     );
@@ -206,8 +225,9 @@ class _BuildCouncilCardInspection extends StatelessWidget {
   final ICouncilCardModel model;
 
   @override
-  Widget build(BuildContext context) =>
-      _BuildCouncilCardTile(title: LocaleProvider.of(context).expected_inspection, data: (model as CouncilCardPendingInspectionModel).expectedInspection);
+  Widget build(BuildContext context) => _BuildCouncilCardTile(
+      title: LocaleProvider.of(context).expected_inspection,
+      data: (model as CouncilCardPendingInspectionModel).expectedInspection);
 }
 
 //! BodyDate - BodyDate - BodyDate - BodyDate - BodyDate - BodyDate
@@ -226,7 +246,9 @@ class _BuildCouncilCardDate extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _BuildCouncilCardTile(
-              title: model is CouncilCardReportModel ? LocaleProvider.of(context).date : LocaleProvider.of(context).date_and_hour,
+              title: model is CouncilCardReportModel
+                  ? LocaleProvider.of(context).date
+                  : LocaleProvider.of(context).date_and_hour,
               //? Konsey Raporu
               data: model is CouncilCardReportModel
                   ? (model as CouncilCardReportModel).dateToString(
@@ -242,10 +264,14 @@ class _BuildCouncilCardDate extends StatelessWidget {
                           ? (model as CouncilCardPendingApprovalModel).date
                           //? Randevu
                           : model is CouncilCardAppoitmentModel
-                              ? (model as CouncilCardAppoitmentModel).dateToString((model as CouncilCardAppoitmentModel).date)
+                              ? (model as CouncilCardAppoitmentModel)
+                                  .dateToString(
+                                      (model as CouncilCardAppoitmentModel)
+                                          .date)
                               //? Odeme
                               : model is CouncilCardPaymentModel
-                                  ? (model as CouncilCardPaymentModel).dateToString(
+                                  ? (model as CouncilCardPaymentModel)
+                                      .dateToString(
                                       (model as CouncilCardPaymentModel).date,
                                     )
                                   : null,
@@ -337,7 +363,8 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
       children: [
         Text(
           LocaleProvider.of(context).council_connection_link,
-          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+          style: context.xSubtitle2
+              .copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -345,11 +372,19 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
             if (model is CouncilCardPendingApprovalModel)
               Flexible(
                   child: FittedBox(
-                      child: Text((model as CouncilCardPendingApprovalModel).councilConnectionUrl, style: context.xSubtitle2.copyWith(color: Colors.grey)))),
+                      child: Text(
+                          (model as CouncilCardPendingApprovalModel)
+                              .councilConnectionUrl,
+                          style: context.xSubtitle2
+                              .copyWith(color: Colors.grey)))),
             if (model is CouncilCardAppoitmentModel)
               Flexible(
                   child: FittedBox(
-                      child: Text((model as CouncilCardAppoitmentModel).councilConnectionUrl, style: context.xSubtitle2.copyWith(color: Colors.blue)))),
+                      child: Text(
+                          (model as CouncilCardAppoitmentModel)
+                              .councilConnectionUrl,
+                          style: context.xSubtitle2
+                              .copyWith(color: Colors.blue)))),
             SizedBox(
               height: 20,
               child: IconButton(
@@ -358,9 +393,13 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 onPressed: () async {
                   if (model is CouncilCardPendingApprovalModel) {
-                    await Clipboard.setData(ClipboardData(text: (model as CouncilCardPendingApprovalModel).councilConnectionUrl));
+                    await Clipboard.setData(ClipboardData(
+                        text: (model as CouncilCardPendingApprovalModel)
+                            .councilConnectionUrl));
                   } else if (model is CouncilCardAppoitmentModel) {
-                    await Clipboard.setData(ClipboardData(text: (model as CouncilCardAppoitmentModel).councilConnectionUrl));
+                    await Clipboard.setData(ClipboardData(
+                        text: (model as CouncilCardAppoitmentModel)
+                            .councilConnectionUrl));
                   }
 
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -396,7 +435,9 @@ class _BuildCouncilCardNumberOfDoctorsToAttend extends StatelessWidget {
       children: [
         _BuildCouncilCardTile(
           title: LocaleProvider.of(context).number_of_doctors_to_attend,
-          data: (model as CouncilCardPaymentModel).numberOfDoctorsToAttend.toString(),
+          data: (model as CouncilCardPaymentModel)
+              .numberOfDoctorsToAttend
+              .toString(),
         ),
       ],
     );
@@ -422,7 +463,8 @@ class _BuildCouncilCardTile extends StatelessWidget {
       children: [
         Text(
           title,
-          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+          style: context.xSubtitle2
+              .copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
         ),
         Text(
           data ?? '',
