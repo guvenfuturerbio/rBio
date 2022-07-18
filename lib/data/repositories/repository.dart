@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -81,12 +82,24 @@ class Repository {
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
     final url = getIt<IAppConfig>().endpoints.base.getAllPackagePath;
-    return await apiService.getAllPackage(url);
+    return Utils.instance.getCacheApiCallList(
+      url,
+      () => apiService.getAllPackage(url),
+      const Duration(days: 1),
+      ForYouCategoryResponse(),
+      localCacheService,
+    );
   }
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
     final url = getIt<IAppConfig>().endpoints.base.getAllSubCategoriesPath(id);
-    return await apiService.getAllSubCategories(url);
+    return Utils.instance.getCacheApiCallList(
+      url,
+      () => apiService.getAllSubCategories(url),
+      const Duration(days: 1),
+      ForYouCategoryResponse(),
+      localCacheService,
+    );
   }
 
   Future<List<GetChatContactsResponse>> getChatContacts() async {
@@ -108,7 +121,13 @@ class Repository {
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
       int id) async {
     final url = getIt<IAppConfig>().endpoints.base.getSubCategoryDetailPath(id);
-    return await apiService.getSubCategoryDetail(url);
+    return await Utils.instance.getCacheApiCallList(
+      url,
+      () => apiService.getSubCategoryDetail(url),
+      const Duration(days: 1),
+      ForYouSubCategoryDetailResponse(),
+      localCacheService,
+    );
   }
 
   Future<GuvenResponseModel> addStep1(AddStep1Model addStep1Model) =>
@@ -162,21 +181,54 @@ class Repository {
   Future<List<FilterTenantsResponse>> filterTenants(
       FilterTenantsRequest filterTenantsRequest) async {
     final url = getIt<IAppConfig>().endpoints.base.filterTenantsPath;
-    return await apiService.filterTenants(url, filterTenantsRequest);
+    return await Utils.instance.getCacheApiCallList<FilterTenantsResponse>(
+      url,
+      () => apiService.filterTenants(url, filterTenantsRequest),
+      const Duration(days: 10),
+      FilterTenantsResponse(),
+      localCacheService,
+    );
   }
 
   Future<List<FilterDepartmentsResponse>> filterDepartments(
       FilterDepartmentsRequest filterDepartmentsRequest) async {
-    return await apiService.filterDepartments(filterDepartmentsRequest);
+    final url = getIt<IAppConfig>().endpoints.base.filterDepartmentsPath;
+    final bodyString = json.encode(filterDepartmentsRequest.toJson());
+    return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
+      url + bodyString,
+      () => apiService.filterDepartments(filterDepartmentsRequest),
+      const Duration(days: 1),
+      FilterDepartmentsResponse(),
+      localCacheService,
+      localeHandle: true,
+    );
   }
 
   Future<List<FilterResourcesResponse>> filterResources(
       FilterResourcesRequest filterResourcesRequest) async {
-    return await apiService.filterResources(filterResourcesRequest);
+    final url = getIt<IAppConfig>().endpoints.base.filterResourcesPath;
+    final bodyString = json.encode(filterResourcesRequest.toJson());
+    return await Utils.instance.getCacheApiCallList<FilterResourcesResponse>(
+      url + bodyString,
+      () => apiService.filterResources(filterResourcesRequest),
+      const Duration(days: 1),
+      FilterResourcesResponse(),
+      localCacheService,
+    );
   }
 
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
-    return await apiService.getDoctorCvDetails(doctorWebID);
+    final url = getIt<IAppConfig>()
+        .endpoints
+        .common
+        .getDoctorCvDetailsPath(doctorWebID);
+    return await Utils.instance.getCacheApiCallModel<DoctorCvResponse>(
+      url,
+      () => apiService.getDoctorCvDetails(doctorWebID),
+      const Duration(days: 1),
+      DoctorCvResponse(),
+      localCacheService,
+    );
   }
 
   Future<List<GetEventsResponse>> getEvents(
@@ -268,8 +320,8 @@ class Repository {
     }
   }
 
-  Either<GuvenResponseModel, ChangePasswordExceptions> _checkChangePassword(
-      GuvenResponseModel response) {
+  Either<GuvenResponseModel, ChangePasswordExceptions>
+      _checkChangePassword(GuvenResponseModel response) {
     if (response.datum == R.apiEnums.changePassword.success) {
       return left(response);
     } else if (response.datum == R.apiEnums.changePassword.oldError) {
@@ -423,8 +475,15 @@ class Repository {
 
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
       FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
-    return await apiService
-        .fetchOnlineDepartments(filterOnlineDepartmentsRequest);
+    final url = getIt<IAppConfig>().endpoints.base.fetchOnlineDepartmentsPath;
+    return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
+      url,
+      () => apiService.fetchOnlineDepartments(filterOnlineDepartmentsRequest),
+      const Duration(days: 1),
+      FilterDepartmentsResponse(),
+      localCacheService,
+      localeHandle: true,
+    );
   }
 
   Future<GuvenResponseModel> checkOnlineAppointmentPayment(
@@ -445,7 +504,15 @@ class Repository {
 
   // #region Search
   Future<List<SocialPostsResponse>> getAllSocialResources() async {
-    final response = await apiService.socialResource();
+    final url = getIt<IAppConfig>().endpoints.search.getAllPosts;
+    final response =
+        await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(
+      url,
+      () => apiService.socialResource(),
+      const Duration(days: 1),
+      GuvenResponseModel(),
+      localCacheService,
+    );
     final allSocialResources = <SocialPostsResponse>[];
     final datum = response.datum;
     for (final data in datum) {
