@@ -5,10 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/features/profile/personal_information/cubit/personel_information_cubit.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/shared/user_account_info.dart';
+import '../cubit/personel_information_cubit.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
   const PersonalInformationScreen({Key? key}) : super(key: key);
@@ -36,6 +36,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         userFacade: getIt(),
         sharedPreferencesManager: getIt(),
         sentryManager: getIt<IAppConfig>().platform.sentryManager,
+        imageManager: getIt(),
         email: isEMail ? "-" : (userAccount.electronicMail ?? ''),
         phoneNumber: userAccount.phoneNumber ?? '',
       ),
