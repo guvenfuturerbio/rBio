@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
+import '../../../../../core/core.dart';
 import '../../../bluetooth_v2.dart';
 
 part 'bluetooth_status.dart';

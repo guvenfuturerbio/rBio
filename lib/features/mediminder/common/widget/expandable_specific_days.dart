@@ -160,7 +160,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
                 ),
 
                 //
-                R.sizes.wSizer12,
+                R.widgets.wSizer12,
               ],
             ),
           ),

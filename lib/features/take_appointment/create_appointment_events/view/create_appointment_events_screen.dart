@@ -87,12 +87,8 @@ class _CreateAppointmentEventsScreenState
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        R.sizes.stackedTopPadding(context),
-        R.sizes.hSizer8,
-        //
-        // _buildHeaderInfo(),
-
-        // const SizedBox(height: 15),
+        R.widgets.stackedTopPadding(context),
+        R.widgets.hSizer8,
 
         //
         if (val.availableDatesProgress == LoadingProgress.loading) ...[
@@ -150,7 +146,9 @@ class _CreateAppointmentEventsScreenState
               },
             ),
           ),
-          R.sizes.defaultBottomPadding,
+
+          //
+          R.widgets.defaultBottomPadding,
         ],
       ],
     );

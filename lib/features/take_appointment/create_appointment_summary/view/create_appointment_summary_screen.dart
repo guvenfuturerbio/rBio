@@ -137,7 +137,7 @@ class _CreateAppointmentSummaryScreenState
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       //
-                      R.sizes.stackedTopPadding(context),
+                      R.widgets.stackedTopPadding(context),
 
                       //
                       if (vm.appointmentSuccess) ...[
@@ -146,7 +146,7 @@ class _CreateAppointmentSummaryScreenState
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               //
-                              R.sizes.hSizer8,
+                              R.widgets.hSizer8,
 
                               //
                               SvgPicture.asset(
@@ -158,7 +158,7 @@ class _CreateAppointmentSummaryScreenState
                               ),
 
                               //
-                              R.sizes.hSizer4,
+                              R.widgets.hSizer4,
 
                               //
                               Text(
@@ -170,14 +170,14 @@ class _CreateAppointmentSummaryScreenState
                               ),
 
                               //
-                              R.sizes.hSizer12,
+                              R.widgets.hSizer12,
                             ],
                           ),
                         ),
                       ],
 
                       //
-                      R.sizes.hSizer16,
+                      R.widgets.hSizer16,
 
                       //
                       Text(
@@ -472,7 +472,7 @@ class _CreateAppointmentSummaryScreenState
                               ),
 
                               //
-                              R.sizes.wSizer4,
+                              R.widgets.wSizer4,
 
                               //
                               Expanded(
@@ -541,7 +541,7 @@ class _CreateAppointmentSummaryScreenState
           ],
 
           //
-          R.sizes.defaultBottomPadding,
+          R.widgets.defaultBottomPadding,
         ],
       ),
     );

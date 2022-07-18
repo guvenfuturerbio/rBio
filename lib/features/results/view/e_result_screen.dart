@@ -11,7 +11,11 @@ class EResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ResultsCubit(getIt(), getIt())..fetchVisits(),
+      create: (context) => ResultsCubit(
+        repository: getIt<Repository>(),
+        userFacade: getIt<UserFacade>(),
+        sentryManager: getIt<IAppConfig>().platform.sentryManager,
+      )..fetchVisits(),
       child: const EResultView(),
     );
   }
@@ -124,7 +128,7 @@ class EResultView extends StatelessWidget {
           date: visits[index].openingDate?.xGetUTCLocalDateTime() ?? '',
           departmentName: visits[index].department ?? '',
           doctorName: visits[index].physician ?? '',
-          tenantName: getTenantName(item.tenantId),
+          tenantName: getTenantName(context, item.tenantId),
           openDetailTap: (item.hasLaboratoryResults ?? false) ||
                   (item.hasRadiologyResults ?? false) ||
                   (item.hasPathologyResults ?? false)
@@ -149,13 +153,6 @@ class EResultView extends StatelessWidget {
     );
   }
 
-  String getTenantName(int? tenantId) {
-    if (tenantId == 1) {
-      return LocaleProvider.current.guven_hospital_ayranci;
-    } else if (tenantId == 7) {
-      return LocaleProvider.current.guven_cayyolu_campus;
-    }
-
-    return LocaleProvider.current.online_hospital;
-  }
+  String getTenantName(BuildContext context, int? tenantId) =>
+      tenantId.xGetTenantTitle(context);
 }

@@ -92,7 +92,7 @@ class _RbioSelectBottomSheetState<T> extends State<RbioSelectBottomSheet<T>> {
         ),
 
         //
-        R.sizes.hSizer8,
+        R.widgets.hSizer8,
 
         //
         const Spacer(flex: 30),
@@ -130,7 +130,7 @@ class _RbioSelectBottomSheetState<T> extends State<RbioSelectBottomSheet<T>> {
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }

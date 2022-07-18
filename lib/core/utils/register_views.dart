@@ -24,7 +24,7 @@ class RegisterViews {
         ..style.border = 'none',
     );
 
-     MobileWebInterface.registerViewFactory(
+    MobileWebInterface.registerViewFactory(
       'detailed_symptom',
       (int viewId) => IFrameElement()
         ..width = '640'
@@ -48,6 +48,15 @@ class RegisterViews {
         ..width = '640'
         ..height = '360'
         ..src = LocaleProvider.current.iptal_url
+        ..style.border = 'none',
+    );
+
+     MobileWebInterface.registerViewFactory(
+      'councilResultDetail',
+      (int viewId) => IFrameElement()
+        ..width = '640'
+        ..height = '360'
+        ..src = 'https://flutter.dev'
         ..style.border = 'none',
     );
   }

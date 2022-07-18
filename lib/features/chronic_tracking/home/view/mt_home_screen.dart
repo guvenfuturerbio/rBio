@@ -118,7 +118,7 @@ class _MeasurementTrackingHomeScreenState
           _buildExpandedUser(),
 
         //
-        R.sizes.hSizer12,
+        R.widgets.hSizer12,
 
         //
         Container(

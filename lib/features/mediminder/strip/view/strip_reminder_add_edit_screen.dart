@@ -185,13 +185,13 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildAlarmTextField(),
 
           //
-          R.sizes.hSizer4,
+          R.widgets.hSizer4,
         ],
       ),
     );
@@ -218,7 +218,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         ),
 
         //
-        R.sizes.wSizer12,
+        R.widgets.wSizer12,
 
         //
         Expanded(
@@ -259,7 +259,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
           ),
 
           //
-          R.sizes.wSizer8,
+          R.widgets.wSizer8,
 
           //
           Expanded(
@@ -467,5 +467,5 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
   }
   // #endregion
 
-  Widget _buildGap() => R.sizes.hSizer24;
+  Widget _buildGap() => R.widgets.hSizer24;
 }

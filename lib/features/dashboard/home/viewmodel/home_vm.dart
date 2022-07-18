@@ -314,7 +314,7 @@ class HomeVm extends ChangeNotifier {
                   ),
 
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   RbioElevatedButton(

@@ -105,8 +105,8 @@ class ProfileView extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               //
-              R.sizes.stackedTopPadding(context),
-              R.sizes.hSizer8,
+              R.widgets.stackedTopPadding(context),
+              R.widgets.hSizer8,
 
               //
               const RbioLocaleDropdown(),
@@ -114,8 +114,7 @@ class ProfileView extends StatelessWidget {
               //
               RbioUserTile(
                 name: getIt<UserFacade>().getNameAndSurname(),
-                imageBytes: getIt<ISharedPreferencesManager>()
-                    .getString(SharedPreferencesKeys.profileImage),
+                imageBytes: getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.profileImage),
                 leadingImage: UserLeadingImage.circle,
                 onTap: () {},
                 width: Atom.width,
@@ -124,8 +123,7 @@ class ProfileView extends StatelessWidget {
               if (getIt<IAppConfig>().functionality.relatives)
                 if (!(context.read<UserNotifier>().isDefaultUser ?? true)) ...[
                   RbioElevatedButton(
-                    title: LocaleProvider.of(context)
-                        .switch_back_to_default_account,
+                    title: LocaleProvider.of(context).switch_back_to_default_account,
                     onTap: () {
                       showDialog(
                         context: context,
@@ -137,31 +135,25 @@ class ProfileView extends StatelessWidget {
                               builder: (context) {
                                 return GuvenAlert(
                                   backgroundColor: Colors.white,
-                                  title: GuvenAlert.buildTitle(
-                                      LocaleProvider.of(context).warning),
+                                  title: GuvenAlert.buildTitle(LocaleProvider.of(context).warning),
                                   actions: [
                                     GuvenAlert.buildMaterialAction(
                                       LocaleProvider.of(context).Ok,
                                       () {
                                         Navigator.pop(context);
-                                        context
-                                            .read<ProfileCubit>()
-                                            .changeUserToDefault();
+                                        context.read<ProfileCubit>().changeUserToDefault();
                                       },
                                     ),
                                   ],
                                   content: Container(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         GuvenAlert.buildDescription(
-                                          LocaleProvider.of(context)
-                                              .relative_change_message,
+                                          LocaleProvider.of(context).relative_change_message,
                                         ),
                                       ],
                                     ),
@@ -191,9 +183,7 @@ class ProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (getIt<UserNotifier>()
-                        .user
-                        .xGetHealthcareEmployeeOrFalse) ...[
+                    if (getIt<UserNotifier>().user.xGetHealthcareEmployeeOrFalse) ...[
                       _buildListItem(
                         context,
                         LocaleProvider.current.healthcare_employee,
@@ -232,9 +222,7 @@ class ProfileView extends StatelessWidget {
                           )
                         : const SizedBox(),
 
-                    if (!Atom.isWeb &&
-                        getIt<UserNotifier>().user.xGetChronicTrackingOrFalse &&
-                        getIt<IAppConfig>().functionality.chronicTracking)
+                    if (!Atom.isWeb && getIt<UserNotifier>().user.xGetChronicTrackingOrFalse && getIt<IAppConfig>().functionality.chronicTracking)
                       _buildListItem(
                         context,
                         LocaleProvider.current.devices,
@@ -289,16 +277,32 @@ class ProfileView extends StatelessWidget {
                         Atom.to(PagePaths.termsAndPrivacy);
                       },
                     ),
+
+                    //? Hesabimi Sil
+                    // _buildListItem(
+                    //   context,
+                    //   LocaleProvider.current.delelete_account,
+                    //   () {
+                    //     showDialog(
+                    //         context: context,
+                    //         builder: (context) {
+                    //           return RbioMessageDialog(
+                    //             description: LocaleProvider.of(context).delete_account_informations('info@onedose.io'),
+                    //             isAtom: false,
+                    //           );
+                    //         });
+                    //   },
+                    // ),
                   ],
                 ),
               ),
 
-              // 2FA
-              R.sizes.hSizer8,
+              //
+              R.widgets.hSizer8,
 
               //
               Padding(
-                padding: R.sizes.screenPadding(context).copyWith(top: 0),
+                padding: R.utils.screenPadding(context).copyWith(top: 0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -336,7 +340,7 @@ class ProfileView extends StatelessWidget {
               ),
 
               //
-              R.sizes.defaultBottomPadding,
+              R.widgets.defaultBottomPadding,
             ],
           ),
         );

@@ -207,7 +207,9 @@ class _SymptomsBodyLocationsScreenState
                 infinityWidth: true,
               ),
             ),
-            R.sizes.defaultBottomPadding,
+
+            //
+            R.widgets.defaultBottomPadding,
           ],
         );
 

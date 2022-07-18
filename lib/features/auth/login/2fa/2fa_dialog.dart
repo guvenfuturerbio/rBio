@@ -55,7 +55,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     //
-                    R.sizes.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     Center(
@@ -68,9 +68,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                       ),
                     ),
 
-                    R.sizes.hSizer32,
-
-                    //
+                    R.widgets.hSizer32,
 
                     //
                     Padding(
@@ -88,7 +86,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     //
 
                     if (!vm.resendButtonEnabled) ...[
-                      R.sizes.hSizer40,
+                      R.widgets.hSizer40,
                       Center(
                         child: RbioSmallDialogButton.green(
                           title: LocaleProvider.current.save,
@@ -103,7 +101,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     ],
 
                     if (vm.resendButtonEnabled) ...[
-                      R.sizes.hSizer24,
+                      R.widgets.hSizer24,
                       Center(
                         child: RbioSmallDialogButton.white(
                           title: LocaleProvider.current.resend,
@@ -112,7 +110,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                           },
                         ),
                       ),
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
                       Center(
                           child: RbioSmallDialogButton.green(
                         title: LocaleProvider.current.save,

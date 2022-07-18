@@ -148,8 +148,8 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
         mainAxisSize: MainAxisSize.min,
         children: [
           //
-          R.sizes.stackedTopPadding(context),
-          R.sizes.hSizer32,
+          R.widgets.stackedTopPadding(context),
+          R.widgets.hSizer32,
 
           //
           RbioJumpingDots(

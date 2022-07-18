@@ -2,24 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/features/auth/forgot_password/cubit/forgot_password_step2_cubit/forgot_password_step2_cubit.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../../../core/core.dart';
 import '../../auth.dart';
+import '../cubit/forgot_password_step2_cubit/forgot_password_step2_cubit.dart';
 
 class ForgotPasswordStep2Screen extends StatelessWidget {
-  ForgotPasswordStep2Screen({Key? key}) : super(key: key);
-  late String identityNumber;
+  const ForgotPasswordStep2Screen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    late String identityNumber;
+
     try {
       identityNumber = Atom.queryParameters['identityNumber']!;
     } catch (e, stackTrace) {
       return RbioRouteError(e: e, stackTrace: stackTrace);
     }
+
     return BlocProvider(
-      create: (context) => ForgotPasswordStep2Cubit(),
+      create: (context) => ForgotPasswordStep2Cubit(
+        repository: getIt<Repository>(),
+      ),
       child: ForgotPasswordStep2View(
         identityNumber: identityNumber,
       ),
@@ -131,7 +136,10 @@ class _ForgotPasswordStep2ViewState extends State<ForgotPasswordStep2View> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              R.sizes.stackedTopPadding(context),
+              //
+              R.widgets.stackedTopPadding(context),
+
+              //
               Container(
                 margin: const EdgeInsets.only(bottom: 20, top: 40),
                 child: RbioTextFormField(

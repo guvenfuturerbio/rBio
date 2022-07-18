@@ -196,7 +196,7 @@ class DoctorPatientListScreen extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       itemCount: vm.getitemCount,
       itemBuilder: (BuildContext context, int index) {
-        return R.sizes.textScaleBuilder(
+        return R.widgets.textScaleBuilder(
           context,
           smallWidget: _buildCard(context, vm, list[index], isLarge: false),
           largeWidget: _buildCard(context, vm, list[index], isLarge: true),

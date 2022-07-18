@@ -49,7 +49,7 @@ class RbioLocaleDropdown extends StatelessWidget {
           R.image.trFlag,
           width: 30,
         ),
-        R.sizes.wSizer4,
+        R.widgets.wSizer4,
         Text(
           'TR',
           style: context.xHeadline5,
@@ -61,7 +61,7 @@ class RbioLocaleDropdown extends StatelessWidget {
           R.image.engFlag,
           width: 30,
         ),
-        R.sizes.wSizer4,
+        R.widgets.wSizer4,
         Text('EN', style: context.xHeadline5),
       ]);
     }

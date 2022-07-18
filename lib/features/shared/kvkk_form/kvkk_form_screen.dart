@@ -39,8 +39,10 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
               ),
             ),
 
-            R.sizes.hSizer24,
+            //
+            R.widgets.hSizer24,
 
+            //
             SingleChildScrollView(
               child: ChangeNotifierProvider<KvkkFormScreenVm>(
                 create: (context) => KvkkFormScreenVm(

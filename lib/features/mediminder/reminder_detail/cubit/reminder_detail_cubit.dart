@@ -5,7 +5,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../core/utils/tz_helper.dart';
+import '../../../../core/utils/helper/tz_helper.dart';
 import '../../mediminder.dart';
 
 part 'reminder_detail_cubit.freezed.dart';

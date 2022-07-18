@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -82,7 +81,7 @@ class Repository {
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
     final url = getIt<IAppConfig>().endpoints.base.getAllPackagePath;
-    return apiService.getAllPackage(url);
+    return await apiService.getAllPackage(url);
   }
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {

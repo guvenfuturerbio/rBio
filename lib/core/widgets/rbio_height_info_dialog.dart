@@ -26,6 +26,7 @@ class RbioHeightInfoDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              //
               Center(
                 child: Text(
                   LocaleProvider.current.warning,
@@ -34,7 +35,11 @@ class RbioHeightInfoDialog extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              R.sizes.hSizer32,
+
+              //
+              R.widgets.hSizer32,
+
+              //
               Center(
                 child: Text(
                   LocaleProvider.current.required_user_height_info_message,
@@ -45,14 +50,19 @@ class RbioHeightInfoDialog extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              R.sizes.hSizer32,
+
+              //
+              R.widgets.hSizer32,
+
+              //
               Center(
                 child: RbioSmallDialogButton.green(
-                    title: LocaleProvider.current.update,
-                    onPressed: () {
-                      Atom.dismiss();
-                      Atom.to(PagePaths.healthInformation);
-                    }),
+                  title: LocaleProvider.current.update,
+                  onPressed: () {
+                    Atom.dismiss();
+                    Atom.to(PagePaths.healthInformation);
+                  },
+                ),
               ),
             ],
           ),

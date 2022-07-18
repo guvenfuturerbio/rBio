@@ -66,7 +66,7 @@ class ScaleChart extends StatelessWidget {
       borderWidth: 0,
       borderColor: Colors.transparent,
       backgroundColor: Colors.transparent,
-      margin: R.sizes.screenPadding(context),
+      margin: R.utils.screenPadding(context),
       // selectionType: SelectionType.point,
 
       // Primary
