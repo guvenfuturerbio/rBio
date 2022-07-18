@@ -930,6 +930,16 @@
   "after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests": "Ödeme yaptıktan sonra konsey randevunuz ile ilgili detaylara ve konsey bağlantı adresine Konsey Taleplerim bölümünden ulaşabilirsiniz.",
   "requested_inspections": "İstenilen Tetkikler",
   "file_name": "Dosya adı",
+  "delelete_account": "Hesabımı Sil",
+
+  "delete_account_informations": "24/3/2016 tarihli ve 6698 sayılı Kişisel Verilerin Korunması Kanunu hükümleri kapsamında, kişisel sağlık verileriniz talebinizle silinecektir.\n \n Bunun için T.C. Kimlik veya Pasaport Seri No bilgisi ile birlikte {email} adresine e-posta göndermeniz gerekmektedir.",
+  "@delete_account_informations": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
 
   "not_now": "Şimdi Değil",
   "permission_camera_message_ios": "{appName} kameranıza erişimi yok. Erişime izin vermek için, Ayarlar'a dokunun ve Kamera'yı etkinleştirin.",

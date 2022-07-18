@@ -20,22 +20,25 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(appName) =>
-      "To capture photos and videos, allow ${appName} access to your camera. Tap Settings > Permissions, and turn Camera on.";
+  static String m0(email) =>
+      "Your personal health data will be deleted upon your request, within the scope of the provisions of the Law on Protection of Personal Data No. 6698 dated 24/3/2016. \n \n Please send an e-mail to the ${email} adress with your T.C. Identification or Passport Serial No information.";
 
   static String m1(appName) =>
-      "${appName} does not have access to your camera. To enable access, tap Settings and turn on Camera.";
+      "To capture photos and videos, allow ${appName} access to your camera. Tap Settings > Permissions, and turn Camera on.";
 
   static String m2(appName) =>
-      "To capture photos and videos, allow ${appName} access to your device\'s photos, media, and files. Tap Settings > Permissions, and turn \"Files and media\" on.";
+      "${appName} does not have access to your camera. To enable access, tap Settings and turn on Camera.";
 
   static String m3(appName) =>
-      "${appName} does not have access to your photos or videos. To enable access, tap Settings and turn on Photos.";
+      "To capture photos and videos, allow ${appName} access to your device\'s photos, media, and files. Tap Settings > Permissions, and turn \"Files and media\" on.";
 
   static String m4(appName) =>
-      "Want to record videos with sound? Allow ${appName} access to your microphone. Tap Settings > Permissions and turn Microphone on.";
+      "${appName} does not have access to your photos or videos. To enable access, tap Settings and turn on Photos.";
 
   static String m5(appName) =>
+      "Want to record videos with sound? Allow ${appName} access to your microphone. Tap Settings > Permissions and turn Microphone on.";
+
+  static String m6(appName) =>
       "To record videos with sound, ${appName} needs microphone access. To enable access, tap Settings and turn on Microphone.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -392,7 +395,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "date_of_birth": MessageLookupByLibrary.simpleMessage("Date of birth"),
         "day": MessageLookupByLibrary.simpleMessage("Day"),
         "days": MessageLookupByLibrary.simpleMessage("Days"),
+        "delelete_account":
+            MessageLookupByLibrary.simpleMessage("Delete Account"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "delete_account_informations": m0,
         "delete_diet_list": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete the diet list?"),
         "delete_file_question": MessageLookupByLibrary.simpleMessage(
@@ -1097,12 +1103,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Pending Inspection"),
         "pending_payment":
             MessageLookupByLibrary.simpleMessage("Pending Payment"),
-        "permission_camera_message_android": m0,
-        "permission_camera_message_ios": m1,
-        "permission_gallery_message_android": m2,
-        "permission_gallery_message_ios": m3,
-        "permission_microphone_message_android": m4,
-        "permission_microphone_message_ios": m5,
+        "permission_camera_message_android": m1,
+        "permission_camera_message_ios": m2,
+        "permission_gallery_message_android": m3,
+        "permission_gallery_message_ios": m4,
+        "permission_microphone_message_android": m5,
+        "permission_microphone_message_ios": m6,
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "personal_data_policy": MessageLookupByLibrary.simpleMessage(
             "Privacy Statement and Personal Data Protection Policy"),
