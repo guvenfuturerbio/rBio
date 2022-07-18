@@ -933,6 +933,16 @@
   "after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests": "After payment, you can reach the details of your council appointment and the council connection link from your Council Requests.",
   "requested_inspections": "Requested Inspections",
   "file_name": "File name",
+  "delelete_account": "Delete Account",
+
+  "delete_account_informations": "Your personal health data will be deleted upon your request, within the scope of the provisions of the Law on Protection of Personal Data No. 6698 dated 24/3/2016. \n \n Please send an e-mail to the {email} adress with your T.C. Identification or Passport Serial No information.",
+  "@delete_account_informations": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
 
 
   "not_now": "Not Now",

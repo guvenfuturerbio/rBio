@@ -9394,6 +9394,26 @@ class LocaleProvider {
     );
   }
 
+  /// `Delete Account`
+  String get delelete_account {
+    return Intl.message(
+      'Delete Account',
+      name: 'delelete_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your personal health data will be deleted upon your request, within the scope of the provisions of the Law on Protection of Personal Data No. 6698 dated 24/3/2016. \n \n Please send an e-mail to the {email} adress with your T.C. Identification or Passport Serial No information.`
+  String delete_account_informations(String email) {
+    return Intl.message(
+      'Your personal health data will be deleted upon your request, within the scope of the provisions of the Law on Protection of Personal Data No. 6698 dated 24/3/2016. \n \n Please send an e-mail to the $email adress with your T.C. Identification or Passport Serial No information.',
+      name: 'delete_account_informations',
+      desc: '',
+      args: [email],
+    );
+  }
+
   /// `Not Now`
   String get not_now {
     return Intl.message(
