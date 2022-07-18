@@ -205,8 +205,8 @@ class _DoctorScaleDietAddEditViewState
         mainAxisSize: MainAxisSize.max,
         children: [
           //
-          R.sizes.stackedTopPadding(context),
-          R.sizes.hSizer8,
+          R.widgets.stackedTopPadding(context),
+          R.widgets.hSizer8,
 
           //
           Expanded(
@@ -229,7 +229,7 @@ class _DoctorScaleDietAddEditViewState
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    R.sizes.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     if (result.editMode ==
@@ -258,8 +258,9 @@ class _DoctorScaleDietAddEditViewState
                       ),
                     ],
 
-                    R.sizes.hSizer8,
-                    R.sizes.hSizer8,
+                    //
+                    R.widgets.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     _buildTitle(
@@ -274,7 +275,7 @@ class _DoctorScaleDietAddEditViewState
                     ),
 
                     //
-                    R.sizes.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     _buildTitle(
@@ -289,7 +290,7 @@ class _DoctorScaleDietAddEditViewState
                     ),
 
                     //
-                    R.sizes.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     _buildTitle(
@@ -304,7 +305,7 @@ class _DoctorScaleDietAddEditViewState
                     ),
 
                     //
-                    R.sizes.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     _buildTitle(
@@ -319,7 +320,7 @@ class _DoctorScaleDietAddEditViewState
                     ),
 
                     //
-                    R.sizes.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     _buildTitle(
@@ -334,7 +335,7 @@ class _DoctorScaleDietAddEditViewState
                     ),
 
                     //
-                    R.sizes.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     _buildTitle(
@@ -354,7 +355,7 @@ class _DoctorScaleDietAddEditViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           KeyboardVisibilityBuilder(
@@ -364,7 +365,7 @@ class _DoctorScaleDietAddEditViewState
           ),
 
           //
-          R.sizes.defaultBottomPadding,
+          R.widgets.defaultBottomPadding,
         ],
       ),
     );
@@ -457,7 +458,7 @@ class _DoctorScaleDietAddEditViewState
             ),
 
             //
-            R.sizes.wSizer8,
+            R.widgets.wSizer8,
 
             //
             Expanded(
@@ -493,7 +494,7 @@ class _DoctorScaleDietAddEditViewState
                   ),
 
                   //
-                  R.sizes.wSizer8,
+                  R.widgets.wSizer8,
 
                   //
                   Expanded(
@@ -535,7 +536,7 @@ class _DoctorScaleDietAddEditViewState
                   ),
 
                   //
-                  R.sizes.wSizer8,
+                  R.widgets.wSizer8,
 
                   //
                   Expanded(

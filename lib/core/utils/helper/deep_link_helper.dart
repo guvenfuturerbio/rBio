@@ -2,7 +2,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:vrouter/vrouter.dart';
 
-import '../core.dart';
+import '../../core.dart';
 
 class DeepLinkHelper {
   DeepLinkHelper._();

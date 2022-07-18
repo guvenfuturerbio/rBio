@@ -384,7 +384,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
                 ),
 
                 //
-                R.sizes.wSizer4,
+                R.widgets.wSizer4,
 
                 //
                 Container(
@@ -472,7 +472,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
           ),
 
           //
-          R.sizes.hSizer4,
+          R.widgets.hSizer4,
 
           //
           _DynamicColorfulRange(

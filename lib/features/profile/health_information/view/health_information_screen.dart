@@ -131,8 +131,8 @@ class _HealthInformationViewState extends State<HealthInformationView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //
-                    R.sizes.stackedTopPadding(context),
-                    R.sizes.hSizer16,
+                    R.widgets.stackedTopPadding(context),
+                    R.widgets.hSizer16,
 
                     // Diabet Type
                     _buildTitle(LocaleProvider.current.diabet_type),
@@ -233,7 +233,7 @@ class _HealthInformationViewState extends State<HealthInformationView> {
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }

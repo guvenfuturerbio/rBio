@@ -29,8 +29,10 @@ class ReminderDetailDialog extends StatelessWidget {
                 ),
               ),
 
-              R.sizes.hSizer32,
+              //
+              R.widgets.hSizer32,
 
+              //
               Center(
                 child: Text(
                   getIt<UserFacade>().getNameAndSurname(),
@@ -41,7 +43,8 @@ class ReminderDetailDialog extends StatelessWidget {
                 ),
               ),
 
-              R.sizes.hSizer12,
+              //
+              R.widgets.hSizer12,
 
               //
               if ((model.subTitle ?? '').isNotEmpty) ...[
@@ -55,9 +58,7 @@ class ReminderDetailDialog extends StatelessWidget {
               ],
 
               //
-
-              //
-              R.sizes.hSizer40,
+              R.widgets.hSizer40,
 
               // //
               // RbioElevatedButton(
@@ -100,7 +101,7 @@ class ReminderDetailDialog extends StatelessWidget {
                   ),
 
                   //
-                  R.sizes.wSizer8,
+                  R.widgets.wSizer8,
 
                   //
                   Expanded(

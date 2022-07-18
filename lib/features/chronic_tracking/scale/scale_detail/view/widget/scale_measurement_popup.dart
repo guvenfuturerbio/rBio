@@ -27,17 +27,27 @@ class ScaleMeasurementPopup extends StatelessWidget {
               showLoading: (scaleEntity) {
                 return SafeArea(
                   child: Padding(
-                    padding: R.sizes.screenPadding(context),
+                    padding: R.utils.screenPadding(context),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        R.sizes.hSizer28,
+                        R.widgets.hSizer28,
+
+                        //
                         _buildTitle(context),
-                        R.sizes.hSizer8,
-                        R.sizes.hSizer28,
+
+                        //
+                        R.widgets.hSizer8,
+
+                        //
+                        R.widgets.hSizer28,
+
+                        //
                         _buildWeight(scaleEntity, context),
+
+                        //
                         Center(
                           child: MirrorAnimation(
                             duration: const Duration(seconds: 1),
@@ -53,7 +63,11 @@ class ScaleMeasurementPopup extends StatelessWidget {
                             },
                           ),
                         ),
-                        R.sizes.hSizer8,
+
+                        //
+                        R.widgets.hSizer8,
+
+                        //
                         Container(
                           color: Colors.transparent,
                           height: 45,
@@ -63,9 +77,13 @@ class ScaleMeasurementPopup extends StatelessWidget {
                             alignment: Alignment.bottomCenter,
                           ),
                         ),
-                        R.sizes.hSizer28,
-                        R.sizes.hSizer28,
-                        R.sizes.hSizer28,
+
+                        //
+                        R.widgets.hSizer28,
+                        R.widgets.hSizer28,
+                        R.widgets.hSizer28,
+
+                        //
                         _buildDescription(context),
                       ],
                     ),
@@ -84,6 +102,7 @@ class ScaleMeasurementPopup extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        //
         Flexible(
           child: Text(
             LocaleProvider.current.weighing,
@@ -92,7 +111,11 @@ class ScaleMeasurementPopup extends StatelessWidget {
             ),
           ),
         ),
-        R.sizes.wSizer8,
+
+        //
+        R.widgets.wSizer8,
+
+        //
         RbioJumpingDots(
           fontSize: 16,
           dotSpacing: 5,

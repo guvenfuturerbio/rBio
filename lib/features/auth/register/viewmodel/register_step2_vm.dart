@@ -259,7 +259,7 @@ class RegisterStep2ScreenVm extends RbioVm {
   }
 
   bool checkPasswordCapabilityForAll(String password) {
-    return PasswordAdvisor().validateStructureByPattern(password);
+    return PasswordHelper().validateStructureByPattern(password);
   }
 
   void toggleCitizen() {

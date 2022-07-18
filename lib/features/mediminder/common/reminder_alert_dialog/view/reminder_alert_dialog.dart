@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onedosehealth/core/utils/helper/tz_helper.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/utils/tz_helper.dart';
 import '../../../mediminder.dart';
 
 part '../model/reminder_postpone_type.dart';
@@ -89,19 +89,26 @@ class _ReminderAlertView extends StatelessWidget {
               style: getIt<IAppConfig>().theme.dialogTheme.title(context),
             ),
           ),
-          R.sizes.hSizer24,
 
+          //
+          R.widgets.hSizer24,
+
+          //
           Center(
             child: Text(
               getIt<UserFacade>().getNameAndSurname(),
               style: getIt<IAppConfig>().theme.dialogTheme.description(context),
             ),
           ),
-          R.sizes.hSizer8,
+
+          //
+          R.widgets.hSizer8,
+
           //
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              //
               Text(
                 model.title,
                 style: getIt<IAppConfig>()
@@ -111,6 +118,7 @@ class _ReminderAlertView extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
 
+              //
               Text(
                 "  -  ",
                 style: getIt<IAppConfig>()
@@ -119,6 +127,7 @@ class _ReminderAlertView extends StatelessWidget {
                     .description(context)
                     .copyWith(fontWeight: FontWeight.bold),
               ),
+
               //
               Text(
                 model.scheduledDate.xHourFormat,
@@ -130,8 +139,9 @@ class _ReminderAlertView extends StatelessWidget {
               ),
             ],
           ),
+
           //
-          R.sizes.hSizer12,
+          R.widgets.hSizer12,
 
           //
           Row(
@@ -147,7 +157,7 @@ class _ReminderAlertView extends StatelessWidget {
                 ),
 
                 //
-                R.sizes.wSizer8,
+                R.widgets.wSizer8,
               ],
 
               //
@@ -163,7 +173,7 @@ class _ReminderAlertView extends StatelessWidget {
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           RbioSmallDialogButton.red(

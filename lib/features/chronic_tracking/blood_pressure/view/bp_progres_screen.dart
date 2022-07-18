@@ -60,8 +60,8 @@ class BpProgressScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           //
-          R.sizes.hSizer8,
-          R.sizes.stackedTopPadding(context),
+          R.widgets.hSizer8,
+          R.widgets.stackedTopPadding(context),
 
           //
           if (vm.isChartShow) ...[
@@ -76,7 +76,7 @@ class BpProgressScreen extends StatelessWidget {
             ),
 
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
             Wrap(

@@ -39,8 +39,11 @@ class _GradientDialogForPaymentDialogState
                 style: getIt<IAppConfig>().theme.dialogTheme.title(context),
               ),
             ),
-            R.sizes.hSizer32,
 
+            //
+            R.widgets.hSizer32,
+
+            //
             Text(
               widget.code == "13"
                   ? LocaleProvider.of(context).payment_successfull
@@ -56,20 +59,21 @@ class _GradientDialogForPaymentDialogState
               textAlign: TextAlign.center,
             ),
 
-            R.sizes.hSizer32,
+            //
+            R.widgets.hSizer32,
 
             //
-
             Center(
               child: RbioSmallDialogButton.green(
-                  title: LocaleProvider.current.Ok,
-                  onPressed: () {
-                    if (widget.code == "13" || widget.code == "10") {
-                      Atom.dismiss();
-                    } else {
-                      Navigator.of(context).pop();
-                    }
-                  }),
+                title: LocaleProvider.current.Ok,
+                onPressed: () {
+                  if (widget.code == "13" || widget.code == "10") {
+                    Atom.dismiss();
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
             ),
           ],
         ),

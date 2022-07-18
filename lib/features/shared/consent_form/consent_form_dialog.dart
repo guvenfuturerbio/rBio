@@ -39,8 +39,10 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
               ),
             ),
 
-            R.sizes.hSizer32,
+            //
+            R.widgets.hSizer32,
 
+            //
             SingleChildScrollView(
               child: ChangeNotifierProvider<ConsentFormDialogVm>(
                 create: (context) => ConsentFormDialogVm(
@@ -67,7 +69,8 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                           ),
                         ),
 
-                        R.sizes.hSizer8,
+                        //
+                        R.widgets.hSizer8,
 
                         //
                         Row(

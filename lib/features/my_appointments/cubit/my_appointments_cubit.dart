@@ -8,32 +8,32 @@ import '../model/model.dart';
 part 'my_appointments_state.dart';
 
 class MyAppointmentsCubit extends Cubit<MyAppointmentsState> {
-  MyAppointmentsCubit(
-    this.repository,
-    this.userFacade,
-    this.sentryManager,
-    String? jitsiRoomId,
-  ) : super(MyAppointmentsState()) {
-    setInitState(jitsiRoomId);
+  MyAppointmentsCubit({
+    required this.repository,
+    required this.userFacade,
+    required this.sentryManager,
+    required String? jitsiRoomId,
+  }) : super(MyAppointmentsState()) {
+    _setInitState(jitsiRoomId);
   }
-
   late final Repository repository;
   late final UserFacade userFacade;
   late final SentryManager sentryManager;
   late int _patientId;
+
   CancelAppointmentRequest? cancelAppointmentRequest;
 
-  Future<void> setInitState(String? jitsiRoomId) async {
+  Future<void> _setInitState(String? jitsiRoomId) async {
     _patientId = userFacade.getPatient().id ?? 0;
 
     if (userFacade.canAccessHospital()) {
       // await fetchAllTranslator();
-      await fetchPatientAppointments();
+      await _fetchPatientAppointments();
     } else {
-      showNecessary();
+      _showNecessary();
 
       if (jitsiRoomId != null) {
-        await joinMeeting(jitsiRoomId, null, "");
+        await _joinMeeting(jitsiRoomId, null, "");
       }
     }
   }
@@ -53,7 +53,7 @@ class MyAppointmentsCubit extends Cubit<MyAppointmentsState> {
         startDate: value,
       ),
     );
-    fetchPatientAppointments();
+    _fetchPatientAppointments();
   }
 
   void setEndDate(DateTime value) {
@@ -62,7 +62,7 @@ class MyAppointmentsCubit extends Cubit<MyAppointmentsState> {
         endDate: value,
       ),
     );
-    fetchPatientAppointments();
+    _fetchPatientAppointments();
   }
 
 //TODO: Burası silinmeyecek.(USBS İÇİN)
@@ -81,94 +81,6 @@ class MyAppointmentsCubit extends Cubit<MyAppointmentsState> {
   //   }
   // }
 
-  Future<void> fetchPatientAppointments() async {
-    final currentState = state;
-    emit(
-      currentState.copyWith(
-        bodyStatus: MyAppointmentsBodyStatus.loadingProgress,
-      ),
-    );
-
-    try {
-      final patientAppointments =
-          await getIt<Repository>().getPatientAppointments(
-        PatientAppointmentRequest(
-          patientId: _patientId,
-          to: currentState.endDate.toString(),
-          from: currentState.startDate.toString(),
-        ),
-      );
-      emit(
-        currentState.copyWith(
-          bodyStatus: MyAppointmentsBodyStatus.success,
-          patientAppointments: patientAppointments,
-        ),
-      );
-    } catch (e, stackTrace) {
-      sentryManager.captureException(e, stackTrace: stackTrace);
-      emit(
-        currentState.copyWith(
-          bodyStatus: MyAppointmentsBodyStatus.error,
-        ),
-      );
-    }
-  }
-
-  void setCancelAppointmentRequest(int id) {
-    cancelAppointmentRequest = CancelAppointmentRequest(
-      id: id,
-      cancellationNote: "CancelFromMobile",
-      cancellationReasonId: 3,
-    );
-  }
-
-  Future<void> joinMeeting(
-    String webConsultantId,
-    int? availabilityId,
-    String fromDate,
-  ) async {
-    final currentState = state;
-    //webConsultantId = webConsultantId.substring(webConsultantId.indexOf('='));
-    emit(
-      currentState.copyWith(
-        overlayStatus: MyAppointmentsOverlayStatus.showProgressOverlay,
-      ),
-    );
-
-    try {
-      if (kIsWeb) {
-        if (Atom.url != PagePaths.webConferance) {
-          Atom.to(
-            PagePaths.webConferance,
-            queryParameters: {
-              'webConsultAppId': webConsultantId.toString(),
-              'availability': availabilityId.toString(),
-              'fromDate': fromDate.toString(),
-            },
-          );
-        }
-      } else {
-        if (availabilityId != null) {
-          emit(
-            currentState.copyWith(
-                overlayStatus: MyAppointmentsOverlayStatus.joinMeeting,
-                webConsultantId: webConsultantId,
-                availabilityId: availabilityId,
-                fromDate: fromDate),
-          );
-        }
-      }
-      emit(
-        currentState.copyWith(
-          overlayStatus: MyAppointmentsOverlayStatus.initial,
-        ),
-      );
-    } catch (e, stackTrace) {
-      sentryManager.captureException(e, stackTrace: stackTrace);
-      _showDialog();
-    }
-  }
-
   Future<void> cancelAppointment() async {
     if (cancelAppointmentRequest == null) return;
     final currentState = state;
@@ -180,7 +92,7 @@ class MyAppointmentsCubit extends Cubit<MyAppointmentsState> {
         ),
       );
 
-      await getIt<Repository>().cancelAppointment(cancelAppointmentRequest!);
+      await repository.cancelAppointment(cancelAppointmentRequest!);
       emit(
         currentState.copyWith(
           overlayStatus: MyAppointmentsOverlayStatus.initial,
@@ -191,68 +103,11 @@ class MyAppointmentsCubit extends Cubit<MyAppointmentsState> {
           milliseconds: 300,
         ),
       );
-      await fetchPatientAppointments();
+      await _fetchPatientAppointments();
     } catch (e, stackTrace) {
       sentryManager.captureException(e, stackTrace: stackTrace);
       _showDialog();
     }
-  }
-
-  void showQuestionDialog(String title, String text) {
-    final currentState = state;
-    emit(
-      currentState.copyWith(
-        overlayStatus: MyAppointmentsOverlayStatus.questionDialog,
-      ),
-    );
-    // showDialog(
-    //     context: mContext,
-    //     barrierDismissible: false,
-    //     builder: (BuildContext context) {
-    //       return const QuestionDialog();
-    //     }).then((value) async {
-    //   if (value) {
-    //     await cancelAppointment();
-    //   } else {}
-    // });
-  }
-
-  Future<void> showNecessary() async {
-    final result = await Atom.show(
-      const NecessaryIdentityScreen(),
-      barrierDismissible: false,
-    );
-    if ((result ?? false) == true) {
-      // await fetchAllTranslator();
-      await fetchPatientAppointments();
-    } else {
-      Atom.historyBack();
-    }
-  }
-
-  Future<bool> isOnlineAppointmentPaid(int id) async {
-    final currentState = state;
-    emit(currentState.copyWith(
-        overlayStatus: MyAppointmentsOverlayStatus.showProgressOverlay));
-
-    try {
-      await getIt<Repository>().checkOnlineAppointmentPayment(
-        CheckPaymentRequest(appointmentId: id),
-      );
-      emit(currentState.copyWith(
-          overlayStatus: MyAppointmentsOverlayStatus.initial));
-
-      return true;
-    } on Exception {
-      return false;
-    }
-  }
-
-  void _doPayment(PatientAppointmentsResponse data) {
-    final currentState = state;
-    emit(currentState.copyWith(
-      overlayStatus: MyAppointmentsOverlayStatus.doPayment,
-    ));
   }
 
   Future<void> handleAppointment(PatientAppointmentsResponse data) async {
@@ -260,12 +115,12 @@ class MyAppointmentsCubit extends Cubit<MyAppointmentsState> {
       try {
         late bool result;
         if (data.id != null) {
-          result = await isOnlineAppointmentPaid(data.id!);
+          result = await _isOnlineAppointmentPaid(data.id!);
         }
 
         if (result) {
           if (data.videoGuid != null) {
-            joinMeeting(
+            _joinMeeting(
               data.videoGuid!,
               data.id,
               data.resources?.first.from ?? '',
@@ -334,13 +189,152 @@ class MyAppointmentsCubit extends Cubit<MyAppointmentsState> {
       }
     } else {
       if (data.id != null) {
-        setCancelAppointmentRequest(data.id!);
+        _setCancelAppointmentRequest(data.id!);
       }
 
-      showQuestionDialog(
+      _showQuestionDialog(
         LocaleProvider.current.warning,
         LocaleProvider.current.cancel_appo_question,
       );
+    }
+  }
+
+  Future<bool> _isOnlineAppointmentPaid(int id) async {
+    final currentState = state;
+    emit(
+      currentState.copyWith(
+        overlayStatus: MyAppointmentsOverlayStatus.showProgressOverlay,
+      ),
+    );
+
+    try {
+      await repository.checkOnlineAppointmentPayment(
+        CheckPaymentRequest(appointmentId: id),
+      );
+      emit(
+        currentState.copyWith(
+          overlayStatus: MyAppointmentsOverlayStatus.initial,
+        ),
+      );
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  void _showQuestionDialog(String title, String text) {
+    emit(
+      state.copyWith(
+        overlayStatus: MyAppointmentsOverlayStatus.questionDialog,
+      ),
+    );
+  }
+
+  void _setCancelAppointmentRequest(int id) {
+    cancelAppointmentRequest = CancelAppointmentRequest(
+      id: id,
+      cancellationNote: "CancelFromMobile",
+      cancellationReasonId: 3,
+    );
+  }
+
+  Future<void> _fetchPatientAppointments() async {
+    final currentState = state;
+    emit(
+      currentState.copyWith(
+        bodyStatus: MyAppointmentsBodyStatus.loadingProgress,
+      ),
+    );
+
+    try {
+      final patientAppointments = await repository.getPatientAppointments(
+        PatientAppointmentRequest(
+          patientId: _patientId,
+          to: currentState.endDate.toString(),
+          from: currentState.startDate.toString(),
+        ),
+      );
+      emit(
+        currentState.copyWith(
+          bodyStatus: MyAppointmentsBodyStatus.success,
+          patientAppointments: patientAppointments,
+        ),
+      );
+    } catch (e, stackTrace) {
+      sentryManager.captureException(e, stackTrace: stackTrace);
+      emit(
+        currentState.copyWith(
+          bodyStatus: MyAppointmentsBodyStatus.error,
+        ),
+      );
+    }
+  }
+
+  void _doPayment(PatientAppointmentsResponse data) {
+    emit(
+      state.copyWith(
+        overlayStatus: MyAppointmentsOverlayStatus.doPayment,
+      ),
+    );
+  }
+
+  Future<void> _joinMeeting(
+    String webConsultantId,
+    int? availabilityId,
+    String fromDate,
+  ) async {
+    final currentState = state;
+    //webConsultantId = webConsultantId.substring(webConsultantId.indexOf('='));
+    emit(
+      currentState.copyWith(
+        overlayStatus: MyAppointmentsOverlayStatus.showProgressOverlay,
+      ),
+    );
+
+    try {
+      if (kIsWeb) {
+        if (Atom.url != PagePaths.webConferance) {
+          Atom.to(
+            PagePaths.webConferance,
+            queryParameters: {
+              'webConsultAppId': webConsultantId.toString(),
+              'availability': availabilityId.toString(),
+              'fromDate': fromDate.toString(),
+            },
+          );
+        }
+      } else {
+        if (availabilityId != null) {
+          emit(
+            currentState.copyWith(
+                overlayStatus: MyAppointmentsOverlayStatus.joinMeeting,
+                webConsultantId: webConsultantId,
+                availabilityId: availabilityId,
+                fromDate: fromDate),
+          );
+        }
+      }
+      emit(
+        currentState.copyWith(
+          overlayStatus: MyAppointmentsOverlayStatus.initial,
+        ),
+      );
+    } catch (e, stackTrace) {
+      sentryManager.captureException(e, stackTrace: stackTrace);
+      _showDialog();
+    }
+  }
+
+  Future<void> _showNecessary() async {
+    final result = await Atom.show(
+      const NecessaryIdentityScreen(),
+      barrierDismissible: false,
+    );
+    if ((result ?? false) == true) {
+      // await fetchAllTranslator();
+      await _fetchPatientAppointments();
+    } else {
+      Atom.historyBack();
     }
   }
 

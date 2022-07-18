@@ -142,8 +142,8 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   //
-                                  R.sizes.stackedTopPadding(context),
-                                  R.sizes.hSizer8,
+                                  R.widgets.stackedTopPadding(context),
+                                  R.widgets.hSizer8,
 
                                   //
                                   Padding(
@@ -178,7 +178,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                                       ),
 
                                       //
-                                      R.sizes.wSizer8,
+                                      R.widgets.wSizer8,
 
                                       //
                                       Expanded(
@@ -204,7 +204,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                           _buildButtons(result),
 
                           //
-                          R.sizes.defaultBottomPadding,
+                          R.widgets.defaultBottomPadding,
                         ],
                       ),
                     ),
@@ -386,7 +386,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
         ),
 
         //
-        R.sizes.wSizer12,
+        R.widgets.wSizer12,
 
         //
         Expanded(
@@ -404,5 +404,5 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
   }
 
   // #endregion
-  Widget _buildGap() => R.sizes.hSizer8;
+  Widget _buildGap() => R.widgets.hSizer8;
 }

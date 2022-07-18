@@ -36,7 +36,11 @@ class SelectableUsageType extends StatelessWidget {
                 UsageType.hungry,
               ),
             ),
-            R.sizes.wSizer12,
+
+            //
+            R.widgets.wSizer12,
+
+            //
             Expanded(
               child: _buildUsageTypeCard(
                 context,

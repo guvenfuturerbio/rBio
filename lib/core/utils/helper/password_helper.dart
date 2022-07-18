@@ -7,7 +7,7 @@ enum PasswordScore {
   veryStrong,
 }
 
-class PasswordAdvisor {
+class PasswordHelper {
   static const int requiredPasswordLength = 8;
   RegExp numberInclude = RegExp("(?=.*?[0-9])");
   RegExp lowerCase = RegExp("(?=.*?[a-z])");

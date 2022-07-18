@@ -9,17 +9,19 @@ import '../my_appointments.dart';
 
 class AppointmentListScreen extends StatelessWidget {
   final bool isFromDashboard;
-  const AppointmentListScreen({this.isFromDashboard = false, Key? key})
-      : super(key: key);
+  const AppointmentListScreen({
+    Key? key,
+    this.isFromDashboard = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MyAppointmentsCubit(
-        getIt(),
-        getIt(),
-        getIt<IAppConfig>().platform.sentryManager,
-        '',
+        repository: getIt<Repository>(),
+        userFacade: getIt<UserFacade>(),
+        sentryManager: getIt<IAppConfig>().platform.sentryManager,
+        jitsiRoomId: '',
       ),
       child: AppointmentListView(isFromDashboard: isFromDashboard),
     );
@@ -195,8 +197,8 @@ class _AppointmentListViewState extends State<AppointmentListView> {
       mainAxisSize: MainAxisSize.min,
       children: [
         //
-        R.sizes.stackedTopPadding(context),
-        R.sizes.hSizer8,
+        R.widgets.stackedTopPadding(context),
+        R.widgets.hSizer8,
 
         //
         Text(
@@ -501,7 +503,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
     );
   }
 
-  Widget _build40Gap() => R.sizes.wSizer40;
+  Widget _build40Gap() => R.widgets.wSizer40;
 
   Widget _buildStartVideoButton({
     Color? backColor,

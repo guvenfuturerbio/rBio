@@ -158,8 +158,8 @@ class _DoctorScaleTreatmentAddEditViewState
         mainAxisSize: MainAxisSize.max,
         children: [
           //
-          R.sizes.stackedTopPadding(context),
-          R.sizes.hSizer8,
+          R.widgets.stackedTopPadding(context),
+          R.widgets.hSizer8,
 
           //
           Expanded(
@@ -188,9 +188,8 @@ class _DoctorScaleTreatmentAddEditViewState
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       //
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
 
-                      //
                       //
                       if (result.editMode ==
                           ScaleTreatmentScreenEditMode.readOnly) ...[
@@ -266,7 +265,7 @@ class _DoctorScaleTreatmentAddEditViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           KeyboardVisibilityBuilder(
@@ -276,7 +275,7 @@ class _DoctorScaleTreatmentAddEditViewState
           ),
 
           //
-          R.sizes.defaultBottomPadding,
+          R.widgets.defaultBottomPadding,
         ],
       ),
     );
@@ -310,7 +309,7 @@ class _DoctorScaleTreatmentAddEditViewState
             ),
 
             //
-            R.sizes.wSizer8,
+            R.widgets.wSizer8,
 
             //
             Expanded(
@@ -346,7 +345,7 @@ class _DoctorScaleTreatmentAddEditViewState
                   ),
 
                   //
-                  R.sizes.wSizer8,
+                  R.widgets.wSizer8,
 
                   //
                   Expanded(
@@ -388,7 +387,7 @@ class _DoctorScaleTreatmentAddEditViewState
                   ),
 
                   //
-                  R.sizes.wSizer8,
+                  R.widgets.wSizer8,
 
                   //
                   Expanded(

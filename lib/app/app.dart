@@ -156,7 +156,9 @@ class _MyAppCommonState extends State<MyAppCommon> {
             ),
           ),
           ChangeNotifierProvider<ThemeNotifier>(
-            create: (context) => ThemeNotifier(),
+            create: (context) => ThemeNotifier(
+              getIt<ISharedPreferencesManager>(),
+            ),
           ),
           ChangeNotifierProvider<UserNotifier>(
             create: (context) => getIt<UserNotifier>(),
