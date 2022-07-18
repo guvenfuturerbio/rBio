@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/manager/image_manager.dart';
 import '../../../../model/model.dart';
 
 part 'personel_information_state.dart';
@@ -25,7 +24,6 @@ class PersonelInformationCubit extends Cubit<PersonelInformationState> {
   String phoneNumber;
   String email;
   late bool isTwoFactorAuth;
-  final imagePicker = ImagePicker();
   File? newProfileFile;
   late Repository repository;
   late UserFacade userFacade;

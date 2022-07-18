@@ -58,13 +58,15 @@ class ImageManagerImpl extends ImageManager {
   }
 
   @override
-  Future<PickedFile?> getImage(
-      {required ImageSource source,
-      double? maxHeight,
-      double? maxWidth,
-      int? imageQuality,
-      CameraDevice? cameraDevice}) {
+  Future<PickedFile?> getImage({
+    required ImageSource source,
+    double? maxHeight,
+    double? maxWidth,
+    int? imageQuality,
+    CameraDevice? cameraDevice,
+  }) {
     try {
+      // ignore: deprecated_member_use
       return imagePicker.getImage(
         source: source,
         maxHeight: maxHeight,
