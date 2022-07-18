@@ -8,16 +8,20 @@ import '../model/visit_response.dart';
 part 'results_state.dart';
 
 class ResultsCubit extends Cubit<ResultsState> {
-  ResultsCubit(this.repository, this.userFacade) : super(ResultsState()) {
-    if (getIt<UserFacade>().canAccessHospital()) {
+  ResultsCubit({
+    required this.repository,
+    required this.userFacade,
+    required this.sentryManager,
+  }) : super(ResultsState()) {
+    if (userFacade.canAccessHospital()) {
       fetchVisits();
     } else {
       showNecessary();
     }
   }
-
   late final Repository repository;
   late final UserFacade userFacade;
+  late final SentryManager sentryManager;
 
   Future<void> fetchVisits() async {
     final currentState = state;
@@ -43,10 +47,7 @@ class ResultsCubit extends Cubit<ResultsState> {
         ),
       );
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      sentryManager.captureException(e, stackTrace: stackTrace);
       emit(currentState.copyWith(status: RbioLoadingProgress.failure));
     }
   }

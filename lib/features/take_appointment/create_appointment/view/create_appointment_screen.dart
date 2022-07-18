@@ -330,11 +330,12 @@ class CreateAppointmentScreen extends StatelessWidget {
                         },
                         infinityWidth: true,
                       ),
-                      R.sizes.defaultBottomPadding,
+                      R.widgets.defaultBottomPadding,
                     ]
                   : [
                       if (getIt<IAppConfig>().productType ==
                           ProductType.oneDose) ...[
+                        //
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5.0),
                           child: Center(
@@ -344,6 +345,8 @@ class CreateAppointmentScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+
+                        //
                         RbioElevatedButton(
                           onTap: () {
                             Atom.to(PagePaths.symptomMainMenu);
@@ -351,7 +354,9 @@ class CreateAppointmentScreen extends StatelessWidget {
                           title: LocaleProvider.current.depart_analyse,
                           infinityWidth: true,
                         ),
-                        R.sizes.defaultBottomPadding,
+
+                        //
+                        R.widgets.defaultBottomPadding,
                       ],
                     ],
             ],

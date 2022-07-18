@@ -64,7 +64,7 @@ class _RateDialogState extends State<RateDialog> {
                 ),
 
                 //
-                R.sizes.hSizer32,
+                R.widgets.hSizer32,
 
                 //
                 ChangeNotifierProvider(

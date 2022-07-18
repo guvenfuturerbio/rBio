@@ -28,6 +28,7 @@ class _DialogForPossibleErrorDialogState
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            //
             Center(
               child: Text(
                 LocaleProvider.current.warning,
@@ -35,7 +36,11 @@ class _DialogForPossibleErrorDialogState
                 textAlign: TextAlign.center,
               ),
             ),
-            R.sizes.hSizer32,
+
+            //
+            R.widgets.hSizer32,
+
+            //
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part1,
@@ -44,6 +49,8 @@ class _DialogForPossibleErrorDialogState
                 textAlign: TextAlign.center,
               ),
             ),
+
+            //
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part2,
@@ -52,6 +59,8 @@ class _DialogForPossibleErrorDialogState
                 textAlign: TextAlign.center,
               ),
             ),
+
+            //
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part3,
@@ -60,7 +69,11 @@ class _DialogForPossibleErrorDialogState
                 textAlign: TextAlign.center,
               ),
             ),
-            R.sizes.hSizer32,
+
+            //
+            R.widgets.hSizer32,
+
+            //
             Center(
               child: RbioSmallDialogButton.green(
                 title: LocaleProvider.current.Ok,

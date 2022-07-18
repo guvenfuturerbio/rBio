@@ -159,13 +159,13 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
               ),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
 
               //
               _buildActions(vm),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
               SizedBox(height: Atom.safeBottom),
             ],
           ),
@@ -260,7 +260,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
           ),
 
           //
-          R.sizes.hSizer12,
+          R.widgets.hSizer12,
 
           //
           Text(
@@ -567,7 +567,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
         ),
 
         //
-        R.sizes.wSizer8,
+        R.widgets.wSizer8,
 
         //
         _buildActionButton(

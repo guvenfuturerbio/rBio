@@ -86,7 +86,7 @@ class Repository {
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
     final url = getIt<IAppConfig>().endpoints.base.getAllSubCategoriesPath(id);
-    return apiService.getAllSubCategories(url);
+    return await apiService.getAllSubCategories(url);
   }
 
   Future<List<GetChatContactsResponse>> getChatContacts() async {

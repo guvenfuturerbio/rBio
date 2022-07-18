@@ -9,7 +9,10 @@ void initializeLocatorTest(ProductType type) {
   getIt.registerSingleton<IAppConfig>(OneDoseConfig());
 }
 
-ApiService getTestApiService() => ApiServiceImpl(DioHelper(true));
+ApiService getTestApiService() => ApiServiceImpl(
+      DioHelper(true),
+      getIt<IAppConfig>().endpoints,
+    );
 
 class TestOneDoseKeyManager extends KeyManager {
   void loadTestData() {

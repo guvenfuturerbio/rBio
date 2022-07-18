@@ -59,7 +59,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: R.sizes.screenPadding(context),
+      padding: R.utils.screenPadding(context),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

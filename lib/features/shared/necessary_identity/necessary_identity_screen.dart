@@ -54,8 +54,10 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                     ),
                   ),
 
-                  R.sizes.hSizer32,
+                  //
+                  R.widgets.hSizer32,
 
+                  //
                   Center(
                     child: Text(
                       LocaleProvider.current.necessary_identity_message,
@@ -84,12 +86,12 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                   ),
 
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   Row(
                     children: [
-                      R.sizes.wSizer12,
+                      R.widgets.wSizer12,
                       Expanded(
                         child: RbioSmallDialogButton.red(
                           title: LocaleProvider.current.btn_cancel,
@@ -98,7 +100,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                           },
                         ),
                       ),
-                      R.sizes.wSizer8,
+                      R.widgets.wSizer8,
                       Expanded(
                         child: RbioSmallDialogButton.green(
                           title: LocaleProvider.current.Ok,
@@ -107,7 +109,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                           },
                         ),
                       ),
-                      R.sizes.wSizer12,
+                      R.widgets.wSizer12,
                     ],
                   ),
                 ],

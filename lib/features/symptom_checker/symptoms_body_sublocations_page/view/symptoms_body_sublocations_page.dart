@@ -279,7 +279,9 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
               title: LocaleProvider.of(context).continue_lbl,
               infinityWidth: true,
             ),
-            R.sizes.defaultBottomPadding,
+
+            //
+            R.widgets.defaultBottomPadding,
           ],
         );
 

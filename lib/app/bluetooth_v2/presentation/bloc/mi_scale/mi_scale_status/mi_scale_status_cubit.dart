@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../../../../../../core/core.dart';
 import '../../../../bluetooth_v2.dart';
 
 part 'mi_scale_status.dart';

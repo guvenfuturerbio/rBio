@@ -29,7 +29,7 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           //
-          R.sizes.hSizer12,
+          R.widgets.hSizer12,
 
           //
           Padding(
@@ -40,12 +40,12 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
           ),
 
           //
-          R.sizes.hSizer16,
+          R.widgets.hSizer16,
 
           //
           Row(
             children: [
-              R.sizes.wSizer12,
+              R.widgets.wSizer12,
               Expanded(
                 child: GuvenAlert.buildMaterialRedAction(
                   LocaleProvider.current.delete,
@@ -55,7 +55,7 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
                   },
                 ),
               ),
-              R.sizes.wSizer8,
+              R.widgets.wSizer8,
               Expanded(
                 child: GuvenAlert.buildMaterialWhiteAction(
                   LocaleProvider.current.btn_cancel,
@@ -64,7 +64,7 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
                   },
                 ),
               ),
-              R.sizes.wSizer12,
+              R.widgets.wSizer12,
             ],
           ),
         ],

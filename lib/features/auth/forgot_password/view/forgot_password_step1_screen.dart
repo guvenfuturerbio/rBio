@@ -58,7 +58,7 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
   Widget build(BuildContext context) {
     return BlocConsumer<ForgotPasswordStep1Cubit, ForgotPasswordStep1State>(
       listener: (context, state) {
-        if (state.isError ) {
+        if (state.isError) {
           if (state.dialogMessage != null) {
             showDialog(
               context: context,
@@ -103,7 +103,8 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            R.sizes.stackedTopPadding(context),
+            R.widgets.stackedTopPadding(context),
+
             //
             const SizedBox(
               height: 20,
@@ -115,8 +116,9 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
               child: Text(
                 LocaleProvider.current.recover_your_password,
                 style: context.xHeadline1.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: context.textScale * 30),
+                  fontWeight: FontWeight.bold,
+                  fontSize: context.textScale * 30,
+                ),
               ),
             ),
 

@@ -158,7 +158,7 @@ class RbioBody extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 1200),
       child: RbioLoadingOverlay(
         child: Padding(
-          padding: padding ?? R.sizes.screenPadding(context),
+          padding: padding ?? R.utils.screenPadding(context),
           child: child,
         ),
         isLoading: isLoading,

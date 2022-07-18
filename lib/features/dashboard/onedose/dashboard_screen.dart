@@ -52,7 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           mainAxisSize: MainAxisSize.max,
           children: [
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
             Row(
@@ -104,7 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
 
                           //
-                          R.sizes.wSizer12,
+                          R.widgets.wSizer12,
 
                           //
                           Expanded(
@@ -146,7 +146,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
 
                 //
-                R.sizes.wSizer4,
+                R.widgets.wSizer4,
               ],
             ),
 
@@ -166,8 +166,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
 
-            R.sizes.hSizer12,
+            //
+            R.widgets.hSizer12,
 
+            //
             _buildDrawerListTile(
               DrawerModel(
                 title: LocaleProvider.current.log_out,
@@ -213,7 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             mainAxisSize: MainAxisSize.max,
             children: [
               //
-              R.sizes.hSizer16,
+              R.widgets.hSizer16,
 
               //
               Row(
@@ -221,7 +223,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  R.sizes.wSizer4,
+                  R.widgets.wSizer4,
                   SizedBox(
                     width: 25,
                     height: 25,
@@ -229,7 +231,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       model.svgPath,
                     ),
                   ),
-                  R.sizes.wSizer16,
+                  R.widgets.wSizer16,
                   Expanded(
                     child: Text(
                       model.title,
@@ -243,7 +245,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
 
               //
-              R.sizes.hSizer16,
+              R.widgets.hSizer16,
 
               // //
               Divider(

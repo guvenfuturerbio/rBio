@@ -94,8 +94,8 @@ class _DoctorScaleTreatmentListViewState
       mainAxisSize: MainAxisSize.max,
       children: [
         //
-        R.sizes.stackedTopPadding(context),
-        R.sizes.hSizer8,
+        R.widgets.stackedTopPadding(context),
+        R.widgets.hSizer8,
 
         //
         RbioDetailSearchComponent(

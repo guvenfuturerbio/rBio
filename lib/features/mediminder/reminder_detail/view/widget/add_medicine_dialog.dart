@@ -54,7 +54,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   Text(
@@ -65,7 +65,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                   ),
 
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   RbioTextFormField(
@@ -79,7 +79,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                   ),
 
                   //
-                  R.sizes.hSizer16,
+                  R.widgets.hSizer16,
 
                   //
                   if (context.xTextScaleType == TextScaleType.small) ...[
@@ -94,7 +94,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                         ),
 
                         //
-                        R.sizes.wSizer8,
+                        R.widgets.wSizer8,
 
                         //
                         Expanded(
@@ -104,12 +104,12 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                     ),
                   ] else ...[
                     _buildCancelButton(infinityWidth: true),
-                    R.sizes.hSizer12,
+                    R.widgets.hSizer12,
                     _buildConfirmButton(infinityWidth: true),
                   ],
 
                   //
-                  R.sizes.hSizer4,
+                  R.widgets.hSizer4,
                 ],
               ),
             ),

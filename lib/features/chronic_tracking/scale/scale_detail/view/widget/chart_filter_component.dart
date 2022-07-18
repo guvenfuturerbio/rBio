@@ -111,7 +111,7 @@ class ChartFilterComponent extends StatelessWidget {
             ),
 
             //
-            R.sizes.hSizer4,
+            R.widgets.hSizer4,
 
             //
             Container(

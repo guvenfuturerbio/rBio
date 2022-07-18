@@ -113,7 +113,7 @@ class PermissionManagerImpl extends PermissionManager {
                 ),
 
                 //
-                R.sizes.hSizer32,
+                R.widgets.hSizer32,
 
                 //
                 Center(
@@ -128,13 +128,13 @@ class PermissionManagerImpl extends PermissionManager {
                 ),
 
                 //
-                R.sizes.hSizer32,
+                R.widgets.hSizer32,
 
                 //
                 Row(
                   children: [
                     //
-                    R.sizes.wSizer12,
+                    R.widgets.wSizer12,
 
                     //
                     Expanded(
@@ -147,7 +147,7 @@ class PermissionManagerImpl extends PermissionManager {
                     ),
 
                     //
-                    R.sizes.wSizer8,
+                    R.widgets.wSizer8,
 
                     //
                     Expanded(
@@ -166,7 +166,7 @@ class PermissionManagerImpl extends PermissionManager {
                     ),
 
                     //
-                    R.sizes.wSizer12,
+                    R.widgets.wSizer12,
                   ],
                 ),
               ],

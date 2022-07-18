@@ -57,7 +57,7 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   Text(
@@ -68,7 +68,7 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
                   ),
 
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   RbioTextFormField(
@@ -83,7 +83,7 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
                   ),
 
                   //
-                  R.sizes.hSizer16,
+                  R.widgets.hSizer16,
 
                   //
                   if (context.xTextScaleType == TextScaleType.small) ...[
@@ -98,7 +98,7 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
                         ),
 
                         //
-                        R.sizes.wSizer8,
+                        R.widgets.wSizer8,
 
                         //
                         Expanded(
@@ -108,12 +108,12 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
                     ),
                   ] else ...[
                     _buildCancelButton(infinityWidth: true),
-                    R.sizes.hSizer12,
+                    R.widgets.hSizer12,
                     _buildConfirmButton(infinityWidth: true),
                   ],
 
                   //
-                  R.sizes.hSizer4,
+                  R.widgets.hSizer4,
                 ],
               ),
             ),

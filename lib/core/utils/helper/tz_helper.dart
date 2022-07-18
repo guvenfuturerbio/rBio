@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
-import '../extension/extension.dart';
+
+import '../../core.dart';
 
 class TZHelper {
   TZHelper._();

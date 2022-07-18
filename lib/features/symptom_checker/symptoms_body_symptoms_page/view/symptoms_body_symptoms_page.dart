@@ -271,7 +271,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }
