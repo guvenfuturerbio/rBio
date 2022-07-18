@@ -6,19 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/core.dart';
+import '../../../../core/manager/image_manager.dart';
 import '../../../../model/model.dart';
 
 part 'personel_information_state.dart';
 
 class PersonelInformationCubit extends Cubit<PersonelInformationState> {
-  PersonelInformationCubit(
-      {required this.repository,
-      required this.userFacade,
-      required this.sharedPreferencesManager,
-      required this.sentryManager,
-      required this.email,
-      required this.phoneNumber})
-      : super(PersonelInformationState());
+  PersonelInformationCubit({
+    required this.repository,
+    required this.userFacade,
+    required this.sharedPreferencesManager,
+    required this.sentryManager,
+    required this.email,
+    required this.phoneNumber,
+    required this.imageManager,
+  }) : super(PersonelInformationState());
 
   String phoneNumber;
   String email;
@@ -29,6 +31,7 @@ class PersonelInformationCubit extends Cubit<PersonelInformationState> {
   late UserFacade userFacade;
   late ISharedPreferencesManager sharedPreferencesManager;
   late SentryManager sentryManager;
+  late ImageManager imageManager;
 
 // serkan.ozturk@guvenfuture.com
   Future<void> updateValues({
@@ -167,12 +170,11 @@ class PersonelInformationCubit extends Cubit<PersonelInformationState> {
       ),
     );
     try {
-      final imageFile = await imagePicker.pickImage(
-        source: state.imageSource!,
-        maxHeight: 1080,
-        maxWidth: 1920,
-        imageQuality: 50,
-      );
+      final imageFile = await imageManager.pickImage(
+          source: state.imageSource!,
+          maxHeight: 1080,
+          maxWidth: 1920,
+          imageQuality: 50);
       if (imageFile != null) {
         newProfileFile = File(imageFile.path);
         emit(

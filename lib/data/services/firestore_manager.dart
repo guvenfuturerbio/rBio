@@ -13,6 +13,7 @@ import '../../../features/chat/model/message.dart';
 import '../../../features/chat/model/notification_data.dart';
 import '../../../features/chat/model/notification_model.dart';
 import '../../core/core.dart';
+import '../../core/manager/image_manager.dart';
 
 class FirestoreManager {
   XFile? imageFile;
@@ -176,10 +177,9 @@ class FirestoreManager {
     ChatPerson currentPerson,
     String otherNotiToken,
   ) async {
-    final ImagePicker imagePicker = ImagePicker();
     imageFile = index == 0
-        ? await imagePicker.pickImage(source: ImageSource.gallery)
-        : await imagePicker.pickImage(source: ImageSource.camera);
+        ? await getIt<ImageManager>().pickImage(source: ImageSource.gallery)
+        : await getIt<ImageManager>().pickImage(source: ImageSource.camera);
 
     if (imageFile != null) {
       Atom.show(const RbioLoading(), barrierDismissible: false);

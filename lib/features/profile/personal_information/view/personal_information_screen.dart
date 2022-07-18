@@ -36,6 +36,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         userFacade: getIt(),
         sharedPreferencesManager: getIt(),
         sentryManager: getIt<IAppConfig>().platform.sentryManager,
+        imageManager: getIt(),
         email: isEMail ? "-" : (userAccount.electronicMail ?? ''),
         phoneNumber: userAccount.phoneNumber ?? '',
       ),
