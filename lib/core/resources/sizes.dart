@@ -18,8 +18,7 @@ class _Sizes {
   final double iconSize4 = 14;
   final double iconSize5 = 10;
 
-  double stackedTopPaddingValue(BuildContext context) =>
-      54 + MediaQuery.of(context).viewPadding.top;
+  double stackedTopPaddingValue(BuildContext context) => 54 + MediaQuery.of(context).viewPadding.top;
   final double defaultBottomValue = Atom.safeBottom + 12;
   final double bottomNavigationBarHeight = Atom.safeBottom + 65;
   final double defaultElevation = 0.0;

@@ -98,9 +98,9 @@ class _BuildPriceField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12),
-      decoration: const BoxDecoration(
+      decoration:  BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

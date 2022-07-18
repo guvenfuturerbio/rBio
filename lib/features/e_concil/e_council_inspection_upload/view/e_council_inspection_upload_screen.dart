@@ -43,9 +43,9 @@ class _RequestedInseptionsCardState extends State<_RequestedInseptionsCard> {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -97,9 +97,9 @@ class _BuildFilesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
