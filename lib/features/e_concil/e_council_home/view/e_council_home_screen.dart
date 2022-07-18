@@ -102,7 +102,7 @@ class _BuildCouncilButton extends StatelessWidget {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: InkWell(
         onTap: () {

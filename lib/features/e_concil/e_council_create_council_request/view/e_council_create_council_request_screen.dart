@@ -71,8 +71,8 @@ class _BuildSearchField extends StatelessWidget {
         filled: true,
         suffixIcon: Icon(Icons.search, color: getIt<IAppConfig>().theme.mainColor),
         errorStyle: const TextStyle(fontSize: 11),
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(R.sizes.radiusCircular),
           borderSide: BorderSide.none,
         ),
       ),
@@ -183,7 +183,7 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
           height: microphoneSvgSize,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            borderRadius: BorderRadius.all(R.sizes.radiusCircular),
             border: Border.all(color: borderColor, width: 3),
             boxShadow: [
               if (isRecording) BoxShadow(color: borderColor.withOpacity(0.5), spreadRadius: 1, blurRadius: 4),
@@ -293,9 +293,9 @@ class _BuildUploadField extends StatelessWidget {
         RbioTextFormField(
           hintText: LocaleProvider.of(context).file_description,
           readOnly: true,
-          border: const OutlineInputBorder(
+          border: OutlineInputBorder(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+            borderRadius: BorderRadius.only(topLeft: R.sizes.radiusCircular, topRight: R.sizes.radiusCircular),
           ),
           onTap: () {},
           suffixIcon: Padding(padding: const EdgeInsets.all(10.0), child: SvgPicture.asset(R.image.councilUpload)),
@@ -303,9 +303,9 @@ class _BuildUploadField extends StatelessWidget {
         const Divider(height: 2, thickness: 2),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 22.0),
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0), bottomRight: Radius.circular(10.0)),
+            borderRadius: BorderRadius.only(bottomLeft: R.sizes.radiusCircular, bottomRight: R.sizes.radiusCircular),
           ),
           child: Text(LocaleProvider.of(context).please_select_the_file_you_want_to_upload, style: context.xHeadline3),
         ),

@@ -19,7 +19,7 @@ class ECouncilResultsDetailScreen extends StatelessWidget {
               height: 50,
               padding: const EdgeInsets.only(left: 19),
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                borderRadius: R.sizes.borderRadiusCircular,
                 color: getIt<IAppConfig>().theme.mainColor,
               ),
               child: Column(
