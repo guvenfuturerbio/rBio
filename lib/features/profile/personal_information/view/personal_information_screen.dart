@@ -1,62 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:provider/provider.dart';
+import 'package:onedosehealth/features/profile/personal_information/cubit/personel_information_cubit.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/shared/user_account_info.dart';
-import '../viewmodel/personal_information_vm.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
   const PersonalInformationScreen({Key? key}) : super(key: key);
 
   @override
-  _PersonalInformationScreenState createState() =>
+  State<PersonalInformationScreen> createState() =>
       _PersonalInformationScreenState();
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   late UserAccount userAccount;
-
-  late TextEditingController _identityEditingController;
-  late TextEditingController _nameEditingController;
-  late TextEditingController _birthdayEditingController;
-  late TextEditingController _phoneNumberEditingController;
-  late TextEditingController _emailEditingController;
-  late String countryCode;
-  late FocusNode _phoneNumberFocus;
-  late FocusNode _emailFocus;
-
-  @override
-  void initState() {
-    _identityEditingController = TextEditingController();
-    _nameEditingController = TextEditingController();
-    _birthdayEditingController = TextEditingController();
-    _phoneNumberEditingController = TextEditingController();
-    _emailEditingController = TextEditingController();
-
-    _phoneNumberFocus = FocusNode();
-    _emailFocus = FocusNode();
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _identityEditingController.dispose();
-    _nameEditingController.dispose();
-    _birthdayEditingController.dispose();
-    _phoneNumberEditingController.dispose();
-    _emailEditingController.dispose();
-
-    _phoneNumberFocus.dispose();
-    _emailFocus.dispose();
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,56 +28,155 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     } catch (e, stackTrace) {
       return RbioRouteError(e: e, stackTrace: stackTrace);
     }
-
-    final xIsTCNationality = userAccount.nationality?.xIsTCNationality;
-    if (xIsTCNationality != null) {
-      _identityEditingController.text = xIsTCNationality
-          ? userAccount.identificationNumber ?? ''
-          : userAccount.passaportNumber ?? '';
-    }
-    countryCode = userAccount.countryCode ?? '+90';
-    final userName = userAccount.name ?? '';
-    final userSurname = userAccount.surname ?? '';
-    _nameEditingController.text = userName + " " + userSurname;
-
-    final patientsLength = userAccount.patients?.length ?? 0;
-    if (patientsLength > 0) {
-      final patientsFirstBirthDate =
-          userAccount.patients?.first.birthDate?.replaceAll('.', '/') ?? '';
-      _birthdayEditingController.text =
-          patientsLength > 0 ? patientsFirstBirthDate : "-";
-    }
-
-    _phoneNumberEditingController.text = userAccount.phoneNumber ?? '';
-
     final isEMail =
         !(userAccount.electronicMail?.contains("@mailyok.com") ?? false);
-    if (isEMail) {
-      _emailEditingController.text = userAccount.electronicMail ?? '';
-    }
-
-    return ChangeNotifierProvider<PersonalInformationScreenVm>(
-      create: (context) => PersonalInformationScreenVm(
-        mContext: context,
+    return BlocProvider(
+      create: (context) => PersonelInformationCubit(
+        repository: getIt(),
+        userFacade: getIt(),
+        sharedPreferencesManager: getIt(),
+        sentryManager: getIt<IAppConfig>().platform.sentryManager,
         email: isEMail ? "-" : (userAccount.electronicMail ?? ''),
         phoneNumber: userAccount.phoneNumber ?? '',
       ),
-      child: Consumer<PersonalInformationScreenVm>(
-        builder: (
-          BuildContext context,
-          PersonalInformationScreenVm vm,
-          Widget? child,
-        ) {
-          return KeyboardDismissOnTap(
-            child: RbioStackedScaffold(
-              isLoading: vm.showLoadingOverlay,
-              resizeToAvoidBottomInset: true,
-              appbar: _buildAppBar(context),
-              body: _builBody(context, vm),
-            ),
-          );
-        },
+      child: PersonalInformationView(
+        userAccount: userAccount,
       ),
+    );
+  }
+}
+
+class PersonalInformationView extends StatefulWidget {
+  PersonalInformationView({required this.userAccount, Key? key})
+      : super(key: key);
+
+  UserAccount userAccount;
+
+  @override
+  _PersonalInformationViewState createState() =>
+      _PersonalInformationViewState();
+}
+
+class _PersonalInformationViewState extends State<PersonalInformationView> {
+  final AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late TextEditingController identityEditingController;
+  late TextEditingController nameEditingController;
+  late TextEditingController birthdayEditingController;
+  late TextEditingController phoneNumberEditingController;
+  late TextEditingController emailEditingController;
+  late String countryCode;
+  late FocusNode phoneNumberFocus;
+  late FocusNode emailFocus;
+  @override
+  void initState() {
+    identityEditingController = TextEditingController();
+    nameEditingController = TextEditingController();
+    birthdayEditingController = TextEditingController();
+    phoneNumberEditingController = TextEditingController();
+    emailEditingController = TextEditingController();
+    phoneNumberFocus = FocusNode();
+    emailFocus = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    identityEditingController.dispose();
+    nameEditingController.dispose();
+    birthdayEditingController.dispose();
+    phoneNumberEditingController.dispose();
+    emailEditingController.dispose();
+    phoneNumberFocus.dispose();
+    emailFocus.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final xIsTCNationality = widget.userAccount.nationality?.xIsTCNationality;
+    if (xIsTCNationality != null) {
+      identityEditingController.text = xIsTCNationality
+          ? widget.userAccount.identificationNumber ?? ''
+          : widget.userAccount.passaportNumber ?? '';
+    }
+    countryCode = widget.userAccount.countryCode ?? '+90';
+    final userName = widget.userAccount.name ?? '';
+    final userSurname = widget.userAccount.surname ?? '';
+    nameEditingController.text = userName + " " + userSurname;
+    final patientsLength = widget.userAccount.patients?.length ?? 0;
+    if (patientsLength > 0) {
+      final patientsFirstBirthDate =
+          widget.userAccount.patients?.first.birthDate?.replaceAll('.', '/') ??
+              '';
+      birthdayEditingController.text =
+          patientsLength > 0 ? patientsFirstBirthDate : "-";
+    }
+    final isEMail =
+        !(widget.userAccount.electronicMail?.contains("@mailyok.com") ?? false);
+    if (isEMail) {
+      emailEditingController.text = widget.userAccount.electronicMail ?? '';
+    }
+
+    phoneNumberEditingController.text = widget.userAccount.phoneNumber ?? '';
+    return BlocConsumer<PersonelInformationCubit, PersonelInformationState>(
+      listener: (context, state) async {
+        if (state.status == PersonelInformationStatus.succes) {
+          Utils.instance.showSuccessSnackbar(
+            context,
+            LocaleProvider.current.personal_update_success,
+          );
+        } else if (state.status == PersonelInformationStatus.deletePhoto) {
+        } else if (state.status ==
+            PersonelInformationStatus.getPhotoFromSource) {
+          if (state.imageSource == ImageSource.gallery) {
+            if (!await getIt<PermissionManager>().request(
+              permission: GalleryPermissionStrategy(
+                LocaleProvider.current,
+                getIt<IAppConfig>(),
+              ),
+              context: context,
+            )) {
+              Navigator.of(context).pop();
+              return;
+            } else {
+              if (!await getIt<PermissionManager>().request(
+                permission: CameraPermissionStrategy(
+                  LocaleProvider.current,
+                  getIt<IAppConfig>(),
+                ),
+                context: context,
+              )) {
+                Navigator.of(context).pop();
+                return;
+              }
+            }
+          }
+        } else if (state.status == PersonelInformationStatus.errorDialog) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return RbioMessageDialog(
+                description: LocaleProvider.of(context).sorry_dont_transaction,
+                buttonTitle: LocaleProvider.current.ok,
+                isAtom: false,
+              );
+            },
+          );
+        }
+      },
+      builder: (context, state) {
+        return KeyboardDismissOnTap(
+          child: RbioStackedScaffold(
+            isLoading: state.isLoading,
+            resizeToAvoidBottomInset: true,
+            appbar: _buildAppBar(context),
+            body: _builBody(context, state),
+          ),
+        );
+      },
     );
   }
 
@@ -127,7 +189,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     );
   }
 
-  Widget _builBody(BuildContext context, PersonalInformationScreenVm vm) {
+  Widget _builBody(BuildContext context, PersonelInformationState state) {
     return KeyboardVisibilityBuilder(
       builder: (context, isKeyboardVisible) {
         return Column(
@@ -139,14 +201,14 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             Expanded(
               child: RbioKeyboardActions(
                 focusList: [
-                  _phoneNumberFocus,
-                  _emailFocus,
+                  phoneNumberFocus,
+                  emailFocus,
                 ],
                 child: KeyboardAvoider(
                   autoScroll: true,
                   duration: const Duration(seconds: 1),
                   child: Form(
-                    key: vm.formKey,
+                    key: formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -165,7 +227,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             children: [
                               //
                               CircleAvatar(
-                                backgroundImage: vm.getProfileImage,
+                                backgroundImage: state.getProfileImage,
                                 radius: R.sizes.iconSize * 1.3,
                                 backgroundColor: getIt<IAppConfig>()
                                     .theme
@@ -180,7 +242,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  _openCupertinoModalPopup(vm);
+                                  _openCupertinoModalPopup();
                                 },
                                 child: Text(
                                   LocaleProvider.current.change,
@@ -198,12 +260,13 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
                         // Identity Number
                         _buildTitle(
-                          (userAccount.nationality?.xIsTCNationality ?? false)
+                          (widget.userAccount.nationality?.xIsTCNationality ??
+                                  false)
                               ? LocaleProvider.of(context).tc_identity_number
                               : LocaleProvider.of(context).passport_number,
                         ),
                         _buildDisabledTextField(
-                          _identityEditingController,
+                          identityEditingController,
                         ),
 
                         // Name
@@ -212,7 +275,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           LocaleProvider.of(context).name,
                         ),
                         _buildDisabledTextField(
-                          _nameEditingController,
+                          nameEditingController,
                         ),
 
                         // Birthday
@@ -221,7 +284,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           LocaleProvider.of(context).birth_date,
                         ),
                         _buildDisabledTextField(
-                          _birthdayEditingController,
+                          birthdayEditingController,
                         ),
 
                         // Phone Number
@@ -236,11 +299,14 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           children: [
                             //
                             RbioCountryCodePicker(
-                              initialSelection: userAccount.countryCode == null
+                              initialSelection: widget
+                                          .userAccount.countryCode ==
+                                      null
                                   ? '+90'
-                                  : userAccount.countryCode!.contains('+')
-                                      ? userAccount.countryCode
-                                      : '+' + userAccount.countryCode!,
+                                  : widget.userAccount.countryCode!
+                                          .contains('+')
+                                      ? widget.userAccount.countryCode
+                                      : '+' + widget.userAccount.countryCode!,
                               onChanged: (code) {
                                 countryCode = code.dialCode!;
                               },
@@ -261,9 +327,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     return LocaleProvider.current.validation;
                                   }
                                 },
-                                autovalidateMode: vm.autovalidateMode,
-                                focusNode: _phoneNumberFocus,
-                                controller: _phoneNumberEditingController,
+                                autovalidateMode: autovalidateMode,
+                                focusNode: phoneNumberFocus,
+                                controller: phoneNumberEditingController,
                                 keyboardType: TextInputType.phone,
                                 textInputAction: TextInputAction.done,
                                 hintText:
@@ -271,8 +337,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 inputFormatters: <TextInputFormatter>[
                                   TabToNextFieldTextInputFormatter(
                                     context,
-                                    _phoneNumberFocus,
-                                    _emailFocus,
+                                    phoneNumberFocus,
+                                    emailFocus,
                                   ),
                                 ],
                               ),
@@ -293,16 +359,16 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                               return LocaleProvider.current.validation;
                             }
                           },
-                          autovalidateMode: vm.autovalidateMode,
-                          focusNode: _emailFocus,
-                          controller: _emailEditingController,
+                          autovalidateMode: autovalidateMode,
+                          focusNode: emailFocus,
+                          controller: emailEditingController,
                           textInputAction: TextInputAction.done,
                           hintText: LocaleProvider.of(context).email_address,
                           inputFormatters: <TextInputFormatter>[
                             TabToNextFieldTextInputFormatter(
                               context,
-                              _emailFocus,
-                              _phoneNumberFocus,
+                              emailFocus,
+                              phoneNumberFocus,
                             ),
                           ],
                         ),
@@ -344,13 +410,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       child: RbioElevatedButton(
                         title: LocaleProvider.current.update,
                         onTap: () {
-                          if (vm.formKey?.currentState?.validate() ?? false) {
-                            vm.updateValues(
-                              countryCode: countryCode,
-                              newPhoneNumber:
-                                  _phoneNumberEditingController.text.trim(),
-                              newEmail: _emailEditingController.text.trim(),
-                            );
+                          if (formKey.currentState?.validate() ?? false) {
+                            context
+                                .read<PersonelInformationCubit>()
+                                .updateValues(
+                                  countryCode: countryCode,
+                                  newPhoneNumber:
+                                      phoneNumberEditingController.text.trim(),
+                                  newEmail: emailEditingController.text.trim(),
+                                );
                           } else {
                             LocaleProvider.current.validation;
                           }
@@ -393,74 +461,89 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         ),
       );
 
-  void _openCupertinoModalPopup(PersonalInformationScreenVm vm) {
+  void _openCupertinoModalPopup() {
     showCupertinoModalPopup(
       context: context,
-      builder: (BuildContext context) {
-        return CupertinoActionSheet(
-          actions: Atom.isWeb
-              ? <Widget>[
-                  CupertinoActionSheetAction(
-                    child: Text(
-                      LocaleProvider.current.delete,
-                      style: context.xHeadline4.copyWith(
-                        fontWeight: FontWeight.bold,
+      builder: (BuildContext ctx) {
+        return BlocProvider.value(
+          value: context.read<PersonelInformationCubit>(),
+          child: Builder(builder: (context) {
+            return CupertinoActionSheet(
+              actions: Atom.isWeb
+                  ? <Widget>[
+                      CupertinoActionSheetAction(
+                        child: Text(
+                          LocaleProvider.current.delete,
+                          style: context.xHeadline4.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () async {
+                          await context
+                              .read<PersonelInformationCubit>()
+                              .deletePhoto();
+                          Navigator.pop(context);
+                        },
                       ),
-                    ),
-                    onPressed: () async {
-                      await vm.deletePhoto(context);
-                    },
-                  ),
-                ]
-              : <Widget>[
-                  CupertinoActionSheetAction(
-                    child: Text(
-                      LocaleProvider.current.delete,
-                      style: context.xHeadline4.copyWith(
-                        fontWeight: FontWeight.bold,
+                    ]
+                  : <Widget>[
+                      CupertinoActionSheetAction(
+                        child: Text(
+                          LocaleProvider.current.delete,
+                          style: context.xHeadline4.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () async {
+                          await context
+                              .read<PersonelInformationCubit>()
+                              .deletePhoto();
+                          Navigator.pop(context);
+                        },
                       ),
-                    ),
-                    onPressed: () async {
-                      await vm.deletePhoto(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: Text(
-                      LocaleProvider.current.gallery,
-                      style: context.xHeadline4.copyWith(
-                        fontWeight: FontWeight.bold,
+                      CupertinoActionSheetAction(
+                        child: Text(
+                          LocaleProvider.current.gallery,
+                          style: context.xHeadline4.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () async {
+                          await context
+                              .read<PersonelInformationCubit>()
+                              .getPhotoFromSource(
+                                ImageSource.gallery,
+                              );
+                          Navigator.pop(context);
+                        },
                       ),
-                    ),
-                    onPressed: () async {
-                      await vm.getPhotoFromSource(
-                        context,
-                        ImageSource.gallery,
-                      );
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: Text(
-                      LocaleProvider.current.camera,
-                      style: context.xHeadline4.copyWith(
-                        fontWeight: FontWeight.bold,
+                      CupertinoActionSheetAction(
+                        child: Text(
+                          LocaleProvider.current.camera,
+                          style: context.xHeadline4.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () async {
+                          await context
+                              .read<PersonelInformationCubit>()
+                              .getPhotoFromSource(
+                                ImageSource.camera,
+                              );
+                          Navigator.pop(context);
+                        },
                       ),
-                    ),
-                    onPressed: () async {
-                      await vm.getPhotoFromSource(
-                        context,
-                        ImageSource.camera,
-                      );
-                    },
-                  ),
-                ],
-          cancelButton: CupertinoActionSheetAction(
-            child: Text(
-              LocaleProvider.current.btn_cancel,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+                    ],
+              cancelButton: CupertinoActionSheetAction(
+                child: Text(
+                  LocaleProvider.current.btn_cancel,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            );
+          }),
         );
       },
     );
