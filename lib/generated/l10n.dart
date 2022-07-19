@@ -7670,10 +7670,10 @@ class LocaleProvider {
     );
   }
 
-  /// `Cancel discount`
+  /// `Cancel`
   String get cancel_discount {
     return Intl.message(
-      'Cancel discount',
+      'Cancel',
       name: 'cancel_discount',
       desc: '',
       args: [],
