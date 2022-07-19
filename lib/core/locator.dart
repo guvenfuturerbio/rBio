@@ -14,7 +14,8 @@ GetIt getIt = GetIt.instance;
 
 Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerSingleton<KeyManager>(KeyManager());
-  await getIt<KeyManager>().setup(appConfig.endpoints.envPath);
+  await getIt<KeyManager>().setup(appConfig.constants.envPath);
+  appConfig.setEndpoints();
 
   getIt.registerSingleton<IAppConfig>(appConfig);
   getIt.registerSingleton<PermissionManager>(PermissionManagerImpl());

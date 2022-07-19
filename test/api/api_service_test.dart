@@ -1,5 +1,14 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:onedosehealth/core/core.dart';
+import 'package:onedosehealth/features/dashboard/search/model/filter_resources_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/model/filter_tenants_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment/model/filter_departments_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment_events/model/resources_request.dart';
+import 'package:onedosehealth/features/take_appointment/create_appointment_summary/model/save_appointment_request.dart';
+import 'package:onedosehealth/features/take_appointment/do_mobile_payment/appointment_request.dart';
 
 import '../setup/locator_setup.dart';
 
@@ -11,17 +20,63 @@ void main() {
   });
 
   const _testUsername = "18620716416";
+  const _testBerkayUserName = "34954617212";
   const _testPassword = "Numlock1234!!";
   const _testWrongPassword = "Numlock1234!!*";
   const _testConsentId = "2";
+  const _userNameString = "34954617212";
+  // const _userName = 34954617212;
+  const _userId = 54775;
+  const _smsCode = "403283";
+  const _wrongSmsCode = "222222";
+  const _bbPassword = "Berkay1!";
+  const _cardHolder = "test";
+  const _cardNumber = "test";
+  const _ccv = "test";
+  const _expirationMonth = "02";
+  const _expirationYear = "24";
+  const _identityNumber = "34954617212";
+  const _cayyoluTenantId = 7;
+  const _dietDepartmentId = 119;
+  const _appointmentDietResourceId = 863;
+  const _patientIdBerkay = 677379;
+  const _fromAppointmentStart = "2022-09-09T13:30:00";
+  const _toAppointmentStart = "2022-09-09T14:15:00";
+  const _resourceRequestId = null;
+  const _appointmentHospitalType = 1;
+  const _appointmentStatus = 1;
+  const _appointmentPatientType = 0;
+  const _appointmentSource = 3;
+  const _hospitalVideoCallLink = null;
+  const _hospitalVoucherCode = null;
+  const _chatNotificationModelTo = null;
+  const _chatNotificationModelContentAvailable = null;
+  const _chatNotificationModelNotification = null;
+  const _chatNotificationModelData = null;
+  const _notificationModelTitle = null;
+  const _notificationModelBody = null;
+  const _notificationDataType = null;
+  const _notificationDataTitle = null;
+  const _notificationDataBody = null;
+  const _chatPersonName = null;
+  const _chatPersonId = null;
+  const _chatPersonLastMessage = null;
+  const _chatPersonLastMessageSender = null;
+  const _chatPersonLastMessageType = null;
+  const _chatPersonMessageTime = null;
+  const _chatPersonHasRead = null;
+  const _chatPersonOtherHasRead = null;
+  const _chatPersonTimestamp = null;
+  const _chatPersonUrl = null;
+  const _chatPersonFirebaseToken = null;
 
   group(
     "Login",
     () {
       test('Login Success Test', () async {
         final result = await apiService.login(
-          _testUsername,
-          _testPassword,
+          _testBerkayUserName,
+          _bbPassword,
           _testConsentId,
         );
         expect(result.isSuccessful, true);
@@ -40,4 +95,178 @@ void main() {
       });
     },
   );
+
+  group(
+    "loginStarter",
+    () {
+      test('Login Success Test', () async {
+        final result = await apiService.loginStarter(
+          _userNameString,
+          _bbPassword,
+        );
+        expect(result.isSuccessful, true);
+      });
+
+      test('Login Failure Test', () async {
+        try {
+          await apiService.loginStarter(
+            _userNameString,
+            _testWrongPassword,
+          );
+        } on RbioClientException catch (e) {
+          expect(e, isNotNull);
+        }
+      });
+    },
+  );
+
+  group(
+    "2 FA Login",
+    () {
+      test('2 FA Login', () async {
+        final result = await apiService.verifyConfirmation2fa(
+          _smsCode,
+          _userId,
+        );
+        expect(result, true);
+      });
+
+      test('2 FA Login Failure Test', () async {
+        try {
+          await apiService.verifyConfirmation2fa(
+            _wrongSmsCode,
+            _userId,
+          );
+        } on RbioClientException catch (e) {
+          expect(e, isNotNull);
+        }
+      });
+    },
+  );
+
+  group(
+    "For You",
+    () {
+      test('Get Packages', () async {
+        final result = await apiService.getAllPackage(
+          getIt<IAppConfig>().endpoints.package.getAllPackagePath,
+        );
+        expect(result, isNotEmpty);
+      });
+
+      test('getAllSubCategories', () async {
+        final result = await apiService.getAllSubCategories(
+          getIt<IAppConfig>()
+              .endpoints
+              .package
+              .getAllSubCategoriesPath(13), // Masaj Paketleri
+        );
+        expect(result, isNotEmpty);
+      });
+
+      test('getSubCategoryDetail', () async {
+        final result = await apiService.getSubCategoryDetail(
+          getIt<IAppConfig>()
+              .endpoints
+              .package
+              .getSubCategoryDetailPath(22), // Masaj Paketleri
+        );
+        expect(result, isNotEmpty);
+      });
+
+      test('getSubCategoryItems', () async {
+        final result =
+            await apiService.getSubCategoryItems("22" // Masaj Paketleri
+                );
+        expect(result, isNotEmpty);
+      });
+
+      // test('doPackagePayment', () async {
+      //   final result = await apiService.doPackagePayment(PackagePaymentRequest(
+      //       subPackageItemId: "22",
+      //       cc: PaymentCCRequest(
+      //           cardHolder: _cardHolder,
+      //           cardNumber: _cardNumber,
+      //           cvv: _ccv,
+      //           expirationMonth: _expirationMonth,
+      //           expirationYear: _expirationYear))); // Masaj Paketleri
+
+      //   expect(result, isNotEmpty);
+      // });
+    },
+  );
+
+  test('updateUserSystemName', () async {
+    final result = await apiService.updateUserSystemName(_identityNumber);
+    expect(result, isNotEmpty);
+  });
+
+  test('filterTenants', () async {
+    final result = await apiService.filterTenants(
+        getIt<IAppConfig>().endpoints.pusula.filterTenantsPath,
+        FilterTenantsRequest(departmanId: 7));
+    expect(result.isNotEmpty, true);
+  });
+
+  test('filterDepartments', () async {
+    final result = await apiService.filterDepartments(FilterDepartmentsRequest(
+        tenantId: 7, search: "Instance of 'SearchObject"));
+    expect(result.isNotEmpty, true);
+  });
+
+  test('filterResources', () async {
+    final result = await apiService.filterResources(FilterResourcesRequest(
+        departmentId: 13,
+        tenantId: 1,
+        search: "Instance of 'SearchObject'",
+        appointmentType: 1));
+    expect(result.isEmpty, true);
+  });
+
+  test('saveAppointment', () async {
+    final result = await apiService.saveAppointment(
+      AppointmentRequest(
+        saveAppointmentsRequest: SaveAppointmentsRequest(
+            tenantId: _cayyoluTenantId,
+            patientId: _patientIdBerkay,
+            resourcesRequestList: [
+              ResourcesRequest(
+                  tenantId: _cayyoluTenantId,
+                  departmentId: _dietDepartmentId,
+                  resourceId: _appointmentDietResourceId,
+                  from: _fromAppointmentStart,
+                  to: _toAppointmentStart,
+                  id: _resourceRequestId)
+            ],
+            type: _appointmentHospitalType,
+            status: _appointmentStatus,
+            patientType: _appointmentPatientType,
+            appointmentSource: _appointmentSource,
+            videoCallLink: _hospitalVideoCallLink),
+        voucherCode: _hospitalVoucherCode,
+      ),
+    );
+    expect(result, true);
+  });
+
+  test('Get Countries Test', () async {
+    final result = await apiService.getCountries();
+    expect(result.isSuccessful, true);
+  });
+
+  // test('addFirebaseTokenUi', () async {
+  //   final result = await apiService.addFirebaseTokenUi(
+  //       AddFirebaseTokenRequest(firebaseId: firebase, phoneInfo: null));
+  //   expect(result.isSuccessful, true);
+  // });
+
+  // test('Send Notification', () async {
+  //   final result = await apiService.sendNotification(ChatNotificationModel(
+  //     to: _chatNotificationModelTo,
+  //     contentAvailable: _chatNotificationModelContentAvailable,
+  //     notification: NotificationModel(title: _notificationModelTitle, body: _notificationModelBody),
+
+  //   ));
+  //   expect(result.isSuccessful, true);
+  // });
 }

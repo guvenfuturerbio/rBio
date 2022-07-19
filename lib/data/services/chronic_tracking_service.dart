@@ -44,8 +44,6 @@ abstract class ChronicTrackingApiService {
   );
   Future<List<Person>> getAllProfiles();
   Future<GuvenResponseModel> addProfile(Person person);
-  Future<GuvenResponseModel> changeProfile(int userId);
-  Future<GuvenResponseModel> deleteProfile(int userId);
   Future<GuvenResponseModel> updateProfile(Person person, int id);
   Future<GuvenResponseModel> setDefaultProfile(Person person);
   Future<GuvenResponseModel> updateUserStrip(StripDetailModel stripDetailModel);
@@ -62,8 +60,6 @@ abstract class ChronicTrackingApiService {
     GetHba1cMeasurementListModel getHba1cMeasurementListModel,
     int entegrationId,
   );
-  Future<GuvenResponseModel> getMedicineByFilter(String text);
-
   Future<GuvenResponseModel> insertNewBpValue(AddBpWithDetail addBpWithDetail);
 
   Future<GuvenResponseModel> deleteBpMeasurement(

@@ -11,12 +11,42 @@ import '../../../features/dashboard/guven/dashboard_navigation.dart';
 import '../../../features/dashboard/onedose/dashboard_navigation.dart';
 import '../../app.dart';
 
+part '../guven/endpoints/guven_access_token_endpoints.dart';
+part '../guven/endpoints/guven_appointment_interpreter_endpoints.dart';
+part '../guven/endpoints/guven_doctor_endpoints.dart';
+part '../guven/endpoints/guven_file_endpoints.dart';
+part '../guven/endpoints/guven_measurement_endpoints.dart';
+part '../guven/endpoints/guven_package_endpoints.dart';
+part '../guven/endpoints/guven_profile_endpoints.dart';
+part '../guven/endpoints/guven_pusula_endpoints.dart';
+part '../guven/endpoints/guven_single_endpoints.dart';
+part '../guven/endpoints/guven_social_post_endpoints.dart';
+part '../guven/endpoints/guven_suggestion_rate_endpoints.dart';
+part '../guven/endpoints/guven_symptom_checker_endpoints.dart';
+part '../guven/endpoints/guven_treatment_endpoints.dart';
+part '../guven/endpoints/guven_user_endpoints.dart';
+part '../guven/endpoints/guven_user_register_endpoints.dart';
 part '../guven/guven_config.dart';
 part '../guven/guven_constants.dart';
 part '../guven/guven_endpoints.dart';
 part '../guven/guven_functionality.dart';
 part '../guven/guven_platform_config.dart';
 part '../guven/guven_theme.dart';
+part '../onedose/endpoints/onedose_access_token_endpoints.dart';
+part '../onedose/endpoints/onedose_appointment_interpreter_endpoints.dart';
+part '../onedose/endpoints/onedose_doctor_endpoints.dart';
+part '../onedose/endpoints/onedose_file_endpoints.dart';
+part '../onedose/endpoints/onedose_measurement_endpoints.dart';
+part '../onedose/endpoints/onedose_package_endpoints.dart';
+part '../onedose/endpoints/onedose_profile_endpoints.dart';
+part '../onedose/endpoints/onedose_pusula_endpoints.dart';
+part '../onedose/endpoints/onedose_single_endpoints.dart';
+part '../onedose/endpoints/onedose_social_post_endpoints.dart';
+part '../onedose/endpoints/onedose_suggestion_rate_endpoints.dart';
+part '../onedose/endpoints/onedose_symptom_checker_endpoints.dart';
+part '../onedose/endpoints/onedose_treatment_endpoints.dart';
+part '../onedose/endpoints/onedose_user_endpoints.dart';
+part '../onedose/endpoints/onedose_user_register_endpoints.dart';
 part '../onedose/onedose_config.dart';
 part '../onedose/onedose_constants.dart';
 part '../onedose/onedose_endpoints.dart';
@@ -43,10 +73,10 @@ abstract class IAppConfig<T extends IAppPlatformConfig> {
     required this.productType,
     required this.theme,
     required this.functionality,
-    required this.endpoints,
     required this.constants,
   });
 
+  void setEndpoints();
   void setDeviceConfig();
   IProductDashboard getDashboard();
 }

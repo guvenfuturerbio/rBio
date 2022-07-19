@@ -81,7 +81,7 @@ class Repository {
   }
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
-    final url = getIt<IAppConfig>().endpoints.base.getAllPackagePath;
+    final url = getIt<IAppConfig>().endpoints.package.getAllPackagePath;
     return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllPackage(url),
@@ -92,7 +92,8 @@ class Repository {
   }
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
-    final url = getIt<IAppConfig>().endpoints.base.getAllSubCategoriesPath(id);
+    final url =
+        getIt<IAppConfig>().endpoints.package.getAllSubCategoriesPath(id);
     return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllSubCategories(url),
@@ -119,8 +120,10 @@ class Repository {
   }
 
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
-      int id) async {
-    final url = getIt<IAppConfig>().endpoints.base.getSubCategoryDetailPath(id);
+    int id,
+  ) async {
+    final url =
+        getIt<IAppConfig>().endpoints.package.getSubCategoryDetailPath(id);
     return await Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getSubCategoryDetail(url),
@@ -320,8 +323,8 @@ class Repository {
     }
   }
 
-  Either<GuvenResponseModel, ChangePasswordExceptions>
-      _checkChangePassword(GuvenResponseModel response) {
+  Either<GuvenResponseModel, ChangePasswordExceptions> _checkChangePassword(
+      GuvenResponseModel response) {
     if (response.datum == R.apiEnums.changePassword.success) {
       return left(response);
     } else if (response.datum == R.apiEnums.changePassword.oldError) {

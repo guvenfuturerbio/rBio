@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:onedosehealth/features/e_concil/e_council_inspection_upload/view/e_council_inspection_upload_screen.dart';
-import 'package:onedosehealth/features/e_concil/e_council_payment/view/e_council_payment_screen.dart';
-import 'package:onedosehealth/features/e_concil/e_council_payment_preview/view/e_council_payment_preview_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -30,13 +27,22 @@ import '../../features/doctor/treatment/doctor_note_add_edit/doctor_note_add_edi
 import '../../features/doctor/treatment/treatment_add_edit/view/doctor_scale_treatment_add_edit_screen.dart';
 import '../../features/doctor/treatment/treatment_list/view/doctor_scale_treatment_list_screen.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
-import '../../features/e_concil/e_concil_results/view/couincil_results_screen.dart';
-import '../../features/e_concil/e_couincil_requests/view/council_requests_screen.dart';
-import '../../features/e_concil/e_council_create_council_request/view/e_council_create_council_request_screen.dart';
-import '../../features/e_concil/e_council_home/view/e_council_home_screen.dart';
-import '../../features/e_concil/e_council_information_pages/view/e_council_information_screen.dart';
-import '../../features/e_concil/e_council_results_detail/view/council_results_detail_screen.dart';
-import '../../features/mediminder/mediminder.dart';
+import '../../features/e_council/e_couincil_requests/view/council_requests_screen.dart';
+import '../../features/e_council/e_council_create_council_request/view/e_council_create_council_request_screen.dart';
+import '../../features/e_council/e_council_home/view/e_council_home_screen.dart';
+import '../../features/e_council/e_council_information_pages/view/e_council_information_screen.dart';
+import '../../features/e_council/e_council_inspection_upload/view/e_council_inspection_upload_screen.dart';
+import '../../features/e_council/e_council_payment/view/e_council_payment_screen.dart';
+import '../../features/e_council/e_council_payment_preview/view/e_council_payment_preview_screen.dart';
+import '../../features/e_council/e_council_results/view/couincil_results_screen.dart';
+import '../../features/e_council/e_council_results_detail/view/council_results_detail_screen.dart';
+import '../../features/mediminder/blood_glucose/view/blood_glucose_reminder_add_edit_screen.dart';
+import '../../features/mediminder/hba1c/view/hba1c_reminder_add_edit_screen.dart';
+import '../../features/mediminder/medication/view/medication_add_edit_screen.dart';
+import '../../features/mediminder/reminder_detail/view/reminder_detail_screen.dart';
+import '../../features/mediminder/reminder_list/view/reminder_list_screen.dart';
+import '../../features/mediminder/select_reminder/view/select_reminder_screen.dart';
+import '../../features/mediminder/strip/view/strip_reminder_add_edit_screen.dart';
 import '../../features/my_appointments/my_appointments.dart';
 import '../../features/onboarding/view/onboarding_screen.dart';
 import '../../features/profile/devices/devices.dart';
@@ -401,8 +407,7 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!Atom.isWeb &&
-                !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+            if (!Atom.isWeb && !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
               _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },

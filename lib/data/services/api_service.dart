@@ -98,7 +98,6 @@ abstract class ApiService {
       AddFirebaseTokenRequest addFirebaseToken);
   Future<GuvenResponseModel> sendNotification(ChatNotificationModel model);
 
-  Future<GuvenResponseModel> getRoomStatusUi(String roomId);
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId);
   Future<GuvenResponseModel> deleteOnlineAppoFile(
       String webAppoId, String fileName);
@@ -106,7 +105,6 @@ abstract class ApiService {
   Future<GuvenResponseModel> getUserKvkkInfo();
   Future<GuvenResponseModel> updateUserKvkkInfo();
   Future<GuvenResponseModel> addSuggestion(SuggestionRequest suggestionRequest);
-  Future<GuvenResponseModel> getCourseId();
   Future<GuvenResponseModel> setJitsiWebConsultantId(String webConsultantId);
   Future<GuvenResponseModel> deleteProfilePicture();
   Future<GuvenResponseModel> uploadProfilePicture(File file);
