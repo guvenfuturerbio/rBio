@@ -14,22 +14,21 @@ class ECouncilHomeScreen extends StatelessWidget {
       appbar: RbioAppBar(
         title: Text(LocaleProvider.of(context).e_council),
       ),
-      body: _BuildBody(),
+      body: const _BuildBody(),
     );
   }
 }
 
 class _BuildBody extends StatelessWidget {
-  _BuildBody({Key? key}) : super(key: key);
-
-  TextStyle textStyle = TextStyle(
-    decoration: TextDecoration.underline,
-    color: getIt<IAppConfig>().theme.mainColor,
-    fontSize: 14,
-  );
+  const _BuildBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TextStyle textStyle = context.xHeadline1.copyWith(
+      color: getIt<IAppConfig>().theme.mainColor,
+      decoration: TextDecoration.underline,
+    );
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -51,7 +50,10 @@ class _BuildBody extends StatelessWidget {
                         },
                       );
                     },
-                    child: Text(LocaleProvider.of(context).what_is_the_e_council, style: textStyle),
+                    child: Text(
+                      LocaleProvider.of(context).what_is_the_e_council,
+                      style: textStyle,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   //? E-Konsey Nasil Kullanilir?
@@ -65,15 +67,18 @@ class _BuildBody extends StatelessWidget {
                         },
                       );
                     },
-                    child: Text(LocaleProvider.of(context).how_to_use_the_e_council, style: textStyle),
+                    child: Text(
+                      LocaleProvider.of(context).how_to_use_the_e_council,
+                      style: textStyle,
+                    ),
                   ),
-                  const SizedBox(height: 24),
+                  R.widgets.hSizer24,
                   //? Konsey Taleplerim
                   const _BuildCustomExpansionTile(),
-                  const SizedBox(height: 16),
+                  R.widgets.hSizer16,
                   //? Konsey Sonuçlarım
-                  const _BuildCouncilButton(),
-                  const SizedBox(height: 16),
+                  const _BuildCouncilResults(),
+                  R.widgets.hSizer16,
                 ],
               ),
             ),
@@ -91,8 +96,8 @@ class _BuildBody extends StatelessWidget {
 }
 
 /// Konsey Sonuçlarım
-class _BuildCouncilButton extends StatelessWidget {
-  const _BuildCouncilButton({
+class _BuildCouncilResults extends StatelessWidget {
+  const _BuildCouncilResults({
     Key? key,
   }) : super(key: key);
 
@@ -114,7 +119,7 @@ class _BuildCouncilButton extends StatelessWidget {
             children: [
               SvgPicture.asset(R.image.councilResults),
               R.widgets.wSizer16,
-              Text(LocaleProvider.of(context).council_results, style: context.xHeadline4),
+              Text(LocaleProvider.of(context).council_results, style: context.xHeadline2),
               const Spacer(),
               const Icon(Icons.arrow_forward_ios_outlined),
             ],
@@ -175,7 +180,7 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                   Expanded(
                     child: Text(
                       LocaleProvider.of(context).council_requests,
-                      style: context.xHeadline4,
+                      style: context.xHeadline2,
                     ),
                   ),
 
@@ -271,7 +276,11 @@ class _BuildECouncilListTile extends StatelessWidget {
       padding: const EdgeInsets.only(left: 36.0, bottom: 8.0),
       child: Row(
         children: [
-          Text(text, style: Theme.of(context).textTheme.headline3!.copyWith(color: color)),
+          Text(
+            text,
+            // style: Theme.of(context).textTheme.headline3!.copyWith(color: color),
+            style: context.xHeadline5.copyWith(color: color),
+          ),
           R.widgets.hSizer16,
           const Spacer(),
           Container(
@@ -280,7 +289,7 @@ class _BuildECouncilListTile extends StatelessWidget {
             child: Center(
               child: Text(
                 '$number',
-                style: const TextStyle(color: Colors.white),
+                style: context.xHeadline5.copyWith(color: Colors.white),
               ),
             ),
             decoration: BoxDecoration(
@@ -288,7 +297,7 @@ class _BuildECouncilListTile extends StatelessWidget {
               shape: BoxShape.circle,
             ),
           ),
-          const SizedBox(height: 15, width: 50),
+          const SizedBox(height: 15, width: 60),
         ],
       ),
     );

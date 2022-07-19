@@ -35,16 +35,22 @@ class _BuildBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            //? Arama alani
             _BuildSearchField(textController: _textController),
             R.widgets.hSizer16,
+            //? Ad Soyad
             const _BuildNameSurnameField(),
             R.widgets.hSizer24,
+            //? Hastalik hikayenizi giriniz
             const _BuildIllnessHistoryField(),
             R.widgets.hSizer16,
+            //? Kayit alani
             const _BuildRecordField(),
             R.widgets.hSizer16,
+            //? Dosya Yukleme
             const _BuildUploadField(),
             R.widgets.hSizer16,
+            //? Talep olustur Butonu
             _BuildCreateRequestButton(formKey: _formKey),
           ],
         ),
@@ -99,7 +105,7 @@ class _BuildNameSurnameField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(LocaleProvider.of(context).name_surname, style: context.xHeadline4),
+        Text(LocaleProvider.of(context).name_surname, style: context.xHeadline3),
         R.widgets.hSizer4,
         RbioTextFormField(
           validator: (String? p0) {
@@ -124,7 +130,7 @@ class _BuildIllnessHistoryField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(LocaleProvider.of(context).enter_your_illness_history, style: context.xHeadline4),
+        Text(LocaleProvider.of(context).enter_your_illness_history, style: context.xHeadline3),
         R.widgets.hSizer4,
         const RbioTextFormField(minLines: 4, maxLines: 4),
       ],
@@ -232,7 +238,7 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
               //? Text
               Text(
                 isRecording ? LocaleProvider.of(context).slide_to_cancel : LocaleProvider.of(context).press_and_hold_the_microphone,
-                style: context.xSubtitle1.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+                style: context.xHeadline5.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
               ),
               //? Ileri oku
               Visibility(
@@ -269,7 +275,7 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
                       splashRadius: 14,
                     ),
                     R.widgets.wSizer8,
-                    Text(e, style: context.xSubtitle1),
+                    Text(e, style: context.xHeadline3),
                   ],
                 ),
               ),
@@ -303,7 +309,7 @@ class _BuildUploadField extends StatelessWidget {
         const Divider(height: 2, thickness: 2),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 22.0),
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(bottomLeft: R.sizes.radiusCircular, bottomRight: R.sizes.radiusCircular),
           ),
@@ -346,7 +352,7 @@ class CouncilCardFilesWidget extends StatelessWidget {
             splashRadius: 14,
           ),
           R.widgets.wSizer8,
-          Text(title, style: context.xSubtitle1),
+          Text(title, style: context.xHeadline3),
         ],
       ),
     );

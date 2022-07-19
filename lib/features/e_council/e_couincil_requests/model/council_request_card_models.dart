@@ -1,5 +1,5 @@
-import 'package:onedosehealth/features/e_concil/shared/core/couincil_mixins.dart';
 
+import '../../shared/core/couincil_mixins.dart';
 import '../../shared/model/icouncil_card_model.dart';
 
 /// Odeme Bekleniyor Kart Modeli

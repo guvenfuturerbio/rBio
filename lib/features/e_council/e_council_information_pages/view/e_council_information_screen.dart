@@ -30,12 +30,17 @@ class _BuildBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(Atom.queryParameters[ECouncilInformationScreen.eCouncilInformationPageTitleKey] ?? '',
-                style: TextStyle(color: getIt<IAppConfig>().theme.mainColor, fontSize: 16)),
+            Text(
+              Atom.queryParameters[ECouncilInformationScreen.eCouncilInformationPageTitleKey] ?? '',
+              // style: TextStyle(color: , fontSize: 16),
+              style: context.xHeadline1.copyWith(
+                color: getIt<IAppConfig>().theme.mainColor,
+              ),
+            ),
             const SizedBox(height: 16),
             Text(
               Atom.queryParameters[ECouncilInformationScreen.eCouncilInformationPageInformationKey] ?? '',
-              style: const TextStyle(fontSize: 14),
+              style: context.xHeadline3,
               textAlign: TextAlign.justify,
             ),
           ],
