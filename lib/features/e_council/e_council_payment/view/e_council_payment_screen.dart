@@ -62,12 +62,14 @@ class _BuildBody extends StatelessWidget {
                   RichText(
                     textAlign: TextAlign.justify,
                     text: TextSpan(
-                      style: context.xBodyText1.copyWith(fontSize: 11),
+                      style: context.xHeadline4,
                       children: <TextSpan>[
                         TextSpan(text: splitList[0]),
                         TextSpan(
                           text: LocaleProvider.of(context).council_requests,
-                          style: context.xBodyText1.copyWith(color: getIt<IAppConfig>().theme.mainColor),
+                          style: context.xHeadline4.copyWith(
+                            color: getIt<IAppConfig>().theme.mainColor,
+                          ),
                         ),
                         TextSpan(text: splitList[1]),
                       ],
@@ -98,15 +100,26 @@ class _BuildPriceField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12),
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(LocaleProvider.of(context).price, style: context.xHeadline2.copyWith(fontWeight: FontWeight.bold)),
-          Text('1500.00 TL', style: context.xHeadline1.copyWith(color: getIt<IAppConfig>().theme.mainColor, fontWeight: FontWeight.bold)),
+          Text(
+            LocaleProvider.of(context).price,
+            style: context.xHeadline4.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            '1500.00 TL',
+            style: context.xHeadline4.copyWith(
+              color: getIt<IAppConfig>().theme.mainColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
