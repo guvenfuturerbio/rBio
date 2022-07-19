@@ -1,16 +1,14 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/chat/model/chat_notification.dart';
-import 'package:onedosehealth/features/chat/model/notification_model.dart';
 import 'package:onedosehealth/features/dashboard/search/model/filter_resources_request.dart';
 import 'package:onedosehealth/features/take_appointment/create_appointment/model/filter_tenants_request.dart';
 import 'package:onedosehealth/features/take_appointment/create_appointment/model/filter_departments_request.dart';
 import 'package:onedosehealth/features/take_appointment/create_appointment_events/model/resources_request.dart';
 import 'package:onedosehealth/features/take_appointment/create_appointment_summary/model/save_appointment_request.dart';
 import 'package:onedosehealth/features/take_appointment/do_mobile_payment/appointment_request.dart';
-import 'package:onedosehealth/features/store/credit_card/model/package_payment_request.dart';
-import 'package:onedosehealth/features/store/credit_card/model/payment_cc_request.dart';
-import 'package:onedosehealth/model/shared/add_firebase_token_request.dart';
 
 import '../setup/locator_setup.dart';
 
@@ -151,7 +149,7 @@ void main() {
     () {
       test('Get Packages', () async {
         final result = await apiService.getAllPackage(
-          getIt<IAppConfig>().endpoints.base.getAllPackagePath,
+          getIt<IAppConfig>().endpoints.package.getAllPackagePath,
         );
         expect(result, isNotEmpty);
       });
@@ -160,7 +158,7 @@ void main() {
         final result = await apiService.getAllSubCategories(
           getIt<IAppConfig>()
               .endpoints
-              .base
+              .package
               .getAllSubCategoriesPath(13), // Masaj Paketleri
         );
         expect(result, isNotEmpty);
@@ -170,7 +168,7 @@ void main() {
         final result = await apiService.getSubCategoryDetail(
           getIt<IAppConfig>()
               .endpoints
-              .base
+              .package
               .getSubCategoryDetailPath(22), // Masaj Paketleri
         );
         expect(result, isNotEmpty);
@@ -205,7 +203,7 @@ void main() {
 
   test('filterTenants', () async {
     final result = await apiService.filterTenants(
-        getIt<IAppConfig>().endpoints.base.filterTenantsPath,
+        getIt<IAppConfig>().endpoints.pusula.filterTenantsPath,
         FilterTenantsRequest(departmanId: 7));
     expect(result.isNotEmpty, true);
   });
