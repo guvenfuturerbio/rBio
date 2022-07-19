@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/e_concil/SIL_DELETE_DELETE_SIL/sil.dart';
+
+import '../../SIL_DELETE_DELETE_SIL/sil.dart';
 
 class ECouncilInspectionUploadScreen extends StatelessWidget {
   const ECouncilInspectionUploadScreen({Key? key}) : super(key: key);
@@ -61,7 +62,7 @@ class _RequestedInseptionsCardState extends State<_RequestedInseptionsCard> {
                 children: [
                   Row(
                     children: [
-                      Text('-${requestedInspections[i].inspectionName}', style: context.xSubtitle1),
+                      Text('-${requestedInspections[i].inspectionName}', style: context.xHeadline3),
                       const Spacer(),
                       requestedInspections[i].isUploaded
                           ? Icon(Icons.done, color: getIt<IAppConfig>().theme.mainColor)

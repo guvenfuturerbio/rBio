@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:onedosehealth/core/core.dart';
-import 'package:onedosehealth/features/e_concil/e_concil_results/model/council_card_report_model.dart';
 
 import '../../shared/view/widget/council_card.dart';
+import '../model/council_card_report_model.dart';
 
 class ECouncilResultScreen extends StatelessWidget {
   const ECouncilResultScreen({Key? key}) : super(key: key);

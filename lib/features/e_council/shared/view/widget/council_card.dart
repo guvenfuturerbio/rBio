@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../../core/core.dart';
-import '../../../e_concil_results/model/council_card_report_model.dart';
 import '../../../e_couincil_requests/model/council_request_card_models.dart';
+import '../../../e_council_results/model/council_card_report_model.dart';
 import '../../model/council_card_payment_model.dart';
 import '../../model/icouncil_card_model.dart';
 
@@ -61,7 +61,7 @@ class _BuildCouncilCardTitle extends StatelessWidget {
             Center(
               child: Text(
                 model.title,
-                style: context.xHeadline3.copyWith(
+                style: context.xHeadline2.copyWith(
                   color: model is CouncilCardReportModel ? Colors.black : Colors.white,
                 ),
               ),
@@ -119,7 +119,12 @@ class _BuildCouncilCardTitleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text(text, style: context.xHeadline3.copyWith(color: Color(textColor))),
+      child: Text(
+        text,
+        style: context.xHeadline3.copyWith(
+          color: Color(textColor),
+        ),
+      ),
       style: ButtonStyle(
         elevation: MaterialStateProperty.all(0.0),
         backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -340,19 +345,35 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
       children: [
         Text(
           LocaleProvider.of(context).council_connection_link,
-          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+          style: context.xHeadline4.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            //? Onay bekliyor
             if (model is CouncilCardPendingApprovalModel)
               Flexible(
-                  child: FittedBox(
-                      child: Text((model as CouncilCardPendingApprovalModel).councilConnectionUrl, style: context.xSubtitle2.copyWith(color: Colors.grey)))),
+                child: FittedBox(
+                  child: Text(
+                    (model as CouncilCardPendingApprovalModel).councilConnectionUrl,
+                    style: context.xHeadline3.copyWith(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+            //? Randevu
             if (model is CouncilCardAppoitmentModel)
               Flexible(
-                  child: FittedBox(
-                      child: Text((model as CouncilCardAppoitmentModel).councilConnectionUrl, style: context.xSubtitle2.copyWith(color: Colors.blue)))),
+                child: FittedBox(
+                  child: Text(
+                    (model as CouncilCardAppoitmentModel).councilConnectionUrl,
+                    style: context.xHeadline3.copyWith(
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
             SizedBox(
               height: 20,
               child: IconButton(
@@ -425,12 +446,12 @@ class _BuildCouncilCardTile extends StatelessWidget {
       children: [
         Text(
           title,
-          style: context.xSubtitle2.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+          style: context.xHeadline4.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
         ),
         Text(
           data ?? '',
           textAlign: TextAlign.justify,
-          style: context.xSubtitle2,
+          style: context.xHeadline3,
         ),
         R.widgets.hSizer4,
       ],
