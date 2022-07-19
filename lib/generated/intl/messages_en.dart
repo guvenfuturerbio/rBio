@@ -236,8 +236,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure you want to cancel your appointment ?"),
         "cancel_call_appo": MessageLookupByLibrary.simpleMessage(
             "Please call 444 94 94 to cancel the appointment"),
-        "cancel_discount":
-            MessageLookupByLibrary.simpleMessage("Cancel discount"),
+        "cancel_discount": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancellation_refund_conditions": MessageLookupByLibrary.simpleMessage(
             "Cancellation and refund conditions"),
         "cannot_retrieve_token": MessageLookupByLibrary.simpleMessage(

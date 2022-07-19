@@ -21,19 +21,6 @@ class DoctorApiServiceImpl extends DoctorApiService {
       });
 
   @override
-  Future<RbioLoginResponse> login(
-      String userId, String password, String consentId) async {
-    final response = await helper.postGuven(
-        getIt<IAppConfig>().endpoints.doctor.login(userId, password, consentId),
-        {});
-    if (response.isSuccessful == true) {
-      return RbioLoginResponse.fromJson(response.xGetMap);
-    } else {
-      throw Exception('/login : ${response.isSuccessful}');
-    }
-  }
-
-  @override
   Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
     GetMyPatientFilter getMyPatientFilter,
   ) async {
@@ -208,7 +195,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     final response = await helper.postGuven(
       getIt<IAppConfig>()
           .endpoints
-          .devApi
+          .treatment
           .getTreatmentNoteWithDietDoctor(patientId),
       request.toJson(),
       options: authOptions,
@@ -229,7 +216,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     final response = await helper.getGuven(
       getIt<IAppConfig>()
           .endpoints
-          .devApi
+          .treatment
           .treatmentGetDetail(type.xGetRawValue, id),
       options: authOptions,
     );
@@ -246,7 +233,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     ScaleDietListAddRequest model,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.addDiet(patientId),
+      getIt<IAppConfig>().endpoints.treatment.addDiet(patientId),
       model.toJson(),
       options: authOptions,
     );
@@ -265,7 +252,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     final response = await helper.deleteGuven(
       getIt<IAppConfig>()
           .endpoints
-          .devApi
+          .treatment
           .deleteNoteDiet(type.xGetRawValue, id),
       options: authOptions,
     );
@@ -282,7 +269,7 @@ class DoctorApiServiceImpl extends DoctorApiService {
     PatientTreatmentAddRequest model,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.addTreatmentNoteDoctor(patientId),
+      getIt<IAppConfig>().endpoints.treatment.addTreatmentNoteDoctor(patientId),
       model.toJson(),
       options: authOptions,
     );

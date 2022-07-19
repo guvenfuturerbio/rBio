@@ -230,8 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Randevunuzu iptal etmek istediğinize emin misiniz?"),
         "cancel_call_appo": MessageLookupByLibrary.simpleMessage(
             "Randevuyu iptal etmek için lütfen 444 94 94 arayınız"),
-        "cancel_discount":
-            MessageLookupByLibrary.simpleMessage("İndirimi iptal et"),
+        "cancel_discount": MessageLookupByLibrary.simpleMessage("İptal et"),
         "cancellation_refund_conditions":
             MessageLookupByLibrary.simpleMessage("İptal ve iade koşulları"),
         "cannot_retrieve_token": MessageLookupByLibrary.simpleMessage(

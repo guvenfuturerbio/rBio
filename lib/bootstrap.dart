@@ -19,9 +19,10 @@ Future<void> bootstrap(IAppConfig appConfig) async {
   timeago.setLocaleMessages('tr', timeago.TrMessages());
   RegisterViews.instance.initialize();
   await appConfig.platform.sendFirstOpenFirebaseEvent(
-      getIt<ISharedPreferencesManager>(),
-      getIt<FirebaseAnalyticsManager>(),
-      appConfig.platform.adjustManager);
+    getIt<ISharedPreferencesManager>(),
+    getIt<FirebaseAnalyticsManager>(),
+    appConfig.platform.adjustManager,
+  );
   await appConfig.platform.recaptchaManager?.init();
 
   SystemChrome.setSystemUIOverlayStyle(

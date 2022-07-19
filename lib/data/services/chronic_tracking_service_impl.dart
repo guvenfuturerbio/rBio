@@ -30,7 +30,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       final response = await helper.getGuven(
         getIt<IAppConfig>()
             .endpoints
-            .devApi
+            .user
             .ctGetUserStrip(entegrationId, deviceUUID),
         options: authOptions,
       );
@@ -50,7 +50,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     CancelToken? cancelToken,
   }) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctInsertNewBloodGlucoseValue,
+      getIt<IAppConfig>().endpoints.measurement.ctInsertNewBloodGlucoseValue,
       bodyPages.toJson(),
       options: authOptions,
       cancelToken: cancelToken,
@@ -67,7 +67,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     DeleteBloodGlucoseMeasurementRequest deleteBloodGlucoseMeasurementRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctDeleteBloodGlucoseValue,
+      getIt<IAppConfig>().endpoints.measurement.ctDeleteBloodGlucoseValue,
       deleteBloodGlucoseMeasurementRequest.toJson(),
       options: authOptions,
     );
@@ -83,7 +83,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     UpdateBloodGlucoseMeasurementRequest updateBloodGlucoseMeasurementRequest,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctUpdateBloodGlucoseValue,
+      getIt<IAppConfig>().endpoints.measurement.ctUpdateBloodGlucoseValue,
       updateBloodGlucoseMeasurementRequest.toJson(),
       options: authOptions,
     );
@@ -108,7 +108,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     final response = await helper.postGuven(
       getIt<IAppConfig>()
           .endpoints
-          .devApi
+          .measurement
           .ctUploadMeasurementImage(entegrationId, measurementId),
       formData,
       options: authOptions..headers?.addAll($headers),
@@ -125,7 +125,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     BloodGlucoseReportBody bloodGlucoseReportBody,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctGetBloodGlucoseReport,
+      getIt<IAppConfig>().endpoints.measurement.ctGetBloodGlucoseReport,
       bloodGlucoseReportBody.toJson(),
       options: authOptions,
     );
@@ -141,7 +141,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctGetBloodGlucoseDataOfPerson,
+      getIt<IAppConfig>().endpoints.measurement.ctGetBloodGlucoseDataOfPerson,
       getBloodGlucoseDataOfPerson.toJson(),
       options: authOptions,
     );
@@ -157,7 +157,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<List<Person>> getAllProfiles() async {
     final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctGetAllProfiles,
+      getIt<IAppConfig>().endpoints.profile.getAllProfiles,
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -183,7 +183,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> addProfile(Person person) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctAddProfile,
+      getIt<IAppConfig>().endpoints.profile.addProfile,
       person.toJson(),
       options: authOptions,
     );
@@ -195,36 +195,9 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<GuvenResponseModel> changeProfile(int userId) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctChangeProfile(userId),
-      {},
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/changeProfile : ${response.isSuccessful}');
-    }
-  }
-
-  @override
-  Future<GuvenResponseModel> deleteProfile(int userId) async {
-    final response = await helper.deleteGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctChangeProfile(userId),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/deleteProfile : ${response.isSuccessful}');
-    }
-  }
-
-  @override
   Future<GuvenResponseModel> updateProfile(Person person, int id) async {
     final response = await helper.patchGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctUpdateProfile(id),
+      getIt<IAppConfig>().endpoints.user.ctUpdateProfile(id),
       data: person.getRequestBody(),
       options: authOptions,
     );
@@ -241,7 +214,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     String treatment,
   ) async {
     final response = await helper.patchGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctUpdateProfile(person.id),
+      getIt<IAppConfig>().endpoints.user.ctUpdateProfile(person.id),
       data: person.toJson()..addEntries([MapEntry('treatment', treatment)]),
       options: authOptions,
     );
@@ -255,7 +228,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> setDefaultProfile(Person person) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctSetDefaultProfile,
+      getIt<IAppConfig>().endpoints.user.ctSetDefaultProfile,
       person.toJson(),
       options: authOptions,
     );
@@ -271,7 +244,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     StripDetailModel stripDetailModel,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctUpdateUserStrip,
+      getIt<IAppConfig>().endpoints.user.ctUpdateUserStrip,
       stripDetailModel.toJson(),
       options: authOptions,
     );
@@ -285,7 +258,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   @override
   Future<GuvenResponseModel> deleteUserStrip(int id, int entegrationId) async {
     final response = await helper.deleteGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctDeleteUserStrip(id, entegrationId),
+      getIt<IAppConfig>().endpoints.user.ctDeleteUserStrip(id, entegrationId),
       options: authOptions,
     );
     if (response.xIsSuccessful) {
@@ -303,7 +276,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     final response = await helper.getGuven(
       getIt<IAppConfig>()
           .endpoints
-          .devApi
+          .single
           .ctIsDeviceIdRegisteredForSomeUser(deviceId, entegrationId),
       options: authOptions,
     );
@@ -324,7 +297,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     final response = await helper.postGuven(
       getIt<IAppConfig>()
           .endpoints
-          .devApi
+          .measurement
           .ctAddHospitalHba1cMeasurement(entegrationId),
       hospitalHba1cMeasurementModel.toJson(),
       options: authOptions,
@@ -346,7 +319,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     final response = await helper.postGuven(
       getIt<IAppConfig>()
           .endpoints
-          .devApi
+          .measurement
           .ctGetHba1cMeasurementList(entegrationId),
       getHba1cMeasurementListModel.toJson(),
       options: authOptions,
@@ -357,26 +330,13 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
       throw Exception('/getHba1cMeasurementList : ${response.isSuccessful}');
     }
   }
-
-  @override
-  Future<GuvenResponseModel> getMedicineByFilter(String text) async {
-    final response = await helper.getGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctGetMedicineByFilter(text),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/getMedicineByFilter : ${response.isSuccessful}');
-    }
-  }
-
+  
   @override
   Future<GuvenResponseModel> deleteBpMeasurement(
     DeleteBpMeasurements deleteBpMeasurements,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctDeleteBpMeasurement,
+      getIt<IAppConfig>().endpoints.measurement.ctDeleteBpMeasurement,
       deleteBpMeasurements.toJson(),
       options: authOptions,
     );
@@ -392,7 +352,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     GetBpMeasurements getBpMeasurements,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctGetBpMeasurement,
+      getIt<IAppConfig>().endpoints.measurement.ctGetBpMeasurement,
       getBpMeasurements.toJson(),
       options: authOptions,
     );
@@ -408,7 +368,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     AddBpWithDetail addBpWithDetail,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctInsertNewBpValue,
+      getIt<IAppConfig>().endpoints.measurement.ctInsertNewBpValue,
       addBpWithDetail.toJson(),
       options: authOptions,
     );
@@ -424,7 +384,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     UpdateBpMeasurements updateBpMeasurements,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.ctUpdateBpMeasurement,
+      getIt<IAppConfig>().endpoints.measurement.ctUpdateBpMeasurement,
       updateBpMeasurements.toJson(),
       options: authOptions,
     );
@@ -443,7 +403,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     final response = await helper.postGuven(
       getIt<IAppConfig>()
           .endpoints
-          .devApi
+          .treatment
           .getTreatmentNoteWithDiet(entegrationId),
       request.toJson(),
       options: authOptions,
@@ -463,7 +423,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     final response = await helper.getGuven(
       getIt<IAppConfig>()
           .endpoints
-          .devApi
+          .treatment
           .treatmentGetDetail(itemType.xGetRawValue, id),
       options: authOptions,
     );
@@ -480,7 +440,7 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     PatientTreatmentAddRequest model,
   ) async {
     final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.devApi.addTreatmentNote(entegrationId),
+      getIt<IAppConfig>().endpoints.treatment.addTreatmentNote(entegrationId),
       model.toJson(),
       options: authOptions,
     );
