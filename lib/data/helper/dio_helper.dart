@@ -104,7 +104,7 @@ class DioHelper with DioMixin implements Dio, IDioHelper {
                 if (password != null && userName != null) {
                   if (getIt<IAppConfig>()
                       .endpoints
-                      .devApi
+                      .accessToken
                       .loginPath
                       .contains(error.response!.requestOptions.uri.path)) {
                     Atom.to(PagePaths.login, isReplacement: true);

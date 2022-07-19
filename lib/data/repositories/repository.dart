@@ -81,7 +81,7 @@ class Repository {
   }
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
-    final url = getIt<IAppConfig>().endpoints.base.getAllPackagePath;
+    final url = getIt<IAppConfig>().endpoints.package.getAllPackagePath;
     return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllPackage(url),
@@ -92,7 +92,8 @@ class Repository {
   }
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
-    final url = getIt<IAppConfig>().endpoints.base.getAllSubCategoriesPath(id);
+    final url =
+        getIt<IAppConfig>().endpoints.package.getAllSubCategoriesPath(id);
     return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllSubCategories(url),
@@ -120,7 +121,8 @@ class Repository {
 
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
       int id) async {
-    final url = getIt<IAppConfig>().endpoints.base.getSubCategoryDetailPath(id);
+    final url =
+        getIt<IAppConfig>().endpoints.package.getSubCategoryDetailPath(id);
     return await Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getSubCategoryDetail(url),
@@ -167,20 +169,22 @@ class Repository {
       apiService.getCurrentApplicationVersion();
 
   Future<PatientResponse?> getPatientDetail() async {
-    final url = getIt<IAppConfig>().endpoints.base.getPatientDetailPath;
+    final url = getIt<IAppConfig>().endpoints.pusula.getPatientDetailPath;
     final response = await apiService.getPatientDetail(url);
     return response;
   }
 
   Future<GuvenResponseModel> sendNotification(
-      ChatNotificationModel model) async {
+    ChatNotificationModel model,
+  ) async {
     final response = await apiService.sendNotification(model);
     return response;
   }
 
   Future<List<FilterTenantsResponse>> filterTenants(
-      FilterTenantsRequest filterTenantsRequest) async {
-    final url = getIt<IAppConfig>().endpoints.base.filterTenantsPath;
+    FilterTenantsRequest filterTenantsRequest,
+  ) async {
+    final url = getIt<IAppConfig>().endpoints.pusula.filterTenantsPath;
     return await Utils.instance.getCacheApiCallList<FilterTenantsResponse>(
       url,
       () => apiService.filterTenants(url, filterTenantsRequest),
@@ -191,8 +195,9 @@ class Repository {
   }
 
   Future<List<FilterDepartmentsResponse>> filterDepartments(
-      FilterDepartmentsRequest filterDepartmentsRequest) async {
-    final url = getIt<IAppConfig>().endpoints.base.filterDepartmentsPath;
+    FilterDepartmentsRequest filterDepartmentsRequest,
+  ) async {
+    final url = getIt<IAppConfig>().endpoints.pusula.filterDepartmentsPath;
     final bodyString = json.encode(filterDepartmentsRequest.toJson());
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url + bodyString,
@@ -205,8 +210,9 @@ class Repository {
   }
 
   Future<List<FilterResourcesResponse>> filterResources(
-      FilterResourcesRequest filterResourcesRequest) async {
-    final url = getIt<IAppConfig>().endpoints.base.filterResourcesPath;
+    FilterResourcesRequest filterResourcesRequest,
+  ) async {
+    final url = getIt<IAppConfig>().endpoints.pusula.filterResourcesPath;
     final bodyString = json.encode(filterResourcesRequest.toJson());
     return await Utils.instance.getCacheApiCallList<FilterResourcesResponse>(
       url + bodyString,
@@ -220,7 +226,7 @@ class Repository {
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
     final url = getIt<IAppConfig>()
         .endpoints
-        .common
+        .single
         .getDoctorCvDetailsPath(doctorWebID);
     return await Utils.instance.getCacheApiCallModel<DoctorCvResponse>(
       url,
@@ -320,8 +326,8 @@ class Repository {
     }
   }
 
-  Either<GuvenResponseModel, ChangePasswordExceptions>
-      _checkChangePassword(GuvenResponseModel response) {
+  Either<GuvenResponseModel, ChangePasswordExceptions> _checkChangePassword(
+      GuvenResponseModel response) {
     if (response.datum == R.apiEnums.changePassword.success) {
       return left(response);
     } else if (response.datum == R.apiEnums.changePassword.oldError) {
@@ -349,9 +355,6 @@ class Repository {
           AddFirebaseTokenRequest addFirebaseToken) =>
       apiService.addFirebaseTokenUi(addFirebaseToken);
 
-  Future<GuvenResponseModel> getRoomStatusUi(String roomId) =>
-      apiService.getRoomStatusUi(roomId);
-
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId) =>
       apiService.getOnlineAppoFiles(roomId);
 
@@ -378,8 +381,6 @@ class Repository {
   Future<GuvenResponseModel> addSuggestion(
           SuggestionRequest suggestionRequest) =>
       apiService.addSuggestion(suggestionRequest);
-
-  Future<GuvenResponseModel> getCourseId() => apiService.getCourseId();
 
   Future<GuvenResponseModel> setJitsiWebConsultantId(String id) =>
       apiService.setJitsiWebConsultantId(id);
@@ -474,8 +475,9 @@ class Repository {
       apiService.doMobilePayment(doMobilePaymentWithVoucherRequest);
 
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
-      FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
-    final url = getIt<IAppConfig>().endpoints.base.fetchOnlineDepartmentsPath;
+    FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest,
+  ) async {
+    final url = getIt<IAppConfig>().endpoints.pusula.fetchOnlineDepartmentsPath;
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url,
       () => apiService.fetchOnlineDepartments(filterOnlineDepartmentsRequest),
@@ -504,7 +506,7 @@ class Repository {
 
   // #region Search
   Future<List<SocialPostsResponse>> getAllSocialResources() async {
-    final url = getIt<IAppConfig>().endpoints.search.getAllPosts;
+    final url = getIt<IAppConfig>().endpoints.socialPost.getAllPosts;
     final response =
         await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(
       url,

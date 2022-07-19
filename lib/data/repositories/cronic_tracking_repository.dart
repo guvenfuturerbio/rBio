@@ -55,10 +55,6 @@ class ChronicTrackingRepository {
   Future<List<Person>> getAllProfiles() => apiService.getAllProfiles();
   Future<GuvenResponseModel> addProfile(Person person) =>
       apiService.addProfile(person);
-  Future<GuvenResponseModel> changeProfile(int userId) =>
-      apiService.changeProfile(userId);
-  Future<GuvenResponseModel> deleteProfile(int userId) =>
-      apiService.deleteProfile(userId);
   Future<GuvenResponseModel> updateProfile(Person person, int id) =>
       apiService.updateProfile(person, id);
   Future<GuvenResponseModel> addTreatment(Person person, String treatment) =>

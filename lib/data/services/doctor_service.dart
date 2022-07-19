@@ -12,8 +12,6 @@ abstract class DoctorApiService {
   final IDioHelper helper;
   DoctorApiService(this.helper);
 
-  Future<RbioLoginResponse> login(
-      String userId, String password, String consentId);
   Future<List<DoctorGlucosePatientModel>> getMySugarPatient(
       GetMyPatientFilter getMyPatientFilter);
   Future<List<DoctorGlucosePatientModel>> getMyScalePatient(

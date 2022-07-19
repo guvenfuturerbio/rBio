@@ -7,7 +7,6 @@ class GuvenConfig extends IAppConfig<IGuvenPlatformConfig> {
           productType: ProductType.guven,
           theme: GuvenTheme(),
           functionality: GuvenFunctionality(),
-          endpoints: GuvenEndpoints(),
           constants: GuvenConstants(),
         ) {
     setDeviceConfig();
@@ -25,5 +24,10 @@ class GuvenConfig extends IAppConfig<IGuvenPlatformConfig> {
   @override
   IProductDashboard getDashboard() {
     return GuvenDashboardNavigation();
+  }
+
+  @override
+  void setEndpoints() {
+    super.endpoints = GuvenEndpoints();
   }
 }
