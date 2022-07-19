@@ -39,6 +39,7 @@ export 'manager/permission_manager.dart';
 export 'manager/sentry_manager.dart';
 export 'manager/url_launcher_manager.dart';
 export "manager/user_manager.dart";
+export "manager/image_manager.dart";
 export 'navigation/app_paths.dart';
 export 'notifiers/locale_notifier.dart';
 export 'notifiers/rbio_vm.dart';

@@ -21,6 +21,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerSingleton<CacheClient>(CacheClient());
   getIt.registerSingleton<UrlLauncherManager>(UrlLauncherManagerImpl());
   getIt.registerSingleton<FirebaseAnalyticsManager>(FirebaseAnalyticsManager());
+  getIt.registerSingleton<ImageManager>(ImageManagerImpl());
 
   getIt.registerSingleton<DeviceLocalDataSource>(
       BluetoothDeviceLocalDataSourceImpl());
