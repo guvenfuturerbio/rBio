@@ -4600,6 +4600,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Date and Hour`
+  String get date_and_hour {
+    return Intl.message(
+      'Date and Hour',
+      name: 'date_and_hour',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Date of birth`
   String get date_of_birth {
     return Intl.message(
@@ -7630,6 +7640,16 @@ class LocaleProvider {
     );
   }
 
+  /// `Pay`
+  String get pay2 {
+    return Intl.message(
+      'Pay',
+      name: 'pay2',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add discount code`
   String get add_discount_code {
     return Intl.message(
@@ -8930,6 +8950,16 @@ class LocaleProvider {
     );
   }
 
+  /// ` Note`
+  String get note {
+    return Intl.message(
+      ' Note',
+      name: 'note',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Special note`
   String get special_note {
     return Intl.message(
@@ -9047,6 +9077,340 @@ class LocaleProvider {
       name: 'guven_jailbreak_warning',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `What is the E-Council?`
+  String get what_is_the_e_council {
+    return Intl.message(
+      'What is the E-Council?',
+      name: 'what_is_the_e_council',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How to use the E-Council?`
+  String get how_to_use_the_e_council {
+    return Intl.message(
+      'How to use the E-Council?',
+      name: 'how_to_use_the_e_council',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-Council`
+  String get e_council {
+    return Intl.message(
+      'E-Council',
+      name: 'e_council',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Council Requests`
+  String get council_requests {
+    return Intl.message(
+      'Council Requests',
+      name: 'council_requests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending approval`
+  String get pending_approval {
+    return Intl.message(
+      'Pending approval',
+      name: 'pending_approval',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending Payment`
+  String get pending_payment {
+    return Intl.message(
+      'Pending Payment',
+      name: 'pending_payment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending Inspection`
+  String get pending_inspection {
+    return Intl.message(
+      'Pending Inspection',
+      name: 'pending_inspection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rejected`
+  String get rejected {
+    return Intl.message(
+      'Rejected',
+      name: 'rejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Appointment Ready`
+  String get appointment_ready {
+    return Intl.message(
+      'Appointment Ready',
+      name: 'appointment_ready',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Council Results`
+  String get council_results {
+    return Intl.message(
+      'Council Results',
+      name: 'council_results',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create new council request`
+  String get create_new_council_request {
+    return Intl.message(
+      'Create new council request',
+      name: 'create_new_council_request',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Council Report`
+  String get council_report {
+    return Intl.message(
+      'Council Report',
+      name: 'council_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diagnosis`
+  String get diagnosis {
+    return Intl.message(
+      'Diagnosis',
+      name: 'diagnosis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Department Manager`
+  String get department_manager {
+    return Intl.message(
+      'Department Manager',
+      name: 'department_manager',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Council Appointment`
+  String get council_appointment {
+    return Intl.message(
+      'Council Appointment',
+      name: 'council_appointment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expected Inspection`
+  String get expected_inspection {
+    return Intl.message(
+      'Expected Inspection',
+      name: 'expected_inspection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Council Connection Link`
+  String get council_connection_link {
+    return Intl.message(
+      'Council Connection Link',
+      name: 'council_connection_link',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied`
+  String get copied {
+    return Intl.message(
+      'Copied',
+      name: 'copied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Select Your Diagnosis`
+  String get please_select_your_diagnosis {
+    return Intl.message(
+      'Please Select Your Diagnosis',
+      name: 'please_select_your_diagnosis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid Diagnosis`
+  String get inlavid_diagnosis {
+    return Intl.message(
+      'Invalid Diagnosis',
+      name: 'inlavid_diagnosis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create request`
+  String get create_request {
+    return Intl.message(
+      'Create request',
+      name: 'create_request',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your illness history`
+  String get enter_your_illness_history {
+    return Intl.message(
+      'Enter your illness history',
+      name: 'enter_your_illness_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Press and hold the microphone`
+  String get press_and_hold_the_microphone {
+    return Intl.message(
+      'Press and hold the microphone',
+      name: 'press_and_hold_the_microphone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Slide to cancel`
+  String get slide_to_cancel {
+    return Intl.message(
+      'Slide to cancel',
+      name: 'slide_to_cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select the file you want to upload`
+  String get please_select_the_file_you_want_to_upload {
+    return Intl.message(
+      'Please select the file you want to upload',
+      name: 'please_select_the_file_you_want_to_upload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File Description`
+  String get file_description {
+    return Intl.message(
+      'File Description',
+      name: 'file_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of doctors to attend`
+  String get number_of_doctors_to_attend {
+    return Intl.message(
+      'Number of doctors to attend',
+      name: 'number_of_doctors_to_attend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your council request has been accepted by our doctors. Below are the details.`
+  String
+      get your_council_request_has_been_accepted_by_our_doctors_below_are_the_details {
+    return Intl.message(
+      'Your council request has been accepted by our doctors. Below are the details.',
+      name:
+          'your_council_request_has_been_accepted_by_our_doctors_below_are_the_details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `After payment, you can reach the details of your council appointment and the council connection link from your Council Requests.`
+  String
+      get after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests {
+    return Intl.message(
+      'After payment, you can reach the details of your council appointment and the council connection link from your Council Requests.',
+      name:
+          'after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Requested Inspections`
+  String get requested_inspections {
+    return Intl.message(
+      'Requested Inspections',
+      name: 'requested_inspections',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File name`
+  String get file_name {
+    return Intl.message(
+      'File name',
+      name: 'file_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Account`
+  String get delelete_account {
+    return Intl.message(
+      'Delete Account',
+      name: 'delelete_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your personal health data will be deleted upon your request, within the scope of the provisions of the Law on Protection of Personal Data No. 6698 dated 24/3/2016. \n \n Please send an e-mail to the {email} adress with your T.C. Identification or Passport Serial No information.`
+  String delete_account_informations(String email) {
+    return Intl.message(
+      'Your personal health data will be deleted upon your request, within the scope of the provisions of the Law on Protection of Personal Data No. 6698 dated 24/3/2016. \n \n Please send an e-mail to the $email adress with your T.C. Identification or Passport Serial No information.',
+      name: 'delete_account_informations',
+      desc: '',
+      args: [email],
     );
   }
 

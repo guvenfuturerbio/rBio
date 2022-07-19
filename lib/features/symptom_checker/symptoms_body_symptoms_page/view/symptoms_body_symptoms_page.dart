@@ -240,7 +240,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                       ?.trackEvent(MySymptomsPage4DepartmentAnalysisEvent());
                   getIt<FirebaseAnalyticsManager>().logEvent(
                     SikayetlerimSayfa4BolumAnaliziYapin(
-                      getIt<UserNotifier>().firebaseEmail,
+                      getIt<UserNotifier>().firebaseEmail.toString(),
                       widget.selectedGenderId == 0 ||
                               widget.selectedGenderId == 2
                           ? 'M'
@@ -271,7 +271,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }

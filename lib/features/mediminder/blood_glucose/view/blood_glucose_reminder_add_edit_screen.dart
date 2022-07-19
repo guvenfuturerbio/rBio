@@ -184,7 +184,7 @@ class __BloodGlucoseReminderAddEditViewState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //
-              R.sizes.stackedTopPadding(context),
+              R.widgets.stackedTopPadding(context),
               _buildGap(),
 
               // Almanız gereken durumu seçiniz
@@ -281,7 +281,7 @@ class __BloodGlucoseReminderAddEditViewState
             ),
 
             //
-            R.sizes.wSizer8,
+            R.widgets.wSizer8,
 
             //
             Expanded(
@@ -300,7 +300,7 @@ class __BloodGlucoseReminderAddEditViewState
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ];
     } else {
       return [const SizedBox()];
@@ -481,5 +481,5 @@ class __BloodGlucoseReminderAddEditViewState
   }
   // #endregion
 
-  Widget _buildGap() => R.sizes.hSizer16;
+  Widget _buildGap() => R.widgets.hSizer16;
 }

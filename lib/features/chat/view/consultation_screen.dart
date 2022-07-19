@@ -20,7 +20,7 @@ class ConsultationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)
+    return !(getIt<UserNotifier>().user?.chat ?? false)
         ? NotChronicScreen(
             title: LocaleProvider.current.consultation,
             drawerKey: drawerKey,

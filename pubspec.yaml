@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 1.0.35+52
+version: 1.0.38+55
 
 environment:
   sdk: ">=2.17.1 <3.0.0"
@@ -95,6 +95,7 @@ dependencies:
   rename: ^2.0.1
   reorderables: ^0.5.0
   scan: ^1.6.0
+  searchfield: ^0.6.6
   sentry_flutter: ^6.6.1
   shimmer: ^2.0.0
   simple_gesture_detector: ^0.2.0
@@ -171,6 +172,7 @@ flutter:
     - assets/images/
     - assets/images/bottom_navigation/
     - assets/images/drawer/
+    - assets/images/e_council/
     - assets/images/guven/
     - assets/images/guven/dashboard/
     - assets/images/magazines/

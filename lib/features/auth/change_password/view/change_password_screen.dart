@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/features/auth/change_password/cubit/change_password_cubit.dart';
 
 import '../../../../core/core.dart';
+import '../cubit/change_password_cubit.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
@@ -14,7 +14,14 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ChangePasswordCubit(getIt()),
+      create: (context) => ChangePasswordCubit(
+        repository: getIt<Repository>(),
+        userManager: getIt<UserManager>(),
+        adjustManager: getIt<IAppConfig>().platform.adjustManager,
+        sentryManager: getIt<IAppConfig>().platform.sentryManager,
+        sharedPreferencesManager: getIt<ISharedPreferencesManager>(),
+        firebaseAnalyticsManager: getIt<FirebaseAnalyticsManager>(),
+      ),
       child: const ChangePasswordView(),
     );
   }
@@ -149,10 +156,10 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               //
-              R.sizes.stackedTopPadding(context),
+              R.widgets.stackedTopPadding(context),
 
               //
-              R.sizes.hSizer16,
+              R.widgets.hSizer16,
 
               //
               Text(
@@ -361,7 +368,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               ),
 
               //
-              R.sizes.defaultBottomPadding,
+              R.widgets.defaultBottomPadding,
             ],
           ),
         ),

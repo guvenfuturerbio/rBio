@@ -5,63 +5,13 @@ class _Constants {
 
   final guvenTel = "tel://4449494";
 
-  final supportedFileExtensions = [
-    'docx',
-    'pdf',
-    'txt',
-    'dicom',
-    'jpeg',
-    'png',
-    'jpg',
-  ];
+  final fontSourceSans = 'SourceSans';
+  final oneDoseHealthAppLogo = 'assets/images/oneDose/onedose_logo.svg';
+  final oneDoseHealthSuccessAppointmentImage = 'assets/images/oneDose/success_appointment.svg';
 
-  final magazineList = [
-    {
-      'imagePath': R.image.guvenin_1,
-      "magazineUrl": "https://guvenin.com.tr/dergi/1",
-      "sayi": "Sayı 1",
-    },
-    {
-      'imagePath': R.image.guvenin_2,
-      "magazineUrl": "https://guvenin.com.tr/dergi/2",
-      "sayi": "Sayı 2",
-    },
-    {
-      'imagePath': R.image.guvenin_3,
-      "magazineUrl": "https://guvenin.com.tr/dergi/3",
-      "sayi": "Sayı 3",
-    },
-    {
-      'imagePath': R.image.guvenin_4,
-      "magazineUrl": "https://guvenin.com.tr/dergi/4",
-      "sayi": "Sayı 4",
-    }
-  ];
-
-  final drTitles = [
-    "prof.dr.",
-    "uzm.dr.",
-    "dr.",
-    "dr",
-    "dt.",
-    "dt",
-    "prof. dr.",
-    "doc. dr.",
-    "dyt.",
-    "psk.",
-    "fzt.",
-    "hem.",
-    "dan.",
-    "*",
-    "doç.dr.",
-    "doc.dr.",
-    "doc.",
-    "uzm",
-    "-danismanlik",
-    "danismanlik",
-    " ()",
-    "()",
-  ];
+  final fontPoppins = 'Poppins';
+  final guvenAppLogo = 'assets/images/guven/guvenonline_icon.svg';
+  final guvenSuccessAppointmentImage = 'assets/images/guven/success_appointment.svg';
 
   final onlineAppointmentType = 256;
   final hospitalAppointmentType = 1;
@@ -144,4 +94,62 @@ M345.52,900.679c-10.543-.251-19.154-.815-25.466-1.322a475.226,475.226,0,0,1-83.8
           .split('\n');
 
   String json = 'json';
+
+  final supportedFileExtensions = [
+    'docx',
+    'pdf',
+    'txt',
+    'dicom',
+    'jpeg',
+    'png',
+    'jpg',
+  ];
+
+  final magazineList = [
+    {
+      'imagePath': R.image.guvenin_1,
+      "magazineUrl": "https://guvenin.com.tr/dergi/1",
+      "sayi": "Sayı 1",
+    },
+    {
+      'imagePath': R.image.guvenin_2,
+      "magazineUrl": "https://guvenin.com.tr/dergi/2",
+      "sayi": "Sayı 2",
+    },
+    {
+      'imagePath': R.image.guvenin_3,
+      "magazineUrl": "https://guvenin.com.tr/dergi/3",
+      "sayi": "Sayı 3",
+    },
+    {
+      'imagePath': R.image.guvenin_4,
+      "magazineUrl": "https://guvenin.com.tr/dergi/4",
+      "sayi": "Sayı 4",
+    }
+  ];
+
+  final drTitles = [
+    "prof.dr.",
+    "uzm.dr.",
+    "dr.",
+    "dr",
+    "dt.",
+    "dt",
+    "prof. dr.",
+    "doc. dr.",
+    "dyt.",
+    "psk.",
+    "fzt.",
+    "hem.",
+    "dan.",
+    "*",
+    "doç.dr.",
+    "doc.dr.",
+    "doc.",
+    "uzm",
+    "-danismanlik",
+    "danismanlik",
+    " ()",
+    "()",
+  ];
 }

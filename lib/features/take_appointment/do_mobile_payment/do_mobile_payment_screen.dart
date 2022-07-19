@@ -431,7 +431,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
             ),
 
             //
-            R.sizes.defaultBottomPadding,
+            R.widgets.defaultBottomPadding,
           ],
         ),
       ),

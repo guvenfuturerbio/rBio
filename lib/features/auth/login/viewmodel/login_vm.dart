@@ -29,8 +29,8 @@ class LoginScreenVm extends ChangeNotifier {
           SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();
       await getSavedLoginInfo();
-      getIt<UserNotifier>().isDefaultUser = getIt<ISharedPreferencesManager>()
-          .getBool(SharedPreferencesKeys.isDefaultUser);
+      getIt<UserNotifier>().setDefaultUser(getIt<ISharedPreferencesManager>()
+          .getBool(SharedPreferencesKeys.isDefaultUser));
     });
   }
 
@@ -417,7 +417,7 @@ class LoginScreenVm extends ChangeNotifier {
     }
     if (pusulaPatientDetail == null) {
       pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
-      await getIt<UserNotifier>().setPatient(pusulaPatientDetail!);
+      await getIt<UserFacade>().setPatient(pusulaPatientDetail!);
     }
     _checkedKvkk = results[2];
 
@@ -454,7 +454,7 @@ class LoginScreenVm extends ChangeNotifier {
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }
-    final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
+    final allUsersModel = getIt<UserFacade>().getHomeWidgets(username);
     mContext.read<HomeVm>().init(allUsersModel);
     await Future.delayed(const Duration(milliseconds: 100));
     hideDialog(mContext);
@@ -575,11 +575,11 @@ class LoginScreenVm extends ChangeNotifier {
     }
     if (pusulaPatientDetail == null) {
       pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
-      await getIt<UserNotifier>().setPatient(pusulaPatientDetail!);
+      await getIt<UserFacade>().setPatient(pusulaPatientDetail!);
     }
     _checkedKvkk = results[2];
 
-    if (getIt<UserNotifier>().isCronic) {
+    if (getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
       var profiles = await getIt<ChronicTrackingRepository>().getAllProfiles();
       if (profiles.isNotEmpty) {
         await getIt<ProfileStorageImpl>().write(
@@ -599,7 +599,7 @@ class LoginScreenVm extends ChangeNotifier {
       }
     }
 
-    if (!Atom.isWeb && getIt<UserNotifier>().isCronic) {
+    if (!Atom.isWeb && getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
       try {
         List<PairedDevice>? devices =
             getIt<BleDeviceManager>().getPairedDevices();
@@ -637,7 +637,7 @@ class LoginScreenVm extends ChangeNotifier {
       //
     }
 
-    if (getIt<UserNotifier>().isCronic) {
+    if (getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
       getIt<ScaleRepository>().fetchScaleData(
         getIt<ProfileStorageImpl>().getFirst().id ?? 0,
       );
@@ -659,7 +659,7 @@ class LoginScreenVm extends ChangeNotifier {
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }
-    final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
+    final allUsersModel = getIt<UserFacade>().getHomeWidgets(username);
     mContext.read<HomeVm>().init(allUsersModel);
     await Future.delayed(const Duration(milliseconds: 100));
     hideDialog(mContext);

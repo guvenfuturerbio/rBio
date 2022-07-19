@@ -26,7 +26,7 @@ class RbioBaseDialog extends StatelessWidget {
     );
   }
 
-  static Widget verticalGap() => R.sizes.hSizer32;
+  static Widget verticalGap() => R.widgets.hSizer32;
 }
 
 class RbioBaseGreyDialog extends StatelessWidget {
@@ -53,7 +53,7 @@ class RbioBaseGreyDialog extends StatelessWidget {
     );
   }
 
-  static Widget verticalGap() => R.sizes.hSizer32;
+  static Widget verticalGap() => R.widgets.hSizer32;
 }
 
 class RbioMessageDialog extends StatelessWidget {

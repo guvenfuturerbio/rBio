@@ -13,7 +13,8 @@ void initializeLocatorTest(ProductType type) {
       SharedPreferencesTestManager());
 }
 
-ApiService getTestApiService() => ApiServiceImpl(DioHelper(true));
+ApiService getTestApiService() =>
+    ApiServiceImpl(DioHelper(true), getIt<IAppConfig>().endpoints);
 
 class TestOneDoseKeyManager extends KeyManager {
   void loadTestData() {

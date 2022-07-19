@@ -454,6 +454,7 @@
   "contour_plus_blood_sugar": "Contour Plus Blood Glucose",
   "daily": "Daily",
   "date": "Date",
+  "date_and_hour": "Date and Hour",
   "date_of_birth": "Date of birth",
   "day": "Day",
   "delete_medicine_confirm_message": "Do you want to delete selected reminder?",
@@ -757,6 +758,7 @@
   "discount_code": "Discount Code",
   "price": "Fee",
   "pay": "Make Payment",
+  "pay2": "Pay",
   "add_discount_code": "Add discount code",
   "apply_discount": "Apply discount",
   "cancel_discount": "Cancel",
@@ -887,6 +889,7 @@
   "delete_diet_list": "Are you sure you want to delete the diet list?",
   "empty_cv": "Specialist's CV can not be found.",
   "add_diet_list": "Add Diet List",
+  "note": " Note",
   "special_note": "Special note",
   "add_special_note": "Add Special note",
   "update_special_note": "Update Special note",
@@ -899,6 +902,49 @@
   "your_data_is_synchronizing": "Your data is synchronizing",
   "onedosehealth_jailbreak_warning": "The devices which have Root or Jailbreak, are not allowed to use OneDoseHealth App",
   "guven_jailbreak_warning": "The devices which have Root or Jailbreak, are not allowed to use Guven Online App",
+  "what_is_the_e_council": "What is the E-Council?",
+  "how_to_use_the_e_council": "How to use the E-Council?",
+  "e_council": "E-Council",
+  "council_requests": "Council Requests",
+  "pending_approval": "Pending approval",
+  "pending_payment": "Pending Payment",
+  "pending_inspection": "Pending Inspection",
+  "rejected": "Rejected",
+  "appointment_ready": "Appointment Ready",
+  "council_results": "Council Results",
+  "create_new_council_request": "Create new council request",
+  "council_report": "Council Report",
+  "diagnosis": "Diagnosis",
+  "department_manager": "Department Manager",
+  "council_appointment": "Council Appointment",
+  "expected_inspection": "Expected Inspection",
+  "council_connection_link": "Council Connection Link",
+  "copied":"Copied",
+  "please_select_your_diagnosis": "Please Select Your Diagnosis",
+  "inlavid_diagnosis": "Invalid Diagnosis",
+  "create_request": "Create request",
+  "enter_your_illness_history": "Enter your illness history",
+  "press_and_hold_the_microphone": "Press and hold the microphone",
+  "slide_to_cancel": "Slide to cancel",
+  "please_select_the_file_you_want_to_upload": "Please select the file you want to upload",
+  "file_description": "File Description",
+  "number_of_doctors_to_attend": "Number of doctors to attend",
+  "your_council_request_has_been_accepted_by_our_doctors_below_are_the_details": "Your council request has been accepted by our doctors. Below are the details.",
+  "after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests": "After payment, you can reach the details of your council appointment and the council connection link from your Council Requests.",
+  "requested_inspections": "Requested Inspections",
+  "file_name": "File name",
+  "delelete_account": "Delete Account",
+
+  "delete_account_informations": "Your personal health data will be deleted upon your request, within the scope of the provisions of the Law on Protection of Personal Data No. 6698 dated 24/3/2016. \n \n Please send an e-mail to the {email} adress with your T.C. Identification or Passport Serial No information.",
+  "@delete_account_informations": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+
+
   "not_now": "Not Now",
   "permission_camera_message_ios": "{appName} does not have access to your camera. To enable access, tap Settings and turn on Camera.",
   "@permission_camera_message_ios": {

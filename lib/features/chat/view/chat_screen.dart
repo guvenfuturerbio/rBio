@@ -37,7 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
   String getCurrentUserId = getIt<UserNotifier>().firebaseID!;
   ChatPerson get getCurrentPerson => ChatPerson(
         id: getIt<UserNotifier>().firebaseID,
-        name: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+        name: getIt<UserFacade>().getNameAndSurname(),
         url: R.image.avatarUrl,
         firebaseToken: getIt<FirebaseMessagingManager>().getToken,
       );

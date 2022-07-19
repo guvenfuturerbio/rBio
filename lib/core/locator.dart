@@ -21,6 +21,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerSingleton<CacheClient>(CacheClient());
   getIt.registerSingleton<UrlLauncherManager>(UrlLauncherManagerImpl());
   getIt.registerSingleton<FirebaseAnalyticsManager>(FirebaseAnalyticsManager());
+  getIt.registerSingleton<ImageManager>(ImageManagerImpl());
 
   getIt.registerSingleton<DeviceLocalDataSource>(
       BluetoothDeviceLocalDataSourceImpl());
@@ -130,7 +131,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
     () => BloodPressureStorageImpl(),
   );
   getIt.registerLazySingleton<ApiService>(
-    () => ApiServiceImpl(getIt<IDioHelper>()),
+    () => ApiServiceImpl(getIt<IDioHelper>(), appConfig.endpoints),
   );
   getIt.registerLazySingleton<ChronicTrackingApiService>(
     () => ChronicTrackingApiServiceImpl(
@@ -185,8 +186,23 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerLazySingleton<LocaleNotifier>(
     () => LocaleNotifier(),
   );
+  getIt.registerLazySingleton<UserFacade>(
+    () => UserFacadeImpl(
+      appConfig: appConfig,
+      firebaseAnalyticsManager: getIt(),
+      bluetoothLocalManager: getIt(),
+      localNotificationManager: getIt(),
+      firebaseMessagingManager: getIt(),
+      sharedPreferencesManager: getIt(),
+      profileStorageImpl: getIt(),
+      glucoseStorageImpl: getIt(),
+      bloodPressureStorageImpl: getIt(),
+      repository: getIt(),
+      scaleRepository: getIt(),
+    ),
+  );
   getIt.registerLazySingleton<UserNotifier>(
-    () => UserNotifier(),
+    () => UserNotifier(getIt<UserFacade>()),
   );
   // #endregion
 

@@ -160,6 +160,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             // #region outsideBuilder
             // Diğer aya ait günler
             outsideBuilder: (context, day, focusedDay) {
+              
               return Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(

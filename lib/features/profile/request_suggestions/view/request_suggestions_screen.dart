@@ -102,8 +102,8 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
           mainAxisSize: MainAxisSize.max,
           children: [
             //
-            R.sizes.stackedTopPadding(context),
-            R.sizes.hSizer16,
+            R.widgets.stackedTopPadding(context),
+            R.widgets.hSizer16,
 
             //
             Padding(
@@ -164,7 +164,7 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
             ),
 
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
             Center(
@@ -183,7 +183,7 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
             ),
 
             //
-            R.sizes.defaultBottomPadding,
+            R.widgets.defaultBottomPadding,
           ],
         ),
       ),

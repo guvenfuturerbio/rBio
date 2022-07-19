@@ -19,7 +19,8 @@ class RbioDetailSearchComponent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _RbioDetailSearchComponentState createState() => _RbioDetailSearchComponentState();
+  _RbioDetailSearchComponentState createState() =>
+      _RbioDetailSearchComponentState();
 }
 
 class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
@@ -216,7 +217,7 @@ class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
                     ),
 
                     //
-                    R.sizes.hSizer20,
+                    R.widgets.hSizer20,
                   ],
                 ],
               ),

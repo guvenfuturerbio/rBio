@@ -139,12 +139,11 @@ class ReminderCard extends StatelessWidget {
                               ),
 
                               //
-                              R.sizes.hSizer8,
+                              R.widgets.hSizer8,
 
                               //
                               Text(
-                                getIt<UserNotifier>()
-                                    .getCurrentUserNameAndSurname(),
+                                getIt<UserFacade>().getNameAndSurname(),
                                 style: context.xHeadline4.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),

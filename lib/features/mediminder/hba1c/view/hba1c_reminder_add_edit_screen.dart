@@ -170,7 +170,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
     );
   }
 
-  Widget _buildGap() => R.sizes.hSizer16;
+  Widget _buildGap() => R.widgets.hSizer16;
 
   Widget _buildLastTestDate(
     BuildContext context,
@@ -459,7 +459,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
             ),
 
             //
-            R.sizes.wSizer12,
+            R.widgets.wSizer12,
 
             //
             Expanded(

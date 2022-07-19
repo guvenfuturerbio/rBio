@@ -228,7 +228,7 @@ class __MedicationReminderAddEditViewState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //
-              R.sizes.stackedTopPadding(context),
+              R.widgets.stackedTopPadding(context),
 
               // İlaç Kutusu & Manuel
               // _buildGap(),
@@ -371,7 +371,7 @@ class __MedicationReminderAddEditViewState
             ),
 
             //
-            R.sizes.wSizer8,
+            R.widgets.wSizer8,
 
             //
             Expanded(
@@ -390,7 +390,7 @@ class __MedicationReminderAddEditViewState
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ];
     } else {
       return [const SizedBox()];
@@ -421,7 +421,7 @@ class __MedicationReminderAddEditViewState
                 DrugTracking.pillarSmall,
               ),
             ),
-            R.sizes.wSizer12,
+            R.widgets.wSizer12,
             Expanded(
               child: _buildMedicineTypeCard(
                 result,
@@ -501,7 +501,7 @@ class __MedicationReminderAddEditViewState
         Expanded(
           child: _buildDrugCount(),
         ),
-        R.sizes.wSizer12,
+        R.widgets.wSizer12,
         Expanded(
           child: _buildRemainingCountNotification(),
         ),
@@ -773,5 +773,5 @@ class __MedicationReminderAddEditViewState
   }
   // #endregion
 
-  Widget _buildGap() => R.sizes.hSizer16;
+  Widget _buildGap() => R.widgets.hSizer16;
 }

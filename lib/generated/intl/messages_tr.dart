@@ -20,22 +20,25 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'tr';
 
-  static String m0(appName) =>
-      "Fotoğraf ve video çekmek için ${appName} kameranıza erişimine izin verin. Ayarlar > İzinler\'e dokunun ve Kamera\'yı açık konuma getirin.";
+  static String m0(email) =>
+      "24/3/2016 tarihli ve 6698 sayılı Kişisel Verilerin Korunması Kanunu hükümleri kapsamında, kişisel sağlık verileriniz talebinizle silinecektir.\n \n Bunun için T.C. Kimlik veya Pasaport Seri No bilgisi ile birlikte ${email} adresine e-posta göndermeniz gerekmektedir.";
 
   static String m1(appName) =>
-      "${appName} kameranıza erişimi yok. Erişime izin vermek için, Ayarlar\'a dokunun ve Kamera\'yı etkinleştirin.";
+      "Fotoğraf ve video çekmek için ${appName} kameranıza erişimine izin verin. Ayarlar > İzinler\'e dokunun ve Kamera\'yı açık konuma getirin.";
 
   static String m2(appName) =>
-      "${appName} fotoğraf, medya ve dosyalara erişimi yok. Ayarlar > İzinler\'e dokunun ve Depolama\'yı açık konuma getirin.";
+      "${appName} kameranıza erişimi yok. Erişime izin vermek için, Ayarlar\'a dokunun ve Kamera\'yı etkinleştirin.";
 
   static String m3(appName) =>
-      "${appName} fotoğraflarınıza veya videolarınıza erişimi yok. Erişime izin vermek için, Ayarlar\'a dokunun ve Fotoğraflar\'ı açın.";
+      "${appName} fotoğraf, medya ve dosyalara erişimi yok. Ayarlar > İzinler\'e dokunun ve Depolama\'yı açık konuma getirin.";
 
   static String m4(appName) =>
-      "Videoları sesli mi kaydetmek istiyorsunuz? ${appName} mikrofununuza erişimine izin verin. Ayarlar > İzinler\'e giderek Mikrofon\'u açık konuma getirin.";
+      "${appName} fotoğraflarınıza veya videolarınıza erişimi yok. Erişime izin vermek için, Ayarlar\'a dokunun ve Fotoğraflar\'ı açın.";
 
   static String m5(appName) =>
+      "Videoları sesli mi kaydetmek istiyorsunuz? ${appName} mikrofununuza erişimine izin verin. Ayarlar > İzinler\'e giderek Mikrofon\'u açık konuma getirin.";
+
+  static String m6(appName) =>
       "Sesli video kaydedebilmek için ${appName} mikrofona erişmesi gerekiyor. Erişime izin vermek için, Ayarlar\'a dokunun ve Mikrofon\'u açın.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -86,6 +89,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "aft": MessageLookupByLibrary.simpleMessage("Son."),
         "after": MessageLookupByLibrary.simpleMessage("Sonra"),
         "after_meal": MessageLookupByLibrary.simpleMessage("Tok"),
+        "after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests":
+            MessageLookupByLibrary.simpleMessage(
+                "Ödeme yaptıktan sonra konsey randevunuz ile ilgili detaylara ve konsey bağlantı adresine Konsey Taleplerim bölümünden ulaşabilirsiniz."),
         "age": MessageLookupByLibrary.simpleMessage("Yaş"),
         "alert": MessageLookupByLibrary.simpleMessage("Alarm"),
         "all_appointment_file":
@@ -132,6 +138,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Randevu Dosyaları"),
         "appointment_files":
             MessageLookupByLibrary.simpleMessage("Randevu Dosyaları"),
+        "appointment_ready":
+            MessageLookupByLibrary.simpleMessage("Randevu Hazır"),
         "appointments": MessageLookupByLibrary.simpleMessage("Randevular"),
         "approve_consent_form": MessageLookupByLibrary.simpleMessage(
             "Uygulama Onam Formunu Onaylamanız Gerekiyor"),
@@ -302,6 +310,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Kan şekeri sonucunu görüntüleyin."),
         "contour_plus_blood_sugar":
             MessageLookupByLibrary.simpleMessage("Contour Plus Şeker Ölçüm"),
+        "copied": MessageLookupByLibrary.simpleMessage("Kopyalandı"),
+        "council_appointment":
+            MessageLookupByLibrary.simpleMessage("Konsey Randevusu"),
+        "council_connection_link":
+            MessageLookupByLibrary.simpleMessage("Konsey Bağlantı Linki"),
+        "council_report": MessageLookupByLibrary.simpleMessage("Konsey Raporu"),
+        "council_requests":
+            MessageLookupByLibrary.simpleMessage("Konsey Taleplerim"),
+        "council_results":
+            MessageLookupByLibrary.simpleMessage("Konsey Sonuçlarım"),
         "country": MessageLookupByLibrary.simpleMessage("Ülke"),
         "covid_text_1": MessageLookupByLibrary.simpleMessage(
             "İnsanlarda ve hayvanlarda hastalığa yol açabilen ve birçok türü bulunan virüslere “Koronavirus” denilmektedir. İnsanlarda genellikle soğuk algınlığına yol açan bu virüsler hayat kayıplarına varan tablolara da neden olabilmektedir. 2002 yılında Çin’in Guangdong Eyaleti’nde başlayan SARS-CoV virüsü salgını dünya genelinde 17 ülkeye yayılmıştır. Bu salgında 8098 kişi hastalığa yakalanmış ve 774 kişi hayatını kaybetmiştir. 2012 yılında Suudi Arabistan’da başlayan MERS-CoV virüsü salgını ise dünya genelinde 27 ülkeyi etkilemiş, salgına yakalanan 2499 kişiden 861’i hayatını kaybetmiştir."),
@@ -334,10 +352,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "create_appo": MessageLookupByLibrary.simpleMessage("Randevu Ara"),
         "create_appointment_events":
             MessageLookupByLibrary.simpleMessage("Randevu Oluştur"),
+        "create_new_council_request":
+            MessageLookupByLibrary.simpleMessage("Yeni Konsey Talebi Oluştur"),
         "create_password":
             MessageLookupByLibrary.simpleMessage("Şifre Oluştur"),
         "create_reminder":
             MessageLookupByLibrary.simpleMessage("Hatırlatıcı oluştur"),
+        "create_request": MessageLookupByLibrary.simpleMessage("Talep Oluştur"),
         "created_by": MessageLookupByLibrary.simpleMessage("Oluşturan"),
         "credential_already_exist": MessageLookupByLibrary.simpleMessage(
             "Kimlik bilgileri bir hesaba bağlı olarak zaten mevcuttur. Öncelikle bağlı olduğu hesabın altından silinmesi gereklidir"),
@@ -359,11 +380,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "Cvv kod en az 3 haneli olmalıdır"),
         "daily": MessageLookupByLibrary.simpleMessage("Günlük"),
         "date": MessageLookupByLibrary.simpleMessage("Tarih"),
+        "date_and_hour": MessageLookupByLibrary.simpleMessage("Tarih ve Saat"),
         "date_filter": MessageLookupByLibrary.simpleMessage("Tarih Aralığı:"),
         "date_of_birth": MessageLookupByLibrary.simpleMessage("Doğum Tarihi"),
         "day": MessageLookupByLibrary.simpleMessage("Gün"),
         "days": MessageLookupByLibrary.simpleMessage("Günler"),
+        "delelete_account":
+            MessageLookupByLibrary.simpleMessage("Hesabımı Sil"),
         "delete": MessageLookupByLibrary.simpleMessage("Sil"),
+        "delete_account_informations": m0,
         "delete_diet_list": MessageLookupByLibrary.simpleMessage(
             "Diyet listesini silmek istediğinizden emin misiniz?"),
         "delete_file_question": MessageLookupByLibrary.simpleMessage(
@@ -393,6 +418,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "depart_selection":
             MessageLookupByLibrary.simpleMessage("Bölüm seçimi:"),
         "department": MessageLookupByLibrary.simpleMessage("Bölüm"),
+        "department_manager":
+            MessageLookupByLibrary.simpleMessage("Bölüm Sorumlusu"),
         "des_forgot_password": MessageLookupByLibrary.simpleMessage(
             "We just need your registered Email to  send you password reset intruction"),
         "des_forgot_password_other": MessageLookupByLibrary.simpleMessage(
@@ -448,6 +475,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diabetes_type": MessageLookupByLibrary.simpleMessage("Diyabet Tipi"),
         "diabetes_type_1": MessageLookupByLibrary.simpleMessage("Tip 1"),
         "diabetes_type_2": MessageLookupByLibrary.simpleMessage("Tip 2"),
+        "diagnosis": MessageLookupByLibrary.simpleMessage("Teşhis"),
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Tanı Tarihi"),
         "didnt_reach_goals": MessageLookupByLibrary.simpleMessage(
             "Normal değer aralığında olmayanlar"),
@@ -483,6 +511,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dose_interval": MessageLookupByLibrary.simpleMessage("Doz Aralığı"),
         "drug_count": MessageLookupByLibrary.simpleMessage("İlaç adedi"),
         "drug_search": MessageLookupByLibrary.simpleMessage("İlaç arama"),
+        "e_council": MessageLookupByLibrary.simpleMessage("E-Konsey"),
         "edit": MessageLookupByLibrary.simpleMessage("Düzenle"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("Profili Düzenle"),
         "educations": MessageLookupByLibrary.simpleMessage("Eğitimleri"),
@@ -504,6 +533,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enter_the_code":
             MessageLookupByLibrary.simpleMessage("Lütfen kodu giriniz"),
         "enter_weight": MessageLookupByLibrary.simpleMessage("Değer girme"),
+        "enter_your_illness_history":
+            MessageLookupByLibrary.simpleMessage("Hastalık hikayenizi giriniz"),
         "error": MessageLookupByLibrary.simpleMessage("Hata"),
         "error_empty_dosage_name":
             MessageLookupByLibrary.simpleMessage("Lütfen dozu giriniz."),
@@ -532,6 +563,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("KanSekerOlcumRaporu.xlsx"),
         "existing_relative_add": MessageLookupByLibrary.simpleMessage(
             "Var Olan Kullanıcı Profilinize Eklenmiştir."),
+        "expected_inspection":
+            MessageLookupByLibrary.simpleMessage("Beklenen Tetkik"),
         "experiences": MessageLookupByLibrary.simpleMessage("Deneyimleri"),
         "expiration_date_should_be": MessageLookupByLibrary.simpleMessage(
             "Son kullanma tarihi aa/yy formatında yazılmalıdır"),
@@ -543,6 +576,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "female": MessageLookupByLibrary.simpleMessage("Kadın"),
         "file_deleted":
             MessageLookupByLibrary.simpleMessage("Dosya başarıyla silindi"),
+        "file_description":
+            MessageLookupByLibrary.simpleMessage("Dosya açıklaması"),
+        "file_name": MessageLookupByLibrary.simpleMessage("Dosya adı"),
         "file_uploaded":
             MessageLookupByLibrary.simpleMessage("Dosya başarıyla yüklendi"),
         "files": MessageLookupByLibrary.simpleMessage("Dosyalar"),
@@ -628,6 +664,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "how_often": MessageLookupByLibrary.simpleMessage("Ne sıklıkla"),
         "how_to_get_photo":
             MessageLookupByLibrary.simpleMessage("Fotoğraf nasıl alınsın?"),
+        "how_to_use_the_e_council":
+            MessageLookupByLibrary.simpleMessage("E-Konsey nasıl kullanılır?"),
         "how_video_doctor": MessageLookupByLibrary.simpleMessage(
             "Uzmanınızdan memnun kaldınız mı?"),
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
@@ -656,6 +694,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aydınlatılmış Onam Belgesi̇"),
         "informed_consent_form_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/onam_tr.html"),
+        "inlavid_diagnosis":
+            MessageLookupByLibrary.simpleMessage("Geçersiz Teşhis"),
         "insufficient": MessageLookupByLibrary.simpleMessage("Yetersiz"),
         "intermittent_days":
             MessageLookupByLibrary.simpleMessage("Aralıklı Günler"),
@@ -911,10 +951,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_found": MessageLookupByLibrary.simpleMessage("Bulunamadı"),
         "not_now": MessageLookupByLibrary.simpleMessage("Şimdi Değil"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Belirtilmemiş"),
+        "note": MessageLookupByLibrary.simpleMessage("Not"),
         "notes": MessageLookupByLibrary.simpleMessage("Notlar"),
         "notification": MessageLookupByLibrary.simpleMessage("Bildirim"),
         "notification_inbox_empty":
             MessageLookupByLibrary.simpleMessage("Henüz bildiriminiz yok"),
+        "number_of_doctors_to_attend":
+            MessageLookupByLibrary.simpleMessage("Katılacak doktor sayısı"),
         "oauth_credential_error":
             MessageLookupByLibrary.simpleMessage("OAuth credential error"),
         "ok": MessageLookupByLibrary.simpleMessage("Onay"),
@@ -1025,6 +1068,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "patient_name_2": MessageLookupByLibrary.simpleMessage("Hasta Adı"),
         "patients": MessageLookupByLibrary.simpleMessage("Hastalar"),
         "pay": MessageLookupByLibrary.simpleMessage("Ödeme yap"),
+        "pay2": MessageLookupByLibrary.simpleMessage("Öde"),
         "payment": MessageLookupByLibrary.simpleMessage("Ödeme"),
         "payment_not_successful": MessageLookupByLibrary.simpleMessage(
             "Ödeme başarısız.\nLütfen 444 25 25 arayınız"),
@@ -1036,12 +1080,18 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ödeme işlemi başarılı. Randevunuz başarıyla oluşturulmuştur"),
         "pdf_filename":
             MessageLookupByLibrary.simpleMessage("KanSekerOlcumRaporu.pdf"),
-        "permission_camera_message_android": m0,
-        "permission_camera_message_ios": m1,
-        "permission_gallery_message_android": m2,
-        "permission_gallery_message_ios": m3,
-        "permission_microphone_message_android": m4,
-        "permission_microphone_message_ios": m5,
+        "pending_approval":
+            MessageLookupByLibrary.simpleMessage("Onay bekleyeniyor"),
+        "pending_inspection":
+            MessageLookupByLibrary.simpleMessage("Tetkik bekleyeniyor"),
+        "pending_payment":
+            MessageLookupByLibrary.simpleMessage("Ödeme bekleyeniyor"),
+        "permission_camera_message_android": m1,
+        "permission_camera_message_ios": m2,
+        "permission_gallery_message_android": m3,
+        "permission_gallery_message_ios": m4,
+        "permission_microphone_message_android": m5,
+        "permission_microphone_message_ios": m6,
         "person": MessageLookupByLibrary.simpleMessage("Kişi"),
         "personal_data_policy": MessageLookupByLibrary.simpleMessage(
             "Gizlilik Bildirimi ve Kişisel Veri Koruma Politikası"),
@@ -1058,6 +1108,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "pick_time": MessageLookupByLibrary.simpleMessage("Zaman Seç"),
         "piece": MessageLookupByLibrary.simpleMessage("adet"),
         "pillar_small": MessageLookupByLibrary.simpleMessage("İlaç kutusu"),
+        "please_select_the_file_you_want_to_upload":
+            MessageLookupByLibrary.simpleMessage(
+                "Lütfen yüklemek istediğiniz dosyayı seçiniz"),
+        "please_select_your_diagnosis":
+            MessageLookupByLibrary.simpleMessage("Lütfen teşhisinizi seçiniz"),
         "pls_select": MessageLookupByLibrary.simpleMessage("Seçiniz"),
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Lütfen departman seçiniz"),
@@ -1076,6 +1131,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "premium": MessageLookupByLibrary.simpleMessage("Premium"),
         "preselection":
             MessageLookupByLibrary.simpleMessage("Ön seçiminizi belirleyin:"),
+        "press_and_hold_the_microphone":
+            MessageLookupByLibrary.simpleMessage("Mikrofona basılı tutunuz"),
         "press_plus_to_add_medicine": MessageLookupByLibrary.simpleMessage(
             "Hatırlatıcı eklemek için + butonuna basın"),
         "price": MessageLookupByLibrary.simpleMessage("Fiyat"),
@@ -1109,6 +1166,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "recover_your_password":
             MessageLookupByLibrary.simpleMessage("Şifremi Kurtar"),
         "refreshment": MessageLookupByLibrary.simpleMessage("Ara"),
+        "rejected": MessageLookupByLibrary.simpleMessage("Reddedildi"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Bundan sonraki işlemleriniz seçilen kullanıcı ile yapılacaktır, onaylıyor musunuz?"),
         "relative_identity_number":
@@ -1140,6 +1198,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("İstek ve Önerileriniz"),
         "request_and_suggestions_text": MessageLookupByLibrary.simpleMessage(
             "Bu Form; sizlere daha iyi hizmet verebilmek amacıyla uygulamada yaşadığınız ve gözlemlediğiniz sorunları / önerilerinizi ve teşekkürlerinizi bildirmeniz için hazırlanmıştır. Bildiriminiz Hastane Yönetimi tarafından en kısa sürede incelenecek, alınan önlemler ve yapılacak düzenlemeler hakkında size bilgi verilecektir. İlgilerinize ve katkılarınıza teşekkür ederiz."),
+        "requested_inspections":
+            MessageLookupByLibrary.simpleMessage("İstenilen Tetkikler"),
         "required_area": MessageLookupByLibrary.simpleMessage("alanı zorunlu"),
         "required_user_height_info_message":
             MessageLookupByLibrary.simpleMessage(
@@ -1214,6 +1274,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Google ile Giriş Yap"),
         "single_day": MessageLookupByLibrary.simpleMessage("Tek Gün"),
         "six_months": MessageLookupByLibrary.simpleMessage("6 aylık"),
+        "slide_to_cancel":
+            MessageLookupByLibrary.simpleMessage("İptal etmek için kaydırın"),
         "smoker": MessageLookupByLibrary.simpleMessage("İçiyor"),
         "smoker_type": MessageLookupByLibrary.simpleMessage("Sigara Geçmişi"),
         "smokes_occasionally":
@@ -1439,6 +1501,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "weight": MessageLookupByLibrary.simpleMessage("Kilo"),
         "weight_text": MessageLookupByLibrary.simpleMessage("Ağırlık"),
         "weight_tracking": MessageLookupByLibrary.simpleMessage("Kilo Takibi"),
+        "what_is_the_e_council":
+            MessageLookupByLibrary.simpleMessage("E-Konsey Nedir?"),
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
             "Kaç strip kaldığında hatırlatılsın"),
@@ -1466,6 +1530,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "<stripCount> stripiniz kaldı"),
         "your_complaints": MessageLookupByLibrary.simpleMessage(
             "Belirttiğiniz şikayetleriniz:"),
+        "your_council_request_has_been_accepted_by_our_doctors_below_are_the_details":
+            MessageLookupByLibrary.simpleMessage(
+                "Konsey talebiniz doktorlarımız tarafından kabul edilmiştir. Aşağıda detaylar yer almaktadır."),
         "your_data_is_synchronizing": MessageLookupByLibrary.simpleMessage(
             "Verileriniz senkronize ediliyor"),
         "youtube_stream": MessageLookupByLibrary.simpleMessage("Youtube Yayını")
