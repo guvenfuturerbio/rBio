@@ -7,7 +7,6 @@ class OneDoseConfig extends IAppConfig<IOneDosePlatformConfig> {
           productType: ProductType.oneDose,
           theme: OneDoseTheme(),
           functionality: OneDoseFunctionality(),
-          endpoints: OneDoseEndpoints(),
           constants: OneDoseConstants(),
         ) {
     setDeviceConfig();
@@ -25,5 +24,10 @@ class OneDoseConfig extends IAppConfig<IOneDosePlatformConfig> {
   @override
   IProductDashboard getDashboard() {
     return DashboardNavigation();
+  }
+
+  @override
+  void setEndpoints() {
+    super.endpoints = OneDoseEndpoints();
   }
 }

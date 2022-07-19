@@ -80,12 +80,13 @@ class Repository {
   }
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
-    final url = getIt<IAppConfig>().endpoints.base.getAllPackagePath;
+    final url = getIt<IAppConfig>().endpoints.package.getAllPackagePath;
     return await apiService.getAllPackage(url);
   }
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
-    final url = getIt<IAppConfig>().endpoints.base.getAllSubCategoriesPath(id);
+    final url =
+        getIt<IAppConfig>().endpoints.package.getAllSubCategoriesPath(id);
     return await apiService.getAllSubCategories(url);
   }
 
@@ -107,7 +108,8 @@ class Repository {
 
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
       int id) async {
-    final url = getIt<IAppConfig>().endpoints.base.getSubCategoryDetailPath(id);
+    final url =
+        getIt<IAppConfig>().endpoints.package.getSubCategoryDetailPath(id);
     return await apiService.getSubCategoryDetail(url);
   }
 
@@ -148,30 +150,34 @@ class Repository {
       apiService.getCurrentApplicationVersion();
 
   Future<PatientResponse?> getPatientDetail() async {
-    final url = getIt<IAppConfig>().endpoints.base.getPatientDetailPath;
+    final url = getIt<IAppConfig>().endpoints.pusula.getPatientDetailPath;
     final response = await apiService.getPatientDetail(url);
     return response;
   }
 
   Future<GuvenResponseModel> sendNotification(
-      ChatNotificationModel model) async {
+    ChatNotificationModel model,
+  ) async {
     final response = await apiService.sendNotification(model);
     return response;
   }
 
   Future<List<FilterTenantsResponse>> filterTenants(
-      FilterTenantsRequest filterTenantsRequest) async {
-    final url = getIt<IAppConfig>().endpoints.base.filterTenantsPath;
+    FilterTenantsRequest filterTenantsRequest,
+  ) async {
+    final url = getIt<IAppConfig>().endpoints.pusula.filterTenantsPath;
     return await apiService.filterTenants(url, filterTenantsRequest);
   }
 
   Future<List<FilterDepartmentsResponse>> filterDepartments(
-      FilterDepartmentsRequest filterDepartmentsRequest) async {
+    FilterDepartmentsRequest filterDepartmentsRequest,
+  ) async {
     return await apiService.filterDepartments(filterDepartmentsRequest);
   }
 
   Future<List<FilterResourcesResponse>> filterResources(
-      FilterResourcesRequest filterResourcesRequest) async {
+    FilterResourcesRequest filterResourcesRequest,
+  ) async {
     return await apiService.filterResources(filterResourcesRequest);
   }
 
@@ -297,9 +303,6 @@ class Repository {
           AddFirebaseTokenRequest addFirebaseToken) =>
       apiService.addFirebaseTokenUi(addFirebaseToken);
 
-  Future<GuvenResponseModel> getRoomStatusUi(String roomId) =>
-      apiService.getRoomStatusUi(roomId);
-
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId) =>
       apiService.getOnlineAppoFiles(roomId);
 
@@ -326,8 +329,6 @@ class Repository {
   Future<GuvenResponseModel> addSuggestion(
           SuggestionRequest suggestionRequest) =>
       apiService.addSuggestion(suggestionRequest);
-
-  Future<GuvenResponseModel> getCourseId() => apiService.getCourseId();
 
   Future<GuvenResponseModel> setJitsiWebConsultantId(String id) =>
       apiService.setJitsiWebConsultantId(id);
@@ -422,7 +423,8 @@ class Repository {
       apiService.doMobilePayment(doMobilePaymentWithVoucherRequest);
 
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
-      FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
+    FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest,
+  ) async {
     return await apiService
         .fetchOnlineDepartments(filterOnlineDepartmentsRequest);
   }

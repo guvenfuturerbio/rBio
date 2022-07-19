@@ -56,17 +56,13 @@ class PersonelInformationCubit extends Cubit<PersonelInformationState> {
         changeInfo.nationalityId = pusulaAccount.nationalityId;
         changeInfo.hasETKApproval = pusulaAccount.hasETKApproval ?? true;
         changeInfo.hasKVKKApproval = pusulaAccount.hasKVKKApproval ?? true;
-        changeInfo.isTwoFactorAuth = sharedPreferencesManager
-                .getBool(SharedPreferencesKeys.isTwoFactorAuth) ??
-            false;
+        changeInfo.isTwoFactorAuth = sharedPreferencesManager.getBool(SharedPreferencesKeys.isTwoFactorAuth) ?? false;
         await repository.updateContactInfo(changeInfo);
       } else {
         changeInfo.gsm = newPhoneNumber;
         changeInfo.gsmCountryCode = null;
         changeInfo.email = newEmail;
-        changeInfo.isTwoFactorAuth = sharedPreferencesManager
-                .getBool(SharedPreferencesKeys.isTwoFactorAuth) ??
-            false;
+        changeInfo.isTwoFactorAuth = sharedPreferencesManager.getBool(SharedPreferencesKeys.isTwoFactorAuth) ?? false;
         await repository.updateContactInfo(changeInfo);
       }
 
@@ -79,7 +75,7 @@ class PersonelInformationCubit extends Cubit<PersonelInformationState> {
       emit(
         state.copyWith(
           isLoading: false,
-          status: PersonelInformationStatus.succes,
+          status: PersonelInformationStatus.success,
         ),
       );
     } catch (e, stackTrace) {
@@ -110,8 +106,7 @@ class PersonelInformationCubit extends Cubit<PersonelInformationState> {
       final guvenResponse = await repository.deleteProfilePicture();
       if (guvenResponse.xIsSuccessful) {
         newProfileFile = null;
-        await sharedPreferencesManager
-            .remove(SharedPreferencesKeys.profileImage);
+        await sharedPreferencesManager.remove(SharedPreferencesKeys.profileImage);
         emit(
           state.copyWith(
             getProfileImage: NetworkImage(R.image.circlevatar),
@@ -133,8 +128,7 @@ class PersonelInformationCubit extends Cubit<PersonelInformationState> {
   Future<void> savePhoto() async {
     if (newProfileFile == null) return;
     try {
-      final guvenResponse =
-          await repository.uploadProfilePicture(newProfileFile!);
+      final guvenResponse = await repository.uploadProfilePicture(newProfileFile!);
       if (guvenResponse.xIsSuccessful && guvenResponse.datum != null) {
         await sharedPreferencesManager.setString(
           SharedPreferencesKeys.profileImage,
@@ -168,11 +162,7 @@ class PersonelInformationCubit extends Cubit<PersonelInformationState> {
       ),
     );
     try {
-      final imageFile = await imageManager.pickImage(
-          source: state.imageSource!,
-          maxHeight: 1080,
-          maxWidth: 1920,
-          imageQuality: 50);
+      final imageFile = await imageManager.pickImage(source: state.imageSource!, maxHeight: 1080, maxWidth: 1920, imageQuality: 50);
       if (imageFile != null) {
         newProfileFile = File(imageFile.path);
         emit(
