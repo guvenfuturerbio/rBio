@@ -1679,13 +1679,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.0"
-  searchfield:
-    dependency: "direct main"
-    description:
-      name: searchfield
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.6"
   sentry:
     dependency: transitive
     description:
