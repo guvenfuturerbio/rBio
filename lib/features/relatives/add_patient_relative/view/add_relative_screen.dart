@@ -107,8 +107,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
-        title: RbioAppBar.textTitle(
-            context, LocaleProvider.of(context).add_new_relative),
+        title: RbioAppBar.textTitle(context, LocaleProvider.of(context).add_new_relative),
       ),
       body: _buildBody(),
     );
@@ -123,16 +122,13 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
             LocaleProvider.of(context).something_went_wrong,
           );
         } else if (state.status == AddPatientRelativesStatus.done) {
-          Utils.instance.showSuccessSnackbar(
-              context, LocaleProvider.of(context).add_relative_request);
+          Utils.instance.showSuccessSnackbar(context, LocaleProvider.of(context).add_relative_request);
           Atom.historyBack();
         } else if (state.status == AddPatientRelativesStatus.datum0) {
-          Utils.instance.showSuccessSnackbar(
-              context, LocaleProvider.of(context).existing_relative_add);
+          Utils.instance.showSuccessSnackbar(context, LocaleProvider.of(context).existing_relative_add);
           Atom.historyBack();
         } else if (state.status == AddPatientRelativesStatus.datum1) {
-          Utils.instance.showSuccessSnackbar(
-              context, LocaleProvider.of(context).add_new_relative);
+          Utils.instance.showSuccessSnackbar(context, LocaleProvider.of(context).add_new_relative);
           Atom.historyBack();
         }
       },
@@ -143,10 +139,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
             _buildSuccess(context, state.model),
 
             //
-            if (state.status ==
-                AddPatientRelativesStatus.loadingInProgress) ...[
-              RbioLoading.progressIndicator()
-            ],
+            if (state.status == AddPatientRelativesStatus.loadingInProgress) ...[RbioLoading.progressIndicator()],
           ],
         );
       },
@@ -210,8 +203,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               validator: validatorForEmpty,
               keyboardType: TextInputType.name,
               inputFormatters: <TextInputFormatter>[
-                TabToNextFieldTextInputFormatter(
-                    context, nameFNode, surnameFNode),
+                TabToNextFieldTextInputFormatter(context, nameFNode, surnameFNode),
                 FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\t\r]')),
               ],
               onFieldSubmitted: (term) {
@@ -228,8 +220,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               validator: validatorForEmpty,
               keyboardType: TextInputType.name,
               inputFormatters: <TextInputFormatter>[
-                TabToNextFieldTextInputFormatter(
-                    context, surnameFNode, phoneFNode),
+                TabToNextFieldTextInputFormatter(context, surnameFNode, phoneFNode),
                 FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\t\r]')),
               ],
               onFieldSubmitted: (term) {
@@ -254,8 +245,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 }
               },
               inputFormatters: <TextInputFormatter>[
-                TabToNextFieldTextInputFormatter(
-                    context, phoneFNode, emailFNode),
+                TabToNextFieldTextInputFormatter(context, phoneFNode, emailFNode),
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]')),
               ],
               onFieldSubmitted: (term) {
@@ -271,10 +261,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               focusNode: emailFNode,
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
-                RegExp mailReg = RegExp(
-                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-
-                if (!mailReg.hasMatch(value!)) {
+                if (!R.regExp.email.hasMatch(value!)) {
                   return LocaleProvider.of(context).invalid_mail;
                 } else {
                   return null;
@@ -298,8 +285,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               focusNode: birthDateFNode,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(context, birthDateFNode, null),
-                FilteringTextInputFormatter.allow(
-                    RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
+                FilteringTextInputFormatter.allow(RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
               ],
               onFieldSubmitted: (term) {
                 Utils.instance.fieldFocusChange(context, birthDateFNode, null);
@@ -308,20 +294,16 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 final DateTime? picked = await showRbioDatePicker(
                   context,
                   title: LocaleProvider.of(context).select_birth_date,
-                  initialDateTime:
-                      DateTime.now().subtract(const Duration(days: 365 * 18)),
-                  maximumDate:
-                      DateTime.now().subtract(const Duration(days: 365 * 18)),
-                  minimumDate:
-                      DateTime.now().subtract(const Duration(days: 365 * 100)),
+                  initialDateTime: DateTime.now().subtract(const Duration(days: 365 * 18)),
+                  maximumDate: DateTime.now().subtract(const Duration(days: 365 * 18)),
+                  minimumDate: DateTime.now().subtract(const Duration(days: 365 * 100)),
                   maxYear: DateTime.now().year - 18,
                   minYear: DateTime.now().year - 99,
                 );
 
                 if (picked != null) {
                   birthDateController.text = DateFormat.yMMMMd().format(picked);
-                  context.read<AddPatientRelativesCubit>().updateModel(
-                      model.copyWith(birthDate: picked.toString()));
+                  context.read<AddPatientRelativesCubit>().updateModel(model.copyWith(birthDate: picked.toString()));
                 }
               },
             ),
@@ -344,9 +326,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                 var res = await showRbioSelectBottomSheet(
                   context,
                   title: LocaleProvider.current.gender,
-                  children: [
-                    for (var item in listOfGender) Center(child: Text(item))
-                  ],
+                  children: [for (var item in listOfGender) Center(child: Text(item))],
                   initialItem: 0,
                 );
 
@@ -377,15 +357,11 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               onTap: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  UserRelativePatientModel addPatientRelative =
-                      UserRelativePatientModel(
+                  UserRelativePatientModel addPatientRelative = UserRelativePatientModel(
                     firstName: nameController.text,
                     lastName: surnameController.text,
                     birthDate: model.birthDate,
-                    gender:
-                        genderController.text == LocaleProvider.of(context).male
-                            ? 'E'
-                            : 'K',
+                    gender: genderController.text == LocaleProvider.of(context).male ? 'E' : 'K',
                     gsm: phoneController.text,
                     email: emailController.text,
                     identityNumber: tcNoController.text,
@@ -399,13 +375,9 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
                       addPatientRelative.email!.isNotEmpty &&
                       addPatientRelative.gsm!.isNotEmpty &&
                       addPatientRelative.birthDate!.isNotEmpty) {
-                    context
-                        .read<AddPatientRelativesCubit>()
-                        .updateModel(addPatientRelative);
+                    context.read<AddPatientRelativesCubit>().updateModel(addPatientRelative);
 
-                    context
-                        .read<AddPatientRelativesCubit>()
-                        .addPatientRelative(addPatientRelative);
+                    context.read<AddPatientRelativesCubit>().addPatientRelative(addPatientRelative);
                   }
                 }
               },
