@@ -5,7 +5,7 @@ enum PersonelInformationStatus {
   inital,
   getPhotoFromSource,
   deletePhoto,
-  succes,
+  success,
   errorDialog,
 }
 
@@ -20,8 +20,7 @@ class PersonelInformationState {
     ImageProvider<Object>? getProfileImage,
     this.imageSource,
   }) {
-    this.getProfileImage =
-        getProfileImage ?? Utils.instance.getCacheProfileImage;
+    this.getProfileImage = getProfileImage ?? Utils.instance.getCacheProfileImage;
   }
 
   PersonelInformationState copyWith({

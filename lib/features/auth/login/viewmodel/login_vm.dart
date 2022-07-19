@@ -25,12 +25,10 @@ class LoginScreenVm extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       consentForm = await getIt<Repository>().getConsentForm();
 
-      getIt<ISharedPreferencesManager>().setString(
-          SharedPreferencesKeys.consentId, consentForm.id.toString());
+      getIt<ISharedPreferencesManager>().setString(SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();
       await getSavedLoginInfo();
-      getIt<UserNotifier>().setDefaultUser(getIt<ISharedPreferencesManager>()
-          .getBool(SharedPreferencesKeys.isDefaultUser));
+      getIt<UserNotifier>().setDefaultUser(getIt<ISharedPreferencesManager>().getBool(SharedPreferencesKeys.isDefaultUser));
     });
   }
 
@@ -45,8 +43,7 @@ class LoginScreenVm extends ChangeNotifier {
   LoadingDialog? loadingDialog;
 
   ApplicationVersionResponse? _applicationVersionResponse;
-  ApplicationVersionResponse? get applicationVersion =>
-      _applicationVersionResponse;
+  ApplicationVersionResponse? get applicationVersion => _applicationVersionResponse;
 
   RbioLoginResponse? _guvenLogin;
   RbioLoginResponse? get guvenLogin => _guvenLogin;
@@ -112,8 +109,7 @@ class LoginScreenVm extends ChangeNotifier {
 
   Future<void> getSavedLoginInfo() async {
     var userLoginInfo = getIt<UserManager>().getSavedLoginInfo();
-    if (userLoginInfo.password != null &&
-        (userLoginInfo.password?.length ?? 0) > 0) {
+    if (userLoginInfo.password != null && (userLoginInfo.password?.length ?? 0) > 0) {
       _rememberMeChecked = true;
     }
     setUserIdText(userLoginInfo.username ?? '');
@@ -136,10 +132,7 @@ class LoginScreenVm extends ChangeNotifier {
       _versionCheckProgress = VersionCheckProgress.done;
       notifyListeners();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       showGradientDialog(
         mContext,
         LocaleProvider.current.warning,
@@ -152,13 +145,9 @@ class LoginScreenVm extends ChangeNotifier {
 
   Future<void> fetchAppVersion(UserLoginInfo userLoginInfo) async {
     try {
-      _applicationVersionResponse =
-          await getIt<Repository>().getCurrentApplicationVersion();
+      _applicationVersionResponse = await getIt<Repository>().getCurrentApplicationVersion();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       LoggerUtils.instance.e(e);
     } finally {
       notifyListeners();
@@ -168,8 +157,7 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> checkAppVersion(UserLoginInfo userLoginInfo) async {
-    final requiredMinVersion =
-        Version.parse(applicationVersion?.minimum ?? '0.0.0');
+    final requiredMinVersion = Version.parse(applicationVersion?.minimum ?? '0.0.0');
     final latestVersion = Version.parse(applicationVersion?.latest ?? '0.0.0');
 
     final packageInfo = await PackageInfo.fromPlatform();
@@ -183,8 +171,7 @@ class LoginScreenVm extends ChangeNotifier {
         onPressed: () {
           updateNow();
         },
-        message: LocaleProvider.of(mContext).force_update_message +
-            "\n${applicationVersion?.name ?? ""}\n${applicationVersion?.releaseNotes ?? ""}",
+        message: LocaleProvider.of(mContext).force_update_message + "\n${applicationVersion?.name ?? ""}\n${applicationVersion?.releaseNotes ?? ""}",
       );
     } else if (latestVersion > currentVersion) {
       _needForceUpdate = false;
@@ -193,22 +180,16 @@ class LoginScreenVm extends ChangeNotifier {
       if (check) {
         showOptionalUpdateDialog(
           context: mContext,
-          message: LocaleProvider.of(mContext).optional_update_message +
-              "\n${applicationVersion?.name ?? ""}\n${applicationVersion?.releaseNotes ?? ""}",
+          message: LocaleProvider.of(mContext).optional_update_message + "\n${applicationVersion?.name ?? ""}\n${applicationVersion?.releaseNotes ?? ""}",
           onPressed: () {
             updateNow();
           },
         );
       }
     } else {
-      if ((userLoginInfo.username ?? "").isNotEmpty &&
-          (userLoginInfo.password ?? "").isNotEmpty) {
+      if ((userLoginInfo.username ?? "").isNotEmpty && (userLoginInfo.password ?? "").isNotEmpty) {
         await login(
-            userLoginInfo.username ?? '',
-            userLoginInfo.password ?? '',
-            getIt<ISharedPreferencesManager>()
-                    .getString(SharedPreferencesKeys.consentId) ??
-                '');
+            userLoginInfo.username ?? '', userLoginInfo.password ?? '', getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.consentId) ?? '');
       }
     }
   }
@@ -221,9 +202,7 @@ class LoginScreenVm extends ChangeNotifier {
 
       try {
         if (getIt<IAppConfig>().functionality.recaptcha && kIsWeb) {
-          String token =
-              await getIt<IAppConfig>().platform.recaptchaManager?.login() ??
-                  '';
+          String token = await getIt<IAppConfig>().platform.recaptchaManager?.login() ?? '';
           if (token.isEmpty) return;
         }
         final starterResponse = await getIt<Repository>().loginStarter(
@@ -233,8 +212,7 @@ class LoginScreenVm extends ChangeNotifier {
         hideDialog(mContext);
 
         if (starterResponse.datum is Map<String, dynamic>) {
-          final starterBody =
-              UserLoginStarterResponse.fromJson(starterResponse.datum);
+          final starterBody = UserLoginStarterResponse.fromJson(starterResponse.datum);
           await getIt<ISharedPreferencesManager>().setBool(
             SharedPreferencesKeys.isTwoFactorAuth,
             starterBody.isTwoFa ?? false,
@@ -261,16 +239,13 @@ class LoginScreenVm extends ChangeNotifier {
               await login(username, password, consentId);
               return;
             }
-          } else if (starterBody.isTwoFa == false &&
-              starterBody.isSsoValid == true) {
+          } else if (starterBody.isTwoFa == false && starterBody.isSsoValid == true) {
             // Get Token by GOs
             await loginWithProductType(username, password, consentId);
-          } else if (starterBody.isTwoFa == false &&
-              starterBody.isSsoValid == false) {
+          } else if (starterBody.isTwoFa == false && starterBody.isSsoValid == false) {
             // Get Token by GO
             await loginWithProductType(username, password, consentId);
-          } else if (starterBody.isTwoFa == true &&
-              starterBody.isSsoValid == false) {
+          } else if (starterBody.isTwoFa == true && starterBody.isSsoValid == false) {
             showGradientDialog(
               mContext,
               LocaleProvider.current.warning,
@@ -279,10 +254,7 @@ class LoginScreenVm extends ChangeNotifier {
           }
         }
       } catch (e, stackTrace) {
-        getIt<IAppConfig>()
-            .platform
-            .sentryManager
-            .captureException(e, stackTrace: stackTrace);
+        getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
         LoggerUtils.instance.e(e);
         hideDialog(mContext);
         notifyListeners();
@@ -295,8 +267,7 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  Future<void> loginWithProductType(
-      String username, String password, String consentId) async {
+  Future<void> loginWithProductType(String username, String password, String consentId) async {
     showLoadingDialog();
     if (getIt<IAppConfig>().productType == ProductType.oneDose) {
       await loginOneDose(username, password, consentId);
@@ -305,16 +276,11 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  Future<void> loginGuven(
-      String username, String password, String consentId) async {
+  Future<void> loginGuven(String username, String password, String consentId) async {
     try {
-      _guvenLogin =
-          await getIt<UserManager>().login(username, password, consentId);
+      _guvenLogin = await getIt<UserManager>().login(username, password, consentId);
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       hideDialog(mContext);
 
       if (e is LoginExceptions) {
@@ -385,34 +351,29 @@ class LoginScreenVm extends ChangeNotifier {
     try {
       pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       if (pusulaPatientDetail == null) {
         var inputFormat = DateFormat('dd.MM.yyyy');
         var date1 = inputFormat.parse(patientDetail.patients!.first.birthDate!);
 
         var outputFormat = DateFormat('yyyy-MM-dd');
         var date2 = outputFormat.format(date1);
-        SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest =
-            SynchronizeOneDoseUserRequest(
-                birthDate: date2,
-                email: patientDetail.electronicMail,
-                firstName: patientDetail.name,
-                gender: patientDetail.patients?.first.gender,
-                gsm: patientDetail.phoneNumber,
-                countryCode: patientDetail.countryCode,
-                id: 0,
-                hasEtkApproval: true,
-                hasKvkkApproval: true,
-                identityNumber: patientDetail.identificationNumber,
-                lastName: patientDetail.surname,
-                nationalityId: (patientDetail.nationality!) == 'TC' ? 213 : 98,
-                passportNumber: patientDetail.passaportNumber,
-                patientType: 1);
-        await getIt<Repository>()
-            .synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
+        SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest = SynchronizeOneDoseUserRequest(
+            birthDate: date2,
+            email: patientDetail.electronicMail,
+            firstName: patientDetail.name,
+            gender: patientDetail.patients?.first.gender,
+            gsm: patientDetail.phoneNumber,
+            countryCode: patientDetail.countryCode,
+            id: 0,
+            hasEtkApproval: true,
+            hasKvkkApproval: true,
+            identityNumber: patientDetail.identificationNumber,
+            lastName: patientDetail.surname,
+            nationalityId: (patientDetail.nationality!) == 'TC' ? 213 : 98,
+            passportNumber: patientDetail.passaportNumber,
+            patientType: 1);
+        await getIt<Repository>().synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
       }
     }
     if (pusulaPatientDetail == null) {
@@ -430,26 +391,18 @@ class LoginScreenVm extends ChangeNotifier {
         );
       }
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       //
     }
 
     final term = Atom.queryParameters['then'];
 
-    getIt<FirebaseAnalyticsManager>()
-        .setUserId(getIt<UserNotifier>().firebaseEmail);
+    getIt<FirebaseAnalyticsManager>().setUserId(getIt<UserNotifier>().firebaseEmail);
     getIt<FirebaseAnalyticsManager>().setUserProperty('Login', 'authed');
-    getIt<FirebaseAnalyticsManager>().setUserProperty(
-        'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
+    getIt<FirebaseAnalyticsManager>().setUserProperty('user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
-    getIt<IAppConfig>()
-        .platform
-        .adjustManager
-        ?.trackEvent(SuccessfulLoginEvent());
+    getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulLoginEvent());
 
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
@@ -462,17 +415,12 @@ class LoginScreenVm extends ChangeNotifier {
     Atom.to(PagePaths.main, isReplacement: true);
   }
 
-  Future<void> loginOneDose(
-      String username, String password, String consentId) async {
+  Future<void> loginOneDose(String username, String password, String consentId) async {
     // Roles and token
     try {
-      _guvenLogin =
-          await getIt<UserManager>().login(username, password, consentId);
+      _guvenLogin = await getIt<UserManager>().login(username, password, consentId);
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       hideDialog(mContext);
 
       if (e is LoginExceptions) {
@@ -543,34 +491,29 @@ class LoginScreenVm extends ChangeNotifier {
     try {
       pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       if (pusulaPatientDetail == null) {
         var inputFormat = DateFormat('dd.MM.yyyy');
         var date1 = inputFormat.parse(patientDetail.patients!.first.birthDate!);
 
         var outputFormat = DateFormat('yyyy-MM-dd');
         var date2 = outputFormat.format(date1);
-        SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest =
-            SynchronizeOneDoseUserRequest(
-                birthDate: date2,
-                email: patientDetail.electronicMail,
-                firstName: patientDetail.name,
-                gender: patientDetail.patients?.first.gender,
-                gsm: patientDetail.phoneNumber,
-                countryCode: patientDetail.countryCode,
-                id: 0,
-                hasEtkApproval: true,
-                hasKvkkApproval: true,
-                identityNumber: patientDetail.identificationNumber,
-                lastName: patientDetail.surname,
-                nationalityId: (patientDetail.nationality!) == 'TC' ? 213 : 98,
-                passportNumber: patientDetail.passaportNumber,
-                patientType: 1);
-        await getIt<Repository>()
-            .synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
+        SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest = SynchronizeOneDoseUserRequest(
+            birthDate: date2,
+            email: patientDetail.electronicMail,
+            firstName: patientDetail.name,
+            gender: patientDetail.patients?.first.gender,
+            gsm: patientDetail.phoneNumber,
+            countryCode: patientDetail.countryCode,
+            id: 0,
+            hasEtkApproval: true,
+            hasKvkkApproval: true,
+            identityNumber: patientDetail.identificationNumber,
+            lastName: patientDetail.surname,
+            nationalityId: (patientDetail.nationality!) == 'TC' ? 213 : 98,
+            passportNumber: patientDetail.passaportNumber,
+            patientType: 1);
+        await getIt<Repository>().synchronizeOneDoseUser(synchronizeOneDoseUserRequest);
       }
     }
     if (pusulaPatientDetail == null) {
@@ -601,21 +544,13 @@ class LoginScreenVm extends ChangeNotifier {
 
     if (!Atom.isWeb && getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
       try {
-        List<PairedDevice>? devices =
-            getIt<BleDeviceManager>().getPairedDevices();
+        List<PairedDevice>? devices = getIt<BleDeviceManager>().getPairedDevices();
         if (devices.isNotEmpty) {
-          Atom.context
-              .read<BluetoothBloc>()
-              .add(const BluetoothEvent.listenBleStatus());
+          Atom.context.read<BluetoothBloc>().add(const BluetoothEvent.listenBleStatus());
         }
       } catch (e, stackTrace) {
-        getIt<IAppConfig>()
-            .platform
-            .sentryManager
-            .captureException(e, stackTrace: stackTrace);
-        Atom.context
-            .read<BluetoothBloc>()
-            .add(const BluetoothEvent.listenBleStatus());
+        getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
+        Atom.context.read<BluetoothBloc>().add(const BluetoothEvent.listenBleStatus());
       }
     }
 
@@ -630,10 +565,7 @@ class LoginScreenVm extends ChangeNotifier {
         );
       }
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      getIt<IAppConfig>().platform.sentryManager.captureException(e, stackTrace: stackTrace);
       //
     }
 
@@ -644,18 +576,13 @@ class LoginScreenVm extends ChangeNotifier {
     }
 
     final term = Atom.queryParameters['then'];
-    getIt<FirebaseAnalyticsManager>()
-        .setUserId(getIt<UserNotifier>().firebaseEmail);
+    getIt<FirebaseAnalyticsManager>().setUserId(getIt<UserNotifier>().firebaseEmail);
 
     getIt<FirebaseAnalyticsManager>().setUserProperty('Login', 'authed');
-    getIt<FirebaseAnalyticsManager>().setUserProperty(
-        'user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
+    getIt<FirebaseAnalyticsManager>().setUserProperty('user_age', getIt<ProfileStorageImpl>().getFirst().birthDate);
 
     getIt<FirebaseAnalyticsManager>().logEvent(BasariliGirisEvent());
-    getIt<IAppConfig>()
-        .platform
-        .adjustManager
-        ?.trackEvent(SuccessfulLoginEvent());
+    getIt<IAppConfig>().platform.adjustManager?.trackEvent(SuccessfulLoginEvent());
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }
@@ -664,7 +591,20 @@ class LoginScreenVm extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 100));
     hideDialog(mContext);
     notifyListeners();
-    Atom.to(PagePaths.main, isReplacement: true);
+
+    /// Kullanici mail adresi boş ise, oturum açma esnasında Ana sayfa yerine
+    /// kişisel bilgilerim sayfası açılır ve kullanıcıdan mail girmesi istenilir.
+    if (getIt<UserFacade>().getUserAccount().electronicMail != null) {
+      Atom.to(PagePaths.main, isReplacement: true);
+    } else {
+      Atom.to(
+        PagePaths.personalInformation,
+        isReplacement: true,
+        queryParameters: {
+          'emailRequired': 'true',
+        },
+      );
+    }
   }
 
   bool checkFields(String username, String password) {
@@ -689,19 +629,16 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  Future<void> saveLoginInfo(
-      String userName, String password, String token) async {
+  Future<void> saveLoginInfo(String userName, String password, String token) async {
     if (!rememberMeChecked) {
       password = "";
     }
 
-    await getIt<UserManager>()
-        .saveLoginInfo(userName, password, rememberMeChecked, token);
+    await getIt<UserManager>().saveLoginInfo(userName, password, rememberMeChecked, token);
   }
 
   bool isShowOptional() {
-    final showUpdates = getIt<ISharedPreferencesManager>()
-        .getBool(SharedPreferencesKeys.updateDialog);
+    final showUpdates = getIt<ISharedPreferencesManager>().getBool(SharedPreferencesKeys.updateDialog);
     if (showUpdates != null) {
       return showUpdates;
     } else {
@@ -710,9 +647,7 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> updateNow() async {
-    String applicationUrl = platform.Platform.isIOS
-        ? (applicationVersion?.iosUrl ?? '')
-        : (applicationVersion?.androidUrl ?? '');
+    String applicationUrl = platform.Platform.isIOS ? (applicationVersion?.iosUrl ?? '') : (applicationVersion?.androidUrl ?? '');
     bool urlActive = await canLaunchUrl(Uri.parse(applicationUrl));
     if (urlActive) {
       launchUrl(Uri.parse(applicationUrl));
@@ -741,11 +676,7 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   void showLoadingDialog() async {
-    await showDialog(
-        context: mContext,
-        barrierDismissible: false,
-        builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
+    await showDialog(context: mContext, barrierDismissible: false, builder: (BuildContext context) => loadingDialog = loadingDialog ?? LoadingDialog());
   }
 
   showApplicationContestForm() async {
