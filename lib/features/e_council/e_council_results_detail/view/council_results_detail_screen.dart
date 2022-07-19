@@ -28,7 +28,7 @@ class ECouncilResultsDetailScreen extends StatelessWidget {
                 children: [
                   Text(
                     LocaleProvider.of(context).council_report,
-                    style: context.xHeadline2.copyWith(color: Colors.white),
+                    style: context.xHeadline1.copyWith(color: Colors.white),
                   ),
                 ],
               ),
