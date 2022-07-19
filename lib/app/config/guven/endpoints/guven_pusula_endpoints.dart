@@ -37,7 +37,7 @@ class GuvenPusulaEndpoints extends PusulaEndpoints {
   String saveAppointmentPath = '/Pusula/saveAppointment'.xBaseUrl;
 
   @override
-  String updatePusulaContactInfoPath =
+  String get updatePusulaContactInfoPath =>
       throw RbioUndefinedEndpointException("updatePusulaContactInfoPath");
 
   @override

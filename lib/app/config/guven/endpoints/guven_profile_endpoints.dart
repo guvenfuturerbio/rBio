@@ -12,11 +12,11 @@ class GuvenProfileEndpoints extends ProfileEndpoints {
   String addNewPatientRelativePath = '/profile/add-relative'.xBaseUrl;
 
   @override
-  String getAllProfiles =
+  String get getAllProfiles =>
       throw RbioUndefinedEndpointException("getAllProfiles");
 
   @override
-  String addProfile = throw RbioUndefinedEndpointException("addProfile");
+  String get addProfile => throw RbioUndefinedEndpointException("addProfile");
 
   @override
   String getActiveStreamPath = '/profile/get-active-stream'.xBaseUrl;
