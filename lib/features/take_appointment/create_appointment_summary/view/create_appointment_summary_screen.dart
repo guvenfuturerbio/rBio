@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
@@ -34,11 +35,7 @@ class _CreateAppointmentSummaryScreenState
   late TextEditingController codeEditingController;
   late FocusNode codeFocusNode;
 
-  late final TextEditingController _countryController;
   late final TextEditingController _cityController;
-
-  late Country selectedCountry;
-  late String selectedCity;
 
   @override
   void initState() {
@@ -47,11 +44,8 @@ class _CreateAppointmentSummaryScreenState
     codeEditingController = TextEditingController();
     codeFocusNode = FocusNode();
 
-    _countryController = TextEditingController(text: R.constants.turkey);
+    // _countryController = TextEditingController(text: R.constants.turkey);
     _cityController = TextEditingController();
-
-    selectedCountry = Country(name: R.constants.turkey, id: 213);
-    selectedCity = "";
   }
 
   @override
@@ -158,7 +152,7 @@ class _CreateAppointmentSummaryScreenState
                                 height: Atom.height * .2,
                               ),
 
-                              //
+                              //""
                               R.widgets.hSizer4,
 
                               //
@@ -202,10 +196,17 @@ class _CreateAppointmentSummaryScreenState
                               .functionality
                               .createOnlineAppointmentWithCountrySelection)
                         LocationInfoCard(
-                          countryController: _countryController,
+                          countryController: vm.isLocationEnable
+                              ? vm.countryController
+                              : TextEditingController(text: R.constants.turkey),
                           cityController: _cityController,
-                          isCityVisible:
-                              selectedCountry.id == 213 ? true : false,
+                          isCityVisible: vm.isLocationEnable
+                              ? vm.placemarks.first.country!.contains('Turkey')
+                                  ? true
+                                  : false
+                              : vm.selectedCountry.id == 213
+                                  ? true
+                                  : false,
                           countryOnTap: () async {
                             var res = await showRbioSelectBottomSheet(
                               context,
@@ -217,11 +218,12 @@ class _CreateAppointmentSummaryScreenState
                               initialItem: 0,
                             );
 
-                            _countryController.text =
+                            vm.countryController.text =
                                 vm.countryList.countries![res].name!;
 
                             setState(() {
-                              selectedCountry = vm.countryList.countries![res];
+                              vm.selectedCountry =
+                                  vm.countryList.countries![res];
                             });
                           },
                           cityOnTap: () async {
@@ -236,7 +238,7 @@ class _CreateAppointmentSummaryScreenState
                             );
 
                             _cityController.text = vm.province[res];
-                            selectedCity = _cityController.text;
+                            vm.selectedCity = _cityController.text;
                             setState(() {});
                           },
                         ),

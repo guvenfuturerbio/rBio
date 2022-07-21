@@ -1,6 +1,8 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
@@ -27,7 +29,12 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   final bool forOnline;
   final String to;
   final String from;
+  Country selectedCountry = Country(name: R.constants.turkey, id: 213);
+  String selectedCity = "";
   CountryListResponse countryList = CountryListResponse();
+  Position? position;
+  List<Placemark> placemarks = [];
+  bool isLocationEnable = false;
 
   bool appointmentSuccess = false;
 
@@ -38,6 +45,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     notifyListeners();
   }
 
+  TextEditingController countryController = TextEditingController();
   bool _showCodeField = false;
   bool get showCodeField => _showCodeField;
   set showCodeField(bool val) {
@@ -73,6 +81,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
             .functionality
             .createOnlineAppointmentWithCountrySelection) {
           await getCountries();
+          await getLocation();
         }
       });
     } else if (tenantId == 1) {
@@ -318,6 +327,19 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
   Future<void> codeCancel() async {
     newVideoCallPriceResponse = null;
     voucherCode = null;
+  }
+
+  Future<void> getLocation() async {
+    isLocationEnable = false;
+    position = await getIt<IAppConfig>().platform.geolocatorManager?.location();
+    placemarks = await placemarkFromCoordinates(
+        position?.latitude ?? 39.925533, position?.longitude ?? 32.866287);
+    countryController.text = placemarks.first.country ?? R.constants.turkey;
+    selectedCountry = countryList.countries!.firstWhere((element) =>
+        (element.name ?? '').toLowerCase() ==
+        countryController.text.toLowerCase());
+    isLocationEnable = true;
+    notifyListeners();
   }
 
   void showPossibleProblemsDialog(

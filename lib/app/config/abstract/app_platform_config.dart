@@ -5,11 +5,13 @@ abstract class IAppPlatformConfig {
   AdjustManager? adjustManager;
   RecaptchaManager? recaptchaManager;
   late SentryManager sentryManager;
+  GeolocatorManager? geolocatorManager;
   IAppPlatformConfig(
     this.options,
     this.adjustManager,
     this.recaptchaManager,
     this.sentryManager,
+    this.geolocatorManager,
   );
   Widget runApp(String initialRoute, bool jailbroken);
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager);

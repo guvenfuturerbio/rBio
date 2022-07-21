@@ -5,17 +5,20 @@ abstract class IOneDosePlatformConfig extends IAppPlatformConfig {
     FirebaseOptions? options,
     AdjustManager? adjustManager,
     RecaptchaManager? recaptchaManager,
+    GeolocatorManager? geolocatorManager,
   ) : super(
           options,
           adjustManager,
           recaptchaManager,
           OneDoseSentryManagerImpl(),
+          geolocatorManager,
         );
 }
 
 class OneDoseMobilePlatformConfig extends IOneDosePlatformConfig
     with IAppMobilePlatformConfig {
-  OneDoseMobilePlatformConfig() : super(null, OneDoseAdjustManagerImpl(), null);
+  OneDoseMobilePlatformConfig()
+      : super(null, OneDoseAdjustManagerImpl(), null, null);
 
   @override
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
@@ -49,6 +52,7 @@ class OneDoseWebPlatformConfig extends IOneDosePlatformConfig
               appId: "1:265636530937:web:5d18cdcf7fd03242263028",
               measurementId: "G-BYWQLYEVVW",
             ),
+            null,
             null,
             null);
 
