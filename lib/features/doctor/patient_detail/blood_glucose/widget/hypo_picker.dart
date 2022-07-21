@@ -21,9 +21,7 @@ class _HypoPicker extends StatelessWidget {
 
   Dialog _buildDialog(BgPatientPickerVm vm, BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,

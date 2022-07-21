@@ -198,9 +198,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                         color: result.graphType == GraphTypes.weight
                             ? context.xPrimaryColor
                             : null,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Text(
@@ -227,9 +225,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                         color: result.graphType == GraphTypes.bmi
                             ? context.xPrimaryColor
                             : null,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Text(

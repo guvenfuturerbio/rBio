@@ -23,9 +23,7 @@ class RbioForYouCategoryCard extends StatelessWidget {
       child: Material(
         clipBehavior: Clip.antiAlias,
         elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
+        shape: R.sizes.defaultShape,
         child: SizedBox(
           height: 300,
           width: 300,
@@ -69,7 +67,7 @@ class RbioForYouCategoryCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(6),
                         child: Text(
-                          title ?? "No title",
+                          title ?? "",
                           textAlign: TextAlign.left,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,

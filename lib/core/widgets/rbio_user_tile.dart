@@ -45,9 +45,7 @@ class RbioUserTile extends StatelessWidget {
               alignment: Alignment.center,
               child: ListTile(
                 dense: true,
-                shape: RoundedRectangleBorder(
-                  borderRadius: R.sizes.borderRadiusCircular,
-                ),
+                shape: R.sizes.defaultShape,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
                   vertical: 6.0,

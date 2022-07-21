@@ -26,9 +26,7 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
       elevation: 0,
       insetPadding: EdgeInsets.zero,
       backgroundColor: getIt<IAppConfig>().theme.grayColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       child: Container(
         width: context.width - 50,
         padding: const EdgeInsets.all(20),

@@ -24,9 +24,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
     return AlertDialog(
       backgroundColor: context.xCardColor,
       contentPadding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       content: SizedBox(
         height: Atom.height * 0.25,
         child: Column(

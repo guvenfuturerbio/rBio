@@ -22,13 +22,14 @@ class BpChartFilterPopUp extends StatelessWidget {
     return Dialog(
       elevation: R.sizes.defaultElevation,
       backgroundColor: context.scaffoldBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       child: ChangeNotifierProvider(
         create: (_) => BpChartFilterPopUpVm(
           measurements: measurements ??
-              Provider.of<BpProgressVm>(context, listen: false).measurements,
+              Provider.of<BpProgressVm>(
+                context,
+                listen: false,
+              ).measurements,
         ),
         child: _buildConsumer(),
       ),

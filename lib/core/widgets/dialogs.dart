@@ -113,9 +113,7 @@ class _GradientDialogState extends State<GradientDialog> {
             fontWeight: FontWeight.w700,
             color: getIt<IAppConfig>().theme.textColor),
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       actions: [
         okButton,
       ],

@@ -14,10 +14,9 @@ class RbioBaseDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      backgroundColor:
+          getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
+      shape: R.sizes.defaultShape,
       child: Container(
         width: context.width > 500 ? 500 : context.width - 50,
         padding: const EdgeInsets.all(20),
@@ -41,10 +40,9 @@ class RbioBaseGreyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      backgroundColor:
+          getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
+      shape: R.sizes.defaultShape,
       child: Container(
         width: context.width > 500 ? 500 : context.width - 50,
         padding: const EdgeInsets.all(20),
@@ -229,7 +227,7 @@ class RbioSmallDialogButton extends StatelessWidget {
       onPressed: onPressed,
       backgroundColor: backgroundColor,
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      shape: RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+      shape: R.sizes.defaultShape,
       padding: const EdgeInsets.symmetric(
         horizontal: 35,
         vertical: 5,

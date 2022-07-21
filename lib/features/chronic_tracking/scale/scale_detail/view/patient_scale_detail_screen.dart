@@ -436,9 +436,7 @@ class ScaleCard extends StatelessWidget {
       AlertDialog(
         contentPadding: EdgeInsets.zero,
         backgroundColor: context.xPrimaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
+        shape: R.sizes.defaultShape,
         title: Text(
           LocaleProvider.current.warning,
           style: context.xHeadline1.copyWith(

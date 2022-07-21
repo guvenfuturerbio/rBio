@@ -119,9 +119,7 @@ class _BuildCouncilResults extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       child: InkWell(
         onTap: () {
           Atom.to(PagePaths.eCouncilResultPage);

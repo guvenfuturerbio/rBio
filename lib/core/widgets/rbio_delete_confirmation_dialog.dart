@@ -17,9 +17,7 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       backgroundColor: context.xCardColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       title: GuvenAlert.buildTitle(
         LocaleProvider.current.warning,
       ),

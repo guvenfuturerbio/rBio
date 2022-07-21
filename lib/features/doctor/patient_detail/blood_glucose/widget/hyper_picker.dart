@@ -19,11 +19,9 @@ class _HyperPicker extends StatelessWidget {
     );
   }
 
-  Dialog _buildDialog(BgPatientPickerVm value, BuildContext context) {
+  Widget _buildDialog(BgPatientPickerVm value, BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,

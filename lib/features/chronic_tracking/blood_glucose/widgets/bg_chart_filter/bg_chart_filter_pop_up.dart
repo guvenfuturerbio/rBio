@@ -20,13 +20,14 @@ class BgChartFilterPopUp extends StatelessWidget {
     return Dialog(
       elevation: R.sizes.defaultElevation,
       backgroundColor: context.scaffoldBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       child: ChangeNotifierProvider(
         create: (_) => BgChartFilterPopUpVm(
-            filters:
-                Provider.of<BgProgressVm>(context, listen: false).filterState),
+          filters: Provider.of<BgProgressVm>(
+            context,
+            listen: false,
+          ).filterState,
+        ),
         child: _buildConsumer(),
       ),
     );
