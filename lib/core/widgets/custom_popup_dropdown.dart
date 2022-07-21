@@ -85,12 +85,15 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
               ),
             ),
 
+            //
             Center(
-              child: RbioSmallDialogButton.green(
-                  title: LocaleProvider.of(context).btn_cancel,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
+              child: RbioSmallDialogButton.main(
+                context: context,
+                title: LocaleProvider.of(context).btn_cancel,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
             ),
           ],
         ),

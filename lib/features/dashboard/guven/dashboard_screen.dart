@@ -125,7 +125,7 @@ class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
                 GuvenDashboardNavigation.toHome(context);
               },
         gradient: widget.currentIndex == 2
-            ? Utils.instance.appGradient()
+            ? Utils.instance.appGradient(context)
             : LinearGradient(colors: [
                 getIt<IAppConfig>().theme.white,
                 getIt<IAppConfig>().theme.white
@@ -139,19 +139,27 @@ class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
   Widget getTitle(BuildContext context) {
     switch (widget.currentIndex) {
       case 0:
-        return RbioAppBar();
+        return RbioAppBar(
+          context: context,
+        );
 
       case 1:
-        return RbioAppBar();
+        return RbioAppBar(
+          context: context,
+        );
 
       case 2:
         return SvgPicture.asset(R.image.guvenLogoWhite);
 
       case 3:
-        return RbioAppBar();
+        return RbioAppBar(
+          context: context,
+        );
 
       case 4:
-        return RbioAppBar();
+        return RbioAppBar(
+          context: context,
+        );
 
       default:
         return const SizedBox();

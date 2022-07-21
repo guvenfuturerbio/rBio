@@ -149,12 +149,11 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
                 SizedBox(
                   height: R.sizes.iconSize,
                   width: R.sizes.iconSize,
-                  child: Checkbox(
+                  child: RbioCheckbox(
                     value: widget.days[index].selected,
                     onChanged: (value) {
                       widget.onChanged(index);
                     },
-                    activeColor: getIt<IAppConfig>().theme.mainColor,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),

@@ -29,6 +29,7 @@ class _DoctorTreatmentProcessScreenState
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.treatment_process,

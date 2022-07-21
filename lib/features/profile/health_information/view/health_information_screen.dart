@@ -103,6 +103,7 @@ class _HealthInformationViewState extends State<HealthInformationView> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.health_information,

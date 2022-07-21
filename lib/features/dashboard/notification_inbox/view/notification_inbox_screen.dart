@@ -26,6 +26,7 @@ class NotificationInboxStateScreen extends State<NotificationInboxScreen> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       leading: widget.drawerKey != null
           ? RbioLeadingMenu(drawerKey: widget.drawerKey)
           : null,

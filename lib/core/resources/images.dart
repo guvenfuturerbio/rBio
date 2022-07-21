@@ -199,14 +199,13 @@ class _Images {
   final drawerChronicTrackHome = 'assets/images/drawer/drawer_chronic_track_home.svg';
   final drawerMyAppointments = 'assets/images/drawer/drawer_my_appointments.svg';
   final drawerResults = 'assets/images/drawer/drawer_results.svg';
-  final drawerForYou = 'assets/images/drawer/drawer_profile.svg';
+  final drawerForYou = 'assets/images/drawer/drawer_for_you.svg';
   final drawerSymptomChecker = 'assets/images/drawer/drawer_symptom_checker.svg';
   final drawerDevices = 'assets/images/drawer/drawer_devices.svg';
   final drawerReminders = 'assets/images/drawer/drawer_reminders.svg';
   final drawerRequestAndSuggestions = 'assets/images/drawer/drawer_request_and_suggestions.svg';
   final drawerDetailedSymptom = 'assets/images/drawer/drawer_detailed_symptom.svg';
   final drawerLogOut = 'assets/images/drawer/drawer_log_out.svg';
-
   // #endregion
 
   // #region Council

@@ -50,6 +50,7 @@ class DoctorPatientListScreen extends StatelessWidget {
 
   // #region _buildAppBar
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           getTitle(),

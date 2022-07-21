@@ -445,7 +445,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.secondaryColor,
+        color: getIt<IAppConfig>().theme.secondaryBackColor,
         borderRadius: BorderRadius.vertical(
           top: R.sizes.radiusCircular,
         ),

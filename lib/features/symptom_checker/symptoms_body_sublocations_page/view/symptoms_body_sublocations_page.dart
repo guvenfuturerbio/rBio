@@ -80,6 +80,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).my_symptoms,
@@ -186,28 +187,30 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                         .width *
                                                     0.70,
                                                 child: Text(
-                                                    value
-                                                        .allBodySymptoms[index]![
-                                                            indx]
-                                                        .name!,
-                                                    softWrap: true,
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow
-                                                        .ellipsis,
-                                                    style: context.xHeadline3.copyWith(
-                                                        color: value
-                                                                .selectedSymptoms!
-                                                                .contains(value
-                                                                            .allBodySymptoms[
-                                                                        index]![
-                                                                    indx])
-                                                            ? getIt<IAppConfig>()
-                                                                .theme
-                                                                .mainColor
-                                                            : getIt<IAppConfig>()
-                                                                .theme
-                                                                .textColorSecondary)),
+                                                  value
+                                                      .allBodySymptoms[index]![
+                                                          indx]
+                                                      .name!,
+                                                  softWrap: true,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: context.xHeadline3
+                                                      .copyWith(
+                                                    color: value
+                                                            .selectedSymptoms!
+                                                            .contains(value
+                                                                    .allBodySymptoms[
+                                                                index]![indx])
+                                                        ? context.xPrimaryColor
+                                                        : getIt<IAppConfig>()
+                                                            .theme
+                                                            .textColorSecondary,
+                                                  ),
+                                                ),
                                               ),
+
+                                              //
                                               GestureDetector(
                                                 onTap: () {
                                                   value.removeSemptomFromList(

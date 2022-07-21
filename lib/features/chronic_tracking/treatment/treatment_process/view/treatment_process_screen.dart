@@ -22,6 +22,7 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.treatment_process,

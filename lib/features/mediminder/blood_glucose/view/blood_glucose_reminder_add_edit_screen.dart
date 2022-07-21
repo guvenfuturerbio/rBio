@@ -104,6 +104,7 @@ class __BloodGlucoseReminderAddEditViewState
   // #region _buildAppBar
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         Remindable.bloodGlucose.toShortTitle(),

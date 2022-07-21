@@ -74,15 +74,11 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                           children: [
                             Container(
                               alignment: Alignment.bottomLeft,
-                              child: Checkbox(
+                              child: RbioCheckbox(
                                 value: value.clickedConsentForm,
-                                checkColor: Colors.white,
                                 onChanged: (newValue) {
                                   value.toggleConsentFormState();
                                 },
-                                activeColor: getIt<IAppConfig>()
-                                    .theme
-                                    .mainColor, //  <-- leading Checkbox
                               ),
                             ),
                             Expanded(
@@ -106,6 +102,7 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Center(
                             child: GuvenAlert.buildBigMaterialAction(
+                              context,
                               LocaleProvider.current.Ok.toUpperCase(),
                               () {
                                 value.saveFormState();

@@ -80,6 +80,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.hbA1c_measurement,

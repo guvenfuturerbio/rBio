@@ -33,4 +33,6 @@ class _Colors {
   final Color frenchLilac = const Color.fromARGB(255, 235, 202, 243); // 0xFFEBCAF3
   final Color supernova = const Color.fromARGB(255, 255, 205, 0); // 0xFFFFCD00
   final Color malibu = const Color.fromARGB(255, 92, 210, 255); // 0xFF5CD2FF
+  final Color emperor = const Color.fromARGB(255, 80, 79, 79); // 0xFF504F4F
+  final Color mineShaft = const Color.fromARGB(255, 45, 45, 45); // 0xFF2D2D2D
 }

@@ -68,6 +68,7 @@ class DoctorCvView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.of(context).title_doctors_profiles,

@@ -94,6 +94,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
   // #region _buildAppBar
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.result_detail,
@@ -206,7 +207,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
   // #region _getTabButtonDecoration
   BoxDecoration _getTabButtonDecoration(bool isActive) {
     return BoxDecoration(
-      color: isActive ? getIt<IAppConfig>().theme.mainColor : Colors.white,
+      color: isActive ? context.xPrimaryColor : Colors.white,
       borderRadius: R.sizes.borderRadiusCircular,
       boxShadow: [
         BoxShadow(
@@ -607,6 +608,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                         padding: const EdgeInsets.only(top: 8),
                         child: state.radiologyResults[index].reportState == 6
                             ? Utils.instance.button(
+                                context: context,
                                 text: LocaleProvider.current.show_result,
                                 width: 130,
                                 onPressed: () {
@@ -636,6 +638,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                         child: state.radiologyResults[index].report != null &&
                                 state.radiologyResults[index].reportState == 6
                             ? Utils.instance.button(
+                                context: context,
                                 text: LocaleProvider.current.show_report,
                                 onPressed: () {
                                   final processId =
@@ -690,8 +693,8 @@ class _VisitDetailViewState extends State<VisitDetailView> {
         ),
         gradient: LinearGradient(
           colors: [
-            getIt<IAppConfig>().theme.mainColor.withAlpha(15),
-            getIt<IAppConfig>().theme.mainColor.withAlpha(15)
+            context.xPrimaryColor.withAlpha(15),
+            context.xPrimaryColor.withAlpha(15)
           ],
           begin: Alignment.bottomLeft,
           end: Alignment.centerRight,

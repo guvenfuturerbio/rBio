@@ -124,6 +124,7 @@ class _DoctorScaleTreatmentAddEditViewState
 
   RbioAppBar _buildAppBar(DoctorScaleTreatmentAddEditState state) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         widget.isCreated

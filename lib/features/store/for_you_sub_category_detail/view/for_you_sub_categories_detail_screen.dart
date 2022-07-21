@@ -78,6 +78,7 @@ class _ForYouSubCategoriesDetailViewState
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         widget.title,
@@ -201,7 +202,7 @@ class _ForYouSubCategoriesDetailViewState
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _currentIndex == index
-                              ? getIt<IAppConfig>().theme.mainColor
+                              ? context.xPrimaryColor
                               : getIt<IAppConfig>()
                                   .theme
                                   .textColorSecondary
@@ -337,8 +338,8 @@ Widget _itemTakeCovid({
         borderRadius: R.sizes.borderRadiusCircular,
         gradient: LinearGradient(
           colors: [
-            getIt<IAppConfig>().theme.mainColor,
-            getIt<IAppConfig>().theme.mainColor,
+            context.xPrimaryColor,
+            context.xPrimaryColor,
           ],
           begin: Alignment.topLeft,
           end: Alignment.topRight,

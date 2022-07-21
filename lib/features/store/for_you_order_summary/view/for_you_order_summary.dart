@@ -64,6 +64,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         widget.categoryName ?? "-",
@@ -299,6 +300,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
                       Container(
                         margin: const EdgeInsets.only(top: 20, bottom: 20),
                         child: Utils.instance.button(
+                          context: context,
                           width: 260,
                           text: LocaleProvider.current.payment,
                           onPressed: () {

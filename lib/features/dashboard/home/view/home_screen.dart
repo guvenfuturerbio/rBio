@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   RbioAppBar _buildAppBar(HomeVm vm) {
     return RbioAppBar(
+      context: context,
       leading: RbioSwitcher(
         showFirstChild: vm.status.isShaken,
         child1: IconButton(

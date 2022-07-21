@@ -9,7 +9,9 @@ class ECouncilInspectionUploadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(),
+      appbar: RbioAppBar(
+        context: context,
+      ),
       body: const _BuildBody(),
     );
   }
@@ -37,7 +39,8 @@ class _RequestedInseptionsCard extends StatefulWidget {
   const _RequestedInseptionsCard({Key? key}) : super(key: key);
 
   @override
-  State<_RequestedInseptionsCard> createState() => _RequestedInseptionsCardState();
+  State<_RequestedInseptionsCard> createState() =>
+      _RequestedInseptionsCardState();
 }
 
 class _RequestedInseptionsCardState extends State<_RequestedInseptionsCard> {
@@ -62,20 +65,28 @@ class _RequestedInseptionsCardState extends State<_RequestedInseptionsCard> {
                 children: [
                   Row(
                     children: [
-                      Text('-${requestedInspections[i].inspectionName}', style: context.xHeadline3),
+                      Text('-${requestedInspections[i].inspectionName}',
+                          style: context.xHeadline3),
                       const Spacer(),
                       requestedInspections[i].isUploaded
-                          ? Icon(Icons.done, color: getIt<IAppConfig>().theme.mainColor)
+                          ? Icon(
+                              Icons.done,
+                              color: context.xPrimaryColor,
+                            )
                           : RbioTextButton(
                               padding: EdgeInsets.zero,
                               child: Text(
                                 LocaleProvider.of(context).upload,
-                                style: context.xSubtitle1.copyWith(color: getIt<IAppConfig>().theme.mainColor),
+                                style: context.xSubtitle1.copyWith(
+                                  color: context.xPrimaryColor,
+                                ),
                               ),
                               onPressed: () {
                                 setState(() {
-                                  requestedInspections[i] = requestedInspections[i].copyWith(
-                                    isUploaded: !requestedInspections[i].isUploaded,
+                                  requestedInspections[i] =
+                                      requestedInspections[i].copyWith(
+                                    isUploaded:
+                                        !requestedInspections[i].isUploaded,
                                   );
                                 });
                               },

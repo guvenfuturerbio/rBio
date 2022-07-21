@@ -24,6 +24,7 @@ class FullPdfViewerScreen extends StatelessWidget {
 
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(context, title ?? "No title"),
         actions: <Widget>[
           Padding(

@@ -29,6 +29,7 @@ class _RbioContextInfoDialogState extends State<RbioContextInfoDialog> {
       //
       actions: [
         GuvenAlert.buildMaterialAction(
+          context,
           LocaleProvider.of(context).Ok,
           () {
             Navigator.pop(context);

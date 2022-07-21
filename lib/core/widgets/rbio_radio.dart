@@ -20,7 +20,7 @@ class RbioRadio extends StatelessWidget {
       groupValue: groupValue,
       onChanged: onChanged,
       value: value,
-      activeColor: getIt<IAppConfig>().theme.mainColor,
+      activeColor: context.xPrimaryColor,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
   }

@@ -60,6 +60,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
                 ),
                 actions: [
                   GuvenAlert.buildMaterialAction(
+                    context,
                     LocaleProvider.current.btn_cancel,
                     () {
                       Navigator.pop(context);
@@ -73,6 +74,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
 
                   //
                   GuvenAlert.buildMaterialAction(
+                    context,
                     LocaleProvider.current.confirm,
                     () {
                       Navigator.pop(context);
@@ -161,6 +163,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       leading: widget.isFromDashboard ? const SizedBox() : null,
       leadingWidth: widget.isFromDashboard ? 0 : null,
       title: RbioAppBar.textTitle(
@@ -496,7 +499,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
       child: Text(
         LocaleProvider.current.rate_thank_you,
         style: context.xHeadline4.copyWith(
-          color: getIt<IAppConfig>().theme.mainColor,
+          color: context.xPrimaryColor,
           fontWeight: FontWeight.bold,
         ),
       ),

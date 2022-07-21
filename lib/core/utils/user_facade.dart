@@ -240,7 +240,10 @@ class UserFacadeImpl extends UserFacade {
               //
               Row(
                 children: [
+                  //
                   R.widgets.wSizer12,
+
+                  //
                   Expanded(
                     child: RbioSmallDialogButton.red(
                       title: LocaleProvider.current.btn_cancel,
@@ -249,9 +252,14 @@ class UserFacadeImpl extends UserFacade {
                       },
                     ),
                   ),
+
+                  //
                   R.widgets.wSizer8,
+
+                  //
                   Expanded(
-                    child: RbioSmallDialogButton.green(
+                    child: RbioSmallDialogButton.main(
+                      context: context,
                       title: LocaleProvider.current.Ok,
                       onPressed: () {
                         Atom.dismiss(true);

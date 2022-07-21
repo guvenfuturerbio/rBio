@@ -68,6 +68,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.treatment_process,

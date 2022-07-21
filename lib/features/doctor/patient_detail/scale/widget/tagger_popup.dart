@@ -167,8 +167,9 @@ class ScaleTagger extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: R.sizes.borderRadiusCircular,
-            color: getIt<IAppConfig>().theme.mainColor),
+          borderRadius: R.sizes.borderRadiusCircular,
+          color: context.xPrimaryColor,
+        ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           LocaleProvider.current.done,

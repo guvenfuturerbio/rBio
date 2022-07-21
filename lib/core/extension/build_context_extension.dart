@@ -14,6 +14,9 @@ extension BuildContextThemeExtensions on BuildContext {
   MediaQueryData get xMediaQuery => MediaQuery.of(this);
   Color get xAccentColor => Theme.of(this).colorScheme.secondary;
 
+  AppBarTheme get xAppBarTheme => Theme.of(this).appBarTheme;
+  Color get xPrimaryColor => Theme.of(this).primaryColor;
+
   // #region Size Extension
   double get height => MediaQuery.of(this).size.height;
   double get width => MediaQuery.of(this).size.width;

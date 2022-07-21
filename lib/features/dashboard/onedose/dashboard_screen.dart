@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Drawer _buildDrawer() {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: getIt<IAppConfig>().theme.bottomMenuColor,
       child: SafeArea(
         top: true,
         child: Column(
@@ -83,7 +83,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         right: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: getIt<IAppConfig>().theme.mainColor,
+                        color: context.xPrimaryColor,
                         borderRadius: R.sizes.borderRadiusCircular,
                       ),
                       child: Row(
@@ -128,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     color: Colors.transparent,
                     child: SvgPicture.asset(
                       R.image.cancel,
-                      color: Colors.black,
+                      color: getIt<IAppConfig>().theme.iconColor,
                       width: R.sizes.iconSize2,
                     ),
                   ),
@@ -203,8 +203,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         widget.drawerKey.currentState?.openDrawer();
         model.onTap();
       },
-      overlayColor:
-          MaterialStateProperty.all(getIt<IAppConfig>().theme.mainColor),
+      overlayColor: MaterialStateProperty.all(context.xPrimaryColor),
       child: Container(
         color: Colors.transparent,
         child: Padding(
@@ -229,6 +228,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 25,
                     child: SvgPicture.asset(
                       model.svgPath,
+                      color: getIt<IAppConfig>().theme.iconColor,
                     ),
                   ),
                   R.widgets.wSizer16,
@@ -271,9 +271,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Text(
         "v" + getIt<GuvenSettings>().version,
         textAlign: TextAlign.left,
-        style: context.xHeadline5.copyWith(
-          color: Colors.black,
-        ),
+        style: context.xHeadline5,
       ),
     );
   }
@@ -296,7 +294,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             CustomPaint(
               size: Size(size.width, R.sizes.bottomNavigationBarHeight),
               painter: BottomNavbarCustomPainter(
-                getIt<IAppConfig>().theme.cardBackgroundColor,
+                getIt<IAppConfig>().theme.bottomMenuColor,
               ),
             ),
 
@@ -307,7 +305,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 height: 60,
                 width: 60,
                 child: FloatingActionButton(
-                  backgroundColor: getIt<IAppConfig>().theme.mainColor,
+                  backgroundColor: context.xPrimaryColor,
                   child: SvgPicture.asset(
                     R.image.bottomNavigationHome,
                     width: R.sizes.iconSize,
@@ -421,8 +419,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String activeImage,
   ) =>
       widget.currentIndex != iconIndex
-          ? SvgPicture.asset(passiveImage, width: R.sizes.iconSize2)
-          : SvgPicture.asset(activeImage, width: R.sizes.iconSize2);
+          ? SvgPicture.asset(
+              passiveImage,
+              width: R.sizes.iconSize2,
+              color: getIt<IAppConfig>().theme.iconColor,
+            )
+          : SvgPicture.asset(
+              activeImage,
+              width: R.sizes.iconSize2,
+            );
 
   List<DrawerModel> get drawerList => <DrawerModel>[
         DrawerModel(
