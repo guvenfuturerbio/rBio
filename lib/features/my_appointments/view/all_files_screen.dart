@@ -31,6 +31,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).all_appointment_file,

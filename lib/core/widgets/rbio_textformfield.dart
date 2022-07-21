@@ -98,7 +98,6 @@ class RbioTextFormField extends StatelessWidget {
             onCodeChanged: onChanged,
           )
         : TextFormField(
-            
             maxLength: maxLength,
             maxLines: maxLines,
             minLines: minLines,
@@ -156,7 +155,7 @@ class RbioTextFormField extends StatelessWidget {
                     borderRadius: R.sizes.borderRadiusCircular,
                   ),
                 ),
-            cursorColor: getIt<IAppConfig>().theme.mainColor,
+            cursorColor: context.xPrimaryColor,
             onChanged: onChanged,
             inputFormatters: inputFormatters,
             onFieldSubmitted: onFieldSubmitted,
@@ -214,19 +213,19 @@ class RbioTextFormField extends StatelessWidget {
 
   static InputBorder defaultBorder() => OutlineInputBorder(
         borderRadius: R.sizes.borderRadiusCircular,
-        borderSide: BorderSide(
+        borderSide: const BorderSide(
           width: 0,
           style: BorderStyle.solid,
-          color: getIt<IAppConfig>().theme.darkWhite,
+          color: Colors.transparent,
         ),
       );
 
-  static InputBorder activeBorder() => OutlineInputBorder(
+  static InputBorder activeBorder(BuildContext context) => OutlineInputBorder(
         borderRadius: R.sizes.borderRadiusCircular,
         borderSide: BorderSide(
           width: 0,
           style: BorderStyle.solid,
-          color: getIt<IAppConfig>().theme.mainColor,
+          color: context.xPrimaryColor,
         ),
       );
 }

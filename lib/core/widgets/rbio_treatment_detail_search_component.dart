@@ -156,7 +156,7 @@ class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
                             LocaleProvider.of(context).current_treatments,
                             style: context.xHeadline3.copyWith(
                               color: val == TreatmentFilterType.current
-                                  ? getIt<IAppConfig>().theme.mainColor
+                                  ? context.xPrimaryColor
                                   : null,
                             ),
                           ),
@@ -176,7 +176,7 @@ class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
                             LocaleProvider.of(context).past_treatments,
                             style: context.xHeadline3.copyWith(
                               color: val == TreatmentFilterType.past
-                                  ? getIt<IAppConfig>().theme.mainColor
+                                  ? context.xPrimaryColor
                                   : null,
                             ),
                           ),

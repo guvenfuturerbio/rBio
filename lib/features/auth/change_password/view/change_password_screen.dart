@@ -132,6 +132,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).change_password,
@@ -166,7 +167,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 LocaleProvider.current.password_security,
                 textAlign: TextAlign.center,
                 style: context.xHeadline4.copyWith(
-                  color: getIt<IAppConfig>().theme.mainColor,
+                  color: context.xPrimaryColor,
                 ),
               ),
 
@@ -402,10 +403,9 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
           ),
 
           //
-          Checkbox(
+          RbioCheckbox(
             value: checkboxValue,
             onChanged: (value) {},
-            activeColor: getIt<IAppConfig>().theme.mainColor,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
         ],

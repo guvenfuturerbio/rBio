@@ -21,7 +21,9 @@ class RbioRouteError extends StatelessWidget {
         .captureException(e, stackTrace: stackTrace);
 
     return RbioScaffold(
-      appbar: RbioAppBar(),
+      appbar: RbioAppBar(
+        context: context,
+      ),
       body: const RbioBodyError(),
     );
   }

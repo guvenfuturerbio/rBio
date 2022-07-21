@@ -164,7 +164,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                   effect: ExpandingDotsEffect(
                     dotHeight: 10,
                     dotWidth: 16,
-                    activeDotColor: getIt<IAppConfig>().theme.mainColor,
+                    activeDotColor: context.xPrimaryColor,
                     dotColor: getIt<IAppConfig>().theme.grey.withOpacity(0.5),
                   ),
                 ),
@@ -200,7 +200,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                                 backColor: getIt<IAppConfig>()
                                     .theme
                                     .cardBackgroundColor,
-                                textColor: getIt<IAppConfig>().theme.mainColor,
+                                textColor: context.xPrimaryColor,
                               ),
                             ),
 
@@ -300,7 +300,7 @@ class AnimatedIntroCard extends StatelessWidget {
                         item.title,
                         textAlign: TextAlign.center,
                         style: context.xHeadline1.copyWith(
-                          color: getIt<IAppConfig>().theme.mainColor,
+                          color: context.xPrimaryColor,
                           fontSize: context.xHeadline1.fontSize! * 1.5,
                           fontWeight: FontWeight.bold,
                           height: 1.35,
@@ -340,7 +340,7 @@ class AnimatedIntroCard extends StatelessWidget {
                         child: RbioElevatedButton(
                           backColor:
                               getIt<IAppConfig>().theme.cardBackgroundColor,
-                          textColor: getIt<IAppConfig>().theme.mainColor,
+                          textColor: context.xPrimaryColor,
                           fontWeight: FontWeight.bold,
                           title: LocaleProvider.current.login,
                           onTap: () async {
@@ -386,7 +386,7 @@ class IntroCard extends StatelessWidget {
           SizedBox(
             height: Atom.height * 0.4,
             child: item.isLast
-                ? Container(color: getIt<IAppConfig>().theme.mainColor)
+                ? Container(color: context.xPrimaryColor)
                 : RiveAnimation.asset(
                     item.animationPath,
                     fit: BoxFit.scaleDown,

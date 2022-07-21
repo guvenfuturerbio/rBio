@@ -72,6 +72,7 @@ class CreateAppointmentScreen extends StatelessWidget {
   // #region _buildAppBar
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       leading: Align(
         alignment: Alignment.center,
         child: InkWell(
@@ -299,6 +300,9 @@ class CreateAppointmentScreen extends StatelessWidget {
                                             child: SvgPicture.asset(
                                               R.image.info,
                                               width: R.sizes.iconSize2,
+                                              color: getIt<IAppConfig>()
+                                                  .theme
+                                                  .iconColor,
                                             ),
                                           ),
                                         ],

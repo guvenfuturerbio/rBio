@@ -122,7 +122,7 @@ class _RateDialogState extends State<RateDialog> {
                                       horizontal: 4.0),
                                   itemBuilder: (context, _) => Icon(
                                     Icons.star,
-                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    color: context.xPrimaryColor,
                                   ),
                                   onRatingUpdate: (rating) {
                                     value.setVideoQuality(rating.toInt());
@@ -169,7 +169,7 @@ class _RateDialogState extends State<RateDialog> {
                                       horizontal: 4.0),
                                   itemBuilder: (context, _) => Icon(
                                     Icons.star,
-                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    color: context.xPrimaryColor,
                                   ),
                                   onRatingUpdate: (rating) {
                                     value.setDoctorQuality(rating.toInt());
@@ -209,7 +209,8 @@ class _RateDialogState extends State<RateDialog> {
                                 const SizedBox(height: 10),
 
                                 //
-                                RbioSmallDialogButton.green(
+                                RbioSmallDialogButton.main(
+                                  context: context,
                                   title: LocaleProvider.current.save,
                                   onPressed: () {
                                     value.rateAppointment(

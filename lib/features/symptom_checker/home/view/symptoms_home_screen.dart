@@ -48,6 +48,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
   // #region _buildAppBar
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).my_symptoms,
@@ -185,7 +186,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                         },
                         textStyle: context.xHeadline3,
                         selectedTextStyle: context.xHeadline1.copyWith(
-                          color: getIt<IAppConfig>().theme.mainColor,
+                          color: context.xPrimaryColor,
                         ),
                       ),
                     ),
@@ -207,7 +208,10 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         //
         RbioElevatedButton(
           onTap: () async {
-            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MySymptomsPage1Event());
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
+                ?.trackEvent(MySymptomsPage1Event());
             getIt<FirebaseAnalyticsManager>().logEvent(
               SikayetlerimSayfa1DevamEvent(
                 getIt<UserNotifier>().firebaseEmail.toString(),
@@ -269,7 +273,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
           child: Card(
             elevation: R.sizes.defaultElevation,
             color: value.genderIdHolder == index
-                ? getIt<IAppConfig>().theme.mainColor
+                ? context.xPrimaryColor
                 : getIt<IAppConfig>().theme.cardBackgroundColor,
             shape: RoundedRectangleBorder(
               borderRadius: R.sizes.borderRadiusCircular,

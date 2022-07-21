@@ -2,6 +2,62 @@ part of '../abstract/app_config.dart';
 
 class GuvenTheme extends IAppTheme {
   @override
+  late TextTheme textTheme;
+
+  GuvenTheme() {
+    textTheme = TextTheme(
+      headline1: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(60),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      headline2: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(55),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      headline3: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(50),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      headline4: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(45),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      headline5: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(40),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      bodyText1: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(35),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      bodyText2: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(30),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+      caption: TextStyle(
+        color: Colors.black,
+        fontSize: convertFontSize(25),
+        fontWeight: FontWeight.normal,
+        fontFamily: fontFamily,
+      ),
+    );
+  }
+
+  @override
   String fontFamily = R.constants.fontPoppins;
 
   @override
@@ -14,11 +70,26 @@ class GuvenTheme extends IAppTheme {
   double appBarLogoHeight = 40;
 
   @override
-  Color mainColor = R.colors.burntUmber;
+  Color primaryColor = R.colors.burntUmber;
 
   @override
   Color secondaryColor = R.colors.coralTree;
 
   @override
   Color textContrastColor = R.colors.white;
+
+  @override
+  Color appbarColor = R.colors.burntUmber;
+
+  @override
+  Color checkboxBorderColor = R.colors.burntUmber;
+
+  @override
+  Color bottomMenuColor = R.colors.white;
+
+  @override
+  Color secondaryBackColor = R.colors.coralTree;
+
+  @override
+  Color mainOverColor = R.colors.white;
 }

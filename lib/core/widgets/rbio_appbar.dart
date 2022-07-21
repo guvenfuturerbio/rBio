@@ -6,6 +6,7 @@ import '../core.dart';
 mixin IRbioAppBar on PreferredSize {}
 
 class RbioAppBar extends PreferredSize with IRbioAppBar {
+  final BuildContext context;
   final Widget? title;
   final Widget? leading;
   final List<Widget>? actions;
@@ -13,6 +14,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
 
   RbioAppBar({
     Key? key,
+    required this.context,
     this.title,
     this.leading,
     this.actions,
@@ -24,7 +26,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             toolbarHeight: 64,
             centerTitle: true,
             elevation: 0,
-            backgroundColor: getIt<IAppConfig>().theme.mainColor,
+            backgroundColor: context.xAppBarTheme.backgroundColor,
 
             //
             leadingWidth: leadingWidth,

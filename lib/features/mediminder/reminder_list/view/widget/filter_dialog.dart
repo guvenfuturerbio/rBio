@@ -280,7 +280,7 @@ class _FilterRowState extends State<FilterRow> {
           Flexible(
             child: SizedBox.fromSize(
               size: const Size(20, 20),
-              child: Checkbox(
+              child: RbioCheckbox(
                 value: currentValue,
                 onChanged: (newValue) {
                   if (newValue == null) return;
@@ -289,7 +289,6 @@ class _FilterRowState extends State<FilterRow> {
                   });
                   widget.onChanged(newValue);
                 },
-                activeColor: getIt<IAppConfig>().theme.mainColor,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             ),

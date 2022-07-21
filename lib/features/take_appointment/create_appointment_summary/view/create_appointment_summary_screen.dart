@@ -109,6 +109,7 @@ class _CreateAppointmentSummaryScreenState
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.appointment_details,
@@ -165,7 +166,7 @@ class _CreateAppointmentSummaryScreenState
                                 LocaleProvider.current.appo_created,
                                 textAlign: TextAlign.center,
                                 style: context.xHeadline3.copyWith(
-                                  color: getIt<IAppConfig>().theme.mainColor,
+                                  color: context.xPrimaryColor,
                                 ),
                               ),
 
@@ -580,7 +581,7 @@ class _CreateAppointmentSummaryScreenState
                   overflow: TextOverflow.ellipsis,
                   style: context.xHeadline1.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: getIt<IAppConfig>().theme.mainColor,
+                    color: context.xPrimaryColor,
                   ),
                 )
               ],
@@ -591,7 +592,7 @@ class _CreateAppointmentSummaryScreenState
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline1.copyWith(
                 fontWeight: FontWeight.bold,
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
               ),
             );
     } else {
@@ -645,10 +646,10 @@ class _CreateAppointmentSummaryScreenState
       title: title,
       backColor: vm.summaryButton == SummaryButtons.add
           ? getIt<IAppConfig>().theme.cardBackgroundColor
-          : getIt<IAppConfig>().theme.mainColor,
+          : context.xPrimaryColor,
       textColor: vm.summaryButton == SummaryButtons.add
           ? getIt<IAppConfig>().theme.textColorSecondary
-          : getIt<IAppConfig>().theme.textColor,
+          : null,
       fontWeight: FontWeight.w600,
     );
   }

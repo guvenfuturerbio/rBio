@@ -10,7 +10,12 @@ class ECouncilRequestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).council_requests)),
+      appbar: RbioAppBar(
+        context: context,
+        title: Text(
+          LocaleProvider.of(context).council_requests,
+        ),
+      ),
       body: const _BuildBody(),
     );
   }

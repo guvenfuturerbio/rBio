@@ -17,9 +17,9 @@ class _TableCalendar extends StatefulWidget {
 }
 
 class _TableCalendarState extends State<_TableCalendar> {
-  static const Color borderColor = Color.fromARGB(255, 238, 238, 238);
+  Color get borderColor => getIt<IAppConfig>().theme.scaffoldBackgroundColor;
 
-  BoxBorder get boxBorder => const Border(
+  BoxBorder get boxBorder => Border(
         right: BorderSide(
           color: borderColor,
         ),
@@ -29,7 +29,7 @@ class _TableCalendarState extends State<_TableCalendar> {
       );
 
   TextStyle get textStyle => context.xHeadline4.copyWith(
-        color: Colors.black,
+        color: getIt<IAppConfig>().theme.textColorSecondary,
       );
 
   late DateTime _focusedDay;
@@ -74,7 +74,7 @@ class _TableCalendarState extends State<_TableCalendar> {
         //
         TableCalendar<Event>(
           locale: context.watch<LocaleNotifier>().getLocaleStr,
-          daysBackgroundColor: getIt<IAppConfig>().theme.secondaryColor,
+          daysBackgroundColor: getIt<IAppConfig>().theme.secondaryBackColor,
           cellBackgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
 
           //
@@ -100,7 +100,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             headerMargin: EdgeInsets.zero,
             headerPadding: EdgeInsets.zero,
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.secondaryColor,
+              color: getIt<IAppConfig>().theme.secondaryBackColor,
               borderRadius: BorderRadius.vertical(
                 top: R.sizes.radiusCircular,
               ),
@@ -160,7 +160,6 @@ class _TableCalendarState extends State<_TableCalendar> {
             // #region outsideBuilder
             // Diğer aya ait günler
             outsideBuilder: (context, day, focusedDay) {
-              
               return Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -209,7 +208,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: getIt<IAppConfig>().theme.mainColor,
+                    color: context.xPrimaryColor,
                     shape: BoxShape.circle,
                   ),
                   child: Text(

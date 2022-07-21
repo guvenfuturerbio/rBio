@@ -92,10 +92,8 @@ class _ReminderDetailView extends StatelessWidget {
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          title,
-        ),
+        context: context,
+        title: RbioAppBar.textTitle(context, title),
       );
 
   Widget _buildBody() => BlocBuilder<ReminderDetailCubit, ReminderDetailState>(

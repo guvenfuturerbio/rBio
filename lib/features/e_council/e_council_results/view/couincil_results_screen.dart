@@ -10,8 +10,12 @@ class ECouncilResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      // backgroundColor: getIt<IAppConfig>().theme.eCouncilScafoldBackground,
-      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).council_results)),
+      appbar: RbioAppBar(
+        context: context,
+        title: Text(
+          LocaleProvider.of(context).council_results,
+        ),
+      ),
       body: const _BuildBody(),
     );
   }

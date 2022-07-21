@@ -88,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       leading: const SizedBox(),
     );
   }
@@ -312,12 +313,11 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 width: 35,
                 height: 35,
-                child: Checkbox(
+                child: RbioCheckbox(
                   value: value.rememberMeChecked,
                   onChanged: (newValue) {
                     value.toggleRememberMeChecked();
                   },
-                  activeColor: getIt<IAppConfig>().theme.mainColor,
                 ),
               ),
               Expanded(
@@ -339,7 +339,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Text(
             LocaleProvider.of(context).lbl_forgot_password,
             style: context.xHeadline5.copyWith(
-              color: getIt<IAppConfig>().theme.mainColor,
+              color: context.xPrimaryColor,
             ),
           ),
           onPressed: () {
@@ -362,14 +362,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SizedBox(
             width: 35,
             height: 35,
-            child: Checkbox(
+            child: RbioCheckbox(
               value: value.clickedGeneralForm,
               onChanged: (newValue) {
                 if (newValue != null) {
                   value.clickedGeneralForm = newValue;
                 }
               },
-              activeColor: getIt<IAppConfig>().theme.mainColor,
             ),
           ),
         ),
@@ -404,14 +403,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SizedBox(
             width: 35,
             height: 35,
-            child: Checkbox(
+            child: RbioCheckbox(
               value: value.checkedKvkkForm,
               onChanged: (newValue) {
                 if (newValue != null) {
                   value.checkedKvkkForm = newValue;
                 }
               },
-              activeColor: getIt<IAppConfig>().theme.mainColor,
             ),
           ),
         ),
@@ -456,6 +454,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         )
                       : Utils.instance.button(
+                          context: context,
                           text: LocaleProvider.of(context).btn_sign_in,
                           onPressed: () {
                             value.login(
@@ -482,7 +481,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         LocaleProvider.of(context).btn_sign_up,
                         style: context.xHeadline3.copyWith(
-                          color: getIt<IAppConfig>().theme.mainColor,
+                          color: context.xPrimaryColor,
                         ),
                       ),
                       onTap: () {
@@ -514,6 +513,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   VersionCheckProgress.done &&
                               value.needForceUpdate == false
                           ? Utils.instance.button(
+                              context: context,
                               text: LocaleProvider.of(context).btn_sign_in,
                               onPressed: () {
                                 if (value.formKey?.currentState?.validate() ??
@@ -532,12 +532,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   value.versionCheckProgress !=
                                       VersionCheckProgress.error
                               ? Utils.instance.button(
+                                  context: context,
                                   onPressed: () {
                                     value.startAppVersionOperation();
                                   },
                                   text: LocaleProvider.of(context).update_now,
                                 )
                               : Utils.instance.button(
+                                  context: context,
                                   text: LocaleProvider.of(context).try_again,
                                   onPressed: () {
                                     value.startAppVersionOperation();
@@ -563,7 +565,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         LocaleProvider.of(context).btn_sign_up,
                         style: context.xHeadline5.copyWith(
-                          color: getIt<IAppConfig>().theme.mainColor,
+                          color: context.xPrimaryColor,
                         ),
                       ),
                       onTap: () {

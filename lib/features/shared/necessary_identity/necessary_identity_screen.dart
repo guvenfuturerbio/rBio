@@ -79,7 +79,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                       prefixIcon: SvgPicture.asset(
                         R.image.user,
                         fit: BoxFit.none,
-                        color: getIt<IAppConfig>().theme.mainColor,
+                        color: context.xPrimaryColor,
                       ),
                     ),
                     margin: const EdgeInsets.only(bottom: 10, top: 20),
@@ -91,7 +91,10 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                   //
                   Row(
                     children: [
+                      //
                       R.widgets.wSizer12,
+
+                      //
                       Expanded(
                         child: RbioSmallDialogButton.red(
                           title: LocaleProvider.current.btn_cancel,
@@ -100,9 +103,14 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                           },
                         ),
                       ),
+
+                      //
                       R.widgets.wSizer8,
+
+                      //
                       Expanded(
-                        child: RbioSmallDialogButton.green(
+                        child: RbioSmallDialogButton.main(
+                          context: context,
                           title: LocaleProvider.current.Ok,
                           onPressed: () {
                             value.updateIdentity(_identityController.text);

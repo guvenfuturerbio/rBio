@@ -36,6 +36,7 @@ class _PatientRelativesViewState extends State<PatientRelativesView> {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.relatives,
@@ -91,7 +92,7 @@ class _PatientRelativesViewState extends State<PatientRelativesView> {
 
   Widget _buildFab() {
     return FloatingActionButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: context.xPrimaryColor,
       onPressed: () {
         Atom.to(PagePaths.addPatientRelatives);
       },
@@ -171,6 +172,7 @@ class _PatientRelativeListTile extends StatelessWidget {
           title: GuvenAlert.buildTitle(title),
           actions: [
             GuvenAlert.buildMaterialAction(
+              context,
               LocaleProvider.of(context).btn_cancel,
               () {
                 Navigator.of(context).pop();
@@ -178,7 +180,11 @@ class _PatientRelativeListTile extends StatelessWidget {
             ),
 
             //
-            GuvenAlert.buildMaterialAction(okButtonText, okButtonFunc),
+            GuvenAlert.buildMaterialAction(
+              context,
+              okButtonText,
+              okButtonFunc,
+            ),
           ],
 
           //

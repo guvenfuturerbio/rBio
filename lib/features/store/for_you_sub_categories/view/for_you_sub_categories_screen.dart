@@ -38,6 +38,7 @@ class ForYouSubCategoriesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(context, title!),
       ),
       body: _buildBody(),

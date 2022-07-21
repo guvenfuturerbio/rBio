@@ -103,6 +103,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.bmi_tracking,
@@ -195,7 +196,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                       },
                       child: Card(
                         color: result.graphType == GraphTypes.weight
-                            ? getIt<IAppConfig>().theme.mainColor
+                            ? context.xPrimaryColor
                             : null,
                         shape: RoundedRectangleBorder(
                           borderRadius: R.sizes.borderRadiusCircular,
@@ -224,7 +225,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                       },
                       child: Card(
                         color: result.graphType == GraphTypes.bmi
-                            ? getIt<IAppConfig>().theme.mainColor
+                            ? context.xPrimaryColor
                             : null,
                         shape: RoundedRectangleBorder(
                           borderRadius: R.sizes.borderRadiusCircular,

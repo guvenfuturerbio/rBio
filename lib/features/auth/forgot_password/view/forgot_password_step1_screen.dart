@@ -79,7 +79,9 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
           child: RbioStackedScaffold(
             isLoading: state.isLoading,
             resizeToAvoidBottomInset: true,
-            appbar: RbioAppBar(),
+            appbar: RbioAppBar(
+              context: context,
+            ),
             body: _buildBody(context, state),
           ),
         );
@@ -288,7 +290,7 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
                           child: Text(
                             LocaleProvider.of(context).btn_sign_up,
                             style: context.xHeadline3.copyWith(
-                              color: getIt<IAppConfig>().theme.mainColor,
+                              color: context.xPrimaryColor,
                             ),
                           ),
                           onTap: () {

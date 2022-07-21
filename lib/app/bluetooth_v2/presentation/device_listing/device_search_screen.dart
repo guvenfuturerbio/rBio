@@ -28,10 +28,18 @@ class DeviceSearchScreen extends StatelessWidget {
           return DeviceSearchView(deviceType: deviceType!);
         }
 
-        return RbioScaffold(appbar: RbioAppBar(), body: Container());
+        return RbioScaffold(
+          appbar: RbioAppBar(
+            context: context,
+          ),
+          body: Container(),
+        );
       }
 
-      return RbioScaffold(appbar: RbioAppBar(), body: Container());
+      return RbioScaffold(
+        appbar: RbioAppBar(context: context),
+        body: Container(),
+      );
     } catch (e, stackTrace) {
       return RbioRouteError(e: e, stackTrace: stackTrace);
     }
@@ -90,6 +98,7 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.device_connections,
@@ -285,7 +294,7 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
         return getIt<IAppConfig>().theme.high;
 
       case DeviceStatus.connected:
-        return getIt<IAppConfig>().theme.mainColor;
+        return context.xPrimaryColor;
 
       case DeviceStatus.disconnected:
       case DeviceStatus.disconnecting:

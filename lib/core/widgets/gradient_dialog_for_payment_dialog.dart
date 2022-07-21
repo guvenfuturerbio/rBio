@@ -64,7 +64,8 @@ class _GradientDialogForPaymentDialogState
 
             //
             Center(
-              child: RbioSmallDialogButton.green(
+              child: RbioSmallDialogButton.main(
+                context: context,
                 title: LocaleProvider.current.Ok,
                 onPressed: () {
                   if (widget.code == "13" || widget.code == "10") {

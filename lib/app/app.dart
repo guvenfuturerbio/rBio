@@ -239,18 +239,24 @@ class _MyAppCommonState extends State<MyAppCommon> {
 
                   //
                   theme: ThemeData(
-                    primaryColor: getIt<IAppConfig>().theme.mainColor,
+                    primaryColor: getIt<IAppConfig>().theme.primaryColor,
                     scaffoldBackgroundColor:
                         getIt<IAppConfig>().theme.scaffoldBackgroundColor,
                     fontFamily: getIt<IAppConfig>().theme.fontFamily,
                     textTheme: getIt<IAppConfig>().theme.textTheme,
+                    appBarTheme: AppBarTheme(
+                      backgroundColor: getIt<IAppConfig>().theme.appbarColor,
+                    ),
+                    cardTheme: const CardTheme().copyWith(
+                      color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                    ),
                     textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: getIt<IAppConfig>().theme.mainColor,
-                      selectionColor: getIt<IAppConfig>().theme.mainColor,
-                      selectionHandleColor: getIt<IAppConfig>().theme.mainColor,
+                      cursorColor: getIt<IAppConfig>().theme.primaryColor,
+                      selectionColor: getIt<IAppConfig>().theme.primaryColor,
+                      selectionHandleColor: getIt<IAppConfig>().theme.primaryColor,
                     ),
                     cupertinoOverrideTheme: CupertinoThemeData(
-                      primaryColor: getIt<IAppConfig>().theme.mainColor,
+                      primaryColor: getIt<IAppConfig>().theme.primaryColor,
                     ),
                   ),
                   locale: context.watch<LocaleNotifier>().current,

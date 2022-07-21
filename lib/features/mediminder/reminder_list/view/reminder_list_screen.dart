@@ -39,6 +39,7 @@ class _ReminderListView extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.reminders,
@@ -61,7 +62,7 @@ class _ReminderListView extends StatelessWidget {
 
   Widget _buildFAB(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: context.xPrimaryColor,
       onPressed: () {
         Atom.to(PagePaths.selectReminder);
       },

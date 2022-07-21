@@ -11,6 +11,7 @@ class MagazineSelectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RbioAppBar(
+          context: context,
           title:
               RbioAppBar.textTitle(context, LocaleProvider.current.magazines)),
       body: ListView(

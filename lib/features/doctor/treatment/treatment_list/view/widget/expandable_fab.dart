@@ -83,7 +83,7 @@ class __ExpandableFabState extends State<_ExpandableFab>
         padding: const EdgeInsets.all(15),
         child: SvgPicture.asset(
           R.image.cancel,
-          color: getIt<IAppConfig>().theme.mainColor,
+          color: context.xPrimaryColor,
         ),
       ),
     );
@@ -126,7 +126,7 @@ class __ExpandableFabState extends State<_ExpandableFab>
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
             heroTag: 'true',
-            backgroundColor: getIt<IAppConfig>().theme.mainColor,
+            backgroundColor: context.xPrimaryColor,
             onPressed: _toggle,
             child: Padding(
               padding: const EdgeInsets.all(15),

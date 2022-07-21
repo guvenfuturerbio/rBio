@@ -25,7 +25,7 @@ class RbioCountryCodePicker extends StatelessWidget {
             ? Border.all(
                 width: 0,
                 style: BorderStyle.solid,
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
               )
             : null,
       ),
@@ -54,7 +54,7 @@ class RbioCountryCodePicker extends StatelessWidget {
         searchDecoration: Utils.instance.inputDecorationForLogin(
           hintText: '',
           contentPadding: const EdgeInsets.all(8),
-          inputBorder: RbioTextFormField.activeBorder(),
+          inputBorder: RbioTextFormField.activeBorder(context),
         ),
         flagDecoration: const BoxDecoration(),
         textStyle: context.xHeadline4,

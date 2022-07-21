@@ -25,10 +25,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         builder:
             (BuildContext context, ShoppingCartScreenVm value, Widget? child) {
           return RbioScaffold(
-              appbar: RbioAppBar(
-                title: RbioAppBar.textTitle(context, "Shopping Cart"),
-              ),
-              body: _buildBody(context, value));
+            appbar: RbioAppBar(
+              context: context,
+              title: RbioAppBar.textTitle(context, "Shopping Cart"),
+            ),
+            body: _buildBody(context, value),
+          );
         },
       ),
     );
@@ -97,6 +99,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
                                           //
                                           Utils.instance.button(
+                                              context: context,
                                               text: "Delete",
                                               width: 30,
                                               height: 12,
@@ -134,6 +137,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 Container(
                   margin: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Utils.instance.button(
+                    context: context,
                     width: 260,
                     text: LocaleProvider.current.payment,
                     onPressed: () {},

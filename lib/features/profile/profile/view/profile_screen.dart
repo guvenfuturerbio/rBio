@@ -69,6 +69,7 @@ class ProfileView extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       leading: isFromDashboard ? const SizedBox() : null,
       leadingWidth: isFromDashboard ? 0 : null,
       title: RbioAppBar.textTitle(
@@ -114,7 +115,8 @@ class ProfileView extends StatelessWidget {
               //
               RbioUserTile(
                 name: getIt<UserFacade>().getNameAndSurname(),
-                imageBytes: getIt<ISharedPreferencesManager>().getString(SharedPreferencesKeys.profileImage),
+                imageBytes: getIt<ISharedPreferencesManager>()
+                    .getString(SharedPreferencesKeys.profileImage),
                 leadingImage: UserLeadingImage.circle,
                 onTap: () {},
                 width: Atom.width,
@@ -123,7 +125,8 @@ class ProfileView extends StatelessWidget {
               if (getIt<IAppConfig>().functionality.relatives)
                 if (!(context.read<UserNotifier>().isDefaultUser ?? true)) ...[
                   RbioElevatedButton(
-                    title: LocaleProvider.of(context).switch_back_to_default_account,
+                    title: LocaleProvider.of(context)
+                        .switch_back_to_default_account,
                     onTap: () {
                       showDialog(
                         context: context,
@@ -135,25 +138,32 @@ class ProfileView extends StatelessWidget {
                               builder: (context) {
                                 return GuvenAlert(
                                   backgroundColor: Colors.white,
-                                  title: GuvenAlert.buildTitle(LocaleProvider.of(context).warning),
+                                  title: GuvenAlert.buildTitle(
+                                      LocaleProvider.of(context).warning),
                                   actions: [
                                     GuvenAlert.buildMaterialAction(
+                                      context,
                                       LocaleProvider.of(context).Ok,
                                       () {
                                         Navigator.pop(context);
-                                        context.read<ProfileCubit>().changeUserToDefault();
+                                        context
+                                            .read<ProfileCubit>()
+                                            .changeUserToDefault();
                                       },
                                     ),
                                   ],
                                   content: Container(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         GuvenAlert.buildDescription(
-                                          LocaleProvider.of(context).relative_change_message,
+                                          LocaleProvider.of(context)
+                                              .relative_change_message,
                                         ),
                                       ],
                                     ),
@@ -183,7 +193,9 @@ class ProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (getIt<UserNotifier>().user.xGetHealthcareEmployeeOrFalse) ...[
+                    if (getIt<UserNotifier>()
+                        .user
+                        .xGetHealthcareEmployeeOrFalse) ...[
                       _buildListItem(
                         context,
                         LocaleProvider.current.healthcare_employee,
@@ -222,7 +234,9 @@ class ProfileView extends StatelessWidget {
                           )
                         : const SizedBox(),
 
-                    if (!Atom.isWeb && getIt<UserNotifier>().user.xGetChronicTrackingOrFalse && getIt<IAppConfig>().functionality.chronicTracking)
+                    if (!Atom.isWeb &&
+                        getIt<UserNotifier>().user.xGetChronicTrackingOrFalse &&
+                        getIt<IAppConfig>().functionality.chronicTracking)
                       _buildListItem(
                         context,
                         LocaleProvider.current.devices,
@@ -322,7 +336,7 @@ class ProfileView extends StatelessWidget {
                       onChanged: (newValue) {
                         context.read<ProfileCubit>().update2FA(newValue);
                       },
-                      activeColor: getIt<IAppConfig>().theme.mainColor,
+                      activeColor: context.xPrimaryColor,
                     ),
                   ],
                 ),

@@ -19,6 +19,7 @@ class RbioLocaleDropdown extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: DropdownButtonHideUnderline(
             child: DropdownButton<Locale>(
+              dropdownColor: getIt<IAppConfig>().theme.cardBackgroundColor,
               value: context.read<LocaleNotifier>().current,
               hint: getLocaleWidget(
                   context.read<LocaleNotifier>().current, context),
@@ -44,26 +45,32 @@ class RbioLocaleDropdown extends StatelessWidget {
 
   Widget getLocaleWidget(Locale localeValue, BuildContext context) {
     if ('tr' == localeValue.languageCode) {
-      return Row(mainAxisSize: MainAxisSize.min, children: [
-        Image.asset(
-          R.image.trFlag,
-          width: 30,
-        ),
-        R.widgets.wSizer4,
-        Text(
-          'TR',
-          style: context.xHeadline5,
-        ),
-      ]);
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            R.image.trFlag,
+            width: 30,
+          ),
+          R.widgets.wSizer4,
+          Text(
+            'TR',
+            style: context.xHeadline5,
+          ),
+        ],
+      );
     } else {
-      return Row(mainAxisSize: MainAxisSize.min, children: [
-        Image.asset(
-          R.image.engFlag,
-          width: 30,
-        ),
-        R.widgets.wSizer4,
-        Text('EN', style: context.xHeadline5),
-      ]);
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            R.image.engFlag,
+            width: 30,
+          ),
+          R.widgets.wSizer4,
+          Text('EN', style: context.xHeadline5),
+        ],
+      );
     }
   }
 }

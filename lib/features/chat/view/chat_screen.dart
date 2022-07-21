@@ -98,6 +98,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(context, otherPerson.name ?? ''),
     );
   }
@@ -202,7 +203,7 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               icon: SvgPicture.asset(
                 R.image.photo,
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
                 width: 25,
               ),
               onPressed: () async {
@@ -229,7 +230,7 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               icon: Icon(
                 Icons.image_outlined,
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
               ),
               onPressed: () async {
                 if (!await getIt<PermissionManager>().request(
@@ -276,7 +277,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
-                      color: getIt<IAppConfig>().theme.mainColor,
+                      color: context.xPrimaryColor,
                       icon: SvgPicture.asset(R.image.send, width: 25),
                       onPressed: () {
                         _sendMessage(chatVm);

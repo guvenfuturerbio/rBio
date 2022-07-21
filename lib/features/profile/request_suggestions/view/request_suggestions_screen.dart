@@ -78,6 +78,7 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).request_and_suggestions,
@@ -112,7 +113,7 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
                 LocaleProvider.current.request_and_suggestions_text,
                 textAlign: TextAlign.center,
                 style: context.xHeadline5.copyWith(
-                  color: getIt<IAppConfig>().theme.mainColor,
+                  color: context.xPrimaryColor,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
                 ),
