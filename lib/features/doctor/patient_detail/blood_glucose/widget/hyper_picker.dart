@@ -55,7 +55,7 @@ class _HyperPicker extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: R.sizes.radiusCircular,
                   bottomRight: R.sizes.radiusCircular,

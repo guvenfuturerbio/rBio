@@ -56,7 +56,7 @@ class BpChartFilterPopUp extends StatelessWidget {
                   (key) => CheckboxListTile(
                     title: Text(key, style: context.xHeadline5),
                     value: vm.measurements[key],
-                    activeColor: getIt<IAppConfig>().theme.mainColor,
+                    activeColor: context.xPrimaryColor,
                     dense: true,
                     onChanged: (_) => vm.changeFilter(key),
                   ),

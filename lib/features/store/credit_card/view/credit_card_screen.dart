@@ -110,6 +110,7 @@ class _CreditCardViewState extends State<CreditCardView> {
       child: RbioScaffold(
         resizeToAvoidBottomInset: true,
         appbar: RbioAppBar(
+          context: context,
           title: RbioAppBar.textTitle(
             context,
             LocaleProvider.current.payment,
@@ -191,6 +192,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                     keyboardType: TextInputType.text,
                     decoration: Utils.instance
                         .inputImageDecoration(
+                          context: context,
                           suffixIconClicked: () {},
                           hintText: LocaleProvider.current.credit_card_holder,
                           image: R.image.user,
@@ -234,6 +236,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                     keyboardType: TextInputType.number,
                     decoration: Utils.instance
                         .inputImageDecoration(
+                          context: context,
                           suffixIconClicked: () {},
                           hintText: LocaleProvider.current.credit_card_number,
                           image: R.image.creditCardNumber,
@@ -276,6 +279,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                     keyboardType: TextInputType.number,
                     decoration: Utils.instance
                         .inputImageDecoration(
+                          context: context,
                           suffixIconClicked: () {},
                           hintText: LocaleProvider.current.credit_card_cvv,
                           image: R.image.password,
@@ -319,6 +323,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                     keyboardType: TextInputType.number,
                     decoration: Utils.instance
                         .inputImageDecoration(
+                          context: context,
                           suffixIconClicked: () {},
                           hintText:
                               LocaleProvider.current.credit_card_expired_date,
@@ -352,14 +357,13 @@ class _CreditCardViewState extends State<CreditCardView> {
                   children: [
                     Container(
                       alignment: Alignment.bottomLeft,
-                      child: Checkbox(
+                      child: RbioCheckbox(
                         value: state.result.isDistanceContractSelected,
                         onChanged: (newValue) {
                           context
                               .read<CreditCardCubit>()
                               .toggleDistanceContract();
                         },
-                        activeColor: getIt<IAppConfig>().theme.mainColor,
                       ),
                     ),
                     Expanded(
@@ -391,14 +395,13 @@ class _CreditCardViewState extends State<CreditCardView> {
                   children: [
                     Container(
                       alignment: Alignment.bottomLeft,
-                      child: Checkbox(
+                      child: RbioCheckbox(
                         value: state.result.isInformationFormAccepted,
                         onChanged: (newValue) {
                           context
                               .read<CreditCardCubit>()
                               .toggleInformationForm();
                         },
-                        activeColor: getIt<IAppConfig>().theme.mainColor,
                       ),
                     ),
                     Expanded(
@@ -430,6 +433,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                   child: state.status == CreditCardStatus.loadingInProgress
                       ? const RbioLoading()
                       : Utils.instance.button(
+                          context: context,
                           text: LocaleProvider.current.confirm.toUpperCase(),
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {

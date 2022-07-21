@@ -62,6 +62,7 @@ class SearchView extends StatelessWidget {
     // adds delay
     final _debouncer = Debouncer(milliseconds: 500);
     return RbioAppBar(
+      context: context,
       leading: drawerKey != null
           ? RbioLeadingMenu(drawerKey: drawerKey)
           : const SizedBox(width: 0, height: 0),
@@ -135,16 +136,20 @@ class RbioFilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilterChip(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
       selected: isSelected,
-      checkmarkColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-      selectedColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      checkmarkColor: getIt<IAppConfig>().theme.mainOverColor,
+      selectedColor: context.xPrimaryColor,
       label: Text(
         type.xGetTitle,
         style: isSelected
-            ? context.xHeadline3
-                .copyWith(color: getIt<IAppConfig>().theme.cardBackgroundColor)
-            : context.xHeadline3,
+            ? context.xHeadline3.copyWith(
+                color: getIt<IAppConfig>().theme.white,
+                fontWeight: FontWeight.bold,
+              )
+            : context.xHeadline3.copyWith(
+                color: getIt<IAppConfig>().theme.textColorSecondary,
+              ),
       ),
       onSelected: (val) {
         context.read<SearchBloc>().add(SearchEvent.platformFilter(type));

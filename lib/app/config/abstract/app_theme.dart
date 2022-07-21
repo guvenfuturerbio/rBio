@@ -1,68 +1,20 @@
 part of 'app_config.dart';
 
 abstract class IAppTheme {
-  IAppTheme() {
-    textTheme = TextTheme(
-      headline1: TextStyle(
-        color: Colors.black,
-        fontSize: convertFontSize(60),
-        fontWeight: FontWeight.normal,
-        fontFamily: fontFamily,
-      ),
-      headline2: TextStyle(
-        color: Colors.black,
-        fontSize: convertFontSize(55),
-        fontWeight: FontWeight.normal,
-        fontFamily: fontFamily,
-      ),
-      headline3: TextStyle(
-        color: Colors.black,
-        fontSize: convertFontSize(50),
-        fontWeight: FontWeight.normal,
-        fontFamily: fontFamily,
-      ),
-      headline4: TextStyle(
-        color: Colors.black,
-        fontSize: convertFontSize(45),
-        fontWeight: FontWeight.normal,
-        fontFamily: fontFamily,
-      ),
-      headline5: TextStyle(
-        color: Colors.black,
-        fontSize: convertFontSize(40),
-        fontWeight: FontWeight.normal,
-        fontFamily: fontFamily,
-      ),
-      bodyText1: TextStyle(
-        color: Colors.black,
-        fontSize: convertFontSize(35),
-        fontWeight: FontWeight.normal,
-        fontFamily: fontFamily,
-      ),
-      bodyText2: TextStyle(
-        color: Colors.black,
-        fontSize: convertFontSize(30),
-        fontWeight: FontWeight.normal,
-        fontFamily: fontFamily,
-      ),
-      caption: TextStyle(
-        color: Colors.black,
-        fontSize: convertFontSize(25),
-        fontWeight: FontWeight.normal,
-        fontFamily: fontFamily,
-      ),
-    );
-  }
-
-  late TextTheme textTheme;
+  TextTheme get textTheme;
   IAppDialogTheme dialogTheme = AppDialogThemeImpl();
   String get fontFamily;
   String get appLogo;
   String get successAppointmentImage;
   double get appBarLogoHeight;
-  Color get mainColor;
+  Color get appbarColor; // appBarTheme-backgroundColor
+  Color get primaryColor; // primaryColor
   Color get secondaryColor;
   Color get textContrastColor;
+  Color get checkboxBorderColor;
+  Color get bottomMenuColor;
+  Color get secondaryBackColor;
+  Color get mainOverColor;
 
   // ! --------- --------- Common --------- ---------
   Color grey = R.colors.grey;

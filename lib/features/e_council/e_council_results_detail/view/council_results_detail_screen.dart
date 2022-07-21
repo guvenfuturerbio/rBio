@@ -9,7 +9,12 @@ class ECouncilResultsDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).council_report)),
+      appbar: RbioAppBar(
+        context: context,
+        title: Text(
+          LocaleProvider.of(context).council_report,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -20,7 +25,7 @@ class ECouncilResultsDetailScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 19),
               decoration: BoxDecoration(
                 borderRadius: R.sizes.borderRadiusCircular,
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

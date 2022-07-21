@@ -34,6 +34,7 @@ class _MagazinesWebViewState extends State<MagazinesWebView> {
 
     return Scaffold(
       appBar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.magazines,

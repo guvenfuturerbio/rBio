@@ -267,7 +267,7 @@ class _UserDetailCard extends StatelessWidget {
                 onTap: onTap,
                 child: SvgPicture.asset(
                   R.image.other,
-                  color: getIt<IAppConfig>().theme.mainColor,
+                  color: context.xPrimaryColor,
                   width: 20,
                   height: 20,
                 ),

@@ -41,7 +41,7 @@ class RbioBaseGreyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.grayColor,
+      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),
@@ -92,7 +92,8 @@ class RbioMessageDialog extends StatelessWidget {
           RbioBaseDialog.verticalGap(),
 
           //
-          RbioSmallDialogButton.green(
+          RbioSmallDialogButton.main(
+            context: context,
             title: buttonTitle ?? LocaleProvider.current.Ok,
             onPressed: () {
               if (isAtom == true) {
@@ -184,13 +185,14 @@ class RbioSmallDialogButton extends StatelessWidget {
     this.onPressed,
   }) : super(key: key);
 
-  factory RbioSmallDialogButton.green({
+  factory RbioSmallDialogButton.main({
+    required BuildContext context,
     required String? title,
     required void Function()? onPressed,
   }) {
     return RbioSmallDialogButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
-      textColor: getIt<IAppConfig>().theme.textColor,
+      backgroundColor: context.xPrimaryColor,
+      textColor: getIt<IAppConfig>().theme.white,
       title: title,
       onPressed: onPressed,
     );
@@ -202,7 +204,7 @@ class RbioSmallDialogButton extends StatelessWidget {
   }) {
     return RbioSmallDialogButton(
       backgroundColor: getIt<IAppConfig>().theme.darkRed,
-      textColor: getIt<IAppConfig>().theme.textColor,
+      textColor: getIt<IAppConfig>().theme.white,
       title: title,
       onPressed: onPressed,
     );

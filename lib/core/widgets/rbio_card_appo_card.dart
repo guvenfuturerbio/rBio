@@ -86,7 +86,7 @@ class RbioCardAppoCard extends StatelessWidget {
               height: 42,
               decoration: BoxDecoration(
                 color: isActiveHeader
-                    ? getIt<IAppConfig>().theme.mainColor
+                    ? context.xPrimaryColor
                     : getIt<IAppConfig>().theme.secondaryColor,
                 borderRadius: BorderRadius.only(
                   topLeft: R.sizes.radiusCircular,

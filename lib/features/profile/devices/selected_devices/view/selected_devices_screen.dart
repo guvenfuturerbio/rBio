@@ -18,6 +18,7 @@ class SelectedDevicesScreen extends StatelessWidget {
 
     return RbioStackedScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.device_connections,
@@ -57,7 +58,8 @@ class SelectedDevicesScreen extends StatelessWidget {
                               child: Text(
                                 LocaleProvider.current.pair_steps,
                                 style: Atom.context.xHeadline1.copyWith(
-                                    color: getIt<IAppConfig>().theme.mainColor),
+                                  color: context.xPrimaryColor,
+                                ),
                               ),
                             ),
 
@@ -65,7 +67,8 @@ class SelectedDevicesScreen extends StatelessWidget {
                             ..._selectedDeviceVm
                                 .getPairOrder()
                                 .entries
-                                .map((data) => pairOrder(data.key, data.value))
+                                .map((data) =>
+                                    pairOrder(context, data.key, data.value))
                                 .toList()
                           ],
                         ),
@@ -88,7 +91,7 @@ class SelectedDevicesScreen extends StatelessWidget {
                                         .getStatus(device.id)
                                         ?.connectionState ==
                                     DeviceConnectionState.connected
-                                ? getIt<IAppConfig>().theme.mainColor
+                                ? context.xPrimaryColor
                                 : getIt<BleConnector>()
                                             .getStatus(device.id)
                                             ?.connectionState ==
@@ -115,7 +118,11 @@ class SelectedDevicesScreen extends StatelessWidget {
     );
   }
 
-  Widget pairOrder(String sequence, String text) {
+  Widget pairOrder(
+    BuildContext context,
+    String sequence,
+    String text,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -126,7 +133,7 @@ class SelectedDevicesScreen extends StatelessWidget {
             child: Text(
               sequence,
               style: Atom.context.xHeadline1.copyWith(
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
               ),
             ),
           ),

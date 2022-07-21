@@ -38,6 +38,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       leading: const SizedBox(),
     );
   }

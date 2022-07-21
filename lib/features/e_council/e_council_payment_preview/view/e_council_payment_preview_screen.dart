@@ -10,7 +10,9 @@ class ECouncilPaymentPreviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(),
+      appbar: RbioAppBar(
+        context: context,
+      ),
       body: const _BuildBody(),
     );
   }
@@ -24,12 +26,14 @@ class _BuildBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 32),
+      padding:
+          const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            LocaleProvider.of(context).your_council_request_has_been_accepted_by_our_doctors_below_are_the_details,
+            LocaleProvider.of(context)
+                .your_council_request_has_been_accepted_by_our_doctors_below_are_the_details,
             textAlign: TextAlign.center,
             style: context.xHeadline4,
           ),

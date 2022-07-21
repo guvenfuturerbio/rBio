@@ -85,6 +85,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).my_symptoms,
@@ -106,6 +107,7 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //
                     Container(
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(left: 2, top: 15),
@@ -118,11 +120,14 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                                     ? LocaleProvider.of(context).boy
                                     : LocaleProvider.of(context).girl,
                         style: context.xHeadline3.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: getIt<IAppConfig>().theme.mainColor),
+                          fontWeight: FontWeight.bold,
+                          color: context.xPrimaryColor,
+                        ),
                         textAlign: TextAlign.start,
                       ),
                     ),
+
+                    //
                     Container(
                       margin: const EdgeInsets.only(left: 35),
                       child: Padding(
@@ -130,12 +135,15 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                         child: Text(
                           widget.selectedBodyLocation!.name!,
                           style: context.xHeadline3.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: getIt<IAppConfig>().theme.mainColor),
+                            fontWeight: FontWeight.bold,
+                            color: context.xPrimaryColor,
+                          ),
                           textAlign: TextAlign.start,
                         ),
                       ),
                     ),
+
+                    //
                     Container(
                       margin: const EdgeInsets.only(left: 35),
                       child: Padding(
@@ -154,6 +162,8 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                     )
                   ],
                 ),
+
+                //
                 Column(
                   children: [
                     SizedBox(
@@ -162,60 +172,64 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                           ? MediaQuery.of(context).size.height * 0.25
                           : value.selectedBodySymptoms.length * 35.0,
                       child: ListView.builder(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width / 8),
-                          itemCount: value.selectedBodySymptoms.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '${value.selectedBodySymptoms[index].name}',
-                                      style: context.xHeadline3.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: getIt<IAppConfig>()
-                                              .theme
-                                              .mainColor),
-                                      overflow: TextOverflow.ellipsis,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width / 8),
+                        itemCount: value.selectedBodySymptoms.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //
+                                  Text(
+                                    '${value.selectedBodySymptoms[index].name}',
+                                    style: context.xHeadline3.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: context.xPrimaryColor,
                                     ),
-                                    GestureDetector(
-                                        onTap: () async {
-                                          await value.removeSemptomFromList(
-                                              value
-                                                  .selectedBodySymptoms[index]);
-                                          await widget.myPv!
-                                              .removeSemptomFromList(widget
-                                                  .myPv!
-                                                  .selectedSymptoms![index]);
-                                          await value.fetchProposedSymptoms(
-                                              value.selectedBodySymptoms,
-                                              widget.selectedGenderId,
-                                              widget.yearOfBirth);
-                                        },
-                                        child: const Icon(Icons.close)),
-                                  ],
-                                ),
-                                const Divider(
-                                  thickness: 1,
-                                )
-                              ],
-                            );
-                          }),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+
+                                  //
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await value.removeSemptomFromList(
+                                          value.selectedBodySymptoms[index]);
+                                      await widget.myPv!.removeSemptomFromList(
+                                          widget
+                                              .myPv!.selectedSymptoms![index]);
+                                      await value.fetchProposedSymptoms(
+                                          value.selectedBodySymptoms,
+                                          widget.selectedGenderId,
+                                          widget.yearOfBirth);
+                                    },
+                                    child: const Icon(Icons.close),
+                                  ),
+                                ],
+                              ),
+
+                              //
+                              const Divider(thickness: 1)
+                            ],
+                          );
+                        },
+                      ),
                     ),
+
+                    //
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 15, 8, 20),
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width / 1.5,
                         child: RbioElevatedButton(
-                            onTap: () {
-                              Atom.historyBack();
-                            },
-                            title: LocaleProvider.of(context).add_symptom),
+                          onTap: () {
+                            Atom.historyBack();
+                          },
+                          title: LocaleProvider.of(context).add_symptom,
+                        ),
                       ),
                     ),
                     value.proposedProgress == LoadingProgress.loading
@@ -315,9 +329,9 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                                 child: Text(
                                   '${value.proposedSymptomList[index].name}',
                                   style: context.xHeadline3.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          getIt<IAppConfig>().theme.mainColor),
+                                    fontWeight: FontWeight.bold,
+                                    color: context.xPrimaryColor,
+                                  ),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),

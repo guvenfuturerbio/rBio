@@ -173,10 +173,9 @@ class BgChartFilterPopUp extends StatelessWidget {
             child: SizedBox(
               height: 16,
               width: 16,
-              child: Checkbox(
+              child: RbioCheckbox(
                 value: status,
                 onChanged: statCallback,
-                activeColor: getIt<IAppConfig>().theme.mainColor,
               ),
             ),
           ),

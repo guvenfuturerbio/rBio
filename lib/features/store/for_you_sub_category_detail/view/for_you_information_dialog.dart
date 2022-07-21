@@ -17,7 +17,7 @@ class ForYouInformationDialog extends StatelessWidget {
             vertical: 10,
           ),
           decoration: BoxDecoration(
-            color: getIt<IAppConfig>().theme.mainColor,
+            color: context.xPrimaryColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Column(

@@ -166,7 +166,7 @@ class _ListBodyState extends State<ListBody>
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: widget.completeNotifier.value?.value == value
-                ? getIt<IAppConfig>().theme.mainColor
+                ? context.xPrimaryColor
                 : getIt<IAppConfig>().theme.cardBackgroundColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
@@ -176,8 +176,11 @@ class _ListBodyState extends State<ListBody>
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.value == value
-                  ? getIt<IAppConfig>().theme.textColor
+                  ? getIt<IAppConfig>().theme.white
                   : getIt<IAppConfig>().theme.textColorSecondary,
+              fontWeight: widget.completeNotifier.value?.value == value
+                  ? FontWeight.bold
+                  : FontWeight.w500,
             ),
           ),
         ),
@@ -238,7 +241,7 @@ class _ListBodyState extends State<ListBody>
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: widget.completeNotifier.value?.selected?.from == item.from
-                ? getIt<IAppConfig>().theme.mainColor
+                ? context.xPrimaryColor
                 : getIt<IAppConfig>().theme.cardBackgroundColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
@@ -250,8 +253,12 @@ class _ListBodyState extends State<ListBody>
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.selected?.from == item.from
-                  ? getIt<IAppConfig>().theme.textColor
+                  ? getIt<IAppConfig>().theme.white
                   : getIt<IAppConfig>().theme.textColorSecondary,
+              fontWeight:
+                  widget.completeNotifier.value?.selected?.from == item.from
+                      ? FontWeight.bold
+                      : FontWeight.w500,
             ),
           ),
         ),

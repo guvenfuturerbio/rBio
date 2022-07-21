@@ -68,6 +68,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
   // #region _buildAppBar
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.strip_tracker,
@@ -283,7 +284,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
     return Center(
       child: CircleAvatar(
         radius: 90,
-        backgroundColor: getIt<IAppConfig>().theme.mainColor,
+        backgroundColor: context.xPrimaryColor,
         child: CircleAvatar(
           backgroundColor: Colors.white,
           radius: 70,
@@ -404,7 +405,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         padding: const EdgeInsets.all(10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.mainColor,
+          color: context.xPrimaryColor,
           shape: BoxShape.circle,
         ),
         child: SvgPicture.asset(

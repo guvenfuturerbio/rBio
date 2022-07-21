@@ -70,6 +70,7 @@ class _MeasurementTrackingHomeScreenState
     return isLandscape
         ? null
         : RbioAppBar(
+            context: context,
             leading: widget.drawerKey != null
                 ? RbioLeadingMenu(drawerKey: widget.drawerKey)
                 : null,

@@ -97,6 +97,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
           child: RbioScaffold(
             resizeToAvoidBottomInset: true,
             appbar: RbioAppBar(
+              context: context,
               leading: RbioAppBar.defaultLeading(
                 context,
                 () {
@@ -153,13 +154,16 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       },
                       decoration: Utils.instance
                           .inputImageDecoration(
+                            context: context,
                             suffixIconClicked: () {},
                             hintText: LocaleProvider.current.credit_card_holder,
                             image: R.image.user,
                           )
                           .copyWith(
-                              fillColor: getIt<IAppConfig>().theme.white,
-                              filled: true),
+                            fillColor:
+                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            filled: true,
+                          ),
                       autocorrect: false,
                       enableSuggestions: false,
                       focusNode: _cardHolderNameFNode,
@@ -196,13 +200,16 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       },
                       decoration: Utils.instance
                           .inputImageDecoration(
+                            context: context,
                             suffixIconClicked: () {},
                             hintText: LocaleProvider.current.credit_card_number,
                             image: R.image.creditCardNumber,
                           )
                           .copyWith(
-                              fillColor: getIt<IAppConfig>().theme.white,
-                              filled: true),
+                            fillColor:
+                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            filled: true,
+                          ),
                       focusNode: _cardNumberFNode,
                       controller: _cardNumberController,
                       enableSuggestions: false,
@@ -238,13 +245,16 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       },
                       decoration: Utils.instance
                           .inputImageDecoration(
+                            context: context,
                             suffixIconClicked: () {},
                             hintText: LocaleProvider.current.credit_card_cvv,
                             image: R.image.password,
                           )
                           .copyWith(
-                              fillColor: getIt<IAppConfig>().theme.white,
-                              filled: true),
+                            fillColor:
+                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            filled: true,
+                          ),
                       focusNode: _cardCcvFNode,
                       controller: _cvvCodeController,
                       enableSuggestions: false,
@@ -281,14 +291,17 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       },
                       decoration: Utils.instance
                           .inputImageDecoration(
+                            context: context,
                             suffixIconClicked: () {},
                             hintText:
                                 LocaleProvider.current.credit_card_expired_date,
                             image: R.image.creditCalendar,
                           )
                           .copyWith(
-                              fillColor: getIt<IAppConfig>().theme.white,
-                              filled: true),
+                            fillColor:
+                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            filled: true,
+                          ),
                       focusNode: _cardExpirityDateFNode,
                       controller: _expiryDateController,
                       enableSuggestions: false,
@@ -334,12 +347,11 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       //
                       Container(
                         alignment: Alignment.bottomLeft,
-                        child: Checkbox(
+                        child: RbioCheckbox(
                           value: value.isSalesContractConfirmed,
                           onChanged: (newValue) {
                             value.toggleSalesContract();
                           },
-                          activeColor: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                       Expanded(
@@ -372,12 +384,11 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                     children: [
                       Container(
                         alignment: Alignment.bottomLeft,
-                        child: Checkbox(
+                        child: RbioCheckbox(
                           value: value.cancellationFormConfirmed,
                           onChanged: (newValue) {
                             value.toggleCancellationForm();
                           },
-                          activeColor: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                       Expanded(

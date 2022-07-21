@@ -78,7 +78,7 @@ class SelectableUsageType extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isActive ? getIt<IAppConfig>().theme.mainColor : Colors.white,
+          color: isActive ? context.xPrimaryColor : Colors.white,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: _text,

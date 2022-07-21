@@ -192,10 +192,9 @@ class _ChartFilter extends StatelessWidget {
             child: SizedBox(
               height: size,
               width: size,
-              child: Checkbox(
+              child: RbioCheckbox(
                 value: status,
                 onChanged: statCallback,
-                activeColor: getIt<IAppConfig>().theme.mainColor,
               ),
             ),
           ),

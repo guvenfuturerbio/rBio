@@ -75,7 +75,7 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
             tileMode: TileMode.clamp,
             stops: const [0.0, 1.0],
             colors: <Color>[
-              getIt<IAppConfig>().theme.mainColor,
+              context.xPrimaryColor,
               getIt<IAppConfig>().theme.secondaryColor,
             ],
           ),
@@ -84,13 +84,13 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
               height: 20,
               width: 20,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
                 borderRadius: BorderRadius.circular(50),
               ),
               padding: const EdgeInsets.all(5),
               child: Container(
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.mainColor,
+                  color: context.xPrimaryColor,
                   borderRadius: BorderRadius.circular(50),
                 ),
               ),

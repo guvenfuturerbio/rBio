@@ -119,11 +119,8 @@ class _HomeSliderState extends State<HomeSlider> {
                                   ),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: getIt<IAppConfig>()
-                                        .theme
-                                        .mainColor
-                                        .withOpacity(
-                                            _current == entry.key ? 0.9 : 0.4),
+                                    color: context.xPrimaryColor.withOpacity(
+                                        _current == entry.key ? 0.9 : 0.4),
                                     border: Border.all(
                                       color: getIt<IAppConfig>().theme.white,
                                       width: 0.5,

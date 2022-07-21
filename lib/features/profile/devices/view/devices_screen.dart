@@ -7,6 +7,7 @@ class DevicesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.devices,
@@ -20,7 +21,7 @@ class DevicesScreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: _buildFab(),
+      floatingActionButton: _buildFab(context),
     );
   }
 
@@ -62,9 +63,9 @@ class DevicesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFab() {
+  Widget _buildFab(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: context.xPrimaryColor,
       onPressed: () {
         Atom.to(PagePaths.allDevices);
       },
@@ -87,9 +88,10 @@ class DevicesScreen extends StatelessWidget {
           }) =>
               DeviceCard(
                 name: device.name,
-                background: _getBackgroundColorV2(deviceStatus),
-                image: Utils.instance.getDeviceImageFromType(device.deviceType!) ??
-                    const SizedBox(),
+                background: _getBackgroundColorV2(context, deviceStatus),
+                image:
+                    Utils.instance.getDeviceImageFromType(device.deviceType!) ??
+                        const SizedBox(),
                 onTap: () async {
                   if (deviceStatus == DeviceStatus.connected) {
                     context.read<DeviceSelectedCubit>().disconnect(device);
@@ -133,10 +135,12 @@ class DevicesScreen extends StatelessWidget {
                             ),
                             actions: [
                               GuvenAlert.buildBigMaterialAction(
+                                context,
                                 LocaleProvider.current.cancel,
                                 () => Atom.dismiss(),
                               ),
                               GuvenAlert.buildBigMaterialAction(
+                                context,
                                 LocaleProvider.current.yes,
                                 () => vm.deletePairedDeviceV2(
                                   context,
@@ -184,13 +188,16 @@ class DevicesScreen extends StatelessWidget {
     );
   }
 
-  Color _getBackgroundColorV2(DeviceStatus? deviceStatus) {
+  Color _getBackgroundColorV2(
+    BuildContext context,
+    DeviceStatus? deviceStatus,
+  ) {
     switch (deviceStatus) {
       case DeviceStatus.connecting:
         return getIt<IAppConfig>().theme.high;
 
       case DeviceStatus.connected:
-        return getIt<IAppConfig>().theme.mainColor;
+        return context.xPrimaryColor;
 
       case DeviceStatus.disconnected:
       case DeviceStatus.disconnecting:
@@ -202,7 +209,8 @@ class DevicesScreen extends StatelessWidget {
   Widget _buildV1Card(BuildContext context, PairedDevice device, DevicesVm vm) {
     return DeviceCard(
       background: getIt<IAppConfig>().theme.cardBackgroundColor,
-      image: Utils.instance.getDeviceImageFromType(device.deviceType!) ?? const SizedBox(),
+      image: Utils.instance.getDeviceImageFromType(device.deviceType!) ??
+          const SizedBox(),
       name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
       trailing: Row(
         children: [
@@ -236,10 +244,12 @@ class DevicesScreen extends StatelessWidget {
                   ),
                   actions: [
                     GuvenAlert.buildBigMaterialAction(
+                      context,
                       LocaleProvider.current.cancel,
                       () => Atom.dismiss(),
                     ),
                     GuvenAlert.buildBigMaterialAction(
+                      context,
                       LocaleProvider.current.yes,
                       () => vm.deletePairedDeviceV1(
                         device.deviceId ?? '',

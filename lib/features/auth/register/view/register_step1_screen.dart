@@ -77,6 +77,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
             child: RbioScaffold(
               resizeToAvoidBottomInset: true,
               appbar: RbioAppBar(
+                context: context,
                 leading: isFromIntro ? const SizedBox() : null,
               ),
               body: _buildBody(vm),
@@ -514,7 +515,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     child: Text(
                       LocaleProvider.of(context).btn_sign_in,
                       style: context.xHeadline3.copyWith(
-                        color: getIt<IAppConfig>().theme.mainColor,
+                        color: context.xPrimaryColor,
                       ),
                     ),
                     onTap: () {

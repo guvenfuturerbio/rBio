@@ -12,6 +12,7 @@ class ECouncilHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: Text(LocaleProvider.of(context).e_council),
       ),
       body: const _BuildBody(),
@@ -25,7 +26,7 @@ class _BuildBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = context.xHeadline1.copyWith(
-      color: getIt<IAppConfig>().theme.mainColor,
+      color: context.xPrimaryColor,
       decoration: TextDecoration.underline,
     );
 
@@ -45,8 +46,12 @@ class _BuildBody extends StatelessWidget {
                       Atom.to(
                         PagePaths.eCouncilInformationPage,
                         queryParameters: {
-                          ECouncilInformationScreen.eCouncilInformationPageTitleKey: LocaleProvider.of(context).what_is_the_e_council,
-                          ECouncilInformationScreen.eCouncilInformationPageInformationKey: whatIsTheECouncil,
+                          ECouncilInformationScreen
+                                  .eCouncilInformationPageTitleKey:
+                              LocaleProvider.of(context).what_is_the_e_council,
+                          ECouncilInformationScreen
+                                  .eCouncilInformationPageInformationKey:
+                              whatIsTheECouncil,
                         },
                       );
                     },
@@ -62,8 +67,13 @@ class _BuildBody extends StatelessWidget {
                       Atom.to(
                         PagePaths.eCouncilInformationPage,
                         queryParameters: {
-                          ECouncilInformationScreen.eCouncilInformationPageTitleKey: LocaleProvider.of(context).how_to_use_the_e_council,
-                          ECouncilInformationScreen.eCouncilInformationPageInformationKey: howToUseTheECouncil,
+                          ECouncilInformationScreen
+                                  .eCouncilInformationPageTitleKey:
+                              LocaleProvider.of(context)
+                                  .how_to_use_the_e_council,
+                          ECouncilInformationScreen
+                                  .eCouncilInformationPageInformationKey:
+                              howToUseTheECouncil,
                         },
                       );
                     },
@@ -119,7 +129,8 @@ class _BuildCouncilResults extends StatelessWidget {
             children: [
               SvgPicture.asset(R.image.councilResults),
               R.widgets.wSizer16,
-              Text(LocaleProvider.of(context).council_results, style: context.xHeadline2),
+              Text(LocaleProvider.of(context).council_results,
+                  style: context.xHeadline2),
               const Spacer(),
               const Icon(Icons.arrow_forward_ios_outlined),
             ],
@@ -136,7 +147,8 @@ class _BuildCustomExpansionTile extends StatefulWidget {
   const _BuildCustomExpansionTile({Key? key}) : super(key: key);
 
   @override
-  State<_BuildCustomExpansionTile> createState() => _BuildCustomExpansionTileState();
+  State<_BuildCustomExpansionTile> createState() =>
+      _BuildCustomExpansionTileState();
 }
 
 class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
@@ -230,7 +242,8 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                     //? Tetkik Bekleyen
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).pending_inspection,
-                      color: getIt<IAppConfig>().theme.eCouncilPendingInspection,
+                      color:
+                          getIt<IAppConfig>().theme.eCouncilPendingInspection,
                       number: 0,
                     ),
                     //? Reddedilen

@@ -334,32 +334,21 @@ class VRouterRoutes {
               beforeEnter: (vRedirector) async {
                 Future<void> showAlert() async {
                   await Atom.show(
-                    GuvenAlert(
-                      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-                      title: GuvenAlert.buildTitle(LocaleProvider.current.info),
-                      content: GuvenAlert.buildDescription(
-                        LocaleProvider.current.device_register,
-                      ),
-                      actions: [
-                        //
-                        GuvenAlert.buildMaterialAction(
-                          LocaleProvider.current.Ok,
-                          () {
-                            Atom.dismiss();
-                            vRedirector.to(PagePaths.allDevices);
-                          },
-                        ),
-                      ],
+                    DeviceRegisterDialog(
+                      vRedirector: vRedirector,
                     ),
                   );
                 }
 
-                final pairedDevices = getIt<BleDeviceManager>().getPairedDevices();
+                final pairedDevices =
+                    getIt<BleDeviceManager>().getPairedDevices();
                 if (pairedDevices.isEmpty) {
                   await showAlert();
                   //vRedirector.stopRedirection();
                 } else {
-                  final hasSugarDevice = pairedDevices.any((item) => item.deviceType == DeviceType.accuCheck || item.deviceType == DeviceType.contourPlusOne);
+                  final hasSugarDevice = pairedDevices.any((item) =>
+                      item.deviceType == DeviceType.accuCheck ||
+                      item.deviceType == DeviceType.contourPlusOne);
                   if (!hasSugarDevice) {
                     await showAlert();
                     vRedirector.stopRedirection();
@@ -407,7 +396,8 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
-            if (!Atom.isWeb && !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+            if (!Atom.isWeb &&
+                !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
               _stopRedirectionShowNotChronicDialog(vRedirector);
             }
           },
@@ -583,7 +573,8 @@ class VRouterRoutes {
               if (!getIt<IAppConfig>().functionality.takeOnlineAppointment) {
                 vRedirector.to(PagePaths.main);
               }
-            } else if (vRedirector.toUrl?.contains('forOnline=false') ?? false) {
+            } else if (vRedirector.toUrl?.contains('forOnline=false') ??
+                false) {
               if (!getIt<IAppConfig>().functionality.takeHospitalAppointment) {
                 vRedirector.to(PagePaths.main);
               }
@@ -726,9 +717,12 @@ class PagePaths {
   static const patientScaleDetail = '/scale-detail';
   static const scaleManuelAdd = '/scale-detail/scale-manuel-add';
 
-  static const patientScaleTreatmentList = "/scale-detail/patient-scale-treatment-list";
-  static const patientScaleDietDetail = "/scale-detail/patient-scale-diet-detail";
-  static const patientScaleTreatmentDetail = "/scale-detail/patient-scale-treatment-detail";
+  static const patientScaleTreatmentList =
+      "/scale-detail/patient-scale-treatment-list";
+  static const patientScaleDietDetail =
+      "/scale-detail/patient-scale-diet-detail";
+  static const patientScaleTreatmentDetail =
+      "/scale-detail/patient-scale-treatment-detail";
   // #endregion
 
   // #region Dashboard
@@ -753,7 +747,8 @@ class PagePaths {
   static const doctorScaleTreatmentList = '/doctor-scale-treatment-list';
   static const doctorScaleDietAddEdit = '/doctor-scale-diet-add-edit';
   static const doctorScaleTreatmentAddEdit = '/doctor-scale-treatment-add-edit';
-  static const doctorScaleDoctorNoteAddEdit = '/doctor-scale-doctor-note-add-edit';
+  static const doctorScaleDoctorNoteAddEdit =
+      '/doctor-scale-doctor-note-add-edit';
   // #endregion
 
   // #region Mediminder
@@ -839,7 +834,8 @@ class PagePaths {
   static const eCouncilResultPage = '/council-result';
   static const eCouncilRequestPage = '/council-requests';
   static const eCouncilResultDetailPage = '/council-result-detail';
-  static const eCouncilCreateCouncilRequestPage = '/council-create-council-request';
+  static const eCouncilCreateCouncilRequestPage =
+      '/council-create-council-request';
   static const eCouncilPaymentPreviewPage = '/council-payment-preview';
   static const eCouncilPaymentPage = '/council-payment';
   static const eCouncilInspectionUploadPage = '/council-inspection-upload';
@@ -850,4 +846,34 @@ class PagePaths {
 
 void openDefaultScreen(VRedirector vRedirector) {
   vRedirector.to(PagePaths.main);
+}
+
+class DeviceRegisterDialog extends StatelessWidget {
+  final VRedirector vRedirector;
+  const DeviceRegisterDialog({
+    Key? key,
+    required this.vRedirector,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GuvenAlert(
+      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      title: GuvenAlert.buildTitle(LocaleProvider.current.info),
+      content: GuvenAlert.buildDescription(
+        LocaleProvider.current.device_register,
+      ),
+      actions: [
+        //
+        GuvenAlert.buildMaterialAction(
+          context,
+          LocaleProvider.current.Ok,
+          () {
+            Atom.dismiss();
+            vRedirector.to(PagePaths.allDevices);
+          },
+        ),
+      ],
+    );
+  }
 }

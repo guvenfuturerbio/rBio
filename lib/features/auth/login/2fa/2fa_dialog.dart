@@ -88,7 +88,8 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     if (!vm.resendButtonEnabled) ...[
                       R.widgets.hSizer40,
                       Center(
-                        child: RbioSmallDialogButton.green(
+                        child: RbioSmallDialogButton.main(
+                          context: context,
                           title: LocaleProvider.current.save,
                           onPressed: () async {
                             await vm.verifyCode(
@@ -101,7 +102,10 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     ],
 
                     if (vm.resendButtonEnabled) ...[
+                      //
                       R.widgets.hSizer24,
+
+                      //
                       Center(
                         child: RbioSmallDialogButton.white(
                           title: LocaleProvider.current.resend,
@@ -110,9 +114,14 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                           },
                         ),
                       ),
+
+                      //
                       R.widgets.hSizer8,
+
+                      //
                       Center(
-                          child: RbioSmallDialogButton.green(
+                          child: RbioSmallDialogButton.main(
+                        context: context,
                         title: LocaleProvider.current.save,
                         onPressed: () async {
                           await vm.verifyCode(

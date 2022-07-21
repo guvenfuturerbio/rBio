@@ -72,14 +72,13 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                   Padding(
                     padding: const EdgeInsets.only(left: 32.0),
                     child: SizedBox(
-                      child: Checkbox(
+                      child: RbioCheckbox(
                         value: doNotAskAgain,
                         onChanged: (val) {
                           setState(() {
                             doNotAskAgain = val!;
                           });
                         },
-                        activeColor: getIt<IAppConfig>().theme.mainColor,
                       ),
                     ),
                   ),
@@ -107,7 +106,8 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
 
             //
             Center(
-              child: RbioSmallDialogButton.green(
+              child: RbioSmallDialogButton.main(
+                context: context,
                 title: LocaleProvider.current.update_now,
                 onPressed: widget.onPositiveButtonClicked,
               ),

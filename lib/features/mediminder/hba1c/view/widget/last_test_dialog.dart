@@ -112,7 +112,8 @@ class _LastTestDialogState extends State<_LastTestDialog> {
 
                     //
                     Expanded(
-                      child: RbioSmallDialogButton.green(
+                      child: RbioSmallDialogButton.main(
+                        context: context,
                         title: LocaleProvider.current.save,
                         onPressed: () {
                           final inputValue =

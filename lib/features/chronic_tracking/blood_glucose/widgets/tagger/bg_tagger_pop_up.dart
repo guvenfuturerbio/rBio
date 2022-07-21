@@ -371,11 +371,15 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
 
   // #endregion
   Widget _buildTagItem(
-      BuildContext context, bool isCurrent, String icon, String title) {
+    BuildContext context,
+    bool isCurrent,
+    String icon,
+    String title,
+  ) {
     return Card(
       elevation: R.sizes.defaultElevation,
       color: isCurrent
-          ? getIt<IAppConfig>().theme.mainColor
+          ? context.xPrimaryColor
           : getIt<IAppConfig>().theme.cardBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,

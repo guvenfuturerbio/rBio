@@ -78,14 +78,11 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                             //
                             Container(
                               alignment: Alignment.bottomLeft,
-                              child: Checkbox(
+                              child: RbioCheckbox(
                                 value: value.clickedConsentForm,
-                                checkColor: Colors.white,
                                 onChanged: (newValue) {
                                   value.toggleConsentFormState();
                                 },
-                                activeColor:
-                                    getIt<IAppConfig>().theme.mainColor,
                               ),
                             ),
 
@@ -111,6 +108,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Center(
                             child: GuvenAlert.buildBigMaterialAction(
+                              context,
                               LocaleProvider.current.Ok.toUpperCase(),
                               () {
                                 value.saveConsentFormState();

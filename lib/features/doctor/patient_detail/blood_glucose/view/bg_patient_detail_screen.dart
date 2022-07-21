@@ -119,6 +119,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.bg_measurement_tracking,
