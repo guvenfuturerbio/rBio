@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
@@ -234,29 +233,12 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
 
   // #region _buildFAB
   Widget _buildFAB(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: context.xPrimaryColor,
+    return RbioSVGFAB.primaryColor(
+      context,
+      imagePath: R.image.add,
       onPressed: () async {
         Atom.to(PagePaths.scaleManuelAdd);
-        // final isAdded = await Atom.show(
-        //   const ScaleTaggerPopUp(),
-        //   barrierDismissible: false,
-        //   barrierColor: Colors.transparent,
-        // );
-
-        // if (isAdded != null) {
-        //   if (isAdded == true) {
-        //     await context.read<ScaleDetailCubit>().fetchAll();
-        //   }
-        // }
       },
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SvgPicture.asset(
-          R.image.add,
-          color: getIt<IAppConfig>().theme.white,
-        ),
-      ),
     );
   }
   // #endregion

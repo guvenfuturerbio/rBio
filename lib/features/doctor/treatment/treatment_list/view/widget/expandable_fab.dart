@@ -77,14 +77,12 @@ class __ExpandableFabState extends State<_ExpandableFab>
   Widget _buildTapToCloseFab() {
     return FloatingActionButton(
       heroTag: 'false',
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      backgroundColor: context.xCardColor,
       onPressed: _toggle,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SvgPicture.asset(
-          R.image.cancel,
-          color: context.xPrimaryColor,
-        ),
+      child: SvgPicture.asset(
+        R.image.cancel,
+        width: R.sizes.iconSize,
+        color: context.xPrimaryColor,
       ),
     );
   }
@@ -128,12 +126,10 @@ class __ExpandableFabState extends State<_ExpandableFab>
             heroTag: 'true',
             backgroundColor: context.xPrimaryColor,
             onPressed: _toggle,
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: SvgPicture.asset(
-                R.image.add,
-                color: getIt<IAppConfig>().theme.white,
-              ),
+            child: SvgPicture.asset(
+              R.image.add,
+              width: R.sizes.iconSize,
+              color: context.xIconColor,
             ),
           ),
         ),

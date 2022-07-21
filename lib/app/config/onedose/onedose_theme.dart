@@ -120,7 +120,7 @@ class OneDoseDarkTheme extends IAppTheme {
         fontFamily: fontFamily,
       ),
       headline4: TextStyle(
-        color: Colors.black,
+        color: Colors.white,
         fontSize: convertFontSize(45),
         fontWeight: FontWeight.normal,
         fontFamily: fontFamily,

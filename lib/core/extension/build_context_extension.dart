@@ -16,6 +16,9 @@ extension BuildContextThemeExtensions on BuildContext {
 
   AppBarTheme get xAppBarTheme => Theme.of(this).appBarTheme;
   Color get xPrimaryColor => Theme.of(this).primaryColor;
+  Color? get xIconColor => iconTheme.color;
+  Color? get xIconSecondaryColor => getIt<IAppConfig>().theme.iconSecondaryColor;
+  Color? get xCardColor => Theme.of(this).cardTheme.color;
 
   // #region Size Extension
   double get height => MediaQuery.of(this).size.height;

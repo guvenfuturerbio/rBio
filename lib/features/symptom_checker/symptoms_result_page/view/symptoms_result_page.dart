@@ -13,6 +13,7 @@ class SymptomsResultPage extends StatefulWidget {
   late bool? isFromVoice;
   late String? bodyPart;
   late int? bodyPartLength;
+
   SymptomsResultPage({
     Key? key,
     this.symptoms,
@@ -381,12 +382,11 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
   }
 }
 
-FloatingActionButton _buildFAB(BuildContext context) {
-  return FloatingActionButton(
-    backgroundColor: context.xPrimaryColor,
+Widget _buildFAB(BuildContext context) {
+  return RbioIconsFAB(
+    icon: Icons.home,
     onPressed: () {
       Atom.to(PagePaths.main);
     },
-    child: const Icon(Icons.home),
   );
 }

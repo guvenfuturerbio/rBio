@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
@@ -143,16 +142,10 @@ class BgProgressScreen extends StatelessWidget {
   }
 
   Widget _buildFAB(BgProgressVm vm, BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: context.xPrimaryColor,
+    return RbioSVGFAB.primaryColor(
+      context,
       onPressed: () => vm.manuelEntry(context),
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SvgPicture.asset(
-          R.image.add,
-          color: getIt<IAppConfig>().theme.white,
-        ),
-      ),
+      imagePath: R.image.add,
     );
   }
 

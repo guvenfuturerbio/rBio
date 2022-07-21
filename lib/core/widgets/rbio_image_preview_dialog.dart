@@ -52,16 +52,11 @@ class RbioImagePreviewDialog extends StatelessWidget {
               alignment: Alignment.topRight,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: FloatingActionButton(
-                  backgroundColor: Colors.white12,
+                child: RbioIconsFAB(
                   onPressed: () {
                     Atom.dismiss();
                   },
-                  child: Icon(
-                    Icons.close,
-                    size: R.sizes.iconSize,
-                    color: getIt<IAppConfig>().theme.iconColor,
-                  ),
+                  icon: Icons.close,
                 ),
               ),
             ),

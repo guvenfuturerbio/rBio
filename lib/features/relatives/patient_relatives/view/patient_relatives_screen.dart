@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/core.dart';
 import '../../../take_appointment/create_appointment/model/patient_relative_info_response.dart';
@@ -91,17 +90,12 @@ class _PatientRelativesViewState extends State<PatientRelativesView> {
   }
 
   Widget _buildFab() {
-    return FloatingActionButton(
-      backgroundColor: context.xPrimaryColor,
+    return RbioSVGFAB.primaryColor(
+      context,
+      imagePath: R.image.add,
       onPressed: () {
         Atom.to(PagePaths.addPatientRelatives);
       },
-      child: Center(
-        child: SvgPicture.asset(
-          R.image.add,
-          width: R.sizes.iconSize2,
-        ),
-      ),
     );
   }
 

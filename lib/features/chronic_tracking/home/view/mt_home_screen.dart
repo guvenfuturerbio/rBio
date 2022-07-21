@@ -122,32 +122,21 @@ class _MeasurementTrackingHomeScreenState
         R.widgets.hSizer12,
 
         //
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: R.sizes.borderRadiusCircular,
-            color: vm.activeItem != null ? Colors.transparent : Colors.white,
-            boxShadow: vm.activeItem != null
-                ? [
-                    const BoxShadow(color: Colors.transparent),
-                  ]
-                : null,
-          ),
-          child: ClipRRect(
-            borderRadius: R.sizes.borderRadiusCircular,
-            child: Column(
-              children: vm.items
-                  .map(
-                    (parentElement) => _SectionCard(
-                      isVisible: vm.activeItem == null,
-                      smallChild: parentElement.smallChild ?? const SizedBox(),
-                      hasDivider: vm.activeItem == null &&
-                          vm.items.indexWhere((element) =>
-                                  element.key == parentElement.key) <
-                              vm.items.length - 1,
-                    ),
-                  )
-                  .toList(),
-            ),
+        Card(
+          margin: EdgeInsets.zero,
+          child: Column(
+            children: vm.items
+                .map(
+                  (parentElement) => _SectionCard(
+                    isVisible: vm.activeItem == null,
+                    smallChild: parentElement.smallChild ?? const SizedBox(),
+                    hasDivider: vm.activeItem == null &&
+                        vm.items.indexWhere(
+                                (element) => element.key == parentElement.key) <
+                            vm.items.length - 1,
+                  ),
+                )
+                .toList(),
           ),
         ),
       ],

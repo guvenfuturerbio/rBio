@@ -64,17 +64,12 @@ class DevicesScreen extends StatelessWidget {
   }
 
   Widget _buildFab(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: context.xPrimaryColor,
+    return RbioSVGFAB.primaryColor(
+      context,
+      imagePath: R.image.add,
       onPressed: () {
         Atom.to(PagePaths.allDevices);
       },
-      child: Center(
-        child: SvgPicture.asset(
-          R.image.add,
-          width: R.sizes.iconSize2,
-        ),
-      ),
     );
   }
 

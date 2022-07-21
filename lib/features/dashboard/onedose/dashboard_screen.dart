@@ -304,12 +304,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: SizedBox(
                 height: 60,
                 width: 60,
-                child: FloatingActionButton(
-                  backgroundColor: context.xPrimaryColor,
-                  child: SvgPicture.asset(
-                    R.image.bottomNavigationHome,
-                    width: R.sizes.iconSize,
-                  ),
+                child: RbioSVGFAB(
+                  iconColor: null,
+                  imagePath: R.image.bottomNavigationHome,
                   elevation: 0,
                   onPressed: () {
                     getIt<IAppConfig>()
@@ -336,6 +333,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       0,
@@ -353,6 +351,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     },
                     splashColor: Colors.white,
                   ),
+
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       1,
@@ -369,9 +369,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       DashboardNavigation.toChat(context);
                     },
                   ),
+
+                  //
                   Container(
                     width: size.width * 0.20,
                   ),
+
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       3,
@@ -388,6 +392,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       DashboardNavigation.toGraph(context);
                     },
                   ),
+
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       4,

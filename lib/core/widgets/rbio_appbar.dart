@@ -40,6 +40,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                       child: SvgPicture.asset(
                         R.image.back,
                         width: R.sizes.iconSize,
+                        color: context.xIconSecondaryColor,
                       ),
                     ),
                     onTap: () {

@@ -244,16 +244,27 @@ class _MyAppCommonState extends State<MyAppCommon> {
                         getIt<IAppConfig>().theme.scaffoldBackgroundColor,
                     fontFamily: getIt<IAppConfig>().theme.fontFamily,
                     textTheme: getIt<IAppConfig>().theme.textTheme,
+                    floatingActionButtonTheme: FloatingActionButtonThemeData(
+                      backgroundColor: getIt<IAppConfig>().theme.primaryColor,
+                    ),
+                    iconTheme: IconThemeData(
+                      color: getIt<IAppConfig>().theme.iconColor,
+                    ),
                     appBarTheme: AppBarTheme(
                       backgroundColor: getIt<IAppConfig>().theme.appbarColor,
                     ),
                     cardTheme: const CardTheme().copyWith(
+                      elevation: 0.0,
                       color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: R.sizes.borderRadiusCircular,
+                      ),
                     ),
                     textSelectionTheme: TextSelectionThemeData(
                       cursorColor: getIt<IAppConfig>().theme.primaryColor,
                       selectionColor: getIt<IAppConfig>().theme.primaryColor,
-                      selectionHandleColor: getIt<IAppConfig>().theme.primaryColor,
+                      selectionHandleColor:
+                          getIt<IAppConfig>().theme.primaryColor,
                     ),
                     cupertinoOverrideTheme: CupertinoThemeData(
                       primaryColor: getIt<IAppConfig>().theme.primaryColor,
