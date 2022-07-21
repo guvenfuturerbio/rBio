@@ -193,7 +193,7 @@ class _TreatmentEditViewState extends State<TreatmentEditView> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
+          RbioCircleAvatar(
             backgroundImage: Utils.instance.getCacheProfileImage,
             backgroundColor: context.xCardColor,
           ),

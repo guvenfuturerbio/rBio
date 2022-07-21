@@ -252,7 +252,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               //
-                              CircleAvatar(
+                              RbioCircleAvatar(
                                 backgroundImage: state.getProfileImage,
                                 radius: R.sizes.iconSize * 1.3,
                                 backgroundColor: context.xCardColor,

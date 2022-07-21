@@ -22,6 +22,7 @@ export 'rbio_badge.dart';
 export 'rbio_buttons.dart';
 export 'rbio_card_appo_card.dart';
 export 'rbio_checkbox.dart';
+export 'rbio_circle_avatar.dart';
 export 'rbio_context_info_dialog.dart';
 export 'rbio_country_code_picker.dart';
 export 'rbio_dark_status_bar.dart';

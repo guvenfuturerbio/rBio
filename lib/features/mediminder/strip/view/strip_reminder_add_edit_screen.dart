@@ -282,10 +282,10 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
   // #region _buildCircleCount
   Widget _buildCircleCount(StripReminderAddEditResult result) {
     return Center(
-      child: CircleAvatar(
+      child: RbioCircleAvatar(
         radius: 90,
         backgroundColor: context.xPrimaryColor,
-        child: CircleAvatar(
+        child: RbioCircleAvatar(
           backgroundColor: Colors.white,
           radius: 70,
           child: Column(

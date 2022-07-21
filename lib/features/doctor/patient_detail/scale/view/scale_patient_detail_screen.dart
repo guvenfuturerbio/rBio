@@ -299,7 +299,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    RbioCircleAvatar(
                       foregroundImage: NetworkImage(R.image.circlevatar),
                       backgroundColor: context.xCardColor,
                     ),

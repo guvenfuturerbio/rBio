@@ -74,7 +74,7 @@ class RbioUserTile extends StatelessWidget {
   Widget _getLeadingImage(BuildContext context, UserLeadingImage type) {
     switch (type) {
       case UserLeadingImage.circle:
-        return CircleAvatar(
+        return RbioCircleAvatar(
           backgroundColor: context.xCardColor,
           backgroundImage: imageBytes != null
               ? MemoryImage(base64.decode(imageBytes!))

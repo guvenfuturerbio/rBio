@@ -171,7 +171,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
+          RbioCircleAvatar(
             foregroundImage: NetworkImage(R.image.circlevatar),
             backgroundColor: context.xCardColor,
           ),

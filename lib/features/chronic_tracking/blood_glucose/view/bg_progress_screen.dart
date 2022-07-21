@@ -170,7 +170,7 @@ class BgProgressScreen extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  RbioCircleAvatar(
                     foregroundImage: Utils.instance.getCacheProfileImage,
                     backgroundColor: context.xCardColor,
                   ),

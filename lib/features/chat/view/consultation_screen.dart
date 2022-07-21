@@ -142,7 +142,7 @@ class ConsultationScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 //
-                CircleAvatar(
+                RbioCircleAvatar(
                   backgroundColor: context.xCardColor,
                   backgroundImage: NetworkImage(item.url!),
                   radius: 25,

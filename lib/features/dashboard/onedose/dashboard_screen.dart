@@ -94,7 +94,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           //
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0),
-                            child: CircleAvatar(
+                            child: RbioCircleAvatar(
                               backgroundImage:
                                   Utils.instance.getCacheProfileImage,
                               radius: R.sizes.iconSize2,

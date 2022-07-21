@@ -252,7 +252,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    RbioCircleAvatar(
                       foregroundImage: NetworkImage(R.image.circlevatar),
                       backgroundColor: context.xCardColor,
                     ),

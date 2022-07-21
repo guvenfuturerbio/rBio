@@ -48,7 +48,7 @@ class RbioBadge extends StatelessWidget {
             if (count != null) ...{
               Align(
                 alignment: Alignment.topRight,
-                child: CircleAvatar(
+                child: RbioCircleAvatar(
                   backgroundColor: getIt<IAppConfig>().theme.darkRed,
                   radius: isBigSize ? 10.5 : 9,
                   child: Text(

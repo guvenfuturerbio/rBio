@@ -181,7 +181,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
+          RbioCircleAvatar(
             foregroundImage: NetworkImage(R.image.circlevatar),
             backgroundColor: context.xCardColor,
           ),
