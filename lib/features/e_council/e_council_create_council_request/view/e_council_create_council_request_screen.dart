@@ -13,7 +13,12 @@ class ECouncilCreateCouncilRequestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).create_new_council_request)),
+      appbar: RbioAppBar(
+        context: context,
+        title: Text(
+          LocaleProvider.of(context).create_new_council_request,
+        ),
+      ),
       body: _BuildBody(),
     );
   }
@@ -75,7 +80,7 @@ class _BuildSearchField extends StatelessWidget {
         hintText: LocaleProvider.of(context).please_select_your_diagnosis,
         fillColor: Colors.white,
         filled: true,
-        suffixIcon: Icon(Icons.search, color: getIt<IAppConfig>().theme.mainColor),
+        suffixIcon: Icon(Icons.search, color: context.xPrimaryColor),
         errorStyle: const TextStyle(fontSize: 11),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(R.sizes.radiusCircular),
@@ -84,7 +89,8 @@ class _BuildSearchField extends StatelessWidget {
       ),
       controller: _textController,
       autoCorrect: false,
-      suggestions: listOfSearchItems.map((String e) => SearchFieldListItem(e)).toList(),
+      suggestions:
+          listOfSearchItems.map((String e) => SearchFieldListItem(e)).toList(),
       validator: (String? x) {
         if (!listOfSearchItems.contains(x) || x!.isEmpty) {
           return LocaleProvider.of(context).inlavid_diagnosis;
@@ -105,7 +111,8 @@ class _BuildNameSurnameField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(LocaleProvider.of(context).name_surname, style: context.xHeadline3),
+        Text(LocaleProvider.of(context).name_surname,
+            style: context.xHeadline3),
         R.widgets.hSizer4,
         RbioTextFormField(
           validator: (String? p0) {
@@ -130,7 +137,8 @@ class _BuildIllnessHistoryField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(LocaleProvider.of(context).enter_your_illness_history, style: context.xHeadline3),
+        Text(LocaleProvider.of(context).enter_your_illness_history,
+            style: context.xHeadline3),
         R.widgets.hSizer4,
         const RbioTextFormField(minLines: 4, maxLines: 4),
       ],
@@ -147,7 +155,8 @@ class _BuildRecordField extends StatefulWidget {
   State<_BuildRecordField> createState() => _BuildRecordFieldState();
 }
 
-class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProviderStateMixin {
+class _BuildRecordFieldState extends State<_BuildRecordField>
+    with TickerProviderStateMixin {
   double microphoneSvgSize = 48;
   bool isRecording = false;
   Color borderColor = Colors.transparent;
@@ -192,14 +201,19 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
             borderRadius: BorderRadius.all(R.sizes.radiusCircular),
             border: Border.all(color: borderColor, width: 3),
             boxShadow: [
-              if (isRecording) BoxShadow(color: borderColor.withOpacity(0.5), spreadRadius: 1, blurRadius: 4),
+              if (isRecording)
+                BoxShadow(
+                    color: borderColor.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 4),
             ],
           ),
           child: Row(
             children: [
               //? Sol Mikrofon
               GestureDetector(
-                child: SvgPicture.asset(R.image.councilRecord, width: microphoneSvgSize, height: microphoneSvgSize),
+                child: SvgPicture.asset(R.image.councilRecord,
+                    width: microphoneSvgSize, height: microphoneSvgSize),
                 onLongPressStart: (LongPressStartDetails detail) {
                   setState(() {
                     microphoneSvgSize = 64;
@@ -237,8 +251,11 @@ class _BuildRecordFieldState extends State<_BuildRecordField> with TickerProvide
               ),
               //? Text
               Text(
-                isRecording ? LocaleProvider.of(context).slide_to_cancel : LocaleProvider.of(context).press_and_hold_the_microphone,
-                style: context.xHeadline5.copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+                isRecording
+                    ? LocaleProvider.of(context).slide_to_cancel
+                    : LocaleProvider.of(context).press_and_hold_the_microphone,
+                style: context.xHeadline5.copyWith(
+                    color: getIt<IAppConfig>().theme.textColorPassive),
               ),
               //? Ileri oku
               Visibility(
@@ -301,19 +318,28 @@ class _BuildUploadField extends StatelessWidget {
           readOnly: true,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.only(topLeft: R.sizes.radiusCircular, topRight: R.sizes.radiusCircular),
+            borderRadius: BorderRadius.only(
+                topLeft: R.sizes.radiusCircular,
+                topRight: R.sizes.radiusCircular),
           ),
           onTap: () {},
-          suffixIcon: Padding(padding: const EdgeInsets.all(10.0), child: SvgPicture.asset(R.image.councilUpload)),
+          suffixIcon: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SvgPicture.asset(R.image.councilUpload)),
         ),
         const Divider(height: 2, thickness: 2),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 22.0),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(bottomLeft: R.sizes.radiusCircular, bottomRight: R.sizes.radiusCircular),
+            borderRadius: BorderRadius.only(
+                bottomLeft: R.sizes.radiusCircular,
+                bottomRight: R.sizes.radiusCircular),
           ),
-          child: Text(LocaleProvider.of(context).please_select_the_file_you_want_to_upload, style: context.xHeadline3),
+          child: Text(
+              LocaleProvider.of(context)
+                  .please_select_the_file_you_want_to_upload,
+              style: context.xHeadline3),
         ),
         ...silFileList
             .map<Widget>((String e) => CouncilCardFilesWidget(

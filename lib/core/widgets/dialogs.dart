@@ -105,7 +105,7 @@ class _GradientDialogState extends State<GradientDialog> {
     );
 
     return AlertDialog(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: context.xPrimaryColor,
       contentPadding: EdgeInsets.zero,
       title: Text(
         widget.title ?? '',

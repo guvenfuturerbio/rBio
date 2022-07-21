@@ -55,7 +55,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                   tooltip: FlutterSliderTooltip(
                     boxStyle: FlutterSliderTooltipBox(
                       decoration: BoxDecoration(
-                        color: getIt<IAppConfig>().theme.mainColor,
+                        color: context.xPrimaryColor,
                         borderRadius: R.sizes.borderRadiusCircular,
                       ),
                     ),
@@ -77,7 +77,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                     ),
                     activeTrackBar: BoxDecoration(
                       borderRadius: R.sizes.borderRadiusCircular,
-                      color: getIt<IAppConfig>().theme.mainColor,
+                      color: context.xPrimaryColor,
                     ),
                   ),
                   onDragging: (handlerIndex, lowerValue, upperValue) {
@@ -94,7 +94,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.mainColor,
+                  color: context.xPrimaryColor,
                   borderRadius: BorderRadius.only(
                     bottomLeft: R.sizes.radiusCircular,
                     bottomRight: R.sizes.radiusCircular,

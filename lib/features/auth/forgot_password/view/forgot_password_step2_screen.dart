@@ -112,7 +112,9 @@ class _ForgotPasswordStep2ViewState extends State<ForgotPasswordStep2View> {
           child: RbioStackedScaffold(
             isLoading: state.isLoading,
             resizeToAvoidBottomInset: true,
-            appbar: RbioAppBar(),
+            appbar: RbioAppBar(
+              context: context,
+            ),
             body: _buildBody(state),
           ),
         );
@@ -292,10 +294,9 @@ class _ForgotPasswordStep2ViewState extends State<ForgotPasswordStep2View> {
           ),
 
           //
-          Checkbox(
+          RbioCheckbox(
             value: checkboxValue,
             onChanged: (value) {},
-            activeColor: getIt<IAppConfig>().theme.mainColor,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
         ],

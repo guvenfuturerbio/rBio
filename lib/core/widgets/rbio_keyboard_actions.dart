@@ -23,7 +23,7 @@ class RbioKeyboardActions extends StatelessWidget {
       isDialog: isDialog,
       config: KeyboardActionsConfig(
         child: _buildMyDoneWidget(context),
-        keyboardSeparatorColor: getIt<IAppConfig>().theme.mainColor,
+        keyboardSeparatorColor: context.xPrimaryColor,
         actions:
             focusList.map((e) => KeyboardActionsItem(focusNode: e)).toList(),
       ),

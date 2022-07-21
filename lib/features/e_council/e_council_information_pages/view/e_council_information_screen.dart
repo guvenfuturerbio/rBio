@@ -8,12 +8,18 @@ class ECouncilInformationScreen extends StatelessWidget {
   }) : super(key: key);
 
   static const eCouncilInformationPageTitleKey = 'eCouncilInformationPageTitle';
-  static const eCouncilInformationPageInformationKey = 'eCouncilInformationPageInformationKey';
+  static const eCouncilInformationPageInformationKey =
+      'eCouncilInformationPageInformationKey';
 
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(title: Text(LocaleProvider.of(context).e_council)),
+      appbar: RbioAppBar(
+        context: context,
+        title: Text(
+          LocaleProvider.of(context).e_council,
+        ),
+      ),
       body: const _BuildBody(),
     );
   }
@@ -30,16 +36,24 @@ class _BuildBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            //
             Text(
-              Atom.queryParameters[ECouncilInformationScreen.eCouncilInformationPageTitleKey] ?? '',
-              // style: TextStyle(color: , fontSize: 16),
+              Atom.queryParameters[ECouncilInformationScreen
+                      .eCouncilInformationPageTitleKey] ??
+                  '',
               style: context.xHeadline1.copyWith(
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
               ),
             ),
+
+            //
             const SizedBox(height: 16),
+
+            //
             Text(
-              Atom.queryParameters[ECouncilInformationScreen.eCouncilInformationPageInformationKey] ?? '',
+              Atom.queryParameters[ECouncilInformationScreen
+                      .eCouncilInformationPageInformationKey] ??
+                  '',
               style: context.xHeadline3,
               textAlign: TextAlign.justify,
             ),

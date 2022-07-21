@@ -17,7 +17,9 @@ class _ECouncilPaymentScreenState extends State<ECouncilPaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(),
+      appbar: RbioAppBar(
+        context: context,
+      ),
       body: const _BuildBody(),
     );
   }
@@ -30,16 +32,19 @@ class _BuildBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String text =
-        LocaleProvider.of(context).after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests;
+    final String text = LocaleProvider.of(context)
+        .after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests;
 
-    List<String> splitList = text.split(LocaleProvider.of(context).council_requests);
+    List<String> splitList =
+        text.split(LocaleProvider.of(context).council_requests);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
           child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: constraints.maxWidth, minHeight: constraints.maxHeight - 32),
+            constraints: BoxConstraints(
+                minWidth: constraints.maxWidth,
+                minHeight: constraints.maxHeight - 32),
             child: IntrinsicHeight(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,7 +73,7 @@ class _BuildBody extends StatelessWidget {
                         TextSpan(
                           text: LocaleProvider.of(context).council_requests,
                           style: context.xHeadline4.copyWith(
-                            color: getIt<IAppConfig>().theme.mainColor,
+                            color: context.xPrimaryColor,
                           ),
                         ),
                         TextSpan(text: splitList[1]),
@@ -116,7 +121,7 @@ class _BuildPriceField extends StatelessWidget {
           Text(
             '1500.00 TL',
             style: context.xHeadline4.copyWith(
-              color: getIt<IAppConfig>().theme.mainColor,
+              color: context.xPrimaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -165,10 +170,14 @@ class _BuildButtonsFieldState extends State<_BuildButtonsField> {
           children: [
             Expanded(
               child: RbioElevatedButton(
-                title: isOpened ? LocaleProvider.of(context).apply_discount : LocaleProvider.of(context).add_discount_code,
+                title: isOpened
+                    ? LocaleProvider.of(context).apply_discount
+                    : LocaleProvider.of(context).add_discount_code,
                 fontWeight: FontWeight.bold,
                 textColor: isOpened ? Colors.white : Colors.black,
-                backColor: isOpened ? getIt<IAppConfig>().theme.mainColor : Colors.white,
+                backColor: isOpened
+                    ? context.xPrimaryColor
+                    : Colors.white,
                 onTap: () {
                   setState(() {
                     isOpened = true;

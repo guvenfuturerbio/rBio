@@ -91,7 +91,9 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
       children: [
         //
         RbioStackedScaffold(
-          appbar: RbioAppBar(),
+          appbar: RbioAppBar(
+            context: context,
+          ),
           body: _buildBody(context),
         ),
 

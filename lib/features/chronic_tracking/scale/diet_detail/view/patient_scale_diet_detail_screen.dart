@@ -75,6 +75,7 @@ class _PatientScaleDietDetailViewState
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.of(context).diet_list,

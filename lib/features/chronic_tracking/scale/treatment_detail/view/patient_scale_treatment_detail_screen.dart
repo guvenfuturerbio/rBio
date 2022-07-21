@@ -100,6 +100,7 @@ class _PatientScaleTreatmentDetailViewState
 
   RbioAppBar _buildAppBar(PatientScaleTreatmentDetailState state) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         state.whenOrNull(

@@ -84,8 +84,8 @@ class RbioElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          primary: backColor ?? getIt<IAppConfig>().theme.mainColor,
-          onSurface: backColor ?? getIt<IAppConfig>().theme.mainColor,
+          primary: backColor ?? context.xPrimaryColor,
+          onSurface: backColor ?? context.xPrimaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(50.0),
           ),
@@ -98,7 +98,7 @@ class RbioElevatedButton extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: context.xHeadline3.copyWith(
-                color: textColor ?? getIt<IAppConfig>().theme.textColor,
+                color: textColor ?? getIt<IAppConfig>().theme.white,
                 fontWeight: fontWeight,
                 fontSize: R.utils.textScaleHandler<double>(
                   context,
@@ -155,8 +155,8 @@ class RbioElevatedAutoButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          primary: backColor ?? getIt<IAppConfig>().theme.mainColor,
-          onSurface: backColor ?? getIt<IAppConfig>().theme.mainColor,
+          primary: backColor ?? context.xPrimaryColor,
+          onSurface: backColor ?? context.xPrimaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50.0),
           ),
@@ -217,11 +217,13 @@ class RbioIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: backColor ?? getIt<IAppConfig>().theme.mainColor, shape: BoxShape.circle),
+      decoration: BoxDecoration(
+          color: backColor ?? context.xPrimaryColor,
+          shape: BoxShape.circle),
       child: IconButton(
         onPressed: onPressed,
         icon: icon,
-        color: backColor ?? getIt<IAppConfig>().theme.mainColor,
+        color: backColor ?? context.xPrimaryColor,
         iconSize: iconSize,
       ),
     );

@@ -54,10 +54,10 @@ class Utils {
         : 0;
   }
 
-  Gradient appGradient() => LinearGradient(
+  Gradient appGradient(BuildContext context) => LinearGradient(
         colors: [
-          getIt<IAppConfig>().theme.mainColor,
-          getIt<IAppConfig>().theme.mainColor,
+          context.xPrimaryColor,
+          context.xPrimaryColor,
         ],
         begin: Alignment.bottomLeft,
         end: Alignment.centerRight,
@@ -107,7 +107,7 @@ class Utils {
     showSnackbar(
       context,
       text,
-      backColor: getIt<IAppConfig>().theme.mainColor,
+      backColor: context.xPrimaryColor,
       trailing: SvgPicture.asset(
         R.image.done,
         height: R.sizes.iconSize2,
@@ -293,6 +293,7 @@ class Utils {
   }
 
   InputDecoration inputImageDecoration({
+    required BuildContext context,
     String? image,
     String? hintText,
     required Function suffixIconClicked,
@@ -304,11 +305,12 @@ class Utils {
             ? SvgPicture.asset(
                 image,
                 fit: BoxFit.none,
+                color: getIt<IAppConfig>().theme.iconColor,
               )
             : const Icon(Icons.close),
         focusedBorder: _borderTextField(),
         border: _borderTextField(),
-        focusColor: getIt<IAppConfig>().theme.mainColor,
+        focusColor: context.xPrimaryColor,
         suffixIcon: Visibility(
           visible: suffixIcon != null ? true : false,
           child: InkWell(
@@ -328,14 +330,15 @@ class Utils {
 
   TextStyle inputTextStyle([Color? textColor]) => TextStyle(
         fontSize: 16,
-        color: textColor ?? getIt<IAppConfig>().theme.darkBlack,
+        color: textColor ?? getIt<IAppConfig>().theme.textColorSecondary,
       );
 
   TextStyle hintStyle() =>
       TextStyle(fontSize: 16, color: getIt<IAppConfig>().theme.gray);
 
   GradientButton button({
-    text: String,
+    required BuildContext context,
+    required String text,
     required Function() onPressed,
     double height = 16,
     double width = 200,
@@ -348,16 +351,18 @@ class Utils {
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: getIt<IAppConfig>().theme.white),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: getIt<IAppConfig>().theme.white,
+          ),
         ),
         textStyle: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: getIt<IAppConfig>().theme.white),
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: getIt<IAppConfig>().theme.white,
+        ),
         callback: onPressed,
-        gradient: appGradient(),
+        gradient: appGradient(context),
         shadowColor: Colors.black,
       );
 
@@ -425,10 +430,10 @@ class Utils {
 
   InputBorder _borderTextField() => OutlineInputBorder(
         borderRadius: BorderRadius.circular(200),
-        borderSide: BorderSide(
+        borderSide: const BorderSide(
           width: 0,
           style: BorderStyle.solid,
-          color: getIt<IAppConfig>().theme.darkWhite,
+          color: Colors.transparent,
         ),
       );
 

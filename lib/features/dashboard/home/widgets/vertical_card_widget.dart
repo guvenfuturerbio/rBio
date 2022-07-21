@@ -27,6 +27,7 @@ class VerticalCard extends StatelessWidget {
         child: Card(
           elevation: R.sizes.defaultElevation,
           margin: EdgeInsets.zero,
+          color: getIt<IAppConfig>().theme.cardBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),

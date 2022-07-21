@@ -48,7 +48,7 @@ class ReminderCard extends StatelessWidget {
                     horizontal: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: getIt<IAppConfig>().theme.mainColor,
+                    color: context.xPrimaryColor,
                     borderRadius: BorderRadius.vertical(
                       top: R.sizes.radiusCircular,
                     ),
@@ -110,7 +110,7 @@ class ReminderCard extends StatelessWidget {
                                 : '',
                             style: context.xHeadline3.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: getIt<IAppConfig>().theme.mainColor,
+                              color: context.xPrimaryColor,
                             ),
                           ),
                         ),

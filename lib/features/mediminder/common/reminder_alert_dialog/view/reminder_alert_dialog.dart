@@ -162,7 +162,8 @@ class _ReminderAlertView extends StatelessWidget {
 
               //
               Expanded(
-                child: RbioSmallDialogButton.green(
+                child: RbioSmallDialogButton.main(
+                  context: context,
                   onPressed: () {
                     Atom.dismiss();
                   },

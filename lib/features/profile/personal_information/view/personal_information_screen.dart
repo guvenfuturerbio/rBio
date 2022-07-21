@@ -15,7 +15,8 @@ class PersonalInformationScreen extends StatefulWidget {
   const PersonalInformationScreen({Key? key}) : super(key: key);
 
   @override
-  State<PersonalInformationScreen> createState() => _PersonalInformationScreenState();
+  State<PersonalInformationScreen> createState() =>
+      _PersonalInformationScreenState();
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
@@ -30,12 +31,14 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     try {
       // Kullanici mail adresi boş ise, oturum açma esnasında Ana sayfa yerine
       // kişisel bilgilerim sayfası açılır ve kullanıcıdan mail girmesi istenilir.
-      isEmailRequired = (Atom.queryParameters['emailRequired'] ?? false) == 'true';
+      isEmailRequired =
+          (Atom.queryParameters['emailRequired'] ?? false) == 'true';
       userAccount = getIt<UserFacade>().getUserAccount();
     } catch (e, stackTrace) {
       return RbioRouteError(e: e, stackTrace: stackTrace);
     }
-    final isEMail = !(userAccount.electronicMail?.contains("@mailyok.com") ?? false);
+    final isEMail =
+        !(userAccount.electronicMail?.contains("@mailyok.com") ?? false);
     return BlocProvider(
       create: (context) => PersonelInformationCubit(
         repository: getIt(),
@@ -65,7 +68,8 @@ class PersonalInformationView extends StatefulWidget {
   final bool isEmailRequired;
 
   @override
-  _PersonalInformationViewState createState() => _PersonalInformationViewState();
+  _PersonalInformationViewState createState() =>
+      _PersonalInformationViewState();
 }
 
 class _PersonalInformationViewState extends State<PersonalInformationView> {
@@ -108,7 +112,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
   Widget build(BuildContext context) {
     final xIsTCNationality = widget.userAccount.nationality?.xIsTCNationality;
     if (xIsTCNationality != null) {
-      identityEditingController.text = xIsTCNationality ? widget.userAccount.identificationNumber ?? '' : widget.userAccount.passaportNumber ?? '';
+      identityEditingController.text = xIsTCNationality
+          ? widget.userAccount.identificationNumber ?? ''
+          : widget.userAccount.passaportNumber ?? '';
     }
     countryCode = widget.userAccount.countryCode ?? '+90';
     final userName = widget.userAccount.name ?? '';
@@ -116,10 +122,14 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
     nameEditingController.text = userName + " " + userSurname;
     final patientsLength = widget.userAccount.patients?.length ?? 0;
     if (patientsLength > 0) {
-      final patientsFirstBirthDate = widget.userAccount.patients?.first.birthDate?.replaceAll('.', '/') ?? '';
-      birthdayEditingController.text = patientsLength > 0 ? patientsFirstBirthDate : "-";
+      final patientsFirstBirthDate =
+          widget.userAccount.patients?.first.birthDate?.replaceAll('.', '/') ??
+              '';
+      birthdayEditingController.text =
+          patientsLength > 0 ? patientsFirstBirthDate : "-";
     }
-    final isEMail = !(widget.userAccount.electronicMail?.contains("@mailyok.com") ?? false);
+    final isEMail =
+        !(widget.userAccount.electronicMail?.contains("@mailyok.com") ?? false);
     if (isEMail) {
       emailEditingController.text = widget.userAccount.electronicMail ?? '';
     }
@@ -137,7 +147,8 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
             Atom.to(PagePaths.main, isReplacement: true);
           }
         } else if (state.status == PersonelInformationStatus.deletePhoto) {
-        } else if (state.status == PersonelInformationStatus.getPhotoFromSource) {
+        } else if (state.status ==
+            PersonelInformationStatus.getPhotoFromSource) {
           if (state.imageSource == ImageSource.gallery) {
             if (!await getIt<PermissionManager>().request(
               permission: GalleryPermissionStrategy(
@@ -190,6 +201,8 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
+
       /// Kullanici mail adresi boş ise, oturum açma esnasında Ana sayfa yerine
       /// kişisel bilgilerim sayfası açılır ve kullanıcıdan mail girmesi istenilir.
       /// Bu senaryoda sayfada geri butonu yer almaz.
@@ -242,7 +255,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                               CircleAvatar(
                                 backgroundImage: state.getProfileImage,
                                 radius: R.sizes.iconSize * 1.3,
-                                backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                                backgroundColor: getIt<IAppConfig>()
+                                    .theme
+                                    .cardBackgroundColor,
                               ),
 
                               //
@@ -258,7 +273,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                                 child: Text(
                                   LocaleProvider.current.change,
                                   style: context.xHeadline5.copyWith(
-                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    color: context.xPrimaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -271,7 +286,8 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
 
                         // Identity Number
                         _buildTitle(
-                          (widget.userAccount.nationality?.xIsTCNationality ?? false)
+                          (widget.userAccount.nationality?.xIsTCNationality ??
+                                  false)
                               ? LocaleProvider.of(context).tc_identity_number
                               : LocaleProvider.of(context).passport_number,
                         ),
@@ -309,9 +325,12 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                           children: [
                             //
                             RbioCountryCodePicker(
-                              initialSelection: widget.userAccount.countryCode == null
+                              initialSelection: widget
+                                          .userAccount.countryCode ==
+                                      null
                                   ? '+90'
-                                  : widget.userAccount.countryCode!.contains('+')
+                                  : widget.userAccount.countryCode!
+                                          .contains('+')
                                       ? widget.userAccount.countryCode
                                       : '+' + widget.userAccount.countryCode!,
                               onChanged: (code) {
@@ -339,7 +358,8 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                                 controller: phoneNumberEditingController,
                                 keyboardType: TextInputType.phone,
                                 textInputAction: TextInputAction.done,
-                                hintText: LocaleProvider.of(context).phone_number,
+                                hintText:
+                                    LocaleProvider.of(context).phone_number,
                                 inputFormatters: <TextInputFormatter>[
                                   TabToNextFieldTextInputFormatter(
                                     context,
@@ -373,10 +393,12 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                           textInputAction: TextInputAction.done,
                           hintText: LocaleProvider.of(context).email_address,
                           inputFormatters: <TextInputFormatter>[
-                            TabToNextFieldTextInputFormatter(context, emailFocus, null),
+                            TabToNextFieldTextInputFormatter(
+                                context, emailFocus, null),
                           ],
                           onFieldSubmitted: (String term) {
-                            Utils.instance.fieldFocusChange(context, emailFocus, null);
+                            Utils.instance
+                                .fieldFocusChange(context, emailFocus, null);
                           },
                         ),
                       ],
@@ -402,7 +424,8 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                         onTap: () {
                           Atom.historyBack();
                         },
-                        backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                        backColor:
+                            getIt<IAppConfig>().theme.cardBackgroundColor,
                         textColor: getIt<IAppConfig>().theme.textColorSecondary,
                         fontWeight: FontWeight.bold,
                       ),
@@ -417,9 +440,12 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                         title: LocaleProvider.current.update,
                         onTap: () {
                           if (formKey.currentState?.validate() ?? false) {
-                            context.read<PersonelInformationCubit>().updateValues(
+                            context
+                                .read<PersonelInformationCubit>()
+                                .updateValues(
                                   countryCode: countryCode,
-                                  newPhoneNumber: phoneNumberEditingController.text.trim(),
+                                  newPhoneNumber:
+                                      phoneNumberEditingController.text.trim(),
                                   newEmail: emailEditingController.text.trim(),
                                 );
                           } else {
@@ -482,7 +508,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                           ),
                         ),
                         onPressed: () async {
-                          await context.read<PersonelInformationCubit>().deletePhoto();
+                          await context
+                              .read<PersonelInformationCubit>()
+                              .deletePhoto();
                           Navigator.pop(context);
                         },
                       ),
@@ -496,7 +524,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                           ),
                         ),
                         onPressed: () async {
-                          await context.read<PersonelInformationCubit>().deletePhoto();
+                          await context
+                              .read<PersonelInformationCubit>()
+                              .deletePhoto();
                           Navigator.pop(context);
                         },
                       ),
@@ -508,7 +538,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                           ),
                         ),
                         onPressed: () async {
-                          await context.read<PersonelInformationCubit>().getPhotoFromSource(
+                          await context
+                              .read<PersonelInformationCubit>()
+                              .getPhotoFromSource(
                                 ImageSource.gallery,
                               );
                           Navigator.pop(context);
@@ -522,7 +554,9 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                           ),
                         ),
                         onPressed: () async {
-                          await context.read<PersonelInformationCubit>().getPhotoFromSource(
+                          await context
+                              .read<PersonelInformationCubit>()
+                              .getPhotoFromSource(
                                 ImageSource.camera,
                               );
                           Navigator.pop(context);

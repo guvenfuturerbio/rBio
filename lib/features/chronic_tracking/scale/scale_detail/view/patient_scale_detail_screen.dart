@@ -46,7 +46,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: context.xPrimaryColor,
       bodyPadding: EdgeInsets.zero,
       appbar: _buildAppBar(),
       body: _buildBody(),
@@ -57,6 +57,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
   // #region _buildAppBar
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.weight_tracking,
@@ -234,7 +235,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
   // #region _buildFAB
   Widget _buildFAB(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: context.xPrimaryColor,
       onPressed: () async {
         Atom.to(PagePaths.scaleManuelAdd);
         // final isAdded = await Atom.show(
@@ -350,7 +351,7 @@ class ScaleCard extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? getIt<IAppConfig>().theme.mainColor
+                              ? context.xPrimaryColor
                               : getIt<IAppConfig>().theme.grayColor,
                           borderRadius: BorderRadius.only(
                             topLeft: R.sizes.radiusCircular,
@@ -452,7 +453,7 @@ class ScaleCard extends StatelessWidget {
     return await Atom.show(
       AlertDialog(
         contentPadding: EdgeInsets.zero,
-        backgroundColor: getIt<IAppConfig>().theme.mainColor,
+        backgroundColor: context.xPrimaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),

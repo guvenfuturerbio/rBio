@@ -132,6 +132,7 @@ class __MedicationReminderAddEditViewState
   // #region _buildAppBar
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.medication_reminders,
@@ -460,7 +461,7 @@ class __MedicationReminderAddEditViewState
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: type == result.drugTracking
-              ? getIt<IAppConfig>().theme.mainColor
+              ? context.xPrimaryColor
               : Colors.white,
           borderRadius: R.sizes.borderRadiusCircular,
         ),

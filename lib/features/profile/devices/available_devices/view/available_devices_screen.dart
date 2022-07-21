@@ -13,6 +13,7 @@ class AvailableDevices extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.supported_devices,
@@ -91,7 +92,9 @@ class AvailableDevices extends StatelessWidget {
             : const EdgeInsets.symmetric(horizontal: 8),
         child: Card(
           elevation: R.sizes.defaultElevation,
-          color: (device.enable ?? false) ? null : getIt<IAppConfig>().theme.bgGray,
+          color: (device.enable ?? false)
+              ? null
+              : getIt<IAppConfig>().theme.bgGray,
           shape: RoundedRectangleBorder(
             borderRadius: R.sizes.borderRadiusCircular,
           ),

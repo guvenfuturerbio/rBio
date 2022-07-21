@@ -67,6 +67,7 @@ class _CreateAppointmentEventsScreenState
           return RbioStackedScaffold(
             isLoading: val.centerLoading,
             appbar: RbioAppBar(
+              context: context,
               title: RbioAppBar.textTitle(
                 context,
                 LocaleProvider.of(context).create_appointment_events,

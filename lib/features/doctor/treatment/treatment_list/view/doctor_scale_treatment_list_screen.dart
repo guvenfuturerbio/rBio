@@ -64,6 +64,7 @@ class _DoctorScaleTreatmentListViewState
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.of(context).treatment,

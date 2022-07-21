@@ -56,7 +56,8 @@ class RbioHeightInfoDialog extends StatelessWidget {
 
               //
               Center(
-                child: RbioSmallDialogButton.green(
+                child: RbioSmallDialogButton.main(
+                  context: context,
                   title: LocaleProvider.current.update,
                   onPressed: () {
                     Atom.dismiss();

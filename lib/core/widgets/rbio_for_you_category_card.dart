@@ -48,8 +48,8 @@ class RbioForYouCategoryCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        getIt<IAppConfig>().theme.mainColor.withOpacity(0.8),
-                        getIt<IAppConfig>().theme.mainColor.withOpacity(0.3),
+                        context.xPrimaryColor.withOpacity(0.8),
+                        context.xPrimaryColor.withOpacity(0.3),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.topRight,

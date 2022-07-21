@@ -340,6 +340,7 @@ class AppointmentListVm extends RbioVm {
                 ),
                 actions: [
                   GuvenAlert.buildMaterialAction(
+                    context,
                     LocaleProvider.of(mContext).btn_cancel,
                     () {
                       Navigator.pop(mContext);
@@ -353,6 +354,7 @@ class AppointmentListVm extends RbioVm {
 
                   //
                   GuvenAlert.buildMaterialAction(
+                    context,
                     LocaleProvider.of(mContext).confirm,
                     () {
                       Navigator.pop(mContext);

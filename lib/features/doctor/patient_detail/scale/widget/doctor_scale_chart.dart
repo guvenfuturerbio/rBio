@@ -54,7 +54,7 @@ class _DoctorScaleChartState extends State<DoctorScaleChart> {
       // Plot Area
       plotAreaBorderWidth: 0,
       plotAreaBorderColor: Colors.transparent,
-      plotAreaBackgroundColor: getIt<IAppConfig>().theme.mainColor,
+      plotAreaBackgroundColor: context.xPrimaryColor,
       onPlotAreaSwipe: (detail) {},
       // plotAreaBackgroundImage: const AssetImage('images/bike.png'),
 

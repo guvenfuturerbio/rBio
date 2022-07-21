@@ -63,6 +63,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).results,
@@ -92,6 +93,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            //
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -99,13 +101,14 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                 style: context.xHeadline2,
                               ),
                             ),
+
+                            //
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 LinearPercentIndicator(
                                   animation: true,
-                                  progressColor:
-                                      getIt<IAppConfig>().theme.mainColor,
+                                  progressColor: context.xPrimaryColor,
                                   backgroundColor: getIt<IAppConfig>()
                                       .theme
                                       .grey
@@ -119,19 +122,19 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                     child: Text(
                                       '% 95.0',
                                       style: context.xHeadline2.copyWith(
-                                          color: getIt<IAppConfig>()
-                                              .theme
-                                              .mainColor,
-                                          fontWeight: FontWeight.bold),
+                                        color: context.xPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
+
+                                //
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color:
-                                          getIt<IAppConfig>().theme.mainColor,
+                                      color: context.xPrimaryColor,
                                       borderRadius:
                                           R.sizes.borderRadiusCircular,
                                     ),
@@ -193,6 +196,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                       ),
                     ),
                   ),
+
+                  //
                   Center(
                     child: Text(
                       LocaleProvider.of(context).no_symptom_result,
@@ -240,8 +245,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                             children: [
                               LinearPercentIndicator(
                                 animation: true,
-                                progressColor:
-                                    getIt<IAppConfig>().theme.mainColor,
+                                progressColor: context.xPrimaryColor,
                                 backgroundColor: getIt<IAppConfig>()
                                     .theme
                                     .grey
@@ -257,19 +261,17 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                       value.specialisations[index].accuracy
                                           .toStringAsFixed(1),
                                   style: context.xHeadline1.copyWith(
-                                      color:
-                                          getIt<IAppConfig>().theme.mainColor,
+                                      color: context.xPrimaryColor,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
 
                               //
-
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    color: context.xPrimaryColor,
                                     borderRadius: R.sizes.borderRadiusCircular,
                                   ),
                                   width:
@@ -381,7 +383,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
 
 FloatingActionButton _buildFAB(BuildContext context) {
   return FloatingActionButton(
-    backgroundColor: getIt<IAppConfig>().theme.mainColor,
+    backgroundColor: context.xPrimaryColor,
     onPressed: () {
       Atom.to(PagePaths.main);
     },

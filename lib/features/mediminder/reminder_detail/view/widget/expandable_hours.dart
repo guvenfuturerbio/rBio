@@ -138,7 +138,7 @@ class __ExpandableHoursState extends State<_ExpandableHours> {
                     ),
                   );
             },
-            activeColor: getIt<IAppConfig>().theme.mainColor,
+            activeColor: context.xPrimaryColor,
           ),
         ],
       ),

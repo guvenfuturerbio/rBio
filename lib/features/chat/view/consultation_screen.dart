@@ -43,6 +43,7 @@ class ConsultationScreen extends StatelessWidget {
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
+        context: context,
         leading:
             drawerKey != null ? RbioLeadingMenu(drawerKey: drawerKey) : null,
         title: RbioAppBar.textTitle(
@@ -183,7 +184,7 @@ class ConsultationScreen extends StatelessWidget {
                                   margin: const EdgeInsets.only(right: 4),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    color: context.xPrimaryColor,
                                   ),
                                   child: const SizedBox(
                                     height: 10,

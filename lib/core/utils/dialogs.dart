@@ -78,7 +78,8 @@ Future<void> showCompulsoryUpdateDialog({
 
               //
               Center(
-                child: RbioSmallDialogButton.green(
+                child: RbioSmallDialogButton.main(
+                  context: context,
                   title: LocaleProvider.current.update_now,
                   onPressed: onPressed,
                 ),

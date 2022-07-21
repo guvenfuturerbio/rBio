@@ -41,6 +41,7 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
             loadInProgress: () => const RbioLoading(),
             success: () => Scaffold(
               appBar: RbioAppBar(
+                context: context,
                 leading: const SizedBox(),
               ),
               body: Center(

@@ -172,6 +172,7 @@ class _DoctorScaleDietAddEditViewState
   }
 
   RbioAppBar _buildAppBar(DoctorScaleDietAddEditState state) => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           widget.isCreated

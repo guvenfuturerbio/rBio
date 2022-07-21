@@ -75,7 +75,8 @@ class _DialogForPossibleErrorDialogState
 
             //
             Center(
-              child: RbioSmallDialogButton.green(
+              child: RbioSmallDialogButton.main(
+                context: context,
                 title: LocaleProvider.current.Ok,
                 onPressed: () {
                   Navigator.of(context).pop();

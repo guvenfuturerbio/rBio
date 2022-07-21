@@ -43,7 +43,10 @@ class _AudioRecordViewState extends State<AudioRecordView> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(title: const Text('Test')),
+      appbar: RbioAppBar(
+        context: context,
+        title: const Text('Test'),
+      ),
       body: Column(
         children: [
           Row(
@@ -90,7 +93,8 @@ class _AudioRecordViewState extends State<AudioRecordView> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  audioPlayerController.setPath(filePath: recordList[index].file.path);
+                                  audioPlayerController.setPath(
+                                      filePath: recordList[index].file.path);
                                   audioPlayerController.play();
                                 },
                                 icon: const Icon(Icons.play_arrow_outlined),
@@ -110,7 +114,8 @@ class _AudioRecordViewState extends State<AudioRecordView> {
                               IconButton(
                                 onPressed: () {
                                   audioPlayerController.stop();
-                                  audioPlayerController.setPath(filePath: recordList[index].file.path);
+                                  audioPlayerController.setPath(
+                                      filePath: recordList[index].file.path);
                                 },
                                 icon: const Icon(Icons.stop),
                               ),
@@ -120,7 +125,8 @@ class _AudioRecordViewState extends State<AudioRecordView> {
                         ],
                       );
                     },
-                    separatorBuilder: (BuildContext context, int index) => const Divider(),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(),
                     itemCount: recordList.length,
                   ),
                 ),

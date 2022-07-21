@@ -42,6 +42,7 @@ class BpProgressScreen extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.bp_tracking,
@@ -122,7 +123,7 @@ class BpProgressScreen extends StatelessWidget {
 
   Widget _buildFAB(BpProgressVm vm, BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: context.xPrimaryColor,
       onPressed: () => vm.manuelEntry(context),
       child: Padding(
         padding: const EdgeInsets.all(15),
