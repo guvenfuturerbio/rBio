@@ -140,7 +140,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
 
             //
             if (vm.stateProcessPatientDetail == LoadingProgress.loading) ...[
-              const SizedBox(height: 12),
+              R.widgets.hSizer12,
               Shimmer.fromColors(
                 child: _UserDetailCard(
                   patientDetail: DoctorPatientDetailModel(),
@@ -173,7 +173,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
             ],
 
             //
-            const SizedBox(height: 12),
+            R.widgets.hSizer12,
 
             //
             if (!vm.isDataLoading) ...[
@@ -246,7 +246,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
@@ -254,8 +254,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
                   children: [
                     CircleAvatar(
                       foregroundImage: NetworkImage(R.image.circlevatar),
-                      backgroundColor:
-                          getIt<IAppConfig>().theme.cardBackgroundColor,
+                      backgroundColor: context.xCardColor,
                     ),
 
                     //
@@ -285,7 +284,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
           ),
 
           //
-          const SizedBox(width: 6),
+          R.widgets.wSizer8,
 
           //
           GestureDetector(
@@ -315,8 +314,9 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                  borderRadius: R.sizes.borderRadiusCircular),
+                color: context.xCardColor,
+                borderRadius: R.sizes.borderRadiusCircular,
+              ),
               child: Text(
                 LocaleProvider.current.treatment,
                 style: context.xHeadline5.copyWith(

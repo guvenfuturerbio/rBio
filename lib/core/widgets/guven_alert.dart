@@ -146,13 +146,14 @@ class GuvenAlert extends StatelessWidget {
   }
 
   static Widget buildMaterialWhiteAction(
+    BuildContext context,
     String title,
     void Function() onPressed, {
     EdgeInsetsGeometry? padding,
   }) {
     return _actionButton(
       title,
-      getIt<IAppConfig>().theme.cardBackgroundColor,
+      context.xCardColor,
       getIt<IAppConfig>().theme.textColorSecondary,
       onPressed,
       padding: padding,

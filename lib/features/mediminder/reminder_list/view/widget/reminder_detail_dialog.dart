@@ -78,6 +78,7 @@ class ReminderDetailDialog extends StatelessWidget {
                 children: [
                   Expanded(
                     child: RbioSmallDialogButton.white(
+                      context,
                       onPressed: () {
                         Atom.dismiss();
                         Future.delayed(

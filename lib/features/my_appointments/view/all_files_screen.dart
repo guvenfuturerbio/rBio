@@ -84,10 +84,6 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
     return InkWell(
       onTap: () => vm.onFileTapped(file),
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
           child: Row(

@@ -67,7 +67,7 @@ class _TableCalendarState extends State<_TableCalendar> {
         //
         Positioned.fill(
           child: Container(
-            color: getIt<IAppConfig>().theme.cardBackgroundColor,
+            color: context.xCardColor,
           ),
         ),
 
@@ -75,7 +75,7 @@ class _TableCalendarState extends State<_TableCalendar> {
         TableCalendar<Event>(
           locale: context.watch<LocaleNotifier>().getLocaleStr,
           daysBackgroundColor: getIt<IAppConfig>().theme.secondaryBackColor,
-          cellBackgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+          cellBackgroundColor: context.xCardColor,
 
           //
           firstDay: kFirstDay,

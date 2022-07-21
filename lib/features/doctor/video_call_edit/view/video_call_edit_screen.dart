@@ -91,7 +91,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: RbioTextFormField(
@@ -132,7 +132,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
               Expanded(
                 child: RbioElevatedButton(
                   title: LocaleProvider.current.back,
-                  backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  backColor: context.xCardColor,
                   textColor: getIt<IAppConfig>().theme.textColorSecondary,
                   onTap: () {},
                   fontWeight: FontWeight.bold,
@@ -165,7 +165,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -173,7 +173,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
         children: [
           CircleAvatar(
             foregroundImage: NetworkImage(R.image.circlevatar),
-            backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            backgroundColor: context.xCardColor,
           ),
 
           //

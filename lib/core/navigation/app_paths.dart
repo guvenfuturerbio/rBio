@@ -858,7 +858,7 @@ class DeviceRegisterDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GuvenAlert(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      backgroundColor: context.xCardColor,
       title: GuvenAlert.buildTitle(LocaleProvider.current.info),
       content: GuvenAlert.buildDescription(
         LocaleProvider.current.device_register,

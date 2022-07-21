@@ -605,12 +605,12 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Card(
-                  elevation: R.sizes.defaultElevation,
                   shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: getIt<IAppConfig>().theme.red,
-                      ),
-                      borderRadius: R.sizes.borderRadiusCircular),
+                    side: BorderSide(
+                      color: getIt<IAppConfig>().theme.red,
+                    ),
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -652,9 +652,6 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
           )
         : Expanded(
             child: Card(
-              elevation: R.sizes.defaultElevation,
-              shape: RoundedRectangleBorder(
-                  borderRadius: R.sizes.borderRadiusCircular),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[

@@ -218,8 +218,7 @@ class RbioIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: backColor ?? context.xPrimaryColor,
-          shape: BoxShape.circle),
+          color: backColor ?? context.xPrimaryColor, shape: BoxShape.circle),
       child: IconButton(
         onPressed: onPressed,
         icon: icon,

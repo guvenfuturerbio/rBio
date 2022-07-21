@@ -40,7 +40,7 @@ class ForYouInformationDialog extends StatelessWidget {
               const Divider(),
 
               //
-              const SizedBox(height: 10),
+              R.widgets.hSizer12,
 
               //
               Text(
@@ -54,7 +54,7 @@ class ForYouInformationDialog extends StatelessWidget {
               ),
 
               //
-              const SizedBox(height: 10),
+              R.widgets.hSizer12,
 
               //
               Row(

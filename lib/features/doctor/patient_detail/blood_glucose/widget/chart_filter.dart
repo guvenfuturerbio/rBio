@@ -40,10 +40,6 @@ class _ChartFilter extends StatelessWidget {
       child: SizedBox(
         width: width,
         child: Card(
-          elevation: R.sizes.defaultElevation,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: SingleChildScrollView(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
@@ -111,8 +107,7 @@ class _ChartFilter extends StatelessWidget {
                         onTap: () {
                           Atom.dismiss();
                         },
-                        backColor:
-                            getIt<IAppConfig>().theme.cardBackgroundColor,
+                        backColor: context.xCardColor,
                         textColor: getIt<IAppConfig>().theme.textColorSecondary,
                       ),
 

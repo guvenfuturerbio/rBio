@@ -41,7 +41,7 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
         child: Container(
           width: Atom.width > 350 ? 350 : Atom.width,
           decoration: BoxDecoration(
-            color: getIt<IAppConfig>().theme.cardBackgroundColor,
+            color: context.xCardColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: SingleChildScrollView(

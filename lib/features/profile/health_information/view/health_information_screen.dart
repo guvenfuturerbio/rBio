@@ -239,7 +239,7 @@ class _HealthInformationViewState extends State<HealthInformationView> {
     );
   }
 
-  Widget _buildSpacer() => const SizedBox(height: 8);
+  Widget _buildSpacer() => R.widgets.hSizer8;
 
   Widget _buildTitle(String title) => Padding(
         padding: const EdgeInsets.only(bottom: 4),

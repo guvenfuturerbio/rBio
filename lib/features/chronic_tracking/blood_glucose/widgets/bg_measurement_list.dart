@@ -199,10 +199,6 @@ Widget measurementList(
                         width: 60,
                         height: 60,
                         child: Card(
-                          elevation: R.sizes.defaultElevation,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: R.sizes.borderRadiusCircular,
-                          ),
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             height: 25,

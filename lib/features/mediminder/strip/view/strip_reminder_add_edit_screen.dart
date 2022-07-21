@@ -209,7 +209,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         //
         Expanded(
           child: RbioElevatedButton(
-            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            backColor: context.xCardColor,
             textColor: getIt<IAppConfig>().theme.textColorSecondary,
             title: LocaleProvider.current.btn_cancel,
             onTap: () {
@@ -242,7 +242,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(

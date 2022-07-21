@@ -46,10 +46,6 @@ class SelectedDevicesScreen extends StatelessWidget {
                   children: [
                     //
                     Card(
-                      elevation: R.sizes.defaultElevation,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: R.sizes.borderRadiusCircular,
-                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Column(

@@ -115,8 +115,7 @@ class DevicesScreen extends StatelessWidget {
                       onPressed: () {
                         Atom.show(
                           GuvenAlert(
-                            backgroundColor:
-                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            backgroundColor: context.xCardColor,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 25,
                               vertical: 25,
@@ -197,13 +196,13 @@ class DevicesScreen extends StatelessWidget {
       case DeviceStatus.disconnected:
       case DeviceStatus.disconnecting:
       default:
-        return getIt<IAppConfig>().theme.cardBackgroundColor;
+        return context.xCardColor;
     }
   }
 
   Widget _buildV1Card(BuildContext context, PairedDevice device, DevicesVm vm) {
     return DeviceCard(
-      background: getIt<IAppConfig>().theme.cardBackgroundColor,
+      background: context.xCardColor,
       image: Utils.instance.getDeviceImageFromType(device.deviceType!) ??
           const SizedBox(),
       name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
@@ -225,8 +224,7 @@ class DevicesScreen extends StatelessWidget {
             onPressed: () {
               Atom.show(
                 GuvenAlert(
-                  backgroundColor:
-                      getIt<IAppConfig>().theme.cardBackgroundColor,
+                  backgroundColor: context.xCardColor,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 25,
                     vertical: 25,

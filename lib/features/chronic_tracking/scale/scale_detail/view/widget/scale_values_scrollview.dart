@@ -427,7 +427,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       padding: const EdgeInsets.only(

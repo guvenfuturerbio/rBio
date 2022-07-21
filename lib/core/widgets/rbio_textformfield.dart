@@ -204,7 +204,7 @@ class RbioTextFormField extends StatelessWidget {
         )
         .copyWith(
           filled: true,
-          fillColor: backColor ?? getIt<IAppConfig>().theme.cardBackgroundColor,
+          fillColor: backColor ?? context.xCardColor,
           suffixIcon: suffixIcon,
         );
   }

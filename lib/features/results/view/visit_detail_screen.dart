@@ -253,154 +253,6 @@ class _VisitDetailViewState extends State<VisitDetailView> {
         base64.decode(state.laboratoryFileBytes!),
         canShowPaginationDialog: false,
       );
-
-      // return ListView.builder(
-      //   scrollDirection: Axis.vertical,
-      //   physics: BouncingScrollPhysics(),
-      //   padding: EdgeInsets.only(top: 12),
-      //   itemCount: vm.laboratoryResults.length,
-      //   itemBuilder: (BuildContext context, int index) {
-      //     return Container(
-      //       width: double.infinity,
-      //       padding: EdgeInsets.all(8),
-      //       margin: EdgeInsets.only(bottom: 20),
-      //       decoration: BoxDecoration(
-      //         color: getIt<IAppConfig>().theme.cardBackgroundColor,
-      //         borderRadius: BorderRadius.circular(10),
-      //       ),
-      //       child: Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         mainAxisAlignment: MainAxisAlignment.start,
-      //         mainAxisSize: MainAxisSize.min,
-      //         children: <Widget>[
-      //           //
-      //           Padding(
-      //             padding: EdgeInsets.only(left: 10),
-      //             child: Image.asset(
-      //               R.image.hospital_results_red,
-      //               height: 25,
-      //               width: 25,
-      //             ),
-      //           ),
-
-      //           //
-      //           Padding(
-      //             padding: EdgeInsets.all(10),
-      //             child: Column(
-      //               crossAxisAlignment: CrossAxisAlignment.start,
-      //               mainAxisAlignment: MainAxisAlignment.start,
-      //               mainAxisSize: MainAxisSize.min,
-      //               children: <Widget>[
-      //                 //
-      //                 Row(
-      //                   children: [
-      //                     //
-      //                     Expanded(
-      //                       child: Text(
-      //                         LocaleProvider.of(context).test_name,
-      //                         style: context.xHeadline4.copyWith(
-      //                           color: getIt<IAppConfig>().theme.textColorPassive,
-      //                         ),
-      //                       ),
-      //                     ),
-
-      //                     //
-      //                     Expanded(
-      //                       child: Text(
-      //                         LocaleProvider.current.value,
-      //                         style: context.xHeadline4.copyWith(
-      //                           color: getIt<IAppConfig>().theme.textColorPassive,
-      //                         ),
-      //                       ),
-      //                     ),
-      //                   ],
-      //                 ),
-
-      //                 //
-      //                 Row(
-      //                   children: [
-      //                     Expanded(
-      //                       child: Text(
-      //                         vm.laboratoryResults[index]?.name ?? "-",
-      //                         style: context.xHeadline3,
-      //                       ),
-      //                     ),
-
-      //                     //
-      //                     Expanded(
-      //                       child: Text(
-      //                         ("${vm?.laboratoryResults?.elementAt(index)?.value?.toString() ?? "-"}" +
-      //                             " " +
-      //                             "${vm?.laboratoryResults?.elementAt(index)?.unit?.toString() ?? "-"}"),
-      //                         style: context.xHeadline3,
-      //                       ),
-      //                     ),
-      //                   ],
-      //                 ),
-
-      //                 //
-      //                 Padding(
-      //                   padding: EdgeInsets.only(top: 6),
-      //                   child: Row(
-      //                     crossAxisAlignment: CrossAxisAlignment.center,
-      //                     children: <Widget>[
-      //                       Expanded(
-      //                         child: Text(
-      //                           LocaleProvider.of(context).group_name,
-      //                           style: context.xHeadline4.copyWith(
-      //                             color: getIt<IAppConfig>().theme.textColorPassive,
-      //                           ),
-      //                         ),
-      //                       ),
-
-      //                       //
-      //                       Expanded(
-      //                         child: Text(
-      //                           LocaleProvider.of(context).approved_date,
-      //                           style: context.xHeadline4.copyWith(
-      //                             color: getIt<IAppConfig>().theme.textColorPassive,
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ),
-
-      //                 //
-      //                 Row(
-      //                   children: <Widget>[
-      //                     //
-      //                     Expanded(
-      //                       child: Text(
-      //                         vm.laboratoryResults[index]?.group ?? "-",
-      //                         style: context.xHeadline3,
-      //                       ),
-      //                     ),
-
-      //                     //
-      //                     Expanded(
-      //                       child: Text(
-      //                         vm.laboratoryResults[index].state == 6
-      //                             ? getFormattedDateWithTime(vm
-      //                                     ?.laboratoryResults
-      //                                     ?.elementAt(index)
-      //                                     ?.approvedAt
-      //                                     ?.toIso8601String() ??
-      //                                 "-")
-      //                             : "-",
-      //                         style: context.xHeadline3,
-      //                       ),
-      //                     ),
-      //                   ],
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     );
-      //   },
-      // );
     } else if (state.pathologySelected) {
       return ListView.builder(
         scrollDirection: Axis.vertical,
@@ -412,7 +264,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: context.xCardColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Column(
@@ -473,7 +325,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: context.xCardColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Column(

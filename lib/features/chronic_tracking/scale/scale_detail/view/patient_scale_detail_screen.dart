@@ -458,7 +458,7 @@ class ScaleCard extends StatelessWidget {
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              primary: getIt<IAppConfig>().theme.cardBackgroundColor,
+              primary: context.xCardColor,
             ),
             child: Text(LocaleProvider.current.Ok),
             onPressed: () {

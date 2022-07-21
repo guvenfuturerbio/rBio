@@ -39,7 +39,7 @@ class __MeasurementListState extends State<_MeasurementList> {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 2),
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: context.xCardColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Padding(
@@ -102,7 +102,7 @@ Widget _buildCard(
             height: (context.height * .08) * context.textScale,
             margin: const EdgeInsets.only(left: 4, right: 8, top: 8),
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: context.xCardColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             child: Row(

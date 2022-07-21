@@ -295,11 +295,6 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16, top: 16),
         child: Card(
-          elevation: R.sizes.defaultElevation,
-          color: getIt<IAppConfig>().theme.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.only(
@@ -377,13 +372,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
     String title,
   ) {
     return Card(
-      elevation: R.sizes.defaultElevation,
-      color: isCurrent
-          ? context.xPrimaryColor
-          : getIt<IAppConfig>().theme.cardBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      color: isCurrent ? context.xPrimaryColor : context.xCardColor,
       child: Padding(
         padding: const EdgeInsets.only(
           left: 16,
@@ -531,10 +520,6 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: TextField(
           focusNode: noteFocusNode,
           controller: noteController,
@@ -595,7 +580,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       title:
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
       onTap: onTap,
-      backColor: isSave ? null : getIt<IAppConfig>().theme.cardBackgroundColor,
+      backColor: isSave ? null : context.xCardColor,
       textColor: isSave ? null : getIt<IAppConfig>().theme.textColorSecondary,
     );
   }

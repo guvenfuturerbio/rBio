@@ -34,7 +34,7 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      backgroundColor: context.xCardColor,
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
@@ -47,7 +47,7 @@ class _RangeSelectionSliderState extends State<RangeSelectionSlider> {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            const SizedBox(height: 12),
+            R.widgets.hSizer12,
 
             //
             Expanded(

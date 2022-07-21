@@ -76,8 +76,10 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: RbioTextFormField(
                   focusNode: _valueFocusNode,
-                  backColor:
-                      getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
+                  backColor: getIt<IAppConfig>()
+                      .theme
+                      .dialogTheme
+                      .backgroundColor(context),
                   controller: _valueEditingController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),

@@ -234,7 +234,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
         ),
 
         //
-        const SizedBox(height: 12.0),
+        R.widgets.hSizer12,
 
         //
         Expanded(child: _buildExpandedChild(state))

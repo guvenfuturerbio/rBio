@@ -198,7 +198,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -256,7 +256,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -304,7 +304,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -395,7 +395,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -450,7 +450,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
             //
             Expanded(
               child: RbioElevatedButton(
-                backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                backColor: context.xCardColor,
                 textColor: getIt<IAppConfig>().theme.textColorSecondary,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {

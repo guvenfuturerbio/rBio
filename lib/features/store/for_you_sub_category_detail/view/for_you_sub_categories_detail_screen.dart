@@ -174,7 +174,6 @@ class _ForYouSubCategoriesDetailViewState
                             height: MediaQuery.of(context).size.height * 0.30,
                             width: MediaQuery.of(context).size.width,
                             child: Card(
-                              elevation: R.sizes.defaultElevation,
                               child: ListCard(
                                 image: card.image!,
                                 title: card.title!,

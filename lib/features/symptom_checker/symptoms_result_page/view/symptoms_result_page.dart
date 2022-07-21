@@ -84,10 +84,6 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      elevation: R.sizes.defaultElevation,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: R.sizes.borderRadiusCircular,
-                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -217,10 +213,6 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                 itemCount: value.specialisations.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    elevation: R.sizes.defaultElevation,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(

@@ -42,14 +42,16 @@ class _HomeSliderState extends State<HomeSlider> {
                     Positioned.fill(
                       child: CarouselSlider.builder(
                         itemCount: vm.bannerTabsModel.length,
-                        itemBuilder: (BuildContext context, int itemIndex,
-                            int pageViewIndex) {
+                        itemBuilder: (
+                          BuildContext context,
+                          int itemIndex,
+                          int pageViewIndex,
+                        ) {
                           return Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color:
-                                  getIt<IAppConfig>().theme.cardBackgroundColor,
+                              color: context.xCardColor,
                               borderRadius: R.sizes.borderRadiusCircular,
                             ),
                             child: GestureDetector(

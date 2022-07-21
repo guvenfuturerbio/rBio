@@ -84,7 +84,7 @@ class ReminderCard extends StatelessWidget {
                 //
                 Container(
                   decoration: BoxDecoration(
-                    color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                    color: context.xCardColor,
                     borderRadius: BorderRadius.vertical(
                       bottom: R.sizes.radiusCircular,
                     ),

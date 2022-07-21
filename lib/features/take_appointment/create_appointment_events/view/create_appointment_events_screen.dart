@@ -112,7 +112,7 @@ class _CreateAppointmentEventsScreenState
         ],
 
         //
-        const SizedBox(height: 8.0),
+        R.widgets.hSizer8,
 
         //
         if (val.slotsProgress == LoadingProgress.loading) ...[

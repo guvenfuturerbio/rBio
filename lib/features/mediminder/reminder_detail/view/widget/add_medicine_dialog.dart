@@ -38,7 +38,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
         child: Container(
           width: Atom.width > 350 ? 350 : Atom.width,
           decoration: BoxDecoration(
-            color: getIt<IAppConfig>().theme.cardBackgroundColor,
+            color: context.xCardColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: SingleChildScrollView(

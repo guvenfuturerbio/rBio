@@ -225,7 +225,7 @@ class _ReminderDetailView extends StatelessWidget {
             infinityWidth: true,
             fontWeight: FontWeight.bold,
             textColor: getIt<IAppConfig>().theme.textColorSecondary,
-            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            backColor: context.xCardColor,
           ),
 
           //

@@ -119,11 +119,6 @@ class _TaggerPopUp extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        color: getIt<IAppConfig>().theme.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: Container(
           padding: const EdgeInsets.only(
             left: 16,
@@ -193,12 +188,8 @@ class _TaggerPopUp extends StatelessWidget {
     String title,
   ) {
     return Card(
-      elevation: R.sizes.defaultElevation,
       color:
           isCurrent ? context.xPrimaryColor : getIt<IAppConfig>().theme.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
       child: Container(
         decoration: getTagElementDeco(context, isCurrent),
         padding:
@@ -239,11 +230,6 @@ class _TaggerPopUp extends StatelessWidget {
       height: 120,
       width: double.infinity,
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        color: getIt<IAppConfig>().theme.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: Center(
           child: Text(
             note,
@@ -263,10 +249,6 @@ class _TaggerPopUp extends StatelessWidget {
 
   Widget actionButton(BuildContext context) {
     return Card(
-      elevation: R.sizes.defaultElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: R.sizes.borderRadiusCircular,

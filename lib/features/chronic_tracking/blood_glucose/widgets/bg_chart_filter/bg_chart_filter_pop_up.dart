@@ -87,7 +87,7 @@ class BgChartFilterPopUp extends StatelessWidget {
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
-                  backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  backColor: context.xCardColor,
                   textColor: getIt<IAppConfig>().theme.textColorSecondary,
                 ),
 

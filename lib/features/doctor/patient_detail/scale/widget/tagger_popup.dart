@@ -53,11 +53,7 @@ class ScaleTagger extends StatelessWidget {
             child: GestureDetector(
                 onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                 child: Card(
-                  elevation: R.sizes.defaultElevation,
                   color: context.scaffoldBackgroundColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: R.sizes.borderRadiusCircular,
-                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -161,10 +157,6 @@ class ScaleTagger extends StatelessWidget {
 
   Widget actionButton(bool isSave, BuildContext context) {
     return Card(
-      elevation: R.sizes.defaultElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: R.sizes.borderRadiusCircular,
@@ -179,20 +171,19 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-  Container _noteSection(BuildContext context) {
+  Widget _noteSection(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 16),
       child: Card(
-          elevation: R.sizes.defaultElevation,
-          color: getIt<IAppConfig>().theme.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child:
-                SizedBox(width: double.infinity, child: Text(scaleModel.note!)),
-          )),
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          width: double.infinity,
+          child: Text(
+            scaleModel.note!,
+          ),
+        ),
+      )),
     );
   }
 
@@ -200,11 +191,6 @@ class ScaleTagger extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        color: getIt<IAppConfig>().theme.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: Container(
           width: double.infinity,
           padding:

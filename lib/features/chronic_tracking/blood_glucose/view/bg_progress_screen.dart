@@ -164,7 +164,7 @@ class BgProgressScreen extends StatelessWidget {
               height: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Row(
@@ -172,8 +172,7 @@ class BgProgressScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     foregroundImage: Utils.instance.getCacheProfileImage,
-                    backgroundColor:
-                        getIt<IAppConfig>().theme.cardBackgroundColor,
+                    backgroundColor: context.xCardColor,
                   ),
 
                   //
@@ -196,7 +195,7 @@ class BgProgressScreen extends StatelessWidget {
           ),
 
           //
-          const SizedBox(width: 6),
+          R.widgets.wSizer8,
 
           //
           GestureDetector(
@@ -227,7 +226,7 @@ class BgProgressScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Text(

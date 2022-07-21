@@ -137,7 +137,7 @@ class RbioFilterChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilterChip(
       selected: isSelected,
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      backgroundColor: context.xCardColor,
       checkmarkColor: getIt<IAppConfig>().theme.mainOverColor,
       selectedColor: context.xPrimaryColor,
       label: Text(
@@ -210,10 +210,6 @@ class _SocialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: R.sizes.defaultElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
       child: ListTile(
         leading: SizedBox(
           width: kIsWeb
@@ -265,45 +261,41 @@ class _ResourceCard extends StatelessWidget {
     final departmentTitle = item.departments?.first.title ?? '';
 
     return Card(
-        elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: ListTile(
-          title: Text(
-            item.title ?? '',
-            style: context.xHeadline3,
-          ),
-          leading: SizedBox(
-            width: kIsWeb
-                ? MediaQuery.of(context).size.width < 1000
-                    ? MediaQuery.of(context).size.width * 0.10
-                    : MediaQuery.of(context).size.width * 0.03
-                : MediaQuery.of(context).size.width * 0.12,
-            child: SvgPicture.asset(
-              tenantsFirstId == 1
-                  ? getIt<IAppConfig>().theme.appLogo
-                  : getIt<IAppConfig>().theme.appLogo,
-            ),
-          ),
-          subtitle: Text((tenantsFirstId == 1
-                  ? LocaleProvider.current.guven_hospital_ayranci
-                  : LocaleProvider.current.guven_cayyolu_campus) +
-              "\n" +
-              departmentTitle),
-          onTap: () {
-            Atom.to(
-              PagePaths.doctorCv,
-              queryParameters: {
-                'tenantId': tenantsFirstId.toString(),
-                'departmentId': departmentId.toString(),
-                'resourceId': item.id.toString(),
-                'doctorName': Uri.encodeFull(filterResourceTitle),
-                'departmentName': Uri.encodeFull(departmentTitle),
-                'doctorNameNoTitle': Uri.encodeFull(filterResourceTitle),
-              },
-            );
+      title: Text(
+        item.title ?? '',
+        style: context.xHeadline3,
+      ),
+      leading: SizedBox(
+        width: kIsWeb
+            ? MediaQuery.of(context).size.width < 1000
+                ? MediaQuery.of(context).size.width * 0.10
+                : MediaQuery.of(context).size.width * 0.03
+            : MediaQuery.of(context).size.width * 0.12,
+        child: SvgPicture.asset(
+          tenantsFirstId == 1
+              ? getIt<IAppConfig>().theme.appLogo
+              : getIt<IAppConfig>().theme.appLogo,
+        ),
+      ),
+      subtitle: Text((tenantsFirstId == 1
+              ? LocaleProvider.current.guven_hospital_ayranci
+              : LocaleProvider.current.guven_cayyolu_campus) +
+          "\n" +
+          departmentTitle),
+      onTap: () {
+        Atom.to(
+          PagePaths.doctorCv,
+          queryParameters: {
+            'tenantId': tenantsFirstId.toString(),
+            'departmentId': departmentId.toString(),
+            'resourceId': item.id.toString(),
+            'doctorName': Uri.encodeFull(filterResourceTitle),
+            'departmentName': Uri.encodeFull(departmentTitle),
+            'doctorNameNoTitle': Uri.encodeFull(filterResourceTitle),
           },
-        ));
+        );
+      },
+    ));
   }
 }

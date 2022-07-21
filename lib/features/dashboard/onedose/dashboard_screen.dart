@@ -98,8 +98,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               backgroundImage:
                                   Utils.instance.getCacheProfileImage,
                               radius: R.sizes.iconSize2,
-                              backgroundColor:
-                                  getIt<IAppConfig>().theme.cardBackgroundColor,
+                              backgroundColor: context.xCardColor,
                             ),
                           ),
 

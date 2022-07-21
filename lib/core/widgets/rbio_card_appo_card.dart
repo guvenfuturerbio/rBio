@@ -125,7 +125,7 @@ class RbioCardAppoCard extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: context.xCardColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: R.sizes.radiusCircular,
                 bottomRight: R.sizes.radiusCircular,
@@ -137,7 +137,7 @@ class RbioCardAppoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //
-                const SizedBox(height: 4),
+                R.widgets.hSizer4,
 
                 //
                 Column(
@@ -159,7 +159,7 @@ class RbioCardAppoCard extends StatelessWidget {
                 ),
 
                 //
-                const SizedBox(height: 4),
+                R.widgets.hSizer4,
 
                 //
                 Column(
@@ -181,7 +181,7 @@ class RbioCardAppoCard extends StatelessWidget {
                 ),
 
                 //
-                const SizedBox(height: 4),
+                R.widgets.hSizer4,
 
                 //
                 Row(
@@ -255,9 +255,7 @@ class RbioCardAppoCard extends StatelessWidget {
                 if (footer != null) ...[
                   footer!,
                 ] else ...[
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  R.widgets.hSizer8,
                 ],
               ],
             ),

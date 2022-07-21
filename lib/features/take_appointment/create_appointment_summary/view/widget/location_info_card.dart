@@ -26,7 +26,7 @@ class LocationInfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: _buildBody(context),
@@ -56,7 +56,7 @@ class LocationInfoCard extends StatelessWidget {
         ),
 
         //
-        const SizedBox(height: 10),
+        R.widgets.hSizer12,
 
         //
         Visibility(

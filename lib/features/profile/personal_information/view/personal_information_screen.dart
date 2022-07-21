@@ -255,9 +255,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                               CircleAvatar(
                                 backgroundImage: state.getProfileImage,
                                 radius: R.sizes.iconSize * 1.3,
-                                backgroundColor: getIt<IAppConfig>()
-                                    .theme
-                                    .cardBackgroundColor,
+                                backgroundColor: context.xCardColor,
                               ),
 
                               //
@@ -424,8 +422,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                         onTap: () {
                           Atom.historyBack();
                         },
-                        backColor:
-                            getIt<IAppConfig>().theme.cardBackgroundColor,
+                        backColor: context.xCardColor,
                         textColor: getIt<IAppConfig>().theme.textColorSecondary,
                         fontWeight: FontWeight.bold,
                       ),
@@ -467,7 +464,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
     );
   }
 
-  Widget _buildSpacer() => const SizedBox(height: 16);
+  Widget _buildSpacer() => R.widgets.hSizer16;
 
   Widget _buildTitle(String title) => Padding(
         padding: const EdgeInsets.only(bottom: 8, left: 14),
@@ -496,83 +493,85 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
       builder: (BuildContext ctx) {
         return BlocProvider.value(
           value: context.read<PersonelInformationCubit>(),
-          child: Builder(builder: (context) {
-            return CupertinoActionSheet(
-              actions: Atom.isWeb
-                  ? <Widget>[
-                      CupertinoActionSheetAction(
-                        child: Text(
-                          LocaleProvider.current.delete,
-                          style: context.xHeadline4.copyWith(
-                            fontWeight: FontWeight.bold,
+          child: Builder(
+            builder: (context) {
+              return CupertinoActionSheet(
+                actions: Atom.isWeb
+                    ? <Widget>[
+                        CupertinoActionSheetAction(
+                          child: Text(
+                            LocaleProvider.current.delete,
+                            style: context.xHeadline4.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          onPressed: () async {
+                            await context
+                                .read<PersonelInformationCubit>()
+                                .deletePhoto();
+                            Navigator.pop(context);
+                          },
                         ),
-                        onPressed: () async {
-                          await context
-                              .read<PersonelInformationCubit>()
-                              .deletePhoto();
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ]
-                  : <Widget>[
-                      CupertinoActionSheetAction(
-                        child: Text(
-                          LocaleProvider.current.delete,
-                          style: context.xHeadline4.copyWith(
-                            fontWeight: FontWeight.bold,
+                      ]
+                    : <Widget>[
+                        CupertinoActionSheetAction(
+                          child: Text(
+                            LocaleProvider.current.delete,
+                            style: context.xHeadline4.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          onPressed: () async {
+                            await context
+                                .read<PersonelInformationCubit>()
+                                .deletePhoto();
+                            Navigator.pop(context);
+                          },
                         ),
-                        onPressed: () async {
-                          await context
-                              .read<PersonelInformationCubit>()
-                              .deletePhoto();
-                          Navigator.pop(context);
-                        },
-                      ),
-                      CupertinoActionSheetAction(
-                        child: Text(
-                          LocaleProvider.current.gallery,
-                          style: context.xHeadline4.copyWith(
-                            fontWeight: FontWeight.bold,
+                        CupertinoActionSheetAction(
+                          child: Text(
+                            LocaleProvider.current.gallery,
+                            style: context.xHeadline4.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          onPressed: () async {
+                            await context
+                                .read<PersonelInformationCubit>()
+                                .getPhotoFromSource(
+                                  ImageSource.gallery,
+                                );
+                            Navigator.pop(context);
+                          },
                         ),
-                        onPressed: () async {
-                          await context
-                              .read<PersonelInformationCubit>()
-                              .getPhotoFromSource(
-                                ImageSource.gallery,
-                              );
-                          Navigator.pop(context);
-                        },
-                      ),
-                      CupertinoActionSheetAction(
-                        child: Text(
-                          LocaleProvider.current.camera,
-                          style: context.xHeadline4.copyWith(
-                            fontWeight: FontWeight.bold,
+                        CupertinoActionSheetAction(
+                          child: Text(
+                            LocaleProvider.current.camera,
+                            style: context.xHeadline4.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          onPressed: () async {
+                            await context
+                                .read<PersonelInformationCubit>()
+                                .getPhotoFromSource(
+                                  ImageSource.camera,
+                                );
+                            Navigator.pop(context);
+                          },
                         ),
-                        onPressed: () async {
-                          await context
-                              .read<PersonelInformationCubit>()
-                              .getPhotoFromSource(
-                                ImageSource.camera,
-                              );
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-              cancelButton: CupertinoActionSheetAction(
-                child: Text(
-                  LocaleProvider.current.btn_cancel,
+                      ],
+                cancelButton: CupertinoActionSheetAction(
+                  child: Text(
+                    LocaleProvider.current.btn_cancel,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            );
-          }),
+              );
+            },
+          ),
         );
       },
     );

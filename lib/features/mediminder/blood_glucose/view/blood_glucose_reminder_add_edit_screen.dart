@@ -272,7 +272,7 @@ class __BloodGlucoseReminderAddEditViewState
             //
             Expanded(
               child: RbioElevatedButton(
-                backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+                backColor: context.xCardColor,
                 textColor: getIt<IAppConfig>().theme.textColorSecondary,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {
@@ -403,7 +403,7 @@ class __BloodGlucoseReminderAddEditViewState
       padding: const EdgeInsets.symmetric(vertical: 6),
       margin: EdgeInsets.only(top: index == 0 ? 0 : 8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(

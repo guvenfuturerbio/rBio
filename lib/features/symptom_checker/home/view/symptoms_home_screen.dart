@@ -147,10 +147,6 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Card(
-                        elevation: R.sizes.defaultElevation,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
@@ -271,13 +267,9 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Card(
-            elevation: R.sizes.defaultElevation,
             color: value.genderIdHolder == index
                 ? context.xPrimaryColor
-                : getIt<IAppConfig>().theme.cardBackgroundColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: R.sizes.borderRadiusCircular,
-            ),
+                : context.xCardColor,
             child: Row(
               children: [
                 Padding(

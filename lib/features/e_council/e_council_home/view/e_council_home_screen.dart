@@ -60,7 +60,10 @@ class _BuildBody extends StatelessWidget {
                       style: textStyle,
                     ),
                   ),
-                  const SizedBox(height: 16),
+
+                  //
+                  R.widgets.hSizer16,
+
                   //? E-Konsey Nasil Kullanilir?
                   InkWell(
                     onTap: () {
@@ -158,7 +161,7 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -289,13 +292,20 @@ class _BuildECouncilListTile extends StatelessWidget {
       padding: const EdgeInsets.only(left: 36.0, bottom: 8.0),
       child: Row(
         children: [
+          //
           Text(
             text,
             // style: Theme.of(context).textTheme.headline3!.copyWith(color: color),
             style: context.xHeadline5.copyWith(color: color),
           ),
+
+          //
           R.widgets.hSizer16,
+
+          //
           const Spacer(),
+
+          //
           Container(
             width: 18,
             height: 18,
@@ -310,6 +320,8 @@ class _BuildECouncilListTile extends StatelessWidget {
               shape: BoxShape.circle,
             ),
           ),
+
+          //
           const SizedBox(height: 15, width: 60),
         ],
       ),

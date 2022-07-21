@@ -195,8 +195,10 @@ class _CreateAppointmentSummaryScreenState
                       //
                       _buildInfoCard(vm),
 
-                      const SizedBox(height: 15),
+                      //
+                      R.widgets.hSizer16,
 
+                      //
                       if (forOnline &&
                           getIt<IAppConfig>()
                               .functionality
@@ -274,7 +276,7 @@ class _CreateAppointmentSummaryScreenState
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: isKeyboardVisible ? 5 : 0),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
@@ -350,7 +352,7 @@ class _CreateAppointmentSummaryScreenState
                 height: 55,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
@@ -645,7 +647,7 @@ class _CreateAppointmentSummaryScreenState
       onTap: onTap,
       title: title,
       backColor: vm.summaryButton == SummaryButtons.add
-          ? getIt<IAppConfig>().theme.cardBackgroundColor
+          ? context.xCardColor
           : context.xPrimaryColor,
       textColor: vm.summaryButton == SummaryButtons.add
           ? getIt<IAppConfig>().theme.textColorSecondary
@@ -659,7 +661,7 @@ class _CreateAppointmentSummaryScreenState
       width: double.infinity,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -757,9 +759,9 @@ class _CreateAppointmentSummaryScreenState
     );
   }
 
-  Widget _buildVerticalGap() => const SizedBox(height: 8);
+  Widget _buildVerticalGap() => R.widgets.hSizer8;
 
-  Widget _buildHorizontalGap() => const SizedBox(width: 12);
+  Widget _buildHorizontalGap() => R.widgets.wSizer12;
 
   Widget _buildActiveText(String text) => Text(
         text,

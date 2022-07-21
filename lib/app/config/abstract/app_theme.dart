@@ -7,8 +7,11 @@ abstract class IAppTheme {
   String get appLogo;
   String get successAppointmentImage;
   double get appBarLogoHeight;
+
   Color get appbarColor; // appBarTheme-backgroundColor
   Color get primaryColor; // primaryColor
+  Color cardBackgroundColor = R.colors.white; // cardTheme-color
+
   Color get secondaryColor;
   Color get textContrastColor;
   Color get checkboxBorderColor;
@@ -25,7 +28,6 @@ abstract class IAppTheme {
   Color textColor = R.colors.white;
   Color textColorSecondary = R.colors.black;
   Color textColorPassive = R.colors.silver;
-  Color cardBackgroundColor = R.colors.white;
   Color blackForItem = R.colors.black;
   Color iconColor = R.colors.black;
   Color iconSecondaryColor = R.colors.white;
@@ -67,7 +69,7 @@ abstract class IAppTheme {
 }
 
 abstract class IAppDialogTheme {
-  Color get backgroundColor;
+  Color backgroundColor(BuildContext context);
   TextStyle title(BuildContext context);
   TextStyle description(BuildContext context);
   TextStyle subTitle(BuildContext context);
@@ -76,7 +78,7 @@ abstract class IAppDialogTheme {
 
 class AppDialogThemeImpl extends IAppDialogTheme {
   @override
-  Color get backgroundColor => getIt<IAppConfig>().theme.cardBackgroundColor;
+  Color backgroundColor(BuildContext context) => context.xCardColor;
 
   @override
   TextStyle button(BuildContext context) => context.xHeadline4;

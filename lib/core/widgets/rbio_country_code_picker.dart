@@ -19,7 +19,7 @@ class RbioCountryCodePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
         border: isActiveBorder
             ? Border.all(
@@ -39,12 +39,12 @@ class RbioCountryCodePicker extends StatelessWidget {
         showCountryOnly: false,
         showOnlyCountryWhenClosed: false,
 
-        // UI
+        //
         padding: EdgeInsets.zero,
         barrierColor: Colors.black87,
         backgroundColor: Colors.transparent,
         boxDecoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         closeIcon: Icon(

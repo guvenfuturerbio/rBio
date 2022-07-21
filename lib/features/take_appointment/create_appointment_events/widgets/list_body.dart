@@ -167,7 +167,7 @@ class _ListBodyState extends State<ListBody>
           decoration: BoxDecoration(
             color: widget.completeNotifier.value?.value == value
                 ? context.xPrimaryColor
-                : getIt<IAppConfig>().theme.cardBackgroundColor,
+                : context.xCardColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(
@@ -242,7 +242,7 @@ class _ListBodyState extends State<ListBody>
           decoration: BoxDecoration(
             color: widget.completeNotifier.value?.selected?.from == item.from
                 ? context.xPrimaryColor
-                : getIt<IAppConfig>().theme.cardBackgroundColor,
+                : context.xCardColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(

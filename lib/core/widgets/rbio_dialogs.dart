@@ -14,7 +14,7 @@ class RbioBaseDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
+      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),
@@ -41,7 +41,7 @@ class RbioBaseGreyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
+      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
       ),
@@ -210,12 +210,13 @@ class RbioSmallDialogButton extends StatelessWidget {
     );
   }
 
-  factory RbioSmallDialogButton.white({
+  factory RbioSmallDialogButton.white(
+    BuildContext context, {
     required String? title,
     required void Function()? onPressed,
   }) {
     return RbioSmallDialogButton(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      backgroundColor: context.xCardColor,
       textColor: getIt<IAppConfig>().theme.textColorSecondary,
       title: title,
       onPressed: onPressed,

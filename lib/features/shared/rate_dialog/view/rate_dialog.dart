@@ -206,7 +206,7 @@ class _RateDialogState extends State<RateDialog> {
                                 ),
 
                                 //
-                                const SizedBox(height: 10),
+                                R.widgets.hSizer12,
 
                                 //
                                 RbioSmallDialogButton.main(

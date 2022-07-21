@@ -102,7 +102,7 @@ class RbioTreatmentCard extends StatelessWidget {
                   horizontal: 19,
                 ),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: const BorderRadius.vertical(
                     bottom: Radius.circular(12),
                   ),

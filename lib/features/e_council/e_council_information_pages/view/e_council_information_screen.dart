@@ -47,7 +47,7 @@ class _BuildBody extends StatelessWidget {
             ),
 
             //
-            const SizedBox(height: 16),
+            R.widgets.hSizer16,
 
             //
             Text(

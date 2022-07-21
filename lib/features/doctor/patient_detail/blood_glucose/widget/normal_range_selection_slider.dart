@@ -22,7 +22,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
     BgPatientPickerVm value,
   ) {
     return AlertDialog(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      backgroundColor: context.xCardColor,
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
@@ -35,7 +35,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            const SizedBox(height: 12),
+            R.widgets.hSizer12,
 
             //
             Expanded(

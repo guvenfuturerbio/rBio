@@ -154,7 +154,7 @@ class _PatientScaleTreatmentDetailViewState
                     bottom: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                    color: context.xCardColor,
                     borderRadius: R.sizes.borderRadiusCircular,
                   ),
                   child: Column(

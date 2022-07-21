@@ -133,7 +133,7 @@ class ConsultationScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            const SizedBox(height: 4),
+            R.widgets.hSizer4,
 
             //
             Row(
@@ -143,14 +143,13 @@ class ConsultationScreen extends StatelessWidget {
               children: [
                 //
                 CircleAvatar(
-                  backgroundColor:
-                      getIt<IAppConfig>().theme.cardBackgroundColor,
+                  backgroundColor: context.xCardColor,
                   backgroundImage: NetworkImage(item.url!),
                   radius: 25,
                 ),
 
                 //
-                const SizedBox(width: 12),
+                R.widgets.wSizer12,
 
                 //
                 Expanded(
@@ -195,7 +194,7 @@ class ConsultationScreen extends StatelessWidget {
                       ),
 
                       //
-                      const SizedBox(height: 4),
+                      R.widgets.hSizer4,
 
                       //
                       Row(
@@ -251,7 +250,7 @@ class ConsultationScreen extends StatelessWidget {
             ),
 
             //
-            const SizedBox(height: 4),
+            R.widgets.hSizer4,
 
             //
             const Divider(),
