@@ -123,7 +123,10 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
       actions: [
         IconButton(
           onPressed: () => _restartScan(context),
-          icon: const Icon(Icons.refresh),
+          icon: Icon(
+            Icons.refresh,
+            color: context.xAppColors.white,
+          ),
         ),
       ],
     );

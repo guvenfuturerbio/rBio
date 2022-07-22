@@ -12,18 +12,19 @@ extension BuildContextThemeExtensions on BuildContext {
       MediaQuery.of(this).orientation == Orientation.portrait;
 
   MediaQueryData get xMediaQuery => MediaQuery.of(this);
-  Color get xAccentColor => Theme.of(this).colorScheme.secondary;
+  Color get xAccentColor => xAppTheme.colorScheme.secondary;
 
-  AppBarTheme get xAppBarTheme => Theme.of(this).appBarTheme;
-  Color get xPrimaryColor => Theme.of(this).primaryColor;
+  MyCustomTheme get xAppColors => MyCustomTheme.of(this);
+  AppBarTheme get xAppBarTheme => xAppTheme.appBarTheme;
+  BottomNavigationBarThemeData get xBottomNavigationBarTheme => xAppTheme.bottomNavigationBarTheme;
+  Color get xPrimaryColor => xAppTheme.primaryColor;
   Color get xTextColor => colorScheme.primary;
   Color get xSecondaryColor => colorScheme.secondary;
   Color get xTextInverseColor => colorScheme.inversePrimary;
   Color get xTextOnPrimaryColor => colorScheme.onPrimary;
+  Color get xSecondaryContainerColor => colorScheme.secondaryContainer;
   Color? get xIconColor => iconTheme.color;
-  Color? get xIconSecondaryColor => getIt<IAppConfig>().theme.iconSecondaryColor;
-  Color get xCardColor => Theme.of(this).cardTheme.color ?? Colors.transparent;
-  MyCustomTheme get xAppColors => MyCustomTheme.of(this);
+  Color get xCardColor => xAppTheme.cardTheme.color ?? Colors.transparent;
 
   // #region Size Extension
   double get height => MediaQuery.of(this).size.height;
@@ -33,61 +34,59 @@ extension BuildContextThemeExtensions on BuildContext {
   // #endregion
 
   // #region Text Theme
-  TextTheme get xTextTheme => Theme.of(this).textTheme;
+  TextTheme get xTextTheme => xAppTheme.textTheme;
   TextStyle get xHeadline1 =>
-      Theme.of(this).textTheme.headline1 ?? const TextStyle();
+      xAppTheme.textTheme.headline1 ?? const TextStyle();
   TextStyle get xHeadline2 =>
-      Theme.of(this).textTheme.headline2 ?? const TextStyle();
+      xAppTheme.textTheme.headline2 ?? const TextStyle();
   TextStyle get xHeadline3 =>
-      Theme.of(this).textTheme.headline3 ?? const TextStyle();
+      xAppTheme.textTheme.headline3 ?? const TextStyle();
   TextStyle get xHeadline4 =>
-      Theme.of(this).textTheme.headline4 ?? const TextStyle();
+      xAppTheme.textTheme.headline4 ?? const TextStyle();
 
   TextStyle get xHeadline5 =>
-      Theme.of(this).textTheme.headline5 ?? const TextStyle();
+      xAppTheme.textTheme.headline5 ?? const TextStyle();
   TextStyle get xHeadline6 =>
-      Theme.of(this).textTheme.headline6 ?? const TextStyle();
+      xAppTheme.textTheme.headline6 ?? const TextStyle();
   TextStyle get xSubtitle1 =>
-      Theme.of(this).textTheme.subtitle1 ?? const TextStyle();
+      xAppTheme.textTheme.subtitle1 ?? const TextStyle();
   TextStyle get xSubtitle2 =>
-      Theme.of(this).textTheme.subtitle2 ?? const TextStyle();
+      xAppTheme.textTheme.subtitle2 ?? const TextStyle();
   TextStyle get xBodyText1 =>
-      Theme.of(this).textTheme.bodyText1 ?? const TextStyle();
+      xAppTheme.textTheme.bodyText1 ?? const TextStyle();
   TextStyle get xBodyText2 =>
-      Theme.of(this).textTheme.bodyText2 ?? const TextStyle();
-  TextStyle get xCaption =>
-      Theme.of(this).textTheme.caption ?? const TextStyle();
-  TextStyle get xButton => Theme.of(this).textTheme.button ?? const TextStyle();
-  TextStyle get xOverline =>
-      Theme.of(this).textTheme.overline ?? const TextStyle();
+      xAppTheme.textTheme.bodyText2 ?? const TextStyle();
+  TextStyle get xCaption => xAppTheme.textTheme.caption ?? const TextStyle();
+  TextStyle get xButton => xAppTheme.textTheme.button ?? const TextStyle();
+  TextStyle get xOverline => xAppTheme.textTheme.overline ?? const TextStyle();
   TextStyle get xBodyText1Error =>
-      Theme.of(this).textTheme.bodyText1?.copyWith(
-            color: xAppColors.punch,
-          ) ??
+      xAppTheme.textTheme.bodyText1?.copyWith(
+        color: xAppColors.punch,
+      ) ??
       const TextStyle();
   // #endregion
 
   // #region Color Scheme
-  Color get scaffoldBackgroundColor => Theme.of(this).scaffoldBackgroundColor;
-  ColorScheme get colorScheme => Theme.of(this).colorScheme;
-  Color get primary => Theme.of(this).colorScheme.primary;
-  Color get primaryVariant => Theme.of(this).colorScheme.primaryContainer;
-  Color get secondary => Theme.of(this).colorScheme.secondary;
-  Color get secondaryVariant => Theme.of(this).colorScheme.secondaryContainer;
-  Color get surface => Theme.of(this).colorScheme.surface;
-  Color get background => Theme.of(this).colorScheme.background;
-  Color get error => Theme.of(this).colorScheme.error;
-  Color get onPrimary => Theme.of(this).colorScheme.onPrimary;
-  Color get onSecondary => Theme.of(this).colorScheme.onSecondary;
-  Color get onSurface => Theme.of(this).colorScheme.onSurface;
-  Color get onBackground => Theme.of(this).colorScheme.onBackground;
-  Color get onError => Theme.of(this).colorScheme.onError;
-  Brightness get brightness => Theme.of(this).colorScheme.brightness;
+  Color get scaffoldBackgroundColor => xAppTheme.scaffoldBackgroundColor;
+  ColorScheme get colorScheme => xAppTheme.colorScheme;
+  Color get primary => xAppTheme.colorScheme.primary;
+  Color get primaryVariant => xAppTheme.colorScheme.primaryContainer;
+  Color get secondary => xAppTheme.colorScheme.secondary;
+  Color get secondaryVariant => xAppTheme.colorScheme.secondaryContainer;
+  Color get surface => xAppTheme.colorScheme.surface;
+  Color get background => xAppTheme.colorScheme.background;
+  Color get error => xAppTheme.colorScheme.error;
+  Color get onPrimary => xAppTheme.colorScheme.onPrimary;
+  Color get onSecondary => xAppTheme.colorScheme.onSecondary;
+  Color get onSurface => xAppTheme.colorScheme.onSurface;
+  Color get onBackground => xAppTheme.colorScheme.onBackground;
+  Color get onError => xAppTheme.colorScheme.onError;
+  Brightness get brightness => xAppTheme.colorScheme.brightness;
   // #endregion
 
   ThemeData get xAppTheme => Theme.of(this);
-  TargetPlatform get platform => Theme.of(this).platform;
-  IconThemeData get iconTheme => Theme.of(this).iconTheme;
+  TargetPlatform get platform => xAppTheme.platform;
+  IconThemeData get iconTheme => xAppTheme.iconTheme;
   MaterialColor get xRandomColor => Colors.primaries[Random().nextInt(17)];
 
   bool get xIsKeyBoardOpen => MediaQuery.of(this).viewInsets.bottom > 0;

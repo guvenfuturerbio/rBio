@@ -84,7 +84,7 @@ class ProfileView extends StatelessWidget {
           },
           icon: SvgPicture.asset(
             R.image.changeSize,
-            color: getIt<IAppConfig>().theme.iconSecondaryColor,
+            color: context.xAppBarTheme.iconTheme?.color,
           ),
         ),
       ],

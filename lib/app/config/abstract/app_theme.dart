@@ -9,7 +9,7 @@ abstract class IAppTheme {
   IAppDialogTheme dialogTheme = AppDialogThemeImpl();
 
   // ! ThemeData
-  // *
+  // * Main
   Color get primaryColor; // primaryColor
   Color get scaffoldBackgroundColor;
   // * ColorScheme
@@ -17,10 +17,29 @@ abstract class IAppTheme {
   Color get textColor; // colorScheme-primary
   Color get inverseTextColor; // colorScheme-inversePrimary
   Color get onPrimaryTextColor; // colorScheme-onPrimary
+  Color get secondaryContainerColor; // colorScheme-secondaryContainer
   // * CardTheme
   Color get cardBackgroundColor; // cardTheme-color
   // * AppBarTheme
   Color get appbarColor; // appBarTheme-backgroundColor
+  Color get appbarTextColor; // appBarTheme-titleTextStyle-color
+  Color get appbarIconColor; // appBarTheme-iconTheme-color
+  // * BottomNavigationBarTheme
+  Color get bottomMenuColor; // bottomNavigationBarTheme-backgroundColor
+  // * IconTheme
+  Color get iconColor; // iconTheme-color
+  // * FloatingActionButtonTheme
+  Color get fabBackgroundColor => primaryColor; // floatingActionButtonTheme-backgroundColor
+  // * TextSelectionTheme
+  TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
+        cursorColor: primaryColor,
+        selectionColor: primaryColor,
+        selectionHandleColor: primaryColor,
+      );
+  // * CupertinoTheme
+  CupertinoThemeData get cupertinoTheme => CupertinoThemeData(
+        primaryColor: primaryColor,
+      );
   // * MyCustomTheme
   Color iron = R.colors.iron;
   Color grey = R.colors.grey;
@@ -28,6 +47,7 @@ abstract class IAppTheme {
   Color black = R.colors.black;
   Color punch = R.colors.punch;
   Color roman = R.colors.roman;
+  Color malibu = R.colors.malibu;
   Color deYork = R.colors.deYork;
   Color skeptic = R.colors.skeptic;
   Color boulder = R.colors.boulder;
@@ -35,8 +55,10 @@ abstract class IAppTheme {
   Color codGray = R.colors.codGray;
   Color gallery = R.colors.gallery;
   Color concrete = R.colors.concrete;
+  Color supernova = R.colors.supernova;
   Color tonysPink = R.colors.tonysPink;
   Color dustyGray = R.colors.dustyGray;
+  Color greenHaze = R.colors.greenHaze;
   Color casablanca = R.colors.casablanca;
   Color frenchPass = R.colors.frenchPass;
   Color kournikova = R.colors.kournikova;
@@ -47,26 +69,7 @@ abstract class IAppTheme {
   Color cornflowerBlue = R.colors.cornflowerBlue;
   Color fuzzyWuzzyBrown = R.colors.fuzzyWuzzyBrown;
 
-  Color get checkboxBorderColor;
-  Color get bottomMenuColor;
-  Color get secondaryBackColor;
-  Color get mainOverColor;
-
-  Color iconColor = R.colors.black;
-  Color iconSecondaryColor = R.colors.white;
-
-  Color graphRangeColor = R.colors.skeptic;
   double convertFontSize(double value) => value / 2.85;
-
-  // #region eCouncil
-  Color eCouncilPendingApproval = R.colors.boulder;
-  Color eCouncilPendingPayment = R.colors.supernova;
-  Color eCouncilPendingInspection = R.colors.malibu;
-  Color eCouncilRejected = R.colors.punch;
-  Color eCouncilAppointmentReady = R.colors.greenHaze;
-  Color eCouncilReportCardTitleBackground = R.colors.skeptic;
-  Color eCouncilScafoldBackground = R.colors.gallery;
-  // #endregion
 }
 
 abstract class IAppDialogTheme {
@@ -104,6 +107,7 @@ class MyCustomTheme {
   final Color black;
   final Color punch;
   final Color roman;
+  final Color malibu;
   final Color deYork;
   final Color skeptic;
   final Color boulder;
@@ -111,8 +115,10 @@ class MyCustomTheme {
   final Color codGray;
   final Color gallery;
   final Color concrete;
+  final Color supernova;
   final Color tonysPink;
   final Color dustyGray;
+  final Color greenHaze;
   final Color casablanca;
   final Color frenchPass;
   final Color kournikova;
@@ -130,6 +136,7 @@ class MyCustomTheme {
     required this.black,
     required this.punch,
     required this.roman,
+    required this.malibu,
     required this.deYork,
     required this.skeptic,
     required this.boulder,
@@ -137,8 +144,10 @@ class MyCustomTheme {
     required this.codGray,
     required this.gallery,
     required this.concrete,
+    required this.supernova,
     required this.tonysPink,
     required this.dustyGray,
+    required this.greenHaze,
     required this.casablanca,
     required this.frenchPass,
     required this.kournikova,
@@ -158,7 +167,7 @@ class MyCustomTheme {
 extension MyCustomThemeExtensions on ThemeData {
   static late MyCustomTheme _customTheme;
 
-  void addOwn(MyCustomTheme own) {
+  void addCustomTheme(MyCustomTheme own) {
     _customTheme = own;
   }
 

@@ -47,7 +47,7 @@ class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
 
   Widget _builBottomNavigationBar(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: getIt<IAppConfig>().theme.bottomMenuColor,
+      backgroundColor: context.xBottomNavigationBarTheme.backgroundColor,
       currentIndex: widget.currentIndex,
       onTap: (index) {
         if (pageQueryHolder.last != index) {

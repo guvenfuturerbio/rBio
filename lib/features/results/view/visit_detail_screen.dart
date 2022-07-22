@@ -11,22 +11,16 @@ import '../../../../core/core.dart';
 import '../cubit/visit_detail_cubit.dart';
 
 class VisitDetailScreen extends StatelessWidget {
-  int? countOfRadiologyResults;
-  int? countOfPathologyResults;
-  int? countOfLaboratoryResult;
-  int? visitId;
-  int? patientId;
-  VisitDetailScreen(
-      {this.countOfLaboratoryResult,
-      this.countOfPathologyResults,
-      this.countOfRadiologyResults,
-      this.visitId,
-      this.patientId,
-      Key? key})
-      : super(key: key);
+  const VisitDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int? countOfRadiologyResults;
+    int? countOfPathologyResults;
+    int? countOfLaboratoryResult;
+    int? visitId;
+    int? patientId;
+
     try {
       countOfRadiologyResults =
           int.parse(Atom.queryParameters['countOfRadiologyResults']!);
@@ -39,6 +33,7 @@ class VisitDetailScreen extends StatelessWidget {
     } catch (e, stackTrace) {
       return RbioRouteError(e: e, stackTrace: stackTrace);
     }
+
     return BlocProvider(
       create: (context) => VisitDetailCubit(getIt(),
           countOfLaboratoryResults: countOfLaboratoryResult!,
@@ -107,6 +102,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
             child: SvgPicture.asset(
               R.image.iosShare,
               width: R.sizes.iconSize3,
+              color: context.xAppBarTheme.iconTheme?.color,
             ),
           ),
           onTap: () {

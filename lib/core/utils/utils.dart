@@ -111,7 +111,7 @@ class Utils {
       trailing: SvgPicture.asset(
         R.image.done,
         height: R.sizes.iconSize2,
-        color: getIt<IAppConfig>().theme.iconSecondaryColor,
+        color: context.xAppColors.white,
       ),
     );
   }
@@ -126,7 +126,7 @@ class Utils {
       trailing: SvgPicture.asset(
         R.image.error,
         height: R.sizes.iconSize2,
-        color: getIt<IAppConfig>().theme.iconSecondaryColor,
+        color: context.xAppColors.white,
       ),
     );
   }
@@ -305,7 +305,7 @@ class Utils {
             ? SvgPicture.asset(
                 image,
                 fit: BoxFit.none,
-                color: getIt<IAppConfig>().theme.iconColor,
+                color: context.xIconColor,
               )
             : const Icon(Icons.close),
         focusedBorder: _borderTextField(),

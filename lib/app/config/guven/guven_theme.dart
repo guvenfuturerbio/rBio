@@ -94,14 +94,17 @@ class GuvenTheme extends IAppTheme {
   Color appbarColor = R.colors.burntUmber;
 
   @override
-  Color checkboxBorderColor = R.colors.burntUmber;
+  Color appbarTextColor = R.colors.white;
+
+  @override
+  Color appbarIconColor = R.colors.white;
 
   @override
   Color bottomMenuColor = R.colors.white;
 
   @override
-  Color secondaryBackColor = R.colors.coralTree;
+  Color secondaryContainerColor = R.colors.coralTree;
 
   @override
-  Color mainOverColor = R.colors.white;
+  Color iconColor = R.colors.black;
 }

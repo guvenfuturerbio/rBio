@@ -489,7 +489,7 @@ class VRouterRoutes {
 
         VWidget(
           path: PagePaths.visitDetail,
-          widget: VisitDetailScreen(),
+          widget: const VisitDetailScreen(),
         ),
         // #endregion
 

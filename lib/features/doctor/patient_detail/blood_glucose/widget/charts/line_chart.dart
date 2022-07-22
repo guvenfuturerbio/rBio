@@ -117,7 +117,7 @@ class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
               color: Colors.black,
               fontSize: 13,
             ),
-            color: getIt<IAppConfig>().theme.graphRangeColor,
+            color: context.xAppColors.skeptic,
           ),
         ],
         minimum: _minValue.toDouble(),

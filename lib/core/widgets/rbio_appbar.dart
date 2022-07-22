@@ -40,7 +40,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                       child: SvgPicture.asset(
                         R.image.back,
                         width: R.sizes.iconSize,
-                        color: context.xIconSecondaryColor,
+                        color: context.xAppBarTheme.iconTheme?.color,
                       ),
                     ),
                     onTap: () {
@@ -106,10 +106,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
       text,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: context.xHeadline1.copyWith(
-        color: Colors.white,
-        fontWeight: FontWeight.w400,
-      ),
+      style: context.xAppBarTheme.titleTextStyle,
     );
   }
 }

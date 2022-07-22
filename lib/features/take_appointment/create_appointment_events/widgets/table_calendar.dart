@@ -74,7 +74,7 @@ class _TableCalendarState extends State<_TableCalendar> {
         //
         TableCalendar<Event>(
           locale: context.watch<LocaleNotifier>().getLocaleStr,
-          daysBackgroundColor: getIt<IAppConfig>().theme.secondaryBackColor,
+          daysBackgroundColor: context.xSecondaryContainerColor,
           cellBackgroundColor: context.xCardColor,
 
           //
@@ -100,7 +100,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             headerMargin: EdgeInsets.zero,
             headerPadding: EdgeInsets.zero,
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.secondaryBackColor,
+              color: context.xSecondaryContainerColor,
               borderRadius: BorderRadius.vertical(
                 top: R.sizes.radiusCircular,
               ),

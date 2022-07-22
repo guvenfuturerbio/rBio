@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Drawer _buildDrawer() {
     return Drawer(
-      backgroundColor: getIt<IAppConfig>().theme.bottomMenuColor,
+      backgroundColor: context.xBottomNavigationBarTheme.backgroundColor,
       child: SafeArea(
         top: true,
         child: Column(
@@ -128,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     color: Colors.transparent,
                     child: SvgPicture.asset(
                       R.image.cancel,
-                      color: getIt<IAppConfig>().theme.iconColor,
+                      color: context.xIconColor,
                       width: R.sizes.iconSize2,
                     ),
                   ),
@@ -228,7 +228,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 25,
                     child: SvgPicture.asset(
                       model.svgPath,
-                      color: getIt<IAppConfig>().theme.iconColor,
+                      color: context.xIconColor,
                     ),
                   ),
                   R.widgets.wSizer16,
@@ -294,7 +294,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             CustomPaint(
               size: Size(size.width, R.sizes.bottomNavigationBarHeight),
               painter: BottomNavbarCustomPainter(
-                getIt<IAppConfig>().theme.bottomMenuColor,
+                context.xBottomNavigationBarTheme.backgroundColor!,
               ),
             ),
 
@@ -428,7 +428,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ? SvgPicture.asset(
               passiveImage,
               width: R.sizes.iconSize2,
-              color: getIt<IAppConfig>().theme.iconColor,
+              color: context.xIconColor,
             )
           : SvgPicture.asset(
               activeImage,

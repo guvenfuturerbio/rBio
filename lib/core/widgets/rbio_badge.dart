@@ -37,9 +37,7 @@ class RbioBadge extends StatelessWidget {
               right: 4,
               child: SvgPicture.asset(
                 path ?? image,
-                color: isDark
-                    ? getIt<IAppConfig>().theme.iconColor
-                    : getIt<IAppConfig>().theme.iconSecondaryColor,
+                color: isDark ? context.xIconColor : context.xAppColors.white,
                 width: R.sizes.iconSize,
               ),
             ),

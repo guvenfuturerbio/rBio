@@ -119,12 +119,16 @@ class BloodGlucosePatientScatterState
           ),
           plotBands: [
             PlotBand(
-                isVisible: true,
-                start: _targetMax,
-                end: _targetMin,
-                shouldRenderAboveSeries: false,
-                textStyle: const TextStyle(color: Colors.black, fontSize: 13),
-                color: getIt<IAppConfig>().theme.graphRangeColor),
+              isVisible: true,
+              start: _targetMax,
+              end: _targetMin,
+              shouldRenderAboveSeries: false,
+              textStyle: const TextStyle(
+                color: Colors.black,
+                fontSize: 13,
+              ),
+              color: context.xAppColors.skeptic,
+            ),
           ],
           majorGridLines: const MajorGridLines(color: Colors.black12)),
       enableAxisAnimation: true,

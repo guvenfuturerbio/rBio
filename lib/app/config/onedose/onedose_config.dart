@@ -5,7 +5,7 @@ class OneDoseConfig extends IAppConfig<IOneDosePlatformConfig> {
       : super(
           title: 'One Dose Health',
           productType: ProductType.oneDose,
-          theme: OneDoseTheme(),
+          theme: GuvenTheme(),
           functionality: OneDoseFunctionality(),
           constants: OneDoseConstants(),
         ) {
@@ -23,7 +23,7 @@ class OneDoseConfig extends IAppConfig<IOneDosePlatformConfig> {
 
   @override
   IProductDashboard getDashboard() {
-    return DashboardNavigation();
+    return GuvenDashboardNavigation();
   }
 
   @override

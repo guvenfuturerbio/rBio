@@ -67,7 +67,7 @@ Widget _buildDropdown(
                     ? val.dropdownValueRelative
                     : val.dropdownValueDoctor,
         style: context.xHeadline5,
-        iconEnabledColor: getIt<IAppConfig>().theme.iconColor,
+        iconEnabledColor: context.xIconColor,
         items: itemList.map<DropdownMenuItem<dynamic>>(
           (dynamic value) {
             return DropdownMenuItem<dynamic>(

@@ -239,7 +239,13 @@ class _MyAppCommonState extends State<MyAppCommon> {
 
                   //
                   theme: ThemeData(
+                    fontFamily: getIt<IAppConfig>().theme.fontFamily,
+                    textTheme: getIt<IAppConfig>().theme.textTheme,
                     primaryColor: getIt<IAppConfig>().theme.primaryColor,
+                    scaffoldBackgroundColor:
+                        getIt<IAppConfig>().theme.scaffoldBackgroundColor,
+
+                    // * ColorScheme
                     colorScheme: ColorScheme.fromSeed(
                       seedColor: getIt<IAppConfig>().theme.primaryColor,
                     ).copyWith(
@@ -248,20 +254,11 @@ class _MyAppCommonState extends State<MyAppCommon> {
                       inversePrimary:
                           getIt<IAppConfig>().theme.inverseTextColor,
                       onPrimary: getIt<IAppConfig>().theme.onPrimaryTextColor,
+                      secondaryContainer:
+                          getIt<IAppConfig>().theme.secondaryContainerColor,
                     ),
-                    scaffoldBackgroundColor:
-                        getIt<IAppConfig>().theme.scaffoldBackgroundColor,
-                    fontFamily: getIt<IAppConfig>().theme.fontFamily,
-                    textTheme: getIt<IAppConfig>().theme.textTheme,
-                    floatingActionButtonTheme: FloatingActionButtonThemeData(
-                      backgroundColor: getIt<IAppConfig>().theme.primaryColor,
-                    ),
-                    iconTheme: IconThemeData(
-                      color: getIt<IAppConfig>().theme.iconColor,
-                    ),
-                    appBarTheme: AppBarTheme(
-                      backgroundColor: getIt<IAppConfig>().theme.appbarColor,
-                    ),
+
+                    // * CardTheme
                     cardTheme: const CardTheme().copyWith(
                       elevation: 0.0,
                       color: getIt<IAppConfig>().theme.cardBackgroundColor,
@@ -269,16 +266,51 @@ class _MyAppCommonState extends State<MyAppCommon> {
                         borderRadius: R.sizes.borderRadiusCircular,
                       ),
                     ),
-                    textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: getIt<IAppConfig>().theme.primaryColor,
-                      selectionColor: getIt<IAppConfig>().theme.primaryColor,
-                      selectionHandleColor:
-                          getIt<IAppConfig>().theme.primaryColor,
+
+                    // * AppBarTheme
+                    appBarTheme: AppBarTheme(
+                      backgroundColor: getIt<IAppConfig>().theme.appbarColor,
+                      titleTextStyle: getIt<IAppConfig>()
+                          .theme
+                          .textTheme
+                          .headline1
+                          ?.copyWith(
+                            color: getIt<IAppConfig>().theme.appbarTextColor,
+                            fontWeight: FontWeight.w400,
+                          ),
+                      iconTheme: IconThemeData(
+                        color: getIt<IAppConfig>().theme.appbarIconColor,
+                      ),
                     ),
-                    cupertinoOverrideTheme: CupertinoThemeData(
-                      primaryColor: getIt<IAppConfig>().theme.primaryColor,
+
+                    // * BottomNavigationBarTheme
+                    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                      backgroundColor:
+                          getIt<IAppConfig>().theme.bottomMenuColor,
                     ),
-                  )..addOwn(
+
+                    // * IconTheme
+                    iconTheme: IconThemeData(
+                      color: getIt<IAppConfig>().theme.iconColor,
+                    ),
+
+                    // * FloatingActionButtonTheme
+                    floatingActionButtonTheme: FloatingActionButtonThemeData(
+                      backgroundColor:
+                          getIt<IAppConfig>().theme.fabBackgroundColor,
+                    ),
+
+                    // * TextSelectionTheme
+                    textSelectionTheme:
+                        getIt<IAppConfig>().theme.textSelectionTheme,
+
+                    // * CupertinoTheme
+                    cupertinoOverrideTheme:
+                        getIt<IAppConfig>().theme.cupertinoTheme,
+
+                    // * DialogTheme
+                    dialogTheme: const DialogTheme(),
+                  )..addCustomTheme(
                       MyCustomTheme(
                         iron: getIt<IAppConfig>().theme.iron,
                         grey: getIt<IAppConfig>().theme.grey,
@@ -286,6 +318,7 @@ class _MyAppCommonState extends State<MyAppCommon> {
                         black: getIt<IAppConfig>().theme.black,
                         punch: getIt<IAppConfig>().theme.punch,
                         roman: getIt<IAppConfig>().theme.roman,
+                        malibu: getIt<IAppConfig>().theme.malibu,
                         deYork: getIt<IAppConfig>().theme.deYork,
                         skeptic: getIt<IAppConfig>().theme.skeptic,
                         boulder: getIt<IAppConfig>().theme.boulder,
@@ -293,8 +326,10 @@ class _MyAppCommonState extends State<MyAppCommon> {
                         codGray: getIt<IAppConfig>().theme.codGray,
                         gallery: getIt<IAppConfig>().theme.gallery,
                         concrete: getIt<IAppConfig>().theme.concrete,
+                        supernova: getIt<IAppConfig>().theme.supernova,
                         tonysPink: getIt<IAppConfig>().theme.tonysPink,
                         dustyGray: getIt<IAppConfig>().theme.dustyGray,
+                        greenHaze: getIt<IAppConfig>().theme.greenHaze,
                         casablanca: getIt<IAppConfig>().theme.casablanca,
                         frenchPass: getIt<IAppConfig>().theme.frenchPass,
                         kournikova: getIt<IAppConfig>().theme.kournikova,
@@ -309,6 +344,8 @@ class _MyAppCommonState extends State<MyAppCommon> {
                             getIt<IAppConfig>().theme.fuzzyWuzzyBrown,
                       ),
                     ),
+
+                  //
                   locale: context.watch<LocaleNotifier>().current,
                   localizationsDelegates: const [
                     LocaleProvider.delegate,

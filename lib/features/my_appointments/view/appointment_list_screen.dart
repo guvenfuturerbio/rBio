@@ -172,25 +172,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
         context,
         LocaleProvider.of(context).my_appointments,
       ),
-      actions: getActions(context),
     );
-  }
-
-  List<Widget> getActions(BuildContext context) {
-    return [
-      // InkWell(
-      //   child: SvgPicture.asset(
-      //     R.image.allFilesGrey,
-      //     color: getIt<IAppConfig>().theme.white,
-      //   ),
-      //   onTap: () {
-      //     Atom.to(PagePaths.allFiles);
-      //   },
-      // ),
-      // const SizedBox(
-      //   width: 12,
-      // ),
-    ];
   }
 
   Widget _buildBody(

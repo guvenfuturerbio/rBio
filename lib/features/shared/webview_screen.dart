@@ -36,7 +36,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         context: context,
         title: RbioAppBar.textTitle(
           context,
-          widget.title ?? "No title!",
+          widget.title ?? "",
         ),
         actions: <Widget>[
           Padding(

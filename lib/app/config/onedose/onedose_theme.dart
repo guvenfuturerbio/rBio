@@ -95,16 +95,19 @@ class OneDoseTheme extends IAppTheme {
   Color appbarColor = R.colors.greenHaze;
 
   @override
-  Color checkboxBorderColor = R.colors.greenHaze;
+  Color appbarTextColor = R.colors.white;
+
+  @override
+  Color appbarIconColor = R.colors.white;
 
   @override
   Color bottomMenuColor = R.colors.white;
 
   @override
-  Color secondaryBackColor = R.colors.skeptic;
+  Color secondaryContainerColor = R.colors.skeptic;
 
   @override
-  Color mainOverColor = R.colors.white;
+  Color iconColor = R.colors.black;
 }
 
 class OneDoseDarkTheme extends IAppTheme {
@@ -202,17 +205,17 @@ class OneDoseDarkTheme extends IAppTheme {
   Color appbarColor = R.colors.emperor;
 
   @override
-  Color checkboxBorderColor = R.colors.greenHaze;
+  Color appbarTextColor = R.colors.white;
 
   @override
-  Color iconColor = R.colors.white;
+  Color appbarIconColor = R.colors.white;
 
   @override
   Color bottomMenuColor = R.colors.emperor;
 
   @override
-  Color secondaryBackColor = R.colors.emperor;
+  Color secondaryContainerColor = R.colors.emperor;
 
   @override
-  Color mainOverColor = R.colors.white;
+  Color iconColor = R.colors.white;
 }

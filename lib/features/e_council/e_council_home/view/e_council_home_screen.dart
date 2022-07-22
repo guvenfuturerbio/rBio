@@ -231,32 +231,31 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                     //? Onay Bekleyen
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).pending_approval,
-                      color: getIt<IAppConfig>().theme.eCouncilPendingApproval,
+                      color: context.xAppColors.boulder,
                       number: 2,
                     ),
                     //? Ödeme Bekleyen
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).pending_payment,
-                      color: getIt<IAppConfig>().theme.eCouncilPendingPayment,
+                      color: context.xAppColors.supernova,
                       number: 0,
                     ),
                     //? Tetkik Bekleyen
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).pending_inspection,
-                      color:
-                          getIt<IAppConfig>().theme.eCouncilPendingInspection,
+                      color: context.xAppColors.malibu,
                       number: 0,
                     ),
                     //? Reddedilen
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).rejected,
-                      color: getIt<IAppConfig>().theme.eCouncilRejected,
+                      color: context.xAppColors.punch,
                       number: 13,
                     ),
                     //? Randevu Hazır
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).appointment_ready,
-                      color: getIt<IAppConfig>().theme.eCouncilAppointmentReady,
+                      color: context.xAppColors.greenHaze,
                       number: 1,
                     ),
                   ],
