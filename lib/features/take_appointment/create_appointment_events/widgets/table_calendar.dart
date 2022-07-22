@@ -29,7 +29,7 @@ class _TableCalendarState extends State<_TableCalendar> {
       );
 
   TextStyle get textStyle => context.xHeadline4.copyWith(
-        color: getIt<IAppConfig>().theme.textColorSecondary,
+        color: context.xTextInverseColor,
       );
 
   late DateTime _focusedDay;
@@ -116,8 +116,8 @@ class _TableCalendarState extends State<_TableCalendar> {
             leftChevronVisible: true,
             leftChevronIcon: SvgPicture.asset(
               R.image.arrowLeft,
-              color: getIt<IAppConfig>().theme.textContrastColor,
               width: R.sizes.iconSize5,
+              color: context.xTextOnPrimaryColor,
             ),
 
             //
@@ -130,8 +130,8 @@ class _TableCalendarState extends State<_TableCalendar> {
             rightChevronVisible: true,
             rightChevronIcon: SvgPicture.asset(
               R.image.arrowRightIcon,
-              color: getIt<IAppConfig>().theme.textContrastColor,
               width: R.sizes.iconSize5,
+              color: context.xTextOnPrimaryColor,
             ),
           ),
 
@@ -169,8 +169,8 @@ class _TableCalendarState extends State<_TableCalendar> {
                   '${day.day}',
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
-                        ? getIt<IAppConfig>().theme.textColorSecondary
-                        : getIt<IAppConfig>().theme.textColorPassive,
+                        ? context.xTextInverseColor
+                        : context.xAppColors.textDisabledColor,
                   ),
                 ),
               );
@@ -189,8 +189,8 @@ class _TableCalendarState extends State<_TableCalendar> {
                   '${day.day}',
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
-                        ? getIt<IAppConfig>().theme.textContrastColor
-                        : getIt<IAppConfig>().theme.textColorPassive,
+                        ? context.xTextOnPrimaryColor
+                        : context.xAppColors.textDisabledColor,
                   ),
                 ),
               );

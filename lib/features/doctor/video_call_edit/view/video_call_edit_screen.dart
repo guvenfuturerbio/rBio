@@ -133,7 +133,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
                 child: RbioElevatedButton(
                   title: LocaleProvider.current.back,
                   backColor: context.xCardColor,
-                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                  textColor: context.xTextInverseColor,
                   onTap: () {},
                   fontWeight: FontWeight.bold,
                 ),

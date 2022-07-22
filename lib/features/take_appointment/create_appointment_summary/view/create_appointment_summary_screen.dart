@@ -573,10 +573,14 @@ class _CreateAppointmentSummaryScreenState
                     decoration: TextDecoration.lineThrough,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.normal,
-                    color: getIt<IAppConfig>().theme.textColorPassive,
+                    color: context.xAppColors.textDisabledColor,
                   ),
                 ),
+
+                //
                 _buildHorizontalGap(),
+
+                //
                 Text(
                   _newPrice,
                   maxLines: 1,
@@ -650,7 +654,7 @@ class _CreateAppointmentSummaryScreenState
           ? context.xCardColor
           : context.xPrimaryColor,
       textColor: vm.summaryButton == SummaryButtons.add
-          ? getIt<IAppConfig>().theme.textColorSecondary
+          ? context.xTextInverseColor
           : null,
       fontWeight: FontWeight.w600,
     );
@@ -775,7 +779,7 @@ class _CreateAppointmentSummaryScreenState
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: context.xHeadline4.copyWith(
-          color: getIt<IAppConfig>().theme.textColorPassive,
+          color: context.xAppColors.textDisabledColor,
         ),
       );
 }

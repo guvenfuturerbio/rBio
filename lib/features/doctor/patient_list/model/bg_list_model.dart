@@ -38,6 +38,7 @@ class BgPatientListModel extends PatientListModel<DoctorGlucosePatientModel> {
     return text == '' || text == null
         ? context.xCardColor
         : Utils.instance.fetchMeasurementColor(
+            context,
             measurement: _textToInt(text),
             criticMin: model.alertMin?.toInt() ?? 0,
             criticMax: model.alertMax?.toInt() ?? 0,

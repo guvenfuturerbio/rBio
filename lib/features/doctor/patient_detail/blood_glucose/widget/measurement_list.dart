@@ -91,7 +91,7 @@ Widget _buildCard(
         Text(
           DateFormat("kk : mm").format(bgMeasurementViewModel.date),
           style: context.xBodyText1.copyWith(
-            color: getIt<IAppConfig>().theme.textColorPassive,
+            color: context.xAppColors.textDisabledColor,
           ),
         ),
 

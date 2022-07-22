@@ -397,7 +397,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<IAppConfig>().theme.textColorSecondary,
+                color: context.xTextInverseColor,
               ),
             ),
           ),

@@ -2,58 +2,59 @@ part of 'app_config.dart';
 
 abstract class IAppTheme {
   TextTheme get textTheme;
-  IAppDialogTheme dialogTheme = AppDialogThemeImpl();
   String get fontFamily;
   String get appLogo;
   String get successAppointmentImage;
   double get appBarLogoHeight;
+  IAppDialogTheme dialogTheme = AppDialogThemeImpl();
 
-  Color get appbarColor; // appBarTheme-backgroundColor
+  // ! ThemeData
+  // *
   Color get primaryColor; // primaryColor
-  Color cardBackgroundColor = R.colors.white; // cardTheme-color
+  Color get scaffoldBackgroundColor;
+  // * ColorScheme
+  Color get secondaryColor; // colorScheme-secondary
+  Color get textColor; // colorScheme-primary
+  Color get inverseTextColor; // colorScheme-inversePrimary
+  Color get onPrimaryTextColor; // colorScheme-onPrimary
+  // * CardTheme
+  Color get cardBackgroundColor; // cardTheme-color
+  // * AppBarTheme
+  Color get appbarColor; // appBarTheme-backgroundColor
+  // * MyCustomTheme
+  Color iron = R.colors.iron;
+  Color grey = R.colors.grey;
+  Color white = R.colors.white;
+  Color black = R.colors.black;
+  Color punch = R.colors.punch;
+  Color roman = R.colors.roman;
+  Color deYork = R.colors.deYork;
+  Color skeptic = R.colors.skeptic;
+  Color boulder = R.colors.boulder;
+  Color mercury = R.colors.mercury;
+  Color codGray = R.colors.codGray;
+  Color gallery = R.colors.gallery;
+  Color concrete = R.colors.concrete;
+  Color tonysPink = R.colors.tonysPink;
+  Color dustyGray = R.colors.dustyGray;
+  Color casablanca = R.colors.casablanca;
+  Color frenchPass = R.colors.frenchPass;
+  Color kournikova = R.colors.kournikova;
+  Color ultramarine = R.colors.ultramarine;
+  Color frenchLilac = R.colors.frenchLilac;
+  Color textDisabledColor = R.colors.silver;
+  Color energyYellow = R.colors.energyYellow;
+  Color cornflowerBlue = R.colors.cornflowerBlue;
+  Color fuzzyWuzzyBrown = R.colors.fuzzyWuzzyBrown;
 
-  Color get secondaryColor;
-  Color get textContrastColor;
   Color get checkboxBorderColor;
   Color get bottomMenuColor;
   Color get secondaryBackColor;
   Color get mainOverColor;
 
-  // ! --------- --------- Common --------- ---------
-  Color grey = R.colors.grey;
-  Color blue = R.colors.frenchPass;
-  Color yellow = R.colors.kournikova;
-  Color pink = R.colors.frenchLilac;
-  Color scaffoldBackgroundColor = R.colors.gallery;
-  Color textColor = R.colors.white;
-  Color textColorSecondary = R.colors.black;
-  Color textColorPassive = R.colors.silver;
-  Color blackForItem = R.colors.black;
   Color iconColor = R.colors.black;
   Color iconSecondaryColor = R.colors.white;
-  Color grayColor = R.colors.gallery;
-  Color danisma = R.colors.fountainBlue;
-  Color danismaLight = R.colors.aquaIsland;
-  Color red = R.colors.fuzzyWuzzyBrown;
-  Color lightRed = R.colors.fuzzyWuzzyBrown;
-  Color darkRedGuven = R.colors.burntUmber;
-  Color onlineAppointment = R.colors.ultramarine;
-  Color lightOnlineAppointment = R.colors.cornflowerBlue;
-  Color darkBlack = R.colors.black;
-  Color darkRed = R.colors.punch;
-  Color darkWhite = R.colors.mercury;
-  Color black = R.colors.codGray;
-  Color gray = R.colors.dustyGray;
-  Color white = R.colors.white;
-  Color high = R.colors.energyYellow;
-  Color veryHigh = R.colors.casablanca;
-  Color target = R.colors.deYork;
-  Color low = R.colors.tonysPink;
-  Color veryLow = R.colors.roman;
-  Color stateColor = R.colors.boulder;
-  Color bgGray = R.colors.concrete;
-  Color chartGray = R.colors.iron;
-  Color graphPlotRange = R.colors.skeptic;
+
   Color graphRangeColor = R.colors.skeptic;
   double convertFontSize(double value) => value / 2.85;
 
@@ -93,4 +94,75 @@ class AppDialogThemeImpl extends IAppDialogTheme {
   TextStyle title(BuildContext context) => context.xHeadline2.copyWith(
         fontWeight: FontWeight.bold,
       );
+}
+
+@immutable
+class MyCustomTheme {
+  final Color iron;
+  final Color grey;
+  final Color white;
+  final Color black;
+  final Color punch;
+  final Color roman;
+  final Color deYork;
+  final Color skeptic;
+  final Color boulder;
+  final Color mercury;
+  final Color codGray;
+  final Color gallery;
+  final Color concrete;
+  final Color tonysPink;
+  final Color dustyGray;
+  final Color casablanca;
+  final Color frenchPass;
+  final Color kournikova;
+  final Color ultramarine;
+  final Color frenchLilac;
+  final Color textDisabledColor;
+  final Color energyYellow;
+  final Color cornflowerBlue;
+  final Color fuzzyWuzzyBrown;
+
+  const MyCustomTheme({
+    required this.iron,
+    required this.grey,
+    required this.white,
+    required this.black,
+    required this.punch,
+    required this.roman,
+    required this.deYork,
+    required this.skeptic,
+    required this.boulder,
+    required this.mercury,
+    required this.codGray,
+    required this.gallery,
+    required this.concrete,
+    required this.tonysPink,
+    required this.dustyGray,
+    required this.casablanca,
+    required this.frenchPass,
+    required this.kournikova,
+    required this.ultramarine,
+    required this.frenchLilac,
+    required this.textDisabledColor,
+    required this.energyYellow,
+    required this.cornflowerBlue,
+    required this.fuzzyWuzzyBrown,
+  });
+
+  static MyCustomTheme of(BuildContext context) {
+    return Theme.of(context).own();
+  }
+}
+
+extension MyCustomThemeExtensions on ThemeData {
+  static late MyCustomTheme _customTheme;
+
+  void addOwn(MyCustomTheme own) {
+    _customTheme = own;
+  }
+
+  MyCustomTheme own() {
+    return _customTheme;
+  }
 }

@@ -93,6 +93,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                                   value.toggleConsentFormState();
                                 },
                                 child: GuvenAlert.buildSmallDescription(
+                                  context,
                                   LocaleProvider.of(context)
                                       .accept_application_consent_form,
                                   textAlign: TextAlign.start,

@@ -65,7 +65,7 @@ class ReminderCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline4.copyWith(
-                            color: getIt<IAppConfig>().theme.textColor,
+                            color: context.xTextColor,
                           ),
                         ),
                       ),
@@ -74,7 +74,7 @@ class ReminderCard extends StatelessWidget {
                       Text(
                         model.subTitle ?? '',
                         style: context.xHeadline4.copyWith(
-                          color: getIt<IAppConfig>().theme.textColor,
+                          color: context.xTextColor,
                         ),
                       ),
                     ],

@@ -107,6 +107,7 @@ class ReminderDetailDialog extends StatelessWidget {
                   //
                   Expanded(
                     child: RbioSmallDialogButton.red(
+                      context,
                       onPressed: () {
                         context.read<ReminderListCubit>().removeReminder(model);
                         Atom.dismiss();

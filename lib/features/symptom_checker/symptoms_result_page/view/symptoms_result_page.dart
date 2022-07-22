@@ -178,9 +178,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: context.xHeadline4.copyWith(
-                                            color: getIt<IAppConfig>()
-                                                .theme
-                                                .textColor),
+                                          color: context.xTextColor,
+                                        ),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -199,10 +198,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                     child: Text(
                       LocaleProvider.of(context).no_symptom_result,
                       style: context.xHeadline3.copyWith(
-                          color: getIt<IAppConfig>()
-                              .theme
-                              .textColorSecondary
-                              .withOpacity(0.5)),
+                        color: context.xTextInverseColor.withOpacity(0.5),
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   )
@@ -349,8 +346,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                       textAlign: TextAlign.center,
                                       overflow: TextOverflow.ellipsis,
                                       style: context.xHeadline4.copyWith(
-                                        color:
-                                            getIt<IAppConfig>().theme.textColor,
+                                        color: context.xTextColor,
                                       ),
                                     ),
                                   ),

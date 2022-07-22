@@ -70,7 +70,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                   //
                   RbioTextFormField(
                     focusNode: _valueFocusNode,
-                    backColor: getIt<IAppConfig>().theme.grayColor,
+                    backColor: context.xAppColors.gallery,
                     controller: _valueEditingController,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
@@ -139,8 +139,8 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
     required bool infinityWidth,
   }) {
     return RbioElevatedButton(
-      backColor: getIt<IAppConfig>().theme.grayColor,
-      textColor: getIt<IAppConfig>().theme.textColorSecondary,
+      backColor: context.xAppColors.gallery,
+      textColor: context.xTextInverseColor,
       title: LocaleProvider.current.btn_cancel,
       onTap: () {
         Atom.dismiss();

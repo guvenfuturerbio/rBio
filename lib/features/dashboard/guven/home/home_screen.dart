@@ -60,7 +60,7 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
                                 " " +
                                 getIt<UserFacade>().getNameAndSurname(),
                             style: TextStyle(
-                              color: getIt<IAppConfig>().theme.black,
+                              color: context.xAppColors.codGray,
                               fontWeight: FontWeight.w600,
                               fontSize: 25,
                             ),
@@ -72,7 +72,7 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
                           child: Text(
                             LocaleProvider.of(context).lbl_take_care,
                             style: TextStyle(
-                              color: getIt<IAppConfig>().theme.gray,
+                              color: context.xAppColors.dustyGray,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -106,11 +106,8 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
                               image: R.image.icVideoIcon,
                               number:
                                   LocaleProvider.of(context).title_appointment,
-                              colorLeft:
-                                  getIt<IAppConfig>().theme.onlineAppointment,
-                              colorRight: getIt<IAppConfig>()
-                                  .theme
-                                  .lightOnlineAppointment,
+                              colorLeft: context.xAppColors.ultramarine,
+                              colorRight: context.xAppColors.cornflowerBlue,
                               margin: const EdgeInsets.only(top: 10),
                             ),
                           ),
@@ -119,20 +116,20 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
                         //
                         InkWell(
                           child: _itemFindHospital(
-                              context: context,
-                              title:
-                                  LocaleProvider.of(context).lbl_find_hospital,
-                              image: R.image.icHospitalWhite,
-                              colorLeft: getIt<IAppConfig>().theme.red,
-                              colorRight: getIt<IAppConfig>().theme.lightRed,
-                              number: LocaleProvider.of(context)
-                                  .lbl_number_hospital,
-                              margin:
-                                  const EdgeInsets.only(top: 10, bottom: 10)),
+                            context: context,
+                            title: LocaleProvider.of(context).lbl_find_hospital,
+                            image: R.image.icHospitalWhite,
+                            colorLeft: context.xAppColors.fuzzyWuzzyBrown,
+                            colorRight: context.xAppColors.fuzzyWuzzyBrown,
+                            number:
+                                LocaleProvider.of(context).lbl_number_hospital,
+                            margin: const EdgeInsets.only(top: 10, bottom: 10),
+                          ),
                           onTap: () {
                             getIt<FirebaseAnalyticsManager>().logEvent(
-                                MenuElementTiklamaEvent(
-                                    'hastane_randevusu_olustur'));
+                              MenuElementTiklamaEvent(
+                                  'hastane_randevusu_olustur'),
+                            );
                             Atom.to(
                               PagePaths.createAppointment,
                               queryParameters: {
@@ -273,7 +270,7 @@ Widget _itemOption({
                   overflow: TextOverflow.ellipsis,
                   style: context.xHeadline5.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: getIt<IAppConfig>().theme.textColor,
+                    color: context.xTextColor,
                   ),
                 ),
               ),
@@ -298,19 +295,19 @@ Widget _itemOption({
         gradient: LinearGradient(
           colors: isFocused
               ? [
-                  getIt<IAppConfig>().theme.red,
-                  getIt<IAppConfig>().theme.lightRed,
+                  context.xAppColors.fuzzyWuzzyBrown,
+                  context.xAppColors.fuzzyWuzzyBrown,
                 ]
               : [
-                  getIt<IAppConfig>().theme.gray,
-                  getIt<IAppConfig>().theme.grey,
+                  context.xAppColors.dustyGray,
+                  context.xAppColors.grey,
                 ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
         boxShadow: [
           BoxShadow(
-            color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
+            color: context.xAppColors.black.withAlpha(50),
             blurRadius: 15,
             spreadRadius: 0,
             offset: const Offset(5, 10),
@@ -351,7 +348,7 @@ Widget _itemFindHospital({
                     overflow: TextOverflow.ellipsis,
                     style: context.xHeadline3.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: getIt<IAppConfig>().theme.textColor,
+                      color: context.xTextColor,
                     ),
                   ),
                 ),
@@ -382,7 +379,7 @@ Widget _itemFindHospital({
             ),
             boxShadow: [
               BoxShadow(
-                color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
+                color: context.xAppColors.black.withAlpha(50),
                 blurRadius: 15,
                 spreadRadius: 0,
                 offset: const Offset(5, 10),
@@ -411,7 +408,7 @@ Widget _itemFindHospital({
                     overflow: TextOverflow.ellipsis,
                     style: context.xHeadline3.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: getIt<IAppConfig>().theme.textColor,
+                      color: context.xTextColor,
                     ),
                   ),
                 ),
@@ -442,7 +439,7 @@ Widget _itemFindHospital({
             ),
             boxShadow: [
               BoxShadow(
-                color: getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
+                color: context.xAppColors.black.withAlpha(50),
                 blurRadius: 15,
                 spreadRadius: 0,
                 offset: const Offset(5, 10),

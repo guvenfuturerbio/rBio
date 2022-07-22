@@ -76,7 +76,7 @@ class BpChartFilterPopUp extends StatelessWidget {
                   },
                   padding: EdgeInsets.zero,
                   backColor: context.xCardColor,
-                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                  textColor: context.xTextInverseColor,
                 ),
 
                 //

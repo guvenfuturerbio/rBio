@@ -5,7 +5,7 @@ class _Colors {
   final Color black = Colors.black;
   final Color grey = Colors.grey;
 
-  final Color greenHaze = const Color.fromARGB(255, 0, 158, 71); // 0xFF009E47
+  final Color greenHaze = const Color.fromARGB(255, 0, 161, 71); // 0xFF00A147
   final Color skeptic = const Color.fromARGB(255, 202, 234, 216); // 0xFFCAEAD8
   final Color burntUmber = const Color.fromARGB(255, 134, 39, 52); // 0xFF862734
   final Color coralTree = const Color.fromARGB(255, 170, 104, 113); // 0xFFAA6871

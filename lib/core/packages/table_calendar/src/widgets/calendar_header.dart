@@ -70,7 +70,7 @@ class CalendarHeader extends StatelessWidget {
                       child: Text(
                         text,
                         style: headerStyle.titleTextStyle.copyWith(
-                          color: getIt<IAppConfig>().theme.textContrastColor,
+                          color: context.xTextOnPrimaryColor,
                         ),
                         textAlign: headerStyle.titleCentered
                             ? TextAlign.center

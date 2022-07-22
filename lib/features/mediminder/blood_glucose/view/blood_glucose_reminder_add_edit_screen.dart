@@ -273,7 +273,7 @@ class __BloodGlucoseReminderAddEditViewState
             Expanded(
               child: RbioElevatedButton(
                 backColor: context.xCardColor,
-                textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                textColor: context.xTextInverseColor,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {
                   Atom.historyBack();

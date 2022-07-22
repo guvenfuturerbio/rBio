@@ -177,7 +177,7 @@ class _ListBodyState extends State<ListBody>
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.value == value
                   ? getIt<IAppConfig>().theme.white
-                  : getIt<IAppConfig>().theme.textColorSecondary,
+                  : context.xTextInverseColor,
               fontWeight: widget.completeNotifier.value?.value == value
                   ? FontWeight.bold
                   : FontWeight.w500,
@@ -254,7 +254,7 @@ class _ListBodyState extends State<ListBody>
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.selected?.from == item.from
                   ? getIt<IAppConfig>().theme.white
-                  : getIt<IAppConfig>().theme.textColorSecondary,
+                  : context.xTextInverseColor,
               fontWeight:
                   widget.completeNotifier.value?.selected?.from == item.from
                       ? FontWeight.bold

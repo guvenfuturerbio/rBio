@@ -199,9 +199,8 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                                     .allBodySymptoms[
                                                                 index]![indx])
                                                         ? context.xPrimaryColor
-                                                        : getIt<IAppConfig>()
-                                                            .theme
-                                                            .textColorSecondary,
+                                                        : context
+                                                            .xTextInverseColor,
                                                   ),
                                                 ),
                                               ),

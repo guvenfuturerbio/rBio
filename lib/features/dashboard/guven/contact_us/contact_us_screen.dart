@@ -73,15 +73,16 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(200),
                                 gradient: LinearGradient(
-                                    colors: [
-                                      getIt<IAppConfig>().theme.red,
-                                      getIt<IAppConfig>().theme.lightRed
-                                    ],
-                                    begin: Alignment.bottomLeft,
-                                    end: Alignment.centerRight),
+                                  colors: [
+                                    context.xAppColors.fuzzyWuzzyBrown,
+                                    context.xAppColors.fuzzyWuzzyBrown,
+                                  ],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.centerRight,
+                                ),
                                 border: Border.all(
                                   width: 1,
-                                  color: getIt<IAppConfig>().theme.red,
+                                  color: context.xAppColors.fuzzyWuzzyBrown,
                                 ),
                               ),
                               margin: const EdgeInsets.all(20),
@@ -101,7 +102,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   Text(
                                     LocaleProvider.of(context).call_us,
                                     style: TextStyle(
-                                        color: getIt<IAppConfig>().theme.white),
+                                      color: getIt<IAppConfig>().theme.white,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -112,18 +114,20 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             child: Text(
                               LocaleProvider.of(context).we_are_online,
                               style: TextStyle(
-                                  color: getIt<IAppConfig>().theme.red,
-                                  fontSize: 16),
+                                color: context.xAppColors.fuzzyWuzzyBrown,
+                                fontSize: 16,
+                              ),
                             ),
                           )
                         : Center(
                             child: Text(
                               LocaleProvider.of(context).call_us_message,
                               style: TextStyle(
-                                  color: getIt<IAppConfig>().theme.red,
-                                  fontSize: 16),
+                                color: context.xAppColors.fuzzyWuzzyBrown,
+                                fontSize: 16,
+                              ),
                             ),
-                          )
+                          ),
                   ],
                 ),
               ),

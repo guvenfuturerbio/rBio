@@ -148,7 +148,7 @@ class RbioFilterChip extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               )
             : context.xHeadline3.copyWith(
-                color: getIt<IAppConfig>().theme.textColorSecondary,
+                color: context.xTextInverseColor,
               ),
       ),
       onSelected: (val) {

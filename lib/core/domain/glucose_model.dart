@@ -69,7 +69,11 @@ class GlucoseData extends HiveObject {
 
   // BG
   String get date => DateTime.fromMillisecondsSinceEpoch(time).toString();
-  Color get color => Utils.instance.getGlucoseMeasurementColor(double.parse(level).toInt());
+  Color color(BuildContext context) =>
+      Utils.instance.getGlucoseMeasurementColor(
+        context,
+        double.parse(level).toInt(),
+      );
 
   GlucoseData({
     required this.level,

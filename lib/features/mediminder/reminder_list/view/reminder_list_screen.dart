@@ -89,7 +89,7 @@ class _ReminderListView extends StatelessWidget {
             },
             title: LocaleProvider.current.filter,
             backColor: context.xCardColor,
-            textColor: getIt<IAppConfig>().theme.textColorSecondary,
+            textColor: context.xTextInverseColor,
             fontWeight: FontWeight.bold,
           ),
         ),

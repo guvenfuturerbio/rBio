@@ -192,9 +192,8 @@ class _VisitDetailViewState extends State<VisitDetailView> {
             child: Text(
               text,
               style: context.xHeadline3.copyWith(
-                color: isActive
-                    ? getIt<IAppConfig>().theme.textColor
-                    : getIt<IAppConfig>().theme.textColorSecondary,
+                color:
+                    isActive ? context.xTextColor : context.xTextInverseColor,
               ),
             ),
           ),
@@ -374,7 +373,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                       Text(
                         LocaleProvider.of(context).test_name,
                         style: context.xHeadline4.copyWith(
-                          color: getIt<IAppConfig>().theme.textColorPassive,
+                          color: context.xAppColors.textDisabledColor,
                         ),
                       ),
 
@@ -395,9 +394,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                               child: Text(
                                 LocaleProvider.of(context).group_name,
                                 style: context.xHeadline4.copyWith(
-                                  color: getIt<IAppConfig>()
-                                      .theme
-                                      .textColorPassive,
+                                  color: context.xAppColors.textDisabledColor,
                                 ),
                               ),
                             ),
@@ -407,9 +404,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                               child: Text(
                                 LocaleProvider.of(context).approved_date,
                                 style: context.xHeadline4.copyWith(
-                                  color: getIt<IAppConfig>()
-                                      .theme
-                                      .textColorPassive,
+                                  color: context.xAppColors.textDisabledColor,
                                 ),
                               ),
                             ),
@@ -541,7 +536,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
         textStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: getIt<IAppConfig>().theme.grey,
+          color: context.xAppColors.grey,
         ),
         gradient: LinearGradient(
           colors: [

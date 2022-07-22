@@ -326,7 +326,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: context.xHeadline5.copyWith(
-                    color: getIt<IAppConfig>().theme.textColorSecondary,
+                    color: context.xTextInverseColor,
                   ),
                 ),
               )
@@ -474,7 +474,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       LocaleProvider.of(context).lbl_dont_have_account,
                       style: context.xHeadline3.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorSecondary,
+                        color: context.xTextInverseColor,
                       ),
                     ),
                     InkWell(
@@ -557,7 +557,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.xHeadline5.copyWith(
-                          color: getIt<IAppConfig>().theme.textColorSecondary,
+                          color: context.xTextInverseColor,
                         ),
                       ),
                     ),

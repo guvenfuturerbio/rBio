@@ -558,8 +558,8 @@ class _ChatScreenState extends State<ChatScreen> {
             Flexible(
               child: _buildSelectableText(
                 message.message!,
-                getIt<IAppConfig>().theme.textColorSecondary,
-                getIt<IAppConfig>().theme.secondaryColor,
+                context.xTextInverseColor,
+                context.xSecondaryColor,
               ),
             ),
 
@@ -590,7 +590,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Flexible(
               child: _buildSelectableText(
                 message.message!,
-                getIt<IAppConfig>().theme.textColorSecondary,
+                context.xTextInverseColor,
                 context.xCardColor,
               ),
             ),

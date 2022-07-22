@@ -172,7 +172,10 @@ class _PatientRelativeListTile extends StatelessWidget {
       builder: (BuildContext context) {
         return GuvenAlert(
           backgroundColor: Colors.white,
-          title: GuvenAlert.buildTitle(title),
+          title: GuvenAlert.buildTitle(
+            context,
+            title,
+          ),
           actions: [
             GuvenAlert.buildMaterialAction(
               context,
@@ -198,7 +201,7 @@ class _PatientRelativeListTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                GuvenAlert.buildDescription(text),
+                GuvenAlert.buildDescription(context, text),
               ],
             ),
           ),

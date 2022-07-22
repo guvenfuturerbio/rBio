@@ -196,12 +196,13 @@ class RbioSmallDialogButton extends StatelessWidget {
     );
   }
 
-  factory RbioSmallDialogButton.red({
+  factory RbioSmallDialogButton.red(
+    BuildContext context, {
     required String? title,
     required void Function()? onPressed,
   }) {
     return RbioSmallDialogButton(
-      backgroundColor: getIt<IAppConfig>().theme.darkRed,
+      backgroundColor: context.xAppColors.punch,
       textColor: getIt<IAppConfig>().theme.white,
       title: title,
       onPressed: onPressed,
@@ -215,7 +216,7 @@ class RbioSmallDialogButton extends StatelessWidget {
   }) {
     return RbioSmallDialogButton(
       backgroundColor: context.xCardColor,
-      textColor: getIt<IAppConfig>().theme.textColorSecondary,
+      textColor: context.xTextInverseColor,
       title: title,
       onPressed: onPressed,
     );
@@ -236,7 +237,7 @@ class RbioSmallDialogButton extends StatelessWidget {
         title ?? '',
         textAlign: TextAlign.left,
         style: context.xHeadline4.copyWith(
-          color: textColor ?? getIt<IAppConfig>().theme.textColor,
+          color: textColor ?? context.xTextColor,
           fontWeight: FontWeight.bold,
         ),
       ),

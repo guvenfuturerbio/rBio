@@ -38,52 +38,54 @@ class BpMeasurementViewModel {
 
   set note(String rhs) => bpModel.note = rhs;
 
-  Color get systolicColor {
+  Color systolicColor(BuildContext context) {
     if (sys == null) {
       return Colors.grey[300]!;
     }
     if (sys! > 89 && sys! < 120) {
-      return getIt<IAppConfig>().theme.target;
+      return context.xAppColors.deYork;
     } else if (sys! > 119 && sys! < 139) {
-      return getIt<IAppConfig>().theme.high;
+      return context.xAppColors.energyYellow;
     } else if (sys! >= 139) {
-      return getIt<IAppConfig>().theme.veryHigh;
+      return context.xAppColors.casablanca;
     } else if (90 > sys!) {
-      return getIt<IAppConfig>().theme.low;
+      return context.xAppColors.tonysPink;
     } else {
       return Colors.grey[300]!;
     }
   }
 
-  Color get diastolicColor {
+  Color diastolicColor(BuildContext context) {
     if (dia == null) {
       return Colors.grey[300]!;
     }
+
     if (dia! > 59 && dia! < 80) {
-      return getIt<IAppConfig>().theme.target;
+      return context.xAppColors.deYork;
     } else if (dia! > 79 && dia! < 90) {
-      return getIt<IAppConfig>().theme.high;
+      return context.xAppColors.energyYellow;
     } else if (dia! >= 89) {
-      return getIt<IAppConfig>().theme.veryHigh;
+      return context.xAppColors.casablanca;
     } else if (dia! < 60) {
-      return getIt<IAppConfig>().theme.low;
+      return context.xAppColors.tonysPink;
     } else {
       return Colors.grey[300]!;
     }
   }
 
-  Color get pulseColor {
+  Color pulseColor(BuildContext context) {
     if (pulse == null) {
       return Colors.grey[300]!;
     }
+
     if (pulse! > 59 && pulse! < 101) {
-      return getIt<IAppConfig>().theme.target;
+      return context.xAppColors.deYork;
     } else if (pulse! > 100 && pulse! < 121) {
-      return getIt<IAppConfig>().theme.high;
+      return context.xAppColors.energyYellow;
     } else if (pulse! > 120) {
-      return getIt<IAppConfig>().theme.veryHigh;
+      return context.xAppColors.casablanca;
     } else if (pulse! < 60) {
-      return getIt<IAppConfig>().theme.low;
+      return context.xAppColors.tonysPink;
     } else {
       return Colors.grey[300]!;
     }

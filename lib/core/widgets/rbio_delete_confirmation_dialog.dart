@@ -19,6 +19,7 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
       backgroundColor: context.xCardColor,
       shape: R.sizes.defaultShape,
       title: GuvenAlert.buildTitle(
+        context,
         LocaleProvider.current.warning,
       ),
       content: Column(
@@ -33,6 +34,7 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: GuvenAlert.buildDescription(
+              context,
               description,
             ),
           ),
@@ -49,6 +51,7 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
               //
               Expanded(
                 child: GuvenAlert.buildMaterialRedAction(
+                  context,
                   LocaleProvider.current.delete,
                   () {
                     Atom.dismiss();

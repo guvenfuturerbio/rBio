@@ -202,10 +202,7 @@ class _ForYouSubCategoriesDetailViewState
                           shape: BoxShape.circle,
                           color: _currentIndex == index
                               ? context.xPrimaryColor
-                              : getIt<IAppConfig>()
-                                  .theme
-                                  .textColorSecondary
-                                  .withOpacity(0.5),
+                              : context.xTextInverseColor.withOpacity(0.5),
                         ),
                       );
                     },
@@ -288,13 +285,18 @@ class ListCard extends StatelessWidget {
             //
             Container(
               margin: const EdgeInsets.only(
-                  left: 30, right: 30, top: 10, bottom: 8),
+                left: 30,
+                right: 30,
+                top: 10,
+                bottom: 8,
+              ),
               child: Text(
                 title,
                 style: context.xHeadline3.copyWith(
-                    color: getIt<IAppConfig>().theme.textColorSecondary,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold),
+                  color: context.xTextInverseColor,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -310,7 +312,7 @@ class ListCard extends StatelessWidget {
               child: Text(
                 text,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColorSecondary,
+                  color: context.xTextInverseColor,
                   fontStyle: FontStyle.italic,
                 ),
                 textAlign: TextAlign.center,
@@ -345,7 +347,7 @@ Widget _itemTakeCovid({
         ),
         boxShadow: [
           BoxShadow(
-            color: getIt<IAppConfig>().theme.textColorSecondary.withAlpha(50),
+            color: context.xTextInverseColor.withAlpha(50),
             blurRadius: 15,
             spreadRadius: 0,
             offset: const Offset(5, 10),
@@ -364,8 +366,9 @@ Widget _itemTakeCovid({
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: context.xHeadline3.copyWith(
-                          color: getIt<IAppConfig>().theme.textColor,
-                          fontWeight: FontWeight.bold),
+                        color: context.xTextColor,
+                        fontWeight: FontWeight.bold,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),

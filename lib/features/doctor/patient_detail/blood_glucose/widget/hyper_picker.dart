@@ -63,7 +63,7 @@ class _HyperPicker extends StatelessWidget {
                 LocaleProvider.current.save,
                 textAlign: TextAlign.center,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColor,
+                  color: context.xTextColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),

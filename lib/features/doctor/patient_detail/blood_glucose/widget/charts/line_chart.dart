@@ -65,23 +65,32 @@ class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
               _selected == LocaleProvider.current.specific
           ? DateTimeAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
-              majorGridLines: const MajorGridLines(color: Colors.black12),
+              majorGridLines: const MajorGridLines(
+                color: Colors.black12,
+              ),
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
-              labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
-              interval: 6)
+              labelStyle: TextStyle(
+                color: context.xAppColors.codGray,
+              ),
+              interval: 6,
+            )
           : _selected == LocaleProvider.current.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: const MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(
+                    color: Colors.black12,
+                  ),
                   dateFormat: DateFormat("EEE"),
                   intervalType: DateTimeIntervalType.days,
                   interval: 1,
                 )
               : DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: const MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(
+                    color: Colors.black12,
+                  ),
                 ),
       primaryYAxis: NumericAxis(
         majorTickLines: const MajorTickLines(color: Colors.transparent),
@@ -89,17 +98,27 @@ class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
         axisLine: const AxisLine(width: 0),
         labelFormat: '{value}',
         title: AxisTitle(
-            text: "mg/dL",
-            textStyle: TextStyle(fontSize: 10, color: getIt<IAppConfig>().theme.black)),
-        labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
+          text: "mg/dL",
+          textStyle: TextStyle(
+            fontSize: 10,
+            color: context.xAppColors.codGray,
+          ),
+        ),
+        labelStyle: TextStyle(
+          color: context.xAppColors.codGray,
+        ),
         plotBands: [
           PlotBand(
-              isVisible: true,
-              start: _targetMax,
-              end: _targetMin,
-              shouldRenderAboveSeries: false,
-              textStyle: const TextStyle(color: Colors.black, fontSize: 13),
-              color: getIt<IAppConfig>().theme.graphRangeColor),
+            isVisible: true,
+            start: _targetMax,
+            end: _targetMin,
+            shouldRenderAboveSeries: false,
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontSize: 13,
+            ),
+            color: getIt<IAppConfig>().theme.graphRangeColor,
+          ),
         ],
         minimum: _minValue.toDouble(),
         maximum: _maxValue.toDouble(),

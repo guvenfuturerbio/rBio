@@ -381,7 +381,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline3.copyWith(
-                            color: getIt<IAppConfig>().theme.textColorSecondary,
+                            color: context.xTextInverseColor,
                             decoration: TextDecoration.underline,
                           ),
                         ),
@@ -419,7 +419,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline3.copyWith(
-                            color: getIt<IAppConfig>().theme.textColorSecondary,
+                            color: context.xTextInverseColor,
                             decoration: TextDecoration.underline,
                           ),
                         ),

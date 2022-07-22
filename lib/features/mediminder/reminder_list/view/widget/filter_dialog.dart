@@ -215,7 +215,7 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
             title: LocaleProvider.current.btn_cancel,
             padding: EdgeInsets.zero,
             backColor: context.xCardColor,
-            textColor: getIt<IAppConfig>().theme.textColorSecondary,
+            textColor: context.xTextInverseColor,
             fontWeight: FontWeight.bold,
           ),
         ),

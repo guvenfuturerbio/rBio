@@ -73,10 +73,22 @@ class GuvenTheme extends IAppTheme {
   Color primaryColor = R.colors.burntUmber;
 
   @override
+  Color scaffoldBackgroundColor = R.colors.gallery;
+
+  @override
   Color secondaryColor = R.colors.coralTree;
 
   @override
-  Color textContrastColor = R.colors.white;
+  Color textColor = R.colors.white;
+
+  @override
+  Color inverseTextColor = R.colors.black;
+
+  @override
+  Color onPrimaryTextColor = R.colors.white;
+
+  @override
+  Color cardBackgroundColor = R.colors.white;
 
   @override
   Color appbarColor = R.colors.burntUmber;

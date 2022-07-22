@@ -365,9 +365,12 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
       children: [
         Text(
           LocaleProvider.of(context).council_connection_link,
-          style: context.xHeadline4
-              .copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+          style: context.xHeadline4.copyWith(
+            color: context.xAppColors.textDisabledColor,
+          ),
         ),
+
+        //
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -384,7 +387,8 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
                   ),
                 ),
               ),
-            //? Randevu
+
+            // Randevu
             if (model is CouncilCardAppoitmentModel)
               Flexible(
                 child: FittedBox(
@@ -396,6 +400,7 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
                   ),
                 ),
               ),
+
             SizedBox(
               height: 20,
               child: IconButton(
@@ -474,14 +479,19 @@ class _BuildCouncilCardTile extends StatelessWidget {
       children: [
         Text(
           title,
-          style: context.xHeadline4
-              .copyWith(color: getIt<IAppConfig>().theme.textColorPassive),
+          style: context.xHeadline4.copyWith(
+            color: context.xAppColors.textDisabledColor,
+          ),
         ),
+
+        //
         Text(
           data ?? '',
           textAlign: TextAlign.justify,
           style: context.xHeadline3,
         ),
+
+        //
         R.widgets.hSizer4,
       ],
     );

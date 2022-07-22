@@ -89,8 +89,10 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
           measurementList(context, bgMeasurementViewModel),
       callback: (BgMeasurementGlucoseViewModel data) {
         if (Provider.of<BgProgressVm>(context, listen: false).isChartShow) {
-          Provider.of<BgProgressVm>(context, listen: false)
-              .fetchScrolledData(data.date);
+          Provider.of<BgProgressVm>(context, listen: false).fetchScrolledData(
+            context,
+            data.date,
+          );
         }
       },
     );
@@ -137,6 +139,7 @@ Widget measurementList(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            //
             Expanded(
               child: Row(
                 children: [
@@ -145,7 +148,9 @@ Widget measurementList(
                     width: (context.height * .1) * context.textScale,
                     height: (context.height * .1) * context.textScale,
                     decoration: measurementListBoxDecoration(
-                        bgMeasurementViewModel), //             <--- BoxDecoration here
+                      context,
+                      bgMeasurementViewModel,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -263,17 +268,18 @@ Widget measurementList(
 }
 
 BoxDecoration measurementListBoxDecoration(
-    BgMeasurementGlucoseViewModel bgMeasurementViewModel) {
+  BuildContext context,
+  BgMeasurementGlucoseViewModel bgMeasurementViewModel,
+) {
   return BoxDecoration(
     shape: bgMeasurementViewModel.tag == 1 || bgMeasurementViewModel.tag == 2
         ? BoxShape.circle
         : BoxShape.rectangle,
     color: bgMeasurementViewModel.tag == 1
         ? Colors.transparent
-        : bgMeasurementViewModel.resultColor,
+        : bgMeasurementViewModel.resultColor(context),
     border: Border.all(
-      color: bgMeasurementViewModel
-          .resultColor, //                   <--- border color
+      color: bgMeasurementViewModel.resultColor(context),
       width: 5.0,
     ),
   );

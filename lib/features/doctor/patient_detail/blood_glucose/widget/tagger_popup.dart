@@ -48,9 +48,9 @@ class _TaggerPopUp extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        color: Utils.instance.getGlucoseMeasurementColor(level),
+        color: Utils.instance.getGlucoseMeasurementColor(context, level),
         border: Border.all(
-          color: Utils.instance.getGlucoseMeasurementColor(level),
+          color: Utils.instance.getGlucoseMeasurementColor(context, level),
           width: 5.0,
         ),
       ),
@@ -68,10 +68,10 @@ class _TaggerPopUp extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: data.tag == 2
-            ? Utils.instance.getGlucoseMeasurementColor(level)
+            ? Utils.instance.getGlucoseMeasurementColor(context, level)
             : Colors.white,
         border: Border.all(
-          color: Utils.instance.getGlucoseMeasurementColor(level),
+          color: Utils.instance.getGlucoseMeasurementColor(context, level),
           width: 10.0,
         ),
       ),

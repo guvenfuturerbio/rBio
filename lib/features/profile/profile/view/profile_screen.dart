@@ -139,7 +139,9 @@ class ProfileView extends StatelessWidget {
                                 return GuvenAlert(
                                   backgroundColor: Colors.white,
                                   title: GuvenAlert.buildTitle(
-                                      LocaleProvider.of(context).warning),
+                                    context,
+                                    LocaleProvider.of(context).warning,
+                                  ),
                                   actions: [
                                     GuvenAlert.buildMaterialAction(
                                       context,
@@ -162,6 +164,7 @@ class ProfileView extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         GuvenAlert.buildDescription(
+                                          context,
                                           LocaleProvider.of(context)
                                               .relative_change_message,
                                         ),

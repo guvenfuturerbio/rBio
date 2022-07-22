@@ -45,14 +45,17 @@ class BgChartFilterPopUp extends StatelessWidget {
             R.widgets.hSizer8,
 
             //
-            ...vm.colorInfo.keys
+            ...vm
+                .colorInfo(context)
+                .keys
                 .map(
                   (color) => _colorFilterItem(
                     context: context,
-                    text: vm.colorInfo[color]!.toShortString(),
-                    status: vm.isFilterSelected(vm.colorInfo[color]!),
+                    text: vm.colorInfo(context)[color]!.toShortString(),
+                    status: vm.isFilterSelected(vm.colorInfo(context)[color]!),
                     color: color,
-                    statCallback: (_) => vm.changeFilter(vm.colorInfo[color]!),
+                    statCallback: (_) =>
+                        vm.changeFilter(vm.colorInfo(context)[color]!),
                     isHungry: false,
                   ),
                 )
@@ -65,7 +68,7 @@ class BgChartFilterPopUp extends StatelessWidget {
                     context: context,
                     text: state.toShortString(),
                     status: vm.isFilterSelected(state),
-                    color: getIt<IAppConfig>().theme.stateColor,
+                    color: context.xAppColors.boulder,
                     style: state == GlucoseMarginsFilter.full ||
                             state == GlucoseMarginsFilter.hungry
                         ? BoxShape.circle
@@ -89,7 +92,7 @@ class BgChartFilterPopUp extends StatelessWidget {
                   },
                   padding: EdgeInsets.zero,
                   backColor: context.xCardColor,
-                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                  textColor: context.xTextInverseColor,
                 ),
 
                 //
@@ -100,7 +103,7 @@ class BgChartFilterPopUp extends StatelessWidget {
                   title: LocaleProvider.current.save,
                   onTap: () {
                     Provider.of<BgProgressVm>(context, listen: false)
-                        .updateFilterState();
+                        .updateFilterState(context);
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
@@ -112,7 +115,7 @@ class BgChartFilterPopUp extends StatelessWidget {
             RbioTextButton(
               onPressed: () {
                 Provider.of<BgProgressVm>(context, listen: false)
-                    .resetFilterValues();
+                    .resetFilterValues(context);
                 vm.resetFilterValues();
               },
               child: Text(

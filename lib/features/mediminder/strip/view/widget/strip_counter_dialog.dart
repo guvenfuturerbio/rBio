@@ -73,7 +73,7 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
                   //
                   RbioTextFormField(
                     focusNode: _stripFocusNode,
-                    backColor: getIt<IAppConfig>().theme.grayColor,
+                    backColor: context.xAppColors.gallery,
                     controller: _stripController,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
@@ -146,8 +146,8 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
     required bool infinityWidth,
   }) {
     return RbioElevatedButton(
-      backColor: getIt<IAppConfig>().theme.grayColor,
-      textColor: getIt<IAppConfig>().theme.textColorSecondary,
+      backColor: context.xAppColors.gallery,
+      textColor: context.xTextInverseColor,
       title: LocaleProvider.current.btn_cancel,
       onTap: () {
         Atom.dismiss();

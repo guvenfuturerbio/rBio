@@ -262,7 +262,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                               TextButton(
                                 style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.all(
-                                    getIt<IAppConfig>().theme.textColorPassive,
+                                    context.xAppColors.textDisabledColor,
                                   ),
                                 ),
                                 onPressed: () {
@@ -423,7 +423,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                           Atom.historyBack();
                         },
                         backColor: context.xCardColor,
-                        textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                        textColor: context.xTextInverseColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -483,7 +483,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
         absorbing: true,
         child: RbioTextFormField(
           controller: controller,
-          textColor: getIt<IAppConfig>().theme.textColorPassive,
+          textColor: context.xAppColors.textDisabledColor,
         ),
       );
 

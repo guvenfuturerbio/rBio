@@ -461,9 +461,11 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                   Text(
                     LocaleProvider.of(context).lbl_dont_have_account,
                     style: context.xHeadline3.copyWith(
-                      color: getIt<IAppConfig>().theme.textColorSecondary,
+                      color: context.xTextInverseColor,
                     ),
                   ),
+
+                  //
                   InkWell(
                     child: Text(
                       LocaleProvider.of(context).btn_sign_in,
@@ -510,31 +512,33 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
     );
   }
 
-  Row buildSeperator() {
+  Widget buildSeperator() {
     return Row(
       children: [
+        //
         Expanded(
           child: Container(
             height: 1,
-            color:
-                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+            color: context.xTextInverseColor.withOpacity(0.4),
           ),
         ),
+
+        //
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
           child: Text(
             "or",
             style: context.xHeadline3.copyWith(
-              color:
-                  getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+              color: context.xTextInverseColor.withOpacity(0.4),
             ),
           ),
         ),
+
+        //
         Expanded(
           child: Container(
             height: 1,
-            color:
-                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+            color: context.xTextInverseColor.withOpacity(0.4),
           ),
         ),
       ],

@@ -312,7 +312,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         child: Text(
           title,
           style: context.xHeadline2.copyWith(
-            color: getIt<IAppConfig>().theme.textColorPassive,
+            color: context.xAppColors.textDisabledColor,
           ),
         ),
       ),

@@ -201,8 +201,7 @@ class _RateDialogState extends State<RateDialog> {
                                   maxLength: 256,
                                   hintText: LocaleProvider.of(context)
                                       .comments_and_suggestion,
-                                  backColor:
-                                      getIt<IAppConfig>().theme.grayColor,
+                                  backColor: context.xAppColors.gallery,
                                 ),
 
                                 //

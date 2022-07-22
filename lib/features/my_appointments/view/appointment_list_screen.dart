@@ -53,9 +53,11 @@ class _AppointmentListViewState extends State<AppointmentListView> {
               return GuvenAlert(
                 backgroundColor: Colors.white,
                 title: GuvenAlert.buildTitle(
+                  context,
                   LocaleProvider.current.fee_information,
                 ),
                 content: GuvenAlert.buildDescription(
+                  context,
                   LocaleProvider.current.payment_question_tag,
                 ),
                 actions: [
@@ -307,7 +309,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
                 child: Text(
                   LocaleProvider.current.btn_cancel,
                   style: context.xHeadline3.copyWith(
-                    color: getIt<IAppConfig>().theme.textColor,
+                    color: context.xTextColor,
                   ),
                 ),
               ),
@@ -390,7 +392,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
 
                 //
                 _buildStartVideoButton(
-                  backColor: getIt<IAppConfig>().theme.grey,
+                  backColor: context.xAppColors.grey,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -423,7 +425,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
               //
               Center(
                 child: _buildStartVideoButton(
-                  backColor: getIt<IAppConfig>().theme.gray,
+                  backColor: context.xAppColors.dustyGray,
                   onPressed: () {
                     showDialog(
                       context: context,

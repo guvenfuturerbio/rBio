@@ -363,7 +363,7 @@ class __MedicationReminderAddEditViewState
             Expanded(
               child: RbioElevatedButton(
                 backColor: context.xCardColor,
-                textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                textColor: context.xTextInverseColor,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {
                   Atom.historyBack();
@@ -448,8 +448,8 @@ class __MedicationReminderAddEditViewState
       textAlign: TextAlign.start,
       style: context.xHeadline4.copyWith(
         color: type == result.drugTracking
-            ? getIt<IAppConfig>().theme.textColor
-            : getIt<IAppConfig>().theme.textColorPassive,
+            ? context.xTextColor
+            : context.xAppColors.textDisabledColor,
       ),
     );
 

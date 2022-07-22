@@ -859,8 +859,12 @@ class DeviceRegisterDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return GuvenAlert(
       backgroundColor: context.xCardColor,
-      title: GuvenAlert.buildTitle(LocaleProvider.current.info),
+      title: GuvenAlert.buildTitle(
+        context,
+        LocaleProvider.current.info,
+      ),
       content: GuvenAlert.buildDescription(
+        context,
         LocaleProvider.current.device_register,
       ),
       actions: [

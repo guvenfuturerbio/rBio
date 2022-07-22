@@ -323,7 +323,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                     ? ""
                     : DateTime.parse(result.scheduledDate!).xFormatTime10(),
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColorSecondary,
+                  color: context.xTextInverseColor,
                 ),
               ),
             ),
@@ -414,7 +414,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                     ? ''
                     : result.scheduledHour!.xTimeFormat,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColorSecondary,
+                  color: context.xTextInverseColor,
                 ),
               ),
             ),
@@ -451,7 +451,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
             Expanded(
               child: RbioElevatedButton(
                 backColor: context.xCardColor,
-                textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                textColor: context.xTextInverseColor,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {
                   Atom.historyBack();

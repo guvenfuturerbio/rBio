@@ -151,11 +151,9 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                         child: Text(
                           LocaleProvider.of(context).your_complaints,
                           style: context.xHeadline3.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: getIt<IAppConfig>()
-                                  .theme
-                                  .textColorSecondary
-                                  .withOpacity(0.5)),
+                            fontWeight: FontWeight.bold,
+                            color: context.xTextInverseColor.withOpacity(0.5),
+                          ),
                           textAlign: TextAlign.start,
                         ),
                       ),
@@ -305,9 +303,12 @@ class _BodySymptomsSelectionPageState extends State<BodySymptomsSelectionPage> {
                 child: Text(
                   LocaleProvider.current.proposed_symptom,
                   style: context.xHeadline1.copyWith(
-                      color: getIt<IAppConfig>().theme.textColorSecondary),
+                    color: context.xTextInverseColor,
+                  ),
                 ),
               ),
+
+              //
               SizedBox(
                 height: value.proposedSymptomList.length * 35.0 >
                         MediaQuery.of(context).size.height * 0.25

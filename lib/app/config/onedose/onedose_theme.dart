@@ -74,10 +74,22 @@ class OneDoseTheme extends IAppTheme {
   Color primaryColor = R.colors.greenHaze;
 
   @override
+  Color scaffoldBackgroundColor = R.colors.gallery;
+
+  @override
   Color secondaryColor = R.colors.skeptic;
 
   @override
-  Color textContrastColor = R.colors.black;
+  Color textColor = R.colors.white;
+
+  @override
+  Color inverseTextColor = R.colors.black;
+
+  @override
+  Color onPrimaryTextColor = R.colors.black;
+
+  @override
+  Color cardBackgroundColor = R.colors.white;
 
   @override
   Color appbarColor = R.colors.greenHaze;
@@ -169,25 +181,25 @@ class OneDoseDarkTheme extends IAppTheme {
   Color primaryColor = R.colors.greenHaze;
 
   @override
-  Color secondaryColor = R.colors.skeptic;
-
-  @override
-  Color textContrastColor = R.colors.white;
-
-  @override
   Color scaffoldBackgroundColor = R.colors.codGray;
 
   @override
-  Color appbarColor = R.colors.emperor;
-
-  @override
-  Color cardBackgroundColor = R.colors.mineShaft;
+  Color secondaryColor = R.colors.skeptic;
 
   @override
   Color textColor = R.colors.black;
 
   @override
-  Color textColorSecondary = R.colors.white;
+  Color inverseTextColor = R.colors.white;
+
+  @override
+  Color onPrimaryTextColor = R.colors.white;
+
+  @override
+  Color cardBackgroundColor = R.colors.mineShaft;
+
+  @override
+  Color appbarColor = R.colors.emperor;
 
   @override
   Color checkboxBorderColor = R.colors.greenHaze;

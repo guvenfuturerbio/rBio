@@ -182,13 +182,14 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        color: Utils.instance
-            .getGlucoseMeasurementColor(double.parse(value.data.level).toInt()),
+        color: Utils.instance.getGlucoseMeasurementColor(
+          context,
+          double.parse(value.data.level).toInt(),
+        ),
         border: Border.all(
           color: Utils.instance.getGlucoseMeasurementColor(
-            double.parse(
-              value.data.level,
-            ).toInt(),
+            context,
+            double.parse(value.data.level).toInt(),
           ),
           width: 5.0,
         ),
@@ -207,10 +208,13 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
         shape: BoxShape.circle,
         color: value.data.tag == 2
             ? Utils.instance.getGlucoseMeasurementColor(
-                double.parse(value.data.level).toInt())
+                context,
+                double.parse(value.data.level).toInt(),
+              )
             : Colors.white,
         border: Border.all(
           color: Utils.instance.getGlucoseMeasurementColor(
+            context,
             double.parse(value.data.level).toInt(),
           ),
           width: 10.0,
@@ -581,7 +585,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
       onTap: onTap,
       backColor: isSave ? null : context.xCardColor,
-      textColor: isSave ? null : getIt<IAppConfig>().theme.textColorSecondary,
+      textColor: isSave ? null : context.xTextInverseColor,
     );
   }
 }

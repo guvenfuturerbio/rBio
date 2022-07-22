@@ -112,7 +112,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: context.xHeadline4.copyWith(
-                                  color: getIt<IAppConfig>().theme.textColor),
+                                color: context.xTextColor,
+                              ),
                             ),
                           ),
                         ],
@@ -235,7 +236,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: Text(
                       model.title,
                       style: context.xHeadline4.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorSecondary,
+                        color: context.xTextInverseColor,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

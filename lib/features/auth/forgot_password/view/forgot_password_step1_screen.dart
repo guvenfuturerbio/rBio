@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/features/auth/forgot_password/cubit/forgot_password_step1_cubit/forgot_password_step1_cubit.dart';
 
 import '../../../../core/core.dart';
 import '../../auth.dart';
+import '../cubit/forgot_password_step1_cubit/forgot_password_step1_cubit.dart';
 
 class ForgotPasswordStep1Screen extends StatelessWidget {
   const ForgotPasswordStep1Screen({Key? key}) : super(key: key);
@@ -281,7 +281,7 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
                         Text(
                           LocaleProvider.of(context).lbl_dont_have_account,
                           style: context.xHeadline3.copyWith(
-                            color: getIt<IAppConfig>().theme.grey,
+                            color: context.xAppColors.grey,
                           ),
                         ),
 

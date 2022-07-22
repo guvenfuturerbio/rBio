@@ -320,14 +320,14 @@ class DoctorPatientListScreen extends StatelessWidget {
                         _buildBigSmallCardText(
                           context,
                           LocaleProvider.current.patient_name_2,
-                          getIt<IAppConfig>().theme.textColorPassive,
+                          context.xAppColors.textDisabledColor,
                         ),
 
                         //
                         _buildBigSmallCardText(
                           context,
                           name,
-                          getIt<IAppConfig>().theme.textColorSecondary,
+                          context.xTextInverseColor,
                         ),
                       ],
                     ),
@@ -421,7 +421,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                           child: _buildBigSmallCardText(
                             context,
                             LocaleProvider.current.patient_name_2,
-                            getIt<IAppConfig>().theme.textColorPassive,
+                            context.xAppColors.textDisabledColor,
                           ),
                         ),
 
@@ -442,7 +442,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                           child: _buildBigSmallCardText(
                             context,
                             name,
-                            getIt<IAppConfig>().theme.textColorSecondary,
+                            context.xTextInverseColor,
                           ),
                         ),
 

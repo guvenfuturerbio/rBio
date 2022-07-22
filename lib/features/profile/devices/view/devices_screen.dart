@@ -121,9 +121,11 @@ class DevicesScreen extends StatelessWidget {
                               vertical: 25,
                             ),
                             title: GuvenAlert.buildTitle(
+                              context,
                               LocaleProvider.current.warning,
                             ),
                             content: GuvenAlert.buildDescription(
+                              context,
                               LocaleProvider
                                   .current.ble_delete_paired_device_approv,
                             ),
@@ -147,7 +149,7 @@ class DevicesScreen extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.cancel,
-                        color: getIt<IAppConfig>().theme.darkRed,
+                        color: context.xAppColors.punch,
                         size: R.sizes.iconSize * 1.25,
                       ),
                     ),
@@ -188,7 +190,7 @@ class DevicesScreen extends StatelessWidget {
   ) {
     switch (deviceStatus) {
       case DeviceStatus.connecting:
-        return getIt<IAppConfig>().theme.high;
+        return context.xAppColors.energyYellow;
 
       case DeviceStatus.connected:
         return context.xPrimaryColor;
@@ -230,9 +232,11 @@ class DevicesScreen extends StatelessWidget {
                     vertical: 25,
                   ),
                   title: GuvenAlert.buildTitle(
+                    context,
                     LocaleProvider.current.warning,
                   ),
                   content: GuvenAlert.buildDescription(
+                    context,
                     LocaleProvider.current.ble_delete_paired_device_approv,
                   ),
                   actions: [
@@ -254,7 +258,7 @@ class DevicesScreen extends StatelessWidget {
             },
             icon: Icon(
               Icons.cancel,
-              color: getIt<IAppConfig>().theme.darkRed,
+              color: context.xAppColors.punch,
               size: R.sizes.iconSize * 1.25,
             ),
           ),

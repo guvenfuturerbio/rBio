@@ -102,7 +102,7 @@ class _DoctorTreatmentProcessScreenState
                       item.description ?? "",
                       maxLines: 3,
                       style: context.xHeadline5.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorPassive,
+                        color: context.xAppColors.textDisabledColor,
                       ),
                     ),
                   ],

@@ -52,6 +52,7 @@ class RbioCountryCodePicker extends StatelessWidget {
           size: R.sizes.iconSize,
         ),
         searchDecoration: Utils.instance.inputDecorationForLogin(
+          context,
           hintText: '',
           contentPadding: const EdgeInsets.all(8),
           inputBorder: RbioTextFormField.activeBorder(context),

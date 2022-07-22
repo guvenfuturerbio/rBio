@@ -16,9 +16,14 @@ extension BuildContextThemeExtensions on BuildContext {
 
   AppBarTheme get xAppBarTheme => Theme.of(this).appBarTheme;
   Color get xPrimaryColor => Theme.of(this).primaryColor;
+  Color get xTextColor => colorScheme.primary;
+  Color get xSecondaryColor => colorScheme.secondary;
+  Color get xTextInverseColor => colorScheme.inversePrimary;
+  Color get xTextOnPrimaryColor => colorScheme.onPrimary;
   Color? get xIconColor => iconTheme.color;
   Color? get xIconSecondaryColor => getIt<IAppConfig>().theme.iconSecondaryColor;
   Color get xCardColor => Theme.of(this).cardTheme.color ?? Colors.transparent;
+  MyCustomTheme get xAppColors => MyCustomTheme.of(this);
 
   // #region Size Extension
   double get height => MediaQuery.of(this).size.height;
@@ -56,10 +61,9 @@ extension BuildContextThemeExtensions on BuildContext {
   TextStyle get xOverline =>
       Theme.of(this).textTheme.overline ?? const TextStyle();
   TextStyle get xBodyText1Error =>
-      Theme.of(this)
-          .textTheme
-          .bodyText1
-          ?.copyWith(color: getIt<IAppConfig>().theme.darkRed) ??
+      Theme.of(this).textTheme.bodyText1?.copyWith(
+            color: xAppColors.punch,
+          ) ??
       const TextStyle();
   // #endregion
 
