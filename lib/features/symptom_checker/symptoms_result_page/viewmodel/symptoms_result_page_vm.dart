@@ -100,10 +100,14 @@ class SymptomsResultPageVm extends ChangeNotifier {
   navigateToDoctorsPage(
       {List<GetDepartmentIdResponse>? departments, int? id}) async {
     try {
-      late int resultId;
+      int? resultId;
       departments?.forEach((element) {
-        if (int.parse(element.apimedicId!) == id) {
-          resultId = int.parse(element.id!);
+        if (element.apimedicId != null) {
+          if (int.parse(element.apimedicId!) == id) {
+            if (element.id != null) {
+              resultId = int.parse(element.id!);
+            }
+          }
         }
       });
       return resultId;
