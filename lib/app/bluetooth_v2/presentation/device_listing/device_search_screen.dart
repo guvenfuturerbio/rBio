@@ -123,7 +123,10 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
       actions: [
         IconButton(
           onPressed: () => _restartScan(context),
-          icon: const Icon(Icons.refresh),
+          icon: Icon(
+            Icons.refresh,
+            color: context.xAppColors.white,
+          ),
         ),
       ],
     );
@@ -197,10 +200,6 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
             builder: (context, deviceStatusState) {
               return Card(
                 key: ValueKey(index),
-                elevation: R.sizes.defaultElevation,
-                shape: RoundedRectangleBorder(
-                  borderRadius: R.sizes.borderRadiusCircular,
-                ),
                 color: _getBackColor(deviceStatusState),
                 child: ListTile(
                   onTap: () => _deviceOnTap(
@@ -291,7 +290,7 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
   Color _getBackColor(DeviceStatus? deviceStatus) {
     switch (deviceStatus) {
       case DeviceStatus.connecting:
-        return getIt<IAppConfig>().theme.high;
+        return context.xAppColors.energyYellow;
 
       case DeviceStatus.connected:
         return context.xPrimaryColor;
@@ -299,7 +298,7 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
       case DeviceStatus.disconnected:
       case DeviceStatus.disconnecting:
       default:
-        return getIt<IAppConfig>().theme.cardBackgroundColor;
+        return context.xCardColor;
     }
   }
 }

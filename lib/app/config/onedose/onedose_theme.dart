@@ -74,25 +74,40 @@ class OneDoseTheme extends IAppTheme {
   Color primaryColor = R.colors.greenHaze;
 
   @override
+  Color scaffoldBackgroundColor = R.colors.gallery;
+
+  @override
   Color secondaryColor = R.colors.skeptic;
 
   @override
-  Color textContrastColor = R.colors.black;
+  Color textColor = R.colors.white;
+
+  @override
+  Color inverseTextColor = R.colors.black;
+
+  @override
+  Color onPrimaryTextColor = R.colors.black;
+
+  @override
+  Color cardBackgroundColor = R.colors.white;
 
   @override
   Color appbarColor = R.colors.greenHaze;
 
   @override
-  Color checkboxBorderColor = R.colors.greenHaze;
+  Color appbarTextColor = R.colors.white;
+
+  @override
+  Color appbarIconColor = R.colors.white;
 
   @override
   Color bottomMenuColor = R.colors.white;
 
   @override
-  Color secondaryBackColor = R.colors.skeptic;
+  Color secondaryContainerColor = R.colors.skeptic;
 
   @override
-  Color mainOverColor = R.colors.white;
+  Color iconColor = R.colors.black;
 }
 
 class OneDoseDarkTheme extends IAppTheme {
@@ -120,7 +135,7 @@ class OneDoseDarkTheme extends IAppTheme {
         fontFamily: fontFamily,
       ),
       headline4: TextStyle(
-        color: Colors.black,
+        color: Colors.white,
         fontSize: convertFontSize(45),
         fontWeight: FontWeight.normal,
         fontFamily: fontFamily,
@@ -169,38 +184,38 @@ class OneDoseDarkTheme extends IAppTheme {
   Color primaryColor = R.colors.greenHaze;
 
   @override
-  Color secondaryColor = R.colors.skeptic;
-
-  @override
-  Color textContrastColor = R.colors.white;
-
-  @override
   Color scaffoldBackgroundColor = R.colors.codGray;
 
   @override
-  Color appbarColor = R.colors.emperor;
-
-  @override
-  Color cardBackgroundColor = R.colors.mineShaft;
+  Color secondaryColor = R.colors.skeptic;
 
   @override
   Color textColor = R.colors.black;
 
   @override
-  Color textColorSecondary = R.colors.white;
+  Color inverseTextColor = R.colors.white;
 
   @override
-  Color checkboxBorderColor = R.colors.greenHaze;
+  Color onPrimaryTextColor = R.colors.white;
 
   @override
-  Color iconColor = R.colors.white;
+  Color cardBackgroundColor = R.colors.mineShaft;
+
+  @override
+  Color appbarColor = R.colors.emperor;
+
+  @override
+  Color appbarTextColor = R.colors.white;
+
+  @override
+  Color appbarIconColor = R.colors.white;
 
   @override
   Color bottomMenuColor = R.colors.emperor;
 
   @override
-  Color secondaryBackColor = R.colors.emperor;
+  Color secondaryContainerColor = R.colors.emperor;
 
   @override
-  Color mainOverColor = R.colors.white;
+  Color iconColor = R.colors.white;
 }

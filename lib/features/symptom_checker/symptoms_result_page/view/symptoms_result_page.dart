@@ -13,6 +13,7 @@ class SymptomsResultPage extends StatefulWidget {
   late bool? isFromVoice;
   late String? bodyPart;
   late int? bodyPartLength;
+
   SymptomsResultPage({
     Key? key,
     this.symptoms,
@@ -83,10 +84,6 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      elevation: R.sizes.defaultElevation,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: R.sizes.borderRadiusCircular,
-                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -181,9 +178,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: context.xHeadline4.copyWith(
-                                            color: getIt<IAppConfig>()
-                                                .theme
-                                                .textColor),
+                                          color: context.xTextColor,
+                                        ),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -202,10 +198,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                     child: Text(
                       LocaleProvider.of(context).no_symptom_result,
                       style: context.xHeadline3.copyWith(
-                          color: getIt<IAppConfig>()
-                              .theme
-                              .textColorSecondary
-                              .withOpacity(0.5)),
+                        color: context.xTextInverseColor.withOpacity(0.5),
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   )
@@ -216,10 +210,6 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                 itemCount: value.specialisations.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    elevation: R.sizes.defaultElevation,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -356,8 +346,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                       textAlign: TextAlign.center,
                                       overflow: TextOverflow.ellipsis,
                                       style: context.xHeadline4.copyWith(
-                                        color:
-                                            getIt<IAppConfig>().theme.textColor,
+                                        color: context.xTextColor,
                                       ),
                                     ),
                                   ),
@@ -381,12 +370,11 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
   }
 }
 
-FloatingActionButton _buildFAB(BuildContext context) {
-  return FloatingActionButton(
-    backgroundColor: context.xPrimaryColor,
+Widget _buildFAB(BuildContext context) {
+  return RbioIconsFAB(
+    icon: Icons.home,
     onPressed: () {
       Atom.to(PagePaths.main);
     },
-    child: const Icon(Icons.home),
   );
 }

@@ -246,6 +246,7 @@ class UserFacadeImpl extends UserFacade {
                   //
                   Expanded(
                     child: RbioSmallDialogButton.red(
+                      context,
                       title: LocaleProvider.current.btn_cancel,
                       onPressed: () {
                         Atom.dismiss(false);

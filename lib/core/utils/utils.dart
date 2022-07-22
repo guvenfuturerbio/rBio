@@ -89,7 +89,7 @@ class Utils {
               child: Text(
                 text,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColor,
+                  color: context.xTextColor,
                 ),
               ),
             ),
@@ -111,7 +111,7 @@ class Utils {
       trailing: SvgPicture.asset(
         R.image.done,
         height: R.sizes.iconSize2,
-        color: getIt<IAppConfig>().theme.iconSecondaryColor,
+        color: context.xAppColors.white,
       ),
     );
   }
@@ -122,11 +122,11 @@ class Utils {
     showSnackbar(
       context,
       text,
-      backColor: getIt<IAppConfig>().theme.darkRed,
+      backColor: context.xAppColors.punch,
       trailing: SvgPicture.asset(
         R.image.error,
         height: R.sizes.iconSize2,
-        color: getIt<IAppConfig>().theme.iconSecondaryColor,
+        color: context.xAppColors.white,
       ),
     );
   }
@@ -305,7 +305,7 @@ class Utils {
             ? SvgPicture.asset(
                 image,
                 fit: BoxFit.none,
-                color: getIt<IAppConfig>().theme.iconColor,
+                color: context.xIconColor,
               )
             : const Icon(Icons.close),
         focusedBorder: _borderTextField(),
@@ -325,16 +325,19 @@ class Utils {
         ),
         enabledBorder: _borderTextField(),
         hintText: hintText,
-        hintStyle: hintStyle(),
+        hintStyle: hintStyle(context),
       );
 
-  TextStyle inputTextStyle([Color? textColor]) => TextStyle(
+  TextStyle inputTextStyle(BuildContext context, [Color? textColor]) =>
+      TextStyle(
         fontSize: 16,
-        color: textColor ?? getIt<IAppConfig>().theme.textColorSecondary,
+        color: textColor ?? context.xTextInverseColor,
       );
 
-  TextStyle hintStyle() =>
-      TextStyle(fontSize: 16, color: getIt<IAppConfig>().theme.gray);
+  TextStyle hintStyle(BuildContext context) => TextStyle(
+        fontSize: 16,
+        color: context.xAppColors.dustyGray,
+      );
 
   GradientButton button({
     required BuildContext context,
@@ -353,7 +356,7 @@ class Utils {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: getIt<IAppConfig>().theme.white,
+            color: context.xAppColors.white,
           ),
         ),
         textStyle: TextStyle(
@@ -366,7 +369,8 @@ class Utils {
         shadowColor: Colors.black,
       );
 
-  InputDecoration inputDecorationForLogin({
+  InputDecoration inputDecorationForLogin(
+    BuildContext context, {
     String? hintText,
     String? labelText,
     EdgeInsetsGeometry? contentPadding,
@@ -383,7 +387,7 @@ class Utils {
         labelText: labelText,
         prefixIcon: prefixIcon,
         hintStyle: Atom.context.xHeadline4.copyWith(
-          color: getIt<IAppConfig>().theme.textColorPassive,
+          color: context.xAppColors.textDisabledColor,
         ),
       );
 
@@ -404,7 +408,8 @@ class Utils {
     // }
   }
 
-  Color fetchMeasurementColor({
+  Color fetchMeasurementColor(
+    BuildContext context, {
     required int measurement,
     required int criticMin,
     required int criticMax,
@@ -413,15 +418,15 @@ class Utils {
   }) {
     Color color;
     if (measurement <= criticMin) {
-      color = getIt<IAppConfig>().theme.veryLow;
+      color = context.xAppColors.roman;
     } else if (measurement > criticMin && measurement < targetMin) {
-      color = getIt<IAppConfig>().theme.low;
+      color = context.xAppColors.tonysPink;
     } else if (measurement >= targetMin && measurement <= targetMax) {
-      color = getIt<IAppConfig>().theme.target;
+      color = context.xAppColors.deYork;
     } else if (measurement > targetMax && measurement < criticMax) {
-      color = getIt<IAppConfig>().theme.high;
+      color = context.xAppColors.energyYellow;
     } else if (measurement >= criticMax) {
-      color = getIt<IAppConfig>().theme.veryHigh;
+      color = context.xAppColors.casablanca;
     } else {
       color = Colors.white;
     }
@@ -451,22 +456,25 @@ class Utils {
   }
 
   /// MG14
-  Color getGlucoseMeasurementColor(int result) {
+  Color getGlucoseMeasurementColor(
+    BuildContext context,
+    int result,
+  ) {
     Person activeProfile = getIt<ProfileStorageImpl>().getFirst();
 
     if (result < activeProfile.hypo!) {
-      return getIt<IAppConfig>().theme.veryLow;
+      return context.xAppColors.roman;
     } else if (result >= activeProfile.hypo! &&
         result < activeProfile.rangeMin!) {
-      return getIt<IAppConfig>().theme.low;
+      return context.xAppColors.tonysPink;
     } else if (result >= activeProfile.rangeMin! &&
         result < activeProfile.rangeMax!) {
-      return getIt<IAppConfig>().theme.target;
+      return context.xAppColors.deYork;
     } else if (result >= activeProfile.rangeMax! &&
         result < activeProfile.hyper!) {
-      return getIt<IAppConfig>().theme.high;
+      return context.xAppColors.energyYellow;
     } else {
-      return getIt<IAppConfig>().theme.veryHigh;
+      return context.xAppColors.casablanca;
     }
   }
 

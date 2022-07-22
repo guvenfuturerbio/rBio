@@ -67,7 +67,6 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
         );
       },
       child: Card(
-        elevation: R.sizes.defaultElevation,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 8,
@@ -115,7 +114,7 @@ class _TreatmentProcessScreenState extends State<TreatmentProcessScreen> {
                     Text(
                       item.description ?? '',
                       style: context.xHeadline5.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorPassive,
+                        color: context.xAppColors.textDisabledColor,
                       ),
                     ),
                   ],

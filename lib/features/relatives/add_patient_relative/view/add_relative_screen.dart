@@ -358,7 +358,8 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               },
             ),
 
-            const SizedBox(height: 30),
+            //
+            R.widgets.hSizer32,
 
             //
             Center(
@@ -369,7 +370,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
             ),
 
             //
-            const SizedBox(height: 10),
+            R.widgets.hSizer12,
 
             //
             RbioElevatedButton(

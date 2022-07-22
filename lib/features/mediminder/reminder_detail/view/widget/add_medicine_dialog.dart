@@ -38,7 +38,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
         child: Container(
           width: Atom.width > 350 ? 350 : Atom.width,
           decoration: BoxDecoration(
-            color: getIt<IAppConfig>().theme.cardBackgroundColor,
+            color: context.xCardColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: SingleChildScrollView(
@@ -70,7 +70,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                   //
                   RbioTextFormField(
                     focusNode: _valueFocusNode,
-                    backColor: getIt<IAppConfig>().theme.grayColor,
+                    backColor: context.xAppColors.gallery,
                     controller: _valueEditingController,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
@@ -139,8 +139,8 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
     required bool infinityWidth,
   }) {
     return RbioElevatedButton(
-      backColor: getIt<IAppConfig>().theme.grayColor,
-      textColor: getIt<IAppConfig>().theme.textColorSecondary,
+      backColor: context.xAppColors.gallery,
+      textColor: context.xTextInverseColor,
       title: LocaleProvider.current.btn_cancel,
       onTap: () {
         Atom.dismiss();

@@ -224,8 +224,8 @@ class _ReminderDetailView extends StatelessWidget {
             title: LocaleProvider.current.edit,
             infinityWidth: true,
             fontWeight: FontWeight.bold,
-            textColor: getIt<IAppConfig>().theme.textColorSecondary,
-            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            textColor: context.xTextInverseColor,
+            backColor: context.xCardColor,
           ),
 
           //
@@ -280,7 +280,7 @@ Widget _buildTitleRow(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.xHeadline4.copyWith(
-            color: isActive ? null : getIt<IAppConfig>().theme.textColorPassive,
+            color: isActive ? null : context.xAppColors.textDisabledColor,
           ),
         ),
       ),
@@ -292,7 +292,7 @@ Widget _buildTitleRow(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.xHeadline4.copyWith(
-            color: isActive ? null : getIt<IAppConfig>().theme.textColorPassive,
+            color: isActive ? null : context.xAppColors.textDisabledColor,
           ),
         ),
       ),

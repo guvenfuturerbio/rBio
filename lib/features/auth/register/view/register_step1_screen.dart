@@ -286,86 +286,85 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     ),
                   ),
                   InkWell(
-                      onTap: () {
-                        setState(() {
-                          isBirthDayNull = false;
-                          vm.selectDate(context);
-                        });
-                      },
-                      child: isBirthDayNull
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    padding: const EdgeInsets.all(13),
-                                    decoration: BoxDecoration(
-                                      color: getIt<IAppConfig>().theme.white,
-                                      border: Border.all(
-                                        color: getIt<IAppConfig>().theme.red,
-                                      ),
-                                      borderRadius:
-                                          R.sizes.borderRadiusCircular,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        if (vm.selectedDate == null)
-                                          Text('DD/MM/YYYY',
-                                              style: context.xHeadline3
-                                                  .copyWith(
-                                                      color: getIt<IAppConfig>()
-                                                          .theme
-                                                          .textColorSecondary
-                                                          .withOpacity(0.5))),
-                                        const Icon(Icons.calendar_today)
-                                      ],
-                                    )),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 22.0),
-                                  child: RbioErrorText(
-                                    title: LocaleProvider.current.validation,
+                    onTap: () {
+                      setState(() {
+                        isBirthDayNull = false;
+                        vm.selectDate(context);
+                      });
+                    },
+                    child: isBirthDayNull
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(13),
+                                decoration: BoxDecoration(
+                                  color: getIt<IAppConfig>().theme.white,
+                                  border: Border.all(
+                                    color: context.xAppColors.fuzzyWuzzyBrown,
                                   ),
-                                )
-                              ],
-                            )
-                          : Container(
-                              padding: const EdgeInsets.all(13),
-                              decoration: BoxDecoration(
-                                color: getIt<IAppConfig>().theme.white,
-                                border: Border.all(
-                                  color: getIt<IAppConfig>().theme.darkWhite,
+                                  borderRadius: R.sizes.borderRadiusCircular,
                                 ),
-                                borderRadius: R.sizes.borderRadiusCircular,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  vm.selectedDate != null
-                                      ? Text(
-                                          DateFormat('dd MMMM yyyy')
-                                              .format(vm.selectedDate!),
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        )
-                                      : Text('DD/MM/YYYY',
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    if (vm.selectedDate == null)
+                                      Text('DD/MM/YYYY',
                                           style: context.xHeadline3.copyWith(
-                                              color: getIt<IAppConfig>()
-                                                  .theme
-                                                  .textColorSecondary
-                                                  .withOpacity(0.5))),
-                                  const Icon(Icons.calendar_today),
-                                ],
+                                            color: context.xTextInverseColor
+                                                .withOpacity(0.5),
+                                          )),
+                                    const Icon(Icons.calendar_today)
+                                  ],
+                                ),
                               ),
-                              margin: const EdgeInsets.only(
-                                bottom: 10,
+                              const SizedBox(
+                                height: 5,
                               ),
-                            )),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 22.0),
+                                child: RbioErrorText(
+                                  title: LocaleProvider.current.validation,
+                                ),
+                              )
+                            ],
+                          )
+                        : Container(
+                            padding: const EdgeInsets.all(13),
+                            decoration: BoxDecoration(
+                              color: getIt<IAppConfig>().theme.white,
+                              border: Border.all(
+                                color: context.xAppColors.mercury,
+                              ),
+                              borderRadius: R.sizes.borderRadiusCircular,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                vm.selectedDate != null
+                                    ? Text(
+                                        DateFormat('dd MMMM yyyy')
+                                            .format(vm.selectedDate!),
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      )
+                                    : Text(
+                                        'DD/MM/YYYY',
+                                        style: context.xHeadline3.copyWith(
+                                          color: context.xTextInverseColor
+                                              .withOpacity(0.5),
+                                        ),
+                                      ),
+                                const Icon(Icons.calendar_today),
+                              ],
+                            ),
+                            margin: const EdgeInsets.only(
+                              bottom: 10,
+                            ),
+                          ),
+                  ),
                 ],
               ),
 
@@ -508,9 +507,11 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                   Text(
                     LocaleProvider.of(context).lbl_have_account,
                     style: context.xHeadline3.copyWith(
-                      color: getIt<IAppConfig>().theme.textColorSecondary,
+                      color: context.xTextInverseColor,
                     ),
                   ),
+
+                  //
                   InkWell(
                     child: Text(
                       LocaleProvider.of(context).btn_sign_in,
@@ -542,8 +543,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
         Expanded(
           child: Container(
             height: 1,
-            color:
-                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+            color: context.xTextInverseColor.withOpacity(0.4),
           ),
         ),
 
@@ -553,8 +553,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
           child: Text(
             "or",
             style: context.xHeadline3.copyWith(
-              color:
-                  getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+              color: context.xTextInverseColor.withOpacity(0.4),
             ),
           ),
         ),
@@ -563,8 +562,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
         Expanded(
           child: Container(
             height: 1,
-            color:
-                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+            color: context.xTextInverseColor.withOpacity(0.4),
           ),
         ),
       ],
@@ -605,12 +603,12 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Card(
-                  elevation: R.sizes.defaultElevation,
                   shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: getIt<IAppConfig>().theme.red,
-                      ),
-                      borderRadius: R.sizes.borderRadiusCircular),
+                    side: BorderSide(
+                      color: context.xAppColors.fuzzyWuzzyBrown,
+                    ),
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -652,9 +650,6 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
           )
         : Expanded(
             child: Card(
-              elevation: R.sizes.defaultElevation,
-              shape: RoundedRectangleBorder(
-                  borderRadius: R.sizes.borderRadiusCircular),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[

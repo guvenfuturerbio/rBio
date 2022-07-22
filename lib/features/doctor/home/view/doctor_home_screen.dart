@@ -87,13 +87,12 @@ class DoctorHomeScreen extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-        elevation: R.sizes.defaultElevation,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             //
-            const SizedBox(height: 8),
+            R.widgets.hSizer8,
 
             //
             SvgPicture.asset(
@@ -114,7 +113,7 @@ class DoctorHomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 //
-                const SizedBox(width: 12),
+                R.widgets.wSizer12,
 
                 //
                 Expanded(
@@ -132,7 +131,7 @@ class DoctorHomeScreen extends StatelessWidget {
                 ),
 
                 //
-                const SizedBox(width: 15),
+                R.widgets.wSizer16,
 
                 //
                 RbioBadge(
@@ -140,12 +139,12 @@ class DoctorHomeScreen extends StatelessWidget {
                 ),
 
                 //
-                const SizedBox(width: 12),
+                R.widgets.wSizer12,
               ],
             ),
 
             //
-            const SizedBox(height: 6),
+            R.widgets.hSizer8,
           ],
         ),
       ),

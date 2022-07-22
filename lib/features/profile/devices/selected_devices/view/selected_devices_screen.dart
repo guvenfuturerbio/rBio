@@ -46,10 +46,6 @@ class SelectedDevicesScreen extends StatelessWidget {
                   children: [
                     //
                     Card(
-                      elevation: R.sizes.defaultElevation,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: R.sizes.borderRadiusCircular,
-                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Column(
@@ -96,7 +92,7 @@ class SelectedDevicesScreen extends StatelessWidget {
                                             .getStatus(device.id)
                                             ?.connectionState ==
                                         DeviceConnectionState.connecting
-                                    ? getIt<IAppConfig>().theme.high
+                                    ? context.xAppColors.energyYellow
                                     : Colors.white,
                             image: Utils.instance.getDeviceImageFromType(
                                     _selectedDeviceVm.deviceType) ??

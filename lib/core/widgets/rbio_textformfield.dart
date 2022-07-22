@@ -77,7 +77,7 @@ class RbioTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return isForSms
         ? TextFieldPinAutoFill(
-            style: Utils.instance.inputTextStyle(textColor),
+            style: Utils.instance.inputTextStyle(context, textColor),
             focusNode: focusNode,
             obscureText: obscureText ?? false,
             currentCode: controller?.text ?? "",
@@ -102,7 +102,7 @@ class RbioTextFormField extends StatelessWidget {
             maxLines: maxLines,
             minLines: minLines,
             initialValue: initialValue,
-            style: Utils.instance.inputTextStyle(textColor),
+            style: Utils.instance.inputTextStyle(context, textColor),
             focusNode: focusNode,
             controller: controller,
             autocorrect: autocorrect ?? true,
@@ -119,9 +119,9 @@ class RbioTextFormField extends StatelessWidget {
                   isDense: isDense,
                   contentPadding: contentPadding,
                   errorStyle: context.xBodyText1Error,
-                  errorBorder: _redErrorBorder(),
+                  errorBorder: _redErrorBorder(context),
                   focusedBorder: _focusedBorder(),
-                  focusedErrorBorder: _focusedRedErrorBorder(),
+                  focusedErrorBorder: _focusedRedErrorBorder(context),
                   counterText: counterText,
                   disabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
@@ -143,9 +143,9 @@ class RbioTextFormField extends StatelessWidget {
                 ).copyWith(
                   isDense: isDense,
                   errorStyle: context.xBodyText1Error,
-                  errorBorder: _redErrorBorder(),
+                  errorBorder: _redErrorBorder(context),
                   focusedBorder: _focusedBorder(),
-                  focusedErrorBorder: _focusedRedErrorBorder(),
+                  focusedErrorBorder: _focusedRedErrorBorder(context),
                   counterText: counterText,
                   disabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
@@ -162,11 +162,14 @@ class RbioTextFormField extends StatelessWidget {
           );
   }
 
-  static OutlineInputBorder _focusedRedErrorBorder() {
+  static OutlineInputBorder _focusedRedErrorBorder(BuildContext context) {
     return OutlineInputBorder(
-        borderSide:
-            BorderSide(color: getIt<IAppConfig>().theme.darkRed, width: 2.0),
-        borderRadius: R.sizes.borderRadiusCircular);
+      borderSide: BorderSide(
+        color: context.xAppColors.punch,
+        width: 2.0,
+      ),
+      borderRadius: R.sizes.borderRadiusCircular,
+    );
   }
 
   static OutlineInputBorder _focusedBorder() {
@@ -175,11 +178,14 @@ class RbioTextFormField extends StatelessWidget {
         borderRadius: R.sizes.borderRadiusCircular);
   }
 
-  static OutlineInputBorder _redErrorBorder() {
+  static OutlineInputBorder _redErrorBorder(BuildContext context) {
     return OutlineInputBorder(
-        borderSide:
-            BorderSide(color: getIt<IAppConfig>().theme.darkRed, width: 1.0),
-        borderRadius: R.sizes.borderRadiusCircular);
+      borderSide: BorderSide(
+        color: context.xAppColors.punch,
+        width: 1.0,
+      ),
+      borderRadius: R.sizes.borderRadiusCircular,
+    );
   }
 
   static InputDecoration defaultDecoration(
@@ -194,6 +200,7 @@ class RbioTextFormField extends StatelessWidget {
   }) {
     return Utils.instance
         .inputDecorationForLogin(
+          context,
           hintText: hintText,
           labelText: labelText,
           contentPadding: context.xTextScaleType == TextScaleType.small
@@ -204,7 +211,7 @@ class RbioTextFormField extends StatelessWidget {
         )
         .copyWith(
           filled: true,
-          fillColor: backColor ?? getIt<IAppConfig>().theme.cardBackgroundColor,
+          fillColor: backColor ?? context.xCardColor,
           suffixIcon: suffixIcon,
         );
   }

@@ -333,9 +333,11 @@ class AppointmentListVm extends RbioVm {
               return GuvenAlert(
                 backgroundColor: Colors.white,
                 title: GuvenAlert.buildTitle(
+                  context,
                   LocaleProvider.current.fee_information,
                 ),
                 content: GuvenAlert.buildDescription(
+                  context,
                   LocaleProvider.current.payment_question_tag,
                 ),
                 actions: [

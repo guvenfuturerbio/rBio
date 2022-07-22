@@ -14,7 +14,10 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
   List<DateTime> bgMeasurementDates = <DateTime>[];
   List<BloodGlucose> bloodGlucoseList = <BloodGlucose>[];
 
-  Future<void> fetchBgMeasurements({required int patientId}) async {
+  Future<void> fetchBgMeasurements(
+    BuildContext context, {
+    required int patientId,
+  }) async {
     final result = await getIt<DoctorRepository>().getMyPatientBloodGlucose(
       patientId,
       GetMyPatientFilter(end: null, start: null),
@@ -26,7 +29,7 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
           (e) => BgMeasurement(
             notes: e.bloodGlucoseMeasurement?.valueNote,
             id: e.id,
-            color: Utils.instance.fetchMeasurementColor(
+            color: Utils.instance.fetchMeasurementColor(context,
                 measurement:
                     double.tryParse(e.bloodGlucoseMeasurement?.value ?? '0')
                             ?.toInt() ??
@@ -51,6 +54,7 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
   }
 
   Future<void> fetchBgMeasurementsInDateRange(
+    BuildContext context,
     DateTime start,
     DateTime end,
   ) async {
@@ -60,7 +64,7 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
           (e) => BgMeasurement(
             notes: e.bloodGlucoseMeasurement?.valueNote,
             id: e.id,
-            color: Utils.instance.fetchMeasurementColor(
+            color: Utils.instance.fetchMeasurementColor(context,
                 measurement:
                     double.parse(e.bloodGlucoseMeasurement?.value ?? '0')
                         .toInt(),
@@ -90,7 +94,8 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getMoreData({
+  Future<void> getMoreData(
+    BuildContext context, {
     required int patientId,
     required DateTime date,
   }) async {
@@ -106,7 +111,7 @@ class BgMeasurementsNotifierDoc extends ChangeNotifier {
             BgMeasurement(
               notes: e.bloodGlucoseMeasurement?.valueNote,
               id: e.id,
-              color: Utils.instance.fetchMeasurementColor(
+              color: Utils.instance.fetchMeasurementColor(context,
                   measurement:
                       double.parse(e.bloodGlucoseMeasurement?.value ?? '')
                           .toInt(),

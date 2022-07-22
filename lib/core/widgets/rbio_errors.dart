@@ -86,5 +86,5 @@ class RbioBodyError extends StatelessWidget {
     );
   }
 
-  Widget _buildGap() => const SizedBox(height: 16);
+  Widget _buildGap() => R.widgets.hSizer16;
 }

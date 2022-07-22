@@ -87,7 +87,7 @@ class RbioCardAppoCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isActiveHeader
                     ? context.xPrimaryColor
-                    : getIt<IAppConfig>().theme.secondaryColor,
+                    : context.xSecondaryColor,
                 borderRadius: BorderRadius.only(
                   topLeft: R.sizes.radiusCircular,
                   topRight: R.sizes.radiusCircular,
@@ -109,8 +109,8 @@ class RbioCardAppoCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: context.xHeadline2.copyWith(
                         color: isActiveHeader
-                            ? getIt<IAppConfig>().theme.textColor
-                            : getIt<IAppConfig>().theme.textContrastColor,
+                            ? context.xTextColor
+                            : context.xTextOnPrimaryColor,
                       ),
                     ),
                   ),
@@ -125,7 +125,7 @@ class RbioCardAppoCard extends StatelessWidget {
           //
           Container(
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: context.xCardColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: R.sizes.radiusCircular,
                 bottomRight: R.sizes.radiusCircular,
@@ -137,7 +137,7 @@ class RbioCardAppoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //
-                const SizedBox(height: 4),
+                R.widgets.hSizer4,
 
                 //
                 Column(
@@ -148,7 +148,7 @@ class RbioCardAppoCard extends StatelessWidget {
                     Text(
                       LocaleProvider.of(context).hint_doctor,
                       style: context.xHeadline4.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorPassive,
+                        color: context.xTextOnPrimaryColor,
                       ),
                     ),
                     Text(
@@ -159,7 +159,7 @@ class RbioCardAppoCard extends StatelessWidget {
                 ),
 
                 //
-                const SizedBox(height: 4),
+                R.widgets.hSizer4,
 
                 //
                 Column(
@@ -170,7 +170,7 @@ class RbioCardAppoCard extends StatelessWidget {
                     Text(
                       LocaleProvider.of(context).department,
                       style: context.xHeadline4.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorPassive,
+                        color: context.xAppColors.textDisabledColor,
                       ),
                     ),
                     Text(
@@ -181,7 +181,7 @@ class RbioCardAppoCard extends StatelessWidget {
                 ),
 
                 //
-                const SizedBox(height: 4),
+                R.widgets.hSizer4,
 
                 //
                 Row(
@@ -196,7 +196,7 @@ class RbioCardAppoCard extends StatelessWidget {
                           Text(
                             LocaleProvider.of(context).hint_date,
                             style: context.xHeadline4.copyWith(
-                              color: getIt<IAppConfig>().theme.textColorPassive,
+                              color: context.xAppColors.textDisabledColor,
                             ),
                           ),
                           Text(
@@ -221,8 +221,7 @@ class RbioCardAppoCard extends StatelessWidget {
                             Text(
                               LocaleProvider.current.hint_time,
                               style: context.xHeadline4.copyWith(
-                                color:
-                                    getIt<IAppConfig>().theme.textColorPassive,
+                                color: context.xAppColors.textDisabledColor,
                               ),
                             ),
                             Text(
@@ -255,9 +254,7 @@ class RbioCardAppoCard extends StatelessWidget {
                 if (footer != null) ...[
                   footer!,
                 ] else ...[
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  R.widgets.hSizer8,
                 ],
               ],
             ),

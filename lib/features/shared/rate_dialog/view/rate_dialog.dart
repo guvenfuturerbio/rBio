@@ -201,12 +201,11 @@ class _RateDialogState extends State<RateDialog> {
                                   maxLength: 256,
                                   hintText: LocaleProvider.of(context)
                                       .comments_and_suggestion,
-                                  backColor:
-                                      getIt<IAppConfig>().theme.grayColor,
+                                  backColor: context.xAppColors.gallery,
                                 ),
 
                                 //
-                                const SizedBox(height: 10),
+                                R.widgets.hSizer12,
 
                                 //
                                 RbioSmallDialogButton.main(

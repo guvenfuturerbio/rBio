@@ -18,17 +18,18 @@ Widget createAppoWidget({
     children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(header, style: const TextStyle(fontSize: 15)),
+        child: Text(
+          header,
+          style: const TextStyle(
+            fontSize: 15,
+          ),
+        ),
       ),
 
       //
       AbsorbPointer(
         absorbing: isOnline,
         child: Card(
-          elevation: R.sizes.defaultElevation,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: progress == LoadingProgress.loading
@@ -66,7 +67,7 @@ Widget _buildDropdown(
                     ? val.dropdownValueRelative
                     : val.dropdownValueDoctor,
         style: context.xHeadline5,
-        iconEnabledColor: getIt<IAppConfig>().theme.iconColor,
+        iconEnabledColor: context.xIconColor,
         items: itemList.map<DropdownMenuItem<dynamic>>(
           (dynamic value) {
             return DropdownMenuItem<dynamic>(

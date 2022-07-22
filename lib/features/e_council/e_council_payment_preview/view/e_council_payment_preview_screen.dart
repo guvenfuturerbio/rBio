@@ -49,10 +49,15 @@ class _BuildBody extends StatelessWidget {
               price: 1500,
             ),
           ),
+
+          //
           const Spacer(),
+
+          //
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
+              //
               Expanded(
                 child: RbioElevatedButton(
                   title: LocaleProvider.of(context).btn_cancel,
@@ -61,7 +66,11 @@ class _BuildBody extends StatelessWidget {
                   onTap: () {},
                 ),
               ),
-              const SizedBox(width: 10),
+
+              //
+              R.widgets.wSizer12,
+
+              //
               Expanded(
                 child: RbioElevatedButton(
                   title: LocaleProvider.of(context).btn_confirm,

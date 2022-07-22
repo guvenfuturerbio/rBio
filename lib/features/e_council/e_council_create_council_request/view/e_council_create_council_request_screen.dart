@@ -249,23 +249,29 @@ class _BuildRecordFieldState extends State<_BuildRecordField>
                   });
                 },
               ),
-              //? Text
+
+              // Text
               Text(
                 isRecording
                     ? LocaleProvider.of(context).slide_to_cancel
                     : LocaleProvider.of(context).press_and_hold_the_microphone,
                 style: context.xHeadline5.copyWith(
-                    color: getIt<IAppConfig>().theme.textColorPassive),
+                  color: context.xAppColors.textDisabledColor,
+                ),
               ),
-              //? Ileri oku
+
+              // Ileri oku
               Visibility(
-                  child: Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    color: getIt<IAppConfig>().theme.textColorPassive,
-                  ),
-                  visible: isRecording),
+                child: Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  color: context.xAppColors.textDisabledColor,
+                ),
+                visible: isRecording,
+              ),
+
               const Spacer(),
-              //? Sag mikrofon
+
+              // Sag mikrofon
               Visibility(
                 child: Opacity(
                   child: const Icon(Icons.mic, color: Colors.red),
@@ -276,6 +282,8 @@ class _BuildRecordFieldState extends State<_BuildRecordField>
             ],
           ),
         ),
+
+        //
         ...silRecordList
             .map<Widget>(
               (String e) => Padding(

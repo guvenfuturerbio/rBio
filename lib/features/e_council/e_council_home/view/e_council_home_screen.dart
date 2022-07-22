@@ -60,7 +60,10 @@ class _BuildBody extends StatelessWidget {
                       style: textStyle,
                     ),
                   ),
-                  const SizedBox(height: 16),
+
+                  //
+                  R.widgets.hSizer16,
+
                   //? E-Konsey Nasil Kullanilir?
                   InkWell(
                     onTap: () {
@@ -116,9 +119,7 @@ class _BuildCouncilResults extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       child: InkWell(
         onTap: () {
           Atom.to(PagePaths.eCouncilResultPage);
@@ -158,7 +159,7 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -230,32 +231,31 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                     //? Onay Bekleyen
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).pending_approval,
-                      color: getIt<IAppConfig>().theme.eCouncilPendingApproval,
+                      color: context.xAppColors.boulder,
                       number: 2,
                     ),
                     //? Ödeme Bekleyen
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).pending_payment,
-                      color: getIt<IAppConfig>().theme.eCouncilPendingPayment,
+                      color: context.xAppColors.supernova,
                       number: 0,
                     ),
                     //? Tetkik Bekleyen
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).pending_inspection,
-                      color:
-                          getIt<IAppConfig>().theme.eCouncilPendingInspection,
+                      color: context.xAppColors.malibu,
                       number: 0,
                     ),
                     //? Reddedilen
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).rejected,
-                      color: getIt<IAppConfig>().theme.eCouncilRejected,
+                      color: context.xAppColors.punch,
                       number: 13,
                     ),
                     //? Randevu Hazır
                     _BuildECouncilListTile(
                       text: LocaleProvider.of(context).appointment_ready,
-                      color: getIt<IAppConfig>().theme.eCouncilAppointmentReady,
+                      color: context.xAppColors.greenHaze,
                       number: 1,
                     ),
                   ],
@@ -289,13 +289,20 @@ class _BuildECouncilListTile extends StatelessWidget {
       padding: const EdgeInsets.only(left: 36.0, bottom: 8.0),
       child: Row(
         children: [
+          //
           Text(
             text,
             // style: Theme.of(context).textTheme.headline3!.copyWith(color: color),
             style: context.xHeadline5.copyWith(color: color),
           ),
+
+          //
           R.widgets.hSizer16,
+
+          //
           const Spacer(),
+
+          //
           Container(
             width: 18,
             height: 18,
@@ -310,6 +317,8 @@ class _BuildECouncilListTile extends StatelessWidget {
               shape: BoxShape.circle,
             ),
           ),
+
+          //
           const SizedBox(height: 15, width: 60),
         ],
       ),

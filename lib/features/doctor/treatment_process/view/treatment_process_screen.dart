@@ -72,7 +72,6 @@ class _DoctorTreatmentProcessScreenState
         );
       },
       child: Card(
-        elevation: R.sizes.defaultElevation,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 8,
@@ -103,7 +102,7 @@ class _DoctorTreatmentProcessScreenState
                       item.description ?? "",
                       maxLines: 3,
                       style: context.xHeadline5.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorPassive,
+                        color: context.xAppColors.textDisabledColor,
                       ),
                     ),
                   ],

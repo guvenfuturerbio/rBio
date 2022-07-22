@@ -22,11 +22,9 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
     BgPatientPickerVm value,
   ) {
     return AlertDialog(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+      backgroundColor: context.xCardColor,
       contentPadding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       content: SizedBox(
         height: Atom.height * 0.25,
         child: Column(
@@ -35,7 +33,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            const SizedBox(height: 12),
+            R.widgets.hSizer12,
 
             //
             Expanded(
@@ -61,7 +59,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                     ),
                     alwaysShowTooltip: true,
                     textStyle: context.xHeadline4.copyWith(
-                      color: getIt<IAppConfig>().theme.textColor,
+                      color: context.xTextColor,
                     ),
                   ),
                   trackBar: FlutterSliderTrackBar(
@@ -72,7 +70,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                       color: Colors.black12,
                       border: Border.all(
                         width: 3,
-                        color: getIt<IAppConfig>().theme.secondaryColor,
+                        color: context.xSecondaryColor,
                       ),
                     ),
                     activeTrackBar: BoxDecoration(
@@ -104,7 +102,7 @@ class _NormalRangeSelectionSlider extends StatelessWidget {
                   LocaleProvider.current.save,
                   textAlign: TextAlign.center,
                   style: context.xHeadline3.copyWith(
-                    color: getIt<IAppConfig>().theme.textColor,
+                    color: context.xTextColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

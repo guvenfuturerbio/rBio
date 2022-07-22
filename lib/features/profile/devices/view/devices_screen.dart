@@ -64,17 +64,12 @@ class DevicesScreen extends StatelessWidget {
   }
 
   Widget _buildFab(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: context.xPrimaryColor,
+    return RbioSVGFAB.primaryColor(
+      context,
+      imagePath: R.image.add,
       onPressed: () {
         Atom.to(PagePaths.allDevices);
       },
-      child: Center(
-        child: SvgPicture.asset(
-          R.image.add,
-          width: R.sizes.iconSize2,
-        ),
-      ),
     );
   }
 
@@ -120,16 +115,17 @@ class DevicesScreen extends StatelessWidget {
                       onPressed: () {
                         Atom.show(
                           GuvenAlert(
-                            backgroundColor:
-                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            backgroundColor: context.xCardColor,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 25,
                               vertical: 25,
                             ),
                             title: GuvenAlert.buildTitle(
+                              context,
                               LocaleProvider.current.warning,
                             ),
                             content: GuvenAlert.buildDescription(
+                              context,
                               LocaleProvider
                                   .current.ble_delete_paired_device_approv,
                             ),
@@ -153,7 +149,7 @@ class DevicesScreen extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.cancel,
-                        color: getIt<IAppConfig>().theme.darkRed,
+                        color: context.xAppColors.punch,
                         size: R.sizes.iconSize * 1.25,
                       ),
                     ),
@@ -194,7 +190,7 @@ class DevicesScreen extends StatelessWidget {
   ) {
     switch (deviceStatus) {
       case DeviceStatus.connecting:
-        return getIt<IAppConfig>().theme.high;
+        return context.xAppColors.energyYellow;
 
       case DeviceStatus.connected:
         return context.xPrimaryColor;
@@ -202,13 +198,13 @@ class DevicesScreen extends StatelessWidget {
       case DeviceStatus.disconnected:
       case DeviceStatus.disconnecting:
       default:
-        return getIt<IAppConfig>().theme.cardBackgroundColor;
+        return context.xCardColor;
     }
   }
 
   Widget _buildV1Card(BuildContext context, PairedDevice device, DevicesVm vm) {
     return DeviceCard(
-      background: getIt<IAppConfig>().theme.cardBackgroundColor,
+      background: context.xCardColor,
       image: Utils.instance.getDeviceImageFromType(device.deviceType!) ??
           const SizedBox(),
       name: '${device.manufacturerName}\n${device.serialNumber ?? ''}',
@@ -230,16 +226,17 @@ class DevicesScreen extends StatelessWidget {
             onPressed: () {
               Atom.show(
                 GuvenAlert(
-                  backgroundColor:
-                      getIt<IAppConfig>().theme.cardBackgroundColor,
+                  backgroundColor: context.xCardColor,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 25,
                     vertical: 25,
                   ),
                   title: GuvenAlert.buildTitle(
+                    context,
                     LocaleProvider.current.warning,
                   ),
                   content: GuvenAlert.buildDescription(
+                    context,
                     LocaleProvider.current.ble_delete_paired_device_approv,
                   ),
                   actions: [
@@ -261,7 +258,7 @@ class DevicesScreen extends StatelessWidget {
             },
             icon: Icon(
               Icons.cancel,
-              color: getIt<IAppConfig>().theme.darkRed,
+              color: context.xAppColors.punch,
               size: R.sizes.iconSize * 1.25,
             ),
           ),

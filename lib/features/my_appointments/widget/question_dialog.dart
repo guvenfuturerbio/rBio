@@ -42,6 +42,7 @@ class QuestionDialog extends StatelessWidget {
               //
               Expanded(
                 child: RbioSmallDialogButton.red(
+                  context,
                   title: LocaleProvider.current.no,
                   onPressed: () {
                     Navigator.of(context).pop(false);

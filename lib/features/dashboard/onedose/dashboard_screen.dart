@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Drawer _buildDrawer() {
     return Drawer(
-      backgroundColor: getIt<IAppConfig>().theme.bottomMenuColor,
+      backgroundColor: context.xBottomNavigationBarTheme.backgroundColor,
       child: SafeArea(
         top: true,
         child: Column(
@@ -94,12 +94,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           //
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0),
-                            child: CircleAvatar(
+                            child: RbioCircleAvatar(
                               backgroundImage:
                                   Utils.instance.getCacheProfileImage,
                               radius: R.sizes.iconSize2,
-                              backgroundColor:
-                                  getIt<IAppConfig>().theme.cardBackgroundColor,
+                              backgroundColor: context.xCardColor,
                             ),
                           ),
 
@@ -113,7 +112,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: context.xHeadline4.copyWith(
-                                  color: getIt<IAppConfig>().theme.textColor),
+                                color: context.xTextColor,
+                              ),
                             ),
                           ),
                         ],
@@ -128,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     color: Colors.transparent,
                     child: SvgPicture.asset(
                       R.image.cancel,
-                      color: getIt<IAppConfig>().theme.iconColor,
+                      color: context.xIconColor,
                       width: R.sizes.iconSize2,
                     ),
                   ),
@@ -228,7 +228,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 25,
                     child: SvgPicture.asset(
                       model.svgPath,
-                      color: getIt<IAppConfig>().theme.iconColor,
+                      color: context.xIconColor,
                     ),
                   ),
                   R.widgets.wSizer16,
@@ -236,7 +236,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: Text(
                       model.title,
                       style: context.xHeadline4.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorSecondary,
+                        color: context.xTextInverseColor,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -294,7 +294,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             CustomPaint(
               size: Size(size.width, R.sizes.bottomNavigationBarHeight),
               painter: BottomNavbarCustomPainter(
-                getIt<IAppConfig>().theme.bottomMenuColor,
+                context.xBottomNavigationBarTheme.backgroundColor!,
               ),
             ),
 
@@ -304,12 +304,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: SizedBox(
                 height: 60,
                 width: 60,
-                child: FloatingActionButton(
-                  backgroundColor: context.xPrimaryColor,
-                  child: SvgPicture.asset(
-                    R.image.bottomNavigationHome,
-                    width: R.sizes.iconSize,
-                  ),
+                child: RbioSVGFAB(
+                  iconColor: null,
+                  imagePath: R.image.bottomNavigationHome,
                   elevation: 0,
                   onPressed: () {
                     getIt<IAppConfig>()
@@ -336,6 +333,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       0,
@@ -353,6 +351,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     },
                     splashColor: Colors.white,
                   ),
+
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       1,
@@ -369,9 +369,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       DashboardNavigation.toChat(context);
                     },
                   ),
+
+                  //
                   Container(
                     width: size.width * 0.20,
                   ),
+
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       3,
@@ -388,6 +392,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       DashboardNavigation.toGraph(context);
                     },
                   ),
+
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       4,
@@ -422,7 +428,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ? SvgPicture.asset(
               passiveImage,
               width: R.sizes.iconSize2,
-              color: getIt<IAppConfig>().theme.iconColor,
+              color: context.xIconColor,
             )
           : SvgPicture.asset(
               activeImage,

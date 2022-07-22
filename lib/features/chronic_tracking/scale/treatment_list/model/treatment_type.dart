@@ -9,16 +9,16 @@ enum TreatmentType {
 }
 
 extension TreatmentTypeExtension on TreatmentType {
-  Color get xBackColor {
+  Color xBackColor(BuildContext context) {
     switch (this) {
       case TreatmentType.diet:
-        return getIt<IAppConfig>().theme.yellow;
+        return context.xAppColors.kournikova;
 
       case TreatmentType.treatmentNote:
-        return getIt<IAppConfig>().theme.blue;
+        return context.xAppColors.frenchPass;
 
       case TreatmentType.doctorNote:
-        return getIt<IAppConfig>().theme.pink;
+        return context.xAppColors.frenchLilac;
     }
   }
 

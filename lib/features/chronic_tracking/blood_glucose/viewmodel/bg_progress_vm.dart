@@ -14,7 +14,8 @@ enum GraphType { bubble, line }
 class BgProgressVm
     with ChangeNotifier, IBaseBottomActionsOfGraph
     implements IProgressScreen {
-  BgProgressVm({required BuildContext context}) {
+  late BuildContext context;
+  BgProgressVm(this.context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       isChartShow = true;
       getIt<GlucoseStorageImpl>().addListener(() {
@@ -88,23 +89,6 @@ class BgProgressVm
   final Map<int, List<ChartData>> _chartVeryHighTagged =
       <int, List<ChartData>>{};
 
-  final Map<Color, GlucoseMarginsFilter> _colorInfo =
-      <Color, GlucoseMarginsFilter>{};
-
-  Map<Color, GlucoseMarginsFilter> get colorInfo {
-    _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.veryLow, () => GlucoseMarginsFilter.veryLow);
-    _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.low, () => GlucoseMarginsFilter.low);
-    _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.target, () => GlucoseMarginsFilter.target);
-    _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.high, () => GlucoseMarginsFilter.high);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.veryHigh,
-        () => GlucoseMarginsFilter.veryHigh);
-    return _colorInfo;
-  }
-
   DateTime? _scrolledDate;
 
   List<GlucoseMarginsFilter> get states => [
@@ -143,10 +127,10 @@ class BgProgressVm
     }
   }
 
-  void updateFilterState() {
+  void updateFilterState(BuildContext context) {
     try {
       _lastFilterStateBeforeEdit = <GlucoseMarginsFilter, bool>{};
-      updateBgMeasurement();
+      updateBgMeasurement(context);
       notifyListeners();
     } catch (e, stk) {
       getIt<IAppConfig>()
@@ -165,13 +149,13 @@ class BgProgressVm
 
   /// Connected with filter dialog bottom button.
   /// This function convert all [_filterState] boolean value to [true]
-  resetFilterValues() async {
+  Future<void> resetFilterValues(BuildContext context) async {
     try {
       _filterState.forEach((key, value) {
         _filterState[key] = true;
       });
       notifyListeners();
-      updateBgMeasurement();
+      updateBgMeasurement(context);
     } catch (e, stk) {
       getIt<IAppConfig>()
           .platform
@@ -399,7 +383,7 @@ class BgProgressVm
 
   set currentDateIndex(int val) => _currentDateIndex = val;
 
-  void fetchScrolledData(DateTime date) {
+  void fetchScrolledData(BuildContext context, DateTime date) {
     if (selected == TimePeriodFilter.daily) {
       var _temp = DateTime(_scrolledDate?.year ?? 2000,
           _scrolledDate?.month ?? 01, _scrolledDate?.day ?? 01);
@@ -416,7 +400,7 @@ class BgProgressVm
           }
         }
 
-        setChartDailyData();
+        setChartDailyData(context);
       }
     }
   }
@@ -437,7 +421,7 @@ class BgProgressVm
         }
       }
     }
-    setChartDailyData();
+    setChartDailyData(context);
   }
 
   void fetchSpesificData() {
@@ -448,16 +432,21 @@ class BgProgressVm
         bgMeasurementsDailyData.add(data);
       }
     }
-    setChartDailyData();
+    setChartDailyData(context);
   }
 
   List<ChartData> get chartData => _chartData;
 
-  void setChartDailyData() {
+  void setChartDailyData(BuildContext context) {
     List<ChartData> chartData = <ChartData>[];
     for (var data in bgMeasurementsDailyData) {
-      chartData.add(ChartData(
-          data.date, double.parse(data.result).toInt(), data.resultColor));
+      chartData.add(
+        ChartData(
+          data.date,
+          double.parse(data.result).toInt(),
+          data.resultColor(context),
+        ),
+      );
     }
     _chartData = chartData;
     _chartVeryHighTagged.clear();
@@ -465,14 +454,14 @@ class BgProgressVm
     _chartTargetTagged.clear();
     _chartLowTagged.clear();
     _chartVeryLowTagged.clear();
-    setChartGroupData();
+    setChartGroupData(context);
     notifyListeners();
   }
 
-  void setChartGroupData() {
+  void setChartGroupData(BuildContext context) {
     setChartVeryLow();
     setChartLow();
-    setChartTarget();
+    setChartTarget(context);
     setChartHigh();
     setChartVeryHigh();
   }
@@ -487,21 +476,48 @@ class BgProgressVm
     List<ChartData> chartDataUnTagged = <ChartData>[];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.veryLow) {
-        chartData.add(ChartData(
-            data.date, double.parse(data.result).toInt(), data.resultColor));
+      final dataColor = data.resultColor(context);
+
+      if (dataColor == context.xAppColors.roman) {
+        chartData.add(
+          ChartData(
+            data.date,
+            double.parse(data.result).toInt(),
+            dataColor,
+          ),
+        );
         if (data.tag == 1) {
-          chartDataAc.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataAc.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 2) {
-          chartDataTok.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataTok.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 3) {
-          chartDataFasting.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataFasting.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else {
-          chartDataUnTagged.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataUnTagged.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         }
       }
     }
@@ -522,21 +538,48 @@ class BgProgressVm
     List<ChartData> chartDataUnTagged = <ChartData>[];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.low) {
-        chartData.add(ChartData(
-            data.date, double.parse(data.result).toInt(), data.resultColor));
+      final dataColor = data.resultColor(context);
+
+      if (dataColor == context.xAppColors.tonysPink) {
+        chartData.add(
+          ChartData(
+            data.date,
+            double.parse(data.result).toInt(),
+            dataColor,
+          ),
+        );
         if (data.tag == 1) {
-          chartDataAc.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataAc.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 2) {
-          chartDataTok.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataTok.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 3) {
-          chartDataFasting.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataFasting.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else {
-          chartDataUnTagged.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataUnTagged.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         }
       }
     }
@@ -549,7 +592,7 @@ class BgProgressVm
 
   List<ChartData> get chartTarget => _chartTarget;
 
-  void setChartTarget() {
+  void setChartTarget(BuildContext context) {
     List<ChartData> chartData = <ChartData>[];
     List<ChartData> chartDataAc = <ChartData>[];
     List<ChartData> chartDataTok = <ChartData>[];
@@ -557,21 +600,48 @@ class BgProgressVm
     List<ChartData> chartDataUnTagged = <ChartData>[];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.target) {
-        chartData.add(ChartData(
-            data.date, double.parse(data.result).toInt(), data.resultColor));
+      final dataColor = data.resultColor(context);
+
+      if (dataColor == context.xAppColors.deYork) {
+        chartData.add(
+          ChartData(
+            data.date,
+            double.parse(data.result).toInt(),
+            dataColor,
+          ),
+        );
         if (data.tag == 1) {
-          chartDataAc.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataAc.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 2) {
-          chartDataTok.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataTok.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 3) {
-          chartDataFasting.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataFasting.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else {
-          chartDataUnTagged.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataUnTagged.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         }
       }
     }
@@ -592,21 +662,48 @@ class BgProgressVm
     List<ChartData> chartDataUnTagged = <ChartData>[];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.high) {
-        chartData.add(ChartData(
-            data.date, double.parse(data.result).toInt(), data.resultColor));
+      final dataColor = data.resultColor(context);
+
+      if (dataColor == context.xAppColors.energyYellow) {
+        chartData.add(
+          ChartData(
+            data.date,
+            double.parse(data.result).toInt(),
+            dataColor,
+          ),
+        );
         if (data.tag == 1) {
-          chartDataAc.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataAc.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 2) {
-          chartDataTok.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataTok.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 3) {
-          chartDataFasting.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataFasting.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else {
-          chartDataUnTagged.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataUnTagged.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         }
       }
     }
@@ -627,21 +724,48 @@ class BgProgressVm
     List<ChartData> chartDataUnTagged = <ChartData>[];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.veryHigh) {
-        chartData.add(ChartData(
-            data.date, double.parse(data.result).toInt(), data.resultColor));
+      final dataColor = data.resultColor(context);
+
+      if (dataColor == context.xAppColors.casablanca) {
+        chartData.add(
+          ChartData(
+            data.date,
+            double.parse(data.result).toInt(),
+            dataColor,
+          ),
+        );
         if (data.tag == 1) {
-          chartDataAc.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataAc.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 2) {
-          chartDataTok.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataTok.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else if (data.tag == 3) {
-          chartDataFasting.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataFasting.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         } else {
-          chartDataUnTagged.add(ChartData(
-              data.date, double.parse(data.result).toInt(), data.resultColor));
+          chartDataUnTagged.add(
+            ChartData(
+              data.date,
+              double.parse(data.result).toInt(),
+              dataColor,
+            ),
+          );
         }
       }
     }
@@ -654,7 +778,7 @@ class BgProgressVm
 
   void setChartAverageDataPerDay() {
     bgMeasurementsDailyData = bgMeasurements;
-    setChartDailyData();
+    setChartDailyData(context);
   }
 
   changeStartDate(DateTime date) {
@@ -691,7 +815,7 @@ class BgProgressVm
     setChartAverageDataPerDay();
   }
 
-  updateBgMeasurement() async {
+  Future<void> updateBgMeasurement(BuildContext context) async {
     if (selected == TimePeriodFilter.daily) {
       fetchBgMeasurement();
     } else {
@@ -699,38 +823,47 @@ class BgProgressVm
           startDate, endDate.add(const Duration(days: 1)));
     }
 
-    bgMeasurements.removeWhere((element) =>
-        (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
-            element.resultColor == getIt<IAppConfig>().theme.veryHigh) ||
-        (!isFilterSelected(GlucoseMarginsFilter.high) &&
-            element.resultColor == getIt<IAppConfig>().theme.high) ||
-        (!isFilterSelected(GlucoseMarginsFilter.target) &&
-            element.resultColor == getIt<IAppConfig>().theme.target) ||
-        (!isFilterSelected(GlucoseMarginsFilter.low) &&
-            element.resultColor == getIt<IAppConfig>().theme.low) ||
-        (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
-            element.resultColor == getIt<IAppConfig>().theme.veryLow) ||
-        (!isFilterSelected(GlucoseMarginsFilter.hungry) && element.tag == 1) ||
-        (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
-        (!isFilterSelected(GlucoseMarginsFilter.other) &&
-            element.tag != 1 &&
-            element.tag != 2));
-    bgMeasurementsDailyData.removeWhere((element) =>
-        (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
-            element.resultColor == getIt<IAppConfig>().theme.veryHigh) ||
-        (!isFilterSelected(GlucoseMarginsFilter.high) &&
-            element.resultColor == getIt<IAppConfig>().theme.high) ||
-        (!isFilterSelected(GlucoseMarginsFilter.target) &&
-            element.resultColor == getIt<IAppConfig>().theme.target) ||
-        (!isFilterSelected(GlucoseMarginsFilter.low) &&
-            element.resultColor == getIt<IAppConfig>().theme.low) ||
-        (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
-            element.resultColor == getIt<IAppConfig>().theme.veryLow) ||
-        (!isFilterSelected(GlucoseMarginsFilter.hungry) && element.tag == 1) ||
-        (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
-        (!isFilterSelected(GlucoseMarginsFilter.other) &&
-            element.tag != 1 &&
-            element.tag != 2));
+    bgMeasurements.removeWhere((element) {
+      final elementColor = element.resultColor(context);
+
+      return (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
+              elementColor == context.xAppColors.casablanca) ||
+          (!isFilterSelected(GlucoseMarginsFilter.high) &&
+              elementColor == context.xAppColors.energyYellow) ||
+          (!isFilterSelected(GlucoseMarginsFilter.target) &&
+              elementColor == context.xAppColors.deYork) ||
+          (!isFilterSelected(GlucoseMarginsFilter.low) &&
+              elementColor == context.xAppColors.tonysPink) ||
+          (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
+              elementColor == context.xAppColors.roman) ||
+          (!isFilterSelected(GlucoseMarginsFilter.hungry) &&
+              element.tag == 1) ||
+          (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
+          (!isFilterSelected(GlucoseMarginsFilter.other) &&
+              element.tag != 1 &&
+              element.tag != 2);
+    });
+
+    bgMeasurementsDailyData.removeWhere((element) {
+      final elementColor = element.resultColor(context);
+
+      return (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
+              elementColor == context.xAppColors.casablanca) ||
+          (!isFilterSelected(GlucoseMarginsFilter.high) &&
+              elementColor == context.xAppColors.energyYellow) ||
+          (!isFilterSelected(GlucoseMarginsFilter.target) &&
+              elementColor == context.xAppColors.deYork) ||
+          (!isFilterSelected(GlucoseMarginsFilter.low) &&
+              elementColor == context.xAppColors.tonysPink) ||
+          (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
+              elementColor == context.xAppColors.roman) ||
+          (!isFilterSelected(GlucoseMarginsFilter.hungry) &&
+              element.tag == 1) ||
+          (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
+          (!isFilterSelected(GlucoseMarginsFilter.other) &&
+              element.tag != 1 &&
+              element.tag != 2);
+    });
     if (selected == TimePeriodFilter.daily ||
         selected == TimePeriodFilter.spesific) {
       fetchScrolledDailyData();
@@ -744,233 +877,324 @@ class BgProgressVm
     notifyListeners();
   }
 
-  List<ScatterSeries<ChartData, DateTime>> getDataScatterSeries() {
+  List<ScatterSeries<ChartData, DateTime>> getDataScatterSeries(
+    BuildContext context,
+  ) {
     return <ScatterSeries<ChartData, DateTime>>[
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[-1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryHigh,
-          xAxisName: "Time",
-          markerSettings: const MarkerSettings(
-              height: 15,
-              width: 15,
-              isVisible: true,
-              shape: DataMarkerType.rectangle)),
+        dataSource: _chartVeryHighTagged[-1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.casablanca,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+          shape: DataMarkerType.rectangle,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderWidth: 5,
-              borderColor: getIt<IAppConfig>().theme.veryHigh,
-              isVisible: true)),
+        dataSource: _chartVeryHighTagged[1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderWidth: 5,
+          borderColor: context.xAppColors.casablanca,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[2] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryHigh,
-          xAxisName: "Time",
-          markerSettings:
-              const MarkerSettings(height: 15, width: 15, isVisible: true)),
+        dataSource: _chartVeryHighTagged[2] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.casablanca,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[3] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryHigh,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderColor: getIt<IAppConfig>().theme.veryHigh,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartVeryHighTagged[3] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.casablanca,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderColor: context.xAppColors.casablanca,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[-1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.high,
-          xAxisName: "Time",
-          markerSettings: const MarkerSettings(
-              height: 15,
-              width: 15,
-              isVisible: true,
-              shape: DataMarkerType.rectangle)),
+        dataSource: _chartHighTagged[-1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.energyYellow,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+          shape: DataMarkerType.rectangle,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderWidth: 2,
-              borderColor: getIt<IAppConfig>().theme.high,
-              isVisible: true)),
+        dataSource: _chartHighTagged[1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderWidth: 2,
+          borderColor: context.xAppColors.energyYellow,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[2] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.high,
-          xAxisName: "Time",
-          markerSettings:
-              const MarkerSettings(height: 15, width: 15, isVisible: true)),
+        dataSource: _chartHighTagged[2] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.energyYellow,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[3] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.high,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderColor: getIt<IAppConfig>().theme.high,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartHighTagged[3] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.energyYellow,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderColor: context.xAppColors.energyYellow,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[-1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.target,
-          xAxisName: "Time",
-          markerSettings: const MarkerSettings(
-              height: 15,
-              width: 15,
-              isVisible: true,
-              shape: DataMarkerType.rectangle)),
+        dataSource: _chartTargetTagged[-1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.deYork,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+          shape: DataMarkerType.rectangle,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderWidth: 2,
-              borderColor: getIt<IAppConfig>().theme.target,
-              isVisible: true)),
+        dataSource: _chartTargetTagged[1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderWidth: 2,
+          borderColor: context.xAppColors.deYork,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[2] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.target,
-          xAxisName: "Time",
-          markerSettings:
-              const MarkerSettings(height: 15, width: 15, isVisible: true)),
+        dataSource: _chartTargetTagged[2] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.deYork,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[3] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.target,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderColor: getIt<IAppConfig>().theme.target,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartTargetTagged[3] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.deYork,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderColor: context.xAppColors.deYork,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[-1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.low,
-          xAxisName: "Time",
-          markerSettings: const MarkerSettings(
-              height: 15,
-              width: 15,
-              isVisible: true,
-              shape: DataMarkerType.rectangle)),
+        dataSource: _chartLowTagged[-1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.tonysPink,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+          shape: DataMarkerType.rectangle,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderWidth: 2,
-              borderColor: getIt<IAppConfig>().theme.low,
-              isVisible: true)),
+        dataSource: _chartLowTagged[1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderWidth: 2,
+          borderColor: context.xAppColors.tonysPink,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[2] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.low,
-          xAxisName: "Time",
-          markerSettings:
-              const MarkerSettings(height: 15, width: 15, isVisible: true)),
+        dataSource: _chartLowTagged[2] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.tonysPink,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[3] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.low,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderColor: getIt<IAppConfig>().theme.low,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartLowTagged[3] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.tonysPink,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderColor: context.xAppColors.tonysPink,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[-1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryLow,
-          xAxisName: "Time",
-          markerSettings: const MarkerSettings(
-              height: 15,
-              width: 15,
-              isVisible: true,
-              shape: DataMarkerType.rectangle)),
+        dataSource: _chartVeryLowTagged[-1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.roman,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+          shape: DataMarkerType.rectangle,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[1] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderWidth: 2,
-              borderColor: getIt<IAppConfig>().theme.veryLow,
-              isVisible: true)),
+        dataSource: _chartVeryLowTagged[1] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderWidth: 2,
+          borderColor: context.xAppColors.roman,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[2] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryLow,
-          xAxisName: "Time",
-          markerSettings:
-              const MarkerSettings(height: 15, width: 15, isVisible: true)),
+        dataSource: _chartVeryLowTagged[2] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.roman,
+        xAxisName: "Time",
+        markerSettings: const MarkerSettings(
+          height: 15,
+          width: 15,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[3] ?? [],
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryLow,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: 15,
-              width: 15,
-              borderColor: getIt<IAppConfig>().theme.veryLow,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartVeryLowTagged[3] ?? [],
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xAppColors.roman,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: 15,
+          width: 15,
+          borderColor: context.xAppColors.roman,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
     ];
   }
 

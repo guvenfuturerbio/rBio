@@ -289,7 +289,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
 
             //
-            const SizedBox(width: 6),
+            R.widgets.wSizer8,
           ],
         ),
       ),
@@ -409,12 +409,12 @@ class _ChatScreenState extends State<ChatScreen> {
               chatVm,
             );
 
-  Align _buildDateTitle(DateTime time) {
+  Widget _buildDateTitle(DateTime time) {
     return Align(
       alignment: Alignment.center,
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
           boxShadow: [
             BoxShadow(
@@ -480,7 +480,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
 
             //
-            const SizedBox(width: 6),
+            R.widgets.wSizer8,
 
             //
             Column(
@@ -558,8 +558,8 @@ class _ChatScreenState extends State<ChatScreen> {
             Flexible(
               child: _buildSelectableText(
                 message.message!,
-                getIt<IAppConfig>().theme.textColorSecondary,
-                getIt<IAppConfig>().theme.secondaryColor,
+                context.xTextInverseColor,
+                context.xSecondaryColor,
               ),
             ),
 
@@ -590,8 +590,8 @@ class _ChatScreenState extends State<ChatScreen> {
             Flexible(
               child: _buildSelectableText(
                 message.message!,
-                getIt<IAppConfig>().theme.textColorSecondary,
-                getIt<IAppConfig>().theme.cardBackgroundColor,
+                context.xTextInverseColor,
+                context.xCardColor,
               ),
             ),
 

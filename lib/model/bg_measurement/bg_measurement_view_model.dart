@@ -39,8 +39,8 @@ class BgMeasurementGlucoseViewModel {
     return bgMeasurement.level;
   }
 
-  Color get resultColor {
-    return bgMeasurement.color;
+  Color resultColor(BuildContext context) {
+    return bgMeasurement.color(context);
   }
 
   int? get tag {

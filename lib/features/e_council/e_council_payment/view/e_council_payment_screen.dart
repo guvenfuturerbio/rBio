@@ -164,10 +164,15 @@ class _BuildButtonsFieldState extends State<_BuildButtonsField> {
                   ),
           ),
         ),
+
+        //
         R.widgets.hSizer12,
+
+        //
         //? Inidirim ve onayla butonlari
         Row(
           children: [
+            //
             Expanded(
               child: RbioElevatedButton(
                 title: isOpened
@@ -175,9 +180,7 @@ class _BuildButtonsFieldState extends State<_BuildButtonsField> {
                     : LocaleProvider.of(context).add_discount_code,
                 fontWeight: FontWeight.bold,
                 textColor: isOpened ? Colors.white : Colors.black,
-                backColor: isOpened
-                    ? context.xPrimaryColor
-                    : Colors.white,
+                backColor: isOpened ? context.xPrimaryColor : Colors.white,
                 onTap: () {
                   setState(() {
                     isOpened = true;
@@ -185,7 +188,11 @@ class _BuildButtonsFieldState extends State<_BuildButtonsField> {
                 },
               ),
             ),
-            const SizedBox(width: 10),
+
+            //
+            R.widgets.wSizer12,
+
+            //
             Expanded(
               child: RbioElevatedButton(
                 title: LocaleProvider.of(context).btn_confirm,

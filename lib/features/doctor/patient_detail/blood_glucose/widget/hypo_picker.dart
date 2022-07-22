@@ -21,9 +21,7 @@ class _HypoPicker extends StatelessWidget {
 
   Dialog _buildDialog(BgPatientPickerVm vm, BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -64,7 +62,7 @@ class _HypoPicker extends StatelessWidget {
                 LocaleProvider.current.save,
                 textAlign: TextAlign.center,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColor,
+                  color: context.xTextColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),

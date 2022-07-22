@@ -108,6 +108,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                       //
                       Center(
                         child: RbioSmallDialogButton.white(
+                          context,
                           title: LocaleProvider.current.resend,
                           onPressed: () async {
                             await vm.resendCode();

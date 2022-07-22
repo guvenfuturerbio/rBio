@@ -87,6 +87,7 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                                   value.toggleConsentFormState();
                                 },
                                 child: GuvenAlert.buildSmallDescription(
+                                  context,
                                   LocaleProvider.of(context)
                                       .read_understood_kvkk,
                                   textAlign: TextAlign.start,

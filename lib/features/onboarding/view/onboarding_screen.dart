@@ -126,7 +126,7 @@ class _OnboardingViewState extends State<OnboardingView> {
   Widget build(BuildContext context) {
     return RbioDarkStatusBar(
       child: Scaffold(
-        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+        backgroundColor: context.xCardColor,
         body: SafeArea(
           child: Stack(
             fit: StackFit.expand,
@@ -165,7 +165,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     dotHeight: 10,
                     dotWidth: 16,
                     activeDotColor: context.xPrimaryColor,
-                    dotColor: getIt<IAppConfig>().theme.grey.withOpacity(0.5),
+                    dotColor: context.xAppColors.grey.withOpacity(0.5),
                   ),
                 ),
               ),
@@ -197,9 +197,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                                     curve: Curves.ease,
                                   );
                                 },
-                                backColor: getIt<IAppConfig>()
-                                    .theme
-                                    .cardBackgroundColor,
+                                backColor: context.xCardColor,
                                 textColor: context.xPrimaryColor,
                               ),
                             ),
@@ -338,8 +336,7 @@ class AnimatedIntroCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 32),
                         child: RbioElevatedButton(
-                          backColor:
-                              getIt<IAppConfig>().theme.cardBackgroundColor,
+                          backColor: context.xCardColor,
                           textColor: context.xPrimaryColor,
                           fontWeight: FontWeight.bold,
                           title: LocaleProvider.current.login,

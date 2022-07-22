@@ -22,8 +22,8 @@ class RbioRedButton extends StatelessWidget {
       title: title,
       onTap: onTap,
       fontWeight: FontWeight.bold,
-      textColor: getIt<IAppConfig>().theme.textColor,
-      backColor: getIt<IAppConfig>().theme.darkRed,
+      textColor: context.xTextColor,
+      backColor: context.xAppColors.punch,
       infinityWidth: infinityWidth,
     );
   }
@@ -47,7 +47,7 @@ class RbioWhiteButton extends StatelessWidget {
       title: title,
       onTap: onTap,
       fontWeight: FontWeight.bold,
-      textColor: getIt<IAppConfig>().theme.textColorSecondary,
+      textColor: context.xTextInverseColor,
       backColor: Colors.white,
       infinityWidth: infinityWidth,
     );
@@ -170,7 +170,7 @@ class RbioElevatedAutoButton extends StatelessWidget {
             maxFontSize: 8,
             minFontSize: 8,
             style: context.xHeadline3.copyWith(
-              color: textColor ?? getIt<IAppConfig>().theme.textColor,
+              color: textColor ?? context.xTextColor,
               fontWeight: fontWeight,
             ),
           ),
@@ -218,8 +218,7 @@ class RbioIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: backColor ?? context.xPrimaryColor,
-          shape: BoxShape.circle),
+          color: backColor ?? context.xPrimaryColor, shape: BoxShape.circle),
       child: IconButton(
         onPressed: onPressed,
         icon: icon,

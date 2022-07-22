@@ -76,8 +76,10 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: RbioTextFormField(
                   focusNode: _valueFocusNode,
-                  backColor:
-                      getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
+                  backColor: getIt<IAppConfig>()
+                      .theme
+                      .dialogTheme
+                      .backgroundColor(context),
                   controller: _valueEditingController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
@@ -100,6 +102,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                     //
                     Expanded(
                       child: RbioSmallDialogButton.red(
+                        context,
                         title: LocaleProvider.current.btn_cancel,
                         onPressed: () {
                           Atom.dismiss(false);
@@ -160,8 +163,8 @@ class _LastTestDialogState extends State<_LastTestDialog> {
     required bool infinityWidth,
   }) {
     return RbioElevatedButton(
-      backColor: getIt<IAppConfig>().theme.grayColor,
-      textColor: getIt<IAppConfig>().theme.textColorSecondary,
+      backColor: context.xAppColors.gallery,
+      textColor: context.xTextInverseColor,
       title: LocaleProvider.current.btn_cancel,
       onTap: () {
         Atom.dismiss();

@@ -251,7 +251,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -299,7 +299,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -334,7 +334,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(

@@ -113,7 +113,7 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: RbioTextFormField(
@@ -175,15 +175,15 @@ class _PatientTreatmentEditViewState extends State<PatientTreatmentEditView> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
+          RbioCircleAvatar(
             foregroundImage: NetworkImage(R.image.circlevatar),
-            backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            backgroundColor: context.xCardColor,
           ),
 
           //

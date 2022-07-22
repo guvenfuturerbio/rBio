@@ -156,7 +156,7 @@ class BpMeasurementList extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(

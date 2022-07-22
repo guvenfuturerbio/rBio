@@ -91,9 +91,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
                       //
                       Material(
                         elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -192,9 +190,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
                       //
                       Material(
                         elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -232,9 +228,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
                       //
                       Material(
                         elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(

@@ -97,6 +97,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                       //
                       Expanded(
                         child: RbioSmallDialogButton.red(
+                          context,
                           title: LocaleProvider.current.btn_cancel,
                           onPressed: () {
                             Atom.dismiss();

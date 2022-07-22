@@ -53,9 +53,11 @@ class _AppointmentListViewState extends State<AppointmentListView> {
               return GuvenAlert(
                 backgroundColor: Colors.white,
                 title: GuvenAlert.buildTitle(
+                  context,
                   LocaleProvider.current.fee_information,
                 ),
                 content: GuvenAlert.buildDescription(
+                  context,
                   LocaleProvider.current.payment_question_tag,
                 ),
                 actions: [
@@ -170,25 +172,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
         context,
         LocaleProvider.of(context).my_appointments,
       ),
-      actions: getActions(context),
     );
-  }
-
-  List<Widget> getActions(BuildContext context) {
-    return [
-      // InkWell(
-      //   child: SvgPicture.asset(
-      //     R.image.allFilesGrey,
-      //     color: getIt<IAppConfig>().theme.white,
-      //   ),
-      //   onTap: () {
-      //     Atom.to(PagePaths.allFiles);
-      //   },
-      // ),
-      // const SizedBox(
-      //   width: 12,
-      // ),
-    ];
   }
 
   Widget _buildBody(
@@ -234,7 +218,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
         ),
 
         //
-        const SizedBox(height: 12.0),
+        R.widgets.hSizer12,
 
         //
         Expanded(child: _buildExpandedChild(state))
@@ -307,7 +291,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
                 child: Text(
                   LocaleProvider.current.btn_cancel,
                   style: context.xHeadline3.copyWith(
-                    color: getIt<IAppConfig>().theme.textColor,
+                    color: context.xTextColor,
                   ),
                 ),
               ),
@@ -390,7 +374,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
 
                 //
                 _buildStartVideoButton(
-                  backColor: getIt<IAppConfig>().theme.grey,
+                  backColor: context.xAppColors.grey,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -423,7 +407,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
               //
               Center(
                 child: _buildStartVideoButton(
-                  backColor: getIt<IAppConfig>().theme.gray,
+                  backColor: context.xAppColors.dustyGray,
                   onPressed: () {
                     showDialog(
                       context: context,

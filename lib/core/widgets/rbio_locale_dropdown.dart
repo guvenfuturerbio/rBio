@@ -13,13 +13,13 @@ class RbioLocaleDropdown extends StatelessWidget {
         padding: const EdgeInsets.only(left: 15.0, right: 10.0),
         decoration: BoxDecoration(
           borderRadius: R.sizes.borderRadiusCircular,
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
         ),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: DropdownButtonHideUnderline(
             child: DropdownButton<Locale>(
-              dropdownColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+              dropdownColor: context.xCardColor,
               value: context.read<LocaleNotifier>().current,
               hint: getLocaleWidget(
                   context.read<LocaleNotifier>().current, context),

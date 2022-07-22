@@ -11,6 +11,10 @@ class _Sizes {
   final BorderRadius borderRadiusCircular = BorderRadius.circular(12);
   final Radius radiusCircular = const Radius.circular(12);
 
+  OutlinedBorder get defaultShape => RoundedRectangleBorder(
+        borderRadius: borderRadiusCircular,
+      );
+
   // * Icons
   final double iconSize = 30;
   final double iconSize2 = 24;
@@ -18,8 +22,9 @@ class _Sizes {
   final double iconSize4 = 14;
   final double iconSize5 = 10;
 
-  double stackedTopPaddingValue(BuildContext context) => 54 + MediaQuery.of(context).viewPadding.top;
-  final double defaultBottomValue = Atom.safeBottom + 12;
-  final double bottomNavigationBarHeight = Atom.safeBottom + 65;
+  double stackedTopPaddingValue(BuildContext context) =>
+      54 + MediaQuery.of(context).viewPadding.top;
+  double get defaultBottomValue => Atom.safeBottom + 12;
+  double get bottomNavigationBarHeight => Atom.safeBottom + 65;
   final double defaultElevation = 0.0;
 }

@@ -25,10 +25,8 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
     return Dialog(
       elevation: 0,
       insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.grayColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      backgroundColor: context.xAppColors.gallery,
+      shape: R.sizes.defaultShape,
       child: Container(
         width: context.width - 50,
         padding: const EdgeInsets.all(20),
@@ -71,8 +69,9 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
                               Text(
                                 widget.translators[index].language ?? '',
                                 style: TextStyle(
-                                    fontSize: context.xHeadline3.fontSize,
-                                    color: getIt<IAppConfig>().theme.black),
+                                  fontSize: context.xHeadline3.fontSize,
+                                  color: context.xAppColors.codGray,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ],

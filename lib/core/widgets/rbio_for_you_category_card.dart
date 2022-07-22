@@ -23,9 +23,7 @@ class RbioForYouCategoryCard extends StatelessWidget {
       child: Material(
         clipBehavior: Clip.antiAlias,
         elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
+        shape: R.sizes.defaultShape,
         child: SizedBox(
           height: 300,
           width: 300,
@@ -56,8 +54,7 @@ class RbioForYouCategoryCard extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            getIt<IAppConfig>().theme.darkBlack.withAlpha(50),
+                        color: context.xAppColors.black.withAlpha(50),
                         blurRadius: 15,
                         spreadRadius: 0,
                         offset: const Offset(5, 10),
@@ -69,13 +66,13 @@ class RbioForYouCategoryCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(6),
                         child: Text(
-                          title ?? "No title",
+                          title ?? "",
                           textAlign: TextAlign.left,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline5.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: getIt<IAppConfig>().theme.textColor,
+                            color: context.xTextColor,
                           ),
                         ),
                       ),

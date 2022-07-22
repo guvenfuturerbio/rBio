@@ -20,17 +20,28 @@ class BgChartFilterPopUpVm extends ChangeNotifier {
 
   final Map<Color, GlucoseMarginsFilter> _colorInfo =
       <Color, GlucoseMarginsFilter>{};
-  Map<Color, GlucoseMarginsFilter> get colorInfo {
+
+  Map<Color, GlucoseMarginsFilter> colorInfo(BuildContext context) {
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.veryLow, () => GlucoseMarginsFilter.veryLow);
+      context.xAppColors.roman,
+      () => GlucoseMarginsFilter.veryLow,
+    );
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.low, () => GlucoseMarginsFilter.low);
+      context.xAppColors.tonysPink,
+      () => GlucoseMarginsFilter.low,
+    );
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.target, () => GlucoseMarginsFilter.target);
+      context.xAppColors.deYork,
+      () => GlucoseMarginsFilter.target,
+    );
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.high, () => GlucoseMarginsFilter.high);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.veryHigh,
-        () => GlucoseMarginsFilter.veryHigh);
+      context.xAppColors.energyYellow,
+      () => GlucoseMarginsFilter.high,
+    );
+    _colorInfo.putIfAbsent(
+      context.xAppColors.casablanca,
+      () => GlucoseMarginsFilter.veryHigh,
+    );
     return _colorInfo;
   }
 

@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icon(
             Icons.add,
             size: R.sizes.iconSize,
-            color: Colors.white,
+            color: context.xAppBarTheme.iconTheme?.color,
           ),
         ),
         child2: SizedBox(
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(
                 Icons.done,
                 size: R.sizes.iconSize,
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xAppBarTheme.iconTheme?.color,
               ),
             ),
           ),

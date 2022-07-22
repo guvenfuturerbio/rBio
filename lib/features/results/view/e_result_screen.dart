@@ -82,7 +82,7 @@ class EResultView extends StatelessWidget {
             ),
 
             //
-            const SizedBox(height: 12.0),
+            R.widgets.hSizer12,
 
             //
             Expanded(

@@ -198,9 +198,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                         color: result.graphType == GraphTypes.weight
                             ? context.xPrimaryColor
                             : null,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Text(
@@ -227,9 +225,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                         color: result.graphType == GraphTypes.bmi
                             ? context.xPrimaryColor
                             : null,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Text(
@@ -293,16 +289,15 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    RbioCircleAvatar(
                       foregroundImage: NetworkImage(R.image.circlevatar),
-                      backgroundColor:
-                          getIt<IAppConfig>().theme.cardBackgroundColor,
+                      backgroundColor: context.xCardColor,
                     ),
 
                     //
@@ -332,7 +327,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
           ),
 
           //
-          const SizedBox(width: 6),
+          R.widgets.wSizer8,
 
           //
           GestureDetector(
@@ -371,7 +366,7 @@ class _ScalePatientDetailViewState extends State<ScalePatientDetailView>
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Text(

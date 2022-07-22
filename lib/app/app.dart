@@ -167,7 +167,7 @@ class _MyAppCommonState extends State<MyAppCommon> {
             create: (ctx) => ScaleProgressVm(),
           ),
           ChangeNotifierProvider<BgProgressVm>.value(
-            value: BgProgressVm(context: context),
+            value: BgProgressVm(context),
           ),
           ChangeNotifierProvider<BpProgressVm>.value(
             value: BpProgressVm(),
@@ -239,26 +239,113 @@ class _MyAppCommonState extends State<MyAppCommon> {
 
                   //
                   theme: ThemeData(
+                    fontFamily: getIt<IAppConfig>().theme.fontFamily,
+                    textTheme: getIt<IAppConfig>().theme.textTheme,
                     primaryColor: getIt<IAppConfig>().theme.primaryColor,
                     scaffoldBackgroundColor:
                         getIt<IAppConfig>().theme.scaffoldBackgroundColor,
-                    fontFamily: getIt<IAppConfig>().theme.fontFamily,
-                    textTheme: getIt<IAppConfig>().theme.textTheme,
+
+                    // * ColorScheme
+                    colorScheme: ColorScheme.fromSeed(
+                      seedColor: getIt<IAppConfig>().theme.primaryColor,
+                    ).copyWith(
+                      secondary: getIt<IAppConfig>().theme.secondaryColor,
+                      primary: getIt<IAppConfig>().theme.textColor,
+                      inversePrimary:
+                          getIt<IAppConfig>().theme.inverseTextColor,
+                      onPrimary: getIt<IAppConfig>().theme.onPrimaryTextColor,
+                      secondaryContainer:
+                          getIt<IAppConfig>().theme.secondaryContainerColor,
+                    ),
+
+                    // * CardTheme
+                    cardTheme: const CardTheme().copyWith(
+                      elevation: 0.0,
+                      color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: R.sizes.borderRadiusCircular,
+                      ),
+                    ),
+
+                    // * AppBarTheme
                     appBarTheme: AppBarTheme(
                       backgroundColor: getIt<IAppConfig>().theme.appbarColor,
+                      titleTextStyle: getIt<IAppConfig>()
+                          .theme
+                          .textTheme
+                          .headline1
+                          ?.copyWith(
+                            color: getIt<IAppConfig>().theme.appbarTextColor,
+                            fontWeight: FontWeight.w400,
+                          ),
+                      iconTheme: IconThemeData(
+                        color: getIt<IAppConfig>().theme.appbarIconColor,
+                      ),
                     ),
-                    cardTheme: const CardTheme().copyWith(
-                      color: getIt<IAppConfig>().theme.cardBackgroundColor,
+
+                    // * BottomNavigationBarTheme
+                    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                      backgroundColor:
+                          getIt<IAppConfig>().theme.bottomMenuColor,
                     ),
-                    textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: getIt<IAppConfig>().theme.primaryColor,
-                      selectionColor: getIt<IAppConfig>().theme.primaryColor,
-                      selectionHandleColor: getIt<IAppConfig>().theme.primaryColor,
+
+                    // * IconTheme
+                    iconTheme: IconThemeData(
+                      color: getIt<IAppConfig>().theme.iconColor,
                     ),
-                    cupertinoOverrideTheme: CupertinoThemeData(
-                      primaryColor: getIt<IAppConfig>().theme.primaryColor,
+
+                    // * FloatingActionButtonTheme
+                    floatingActionButtonTheme: FloatingActionButtonThemeData(
+                      backgroundColor:
+                          getIt<IAppConfig>().theme.fabBackgroundColor,
                     ),
-                  ),
+
+                    // * TextSelectionTheme
+                    textSelectionTheme:
+                        getIt<IAppConfig>().theme.textSelectionTheme,
+
+                    // * CupertinoTheme
+                    cupertinoOverrideTheme:
+                        getIt<IAppConfig>().theme.cupertinoTheme,
+
+                    // * DialogTheme
+                    dialogTheme: const DialogTheme(),
+                  )..addCustomTheme(
+                      MyCustomTheme(
+                        iron: getIt<IAppConfig>().theme.iron,
+                        grey: getIt<IAppConfig>().theme.grey,
+                        white: getIt<IAppConfig>().theme.white,
+                        black: getIt<IAppConfig>().theme.black,
+                        punch: getIt<IAppConfig>().theme.punch,
+                        roman: getIt<IAppConfig>().theme.roman,
+                        malibu: getIt<IAppConfig>().theme.malibu,
+                        deYork: getIt<IAppConfig>().theme.deYork,
+                        skeptic: getIt<IAppConfig>().theme.skeptic,
+                        boulder: getIt<IAppConfig>().theme.boulder,
+                        mercury: getIt<IAppConfig>().theme.mercury,
+                        codGray: getIt<IAppConfig>().theme.codGray,
+                        gallery: getIt<IAppConfig>().theme.gallery,
+                        concrete: getIt<IAppConfig>().theme.concrete,
+                        supernova: getIt<IAppConfig>().theme.supernova,
+                        tonysPink: getIt<IAppConfig>().theme.tonysPink,
+                        dustyGray: getIt<IAppConfig>().theme.dustyGray,
+                        greenHaze: getIt<IAppConfig>().theme.greenHaze,
+                        casablanca: getIt<IAppConfig>().theme.casablanca,
+                        frenchPass: getIt<IAppConfig>().theme.frenchPass,
+                        kournikova: getIt<IAppConfig>().theme.kournikova,
+                        ultramarine: getIt<IAppConfig>().theme.ultramarine,
+                        frenchLilac: getIt<IAppConfig>().theme.frenchLilac,
+                        textDisabledColor:
+                            getIt<IAppConfig>().theme.textDisabledColor,
+                        energyYellow: getIt<IAppConfig>().theme.energyYellow,
+                        cornflowerBlue:
+                            getIt<IAppConfig>().theme.cornflowerBlue,
+                        fuzzyWuzzyBrown:
+                            getIt<IAppConfig>().theme.fuzzyWuzzyBrown,
+                      ),
+                    ),
+
+                  //
                   locale: context.watch<LocaleNotifier>().current,
                   localizationsDelegates: const [
                     LocaleProvider.delegate,

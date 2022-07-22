@@ -55,7 +55,7 @@ class GuvenDateRange extends StatelessWidget {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: backColor ?? getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: backColor ?? context.xCardColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             padding: const EdgeInsets.symmetric(
@@ -110,7 +110,7 @@ class GuvenDateRange extends StatelessWidget {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: backColor ?? getIt<IAppConfig>().theme.cardBackgroundColor,
+              color: backColor ?? context.xCardColor,
               borderRadius: R.sizes.borderRadiusCircular,
             ),
             padding: const EdgeInsets.symmetric(

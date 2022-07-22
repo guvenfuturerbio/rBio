@@ -39,9 +39,13 @@ class BgCustomBarPie extends StatelessWidget {
                               value.totalValuableCount,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            colors: [getIt<IAppConfig>().theme.veryLow, getIt<IAppConfig>().theme.veryLow],
-                            begin: Alignment.topLeft,
-                            end: Alignment.topRight),
+                          colors: [
+                            context.xAppColors.roman,
+                            context.xAppColors.roman,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                        ),
                       ),
                       child: animatedCount(value.totalValuableCount == 0
                           ? 0
@@ -58,9 +62,13 @@ class BgCustomBarPie extends StatelessWidget {
                               value.totalValuableCount,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            colors: [getIt<IAppConfig>().theme.low, getIt<IAppConfig>().theme.low],
-                            begin: Alignment.topLeft,
-                            end: Alignment.topRight),
+                          colors: [
+                            context.xAppColors.tonysPink,
+                            context.xAppColors.tonysPink,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                        ),
                       ),
                       child: animatedCount(value.totalValuableCount == 0
                           ? 0
@@ -76,9 +84,13 @@ class BgCustomBarPie extends StatelessWidget {
                               value.totalValuableCount,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            colors: [getIt<IAppConfig>().theme.target, getIt<IAppConfig>().theme.target],
-                            begin: Alignment.topLeft,
-                            end: Alignment.topRight),
+                          colors: [
+                            context.xAppColors.deYork,
+                            context.xAppColors.deYork,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                        ),
                       ),
                       child: animatedCount(value.totalValuableCount == 0
                           ? 0
@@ -95,9 +107,13 @@ class BgCustomBarPie extends StatelessWidget {
                               value.totalValuableCount,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            colors: [getIt<IAppConfig>().theme.high, getIt<IAppConfig>().theme.high],
-                            begin: Alignment.topLeft,
-                            end: Alignment.topRight),
+                          colors: [
+                            context.xAppColors.energyYellow,
+                            context.xAppColors.energyYellow,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                        ),
                       ),
                       child: animatedCount(value.totalValuableCount == 0
                           ? 0
@@ -114,9 +130,13 @@ class BgCustomBarPie extends StatelessWidget {
                               value.totalValuableCount,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            colors: [getIt<IAppConfig>().theme.veryHigh, getIt<IAppConfig>().theme.veryHigh],
-                            begin: Alignment.topLeft,
-                            end: Alignment.topRight),
+                          colors: [
+                            context.xAppColors.casablanca,
+                            context.xAppColors.casablanca,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                        ),
                       ),
                       child: animatedCount(value.totalValuableCount == 0
                           ? 0

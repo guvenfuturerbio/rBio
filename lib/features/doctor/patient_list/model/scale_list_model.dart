@@ -35,7 +35,7 @@ class ScalePatientListModel extends PatientListModel<DoctorBMIPatientModel> {
 
   @override
   Color getBackColor(String text, DoctorBMIPatientModel model) {
-    return getIt<IAppConfig>().theme.textColorPassive;
+    return context.xAppColors.textDisabledColor;
   }
 
   @override

@@ -135,11 +135,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                 itemCount: value.bodySubLocations.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    elevation: R.sizes.defaultElevation,
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
                     child: ExpandablePanel(
                       controller: value.expControllerList[index],
                       //iconColor: R.color.online_appointment,
@@ -203,9 +199,8 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                                     .allBodySymptoms[
                                                                 index]![indx])
                                                         ? context.xPrimaryColor
-                                                        : getIt<IAppConfig>()
-                                                            .theme
-                                                            .textColorSecondary,
+                                                        : context
+                                                            .xTextInverseColor,
                                                   ),
                                                 ),
                                               ),

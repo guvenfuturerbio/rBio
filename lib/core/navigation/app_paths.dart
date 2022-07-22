@@ -489,7 +489,7 @@ class VRouterRoutes {
 
         VWidget(
           path: PagePaths.visitDetail,
-          widget: VisitDetailScreen(),
+          widget: const VisitDetailScreen(),
         ),
         // #endregion
 
@@ -858,9 +858,13 @@ class DeviceRegisterDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GuvenAlert(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-      title: GuvenAlert.buildTitle(LocaleProvider.current.info),
+      backgroundColor: context.xCardColor,
+      title: GuvenAlert.buildTitle(
+        context,
+        LocaleProvider.current.info,
+      ),
       content: GuvenAlert.buildDescription(
+        context,
         LocaleProvider.current.device_register,
       ),
       actions: [

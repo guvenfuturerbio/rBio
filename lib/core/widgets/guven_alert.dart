@@ -43,10 +43,7 @@ class GuvenAlert extends StatelessWidget {
               ),
             )
           : title,
-      shape: shape ??
-          RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
+      shape: shape ?? R.sizes.defaultShape,
       actions: actions,
       content: !Atom.isWeb
           ? content
@@ -59,31 +56,36 @@ class GuvenAlert extends StatelessWidget {
     );
   }
 
-  static Widget buildTitle(String text) {
+  static Widget buildTitle(BuildContext context, String text) {
     return Text(
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 26,
         fontWeight: FontWeight.w700,
-        color: getIt<IAppConfig>().theme.textColorSecondary,
+        color: context.xTextInverseColor,
       ),
     );
   }
 
-  static Widget buildDescription(String text, {Color? color}) {
+  static Widget buildDescription(
+    BuildContext context,
+    String text, {
+    Color? color,
+  }) {
     return Text(
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 20.0,
         fontFamily: 'Roboto',
-        color: color ?? getIt<IAppConfig>().theme.textColorSecondary,
+        color: color ?? context.xTextInverseColor,
       ),
     );
   }
 
   static Widget buildSmallDescription(
+    BuildContext context,
     String text, {
     TextAlign? textAlign,
     TextDecoration? decoration,
@@ -94,7 +96,7 @@ class GuvenAlert extends StatelessWidget {
       style: TextStyle(
         fontSize: 16.0,
         fontFamily: 'Roboto',
-        color: getIt<IAppConfig>().theme.textColorSecondary,
+        color: context.xTextInverseColor,
         decoration: decoration,
       ),
     );
@@ -125,35 +127,37 @@ class GuvenAlert extends StatelessWidget {
     return _actionButton(
       title,
       context.xPrimaryColor,
-      getIt<IAppConfig>().theme.textColor,
+      context.xTextColor,
       onPressed,
       padding: padding,
     );
   }
 
   static Widget buildMaterialRedAction(
+    BuildContext context,
     String title,
     void Function() onPressed, {
     EdgeInsetsGeometry? padding,
   }) {
     return _actionButton(
       title,
-      getIt<IAppConfig>().theme.darkRed,
-      getIt<IAppConfig>().theme.textColor,
+      context.xAppColors.punch,
+      context.xTextColor,
       onPressed,
       padding: padding,
     );
   }
 
   static Widget buildMaterialWhiteAction(
+    BuildContext context,
     String title,
     void Function() onPressed, {
     EdgeInsetsGeometry? padding,
   }) {
     return _actionButton(
       title,
-      getIt<IAppConfig>().theme.cardBackgroundColor,
-      getIt<IAppConfig>().theme.textColorSecondary,
+      context.xCardColor,
+      context.xTextInverseColor,
       onPressed,
       padding: padding,
     );
@@ -174,8 +178,7 @@ class GuvenAlert extends StatelessWidget {
       child: RbioTextButton(
         backgroundColor: Colors.transparent,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        shape:
-            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+        shape: R.sizes.defaultShape,
         padding: padding ?? const EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           title,

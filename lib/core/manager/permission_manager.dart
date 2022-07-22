@@ -139,6 +139,7 @@ class PermissionManagerImpl extends PermissionManager {
                     //
                     Expanded(
                       child: RbioSmallDialogButton.red(
+                        context,
                         title: LocaleProvider.current.not_now,
                         onPressed: () {
                           Navigator.of(context).pop();

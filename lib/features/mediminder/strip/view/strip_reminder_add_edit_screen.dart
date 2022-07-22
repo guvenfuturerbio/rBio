@@ -209,8 +209,8 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         //
         Expanded(
           child: RbioElevatedButton(
-            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-            textColor: getIt<IAppConfig>().theme.textColorSecondary,
+            backColor: context.xCardColor,
+            textColor: context.xTextInverseColor,
             title: LocaleProvider.current.btn_cancel,
             onTap: () {
               Atom.historyBack();
@@ -242,7 +242,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -282,10 +282,10 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
   // #region _buildCircleCount
   Widget _buildCircleCount(StripReminderAddEditResult result) {
     return Center(
-      child: CircleAvatar(
+      child: RbioCircleAvatar(
         radius: 90,
         backgroundColor: context.xPrimaryColor,
-        child: CircleAvatar(
+        child: RbioCircleAvatar(
           backgroundColor: Colors.white,
           radius: 70,
           child: Column(
@@ -339,7 +339,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
                 style: context.xHeadline3.copyWith(
                   height: 1,
                   fontSize: 35,
-                  color: getIt<IAppConfig>().theme.textColorSecondary,
+                  color: context.xTextInverseColor,
                 ),
               ),
             ],
@@ -428,8 +428,9 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         child: Text(
           LocaleProvider.current.strip_page_info_message,
           style: context.xHeadline4.copyWith(
-              fontWeight: FontWeight.w100,
-              color: getIt<IAppConfig>().theme.textColorPassive),
+            fontWeight: FontWeight.w100,
+            color: context.xAppColors.textDisabledColor,
+          ),
           textAlign: TextAlign.center,
         ),
       ),

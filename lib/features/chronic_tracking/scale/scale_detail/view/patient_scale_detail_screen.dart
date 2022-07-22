@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
@@ -110,7 +109,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
     if (result.allList.isEmpty) {
       return RbioEmptyText(
         title: LocaleProvider.current.no_measurement,
-        textColor: getIt<IAppConfig>().theme.textColor,
+        textColor: context.xTextColor,
       );
     }
 
@@ -181,7 +180,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
                       .replaceAll(".", ","),
               style: context.xHeadline1.copyWith(
                 fontSize: context.xHeadline1.fontSize! * 1.5,
-                color: getIt<IAppConfig>().theme.textColor,
+                color: context.xTextColor,
               ),
             ),
           );
@@ -207,7 +206,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
             child: result.filterList.isEmpty
                 ? RbioEmptyText(
                     title: LocaleProvider.current.no_measurement,
-                    textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                    textColor: context.xTextInverseColor,
                   )
                 : ValueListenableBuilder<ScaleEntity?>(
                     valueListenable: _pointTapNotifier,
@@ -234,29 +233,12 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
 
   // #region _buildFAB
   Widget _buildFAB(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: context.xPrimaryColor,
+    return RbioSVGFAB.primaryColor(
+      context,
+      imagePath: R.image.add,
       onPressed: () async {
         Atom.to(PagePaths.scaleManuelAdd);
-        // final isAdded = await Atom.show(
-        //   const ScaleTaggerPopUp(),
-        //   barrierDismissible: false,
-        //   barrierColor: Colors.transparent,
-        // );
-
-        // if (isAdded != null) {
-        //   if (isAdded == true) {
-        //     await context.read<ScaleDetailCubit>().fetchAll();
-        //   }
-        // }
       },
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SvgPicture.asset(
-          R.image.add,
-          color: getIt<IAppConfig>().theme.white,
-        ),
-      ),
     );
   }
   // #endregion
@@ -326,7 +308,7 @@ class ScaleCard extends StatelessWidget {
                         Text(
                           entity.dateTime.xFormatTime7(),
                           style: context.xHeadline5.copyWith(
-                            color: getIt<IAppConfig>().theme.grey,
+                            color: context.xAppColors.grey,
                           ),
                         ),
 
@@ -334,7 +316,7 @@ class ScaleCard extends StatelessWidget {
                         Text(
                           entity.dateTime.xFormatTime8(),
                           style: context.xHeadline5.copyWith(
-                            color: getIt<IAppConfig>().theme.grey,
+                            color: context.xAppColors.grey,
                           ),
                         ),
                       ],
@@ -352,7 +334,7 @@ class ScaleCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: isSelected
                               ? context.xPrimaryColor
-                              : getIt<IAppConfig>().theme.grayColor,
+                              : context.xAppColors.gallery,
                           borderRadius: BorderRadius.only(
                             topLeft: R.sizes.radiusCircular,
                             bottomLeft: R.sizes.radiusCircular,
@@ -364,9 +346,8 @@ class ScaleCard extends StatelessWidget {
                               ? ''
                               : entity.weight!.xGetFriendyString,
                           entity.getUnit,
-                          textColor: isSelected
-                              ? null
-                              : getIt<IAppConfig>().theme.textColorSecondary,
+                          textColor:
+                              isSelected ? null : context.xTextInverseColor,
                         ),
                       ),
                     ),
@@ -377,7 +358,7 @@ class ScaleCard extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
-                          color: getIt<IAppConfig>().theme.grayColor,
+                          color: context.xAppColors.gallery,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -392,9 +373,7 @@ class ScaleCard extends StatelessWidget {
                                     ? "0"
                                     : entity.bmi!.xGetFriendyString,
                                 "BMI",
-                                textColor: getIt<IAppConfig>()
-                                    .theme
-                                    .textColorSecondary,
+                                textColor: context.xTextInverseColor,
                               ),
                             ),
 
@@ -406,9 +385,7 @@ class ScaleCard extends StatelessWidget {
                                     ? "0"
                                     : entity.bmh!.xGetFriendyString,
                                 "BMH",
-                                textColor: getIt<IAppConfig>()
-                                    .theme
-                                    .textColorSecondary,
+                                textColor: context.xTextInverseColor,
                               ),
                             ),
                           ],
@@ -454,13 +431,11 @@ class ScaleCard extends StatelessWidget {
       AlertDialog(
         contentPadding: EdgeInsets.zero,
         backgroundColor: context.xPrimaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
+        shape: R.sizes.defaultShape,
         title: Text(
           LocaleProvider.current.warning,
           style: context.xHeadline1.copyWith(
-            color: getIt<IAppConfig>().theme.textColor,
+            color: context.xTextColor,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -469,14 +444,14 @@ class ScaleCard extends StatelessWidget {
           child: Text(
             LocaleProvider.current.measurement_delete_question,
             style: context.xHeadline3.copyWith(
-              color: getIt<IAppConfig>().theme.textColor,
+              color: context.xTextColor,
             ),
           ),
         ),
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              primary: getIt<IAppConfig>().theme.cardBackgroundColor,
+              primary: context.xCardColor,
             ),
             child: Text(LocaleProvider.current.Ok),
             onPressed: () {
@@ -503,7 +478,7 @@ class ScaleCard extends StatelessWidget {
         Text(
           topTitle,
           style: context.xHeadline3.copyWith(
-            color: textColor ?? getIt<IAppConfig>().theme.textColor,
+            color: textColor ?? context.xTextColor,
           ),
         ),
 
@@ -511,7 +486,7 @@ class ScaleCard extends StatelessWidget {
         Text(
           bottomTitle,
           style: context.xHeadline4.copyWith(
-            color: textColor ?? getIt<IAppConfig>().theme.textColor,
+            color: textColor ?? context.xTextColor,
           ),
         ),
       ],

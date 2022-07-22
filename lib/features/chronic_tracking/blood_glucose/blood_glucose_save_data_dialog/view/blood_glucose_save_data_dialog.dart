@@ -76,7 +76,7 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
             stops: const [0.0, 1.0],
             colors: <Color>[
               context.xPrimaryColor,
-              getIt<IAppConfig>().theme.secondaryColor,
+              context.xSecondaryColor,
             ],
           ),
           widgetIndicator: Center(

@@ -19,16 +19,19 @@ class DetailedGradientMessageWidget extends StatelessWidget {
       children: [
         //
         GuvenAlert.buildSmallDescription(
+          context,
           LocaleProvider.current.detailed_error_dialog_part1,
         ),
 
         //
         GuvenAlert.buildSmallDescription(
+          context,
           LocaleProvider.current.detailed_error_dialog_part2,
         ),
 
         //
         GuvenAlert.buildSmallDescription(
+          context,
           LocaleProvider.current.detailed_error_dialog_part3,
         ),
 

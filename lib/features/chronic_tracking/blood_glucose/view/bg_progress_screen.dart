@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
@@ -143,16 +142,10 @@ class BgProgressScreen extends StatelessWidget {
   }
 
   Widget _buildFAB(BgProgressVm vm, BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: context.xPrimaryColor,
+    return RbioSVGFAB.primaryColor(
+      context,
       onPressed: () => vm.manuelEntry(context),
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SvgPicture.asset(
-          R.image.add,
-          color: getIt<IAppConfig>().theme.white,
-        ),
-      ),
+      imagePath: R.image.add,
     );
   }
 
@@ -171,16 +164,15 @@ class BgProgressScreen extends StatelessWidget {
               height: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  RbioCircleAvatar(
                     foregroundImage: Utils.instance.getCacheProfileImage,
-                    backgroundColor:
-                        getIt<IAppConfig>().theme.cardBackgroundColor,
+                    backgroundColor: context.xCardColor,
                   ),
 
                   //
@@ -203,7 +195,7 @@ class BgProgressScreen extends StatelessWidget {
           ),
 
           //
-          const SizedBox(width: 6),
+          R.widgets.wSizer8,
 
           //
           GestureDetector(
@@ -234,7 +226,7 @@ class BgProgressScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Text(

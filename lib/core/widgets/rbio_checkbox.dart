@@ -18,7 +18,7 @@ class RbioCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        unselectedWidgetColor: getIt<IAppConfig>().theme.checkboxBorderColor,
+        unselectedWidgetColor: context.xPrimaryColor,
       ),
       child: Checkbox(
         value: value,

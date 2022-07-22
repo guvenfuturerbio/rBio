@@ -50,7 +50,7 @@ class _QuantityDropdownState extends State<QuantityDropdown> {
                 constraints: const BoxConstraints(maxHeight: 50, maxWidth: 50),
                 child: TextFormField(
                   controller: quantity,
-                  style: Utils.instance.inputTextStyle(),
+                  style: Utils.instance.inputTextStyle(context),
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(),

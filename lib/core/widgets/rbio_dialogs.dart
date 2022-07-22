@@ -14,10 +14,9 @@ class RbioBaseDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      backgroundColor:
+          getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
+      shape: R.sizes.defaultShape,
       child: Container(
         width: context.width > 500 ? 500 : context.width - 50,
         padding: const EdgeInsets.all(20),
@@ -41,10 +40,9 @@ class RbioBaseGreyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      backgroundColor:
+          getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
+      shape: R.sizes.defaultShape,
       child: Container(
         width: context.width > 500 ? 500 : context.width - 50,
         padding: const EdgeInsets.all(20),
@@ -198,25 +196,27 @@ class RbioSmallDialogButton extends StatelessWidget {
     );
   }
 
-  factory RbioSmallDialogButton.red({
+  factory RbioSmallDialogButton.red(
+    BuildContext context, {
     required String? title,
     required void Function()? onPressed,
   }) {
     return RbioSmallDialogButton(
-      backgroundColor: getIt<IAppConfig>().theme.darkRed,
+      backgroundColor: context.xAppColors.punch,
       textColor: getIt<IAppConfig>().theme.white,
       title: title,
       onPressed: onPressed,
     );
   }
 
-  factory RbioSmallDialogButton.white({
+  factory RbioSmallDialogButton.white(
+    BuildContext context, {
     required String? title,
     required void Function()? onPressed,
   }) {
     return RbioSmallDialogButton(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-      textColor: getIt<IAppConfig>().theme.textColorSecondary,
+      backgroundColor: context.xCardColor,
+      textColor: context.xTextInverseColor,
       title: title,
       onPressed: onPressed,
     );
@@ -228,7 +228,7 @@ class RbioSmallDialogButton extends StatelessWidget {
       onPressed: onPressed,
       backgroundColor: backgroundColor,
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      shape: RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+      shape: R.sizes.defaultShape,
       padding: const EdgeInsets.symmetric(
         horizontal: 35,
         vertical: 5,
@@ -237,7 +237,7 @@ class RbioSmallDialogButton extends StatelessWidget {
         title ?? '',
         textAlign: TextAlign.left,
         style: context.xHeadline4.copyWith(
-          color: textColor ?? getIt<IAppConfig>().theme.textColor,
+          color: textColor ?? context.xTextColor,
           fontWeight: FontWeight.bold,
         ),
       ),

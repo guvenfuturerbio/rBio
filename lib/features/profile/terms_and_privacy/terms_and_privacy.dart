@@ -25,7 +25,10 @@ class TermsAndPrivacyScreen extends StatelessWidget {
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
       context: context,
-      title: Text(LocaleProvider.current.terms_and_privacy),
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.terms_and_privacy,
+      ),
     );
   }
 

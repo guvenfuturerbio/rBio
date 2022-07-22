@@ -77,7 +77,7 @@ class BpTaggerPopUp extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        _buildInputSection(value),
+                        _buildInputSection(context, value),
                         _buildDateTimeSection(context, value),
                         _buildNoteSection(context, value),
                       ],
@@ -88,6 +88,7 @@ class BpTaggerPopUp extends StatelessWidget {
 
               //
               _buildActions(
+                context,
                 Atom.dismiss,
                 isEdit ? value.update : value.save,
               ),
@@ -103,7 +104,7 @@ class BpTaggerPopUp extends StatelessWidget {
   }
 
   // #region _buildInputSection
-  Widget _buildInputSection(BpTaggerVm value) {
+  Widget _buildInputSection(BuildContext context, BpTaggerVm value) {
     return Wrap(
       alignment: WrapAlignment.center,
       children: [
@@ -111,7 +112,7 @@ class BpTaggerPopUp extends StatelessWidget {
           LocaleProvider.current.sys,
           value.changeSys,
           value.context.xHeadline1,
-          value.bpModel!.systolicColor,
+          value.bpModel!.systolicColor(context),
           value.sysController,
           value.context.textScale * (value.height * .1),
           value.context,
@@ -120,7 +121,7 @@ class BpTaggerPopUp extends StatelessWidget {
           LocaleProvider.current.dia,
           value.changeDia,
           value.context.xHeadline1,
-          value.bpModel!.diastolicColor,
+          value.bpModel!.diastolicColor(context),
           value.diaController,
           value.context.textScale * (value.height * .1),
           value.context,
@@ -129,7 +130,7 @@ class BpTaggerPopUp extends StatelessWidget {
           LocaleProvider.current.pulse,
           value.changePulse,
           value.context.xHeadline1,
-          value.bpModel!.pulseColor,
+          value.bpModel!.pulseColor(context),
           value.pulseController,
           value.context.textScale * (value.height * .1),
           value.context,
@@ -150,7 +151,6 @@ class BpTaggerPopUp extends StatelessWidget {
     BuildContext context,
   ) {
     return Card(
-      elevation: R.sizes.defaultElevation,
       shape: RoundedRectangleBorder(
         borderRadius: R.sizes.borderRadiusCircular,
         side: BorderSide(width: 7, color: color),
@@ -216,11 +216,7 @@ class BpTaggerPopUp extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16, top: 20),
         child: Card(
-          elevation: R.sizes.defaultElevation,
           color: getIt<IAppConfig>().theme.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.only(
@@ -260,10 +256,6 @@ class BpTaggerPopUp extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 12),
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: TextField(
           controller: value.noteController,
           keyboardType: TextInputType.multiline,
@@ -290,6 +282,7 @@ class BpTaggerPopUp extends StatelessWidget {
 
   // #region _buildActions
   Widget _buildActions(
+    BuildContext context,
     VoidCallback leftButtonAction,
     VoidCallback rightButtonAction,
   ) {
@@ -297,6 +290,7 @@ class BpTaggerPopUp extends StatelessWidget {
       children: [
         //
         _buildActionButton(
+          context,
           isSave: false,
           onTap: leftButtonAction,
         ),
@@ -306,6 +300,7 @@ class BpTaggerPopUp extends StatelessWidget {
 
         //
         _buildActionButton(
+          context,
           isSave: true,
           onTap: rightButtonAction,
         ),
@@ -315,7 +310,8 @@ class BpTaggerPopUp extends StatelessWidget {
   // #endregion
 
   // #region _buildActionButton
-  Widget _buildActionButton({
+  Widget _buildActionButton(
+    BuildContext context, {
     required bool isSave,
     required void Function()? onTap,
   }) {
@@ -323,8 +319,8 @@ class BpTaggerPopUp extends StatelessWidget {
       title:
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
       onTap: onTap,
-      backColor: isSave ? null : getIt<IAppConfig>().theme.cardBackgroundColor,
-      textColor: isSave ? null : getIt<IAppConfig>().theme.textColorSecondary,
+      backColor: isSave ? null : context.xCardColor,
+      textColor: isSave ? null : context.xTextInverseColor,
     );
   }
   // #endregion

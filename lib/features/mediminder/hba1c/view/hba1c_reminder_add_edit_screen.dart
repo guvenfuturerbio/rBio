@@ -198,7 +198,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -256,7 +256,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -304,7 +304,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -323,7 +323,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                     ? ""
                     : DateTime.parse(result.scheduledDate!).xFormatTime10(),
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColorSecondary,
+                  color: context.xTextInverseColor,
                 ),
               ),
             ),
@@ -395,7 +395,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -414,7 +414,7 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
                     ? ''
                     : result.scheduledHour!.xTimeFormat,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColorSecondary,
+                  color: context.xTextInverseColor,
                 ),
               ),
             ),
@@ -450,8 +450,8 @@ class _Hba1cReminderAddEditView extends StatelessWidget {
             //
             Expanded(
               child: RbioElevatedButton(
-                backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-                textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                backColor: context.xCardColor,
+                textColor: context.xTextInverseColor,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {
                   Atom.historyBack();

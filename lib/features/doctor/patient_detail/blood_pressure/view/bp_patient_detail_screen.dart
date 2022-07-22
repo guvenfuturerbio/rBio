@@ -156,7 +156,7 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
                   //
                   if (MediaQuery.of(context).orientation ==
                       Orientation.portrait)
-                    const SizedBox(height: 12),
+                    R.widgets.hSizer12,
 
                   if (!vm.isDataLoading! &&
                       MediaQuery.of(context).orientation ==
@@ -224,16 +224,15 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    RbioCircleAvatar(
                       foregroundImage: NetworkImage(R.image.circlevatar),
-                      backgroundColor:
-                          getIt<IAppConfig>().theme.cardBackgroundColor,
+                      backgroundColor: context.xCardColor,
                     ),
 
                     //
@@ -263,7 +262,7 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
           ),
 
           //
-          const SizedBox(width: 6),
+          R.widgets.wSizer8,
 
           //
           GestureDetector(
@@ -293,7 +292,7 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Text(

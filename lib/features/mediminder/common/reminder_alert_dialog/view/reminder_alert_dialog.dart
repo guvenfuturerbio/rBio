@@ -178,6 +178,7 @@ class _ReminderAlertView extends StatelessWidget {
 
           //
           RbioSmallDialogButton.red(
+            context,
             title: LocaleProvider.current.discard,
             onPressed: () {
               Atom.dismiss(false);

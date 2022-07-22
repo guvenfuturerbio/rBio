@@ -160,8 +160,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                             image: R.image.user,
                           )
                           .copyWith(
-                            fillColor:
-                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            fillColor: context.xCardColor,
                             filled: true,
                           ),
                       autocorrect: false,
@@ -206,8 +205,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                             image: R.image.creditCardNumber,
                           )
                           .copyWith(
-                            fillColor:
-                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            fillColor: context.xCardColor,
                             filled: true,
                           ),
                       focusNode: _cardNumberFNode,
@@ -251,8 +249,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                             image: R.image.password,
                           )
                           .copyWith(
-                            fillColor:
-                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            fillColor: context.xCardColor,
                             filled: true,
                           ),
                       focusNode: _cardCcvFNode,
@@ -298,8 +295,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                             image: R.image.creditCalendar,
                           )
                           .copyWith(
-                            fillColor:
-                                getIt<IAppConfig>().theme.cardBackgroundColor,
+                            fillColor: context.xCardColor,
                             filled: true,
                           ),
                       focusNode: _cardExpirityDateFNode,
@@ -449,5 +445,5 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
     );
   }
 
-  Widget _buildVerticalGap() => const SizedBox(height: 8);
+  Widget _buildVerticalGap() => R.widgets.hSizer8;
 }

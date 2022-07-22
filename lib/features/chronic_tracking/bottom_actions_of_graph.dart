@@ -19,9 +19,7 @@ abstract class IBaseBottomActionsOfGraph {
         primary: Colors.white,
         shadowColor: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
+        shape: R.sizes.defaultShape,
       ),
       child: AutoSizeText(
         title ?? LocaleProvider.current.filter_graphs,

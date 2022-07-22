@@ -26,7 +26,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -167,7 +167,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
           //
           if (isBottomLine)
             Container(
-              color: getIt<IAppConfig>().theme.textColorPassive,
+              color: context.xAppColors.textDisabledColor,
               height: 0.25,
             )
           else

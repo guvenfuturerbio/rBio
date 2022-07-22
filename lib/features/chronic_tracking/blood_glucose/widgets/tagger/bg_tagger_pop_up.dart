@@ -182,13 +182,14 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        color: Utils.instance
-            .getGlucoseMeasurementColor(double.parse(value.data.level).toInt()),
+        color: Utils.instance.getGlucoseMeasurementColor(
+          context,
+          double.parse(value.data.level).toInt(),
+        ),
         border: Border.all(
           color: Utils.instance.getGlucoseMeasurementColor(
-            double.parse(
-              value.data.level,
-            ).toInt(),
+            context,
+            double.parse(value.data.level).toInt(),
           ),
           width: 5.0,
         ),
@@ -207,10 +208,13 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
         shape: BoxShape.circle,
         color: value.data.tag == 2
             ? Utils.instance.getGlucoseMeasurementColor(
-                double.parse(value.data.level).toInt())
+                context,
+                double.parse(value.data.level).toInt(),
+              )
             : Colors.white,
         border: Border.all(
           color: Utils.instance.getGlucoseMeasurementColor(
+            context,
             double.parse(value.data.level).toInt(),
           ),
           width: 10.0,
@@ -295,11 +299,6 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16, top: 16),
         child: Card(
-          elevation: R.sizes.defaultElevation,
-          color: getIt<IAppConfig>().theme.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.only(
@@ -377,13 +376,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
     String title,
   ) {
     return Card(
-      elevation: R.sizes.defaultElevation,
-      color: isCurrent
-          ? context.xPrimaryColor
-          : getIt<IAppConfig>().theme.cardBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      color: isCurrent ? context.xPrimaryColor : context.xCardColor,
       child: Padding(
         padding: const EdgeInsets.only(
           left: 16,
@@ -531,10 +524,6 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: TextField(
           focusNode: noteFocusNode,
           controller: noteController,
@@ -595,8 +584,8 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       title:
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
       onTap: onTap,
-      backColor: isSave ? null : getIt<IAppConfig>().theme.cardBackgroundColor,
-      textColor: isSave ? null : getIt<IAppConfig>().theme.textColorSecondary,
+      backColor: isSave ? null : context.xCardColor,
+      textColor: isSave ? null : context.xTextInverseColor,
     );
   }
 }

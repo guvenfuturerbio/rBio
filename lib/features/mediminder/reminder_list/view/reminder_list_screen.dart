@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../../../app/bluetooth_v2/bluetooth_v2.dart';
@@ -61,18 +60,12 @@ class _ReminderListView extends StatelessWidget {
   }
 
   Widget _buildFAB(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: context.xPrimaryColor,
+    return RbioSVGFAB.primaryColor(
+      context,
+      imagePath: R.image.add,
       onPressed: () {
         Atom.to(PagePaths.selectReminder);
       },
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SvgPicture.asset(
-          R.image.add,
-          color: getIt<IAppConfig>().theme.white,
-        ),
-      ),
     );
   }
 
@@ -95,8 +88,8 @@ class _ReminderListView extends StatelessWidget {
               );
             },
             title: LocaleProvider.current.filter,
-            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-            textColor: getIt<IAppConfig>().theme.textColorSecondary,
+            backColor: context.xCardColor,
+            textColor: context.xTextInverseColor,
             fontWeight: FontWeight.bold,
           ),
         ),
