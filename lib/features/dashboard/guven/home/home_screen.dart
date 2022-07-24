@@ -60,7 +60,7 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
                                 " " +
                                 getIt<UserFacade>().getNameAndSurname(),
                             style: TextStyle(
-                              color: context.xAppColors.codGray,
+                              color: context.xMyCustomTheme.codGray,
                               fontWeight: FontWeight.w600,
                               fontSize: 25,
                             ),
@@ -72,7 +72,7 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
                           child: Text(
                             LocaleProvider.of(context).lbl_take_care,
                             style: TextStyle(
-                              color: context.xAppColors.dustyGray,
+                              color: context.xMyCustomTheme.dustyGray,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -106,8 +106,8 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
                               image: R.image.icVideoIcon,
                               number:
                                   LocaleProvider.of(context).title_appointment,
-                              colorLeft: context.xAppColors.ultramarine,
-                              colorRight: context.xAppColors.cornflowerBlue,
+                              colorLeft: context.xMyCustomTheme.ultramarine,
+                              colorRight: context.xMyCustomTheme.cornflowerBlue,
                               margin: const EdgeInsets.only(top: 10),
                             ),
                           ),
@@ -119,8 +119,8 @@ class _GuvenHomeViewState extends State<GuvenHomeView> {
                             context: context,
                             title: LocaleProvider.of(context).lbl_find_hospital,
                             image: R.image.icHospitalWhite,
-                            colorLeft: context.xAppColors.fuzzyWuzzyBrown,
-                            colorRight: context.xAppColors.fuzzyWuzzyBrown,
+                            colorLeft: context.xMyCustomTheme.fuzzyWuzzyBrown,
+                            colorRight: context.xMyCustomTheme.fuzzyWuzzyBrown,
                             number:
                                 LocaleProvider.of(context).lbl_number_hospital,
                             margin: const EdgeInsets.only(top: 10, bottom: 10),
@@ -295,19 +295,19 @@ Widget _itemOption({
         gradient: LinearGradient(
           colors: isFocused
               ? [
-                  context.xAppColors.fuzzyWuzzyBrown,
-                  context.xAppColors.fuzzyWuzzyBrown,
+                  context.xMyCustomTheme.fuzzyWuzzyBrown,
+                  context.xMyCustomTheme.fuzzyWuzzyBrown,
                 ]
               : [
-                  context.xAppColors.dustyGray,
-                  context.xAppColors.grey,
+                  context.xMyCustomTheme.dustyGray,
+                  context.xMyCustomTheme.grey,
                 ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
         boxShadow: [
           BoxShadow(
-            color: context.xAppColors.black.withAlpha(50),
+            color: context.xMyCustomTheme.black.withAlpha(50),
             blurRadius: 15,
             spreadRadius: 0,
             offset: const Offset(5, 10),
@@ -379,7 +379,7 @@ Widget _itemFindHospital({
             ),
             boxShadow: [
               BoxShadow(
-                color: context.xAppColors.black.withAlpha(50),
+                color: context.xMyCustomTheme.black.withAlpha(50),
                 blurRadius: 15,
                 spreadRadius: 0,
                 offset: const Offset(5, 10),
@@ -439,7 +439,7 @@ Widget _itemFindHospital({
             ),
             boxShadow: [
               BoxShadow(
-                color: context.xAppColors.black.withAlpha(50),
+                color: context.xMyCustomTheme.black.withAlpha(50),
                 blurRadius: 15,
                 spreadRadius: 0,
                 offset: const Offset(5, 10),

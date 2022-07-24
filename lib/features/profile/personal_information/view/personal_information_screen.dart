@@ -262,7 +262,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                               TextButton(
                                 style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.all(
-                                    context.xAppColors.textDisabledColor,
+                                    context.xMyCustomTheme.textDisabledColor,
                                   ),
                                 ),
                                 onPressed: () {
@@ -483,7 +483,7 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
         absorbing: true,
         child: RbioTextFormField(
           controller: controller,
-          textColor: context.xAppColors.textDisabledColor,
+          textColor: context.xMyCustomTheme.textDisabledColor,
         ),
       );
 

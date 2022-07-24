@@ -92,7 +92,7 @@ class SelectedDevicesScreen extends StatelessWidget {
                                             .getStatus(device.id)
                                             ?.connectionState ==
                                         DeviceConnectionState.connecting
-                                    ? context.xAppColors.energyYellow
+                                    ? context.xMyCustomTheme.energyYellow
                                     : Colors.white,
                             image: Utils.instance.getDeviceImageFromType(
                                     _selectedDeviceVm.deviceType) ??

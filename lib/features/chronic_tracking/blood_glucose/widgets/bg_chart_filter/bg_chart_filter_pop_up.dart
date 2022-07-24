@@ -19,7 +19,7 @@ class BgChartFilterPopUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       elevation: R.sizes.defaultElevation,
-      backgroundColor: context.scaffoldBackgroundColor,
+      backgroundColor: context.xScaffoldBackgroundColor,
       shape: R.sizes.defaultShape,
       child: ChangeNotifierProvider(
         create: (_) => BgChartFilterPopUpVm(
@@ -68,7 +68,7 @@ class BgChartFilterPopUp extends StatelessWidget {
                     context: context,
                     text: state.toShortString(),
                     status: vm.isFilterSelected(state),
-                    color: context.xAppColors.boulder,
+                    color: context.xMyCustomTheme.boulder,
                     style: state == GlucoseMarginsFilter.full ||
                             state == GlucoseMarginsFilter.hungry
                         ? BoxShape.circle

@@ -72,7 +72,7 @@ class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
               labelStyle: TextStyle(
-                color: context.xAppColors.codGray,
+                color: context.xMyCustomTheme.codGray,
               ),
               interval: 6,
             )
@@ -101,11 +101,11 @@ class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
           text: "mg/dL",
           textStyle: TextStyle(
             fontSize: 10,
-            color: context.xAppColors.codGray,
+            color: context.xMyCustomTheme.codGray,
           ),
         ),
         labelStyle: TextStyle(
-          color: context.xAppColors.codGray,
+          color: context.xMyCustomTheme.codGray,
         ),
         plotBands: [
           PlotBand(
@@ -117,7 +117,7 @@ class BloodGlucosePatientLineState extends State<BloodGlucosePatientLine> {
               color: Colors.black,
               fontSize: 13,
             ),
-            color: context.xAppColors.skeptic,
+            color: context.xMyCustomTheme.skeptic,
           ),
         ],
         minimum: _minValue.toDouble(),

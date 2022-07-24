@@ -281,7 +281,7 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
                         Text(
                           LocaleProvider.of(context).lbl_dont_have_account,
                           style: context.xHeadline3.copyWith(
-                            color: context.xAppColors.grey,
+                            color: context.xMyCustomTheme.grey,
                           ),
                         ),
 

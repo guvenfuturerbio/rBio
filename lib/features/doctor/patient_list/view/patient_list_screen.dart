@@ -320,7 +320,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                         _buildBigSmallCardText(
                           context,
                           LocaleProvider.current.patient_name_2,
-                          context.xAppColors.textDisabledColor,
+                          context.xMyCustomTheme.textDisabledColor,
                         ),
 
                         //
@@ -421,7 +421,7 @@ class DoctorPatientListScreen extends StatelessWidget {
                           child: _buildBigSmallCardText(
                             context,
                             LocaleProvider.current.patient_name_2,
-                            context.xAppColors.textDisabledColor,
+                            context.xMyCustomTheme.textDisabledColor,
                           ),
                         ),
 

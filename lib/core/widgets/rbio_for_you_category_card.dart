@@ -54,7 +54,7 @@ class RbioForYouCategoryCard extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: context.xAppColors.black.withAlpha(50),
+                        color: context.xMyCustomTheme.black.withAlpha(50),
                         blurRadius: 15,
                         spreadRadius: 0,
                         offset: const Offset(5, 10),

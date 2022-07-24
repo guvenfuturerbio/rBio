@@ -183,7 +183,7 @@ class _ExpandablePeriodCardState extends State<ExpandablePeriodCard> {
             //
             if (isBottomLine)
               Container(
-                color: context.xAppColors.textDisabledColor,
+                color: context.xMyCustomTheme.textDisabledColor,
                 height: 0.25,
               )
             else

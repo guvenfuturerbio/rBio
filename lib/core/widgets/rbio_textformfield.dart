@@ -165,7 +165,7 @@ class RbioTextFormField extends StatelessWidget {
   static OutlineInputBorder _focusedRedErrorBorder(BuildContext context) {
     return OutlineInputBorder(
       borderSide: BorderSide(
-        color: context.xAppColors.punch,
+        color: context.xMyCustomTheme.punch,
         width: 2.0,
       ),
       borderRadius: R.sizes.borderRadiusCircular,
@@ -181,7 +181,7 @@ class RbioTextFormField extends StatelessWidget {
   static OutlineInputBorder _redErrorBorder(BuildContext context) {
     return OutlineInputBorder(
       borderSide: BorderSide(
-        color: context.xAppColors.punch,
+        color: context.xMyCustomTheme.punch,
         width: 1.0,
       ),
       borderRadius: R.sizes.borderRadiusCircular,

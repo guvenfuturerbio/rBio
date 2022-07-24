@@ -66,7 +66,7 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
               labelStyle: TextStyle(
-                color: context.xAppColors.codGray,
+                color: context.xMyCustomTheme.codGray,
               ),
               interval: 6)
           : _selected == TimePeriodFilter.weekly
@@ -91,14 +91,14 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
           text: "mg/dL",
           textStyle: TextStyle(
             fontSize: 10,
-            color: context.xAppColors.codGray,
+            color: context.xMyCustomTheme.codGray,
           ),
         ),
         minimum: _minimum.toDouble(),
         maximum: _maximum.toDouble(),
         interval: 30,
         labelStyle: TextStyle(
-          color: context.xAppColors.codGray,
+          color: context.xMyCustomTheme.codGray,
         ),
         plotBands: [
           PlotBand(
@@ -106,7 +106,7 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
             start: _targetMax,
             end: _targetMin,
             shouldRenderAboveSeries: false,
-            color: context.xAppColors.skeptic,
+            color: context.xMyCustomTheme.skeptic,
           ),
         ],
         majorGridLines: const MajorGridLines(

@@ -70,7 +70,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                   //
                   RbioTextFormField(
                     focusNode: _valueFocusNode,
-                    backColor: context.xAppColors.gallery,
+                    backColor: context.xMyCustomTheme.gallery,
                     controller: _valueEditingController,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
@@ -139,7 +139,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
     required bool infinityWidth,
   }) {
     return RbioElevatedButton(
-      backColor: context.xAppColors.gallery,
+      backColor: context.xMyCustomTheme.gallery,
       textColor: context.xTextInverseColor,
       title: LocaleProvider.current.btn_cancel,
       onTap: () {

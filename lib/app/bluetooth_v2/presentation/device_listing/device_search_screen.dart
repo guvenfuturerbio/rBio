@@ -125,7 +125,7 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
           onPressed: () => _restartScan(context),
           icon: Icon(
             Icons.refresh,
-            color: context.xAppColors.white,
+            color: context.xMyCustomTheme.white,
           ),
         ),
       ],
@@ -290,7 +290,7 @@ class _DeviceSearchViewState extends State<DeviceSearchView> {
   Color _getBackColor(DeviceStatus? deviceStatus) {
     switch (deviceStatus) {
       case DeviceStatus.connecting:
-        return context.xAppColors.energyYellow;
+        return context.xMyCustomTheme.energyYellow;
 
       case DeviceStatus.connected:
         return context.xPrimaryColor;

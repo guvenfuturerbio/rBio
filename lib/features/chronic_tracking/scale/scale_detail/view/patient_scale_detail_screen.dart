@@ -308,7 +308,7 @@ class ScaleCard extends StatelessWidget {
                         Text(
                           entity.dateTime.xFormatTime7(),
                           style: context.xHeadline5.copyWith(
-                            color: context.xAppColors.grey,
+                            color: context.xMyCustomTheme.grey,
                           ),
                         ),
 
@@ -316,7 +316,7 @@ class ScaleCard extends StatelessWidget {
                         Text(
                           entity.dateTime.xFormatTime8(),
                           style: context.xHeadline5.copyWith(
-                            color: context.xAppColors.grey,
+                            color: context.xMyCustomTheme.grey,
                           ),
                         ),
                       ],
@@ -334,7 +334,7 @@ class ScaleCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: isSelected
                               ? context.xPrimaryColor
-                              : context.xAppColors.gallery,
+                              : context.xMyCustomTheme.gallery,
                           borderRadius: BorderRadius.only(
                             topLeft: R.sizes.radiusCircular,
                             bottomLeft: R.sizes.radiusCircular,
@@ -358,7 +358,7 @@ class ScaleCard extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
-                          color: context.xAppColors.gallery,
+                          color: context.xMyCustomTheme.gallery,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,

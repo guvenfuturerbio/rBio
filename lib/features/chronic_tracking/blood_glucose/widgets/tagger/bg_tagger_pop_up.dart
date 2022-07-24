@@ -117,7 +117,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
     return Consumer<BgTaggerVm>(
       builder: (BuildContext context, BgTaggerVm vm, Widget? child) {
         return Container(
-          color: context.scaffoldBackgroundColor,
+          color: context.xScaffoldBackgroundColor,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,

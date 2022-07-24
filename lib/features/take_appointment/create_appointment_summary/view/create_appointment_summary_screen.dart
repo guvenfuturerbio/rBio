@@ -573,7 +573,7 @@ class _CreateAppointmentSummaryScreenState
                     decoration: TextDecoration.lineThrough,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.normal,
-                    color: context.xAppColors.textDisabledColor,
+                    color: context.xMyCustomTheme.textDisabledColor,
                   ),
                 ),
 
@@ -779,7 +779,7 @@ class _CreateAppointmentSummaryScreenState
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: context.xHeadline4.copyWith(
-          color: context.xAppColors.textDisabledColor,
+          color: context.xMyCustomTheme.textDisabledColor,
         ),
       );
 }

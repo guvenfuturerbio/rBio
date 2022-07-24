@@ -429,7 +429,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
           LocaleProvider.current.strip_page_info_message,
           style: context.xHeadline4.copyWith(
             fontWeight: FontWeight.w100,
-            color: context.xAppColors.textDisabledColor,
+            color: context.xMyCustomTheme.textDisabledColor,
           ),
           textAlign: TextAlign.center,
         ),

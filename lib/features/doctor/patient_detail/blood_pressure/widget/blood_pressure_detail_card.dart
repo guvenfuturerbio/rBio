@@ -23,7 +23,7 @@ class _UserBloodPressureDetailCard extends StatelessWidget {
                 child: Text(
                   LocaleProvider.current.not_found,
                   style: TextStyle(
-                    color: context.xAppColors.grey,
+                    color: context.xMyCustomTheme.grey,
                     fontSize: 18,
                   ),
                 ),
@@ -115,7 +115,7 @@ class _UserBloodPressureDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: context.xAppColors.textDisabledColor,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),
@@ -127,7 +127,7 @@ class _UserBloodPressureDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: context.xAppColors.textDisabledColor,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),

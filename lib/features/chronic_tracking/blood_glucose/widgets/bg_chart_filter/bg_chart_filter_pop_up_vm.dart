@@ -23,23 +23,23 @@ class BgChartFilterPopUpVm extends ChangeNotifier {
 
   Map<Color, GlucoseMarginsFilter> colorInfo(BuildContext context) {
     _colorInfo.putIfAbsent(
-      context.xAppColors.roman,
+      context.xMyCustomTheme.roman,
       () => GlucoseMarginsFilter.veryLow,
     );
     _colorInfo.putIfAbsent(
-      context.xAppColors.tonysPink,
+      context.xMyCustomTheme.tonysPink,
       () => GlucoseMarginsFilter.low,
     );
     _colorInfo.putIfAbsent(
-      context.xAppColors.deYork,
+      context.xMyCustomTheme.deYork,
       () => GlucoseMarginsFilter.target,
     );
     _colorInfo.putIfAbsent(
-      context.xAppColors.energyYellow,
+      context.xMyCustomTheme.energyYellow,
       () => GlucoseMarginsFilter.high,
     );
     _colorInfo.putIfAbsent(
-      context.xAppColors.casablanca,
+      context.xMyCustomTheme.casablanca,
       () => GlucoseMarginsFilter.veryHigh,
     );
     return _colorInfo;

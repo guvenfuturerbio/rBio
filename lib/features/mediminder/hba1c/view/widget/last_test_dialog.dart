@@ -163,7 +163,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
     required bool infinityWidth,
   }) {
     return RbioElevatedButton(
-      backColor: context.xAppColors.gallery,
+      backColor: context.xMyCustomTheme.gallery,
       textColor: context.xTextInverseColor,
       title: LocaleProvider.current.btn_cancel,
       onTap: () {

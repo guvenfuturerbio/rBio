@@ -365,7 +365,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
             Center(
               child: Text(
                 LocaleProvider.of(context).relatives_only_children_warning,
-                style: context.xTextTheme.headline5,
+                style: context.xHeadline5,
               ),
             ),
 

@@ -81,7 +81,7 @@ class DateRangePicker extends StatelessWidget {
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 borderRadius: R.sizes.borderRadiusCircular,
-                color: context.xAppColors.iron,
+                color: context.xMyCustomTheme.iron,
               ),
               child: Row(
                 children: [

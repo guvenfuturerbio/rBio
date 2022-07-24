@@ -151,7 +151,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     return !value
                         ? Positioned.fill(
                             child: Container(
-                              color: context.scaffoldBackgroundColor,
+                              color: context.xScaffoldBackgroundColor,
                               child: const RbioLoading(),
                             ),
                           )

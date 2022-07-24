@@ -43,13 +43,13 @@ class BpMeasurementViewModel {
       return Colors.grey[300]!;
     }
     if (sys! > 89 && sys! < 120) {
-      return context.xAppColors.deYork;
+      return context.xMyCustomTheme.deYork;
     } else if (sys! > 119 && sys! < 139) {
-      return context.xAppColors.energyYellow;
+      return context.xMyCustomTheme.energyYellow;
     } else if (sys! >= 139) {
-      return context.xAppColors.casablanca;
+      return context.xMyCustomTheme.casablanca;
     } else if (90 > sys!) {
-      return context.xAppColors.tonysPink;
+      return context.xMyCustomTheme.tonysPink;
     } else {
       return Colors.grey[300]!;
     }
@@ -61,13 +61,13 @@ class BpMeasurementViewModel {
     }
 
     if (dia! > 59 && dia! < 80) {
-      return context.xAppColors.deYork;
+      return context.xMyCustomTheme.deYork;
     } else if (dia! > 79 && dia! < 90) {
-      return context.xAppColors.energyYellow;
+      return context.xMyCustomTheme.energyYellow;
     } else if (dia! >= 89) {
-      return context.xAppColors.casablanca;
+      return context.xMyCustomTheme.casablanca;
     } else if (dia! < 60) {
-      return context.xAppColors.tonysPink;
+      return context.xMyCustomTheme.tonysPink;
     } else {
       return Colors.grey[300]!;
     }
@@ -79,13 +79,13 @@ class BpMeasurementViewModel {
     }
 
     if (pulse! > 59 && pulse! < 101) {
-      return context.xAppColors.deYork;
+      return context.xMyCustomTheme.deYork;
     } else if (pulse! > 100 && pulse! < 121) {
-      return context.xAppColors.energyYellow;
+      return context.xMyCustomTheme.energyYellow;
     } else if (pulse! > 120) {
-      return context.xAppColors.casablanca;
+      return context.xMyCustomTheme.casablanca;
     } else if (pulse! < 60) {
-      return context.xAppColors.tonysPink;
+      return context.xMyCustomTheme.tonysPink;
     } else {
       return Colors.grey[300]!;
     }

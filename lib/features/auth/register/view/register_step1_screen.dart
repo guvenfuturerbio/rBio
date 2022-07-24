@@ -301,7 +301,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                                 decoration: BoxDecoration(
                                   color: getIt<IAppConfig>().theme.white,
                                   border: Border.all(
-                                    color: context.xAppColors.fuzzyWuzzyBrown,
+                                    color: context.xMyCustomTheme.fuzzyWuzzyBrown,
                                   ),
                                   borderRadius: R.sizes.borderRadiusCircular,
                                 ),
@@ -335,7 +335,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                             decoration: BoxDecoration(
                               color: getIt<IAppConfig>().theme.white,
                               border: Border.all(
-                                color: context.xAppColors.mercury,
+                                color: context.xMyCustomTheme.mercury,
                               ),
                               borderRadius: R.sizes.borderRadiusCircular,
                             ),
@@ -605,7 +605,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                 Card(
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
-                      color: context.xAppColors.fuzzyWuzzyBrown,
+                      color: context.xMyCustomTheme.fuzzyWuzzyBrown,
                     ),
                     borderRadius: R.sizes.borderRadiusCircular,
                   ),

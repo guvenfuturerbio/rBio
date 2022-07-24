@@ -280,7 +280,7 @@ Widget _buildTitleRow(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.xHeadline4.copyWith(
-            color: isActive ? null : context.xAppColors.textDisabledColor,
+            color: isActive ? null : context.xMyCustomTheme.textDisabledColor,
           ),
         ),
       ),
@@ -292,7 +292,7 @@ Widget _buildTitleRow(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.xHeadline4.copyWith(
-            color: isActive ? null : context.xAppColors.textDisabledColor,
+            color: isActive ? null : context.xMyCustomTheme.textDisabledColor,
           ),
         ),
       ),

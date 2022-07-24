@@ -149,7 +149,7 @@ class DevicesScreen extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.cancel,
-                        color: context.xAppColors.punch,
+                        color: context.xMyCustomTheme.punch,
                         size: R.sizes.iconSize * 1.25,
                       ),
                     ),
@@ -190,7 +190,7 @@ class DevicesScreen extends StatelessWidget {
   ) {
     switch (deviceStatus) {
       case DeviceStatus.connecting:
-        return context.xAppColors.energyYellow;
+        return context.xMyCustomTheme.energyYellow;
 
       case DeviceStatus.connected:
         return context.xPrimaryColor;
@@ -258,7 +258,7 @@ class DevicesScreen extends StatelessWidget {
             },
             icon: Icon(
               Icons.cancel,
-              color: context.xAppColors.punch,
+              color: context.xMyCustomTheme.punch,
               size: R.sizes.iconSize * 1.25,
             ),
           ),

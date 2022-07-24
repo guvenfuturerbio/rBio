@@ -37,7 +37,7 @@ class RbioBadge extends StatelessWidget {
               right: 4,
               child: SvgPicture.asset(
                 path ?? image,
-                color: isDark ? context.xIconColor : context.xAppColors.white,
+                color: isDark ? context.xIconColor : context.xMyCustomTheme.white,
                 width: R.sizes.iconSize,
               ),
             ),
@@ -47,7 +47,7 @@ class RbioBadge extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: RbioCircleAvatar(
-                  backgroundColor: context.xAppColors.punch,
+                  backgroundColor: context.xMyCustomTheme.punch,
                   radius: isBigSize ? 10.5 : 9,
                   child: Text(
                     '$count',

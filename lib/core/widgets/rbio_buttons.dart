@@ -23,7 +23,7 @@ class RbioRedButton extends StatelessWidget {
       onTap: onTap,
       fontWeight: FontWeight.bold,
       textColor: context.xTextColor,
-      backColor: context.xAppColors.punch,
+      backColor: context.xMyCustomTheme.punch,
       infinityWidth: infinityWidth,
     );
   }

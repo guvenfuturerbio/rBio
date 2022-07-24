@@ -138,7 +138,7 @@ class RbioFilterChip extends StatelessWidget {
     return FilterChip(
       selected: isSelected,
       backgroundColor: context.xCardColor,
-      checkmarkColor: context.xAppColors.white,
+      checkmarkColor: context.xMyCustomTheme.white,
       selectedColor: context.xPrimaryColor,
       label: Text(
         type.xGetTitle,

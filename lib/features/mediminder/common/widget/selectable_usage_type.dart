@@ -67,7 +67,7 @@ class SelectableUsageType extends StatelessWidget {
       style: context.xHeadline4.copyWith(
         color: isActive
             ? context.xTextColor
-            : context.xAppColors.textDisabledColor,
+            : context.xMyCustomTheme.textDisabledColor,
       ),
     );
 

@@ -202,7 +202,7 @@ class RbioSmallDialogButton extends StatelessWidget {
     required void Function()? onPressed,
   }) {
     return RbioSmallDialogButton(
-      backgroundColor: context.xAppColors.punch,
+      backgroundColor: context.xMyCustomTheme.punch,
       textColor: getIt<IAppConfig>().theme.white,
       title: title,
       onPressed: onPressed,

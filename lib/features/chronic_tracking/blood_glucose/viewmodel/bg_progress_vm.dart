@@ -478,7 +478,7 @@ class BgProgressVm
     for (var data in bgMeasurementsDailyData) {
       final dataColor = data.resultColor(context);
 
-      if (dataColor == context.xAppColors.roman) {
+      if (dataColor == context.xMyCustomTheme.roman) {
         chartData.add(
           ChartData(
             data.date,
@@ -540,7 +540,7 @@ class BgProgressVm
     for (var data in bgMeasurementsDailyData) {
       final dataColor = data.resultColor(context);
 
-      if (dataColor == context.xAppColors.tonysPink) {
+      if (dataColor == context.xMyCustomTheme.tonysPink) {
         chartData.add(
           ChartData(
             data.date,
@@ -602,7 +602,7 @@ class BgProgressVm
     for (var data in bgMeasurementsDailyData) {
       final dataColor = data.resultColor(context);
 
-      if (dataColor == context.xAppColors.deYork) {
+      if (dataColor == context.xMyCustomTheme.deYork) {
         chartData.add(
           ChartData(
             data.date,
@@ -664,7 +664,7 @@ class BgProgressVm
     for (var data in bgMeasurementsDailyData) {
       final dataColor = data.resultColor(context);
 
-      if (dataColor == context.xAppColors.energyYellow) {
+      if (dataColor == context.xMyCustomTheme.energyYellow) {
         chartData.add(
           ChartData(
             data.date,
@@ -726,7 +726,7 @@ class BgProgressVm
     for (var data in bgMeasurementsDailyData) {
       final dataColor = data.resultColor(context);
 
-      if (dataColor == context.xAppColors.casablanca) {
+      if (dataColor == context.xMyCustomTheme.casablanca) {
         chartData.add(
           ChartData(
             data.date,
@@ -827,15 +827,15 @@ class BgProgressVm
       final elementColor = element.resultColor(context);
 
       return (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
-              elementColor == context.xAppColors.casablanca) ||
+              elementColor == context.xMyCustomTheme.casablanca) ||
           (!isFilterSelected(GlucoseMarginsFilter.high) &&
-              elementColor == context.xAppColors.energyYellow) ||
+              elementColor == context.xMyCustomTheme.energyYellow) ||
           (!isFilterSelected(GlucoseMarginsFilter.target) &&
-              elementColor == context.xAppColors.deYork) ||
+              elementColor == context.xMyCustomTheme.deYork) ||
           (!isFilterSelected(GlucoseMarginsFilter.low) &&
-              elementColor == context.xAppColors.tonysPink) ||
+              elementColor == context.xMyCustomTheme.tonysPink) ||
           (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
-              elementColor == context.xAppColors.roman) ||
+              elementColor == context.xMyCustomTheme.roman) ||
           (!isFilterSelected(GlucoseMarginsFilter.hungry) &&
               element.tag == 1) ||
           (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
@@ -848,15 +848,15 @@ class BgProgressVm
       final elementColor = element.resultColor(context);
 
       return (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
-              elementColor == context.xAppColors.casablanca) ||
+              elementColor == context.xMyCustomTheme.casablanca) ||
           (!isFilterSelected(GlucoseMarginsFilter.high) &&
-              elementColor == context.xAppColors.energyYellow) ||
+              elementColor == context.xMyCustomTheme.energyYellow) ||
           (!isFilterSelected(GlucoseMarginsFilter.target) &&
-              elementColor == context.xAppColors.deYork) ||
+              elementColor == context.xMyCustomTheme.deYork) ||
           (!isFilterSelected(GlucoseMarginsFilter.low) &&
-              elementColor == context.xAppColors.tonysPink) ||
+              elementColor == context.xMyCustomTheme.tonysPink) ||
           (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
-              elementColor == context.xAppColors.roman) ||
+              elementColor == context.xMyCustomTheme.roman) ||
           (!isFilterSelected(GlucoseMarginsFilter.hungry) &&
               element.tag == 1) ||
           (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
@@ -886,7 +886,7 @@ class BgProgressVm
         dataSource: _chartVeryHighTagged[-1] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.casablanca,
+        color: context.xMyCustomTheme.casablanca,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -908,7 +908,7 @@ class BgProgressVm
           height: 15,
           width: 15,
           borderWidth: 5,
-          borderColor: context.xAppColors.casablanca,
+          borderColor: context.xMyCustomTheme.casablanca,
           isVisible: true,
         ),
       ),
@@ -918,7 +918,7 @@ class BgProgressVm
         dataSource: _chartVeryHighTagged[2] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.casablanca,
+        color: context.xMyCustomTheme.casablanca,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -932,13 +932,13 @@ class BgProgressVm
         dataSource: _chartVeryHighTagged[3] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.casablanca,
+        color: context.xMyCustomTheme.casablanca,
         borderWidth: 3,
         xAxisName: "Time",
         markerSettings: MarkerSettings(
           height: 15,
           width: 15,
-          borderColor: context.xAppColors.casablanca,
+          borderColor: context.xMyCustomTheme.casablanca,
           shape: DataMarkerType.rectangle,
           isVisible: true,
         ),
@@ -949,7 +949,7 @@ class BgProgressVm
         dataSource: _chartHighTagged[-1] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.energyYellow,
+        color: context.xMyCustomTheme.energyYellow,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -971,7 +971,7 @@ class BgProgressVm
           height: 15,
           width: 15,
           borderWidth: 2,
-          borderColor: context.xAppColors.energyYellow,
+          borderColor: context.xMyCustomTheme.energyYellow,
           isVisible: true,
         ),
       ),
@@ -981,7 +981,7 @@ class BgProgressVm
         dataSource: _chartHighTagged[2] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.energyYellow,
+        color: context.xMyCustomTheme.energyYellow,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -995,13 +995,13 @@ class BgProgressVm
         dataSource: _chartHighTagged[3] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.energyYellow,
+        color: context.xMyCustomTheme.energyYellow,
         borderWidth: 3,
         xAxisName: "Time",
         markerSettings: MarkerSettings(
           height: 15,
           width: 15,
-          borderColor: context.xAppColors.energyYellow,
+          borderColor: context.xMyCustomTheme.energyYellow,
           shape: DataMarkerType.rectangle,
           isVisible: true,
         ),
@@ -1012,7 +1012,7 @@ class BgProgressVm
         dataSource: _chartTargetTagged[-1] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.deYork,
+        color: context.xMyCustomTheme.deYork,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -1034,7 +1034,7 @@ class BgProgressVm
           height: 15,
           width: 15,
           borderWidth: 2,
-          borderColor: context.xAppColors.deYork,
+          borderColor: context.xMyCustomTheme.deYork,
           isVisible: true,
         ),
       ),
@@ -1044,7 +1044,7 @@ class BgProgressVm
         dataSource: _chartTargetTagged[2] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.deYork,
+        color: context.xMyCustomTheme.deYork,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -1058,13 +1058,13 @@ class BgProgressVm
         dataSource: _chartTargetTagged[3] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.deYork,
+        color: context.xMyCustomTheme.deYork,
         borderWidth: 3,
         xAxisName: "Time",
         markerSettings: MarkerSettings(
           height: 15,
           width: 15,
-          borderColor: context.xAppColors.deYork,
+          borderColor: context.xMyCustomTheme.deYork,
           shape: DataMarkerType.rectangle,
           isVisible: true,
         ),
@@ -1075,7 +1075,7 @@ class BgProgressVm
         dataSource: _chartLowTagged[-1] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.tonysPink,
+        color: context.xMyCustomTheme.tonysPink,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -1097,7 +1097,7 @@ class BgProgressVm
           height: 15,
           width: 15,
           borderWidth: 2,
-          borderColor: context.xAppColors.tonysPink,
+          borderColor: context.xMyCustomTheme.tonysPink,
           isVisible: true,
         ),
       ),
@@ -1107,7 +1107,7 @@ class BgProgressVm
         dataSource: _chartLowTagged[2] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.tonysPink,
+        color: context.xMyCustomTheme.tonysPink,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -1121,13 +1121,13 @@ class BgProgressVm
         dataSource: _chartLowTagged[3] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.tonysPink,
+        color: context.xMyCustomTheme.tonysPink,
         borderWidth: 3,
         xAxisName: "Time",
         markerSettings: MarkerSettings(
           height: 15,
           width: 15,
-          borderColor: context.xAppColors.tonysPink,
+          borderColor: context.xMyCustomTheme.tonysPink,
           shape: DataMarkerType.rectangle,
           isVisible: true,
         ),
@@ -1138,7 +1138,7 @@ class BgProgressVm
         dataSource: _chartVeryLowTagged[-1] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.roman,
+        color: context.xMyCustomTheme.roman,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -1160,7 +1160,7 @@ class BgProgressVm
           height: 15,
           width: 15,
           borderWidth: 2,
-          borderColor: context.xAppColors.roman,
+          borderColor: context.xMyCustomTheme.roman,
           isVisible: true,
         ),
       ),
@@ -1170,7 +1170,7 @@ class BgProgressVm
         dataSource: _chartVeryLowTagged[2] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.roman,
+        color: context.xMyCustomTheme.roman,
         xAxisName: "Time",
         markerSettings: const MarkerSettings(
           height: 15,
@@ -1184,13 +1184,13 @@ class BgProgressVm
         dataSource: _chartVeryLowTagged[3] ?? [],
         xValueMapper: (ChartData sales, _) => sales.x,
         yValueMapper: (ChartData sales, _) => sales.y,
-        color: context.xAppColors.roman,
+        color: context.xMyCustomTheme.roman,
         borderWidth: 3,
         xAxisName: "Time",
         markerSettings: MarkerSettings(
           height: 15,
           width: 15,
-          borderColor: context.xAppColors.roman,
+          borderColor: context.xMyCustomTheme.roman,
           shape: DataMarkerType.rectangle,
           isVisible: true,
         ),

@@ -111,7 +111,7 @@ class Utils {
       trailing: SvgPicture.asset(
         R.image.done,
         height: R.sizes.iconSize2,
-        color: context.xAppColors.white,
+        color: context.xMyCustomTheme.white,
       ),
     );
   }
@@ -122,11 +122,11 @@ class Utils {
     showSnackbar(
       context,
       text,
-      backColor: context.xAppColors.punch,
+      backColor: context.xMyCustomTheme.punch,
       trailing: SvgPicture.asset(
         R.image.error,
         height: R.sizes.iconSize2,
-        color: context.xAppColors.white,
+        color: context.xMyCustomTheme.white,
       ),
     );
   }
@@ -336,7 +336,7 @@ class Utils {
 
   TextStyle hintStyle(BuildContext context) => TextStyle(
         fontSize: 16,
-        color: context.xAppColors.dustyGray,
+        color: context.xMyCustomTheme.dustyGray,
       );
 
   GradientButton button({
@@ -356,7 +356,7 @@ class Utils {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: context.xAppColors.white,
+            color: context.xMyCustomTheme.white,
           ),
         ),
         textStyle: TextStyle(
@@ -387,7 +387,7 @@ class Utils {
         labelText: labelText,
         prefixIcon: prefixIcon,
         hintStyle: Atom.context.xHeadline4.copyWith(
-          color: context.xAppColors.textDisabledColor,
+          color: context.xMyCustomTheme.textDisabledColor,
         ),
       );
 
@@ -418,15 +418,15 @@ class Utils {
   }) {
     Color color;
     if (measurement <= criticMin) {
-      color = context.xAppColors.roman;
+      color = context.xMyCustomTheme.roman;
     } else if (measurement > criticMin && measurement < targetMin) {
-      color = context.xAppColors.tonysPink;
+      color = context.xMyCustomTheme.tonysPink;
     } else if (measurement >= targetMin && measurement <= targetMax) {
-      color = context.xAppColors.deYork;
+      color = context.xMyCustomTheme.deYork;
     } else if (measurement > targetMax && measurement < criticMax) {
-      color = context.xAppColors.energyYellow;
+      color = context.xMyCustomTheme.energyYellow;
     } else if (measurement >= criticMax) {
-      color = context.xAppColors.casablanca;
+      color = context.xMyCustomTheme.casablanca;
     } else {
       color = Colors.white;
     }
@@ -463,18 +463,18 @@ class Utils {
     Person activeProfile = getIt<ProfileStorageImpl>().getFirst();
 
     if (result < activeProfile.hypo!) {
-      return context.xAppColors.roman;
+      return context.xMyCustomTheme.roman;
     } else if (result >= activeProfile.hypo! &&
         result < activeProfile.rangeMin!) {
-      return context.xAppColors.tonysPink;
+      return context.xMyCustomTheme.tonysPink;
     } else if (result >= activeProfile.rangeMin! &&
         result < activeProfile.rangeMax!) {
-      return context.xAppColors.deYork;
+      return context.xMyCustomTheme.deYork;
     } else if (result >= activeProfile.rangeMax! &&
         result < activeProfile.hyper!) {
-      return context.xAppColors.energyYellow;
+      return context.xMyCustomTheme.energyYellow;
     } else {
-      return context.xAppColors.casablanca;
+      return context.xMyCustomTheme.casablanca;
     }
   }
 

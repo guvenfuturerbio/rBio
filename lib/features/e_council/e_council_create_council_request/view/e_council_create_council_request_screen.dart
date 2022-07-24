@@ -256,7 +256,7 @@ class _BuildRecordFieldState extends State<_BuildRecordField>
                     ? LocaleProvider.of(context).slide_to_cancel
                     : LocaleProvider.of(context).press_and_hold_the_microphone,
                 style: context.xHeadline5.copyWith(
-                  color: context.xAppColors.textDisabledColor,
+                  color: context.xMyCustomTheme.textDisabledColor,
                 ),
               ),
 
@@ -264,7 +264,7 @@ class _BuildRecordFieldState extends State<_BuildRecordField>
               Visibility(
                 child: Icon(
                   Icons.arrow_forward_ios_outlined,
-                  color: context.xAppColors.textDisabledColor,
+                  color: context.xMyCustomTheme.textDisabledColor,
                 ),
                 visible: isRecording,
               ),

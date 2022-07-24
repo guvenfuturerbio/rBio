@@ -165,7 +165,7 @@ class _DoctorScaleTreatmentListViewState
       children: [
         //
         _ColorfulExpandedFab(
-          backColor: context.xAppColors.kournikova,
+          backColor: context.xMyCustomTheme.kournikova,
           title: LocaleProvider.of(context).diet_list,
           imagePath: R.image.fabDietList,
           onTap: _openDietAddEdit,
@@ -173,7 +173,7 @@ class _DoctorScaleTreatmentListViewState
 
         //
         _ColorfulExpandedFab(
-          backColor: context.xAppColors.frenchPass,
+          backColor: context.xMyCustomTheme.frenchPass,
           title: LocaleProvider.of(context).treatment_note,
           imagePath: R.image.fabTreatmentNote,
           onTap: _openTreatmentAddEdit,
@@ -181,7 +181,7 @@ class _DoctorScaleTreatmentListViewState
 
         //
         _ColorfulExpandedFab(
-          backColor: context.xAppColors.frenchLilac,
+          backColor: context.xMyCustomTheme.frenchLilac,
           title: LocaleProvider.of(context).special_note,
           imagePath: R.image.fabSpecialNote,
           onTap: _openDoctorNoteAddEdit,

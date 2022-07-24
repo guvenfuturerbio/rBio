@@ -32,7 +32,7 @@ Widget _buildHistoryDoctorCard(
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: context.xAppColors.grey,
+                color: context.xMyCustomTheme.grey,
               ),
             )
           ],

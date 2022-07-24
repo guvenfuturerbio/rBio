@@ -54,7 +54,7 @@ class BpTaggerPopUp extends StatelessWidget {
         }
 
         return Container(
-          color: context.scaffoldBackgroundColor,
+          color: context.xScaffoldBackgroundColor,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,

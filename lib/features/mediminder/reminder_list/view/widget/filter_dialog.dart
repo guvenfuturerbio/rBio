@@ -49,7 +49,7 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
         ),
         margin: const EdgeInsets.all(36),
         decoration: BoxDecoration(
-          color: context.scaffoldBackgroundColor,
+          color: context.xScaffoldBackgroundColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: SingleChildScrollView(

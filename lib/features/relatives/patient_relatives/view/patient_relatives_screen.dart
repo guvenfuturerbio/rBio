@@ -128,7 +128,7 @@ class _PatientRelativeListTile extends StatelessWidget {
             children: [
               Text(
                 '${patientRelative.name} ${patientRelative.surname}',
-                style: context.xTextTheme.headline3,
+                style: context.xHeadline3,
               ),
             ],
           ),

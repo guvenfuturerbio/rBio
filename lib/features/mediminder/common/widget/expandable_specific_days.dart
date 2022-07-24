@@ -167,7 +167,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
           //
           if (isBottomLine)
             Container(
-              color: context.xAppColors.textDisabledColor,
+              color: context.xMyCustomTheme.textDisabledColor,
               height: 0.25,
             )
           else

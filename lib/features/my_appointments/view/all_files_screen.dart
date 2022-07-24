@@ -99,7 +99,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
                 margin: const EdgeInsets.only(left: 10, right: 10),
                 width: 1,
                 height: 30,
-                color: context.xAppColors.textDisabledColor,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
 
               //
@@ -107,7 +107,7 @@ class _AllFilesScreenState extends State<AllFilesScreen> {
                 child: Text(
                   file.file ?? '',
                   style: TextStyle(
-                    color: context.xAppColors.codGray,
+                    color: context.xMyCustomTheme.codGray,
                     fontSize: 18,
                   ),
                 ),

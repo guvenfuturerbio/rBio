@@ -170,7 +170,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
                         ? context.xTextInverseColor
-                        : context.xAppColors.textDisabledColor,
+                        : context.xMyCustomTheme.textDisabledColor,
                   ),
                 ),
               );
@@ -190,7 +190,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
                         ? context.xTextOnPrimaryColor
-                        : context.xAppColors.textDisabledColor,
+                        : context.xMyCustomTheme.textDisabledColor,
                   ),
                 ),
               );

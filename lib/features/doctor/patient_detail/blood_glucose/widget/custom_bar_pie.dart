@@ -44,8 +44,8 @@ class _CustomBarPie extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        context.xAppColors.roman,
-                        context.xAppColors.roman,
+                        context.xMyCustomTheme.roman,
+                        context.xMyCustomTheme.roman,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.topRight,
@@ -69,8 +69,8 @@ class _CustomBarPie extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        context.xAppColors.tonysPink,
-                        context.xAppColors.tonysPink,
+                        context.xMyCustomTheme.tonysPink,
+                        context.xMyCustomTheme.tonysPink,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.topRight,
@@ -94,8 +94,8 @@ class _CustomBarPie extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        context.xAppColors.deYork,
-                        context.xAppColors.deYork,
+                        context.xMyCustomTheme.deYork,
+                        context.xMyCustomTheme.deYork,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.topRight,
@@ -119,8 +119,8 @@ class _CustomBarPie extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        context.xAppColors.energyYellow,
-                        context.xAppColors.energyYellow,
+                        context.xMyCustomTheme.energyYellow,
+                        context.xMyCustomTheme.energyYellow,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.topRight,
@@ -144,8 +144,8 @@ class _CustomBarPie extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        context.xAppColors.casablanca,
-                        context.xAppColors.casablanca,
+                        context.xMyCustomTheme.casablanca,
+                        context.xMyCustomTheme.casablanca,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.topRight,

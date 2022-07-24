@@ -366,7 +366,7 @@ class _BuildCouncilCardConnectionLink extends StatelessWidget {
         Text(
           LocaleProvider.of(context).council_connection_link,
           style: context.xHeadline4.copyWith(
-            color: context.xAppColors.textDisabledColor,
+            color: context.xMyCustomTheme.textDisabledColor,
           ),
         ),
 
@@ -480,7 +480,7 @@ class _BuildCouncilCardTile extends StatelessWidget {
         Text(
           title,
           style: context.xHeadline4.copyWith(
-            color: context.xAppColors.textDisabledColor,
+            color: context.xMyCustomTheme.textDisabledColor,
           ),
         ),
 

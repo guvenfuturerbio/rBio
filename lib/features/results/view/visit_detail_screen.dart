@@ -369,7 +369,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                       Text(
                         LocaleProvider.of(context).test_name,
                         style: context.xHeadline4.copyWith(
-                          color: context.xAppColors.textDisabledColor,
+                          color: context.xMyCustomTheme.textDisabledColor,
                         ),
                       ),
 
@@ -390,7 +390,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                               child: Text(
                                 LocaleProvider.of(context).group_name,
                                 style: context.xHeadline4.copyWith(
-                                  color: context.xAppColors.textDisabledColor,
+                                  color: context.xMyCustomTheme.textDisabledColor,
                                 ),
                               ),
                             ),
@@ -400,7 +400,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
                               child: Text(
                                 LocaleProvider.of(context).approved_date,
                                 style: context.xHeadline4.copyWith(
-                                  color: context.xAppColors.textDisabledColor,
+                                  color: context.xMyCustomTheme.textDisabledColor,
                                 ),
                               ),
                             ),
@@ -532,7 +532,7 @@ class _VisitDetailViewState extends State<VisitDetailView> {
         textStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: context.xAppColors.grey,
+          color: context.xMyCustomTheme.grey,
         ),
         gradient: LinearGradient(
           colors: [

@@ -121,7 +121,7 @@ class RbioTreatmentCard extends StatelessWidget {
                           Text(
                             subTitle,
                             style: context.xHeadline3.copyWith(
-                              color: context.xAppColors.textDisabledColor,
+                              color: context.xMyCustomTheme.textDisabledColor,
                             ),
                           ),
 

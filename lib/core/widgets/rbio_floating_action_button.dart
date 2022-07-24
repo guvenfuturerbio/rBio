@@ -27,7 +27,7 @@ class RbioSVGFAB extends StatelessWidget {
       imagePath: imagePath,
       onPressed: onPressed,
       elevation: elevation,
-      iconColor: context.xAppColors.white,
+      iconColor: context.xMyCustomTheme.white,
     );
   }
 
@@ -64,7 +64,7 @@ class RbioIconsFAB extends StatelessWidget {
       child: Icon(
         icon,
         size: R.sizes.iconSize,
-        color: context.xAppColors.white,
+        color: context.xMyCustomTheme.white,
       ),
       onPressed: onPressed,
       elevation: elevation,

@@ -200,7 +200,7 @@ class DoctorCvView extends StatelessWidget {
                         ? LocaleProvider.current.guven_cayyolu_campus
                         : LocaleProvider.current.online_hospital,
                 style: context.xHeadline3.copyWith(
-                  color: context.xAppColors.grey,
+                  color: context.xMyCustomTheme.grey,
                 ),
               ),
             ),
@@ -211,7 +211,7 @@ class DoctorCvView extends StatelessWidget {
               child: Text(
                 departmentName,
                 style: context.xHeadline3.copyWith(
-                  color: context.xAppColors.grey,
+                  color: context.xMyCustomTheme.grey,
                 ),
               ),
             ),

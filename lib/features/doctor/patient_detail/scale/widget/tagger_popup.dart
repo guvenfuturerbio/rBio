@@ -53,7 +53,7 @@ class ScaleTagger extends StatelessWidget {
             child: GestureDetector(
                 onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                 child: Card(
-                  color: context.scaffoldBackgroundColor,
+                  color: context.xScaffoldBackgroundColor,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -102,27 +102,27 @@ class ScaleTagger extends StatelessWidget {
               children: [
                 _itemOfColorInfoDialog(
                   context,
-                  context.xAppColors.roman,
+                  context.xMyCustomTheme.roman,
                   LocaleProvider.current.very_low,
                 ),
                 _itemOfColorInfoDialog(
                   context,
-                  context.xAppColors.tonysPink,
+                  context.xMyCustomTheme.tonysPink,
                   LocaleProvider.current.low,
                 ),
                 _itemOfColorInfoDialog(
                   context,
-                  context.xAppColors.deYork,
+                  context.xMyCustomTheme.deYork,
                   LocaleProvider.current.target,
                 ),
                 _itemOfColorInfoDialog(
                   context,
-                  context.xAppColors.energyYellow,
+                  context.xMyCustomTheme.energyYellow,
                   LocaleProvider.current.high,
                 ),
                 _itemOfColorInfoDialog(
                   context,
-                  context.xAppColors.casablanca,
+                  context.xMyCustomTheme.casablanca,
                   LocaleProvider.current.very_high,
                 ),
               ],
@@ -383,7 +383,7 @@ class ScaleTagger extends StatelessWidget {
                 borderRadius: R.sizes.borderRadiusCircular,
                 border: Border.all(
                   width: 6,
-                  color: color ?? context.xAppColors.grey.withOpacity(.2),
+                  color: color ?? context.xMyCustomTheme.grey.withOpacity(.2),
                 ),
                 shape: BoxShape.rectangle,
                 color: getIt<IAppConfig>().theme.white,

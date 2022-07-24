@@ -141,7 +141,7 @@ class GuvenAlert extends StatelessWidget {
   }) {
     return _actionButton(
       title,
-      context.xAppColors.punch,
+      context.xMyCustomTheme.punch,
       context.xTextColor,
       onPressed,
       padding: padding,

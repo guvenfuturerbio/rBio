@@ -12,13 +12,13 @@ extension TreatmentTypeExtension on TreatmentType {
   Color xBackColor(BuildContext context) {
     switch (this) {
       case TreatmentType.diet:
-        return context.xAppColors.kournikova;
+        return context.xMyCustomTheme.kournikova;
 
       case TreatmentType.treatmentNote:
-        return context.xAppColors.frenchPass;
+        return context.xMyCustomTheme.frenchPass;
 
       case TreatmentType.doctorNote:
-        return context.xAppColors.frenchLilac;
+        return context.xMyCustomTheme.frenchLilac;
     }
   }
 

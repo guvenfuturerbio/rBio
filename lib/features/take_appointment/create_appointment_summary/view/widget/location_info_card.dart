@@ -39,8 +39,7 @@ class LocationInfoCard extends StatelessWidget {
         //
         Text(
           LocaleProvider.of(context).where_will_you_attend_the_meeting,
-          style: context.xTextTheme.headline4!
-              .copyWith(fontWeight: FontWeight.bold),
+          style: context.xHeadline4.copyWith(fontWeight: FontWeight.bold),
         ),
 
         //

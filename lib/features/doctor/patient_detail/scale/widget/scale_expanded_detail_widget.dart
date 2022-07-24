@@ -118,7 +118,7 @@ class _UserScaleDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: context.xAppColors.textDisabledColor,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),
@@ -130,7 +130,7 @@ class _UserScaleDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: context.xAppColors.textDisabledColor,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),

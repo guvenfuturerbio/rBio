@@ -170,7 +170,7 @@ class RbioCardAppoCard extends StatelessWidget {
                     Text(
                       LocaleProvider.of(context).department,
                       style: context.xHeadline4.copyWith(
-                        color: context.xAppColors.textDisabledColor,
+                        color: context.xMyCustomTheme.textDisabledColor,
                       ),
                     ),
                     Text(
@@ -196,7 +196,7 @@ class RbioCardAppoCard extends StatelessWidget {
                           Text(
                             LocaleProvider.of(context).hint_date,
                             style: context.xHeadline4.copyWith(
-                              color: context.xAppColors.textDisabledColor,
+                              color: context.xMyCustomTheme.textDisabledColor,
                             ),
                           ),
                           Text(
@@ -221,7 +221,7 @@ class RbioCardAppoCard extends StatelessWidget {
                             Text(
                               LocaleProvider.current.hint_time,
                               style: context.xHeadline4.copyWith(
-                                color: context.xAppColors.textDisabledColor,
+                                color: context.xMyCustomTheme.textDisabledColor,
                               ),
                             ),
                             Text(

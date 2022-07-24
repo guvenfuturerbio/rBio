@@ -74,15 +74,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 borderRadius: BorderRadius.circular(200),
                                 gradient: LinearGradient(
                                   colors: [
-                                    context.xAppColors.fuzzyWuzzyBrown,
-                                    context.xAppColors.fuzzyWuzzyBrown,
+                                    context.xMyCustomTheme.fuzzyWuzzyBrown,
+                                    context.xMyCustomTheme.fuzzyWuzzyBrown,
                                   ],
                                   begin: Alignment.bottomLeft,
                                   end: Alignment.centerRight,
                                 ),
                                 border: Border.all(
                                   width: 1,
-                                  color: context.xAppColors.fuzzyWuzzyBrown,
+                                  color: context.xMyCustomTheme.fuzzyWuzzyBrown,
                                 ),
                               ),
                               margin: const EdgeInsets.all(20),
@@ -114,7 +114,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             child: Text(
                               LocaleProvider.of(context).we_are_online,
                               style: TextStyle(
-                                color: context.xAppColors.fuzzyWuzzyBrown,
+                                color: context.xMyCustomTheme.fuzzyWuzzyBrown,
                                 fontSize: 16,
                               ),
                             ),
@@ -123,7 +123,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             child: Text(
                               LocaleProvider.of(context).call_us_message,
                               style: TextStyle(
-                                color: context.xAppColors.fuzzyWuzzyBrown,
+                                color: context.xMyCustomTheme.fuzzyWuzzyBrown,
                                 fontSize: 16,
                               ),
                             ),

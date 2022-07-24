@@ -21,7 +21,7 @@ class BpChartFilterPopUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       elevation: R.sizes.defaultElevation,
-      backgroundColor: context.scaffoldBackgroundColor,
+      backgroundColor: context.xScaffoldBackgroundColor,
       shape: R.sizes.defaultShape,
       child: ChangeNotifierProvider(
         create: (_) => BpChartFilterPopUpVm(

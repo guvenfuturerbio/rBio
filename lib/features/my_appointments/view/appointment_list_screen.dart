@@ -374,7 +374,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
 
                 //
                 _buildStartVideoButton(
-                  backColor: context.xAppColors.grey,
+                  backColor: context.xMyCustomTheme.grey,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -407,7 +407,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
               //
               Center(
                 child: _buildStartVideoButton(
-                  backColor: context.xAppColors.dustyGray,
+                  backColor: context.xMyCustomTheme.dustyGray,
                   onPressed: () {
                     showDialog(
                       context: context,

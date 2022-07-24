@@ -165,7 +165,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     dotHeight: 10,
                     dotWidth: 16,
                     activeDotColor: context.xPrimaryColor,
-                    dotColor: context.xAppColors.grey.withOpacity(0.5),
+                    dotColor: context.xMyCustomTheme.grey.withOpacity(0.5),
                   ),
                 ),
               ),

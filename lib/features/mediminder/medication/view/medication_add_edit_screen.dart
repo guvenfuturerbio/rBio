@@ -449,7 +449,7 @@ class __MedicationReminderAddEditViewState
       style: context.xHeadline4.copyWith(
         color: type == result.drugTracking
             ? context.xTextColor
-            : context.xAppColors.textDisabledColor,
+            : context.xMyCustomTheme.textDisabledColor,
       ),
     );
 
