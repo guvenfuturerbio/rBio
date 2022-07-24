@@ -4,12 +4,15 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/app.dart';
-import 'app/bluetooth_v2/bluetooth_v2.dart';
+import 'config/config.dart';
 import 'core/core.dart';
+import 'features/bluetooth/bluetooth.dart';
+import 'features/bluetooth_v2/bluetooth_v2.dart';
 
 Future<void> bootstrap(IAppConfig appConfig) async {
   WidgetsFlutterBinding.ensureInitialized();

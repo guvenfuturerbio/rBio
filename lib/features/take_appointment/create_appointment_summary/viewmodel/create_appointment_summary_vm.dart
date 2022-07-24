@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../../create_appointment/model/voucher_price_request.dart';

@@ -1,8 +1,9 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../../../config/config.dart';
 import '../cubit/cubit.dart';
 
 class ForYouOrderSummaryScreen extends StatelessWidget {

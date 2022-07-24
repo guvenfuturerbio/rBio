@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../config/config.dart';
 import '../../../core/core.dart';
 import '../../shared/consent_form/consent_form_dialog.dart';
 import '../../shared/kvkk_form/kvkk_form_screen.dart';

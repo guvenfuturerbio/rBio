@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../features/doctor/treatment/diet_add_edit/diet_add_edit.dart';
 import '../../../model/model.dart';
+import '../../config/config.dart';
 import '../../core/core.dart';
 
 part 'doctor_service_impl.dart';

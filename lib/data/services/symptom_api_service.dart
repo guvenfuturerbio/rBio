@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../../model/model.dart';
+import '../../config/config.dart';
 import '../../core/core.dart';
 import '../../features/symptom_checker/symptoms_result_page/model/get_body_symptoms_response.dart';
 

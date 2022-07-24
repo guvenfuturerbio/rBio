@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../model/get_availability_rate_request.dart';

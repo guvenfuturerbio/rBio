@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slugify/slugify.dart';
 import 'package:turkish/turkish.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../../../dashboard/search/model/filter_resources_request.dart';

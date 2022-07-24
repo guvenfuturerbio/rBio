@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/config.dart';
 import '../../../core/core.dart';
 import 'necessary_identity_vm.dart';
 

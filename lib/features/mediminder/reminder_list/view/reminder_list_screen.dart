@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import '../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../core/core.dart';
+import '../../../../config/config.dart';
 import '../../../../core/utils/helper/tz_helper.dart';
 import '../../mediminder.dart';
 

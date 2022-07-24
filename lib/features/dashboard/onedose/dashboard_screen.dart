@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../config/config.dart';
 import '../../../core/core.dart';
 import '../home/model/drawer_model.dart';
 import 'bottom_navbar_painter.dart';

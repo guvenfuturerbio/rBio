@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../../../config/config.dart';
 import '../scale_detail.dart';
 
 class PatientScaleDetailScreen extends StatelessWidget {

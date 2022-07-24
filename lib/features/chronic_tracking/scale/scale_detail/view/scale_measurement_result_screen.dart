@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../../core/core.dart';
+import '../../../../bluetooth_v2/bluetooth_v2.dart';
 import '../scale_detail.dart';
 
 class ScaleMeasurementResultScreen extends StatelessWidget {

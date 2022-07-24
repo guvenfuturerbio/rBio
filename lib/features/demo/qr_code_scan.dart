@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:scan/scan.dart';
 
+import '../../config/config.dart';
 import '../../core/core.dart';
 
 class QrCodeScanScreen extends StatefulWidget {

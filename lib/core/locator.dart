@@ -4,7 +4,9 @@ import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../app/bluetooth_v2/bluetooth_v2.dart';
+import '../config/config.dart';
+import '../features/bluetooth/bluetooth.dart';
+import '../features/bluetooth_v2/bluetooth_v2.dart';
 import '../features/chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
 import '../features/mediminder/mediminder.dart';
 import 'core.dart';

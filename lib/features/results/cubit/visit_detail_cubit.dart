@@ -5,11 +5,11 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../../../core/core.dart';
-
-import '../model/model.dart';
 import 'package:universal_html/html.dart' as html;
+
+import '../../../config/config.dart';
+import '../../../core/core.dart';
+import '../model/model.dart';
 
 part 'visit_detail_state.dart';
 

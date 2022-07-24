@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../config/config.dart';
+import '../../features/bluetooth_v2/bluetooth_v2.dart';
 import '../../features/dashboard/home/view/home_screen.dart';
 import '../../model/model.dart';
 import '../core.dart';

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/core.dart';
+import '../../../config/config.dart';
 import '../../shared/rate_dialog/view/rate_dialog.dart';
 import '../cubit/my_appointments_cubit.dart';
 import '../my_appointments.dart';

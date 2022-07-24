@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../cubit/profile_cubit.dart';
 

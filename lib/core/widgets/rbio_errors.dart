@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../config/config.dart';
 import '../core.dart';
 
 class RbioRouteError extends StatelessWidget {

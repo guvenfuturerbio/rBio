@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../config/config.dart';
 
 class SelectReminderScreen extends StatelessWidget {
   const SelectReminderScreen({Key? key}) : super(key: key);

@@ -7,10 +7,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:onedosehealth/core/core.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:universal_html/html.dart' as html;
+
+import '../../config/config.dart';
+import '../../core/core.dart';
 
 class QRCodeGeneratorScreen extends StatefulWidget {
   String name;

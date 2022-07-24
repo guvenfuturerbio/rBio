@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 
 class ContactUsScreen extends StatefulWidget {

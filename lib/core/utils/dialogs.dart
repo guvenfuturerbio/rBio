@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import '../../config/config.dart';
 import '../../features/shared/do_not_show_again_dialog.dart';
 import '../core.dart';
 

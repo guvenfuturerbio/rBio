@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../config/config.dart';
 import '../core/core.dart';
+import '../features/bluetooth/bluetooth.dart';
+import '../features/bluetooth_v2/bluetooth_v2.dart';
 import '../features/chronic_tracking/blood_glucose/blood_glucose.dart';
 import '../features/chronic_tracking/blood_pressure/blood_pressure.dart';
 import '../features/chronic_tracking/home/viewmodel/scale_progress_vm.dart';
@@ -12,7 +16,6 @@ import '../features/chronic_tracking/scale/scale.dart';
 import '../features/dashboard/home/viewmodel/home_vm.dart';
 import '../features/doctor/notifiers/bg_measurements_notifiers.dart';
 import '../features/doctor/notifiers/patient_notifiers.dart';
-import 'bluetooth_v2/bluetooth_v2.dart';
 
 abstract class MyApp {
   bool jailbroken = false;

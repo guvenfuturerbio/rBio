@@ -19,6 +19,7 @@ import '../../../features/take_appointment/create_appointment_summary/model/get_
 import '../../../features/take_appointment/create_appointment_summary/model/synchronize_onedose_user_req.dart';
 import '../../../features/take_appointment/do_mobile_payment/do_mobil_payment_voucher.dart';
 import '../../../model/model.dart';
+import '../../config/config.dart';
 import '../../core/core.dart';
 import '../../features/dashboard/search/model/filter_resources_request.dart';
 import '../../features/dashboard/search/model/filter_resources_response.dart';

@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
 import '../../../../chronic_tracking/bottom_actions_of_graph.dart';

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../../config/config.dart';
 import '../core.dart';
 
 extension DioErrorExtension on DioError {

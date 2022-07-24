@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
+import '../../../config/config.dart';
 
 class QuestionDialog extends StatelessWidget {
   const QuestionDialog({

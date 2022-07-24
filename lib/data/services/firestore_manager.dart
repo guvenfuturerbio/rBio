@@ -12,6 +12,7 @@ import '../../../features/chat/model/chat_person.dart';
 import '../../../features/chat/model/message.dart';
 import '../../../features/chat/model/notification_data.dart';
 import '../../../features/chat/model/notification_model.dart';
+import '../../config/config.dart';
 import '../../core/core.dart';
 
 class FirestoreManager {

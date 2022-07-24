@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
 import '../bloc/search_bloc.dart';

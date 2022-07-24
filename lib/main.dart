@@ -1,5 +1,5 @@
 import 'bootstrap.dart';
-import 'core/core.dart';
+import 'config/config.dart';
 
 Future<void> main() async {
   final config = OneDoseConfig();

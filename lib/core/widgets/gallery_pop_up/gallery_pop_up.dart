@@ -6,6 +6,7 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../config/config.dart';
 import 'stepper/stepper.dart' as core;
 
 class GalleryView extends StatelessWidget {

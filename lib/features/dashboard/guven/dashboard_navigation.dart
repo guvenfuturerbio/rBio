@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vrouter/vrouter.dart';
 
+import '../../../config/config.dart';
 import '../../../core/core.dart';
 import '../../my_appointments/view/view.dart';
 import '../../profile/profile/view/profile_screen.dart';

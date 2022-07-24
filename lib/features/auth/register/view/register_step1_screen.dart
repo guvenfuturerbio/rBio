@@ -5,11 +5,12 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/core/widgets/rbio_error_text.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
+import '../../../../core/widgets/rbio_error_text.dart';
 import '../viewmodel/register_step2_vm.dart';
 
 class RegisterStep1Screen extends StatefulWidget {

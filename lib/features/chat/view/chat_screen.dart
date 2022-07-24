@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../config/config.dart';
 import '../../../core/core.dart';
 import '../controller/chat_vm.dart';
 import '../model/chat_person.dart';

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-
 import 'package:onedosehealth/core/platform/mobil_interface.dart'
     if (dart.library.html) 'package:onedosehealth/core/platform/web_interface.dart';
 
+import '../../config/config.dart';
 import '../../core/core.dart';
 
 const String getMethod = 'GET';

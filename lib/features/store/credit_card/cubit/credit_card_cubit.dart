@@ -2,10 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../config/config.dart';
 import '../credit_card.dart';
 
-part 'credit_card_state.dart';
 part 'credit_card_cubit.freezed.dart';
+part 'credit_card_state.dart';
 
 class CreditCardCubit extends Cubit<CreditCardState> {
   CreditCardCubit(

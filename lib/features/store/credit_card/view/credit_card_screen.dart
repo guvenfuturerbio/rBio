@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../../../config/config.dart';
 import '../../../take_appointment/do_mobile_payment/iyzico_response_sms_payment_page.dart';
 import '../credit_card.dart';
 
@@ -198,8 +199,9 @@ class _CreditCardViewState extends State<CreditCardView> {
                           image: R.image.user,
                         )
                         .copyWith(
-                            fillColor: getIt<IAppConfig>().theme.white,
-                            filled: true),
+                          fillColor: getIt<IAppConfig>().theme.white,
+                          filled: true,
+                        ),
                     focusNode: cardHolderNameFNode,
                     inputFormatters: <TextInputFormatter>[
                       TabToNextFieldTextInputFormatter(

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../../config/config.dart';
 import '../../../core/core.dart';
+import '../../bluetooth/bluetooth.dart';
+import '../../bluetooth_v2/bluetooth_v2.dart';
 
 part 'available_devices/view/available_devices_screen.dart';
 part 'available_devices/view_model/available_devices_vm.dart';

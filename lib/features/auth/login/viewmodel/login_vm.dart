@@ -8,8 +8,10 @@ import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../../../model/model.dart';
+import '../../../bluetooth/bluetooth.dart';
 import '../../../dashboard/home/viewmodel/home_vm.dart';
 import '../../../shared/consent_form/consent_form_dialog.dart';
 import '../../../shared/kvkk_form/kvkk_form_screen.dart';

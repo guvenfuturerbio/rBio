@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../../../config/config.dart';
 import '../model/scale_treatment_request.dart';
 import '../model/treatment_filter_type.dart';
 

@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../../../core/core.dart';
+import '../../../../../../config/config.dart';
 import '../../scale_detail.dart';
 
 part 'patient_scale_detail_cubit.freezed.dart';

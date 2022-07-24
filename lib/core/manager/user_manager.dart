@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 
+import '../../config/config.dart';
 import '../../features/auth/login/model/login_exception.dart';
 import '../../features/shared/consent_form/consent_form_dialog.dart';
 import '../../features/shared/rate_dialog/view/rate_dialog.dart';

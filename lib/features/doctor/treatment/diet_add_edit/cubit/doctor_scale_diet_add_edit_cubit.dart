@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
 import '../../../../chronic_tracking/scale/diet_detail/model/scale_treatment_diet_detail_response.dart';
 import '../../../../chronic_tracking/scale/treatment_detail/model/scale_treatment_screen_edit_mode.dart';

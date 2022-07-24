@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:onedosehealth/config/config.dart';
 
 import 'package:onedosehealth/core/core.dart';
 import 'package:onedosehealth/features/dashboard/search/model/filter_resources_request.dart';

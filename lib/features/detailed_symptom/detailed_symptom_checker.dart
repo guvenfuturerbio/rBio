@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../config/config.dart';
 import '../../core/core.dart';
 
 class DetailedSymptomChecker extends StatefulWidget {

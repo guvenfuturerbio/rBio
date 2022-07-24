@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
 import '../../../../../model/model.dart';
 import '../../../../chronic_tracking/blood_pressure/blood_pressure.dart';
@@ -18,10 +19,10 @@ import '../../../notifiers/patient_notifiers.dart';
 import '../../../treatment_process/view/treatment_process_screen.dart';
 
 part '../viewmodel/bp_patient_detail_vm.dart';
+part '../widget/blood_pressure_detail_card.dart';
 part '../widget/charts/bp_line_chart.dart';
 part '../widget/graph_header_section.dart';
 part '../widget/measurement_list.dart';
-part '../widget/blood_pressure_detail_card.dart';
 
 class BpPatientDetailScreen extends StatefulWidget {
   const BpPatientDetailScreen({Key? key}) : super(key: key);

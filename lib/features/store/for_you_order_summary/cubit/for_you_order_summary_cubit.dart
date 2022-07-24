@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../model/model.dart';
 
-part 'for_you_order_summary_state.dart';
 part 'for_you_order_summary_cubit.freezed.dart';
+part 'for_you_order_summary_state.dart';
 
 class ForYouOrderSummaryCubit extends Cubit<ForYouOrderSummaryState> {
   ForYouOrderSummaryCubit(this.repository)

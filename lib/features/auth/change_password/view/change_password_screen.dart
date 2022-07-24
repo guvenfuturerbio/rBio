@@ -5,6 +5,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../cubit/change_password_cubit.dart';
 

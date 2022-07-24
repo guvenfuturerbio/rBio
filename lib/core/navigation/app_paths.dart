@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
-import '../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../config/config.dart';
 import '../../features/auth/auth.dart';
+import '../../features/bluetooth/bluetooth.dart';
+import '../../features/bluetooth_v2/bluetooth_v2.dart';
 import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';

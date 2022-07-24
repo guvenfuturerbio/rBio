@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rive/rive.dart';
 import 'package:simple_animations/simple_animations.dart';
 
-import '../../../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../../../core/core.dart';
+import '../../../../../bluetooth_v2/bluetooth_v2.dart';
 
 class ScaleMeasurementPopup extends StatelessWidget {
   const ScaleMeasurementPopup({
