@@ -9,7 +9,7 @@ import '../../features/chronic_tracking/blood_pressure/model/model.dart';
 
 class ChronicTrackingRepository {
   final ChronicTrackingApiService apiService;
-  final LocalCacheService localCacheService;
+  final LocalCacheManager localCacheService;
 
   ChronicTrackingRepository({
     required this.apiService,

@@ -207,7 +207,7 @@ class Utils {
     Future<List<T>> Function() apiCall,
     Duration cacheDuration,
     T model,
-    LocalCacheService localCacheService, {
+    LocalCacheManager localCacheService, {
     bool localeHandle = false,
   }) async {
     final cacheUrl = url +
@@ -249,7 +249,7 @@ class Utils {
     Future<T> Function() apiCall,
     Duration cacheDuration,
     T model,
-    LocalCacheService localCacheService, {
+    LocalCacheManager localCacheService, {
     bool localeHandle = false,
   }) async {
     final cacheUrl = url +

@@ -152,8 +152,8 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerLazySingleton<FirestoreManager>(
     () => FirestoreManager(),
   );
-  getIt.registerLazySingleton<LocalCacheService>(
-    () => LocalCacheServiceImpl(),
+  getIt.registerLazySingleton<LocalCacheManager>(
+    () => LocalCacheManagerImpl(),
   );
   getIt.registerLazySingleton<SymptomApiService>(
     () => SymptomApiServiceImpl(
@@ -166,19 +166,19 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerLazySingleton(
     () => ChronicTrackingRepository(
       apiService: getIt<ChronicTrackingApiService>(),
-      localCacheService: getIt<LocalCacheService>(),
+      localCacheService: getIt<LocalCacheManager>(),
     ),
   );
   getIt.registerSingleton<DoctorRepository>(
     DoctorRepository(
       apiService: getIt<DoctorApiService>(),
-      localCacheService: getIt<LocalCacheService>(),
+      localCacheService: getIt<LocalCacheManager>(),
     ),
   );
   getIt.registerSingleton<Repository>(
     Repository(
       apiService: getIt<ApiService>(),
-      localCacheService: getIt<LocalCacheService>(),
+      localCacheService: getIt<LocalCacheManager>(),
     ),
   );
   getIt.registerSingleton<SymptomRepository>(
@@ -245,7 +245,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   // #region Init
   await getIt<ScaleRepository>().init("hive_scale");
   await getIt<ISharedPreferencesManager>().init();
-  await getIt<LocalCacheService>().init();
+  await getIt<LocalCacheManager>().init();
   await getIt<LocaleNotifier>().init();
   await getIt<LocalNotificationManager>().init();
   await getIt<FirebaseMessagingManager>().init();

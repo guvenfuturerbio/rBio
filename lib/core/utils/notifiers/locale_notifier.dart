@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core.dart';
+import '../../core.dart';
 
 class LocaleNotifier with ChangeNotifier {
   late Locale current;

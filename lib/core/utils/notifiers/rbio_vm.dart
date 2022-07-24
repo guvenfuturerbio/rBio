@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core.dart';
+import '../../core.dart';
 
 abstract class RbioVm extends ChangeNotifier {
   BuildContext get mContext;

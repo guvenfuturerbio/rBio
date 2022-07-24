@@ -9,7 +9,7 @@ import '../../features/doctor/shared/shared.dart';
 
 class DoctorRepository {
   final DoctorApiService apiService;
-  final LocalCacheService localCacheService;
+  final LocalCacheManager localCacheService;
 
   DoctorRepository({
     required this.apiService,

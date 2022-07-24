@@ -1,6 +1,20 @@
-part of 'local_cache_service.dart';
+import 'dart:convert';
 
-class LocalCacheServiceImpl extends LocalCacheService {
+import 'package:hive/hive.dart';
+import 'package:pub_semver/pub_semver.dart';
+
+import '../../config/config.dart';
+import '../core.dart';
+
+abstract class LocalCacheManager {
+  Future<void> init();
+  Future<String> get(String url);
+  Future<bool> write(String url, String data, Duration time);
+  Future<bool> remove(String url);
+  Future<bool> removeAll();
+}
+
+class LocalCacheManagerImpl extends LocalCacheManager {
   final _boxKey = 'network_cache';
   late Box box;
 
@@ -84,4 +98,34 @@ class LocalCacheServiceImpl extends LocalCacheService {
       return false;
     }
   }
+}
+
+class NetworkCacheModel extends IBaseModel<NetworkCacheModel> {
+  String data;
+  DateTime expirationTime;
+  String appVersion;
+
+  NetworkCacheModel({
+    required this.data,
+    required this.expirationTime,
+    required this.appVersion,
+  });
+
+  factory NetworkCacheModel.fromJson(Map<String, dynamic> json) =>
+      NetworkCacheModel(
+        data: json['data'] as String,
+        expirationTime: DateTime.parse(json['expirationTime'] as String),
+        appVersion: json['appVersion'] as String,
+      );
+
+  @override
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'data': data,
+        'expirationTime': expirationTime.toIso8601String(),
+        'appVersion': appVersion,
+      };
+
+  @override
+  NetworkCacheModel fromJson(Map<String, dynamic> json) =>
+      NetworkCacheModel.fromJson(json);
 }

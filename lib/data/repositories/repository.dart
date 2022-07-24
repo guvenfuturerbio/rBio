@@ -47,7 +47,7 @@ import '../../features/take_appointment/do_mobile_payment/appointment_request.da
 
 class Repository {
   final ApiService apiService;
-  final LocalCacheService localCacheService;
+  final LocalCacheManager localCacheService;
 
   Repository({
     required this.apiService,
