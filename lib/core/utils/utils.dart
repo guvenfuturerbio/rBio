@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
 import '../../config/config.dart';
+import '../../features/auth/shared/shared.dart';
 import '../core.dart';
 import '../widgets/rbio_height_info_dialog.dart';
 

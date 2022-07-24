@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/get_bodylocations_response.dart';
 
 class SymptomsBodyLocationsVm extends ChangeNotifier {
   BuildContext? mContext;

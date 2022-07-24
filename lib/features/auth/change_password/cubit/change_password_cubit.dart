@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/shared/user_login_info.dart';
+import '../../shared/shared.dart';
 
 part 'change_password_state.dart';
 

@@ -1,5 +1,4 @@
-
-import '../../core/core.dart';
+import '../../../../core/core.dart';
 
 class UserLoginInfo extends IBaseModel<UserLoginInfo> {
   String? username;

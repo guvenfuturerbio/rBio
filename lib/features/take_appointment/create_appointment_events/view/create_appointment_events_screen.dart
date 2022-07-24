@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/resources_request.dart';
 import '../viewmodel/create_appointment_events_vm.dart';
 
 part '../model/event.dart';

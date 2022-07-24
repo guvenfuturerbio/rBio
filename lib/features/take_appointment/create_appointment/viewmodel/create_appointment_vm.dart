@@ -4,10 +4,16 @@ import 'package:turkish/turkish.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../../dashboard/search/doctor_cv/doctor_cv_response.dart';
 import '../../../dashboard/search/model/filter_resources_request.dart';
 import '../../../dashboard/search/model/filter_resources_response.dart';
+import '../../../my_appointments/model/model.dart';
+import '../model/filter_departments_request.dart';
+import '../model/filter_departments_response.dart';
+import '../model/filter_online_departments_request.dart';
+import '../model/filter_tenants_request.dart';
 import '../model/filter_tenants_response.dart';
+import '../model/patient_relative_info_response.dart';
 
 enum Fields { department, tenant, doctors, relative }
 

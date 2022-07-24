@@ -10,7 +10,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
+import '../model/bg_measurement_view_model.dart';
 import '../viewmodel/bg_progress_vm.dart';
 import 'tagger/bg_tagger_pop_up.dart';
 

@@ -6,8 +6,8 @@ import 'dart:io';
 
 import 'package:hive/hive.dart';
 
-import '../../core/core.dart';
-import '../../features/chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
+import '../../../../core/enums/diabetes_type.dart';
+import '../../../chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
 
 part 'person_model.g.dart';
 
@@ -129,10 +129,15 @@ class Person extends HiveObject {
   Map<String, dynamic> toJson() => _$PersonToJson(this);
 
   Map<String, dynamic> getRequestBody() {
-    final diabetesType = this.diabetesType.xGetDiabetesType.xRawValue;
-    final json = _$PersonToJson(this);
-    json['diabetes_type'] = diabetesType;
-    return json;
+    final val = diabetesType;
+    if (val != null) {
+      final diabetesType = val.xGetDiabetesType.xRawValue;
+      final json = _$PersonToJson(this);
+      json['diabetes_type'] = diabetesType;
+      return json;
+    }
+
+    return {};
   }
 
   Person fromDefault({

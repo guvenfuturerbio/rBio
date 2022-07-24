@@ -1,27 +1,4 @@
-// To parse this JSON data, do
-//
-//     final addBpWithDetail = addBpWithDetailFromJson(jsonString);
-
-import 'dart:convert';
-
-AddBpWithDetail addBpWithDetailFromJson(String str) =>
-    AddBpWithDetail.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String addBpWithDetailToJson(AddBpWithDetail data) =>
-    json.encode(data.toJson());
-
 class AddBpWithDetail {
-  AddBpWithDetail({
-    this.entegrationId,
-    this.occurrenceTime,
-    this.sys,
-    this.dia,
-    this.pulse,
-    this.note,
-    this.deviceUuid,
-    this.isManual,
-  });
-
   int? id;
   int? entegrationId;
   DateTime? occurrenceTime;
@@ -32,6 +9,17 @@ class AddBpWithDetail {
   String? deviceUuid;
   bool? isManual;
   int? measurementId;
+
+  AddBpWithDetail({
+    this.entegrationId,
+    this.occurrenceTime,
+    this.sys,
+    this.dia,
+    this.pulse,
+    this.note,
+    this.deviceUuid,
+    this.isManual,
+  });
 
   factory AddBpWithDetail.fromJson(Map<String, dynamic> json) =>
       AddBpWithDetail(

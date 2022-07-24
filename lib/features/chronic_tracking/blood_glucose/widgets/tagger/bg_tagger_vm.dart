@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../config/config.dart';
+import '../../model/model.dart';
 
 class BgTaggerVm extends ChangeNotifier {
   BgTaggerVm({

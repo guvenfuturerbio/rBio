@@ -2,15 +2,10 @@ import 'package:dio/dio.dart';
 
 import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../features/mediminder/mediminder.dart';
-import '../../../model/bg_measurement/blood_glucose_report_body.dart';
-import '../../../model/bg_measurement/blood_glucose_value_model.dart';
-import '../../../model/bg_measurement/delete_bg_measurement_request.dart';
-import '../../../model/bg_measurement/get_blood_glucose_data_of_person.dart';
-import '../../../model/bg_measurement/get_hba1c_measurement_list.dart';
-import '../../../model/bg_measurement/hospital_hba1c_measurement.dart';
-import '../../../model/bg_measurement/update_bg_measurement_request.dart';
-import '../../../model/model.dart';
 import '../../core/core.dart';
+import '../../features/auth/shared/shared.dart';
+import '../../features/chronic_tracking/blood_glucose/model/model.dart';
+import '../../features/chronic_tracking/blood_pressure/model/model.dart';
 
 class ChronicTrackingRepository {
   final ChronicTrackingApiService apiService;
@@ -44,10 +39,6 @@ class ChronicTrackingRepository {
     int measurementId,
   ) =>
       apiService.uploadMeasurementImage(file, entegrationId, measurementId);
-  Future<GuvenResponseModel> getBloodGlucoseReport(
-    BloodGlucoseReportBody bloodGlucoseReportBody,
-  ) =>
-      apiService.getBloodGlucoseReport(bloodGlucoseReportBody);
   Future<GuvenResponseModel> getBloodGlucoseDataOfPerson(
     GetBloodGlucoseDataOfPerson data,
   ) =>
@@ -72,22 +63,6 @@ class ChronicTrackingRepository {
     int entegrationId,
   ) =>
       apiService.isDeviceIdRegisteredForSomeUser(deviceId, entegrationId);
-  Future<GuvenResponseModel> addHospitalHba1cMeasurement(
-    HospitalHba1cMeasurementModel hospitalHba1cMeasurementModel,
-    int entegrationId,
-  ) =>
-      apiService.addHospitalHba1cMeasurement(
-        hospitalHba1cMeasurementModel,
-        entegrationId,
-      );
-  Future<GuvenResponseModel> getHba1cMeasurementList(
-    GetHba1cMeasurementListModel getHba1cMeasurementListModel,
-    int entegrationId,
-  ) =>
-      apiService.getHba1cMeasurementList(
-        getHba1cMeasurementListModel,
-        entegrationId,
-      );
 
   // Bp Definitions
   Future<GuvenResponseModel> insertNewBpValue(

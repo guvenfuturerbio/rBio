@@ -5,8 +5,11 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../config/config.dart';
+import '../features/auth/shared/shared.dart';
 import '../features/bluetooth/bluetooth.dart';
 import '../features/bluetooth_v2/bluetooth_v2.dart';
+import '../features/chronic_tracking/blood_glucose/model/model.dart';
+import '../features/chronic_tracking/blood_pressure/model/model.dart';
 import '../features/chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
 import '../features/mediminder/mediminder.dart';
 import 'core.dart';

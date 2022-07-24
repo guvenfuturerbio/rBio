@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../shared/shared.dart';
 import '../model/patient_list_model.dart';
 
 enum DoctorPatientListSortType {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/core.dart';
+import '../../model/model.dart';
 import '../../viewmodel/bp_measurement_vm.dart';
 
 class BpTaggerVm extends ChangeNotifier {

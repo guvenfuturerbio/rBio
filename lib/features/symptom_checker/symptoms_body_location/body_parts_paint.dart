@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:path_drawing/path_drawing.dart';
 
 import '../../../core/core.dart';
-import '../../../model/model.dart';
+import 'model/get_bodylocations_response.dart';
 
 class Shape {
   Shape(strPath, this.label, this.id, this.tmpOffset)

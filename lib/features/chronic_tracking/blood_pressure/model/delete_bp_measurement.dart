@@ -1,23 +1,11 @@
-// To parse this JSON data, do
-//
-//     final deleteBpMeasurements = deleteBpMeasurementsFromJson(jsonString);
-
-import 'dart:convert';
-
-DeleteBpMeasurements deleteBpMeasurementsFromJson(String str) =>
-    DeleteBpMeasurements.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String deleteBpMeasurementsToJson(DeleteBpMeasurements data) =>
-    json.encode(data.toJson());
-
 class DeleteBpMeasurements {
+  int? measurementId;
+  int? entegrationId;
+
   DeleteBpMeasurements({
     this.measurementId,
     this.entegrationId,
   });
-
-  int? measurementId;
-  int? entegrationId;
 
   factory DeleteBpMeasurements.fromJson(Map<String, dynamic> json) =>
       DeleteBpMeasurements(

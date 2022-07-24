@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/core.dart';
+import 'glucose_model.dart';
 
 class BgMeasurementGlucoseViewModel {
   final GlucoseData bgMeasurement;

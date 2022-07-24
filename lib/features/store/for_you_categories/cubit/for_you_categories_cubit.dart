@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/model.dart';
 
 part 'for_you_categories_cubit.freezed.dart';
 part 'for_you_categories_state.dart';

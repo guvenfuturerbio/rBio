@@ -13,6 +13,8 @@ import '../../../../../core/core.dart';
 import '../../../config/config.dart';
 import '../../../features/chronic_tracking/blood_glucose/blood_glucose.dart';
 import '../../../features/chronic_tracking/blood_glucose/blood_glucose_save_data_dialog/view/blood_glucose_save_data_dialog.dart';
+import '../../auth/shared/shared.dart';
+import '../../chronic_tracking/blood_glucose/model/model.dart';
 import '../bluetooth.dart';
 
 part 'ble_connector.dart';

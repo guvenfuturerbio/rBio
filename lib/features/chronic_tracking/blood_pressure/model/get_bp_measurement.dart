@@ -1,27 +1,15 @@
-// To parse this JSON data, do
-//
-//     final getBpMeasurements = getBpMeasurementsFromJson(jsonString);
-
-import 'dart:convert';
-
-GetBpMeasurements getBpMeasurementsFromJson(String str) =>
-    GetBpMeasurements.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String getBpMeasurementsToJson(GetBpMeasurements data) =>
-    json.encode(data.toJson());
-
 class GetBpMeasurements {
+  int? entegrationId;
+  DateTime? beginDate;
+  DateTime? endDate;
+  int? count;
+
   GetBpMeasurements({
     this.entegrationId,
     this.beginDate,
     this.endDate,
     this.count,
   });
-
-  int? entegrationId;
-  DateTime? beginDate;
-  DateTime? endDate;
-  int? count;
 
   factory GetBpMeasurements.fromJson(Map<String, dynamic> json) =>
       GetBpMeasurements(

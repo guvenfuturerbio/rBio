@@ -1,16 +1,15 @@
-// To parse this JSON data, do
-//
-//     final updateBpMeasurements = updateBpMeasurementsFromJson(jsonString);
-
-import 'dart:convert';
-
-UpdateBpMeasurements updateBpMeasurementsFromJson(String str) =>
-    UpdateBpMeasurements.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String updateBpMeasurementsToJson(UpdateBpMeasurements data) =>
-    json.encode(data.toJson());
-
 class UpdateBpMeasurements {
+  int? id;
+  int? entegrationId;
+  DateTime? occurrenceTime;
+  int? sys;
+  int? dia;
+  int? pulse;
+  String? note;
+  String? deviceUuid;
+  bool? isManual;
+  int? measurementId;
+
   UpdateBpMeasurements({
     this.id,
     this.entegrationId,
@@ -23,17 +22,6 @@ class UpdateBpMeasurements {
     this.isManual,
     this.measurementId,
   });
-
-  int? id;
-  int? entegrationId;
-  DateTime? occurrenceTime;
-  int? sys;
-  int? dia;
-  int? pulse;
-  String? note;
-  String? deviceUuid;
-  bool? isManual;
-  int? measurementId;
 
   factory UpdateBpMeasurements.fromJson(Map<String, dynamic> json) =>
       UpdateBpMeasurements(

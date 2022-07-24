@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
+import '../../../auth/shared/shared.dart';
 import '../../mediminder.dart';
 
 part 'strip_reminder_add_edit_cubit.freezed.dart';

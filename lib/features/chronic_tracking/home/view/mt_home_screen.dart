@@ -11,7 +11,9 @@ import '../../../../core/widgets/rbio_error_screen.dart';
 import '../../../dashboard/onedose/not_chronic_screen.dart';
 import '../../../doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../blood_glucose/blood_glucose.dart';
+import '../../blood_glucose/model/model.dart';
 import '../../blood_pressure/blood_pressure.dart';
+import '../../blood_pressure/model/model.dart';
 import '../model/home_page_model.dart';
 import '../viewmodel/scale_progress_vm.dart';
 

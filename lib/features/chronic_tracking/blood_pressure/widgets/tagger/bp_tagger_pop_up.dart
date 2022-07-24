@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
 import '../../../../../config/config.dart';
+import '../../model/model.dart';
 import '../../viewmodel/bp_measurement_vm.dart';
 import 'bp_tagger_vm.dart';
 

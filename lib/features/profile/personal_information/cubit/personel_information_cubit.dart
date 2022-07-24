@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/change_contact_info_request.dart';
 
 part 'personel_information_state.dart';
 

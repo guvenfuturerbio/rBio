@@ -4,6 +4,7 @@ import 'package:spring/spring.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
+import '../model/all_users_model.dart';
 import '../model/banner_model.dart';
 import '../utils/appointments_painter.dart';
 import '../utils/chronic_tracking_painter.dart';

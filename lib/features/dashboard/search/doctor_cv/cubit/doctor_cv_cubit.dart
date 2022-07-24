@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:slugify/slugify.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../model/model.dart';
+import '../doctor_cv_response.dart';
 
 part 'doctor_cv_cubit.freezed.dart';
 part 'doctor_cv_state.dart';

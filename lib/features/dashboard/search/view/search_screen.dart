@@ -6,10 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
 import '../bloc/search_bloc.dart';
 import '../model/filter_resources_response.dart';
 import '../model/search_social_type.dart';
+import '../model/social_posts_response.dart';
 import '../utils/debouncer.dart';
 
 class SearchScreen extends StatelessWidget {

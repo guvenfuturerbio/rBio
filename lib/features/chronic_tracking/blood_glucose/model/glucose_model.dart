@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../core.dart';
+import '../../../../core/core.dart';
 
 part 'glucose_model.g.dart';
 

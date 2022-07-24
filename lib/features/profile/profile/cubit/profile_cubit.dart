@@ -2,7 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../../auth/auth.dart';
+import '../../personal_information/model/change_contact_info_request.dart';
 
 part 'profile_state.dart';
 

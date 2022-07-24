@@ -14,26 +14,3 @@ class AllUsersModel with _$AllUsersModel {
   factory AllUsersModel.fromJson(Map<String, dynamic> json) =>
       _$AllUsersModelFromJson(json);
 }
-
-/*
-@JsonSerializable()
-class AllUsersModel extends IBaseModel<AllUsersModel> {
-  @JsonKey(name: "useWidgets")
-  List<String>? useWidgets;
-
-  AllUsersModel({
-    this.useWidgets,
-  });
-
-  factory AllUsersModel.fromJson(Map<String, dynamic> json) =>
-      _$AllUsersModelFromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => _$AllUsersModelToJson(this);
-
-  @override
-  AllUsersModel fromJson(Map<String, dynamic> json) {
-    return AllUsersModel.fromJson(json);
-  }
-}
-*/

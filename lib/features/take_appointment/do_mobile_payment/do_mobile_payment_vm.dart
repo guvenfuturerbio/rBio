@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
 import '../../../config/config.dart';
+import '../../auth/shared/shared.dart';
+import 'appointment_request.dart';
 import 'do_mobil_payment_voucher.dart';
+import 'e_randevu_cc_response.dart';
 import 'iyzico_response_sms_payment_page.dart';
 
 class DoMobilePaymentScreenVm extends ChangeNotifier {

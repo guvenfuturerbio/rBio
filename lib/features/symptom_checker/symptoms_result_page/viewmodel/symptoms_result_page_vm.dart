@@ -7,8 +7,9 @@ import 'package:flutter/services.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/department_response.dart';
 import '../model/get_body_symptoms_response.dart';
+import '../model/get_specialisations.response.dart';
 
 class SymptomsResultPageVm extends ChangeNotifier {
   BuildContext? mContext;

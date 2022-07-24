@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
+import '../../model/model.dart';
 import 'bg_tagger_vm.dart';
 
 class BgTaggerPopUp extends StatelessWidget {

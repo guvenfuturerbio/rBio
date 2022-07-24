@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../core/core.dart';
+import '../../../../core/core.dart';
 
 part 'rbio_login_response.g.dart';
 

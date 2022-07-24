@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../../core/core.dart';
+import '../../model/model.dart';
 
 part 'blood_glucose_save_data_dialog_state.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../symptoms_result_page/model/get_body_symptoms_response.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../symptoms_body_location/model/get_bodylocations_response.dart';
 import '../../symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
+import '../../symptoms_result_page/model/get_body_symptoms_response.dart';
 import '../viewmodel/symptoms_body_symptoms_page_vm.dart';
 
 class BodySymptomsSelectionPage extends StatefulWidget {

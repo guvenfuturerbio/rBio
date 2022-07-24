@@ -1,13 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/core.dart';
 
-import '../../../../model/model.dart';
+import '../../../../core/core.dart';
+import '../../patient_relatives/model/user_relative_patient_model.dart';
 import '../cubit/add_patient_relatives_cubit.dart';
 
 part 'widget/add_pr_text_field.dart';

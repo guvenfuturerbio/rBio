@@ -110,7 +110,9 @@ class BgPatientListModel extends PatientListModel<DoctorGlucosePatientModel> {
   }
 
   int criticalMetricsSort(
-      DoctorGlucosePatientModel a, DoctorGlucosePatientModel b) {
+    DoctorGlucosePatientModel a,
+    DoctorGlucosePatientModel b,
+  ) {
     final aMeasurements = a.measurements ?? [];
     final bMeasurements = b.measurements ?? [];
 

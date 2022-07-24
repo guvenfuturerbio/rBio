@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../../take_appointment/create_appointment/model/patient_relative_info_response.dart';
 
 part 'patient_relatives_cubit.freezed.dart';
 part 'patient_relatives_state.dart';

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../symptoms_body_location/model/get_bodylocations_response.dart';
 import '../viewmodel/symptoms_body_sublocations_vm.dart';
 
 class BodySubLocationsPage extends StatefulWidget {

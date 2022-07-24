@@ -11,11 +11,12 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
-import '../../../../../model/model.dart';
 import '../../../../chronic_tracking/blood_pressure/blood_pressure.dart';
+import '../../../../chronic_tracking/blood_pressure/model/model.dart';
 import '../../../../chronic_tracking/bottom_actions_of_graph.dart';
 import '../../../../chronic_tracking/home/view/widgets/widgets.dart';
 import '../../../notifiers/patient_notifiers.dart';
+import '../../../shared/shared.dart';
 import '../../../treatment_process/view/treatment_process_screen.dart';
 
 part '../viewmodel/bp_patient_detail_vm.dart';

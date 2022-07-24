@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
+import '../../../auth/shared/shared.dart';
 import '../../mediminder.dart';
 
 class StripVm with ChangeNotifier {

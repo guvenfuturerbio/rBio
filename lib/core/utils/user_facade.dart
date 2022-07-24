@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../config/config.dart';
+import '../../features/auth/auth.dart';
+import '../../features/auth/shared/shared.dart';
 import '../../features/bluetooth_v2/bluetooth_v2.dart';
+import '../../features/dashboard/home/model/all_users_model.dart';
 import '../../features/dashboard/home/view/home_screen.dart';
-import '../../model/model.dart';
 import '../core.dart';
 
 abstract class UserFacade {

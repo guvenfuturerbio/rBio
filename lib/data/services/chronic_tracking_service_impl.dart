@@ -121,22 +121,6 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
   }
 
   @override
-  Future<GuvenResponseModel> getBloodGlucoseReport(
-    BloodGlucoseReportBody bloodGlucoseReportBody,
-  ) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>().endpoints.measurement.ctGetBloodGlucoseReport,
-      bloodGlucoseReportBody.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/getBloodGlucoseReport : ${response.isSuccessful}');
-    }
-  }
-
-  @override
   Future<GuvenResponseModel> getBloodGlucoseDataOfPerson(
     GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson,
   ) async {
@@ -289,48 +273,6 @@ class ChronicTrackingApiServiceImpl extends ChronicTrackingApiService {
     }
   }
 
-  @override
-  Future<GuvenResponseModel> addHospitalHba1cMeasurement(
-    HospitalHba1cMeasurementModel hospitalHba1cMeasurementModel,
-    int entegrationId,
-  ) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>()
-          .endpoints
-          .measurement
-          .ctAddHospitalHba1cMeasurement(entegrationId),
-      hospitalHba1cMeasurementModel.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception(
-        '/addHospitalHba1cMeasurement : ${response.isSuccessful}',
-      );
-    }
-  }
-
-  @override
-  Future<GuvenResponseModel> getHba1cMeasurementList(
-    GetHba1cMeasurementListModel getHba1cMeasurementListModel,
-    int entegrationId,
-  ) async {
-    final response = await helper.postGuven(
-      getIt<IAppConfig>()
-          .endpoints
-          .measurement
-          .ctGetHba1cMeasurementList(entegrationId),
-      getHba1cMeasurementListModel.toJson(),
-      options: authOptions,
-    );
-    if (response.xIsSuccessful) {
-      return response;
-    } else {
-      throw Exception('/getHba1cMeasurementList : ${response.isSuccessful}');
-    }
-  }
-  
   @override
   Future<GuvenResponseModel> deleteBpMeasurement(
     DeleteBpMeasurements deleteBpMeasurements,

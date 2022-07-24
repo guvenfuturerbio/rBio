@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
-import '../../../model/model.dart';
+import '../patient_detail/blood_glucose/model/model.dart';
+import '../shared/shared.dart';
 import 'patient_notifiers.dart';
 
 enum BgMeasurementState { loading, loaded, error }

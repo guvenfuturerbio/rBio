@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../symptoms_body_location/model/get_bodylocations_response.dart';
 import '../../symptoms_result_page/model/get_body_symptoms_response.dart';
+import '../model/get_bodysublocation_response.dart';
 
 class BodySublocationsVm extends ChangeNotifier {
   BuildContext? mContext;

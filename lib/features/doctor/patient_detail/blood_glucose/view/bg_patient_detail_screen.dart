@@ -15,12 +15,13 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
-import '../../../../../model/model.dart';
 import '../../../../chronic_tracking/bottom_actions_of_graph.dart';
 import '../../../../chronic_tracking/home/view/widgets/widgets.dart';
 import '../../../notifiers/bg_measurements_notifiers.dart';
 import '../../../notifiers/patient_notifiers.dart';
+import '../../../shared/shared.dart';
 import '../../../treatment_process/view/treatment_process_screen.dart';
+import '../model/model.dart';
 
 part '../viewmodel/bg_patient_detail_vm.dart';
 part '../viewmodel/bg_patient_picker_vm.dart';

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../patient_detail/blood_glucose/model/model.dart';
+import '../../patient_detail/blood_pressure/model/model.dart';
+import '../../patient_detail/scale/model/model.dart';
 import '../viewmodel/patient_list_vm.dart';
 
 part 'bg_list_model.dart';

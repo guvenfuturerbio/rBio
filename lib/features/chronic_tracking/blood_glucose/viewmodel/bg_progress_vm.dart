@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
-import '../../../../../model/model.dart';
 import '../../../../config/config.dart';
+import '../../../doctor/patient_detail/blood_glucose/model/model.dart';
 import '../../bottom_actions_of_graph.dart';
 import '../../home/view/widgets/widgets.dart';
+import '../model/bg_measurement_view_model.dart';
 import '../view/bg_progress_screen.dart';
 import '../widgets/widgets.dart';
 

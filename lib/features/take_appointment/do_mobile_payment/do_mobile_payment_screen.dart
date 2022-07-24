@@ -4,8 +4,9 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import 'appointment_request.dart';
 import 'do_mobile_payment_vm.dart';
+import 'e_randevu_cc_response.dart';
 
 class DoMobilePaymentScreen extends StatefulWidget {
   final AppointmentRequest appointment;

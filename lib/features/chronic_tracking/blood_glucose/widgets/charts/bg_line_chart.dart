@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/model/model.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../../doctor/patient_detail/blood_glucose/model/model.dart';
 import '../../viewmodel/bg_progress_vm.dart';
 
 class BgLineChart extends StatefulWidget {

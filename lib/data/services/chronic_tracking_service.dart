@@ -4,16 +4,11 @@ import 'package:intl/intl.dart';
 
 import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../features/mediminder/mediminder.dart';
-import '../../../model/bg_measurement/blood_glucose_report_body.dart';
-import '../../../model/bg_measurement/blood_glucose_value_model.dart';
-import '../../../model/bg_measurement/delete_bg_measurement_request.dart';
-import '../../../model/bg_measurement/get_blood_glucose_data_of_person.dart';
-import '../../../model/bg_measurement/get_hba1c_measurement_list.dart';
-import '../../../model/bg_measurement/hospital_hba1c_measurement.dart';
-import '../../../model/bg_measurement/update_bg_measurement_request.dart';
-import '../../../model/model.dart';
 import '../../config/config.dart';
 import '../../core/core.dart';
+import '../../features/auth/shared/shared.dart';
+import '../../features/chronic_tracking/blood_glucose/model/model.dart';
+import '../../features/chronic_tracking/blood_pressure/model/model.dart';
 
 part 'chronic_tracking_service_impl.dart';
 
@@ -37,9 +32,6 @@ abstract class ChronicTrackingApiService {
     int entegrationId,
     int measurementId,
   );
-  Future<GuvenResponseModel> getBloodGlucoseReport(
-    BloodGlucoseReportBody bloodGlucoseReportBody,
-  );
   Future<GuvenResponseModel> getBloodGlucoseDataOfPerson(
     GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson,
   );
@@ -51,14 +43,6 @@ abstract class ChronicTrackingApiService {
   Future<GuvenResponseModel> deleteUserStrip(int id, int entegrationId);
   Future<GuvenResponseModel> isDeviceIdRegisteredForSomeUser(
     String deviceId,
-    int entegrationId,
-  );
-  Future<GuvenResponseModel> addHospitalHba1cMeasurement(
-    HospitalHba1cMeasurementModel hospitalHba1cMeasurementModel,
-    int entegrationId,
-  );
-  Future<GuvenResponseModel> getHba1cMeasurementList(
-    GetHba1cMeasurementListModel getHba1cMeasurementListModel,
     int entegrationId,
   );
   Future<GuvenResponseModel> insertNewBpValue(AddBpWithDetail addBpWithDetail);

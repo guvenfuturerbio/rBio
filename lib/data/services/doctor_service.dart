@@ -3,9 +3,13 @@ import 'package:intl/intl.dart';
 
 import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../features/doctor/treatment/diet_add_edit/diet_add_edit.dart';
-import '../../../model/model.dart';
 import '../../config/config.dart';
 import '../../core/core.dart';
+import '../../features/chronic_tracking/blood_pressure/model/model.dart';
+import '../../features/doctor/patient_detail/blood_glucose/model/model.dart';
+import '../../features/doctor/patient_detail/blood_pressure/model/model.dart';
+import '../../features/doctor/patient_detail/scale/model/model.dart';
+import '../../features/doctor/shared/shared.dart';
 
 part 'doctor_service_impl.dart';
 

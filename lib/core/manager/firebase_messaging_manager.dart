@@ -11,8 +11,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/config.dart';
+import '../../features/auth/shared/shared.dart';
 import '../../features/chat/model/chat_person.dart';
-import '../../model/model.dart';
 import '../core.dart';
 
 // #region Top Level Variabled and Functions
