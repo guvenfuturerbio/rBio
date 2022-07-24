@@ -20,7 +20,7 @@ Future<void> bootstrap(IAppConfig appConfig) async {
   await initializeLocator(appConfig);
   appConfig.platform.adjustManager?.initializeAdjust();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
-  RegisterViews.instance.initialize();
+  RegisterPlatformViews.instance.initialize();
   await appConfig.platform.sendFirstOpenFirebaseEvent(
     getIt<ISharedPreferencesManager>(),
     getIt<FirebaseAnalyticsManager>(),

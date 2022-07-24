@@ -68,7 +68,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
 
         final html = Map.from(_paymentResponse.datum)['do_result'];
         final transId = _paymentResponse.datum['trans_id'];
-        RegisterViews.instance.doMobilePayment(html);
+        RegisterPlatformViews.instance.doMobilePayment(html);
         Navigator.push(
           mContext,
           MaterialPageRoute(

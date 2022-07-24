@@ -4,13 +4,13 @@ import 'package:onedosehealth/core/platform/mobil_interface.dart'
 import 'package:onedosehealth/generated/l10n.dart';
 import 'package:universal_html/html.dart';
 
-class RegisterViews {
-  RegisterViews._();
+class RegisterPlatformViews {
+  RegisterPlatformViews._();
 
-  static RegisterViews? _instance;
+  static RegisterPlatformViews? _instance;
 
-  static RegisterViews get instance {
-    _instance ??= RegisterViews._();
+  static RegisterPlatformViews get instance {
+    _instance ??= RegisterPlatformViews._();
     return _instance!;
   }
 
@@ -51,7 +51,7 @@ class RegisterViews {
         ..style.border = 'none',
     );
 
-     MobileWebInterface.registerViewFactory(
+    MobileWebInterface.registerViewFactory(
       'councilResultDetail',
       (int viewId) => IFrameElement()
         ..width = '640'
