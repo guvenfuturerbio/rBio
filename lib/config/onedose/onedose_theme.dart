@@ -4,6 +4,9 @@ class OneDoseTheme extends IAppTheme {
   @override
   late TextTheme textTheme;
 
+  @override
+  Brightness brightness = Brightness.light;
+
   OneDoseTheme() {
     textTheme = TextTheme(
       headline1: TextStyle(
@@ -113,6 +116,9 @@ class OneDoseTheme extends IAppTheme {
 class OneDoseDarkTheme extends IAppTheme {
   @override
   late TextTheme textTheme;
+
+  @override
+  Brightness brightness = Brightness.dark;
 
   OneDoseDarkTheme() {
     textTheme = TextTheme(

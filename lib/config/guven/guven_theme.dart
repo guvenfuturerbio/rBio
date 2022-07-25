@@ -4,6 +4,9 @@ class GuvenTheme extends IAppTheme {
   @override
   late TextTheme textTheme;
 
+  @override
+  Brightness brightness = Brightness.light;
+
   GuvenTheme() {
     textTheme = TextTheme(
       headline1: TextStyle(

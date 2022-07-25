@@ -58,6 +58,7 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
   /// Get the Scatter chart sample with dynamically updated data points.
   SfCartesianChart _getAnimationScatterChart() {
     return SfCartesianChart(
+      backgroundColor: context.xCardColor,
       primaryXAxis: _selected == TimePeriodFilter.daily
           ? DateTimeAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
@@ -65,16 +66,14 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
-              labelStyle: TextStyle(
-                color: context.xMyCustomTheme.codGray,
-              ),
+              labelStyle: context.xHeadline3,
               interval: 6)
           : _selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                   dateFormat: DateFormat("EEE"),
                   majorGridLines: const MajorGridLines(
-                    color: Colors.black12,
+                    color: Colors.white,
                   ),
                   intervalType: DateTimeIntervalType.days,
                   interval: 1,
@@ -97,9 +96,7 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
         minimum: _minimum.toDouble(),
         maximum: _maximum.toDouble(),
         interval: 30,
-        labelStyle: TextStyle(
-          color: context.xMyCustomTheme.codGray,
-        ),
+        labelStyle: context.xHeadline5,
         plotBands: [
           PlotBand(
             isVisible: true,

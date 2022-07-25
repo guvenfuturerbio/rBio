@@ -242,6 +242,7 @@ class _MyAppCommonState extends State<MyAppCommon> {
 
                   //
                   theme: ThemeData(
+                    brightness: getIt<IAppConfig>().theme.brightness,
                     fontFamily: getIt<IAppConfig>().theme.fontFamily,
                     textTheme: getIt<IAppConfig>().theme.textTheme,
                     primaryColor: getIt<IAppConfig>().theme.primaryColor,
@@ -251,6 +252,7 @@ class _MyAppCommonState extends State<MyAppCommon> {
                     // * ColorScheme
                     colorScheme: ColorScheme.fromSeed(
                       seedColor: getIt<IAppConfig>().theme.primaryColor,
+                      brightness: getIt<IAppConfig>().theme.brightness,
                     ).copyWith(
                       secondary: getIt<IAppConfig>().theme.secondaryColor,
                       primary: getIt<IAppConfig>().theme.textColor,
@@ -313,8 +315,8 @@ class _MyAppCommonState extends State<MyAppCommon> {
 
                     // * DialogTheme
                     dialogTheme: const DialogTheme(
-                      //
-                    ),
+                        //
+                        ),
                   )..addCustomTheme(
                       MyCustomTheme(
                         iron: getIt<IAppConfig>().theme.iron,

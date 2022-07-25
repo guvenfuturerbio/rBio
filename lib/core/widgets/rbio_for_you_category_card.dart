@@ -72,7 +72,6 @@ class RbioForYouCategoryCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline5.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: context.xTextColor,
                           ),
                         ),
                       ),

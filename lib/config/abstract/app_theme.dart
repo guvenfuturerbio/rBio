@@ -8,6 +8,8 @@ abstract class IAppTheme {
   double get appBarLogoHeight;
   IAppDialogTheme dialogTheme = AppDialogThemeImpl();
 
+  Brightness get brightness;
+
   // ! ThemeData
   // * Main
   Color get primaryColor; // primaryColor
@@ -40,7 +42,7 @@ abstract class IAppTheme {
   // * CupertinoTheme
   CupertinoThemeData get cupertinoTheme => CupertinoThemeData(
         primaryColor: primaryColor,
-        // brightness: Brightness.dark,
+        brightness: brightness,
       );
   // * MyCustomTheme
   Color iron = R.colors.iron;

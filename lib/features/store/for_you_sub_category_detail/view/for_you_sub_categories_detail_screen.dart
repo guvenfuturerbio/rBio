@@ -367,7 +367,6 @@ Widget _itemTakeCovid({
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: context.xHeadline3.copyWith(
-                        color: context.xTextColor,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
