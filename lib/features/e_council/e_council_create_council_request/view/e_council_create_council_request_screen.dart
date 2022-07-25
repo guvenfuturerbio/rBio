@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:onedosehealth/core/core.dart';
@@ -57,6 +55,7 @@ class _BuildBody extends StatelessWidget {
             R.widgets.hSizer16,
             //? Talep olustur Butonu
             _BuildCreateRequestButton(formKey: _formKey),
+            R.widgets.defaultBottomPadding,
           ],
         ),
       ),
@@ -77,8 +76,9 @@ class _BuildSearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SearchField(
       searchInputDecoration: InputDecoration(
+        hintStyle: context.xHeadline4,
         hintText: LocaleProvider.of(context).please_select_your_diagnosis,
-        fillColor: Colors.white,
+        fillColor: context.xCardColor,
         filled: true,
         suffixIcon: Icon(Icons.search, color: context.xPrimaryColor),
         errorStyle: const TextStyle(fontSize: 11),
@@ -197,15 +197,16 @@ class _BuildRecordFieldState extends State<_BuildRecordField>
           padding: const EdgeInsets.all(4.0),
           height: microphoneSvgSize,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.xCardColor,
             borderRadius: BorderRadius.all(R.sizes.radiusCircular),
             border: Border.all(color: borderColor, width: 3),
             boxShadow: [
               if (isRecording)
                 BoxShadow(
-                    color: borderColor.withOpacity(0.5),
-                    spreadRadius: 1,
-                    blurRadius: 4),
+                  color: borderColor.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 4,
+                ),
             ],
           ),
           child: Row(
@@ -332,17 +333,26 @@ class _BuildUploadField extends StatelessWidget {
           ),
           onTap: () {},
           suffixIcon: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: SvgPicture.asset(R.image.councilUpload)),
+            padding: const EdgeInsets.all(10.0),
+            child: SvgPicture.asset(
+              R.image.councilUpload,
+              color: context.xIconColor,
+            ),
+          ),
         ),
+
+        //
         const Divider(height: 2, thickness: 2),
+
+        //
         Container(
           padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 22.0),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.xCardColor,
             borderRadius: BorderRadius.only(
-                bottomLeft: R.sizes.radiusCircular,
-                bottomRight: R.sizes.radiusCircular),
+              bottomLeft: R.sizes.radiusCircular,
+              bottomRight: R.sizes.radiusCircular,
+            ),
           ),
           child: Text(
               LocaleProvider.of(context)

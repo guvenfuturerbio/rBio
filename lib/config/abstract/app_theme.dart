@@ -29,7 +29,8 @@ abstract class IAppTheme {
   // * IconTheme
   Color get iconColor; // iconTheme-color
   // * FloatingActionButtonTheme
-  Color get fabBackgroundColor => primaryColor; // floatingActionButtonTheme-backgroundColor
+  Color get fabBackgroundColor =>
+      primaryColor; // floatingActionButtonTheme-backgroundColor
   // * TextSelectionTheme
   TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
         cursorColor: primaryColor,
@@ -39,6 +40,7 @@ abstract class IAppTheme {
   // * CupertinoTheme
   CupertinoThemeData get cupertinoTheme => CupertinoThemeData(
         primaryColor: primaryColor,
+        // brightness: Brightness.dark,
       );
   // * MyCustomTheme
   Color iron = R.colors.iron;

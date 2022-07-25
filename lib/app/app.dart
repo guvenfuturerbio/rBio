@@ -312,7 +312,9 @@ class _MyAppCommonState extends State<MyAppCommon> {
                         getIt<IAppConfig>().theme.cupertinoTheme,
 
                     // * DialogTheme
-                    dialogTheme: const DialogTheme(),
+                    dialogTheme: const DialogTheme(
+                      //
+                    ),
                   )..addCustomTheme(
                       MyCustomTheme(
                         iron: getIt<IAppConfig>().theme.iron,

@@ -96,12 +96,17 @@ class _BuildBody extends StatelessWidget {
               ),
             ),
           ),
+
+          //
           RbioElevatedButton(
             title: LocaleProvider.of(context).create_new_council_request,
             onTap: () {
               Atom.to(PagePaths.eCouncilCreateCouncilRequestPage);
             },
           ),
+
+          //
+          R.widgets.defaultBottomPadding,
         ],
       ),
     );
@@ -128,10 +133,15 @@ class _BuildCouncilResults extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
           child: Row(
             children: [
-              SvgPicture.asset(R.image.councilResults),
+              SvgPicture.asset(
+                R.image.councilResults,
+                color: context.xIconColor,
+              ),
               R.widgets.wSizer16,
-              Text(LocaleProvider.of(context).council_results,
-                  style: context.xHeadline2),
+              Text(
+                LocaleProvider.of(context).council_results,
+                style: context.xHeadline2,
+              ),
               const Spacer(),
               const Icon(Icons.arrow_forward_ios_outlined),
             ],
@@ -187,6 +197,7 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                   SvgPicture.asset(
                     R.image.councilCalendar,
                     width: R.sizes.iconSize3,
+                    color: context.xIconColor,
                   ),
                   R.widgets.wSizer16,
                   //
@@ -198,7 +209,9 @@ class _BuildCustomExpansionTileState extends State<_BuildCustomExpansionTile> {
                   ),
 
                   //! Animasyon  tasarim ekibi isteği üzerine iptal edildi.
-                  const Icon(Icons.arrow_forward_ios_outlined),
+                  const Icon(
+                    Icons.arrow_forward_ios_outlined,
+                  ),
                   // IconButton(
                   //   icon: const Icon(Icons.arrow_forward_ios_outlined),
                   //   onPressed: () {

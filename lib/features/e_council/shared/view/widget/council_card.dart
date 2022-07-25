@@ -64,8 +64,8 @@ class _BuildCouncilCardTitle extends StatelessWidget {
                 model.title,
                 style: context.xHeadline2.copyWith(
                   color: model is CouncilCardReportModel
-                      ? Colors.black
-                      : Colors.white,
+                      ? context.xTextColor
+                      : context.xTextInverseColor,
                 ),
               ),
             ),
@@ -157,7 +157,7 @@ class _BuildCouncilCardBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.xCardColor,
         borderRadius: BorderRadius.only(
           topLeft: model is CouncilCardPaymentModel
               ? R.sizes.radiusCircular
