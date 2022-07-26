@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../config/config.dart';
 import '../core.dart';
 
 class RbioBaseDialog extends StatelessWidget {
@@ -16,7 +15,7 @@ class RbioBaseDialog extends StatelessWidget {
     return Dialog(
       insetPadding: EdgeInsets.zero,
       backgroundColor:
-          getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
+          context.xCurrentTheme.dialogTheme.backgroundColor(context),
       shape: R.sizes.defaultShape,
       child: Container(
         width: context.width > 500 ? 500 : context.width - 50,
@@ -42,7 +41,7 @@ class RbioBaseGreyDialog extends StatelessWidget {
     return Dialog(
       insetPadding: EdgeInsets.zero,
       backgroundColor:
-          getIt<IAppConfig>().theme.dialogTheme.backgroundColor(context),
+          context.xCurrentTheme.dialogTheme.backgroundColor(context),
       shape: R.sizes.defaultShape,
       child: Container(
         width: context.width > 500 ? 500 : context.width - 50,
@@ -78,7 +77,7 @@ class RbioMessageDialog extends StatelessWidget {
           //
           Text(
             LocaleProvider.current.warning,
-            style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+            style: context.xCurrentTheme.dialogTheme.title(context),
           ),
 
           //
@@ -112,7 +111,7 @@ class RbioMessageDialog extends StatelessWidget {
       builder: (BuildContext context, BoxConstraints constraints) {
         final TextSpan _textSpan = TextSpan(
           text: description,
-          style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+          style: context.xCurrentTheme.dialogTheme.description(context),
         );
 
         final TextPainter _textPainter = TextPainter(
@@ -139,9 +138,7 @@ class RbioMessageDialog extends StatelessWidget {
                     Text(
                       description,
                       textAlign: TextAlign.center,
-                      style: getIt<IAppConfig>()
-                          .theme
-                          .dialogTheme
+                      style: context.xCurrentTheme.dialogTheme
                           .description(context),
                     ),
                   ],
@@ -159,8 +156,7 @@ class RbioMessageDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
                 maxLines: 10,
                 overflow: TextOverflow.ellipsis,
-                style:
-                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                style: context.xCurrentTheme.dialogTheme.description(context),
               ),
             ],
           );
@@ -191,7 +187,7 @@ class RbioSmallDialogButton extends StatelessWidget {
   }) {
     return RbioSmallDialogButton(
       backgroundColor: context.xPrimaryColor,
-      textColor: getIt<IAppConfig>().theme.white,
+      textColor: context.xCurrentTheme.white,
       title: title,
       onPressed: onPressed,
     );
@@ -204,7 +200,7 @@ class RbioSmallDialogButton extends StatelessWidget {
   }) {
     return RbioSmallDialogButton(
       backgroundColor: context.xMyCustomTheme.punch,
-      textColor: getIt<IAppConfig>().theme.white,
+      textColor: context.xCurrentTheme.white,
       title: title,
       onPressed: onPressed,
     );

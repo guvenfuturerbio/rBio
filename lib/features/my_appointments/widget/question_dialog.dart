@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../config/config.dart';
 
 class QuestionDialog extends StatelessWidget {
   const QuestionDialog({
@@ -19,7 +18,7 @@ class QuestionDialog extends StatelessWidget {
           //
           Text(
             LocaleProvider.current.warning,
-            style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+            style: context.xCurrentTheme.dialogTheme.title(context),
           ),
 
           //
@@ -29,7 +28,7 @@ class QuestionDialog extends StatelessWidget {
           Center(
             child: Text(
               LocaleProvider.current.cancel_appo_question,
-              style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+              style: context.xCurrentTheme.dialogTheme.description(context),
               textAlign: TextAlign.center,
             ),
           ),

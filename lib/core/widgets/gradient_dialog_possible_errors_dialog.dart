@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../config/config.dart';
 import '../core.dart';
 
 class DialogForPossibleErrorDialog extends StatefulWidget {
@@ -33,7 +32,7 @@ class _DialogForPossibleErrorDialogState
             Center(
               child: Text(
                 LocaleProvider.current.warning,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xCurrentTheme.dialogTheme.title(context),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -45,8 +44,7 @@ class _DialogForPossibleErrorDialogState
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part1,
-                style:
-                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                style: context.xCurrentTheme.dialogTheme.description(context),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -55,8 +53,7 @@ class _DialogForPossibleErrorDialogState
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part2,
-                style:
-                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                style: context.xCurrentTheme.dialogTheme.description(context),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -65,8 +62,7 @@ class _DialogForPossibleErrorDialogState
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part3,
-                style:
-                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                style: context.xCurrentTheme.dialogTheme.description(context),
                 textAlign: TextAlign.center,
               ),
             ),

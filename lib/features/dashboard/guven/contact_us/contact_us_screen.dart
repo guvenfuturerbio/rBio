@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 
 class ContactUsScreen extends StatefulWidget {
@@ -95,7 +94,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 children: [
                                   SvgPicture.asset(
                                     R.image.icPhoneGreyCall,
-                                    color: getIt<IAppConfig>().theme.white,
+                                    color: context.xCurrentTheme.white,
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -103,7 +102,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   Text(
                                     LocaleProvider.of(context).call_us,
                                     style: TextStyle(
-                                      color: getIt<IAppConfig>().theme.white,
+                                      color: context.xCurrentTheme.white,
                                     ),
                                   ),
                                 ],

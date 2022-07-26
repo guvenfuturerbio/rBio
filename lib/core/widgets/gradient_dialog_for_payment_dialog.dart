@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../config/config.dart';
 import '../core.dart';
 
 class GradientDialogForPaymentDialog extends StatefulWidget {
@@ -37,7 +36,7 @@ class _GradientDialogForPaymentDialogState
                 widget.code == "13"
                     ? LocaleProvider.of(context).info
                     : LocaleProvider.of(context).warning,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xCurrentTheme.dialogTheme.title(context),
               ),
             ),
 
@@ -56,7 +55,7 @@ class _GradientDialogForPaymentDialogState
                               " " +
                               widget.errorText
                           : LocaleProvider.of(context).sorry_dont_transaction,
-              style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+              style: context.xCurrentTheme.dialogTheme.description(context),
               textAlign: TextAlign.center,
             ),
 

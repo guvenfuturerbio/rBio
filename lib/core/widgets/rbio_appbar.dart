@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../config/config.dart';
 import '../core.dart';
+import '../theme/theme_cubit.dart';
 
 mixin IRbioAppBar on PreferredSize {}
 
@@ -55,9 +56,9 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
-                    height: getIt<IAppConfig>().theme.appBarLogoHeight,
+                    height: context.xCurrentTheme.appBarLogoHeight,
                     child: SvgPicture.asset(
-                      getIt<IAppConfig>().theme.appLogo,
+                      context.xCurrentTheme.appLogo,
                       fit: BoxFit.fitHeight,
                     ),
                   ),
@@ -66,6 +67,19 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             //
             actions: actions ??
                 [
+                  // TODO: Daha Sonra Sil
+                  IconButton(
+                    onPressed: () {
+                      context
+                          .read<ThemeCubit>()
+                          .toggle();
+                    },
+                    icon: const Icon(
+                      Icons.refresh,
+                    ),
+                  ),
+
+                  //
                   if (title == null) ...[
                     Opacity(
                       opacity: 0,

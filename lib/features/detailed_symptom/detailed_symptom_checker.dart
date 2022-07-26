@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../config/config.dart';
 import '../../core/core.dart';
 
 class DetailedSymptomChecker extends StatefulWidget {
@@ -26,7 +25,7 @@ class _DetailedSymptomCheckerState extends State<DetailedSymptomChecker> {
         context: context,
         title: Text(
           LocaleProvider.current.detailed_check,
-          style: TextStyle(color: getIt<IAppConfig>().theme.white),
+          style: TextStyle(color: context.xCurrentTheme.white),
         ),
       ),
       body: SafeArea(

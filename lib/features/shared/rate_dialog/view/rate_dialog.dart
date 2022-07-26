@@ -3,7 +3,6 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../viewmodel/rate_dialog_vm.dart';
 
@@ -57,8 +56,7 @@ class _RateDialogState extends State<RateDialog> {
                   child: Center(
                     child: Text(
                       LocaleProvider.of(context).rate_appointment,
-                      style:
-                          getIt<IAppConfig>().theme.dialogTheme.title(context),
+                      style: context.xCurrentTheme.dialogTheme.title(context),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -99,11 +97,10 @@ class _RateDialogState extends State<RateDialog> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
+                                //
                                 Text(
                                   LocaleProvider.current.how_video_quality,
-                                  style: getIt<IAppConfig>()
-                                      .theme
-                                      .dialogTheme
+                                  style: context.xCurrentTheme.dialogTheme
                                       .description(context),
                                   textAlign: TextAlign.center,
                                 ),
@@ -133,9 +130,7 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.video_call_legand,
-                                  style: getIt<IAppConfig>()
-                                      .theme
-                                      .dialogTheme
+                                  style: context.xCurrentTheme.dialogTheme
                                       .subTitle(context),
                                   textAlign: TextAlign.center,
                                 ),
@@ -148,9 +143,7 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.how_video_doctor,
-                                  style: getIt<IAppConfig>()
-                                      .theme
-                                      .dialogTheme
+                                  style: context.xCurrentTheme.dialogTheme
                                       .description(context),
                                   textAlign: TextAlign.center,
                                 ),
@@ -180,8 +173,7 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.doctor_legand,
-                                  style: getIt<IAppConfig>()
-                                      .theme
+                                  style: context.xCurrentTheme
                                       .dialogTheme
                                       .subTitle(context),
                                   textAlign: TextAlign.center,

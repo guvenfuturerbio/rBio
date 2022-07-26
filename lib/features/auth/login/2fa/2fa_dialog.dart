@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '2fa_dialog_vm.dart';
 
@@ -62,10 +61,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     Center(
                       child: Text(
                         LocaleProvider.of(context).sms_verification_code,
-                        style: getIt<IAppConfig>()
-                            .theme
-                            .dialogTheme
-                            .title(context),
+                        style: context.xCurrentTheme.dialogTheme.title(context),
                       ),
                     ),
 

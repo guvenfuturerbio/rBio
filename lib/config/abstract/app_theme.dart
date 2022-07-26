@@ -8,10 +8,9 @@ abstract class IAppTheme {
   double get appBarLogoHeight;
   IAppDialogTheme dialogTheme = AppDialogThemeImpl();
 
-  Brightness get brightness;
-
   // ! ThemeData
   // * Main
+  Brightness get brightness; // brightness
   Color get primaryColor; // primaryColor
   Color get scaffoldBackgroundColor;
   // * ColorScheme
@@ -178,4 +177,19 @@ extension MyCustomThemeExtensions on ThemeData {
   MyCustomTheme own() {
     return _customTheme;
   }
+}
+
+enum AppThemeTypes {
+  oneDoseLight,
+  oneDoseDark,
+  guvenLight,
+}
+
+extension AppThemeTypesStringExt on String {
+  AppThemeTypes? get xThemeKeys => AppThemeTypes.values
+      .firstWhereOrNull((element) => element.xRawValue == this);
+}
+
+extension AppThemeTypesExt on AppThemeTypes {
+  String get xRawValue => toString().split('.').last;
 }

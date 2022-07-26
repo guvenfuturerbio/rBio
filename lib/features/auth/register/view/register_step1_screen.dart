@@ -300,9 +300,10 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                               Container(
                                 padding: const EdgeInsets.all(13),
                                 decoration: BoxDecoration(
-                                  color: getIt<IAppConfig>().theme.white,
+                                  color: context.xCurrentTheme.white,
                                   border: Border.all(
-                                    color: context.xMyCustomTheme.fuzzyWuzzyBrown,
+                                    color:
+                                        context.xMyCustomTheme.fuzzyWuzzyBrown,
                                   ),
                                   borderRadius: R.sizes.borderRadiusCircular,
                                 ),
@@ -334,7 +335,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                         : Container(
                             padding: const EdgeInsets.all(13),
                             decoration: BoxDecoration(
-                              color: getIt<IAppConfig>().theme.white,
+                              color: context.xCurrentTheme.white,
                               border: Border.all(
                                 color: context.xMyCustomTheme.mercury,
                               ),

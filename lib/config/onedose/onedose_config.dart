@@ -5,9 +5,9 @@ class OneDoseConfig extends IAppConfig<IOneDosePlatformConfig> {
       : super(
           title: 'One Dose Health',
           productType: ProductType.oneDose,
-          theme: OneDoseTheme(),
           functionality: OneDoseFunctionality(),
           constants: OneDoseConstants(),
+          utils: OneDoseUtils(),
         ) {
     setDeviceConfig();
   }

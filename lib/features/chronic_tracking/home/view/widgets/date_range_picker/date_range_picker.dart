@@ -4,7 +4,6 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
-import '../../../../../../config/config.dart';
 import '../../../../../../core/core.dart';
 
 part 'date_range_picker_vm.dart';
@@ -96,7 +95,7 @@ class DateRangePicker extends StatelessWidget {
                     child: (value.focusType == _SelectionState.focused &&
                             selected != TimePeriodFilter.daily)
                         ? singleSelectedItem(context, value)
-                        : itemList(value, hasOverflow, constraints),
+                        : itemList(context, value, hasOverflow, constraints),
                   ),
 
                   //
@@ -136,7 +135,7 @@ class DateRangePicker extends StatelessWidget {
         width: context.width / items.length,
         decoration: BoxDecoration(
           borderRadius: R.sizes.borderRadiusCircular,
-          color: getIt<IAppConfig>().theme.white,
+          color: context.xCurrentTheme.white,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withAlpha(50),
@@ -157,6 +156,7 @@ class DateRangePicker extends StatelessWidget {
   }
 
   Widget itemList(
+    BuildContext context,
     DateRangePickerVm value,
     bool hasOverflow,
     BoxConstraints constraints,
@@ -185,8 +185,7 @@ class DateRangePicker extends StatelessWidget {
                       : null,
                   decoration: BoxDecoration(
                     borderRadius: R.sizes.borderRadiusCircular,
-                    color:
-                        e == selected ? getIt<IAppConfig>().theme.white : null,
+                    color: e == selected ? context.xCurrentTheme.white : null,
                     boxShadow: e == selected
                         ? [
                             BoxShadow(

@@ -6,7 +6,6 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../config/config.dart';
 import 'stepper/stepper.dart' as core;
 
 class GalleryView extends StatelessWidget {
@@ -69,7 +68,7 @@ class GalleryView extends StatelessWidget {
                     child: Icon(
                       Icons.close,
                       size: context.aspectRatio * 75,
-                      color: getIt<IAppConfig>().theme.white,
+                      color: context.xCurrentTheme.white,
                     ),
                   ),
                 )

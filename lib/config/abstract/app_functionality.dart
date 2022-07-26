@@ -11,4 +11,5 @@ abstract class IAppFunctionality {
   bool get magazines;
   bool get recaptcha;
   bool get bluetooth;
+  bool get darkTheme;
 }

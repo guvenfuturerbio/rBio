@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../config/config.dart';
 import '../core.dart';
+import '../theme/theme_cubit.dart';
 
 extension BuildContextThemeExtensions on BuildContext {
   TextScaleType get xTextScaleType => read<ThemeNotifier>().textScale;
@@ -46,6 +47,7 @@ extension BuildContextThemeExtensions on BuildContext {
 
   // #region MyCustomTheme
   MyCustomTheme get xMyCustomTheme => MyCustomTheme.of(this);
+  IAppTheme get xCurrentTheme => read<ThemeCubit>().state;
   // #endregion
 
   // #region TextTheme

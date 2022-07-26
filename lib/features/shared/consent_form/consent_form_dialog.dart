@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../config/config.dart';
 import '../../../core/core.dart';
 import 'consent_form_dialog_vm.dart';
 
@@ -35,7 +34,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
             Center(
               child: Text(
                 LocaleProvider.current.approve_consent_form,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xCurrentTheme.dialogTheme.title(context),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -62,8 +61,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                           child: Text(
                             LocaleProvider
                                 .current.application_consent_form_text,
-                            style: getIt<IAppConfig>()
-                                .theme
+                            style: context.xCurrentTheme
                                 .dialogTheme
                                 .description(context),
                             textAlign: TextAlign.center,

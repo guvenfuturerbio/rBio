@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../config/config.dart';
 
 class SelectReminderScreen extends StatelessWidget {
   const SelectReminderScreen({Key? key}) : super(key: key);
@@ -120,7 +119,7 @@ class SelectReminderScreen extends StatelessWidget {
                   maxLines: 5,
                   textAlign: TextAlign.left,
                   overflow: TextOverflow.ellipsis,
-                  style: getIt<IAppConfig>().theme.textTheme.headline4,
+                  style: context.xCurrentTheme.textTheme.headline4,
                 ),
               ),
             ],

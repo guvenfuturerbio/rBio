@@ -45,8 +45,7 @@ class __ExpandablePostponeComponentState
               child: Text(
                 LocaleProvider.current.postpone,
                 textAlign: TextAlign.center,
-                style:
-                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                style: context.xCurrentTheme.dialogTheme.description(context),
               ),
             ),
           ),

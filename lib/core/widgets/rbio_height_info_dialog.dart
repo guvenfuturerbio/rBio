@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../config/config.dart';
 import '../core.dart';
 
 class RbioHeightInfoDialog extends StatelessWidget {
@@ -31,8 +30,7 @@ class RbioHeightInfoDialog extends StatelessWidget {
               Center(
                 child: Text(
                   LocaleProvider.current.warning,
-                  style:
-                      getIt<IAppConfig>().theme.dialogTheme.title(Atom.context),
+                  style: context.xCurrentTheme.dialogTheme.title(Atom.context),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -44,9 +42,7 @@ class RbioHeightInfoDialog extends StatelessWidget {
               Center(
                 child: Text(
                   LocaleProvider.current.required_user_height_info_message,
-                  style: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
+                  style: context.xCurrentTheme.dialogTheme
                       .description(Atom.context),
                   textAlign: TextAlign.center,
                 ),

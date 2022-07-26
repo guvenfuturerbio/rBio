@@ -27,4 +27,5 @@ enum SharedPreferencesKeys {
   usedStripCount,
   consentId,
   isDefaultUser,
+  theme,
 }

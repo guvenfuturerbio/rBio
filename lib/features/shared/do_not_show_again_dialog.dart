@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../config/config.dart';
 import '../../core/core.dart';
 
 class DoNotAskAgainDialog extends StatefulWidget {
@@ -37,7 +36,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
             Center(
               child: Text(
                 LocaleProvider.current.app_update_available,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xCurrentTheme.dialogTheme.title(context),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -52,10 +51,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                 child: Text(
                   LocaleProvider.current.optional_update_message,
                   textAlign: TextAlign.center,
-                  style: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
-                      .description(context),
+                  style: context.xCurrentTheme.dialogTheme.description(context),
                 ),
               ),
             ),
@@ -91,8 +87,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                       child: Text(
                         widget.doNotAskAgainText,
                         textAlign: TextAlign.start,
-                        style: getIt<IAppConfig>()
-                            .theme
+                        style: context.xCurrentTheme
                             .dialogTheme
                             .description(context),
                       ),

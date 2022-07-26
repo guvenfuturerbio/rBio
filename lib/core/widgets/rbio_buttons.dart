@@ -2,7 +2,6 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../config/config.dart';
 import '../core.dart';
 
 class RbioRedButton extends StatelessWidget {
@@ -99,7 +98,7 @@ class RbioElevatedButton extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: context.xHeadline3.copyWith(
-                color: textColor ?? getIt<IAppConfig>().theme.white,
+                color: textColor ?? context.xCurrentTheme.white,
                 fontWeight: fontWeight,
                 fontSize: R.utils.textScaleHandler<double>(
                   context,

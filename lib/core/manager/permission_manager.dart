@@ -110,7 +110,7 @@ class PermissionManagerImpl extends PermissionManager {
                 //
                 Text(
                   LocaleProvider.current.warning,
-                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  style: context.xCurrentTheme.dialogTheme.title(context),
                 ),
 
                 //
@@ -121,8 +121,7 @@ class PermissionManagerImpl extends PermissionManager {
                   child: Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: getIt<IAppConfig>()
-                        .theme
+                    style: context.xCurrentTheme
                         .dialogTheme
                         .description(context),
                   ),

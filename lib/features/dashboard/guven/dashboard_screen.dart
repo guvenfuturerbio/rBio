@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import '../../../config/config.dart';
+
 import '../../../core/core.dart';
 import 'dashboard_navigation.dart';
 
@@ -118,8 +118,8 @@ class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
             ? Utils.instance.appGradient(context)
             : LinearGradient(
                 colors: [
-                  getIt<IAppConfig>().theme.white,
-                  getIt<IAppConfig>().theme.white
+                  context.xCurrentTheme.white,
+                  context.xCurrentTheme.white
                 ],
                 begin: Alignment.bottomLeft,
                 end: Alignment.centerRight,

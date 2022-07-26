@@ -51,7 +51,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
               Center(
                 child: Text(
                   LocaleProvider.current.test_result,
-                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  style: context.xCurrentTheme.dialogTheme.title(context),
                 ),
               ),
 
@@ -61,10 +61,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
               Center(
                 child: Text(
                   getIt<UserFacade>().getNameAndSurname(),
-                  style: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
-                      .description(context),
+                  style: context.xCurrentTheme.dialogTheme.description(context),
                 ),
               ),
 
@@ -76,9 +73,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: RbioTextFormField(
                   focusNode: _valueFocusNode,
-                  backColor: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
+                  backColor: context.xCurrentTheme.dialogTheme
                       .backgroundColor(context),
                   controller: _valueEditingController,
                   keyboardType:

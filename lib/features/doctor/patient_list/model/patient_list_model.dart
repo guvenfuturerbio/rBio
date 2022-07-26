@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../patient_detail/blood_glucose/model/model.dart';
 import '../../patient_detail/blood_pressure/model/model.dart';
@@ -38,7 +37,7 @@ abstract class PatientListModel<T> {
   ) {
     return GestureDetector(
       child: Container(
-        color: getIt<IAppConfig>().theme.scaffoldBackgroundColor,
+        color: context.xCurrentTheme.scaffoldBackgroundColor,
         padding: const EdgeInsets.all(12),
         child: Text(
           text,

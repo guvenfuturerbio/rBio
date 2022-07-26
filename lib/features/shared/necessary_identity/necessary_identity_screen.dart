@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../../config/config.dart';
 import '../../../core/core.dart';
 import 'necessary_identity_vm.dart';
 
@@ -49,8 +48,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                   Center(
                     child: Text(
                       LocaleProvider.current.warning,
-                      style:
-                          getIt<IAppConfig>().theme.dialogTheme.title(context),
+                      style: context.xCurrentTheme.dialogTheme.title(context),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -62,9 +60,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                   Center(
                     child: Text(
                       LocaleProvider.current.necessary_identity_message,
-                      style: getIt<IAppConfig>()
-                          .theme
-                          .dialogTheme
+                      style: context.xCurrentTheme.dialogTheme
                           .description(context),
                       textAlign: TextAlign.center,
                     ),

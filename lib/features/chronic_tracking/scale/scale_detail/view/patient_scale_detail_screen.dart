@@ -196,7 +196,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
     return Container(
       width: double.infinity,
       padding: R.utils.screenPaddingOnlyHorizontal(context),
-      color: getIt<IAppConfig>().theme.scaffoldBackgroundColor,
+      color: context.xCurrentTheme.scaffoldBackgroundColor,
       child: Column(
         children: [
           //

@@ -4,7 +4,6 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
-import '../../../../../config/config.dart';
 import '../../model/model.dart';
 import '../../viewmodel/bp_measurement_vm.dart';
 import 'bp_tagger_vm.dart';
@@ -218,7 +217,7 @@ class BpTaggerPopUp extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16, top: 20),
         child: Card(
-          color: getIt<IAppConfig>().theme.white,
+          color: context.xCurrentTheme.white,
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.only(

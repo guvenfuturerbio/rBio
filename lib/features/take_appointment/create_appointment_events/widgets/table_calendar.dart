@@ -17,7 +17,7 @@ class _TableCalendar extends StatefulWidget {
 }
 
 class _TableCalendarState extends State<_TableCalendar> {
-  Color get borderColor => getIt<IAppConfig>().theme.scaffoldBackgroundColor;
+  Color get borderColor => context.xCurrentTheme.scaffoldBackgroundColor;
 
   BoxBorder get boxBorder => Border(
         right: BorderSide(

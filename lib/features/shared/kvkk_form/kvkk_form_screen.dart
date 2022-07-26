@@ -35,7 +35,7 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
             Center(
               child: Text(
                 LocaleProvider.current.kvkk_title,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xCurrentTheme.dialogTheme.title(context),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -59,9 +59,7 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                         Center(
                           child: Text(
                             getIt<IAppConfig>().constants.kvkkUrl(context),
-                            style: getIt<IAppConfig>()
-                                .theme
-                                .dialogTheme
+                            style: context.xCurrentTheme.dialogTheme
                                 .description(context),
                             textAlign: TextAlign.center,
                           ),

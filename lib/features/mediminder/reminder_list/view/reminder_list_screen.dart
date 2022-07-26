@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../../../core/core.dart';
-import '../../../../config/config.dart';
 import '../../../../core/utils/helper/tz_helper.dart';
 import '../../mediminder.dart';
 

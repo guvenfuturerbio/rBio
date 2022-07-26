@@ -145,7 +145,7 @@ class RbioFilterChip extends StatelessWidget {
         type.xGetTitle,
         style: isSelected
             ? context.xHeadline3.copyWith(
-                color: getIt<IAppConfig>().theme.white,
+                color: context.xCurrentTheme.white,
                 fontWeight: FontWeight.bold,
               )
             : context.xHeadline3.copyWith(
@@ -275,8 +275,8 @@ class _ResourceCard extends StatelessWidget {
             : MediaQuery.of(context).size.width * 0.12,
         child: SvgPicture.asset(
           tenantsFirstId == 1
-              ? getIt<IAppConfig>().theme.appLogo
-              : getIt<IAppConfig>().theme.appLogo,
+              ? context.xCurrentTheme.appLogo
+              : context.xCurrentTheme.appLogo,
         ),
       ),
       subtitle: Text((tenantsFirstId == 1

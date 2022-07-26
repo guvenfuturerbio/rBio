@@ -18,18 +18,6 @@ class OneDoseMobilePlatformConfig extends IOneDosePlatformConfig
   OneDoseMobilePlatformConfig() : super(null, OneDoseAdjustManagerImpl(), null);
 
   @override
-  String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
-    String initialRoute = PagePaths.login;
-    final mobileIntroduction =
-        sharedPreferencesManager.getBool(SharedPreferencesKeys.firstLaunch) ??
-            false;
-    if (!mobileIntroduction) {
-      initialRoute = PagePaths.onboarding;
-    }
-    return initialRoute;
-  }
-
-  @override
   bool checkDevices() => true;
 
   @override

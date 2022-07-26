@@ -5,9 +5,9 @@ class GuvenConfig extends IAppConfig<IGuvenPlatformConfig> {
       : super(
           title: 'Güven Online',
           productType: ProductType.guven,
-          theme: GuvenTheme(),
           functionality: GuvenFunctionality(),
           constants: GuvenConstants(),
+          utils: GuvenUtils(),
         ) {
     setDeviceConfig();
   }

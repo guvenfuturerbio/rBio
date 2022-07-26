@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../utils/home_sizer.dart';
 
@@ -48,7 +47,7 @@ class VerticalCard extends StatelessWidget {
                     maxLines: 3,
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
-                    style: getIt<IAppConfig>().theme.textTheme.headline3,
+                    style: context.xCurrentTheme.textTheme.headline3,
                   ),
                 ),
               ),

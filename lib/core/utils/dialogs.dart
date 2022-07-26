@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../../config/config.dart';
 import '../../features/shared/do_not_show_again_dialog.dart';
 import '../core.dart';
 
@@ -54,7 +53,7 @@ Future<void> showCompulsoryUpdateDialog({
               Center(
                 child: Text(
                   LocaleProvider.current.app_update_available,
-                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  style: context.xCurrentTheme.dialogTheme.title(context),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -66,10 +65,7 @@ Future<void> showCompulsoryUpdateDialog({
               Center(
                 child: Text(
                   LocaleProvider.current.force_update_message,
-                  style: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
-                      .description(context),
+                  style: context.xCurrentTheme.dialogTheme.description(context),
                   textAlign: TextAlign.center,
                 ),
               ),

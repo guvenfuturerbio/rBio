@@ -11,8 +11,11 @@ abstract class IAppPlatformConfig {
     this.recaptchaManager,
     this.sentryManager,
   );
-  Widget runApp(String initialRoute, bool jailbroken);
-  String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager);
+  Widget runApp({
+    required String initialRoute,
+    required bool jailbroken,
+    required AppThemeTypes initialTheme,
+  });
   Future<void> sendFirstOpenFirebaseEvent(
     ISharedPreferencesManager sharedPreferencesManager,
     FirebaseAnalyticsManager firebaseAnalyticsManager,
@@ -23,8 +26,17 @@ abstract class IAppPlatformConfig {
 }
 
 abstract class IAppWebPlatformConfig {
-  Widget runApp(String initialRoute, bool jailbroken) {
-    return WebApp(myApp: WebMyApp(initialRoute: initialRoute));
+  Widget runApp({
+    required String initialRoute,
+    required bool jailbroken,
+    required AppThemeTypes initialTheme,
+  }) {
+    return WebApp(
+      myApp: WebMyApp(
+        initialRoute: initialRoute,
+        initialTheme: initialTheme,
+      ),
+    );
   }
 
   String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
@@ -41,9 +53,16 @@ abstract class IAppWebPlatformConfig {
 }
 
 abstract class IAppMobilePlatformConfig {
-  Widget runApp(String initialRoute, bool jailbroken) {
+  Widget runApp({
+    required String initialRoute,
+    required bool jailbroken,
+    required AppThemeTypes initialTheme,
+  }) {
     return MobileApp(
-      myApp: MobileMyApp(initialRoute: initialRoute),
+      myApp: MobileMyApp(
+        initialRoute: initialRoute,
+        initialTheme: initialTheme,
+      ),
       jailbroken: jailbroken,
     );
   }

@@ -30,4 +30,7 @@ class OneDoseFunctionality extends IAppFunctionality {
 
   @override
   bool get bluetooth => true;
+
+  @override
+  bool get darkTheme => true;
 }

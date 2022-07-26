@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
 
 class ScaleTagger extends StatelessWidget {
@@ -310,16 +309,17 @@ class ScaleTagger extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withAlpha(50),
-                      blurRadius: 5,
-                      spreadRadius: 0,
-                      offset: const Offset(3, 3))
+                    color: Colors.black.withAlpha(50),
+                    blurRadius: 5,
+                    spreadRadius: 0,
+                    offset: const Offset(3, 3),
+                  ),
                 ],
                 border: Border.all(
                   width: 13,
                 ),
                 shape: BoxShape.circle,
-                color: getIt<IAppConfig>().theme.white,
+                color: context.xCurrentTheme.white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -387,7 +387,7 @@ class ScaleTagger extends StatelessWidget {
                   color: color ?? context.xMyCustomTheme.grey.withOpacity(.2),
                 ),
                 shape: BoxShape.rectangle,
-                color: getIt<IAppConfig>().theme.white,
+                color: context.xCurrentTheme.white,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

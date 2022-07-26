@@ -279,7 +279,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                     iconPath,
                     height: R.sizes.iconSize,
                     color: value.genderIdHolder == index
-                        ? getIt<IAppConfig>().theme.white
+                        ? context.xCurrentTheme.white
                         : null,
                   ),
                 ),
@@ -291,7 +291,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                     textAlign: TextAlign.center,
                     style: context.xHeadline4.copyWith(
                       color: value.genderIdHolder == index
-                          ? getIt<IAppConfig>().theme.white
+                          ? context.xCurrentTheme.white
                           : null,
                     ),
                   ),

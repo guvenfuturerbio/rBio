@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../mediminder.dart';
 

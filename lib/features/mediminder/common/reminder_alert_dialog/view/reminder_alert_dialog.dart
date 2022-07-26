@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
 import '../../../../../core/utils/helper/tz_helper.dart';
 import '../../../mediminder.dart';
@@ -87,7 +86,7 @@ class _ReminderAlertView extends StatelessWidget {
           Center(
             child: Text(
               _getTitle(model),
-              style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+              style: context.xCurrentTheme.dialogTheme.title(context),
             ),
           ),
 
@@ -98,7 +97,7 @@ class _ReminderAlertView extends StatelessWidget {
           Center(
             child: Text(
               getIt<UserFacade>().getNameAndSurname(),
-              style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+              style: context.xCurrentTheme.dialogTheme.description(context),
             ),
           ),
 
@@ -112,9 +111,7 @@ class _ReminderAlertView extends StatelessWidget {
               //
               Text(
                 model.title,
-                style: getIt<IAppConfig>()
-                    .theme
-                    .dialogTheme
+                style: context.xCurrentTheme.dialogTheme
                     .description(context)
                     .copyWith(fontWeight: FontWeight.bold),
               ),
@@ -122,9 +119,7 @@ class _ReminderAlertView extends StatelessWidget {
               //
               Text(
                 "  -  ",
-                style: getIt<IAppConfig>()
-                    .theme
-                    .dialogTheme
+                style: context.xCurrentTheme.dialogTheme
                     .description(context)
                     .copyWith(fontWeight: FontWeight.bold),
               ),
@@ -132,9 +127,7 @@ class _ReminderAlertView extends StatelessWidget {
               //
               Text(
                 model.scheduledDate.xHourFormat,
-                style: getIt<IAppConfig>()
-                    .theme
-                    .dialogTheme
+                style: context.xCurrentTheme.dialogTheme
                     .description(context)
                     .copyWith(fontWeight: FontWeight.bold),
               ),

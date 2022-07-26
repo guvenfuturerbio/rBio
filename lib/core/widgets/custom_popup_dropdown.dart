@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../config/config.dart';
 import '../../features/my_appointments/my_appointments.dart';
 import '../core.dart';
 
@@ -40,7 +39,7 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
             Center(
               child: Text(
                 LocaleProvider.of(context).get_translator,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xCurrentTheme.dialogTheme.title(context),
               ),
             ),
 

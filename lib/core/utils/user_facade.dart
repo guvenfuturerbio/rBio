@@ -223,7 +223,7 @@ class UserFacadeImpl extends UserFacade {
             children: [
               Text(
                 LocaleProvider.current.warning,
-                style: appConfig.theme.dialogTheme.title(context),
+                style: context.xCurrentTheme.dialogTheme.title(context),
               ),
 
               //
@@ -234,7 +234,7 @@ class UserFacadeImpl extends UserFacade {
                 child: Text(
                   LocaleProvider.current.logout_confirmation_description,
                   textAlign: TextAlign.center,
-                  style: appConfig.theme.dialogTheme.description(context),
+                  style: context.xCurrentTheme.dialogTheme.description(context),
                 ),
               ),
 

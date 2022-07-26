@@ -19,11 +19,6 @@ class GuvenMobilePlatformConfig extends IGuvenPlatformConfig
       : super(null, GuvenOnlineAdjustManagerImpl(), null);
 
   @override
-  String getInitialRoute(ISharedPreferencesManager sharedPreferencesManager) {
-    return PagePaths.login;
-  }
-
-  @override
   bool checkDevices() => false;
 
   @override

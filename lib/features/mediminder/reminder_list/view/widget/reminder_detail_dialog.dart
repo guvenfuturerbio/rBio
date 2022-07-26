@@ -25,7 +25,7 @@ class ReminderDetailDialog extends StatelessWidget {
               Center(
                 child: Text(
                   LocaleProvider.current.blood_glucose_measurement_title,
-                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  style: context.xCurrentTheme.dialogTheme.title(context),
                 ),
               ),
 
@@ -36,10 +36,7 @@ class ReminderDetailDialog extends StatelessWidget {
               Center(
                 child: Text(
                   getIt<UserFacade>().getNameAndSurname(),
-                  style: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
-                      .description(context),
+                  style: context.xCurrentTheme.dialogTheme.description(context),
                 ),
               ),
 

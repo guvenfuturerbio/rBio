@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../config/config.dart';
 import '../../../take_appointment/do_mobile_payment/iyzico_response_sms_payment_page.dart';
 import '../credit_card.dart';
 
@@ -199,7 +198,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                           image: R.image.user,
                         )
                         .copyWith(
-                          fillColor: getIt<IAppConfig>().theme.white,
+                          fillColor: context.xCurrentTheme.white,
                           filled: true,
                         ),
                     focusNode: cardHolderNameFNode,
@@ -244,7 +243,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                           image: R.image.creditCardNumber,
                         )
                         .copyWith(
-                          fillColor: getIt<IAppConfig>().theme.white,
+                          fillColor: context.xCurrentTheme.white,
                           filled: true,
                         ),
                     focusNode: cardNumberFNode,
@@ -287,7 +286,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                           image: R.image.password,
                         )
                         .copyWith(
-                          fillColor: getIt<IAppConfig>().theme.white,
+                          fillColor: context.xCurrentTheme.white,
                           filled: true,
                         ),
                     focusNode: cardCcvFNode,
@@ -332,7 +331,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                           image: R.image.creditCalendar,
                         )
                         .copyWith(
-                          fillColor: getIt<IAppConfig>().theme.white,
+                          fillColor: context.xCurrentTheme.white,
                           filled: true,
                         ),
                     focusNode: cardExpirityDateFNode,
