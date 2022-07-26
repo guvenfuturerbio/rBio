@@ -16,7 +16,7 @@ abstract class IBaseBottomActionsOfGraph {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: Colors.white,
+        primary: context.xAppTheme.buttonTheme.colorScheme?.primary,
         shadowColor: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         shape: R.sizes.defaultShape,

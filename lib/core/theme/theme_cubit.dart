@@ -20,4 +20,13 @@ class ThemeCubit extends Cubit<IAppTheme> {
       type.xRawValue,
     );
   }
+
+  // void toggle() {
+  //   final brightness = state.brightness;
+  //   updateTheme(
+  //     brightness == Brightness.dark
+  //         ? AppThemeTypes.oneDoseLight
+  //         : AppThemeTypes.oneDoseDark,
+  //   );
+  // }
 }

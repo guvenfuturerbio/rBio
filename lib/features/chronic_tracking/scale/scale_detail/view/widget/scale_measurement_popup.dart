@@ -26,67 +26,70 @@ class ScaleMeasurementPopup extends StatelessWidget {
       builder: (context, miScaleState) {
         return miScaleState.whenOrNull(
               showLoading: (scaleEntity) {
-                return SafeArea(
-                  child: Padding(
-                    padding: R.utils.screenPadding(context),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        R.widgets.hSizer28,
+                return Container(
+                  color: context.xDialogTheme.backgroundColor,
+                  child: SafeArea(
+                    child: Padding(
+                      padding: R.utils.screenPadding(context),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          R.widgets.hSizer28,
 
-                        //
-                        _buildTitle(context),
+                          //
+                          _buildTitle(context),
 
-                        //
-                        R.widgets.hSizer8,
+                          //
+                          R.widgets.hSizer8,
 
-                        //
-                        R.widgets.hSizer28,
+                          //
+                          R.widgets.hSizer28,
 
-                        //
-                        _buildWeight(scaleEntity, context),
+                          //
+                          _buildWeight(scaleEntity, context),
 
-                        //
-                        Center(
-                          child: MirrorAnimation(
-                            duration: const Duration(seconds: 1),
-                            tween: Tween<double>(begin: 0, end: 10),
-                            builder: (context, child, double value) {
-                              return Transform.translate(
-                                offset: Offset(0, value),
-                                child: SvgPicture.asset(
-                                  R.image.arrowDown,
-                                  width: R.sizes.iconSize3,
-                                ),
-                              );
-                            },
+                          //
+                          Center(
+                            child: MirrorAnimation(
+                              duration: const Duration(seconds: 1),
+                              tween: Tween<double>(begin: 0, end: 10),
+                              builder: (context, child, double value) {
+                                return Transform.translate(
+                                  offset: Offset(0, value),
+                                  child: SvgPicture.asset(
+                                    R.image.arrowDown,
+                                    width: R.sizes.iconSize3,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
 
-                        //
-                        R.widgets.hSizer8,
+                          //
+                          R.widgets.hSizer8,
 
-                        //
-                        Container(
-                          color: Colors.transparent,
-                          height: 45,
-                          child: RiveAnimation.asset(
-                            R.image.scaleLoadingLines,
-                            fit: BoxFit.scaleDown,
-                            alignment: Alignment.bottomCenter,
+                          //
+                          Container(
+                            color: Colors.transparent,
+                            height: 45,
+                            child: RiveAnimation.asset(
+                              R.image.scaleLoadingLines,
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.bottomCenter,
+                            ),
                           ),
-                        ),
 
-                        //
-                        R.widgets.hSizer28,
-                        R.widgets.hSizer28,
-                        R.widgets.hSizer28,
+                          //
+                          R.widgets.hSizer28,
+                          R.widgets.hSizer28,
+                          R.widgets.hSizer28,
 
-                        //
-                        _buildDescription(context),
-                      ],
+                          //
+                          _buildDescription(context),
+                        ],
+                      ),
                     ),
                   ),
                 );

@@ -21,7 +21,7 @@ class _DialogForPossibleErrorDialogState
     extends State<DialogForPossibleErrorDialog> {
   @override
   Widget build(BuildContext context) {
-    return RbioBaseGreyDialog(
+    return RbioBaseDialog(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

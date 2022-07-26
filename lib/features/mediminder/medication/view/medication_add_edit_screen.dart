@@ -530,7 +530,7 @@ class __MedicationReminderAddEditViewState
           obscureText: false,
           hintText: "",
           inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+            R.regExp.filterText,
           ],
           onChanged: (text) {
             context
@@ -562,7 +562,7 @@ class __MedicationReminderAddEditViewState
           obscureText: false,
           hintText: "",
           inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+            R.regExp.filterText4,
           ],
           onChanged: (text) {
             context
@@ -616,7 +616,7 @@ class __MedicationReminderAddEditViewState
         keyboardType: TextInputType.number,
         obscureText: false,
         inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+          R.regExp.filterText,
         ],
         onChanged: (text) async {
           if (text.isNotEmpty) {

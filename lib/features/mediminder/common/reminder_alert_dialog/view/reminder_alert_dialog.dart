@@ -76,7 +76,7 @@ class _ReminderAlertView extends StatelessWidget {
 
   // #region _buildSuccess
   Widget _buildSuccess(BuildContext context, ReminderListModel model) {
-    return RbioBaseGreyDialog(
+    return RbioBaseDialog(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,

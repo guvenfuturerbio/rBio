@@ -236,7 +236,10 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                     '$e ${result.scaleUnit.toStr}',
                     style: CupertinoTheme.of(context)
                         .textTheme
-                        .dateTimePickerTextStyle,
+                        .dateTimePickerTextStyle
+                        .copyWith(
+                          color: context.xTextInverseColor,
+                        ),
                   ),
                 ),
               )
@@ -281,7 +284,10 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                     e.toStr,
                     style: CupertinoTheme.of(context)
                         .textTheme
-                        .dateTimePickerTextStyle,
+                        .dateTimePickerTextStyle
+                        .copyWith(
+                          color: context.xTextInverseColor,
+                        ),
                   ),
                 ),
               )

@@ -14,34 +14,7 @@ class RbioBaseDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.zero,
-      backgroundColor:
-          context.xCurrentTheme.dialogTheme.backgroundColor(context),
-      shape: R.sizes.defaultShape,
-      child: Container(
-        width: context.width > 500 ? 500 : context.width - 50,
-        padding: const EdgeInsets.all(20),
-        child: child,
-      ),
-    );
-  }
-
-  static Widget verticalGap() => R.widgets.hSizer32;
-}
-
-class RbioBaseGreyDialog extends StatelessWidget {
-  final Widget child;
-
-  const RbioBaseGreyDialog({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: EdgeInsets.zero,
-      backgroundColor:
-          context.xCurrentTheme.dialogTheme.backgroundColor(context),
+      backgroundColor: context.xDialogTheme.backgroundColor,
       shape: R.sizes.defaultShape,
       child: Container(
         width: context.width > 500 ? 500 : context.width - 50,
@@ -68,7 +41,7 @@ class RbioMessageDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RbioBaseGreyDialog(
+    return RbioBaseDialog(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,

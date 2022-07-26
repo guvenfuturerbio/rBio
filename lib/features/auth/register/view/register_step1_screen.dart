@@ -425,8 +425,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                                 _phoneNumberFocusNode,
                                 null,
                               ),
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'[0-9\t\r]'))
+                              R.regExp.filterText4,
                             ],
                             onFieldSubmitted: (term) {
                               Utils.instance.fieldFocusChange(

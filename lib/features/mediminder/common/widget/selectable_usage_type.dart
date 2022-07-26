@@ -66,8 +66,8 @@ class SelectableUsageType extends StatelessWidget {
       textAlign: TextAlign.start,
       style: context.xHeadline4.copyWith(
         color: isActive
-            ? context.xTextColor
-            : context.xMyCustomTheme.textDisabledColor,
+            ? context.xCurrentTheme.selectionTheme.selectedTextColor
+            : context.xCurrentTheme.selectionTheme.unSelectedTextColor,
       ),
     );
 
@@ -78,7 +78,9 @@ class SelectableUsageType extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isActive ? context.xPrimaryColor : Colors.white,
+          color: isActive
+              ? context.xCurrentTheme.selectionTheme.selectedBackColor
+              : context.xCurrentTheme.selectionTheme.unSelectedBackColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: _text,

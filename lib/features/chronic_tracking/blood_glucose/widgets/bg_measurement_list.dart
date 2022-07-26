@@ -58,7 +58,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
           height: (context.height * .07) * context.textScale,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.xCardColor,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withAlpha(50),
@@ -77,6 +77,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
               child: Text(
                 DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
                     .format(bgMeasurementViewModel.date),
+                style: context.xHeadline5,
               ),
             ),
           ),
@@ -109,27 +110,25 @@ Widget measurementList(
     child: GestureDetector(
       onTap: () {
         Atom.show(
-            BgTaggerPopUp(
-              data: bgMeasurementViewModel.bgMeasurement,
-              isEdit: true,
-            ),
-            barrierColor: Colors.transparent,
-            barrierDismissible: false);
+          BgTaggerPopUp(
+            data: bgMeasurementViewModel.bgMeasurement,
+            isEdit: true,
+          ),
+          barrierColor: Colors.transparent,
+          barrierDismissible: false,
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
         decoration: BoxDecoration(
-          color: Colors.green,
-          gradient: const LinearGradient(
-              colors: [Colors.white, Colors.white],
-              begin: Alignment.bottomLeft,
-              end: Alignment.centerRight),
+          color: context.xCardColor,
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withAlpha(50),
-                blurRadius: 5,
-                spreadRadius: 0,
-                offset: const Offset(5, 5))
+              color: Colors.black.withAlpha(50),
+              blurRadius: 5,
+              spreadRadius: 0,
+              offset: const Offset(5, 5),
+            ),
           ],
           borderRadius: R.sizes.borderRadiusCircular,
         ),
@@ -143,6 +142,7 @@ Widget measurementList(
             Expanded(
               child: Row(
                 children: [
+                  //
                   Container(
                     alignment: Alignment.center,
                     width: (context.height * .1) * context.textScale,
@@ -166,6 +166,8 @@ Widget measurementList(
                       ],
                     ),
                   ),
+
+                  //
                   Expanded(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -181,8 +183,11 @@ Widget measurementList(
                                 : bgMeasurementViewModel.tag == 2
                                     ? R.image.aftermealIconBlack
                                     : R.image.otherIcon,
+                            color: context.xIconColor,
                           ),
                         ),
+
+                        //
                         Expanded(
                           child: Text(
                             (bgMeasurementViewModel.note.length > 10

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../core.dart';
 
 class GuvenAlert extends StatelessWidget {
-  final Color? backgroundColor;
   final EdgeInsets? insetPadding;
   final EdgeInsetsGeometry? contentPadding;
   final Widget? title;
@@ -14,7 +13,6 @@ class GuvenAlert extends StatelessWidget {
 
   const GuvenAlert({
     Key? key,
-    this.backgroundColor,
     this.insetPadding,
     this.contentPadding,
     this.title,
@@ -31,7 +29,7 @@ class GuvenAlert extends StatelessWidget {
       elevation: elevation,
       insetPadding: insetPadding ??
           const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
-      backgroundColor: backgroundColor ?? context.xPrimaryColor,
+      backgroundColor: context.xDialogTheme.backgroundColor,
       contentPadding: contentPadding ?? const EdgeInsets.all(0.0),
       title: context.xTextScaleType == TextScaleType.large
           ? Container(

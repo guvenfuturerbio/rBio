@@ -135,67 +135,71 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
     }
 
     phoneNumberEditingController.text = widget.userAccount.phoneNumber ?? '';
-    return BlocConsumer<PersonelInformationCubit, PersonelInformationState>(
-      listener: (context, state) async {
-        if (state.status == PersonelInformationStatus.success) {
-          Utils.instance.showSuccessSnackbar(
-            context,
-            LocaleProvider.current.personal_update_success,
-          );
 
-          if (widget.isEmailRequired) {
-            Atom.to(PagePaths.main, isReplacement: true);
-          }
-        } else if (state.status == PersonelInformationStatus.deletePhoto) {
-        } else if (state.status ==
-            PersonelInformationStatus.getPhotoFromSource) {
-          if (state.imageSource == ImageSource.gallery) {
-            if (!await getIt<PermissionManager>().request(
-              permission: GalleryPermissionStrategy(
-                LocaleProvider.current,
-                getIt<IAppConfig>(),
-              ),
-              context: context,
-            )) {
-              Navigator.of(context).pop();
-              return;
-            } else {
-              if (!await getIt<PermissionManager>().request(
-                permission: CameraPermissionStrategy(
-                  LocaleProvider.current,
-                  getIt<IAppConfig>(),
-                ),
-                context: context,
-              )) {
-                Navigator.of(context).pop();
-                return;
-              }
-            }
-          }
-        } else if (state.status == PersonelInformationStatus.errorDialog) {
-          showDialog(
-            context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context) {
-              return RbioMessageDialog(
-                description: LocaleProvider.of(context).sorry_dont_transaction,
-                buttonTitle: LocaleProvider.current.ok,
-                isAtom: false,
-              );
-            },
-          );
-        }
-      },
-      builder: (context, state) {
-        return KeyboardDismissOnTap(
-          child: RbioStackedScaffold(
-            isLoading: state.isLoading,
-            resizeToAvoidBottomInset: true,
-            appbar: _buildAppBar(context),
-            body: _builBody(context, state),
+    return BlocConsumer<PersonelInformationCubit, PersonelInformationState>(
+      listener: _listener,
+      builder: _builder,
+    );
+  }
+
+  void _listener(BuildContext context, PersonelInformationState state) async {
+    if (state.status == PersonelInformationStatus.success) {
+      Utils.instance.showSuccessSnackbar(
+        context,
+        LocaleProvider.current.personal_update_success,
+      );
+
+      if (widget.isEmailRequired) {
+        Atom.to(PagePaths.main, isReplacement: true);
+      }
+    } else if (state.status == PersonelInformationStatus.deletePhoto) {
+    } else if (state.status == PersonelInformationStatus.getPhotoFromSource) {
+      if (state.imageSource == ImageSource.gallery) {
+        if (!await getIt<PermissionManager>().request(
+          permission: GalleryPermissionStrategy(
+            LocaleProvider.current,
+            getIt<IAppConfig>(),
           ),
-        );
-      },
+          context: context,
+        )) {
+          // Navigator.of(context).pop();
+          return;
+        }
+      } else {
+        if (!await getIt<PermissionManager>().request(
+          permission: CameraPermissionStrategy(
+            LocaleProvider.current,
+            getIt<IAppConfig>(),
+          ),
+          context: context,
+        )) {
+          // Navigator.of(context).pop();
+          return;
+        }
+      }
+    } else if (state.status == PersonelInformationStatus.errorDialog) {
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return RbioMessageDialog(
+            description: LocaleProvider.of(context).sorry_dont_transaction,
+            buttonTitle: LocaleProvider.current.ok,
+            isAtom: false,
+          );
+        },
+      );
+    }
+  }
+
+  Widget _builder(BuildContext context, PersonelInformationState state) {
+    return KeyboardDismissOnTap(
+      child: RbioStackedScaffold(
+        isLoading: state.isLoading,
+        resizeToAvoidBottomInset: true,
+        appbar: _buildAppBar(context),
+        body: _builBody(context, state),
+      ),
     );
   }
 

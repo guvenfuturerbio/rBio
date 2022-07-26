@@ -18,11 +18,11 @@ class _LastTestDialogState extends State<_LastTestDialog> {
 
   @override
   void initState() {
+    super.initState();
+
     _valueEditingController = TextEditingController();
     _valueFocusNode = FocusNode();
     _valueEditingController.text = widget.initValue.replaceAll(".", ",");
-
-    super.initState();
   }
 
   @override
@@ -35,7 +35,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return RbioBaseGreyDialog(
+    return RbioBaseDialog(
       child: SingleChildScrollView(
         child: RbioKeyboardActions(
           isDialog: true,
@@ -73,13 +73,12 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: RbioTextFormField(
                   focusNode: _valueFocusNode,
-                  backColor: context.xCurrentTheme.dialogTheme
-                      .backgroundColor(context),
+                  backColor: context.xDialogTheme.backgroundColor,
                   controller: _valueEditingController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                    R.regExp.filterText,
                   ],
                 ),
               ),

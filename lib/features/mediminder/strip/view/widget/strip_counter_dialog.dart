@@ -36,7 +36,6 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
       elevation: 0,
       insetPadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
-      backgroundColor: Colors.transparent,
       content: SafeArea(
         child: Container(
           width: Atom.width > 350 ? 350 : Atom.width,
@@ -78,7 +77,7 @@ class __StripCounterDialogState extends State<_StripCounterDialog> {
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                      R.regExp.filterText3,
                     ],
                   ),
 

@@ -84,31 +84,31 @@ class AtomApp extends StatelessWidget {
   }
 
   ThemeData? _getTheme(BuildContext context) {
+    final _currentTheme = context.watch<ThemeCubit>().state;
+
     return ThemeData(
-      brightness: context.watch<ThemeCubit>().state.brightness,
-      fontFamily: context.watch<ThemeCubit>().state.fontFamily,
-      textTheme: context.watch<ThemeCubit>().state.textTheme,
-      primaryColor: context.watch<ThemeCubit>().state.primaryColor,
-      scaffoldBackgroundColor:
-          context.watch<ThemeCubit>().state.scaffoldBackgroundColor,
+      brightness: _currentTheme.brightness,
+      fontFamily: _currentTheme.fontFamily,
+      textTheme: _currentTheme.textTheme,
+      primaryColor: _currentTheme.primaryColor,
+      scaffoldBackgroundColor: _currentTheme.scaffoldBackgroundColor,
 
       // * ColorScheme
       colorScheme: ColorScheme.fromSeed(
-        seedColor: context.watch<ThemeCubit>().state.primaryColor,
-        brightness: context.watch<ThemeCubit>().state.brightness,
+        seedColor: _currentTheme.primaryColor,
+        brightness: _currentTheme.brightness,
       ).copyWith(
-        secondary: context.watch<ThemeCubit>().state.secondaryColor,
-        primary: context.watch<ThemeCubit>().state.textColor,
-        inversePrimary: context.watch<ThemeCubit>().state.inverseTextColor,
-        onPrimary: context.watch<ThemeCubit>().state.onPrimaryTextColor,
-        secondaryContainer:
-            context.watch<ThemeCubit>().state.secondaryContainerColor,
+        secondary: _currentTheme.secondaryColor,
+        primary: _currentTheme.textColor,
+        inversePrimary: _currentTheme.inverseTextColor,
+        onPrimary: _currentTheme.onPrimaryTextColor,
+        secondaryContainer: _currentTheme.secondaryContainerColor,
       ),
 
       // * CardTheme
       cardTheme: const CardTheme().copyWith(
-        elevation: 0.0,
-        color: context.watch<ThemeCubit>().state.cardBackgroundColor,
+        elevation: R.sizes.defaultElevation,
+        color: _currentTheme.cardBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: R.sizes.borderRadiusCircular,
         ),
@@ -116,72 +116,70 @@ class AtomApp extends StatelessWidget {
 
       // * AppBarTheme
       appBarTheme: AppBarTheme(
-        backgroundColor: context.watch<ThemeCubit>().state.appbarColor,
-        titleTextStyle:
-            context.watch<ThemeCubit>().state.textTheme.headline1?.copyWith(
-                  color: context.watch<ThemeCubit>().state.appbarTextColor,
-                  fontWeight: FontWeight.w400,
-                ),
+        backgroundColor: _currentTheme.appbarColor,
+        titleTextStyle: _currentTheme.textTheme.headline1?.copyWith(
+          color: _currentTheme.appbarTextColor,
+          fontWeight: FontWeight.w400,
+        ),
         iconTheme: IconThemeData(
-          color: context.watch<ThemeCubit>().state.appbarIconColor,
+          color: _currentTheme.appbarIconColor,
         ),
       ),
 
       // * BottomNavigationBarTheme
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: context.watch<ThemeCubit>().state.bottomMenuColor,
+        backgroundColor: _currentTheme.bottomMenuColor,
       ),
 
       // * IconTheme
       iconTheme: IconThemeData(
-        color: context.watch<ThemeCubit>().state.iconColor,
+        color: _currentTheme.iconColor,
       ),
 
       // * FloatingActionButtonTheme
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: context.watch<ThemeCubit>().state.fabBackgroundColor,
+        backgroundColor: _currentTheme.fabBackgroundColor,
       ),
 
       // * TextSelectionTheme
-      textSelectionTheme: context.watch<ThemeCubit>().state.textSelectionTheme,
+      textSelectionTheme: _currentTheme.textSelectionTheme,
 
       // * CupertinoTheme
-      cupertinoOverrideTheme: context.watch<ThemeCubit>().state.cupertinoTheme,
+      cupertinoOverrideTheme: _currentTheme.cupertinoTheme,
 
       // * DialogTheme
-      dialogTheme: const DialogTheme(
-          //
-          ),
+      dialogTheme: DialogTheme(
+        backgroundColor: _currentTheme.cardBackgroundColor,
+      ),
     )..addCustomTheme(
         MyCustomTheme(
-          iron: context.watch<ThemeCubit>().state.iron,
-          grey: context.watch<ThemeCubit>().state.grey,
-          white: context.watch<ThemeCubit>().state.white,
-          black: context.watch<ThemeCubit>().state.black,
-          punch: context.watch<ThemeCubit>().state.punch,
-          roman: context.watch<ThemeCubit>().state.roman,
-          malibu: context.watch<ThemeCubit>().state.malibu,
-          deYork: context.watch<ThemeCubit>().state.deYork,
-          skeptic: context.watch<ThemeCubit>().state.skeptic,
-          boulder: context.watch<ThemeCubit>().state.boulder,
-          mercury: context.watch<ThemeCubit>().state.mercury,
-          codGray: context.watch<ThemeCubit>().state.codGray,
-          gallery: context.watch<ThemeCubit>().state.gallery,
-          concrete: context.watch<ThemeCubit>().state.concrete,
-          supernova: context.watch<ThemeCubit>().state.supernova,
-          tonysPink: context.watch<ThemeCubit>().state.tonysPink,
-          dustyGray: context.watch<ThemeCubit>().state.dustyGray,
-          greenHaze: context.watch<ThemeCubit>().state.greenHaze,
-          casablanca: context.watch<ThemeCubit>().state.casablanca,
-          frenchPass: context.watch<ThemeCubit>().state.frenchPass,
-          kournikova: context.watch<ThemeCubit>().state.kournikova,
-          ultramarine: context.watch<ThemeCubit>().state.ultramarine,
-          frenchLilac: context.watch<ThemeCubit>().state.frenchLilac,
-          textDisabledColor:
-              context.watch<ThemeCubit>().state.textDisabledColor,
-          energyYellow: context.watch<ThemeCubit>().state.energyYellow,
-          cornflowerBlue: context.watch<ThemeCubit>().state.cornflowerBlue,
-          fuzzyWuzzyBrown: context.watch<ThemeCubit>().state.fuzzyWuzzyBrown,
+          iron: _currentTheme.iron,
+          grey: _currentTheme.grey,
+          white: _currentTheme.white,
+          black: _currentTheme.black,
+          punch: _currentTheme.punch,
+          roman: _currentTheme.roman,
+          malibu: _currentTheme.malibu,
+          deYork: _currentTheme.deYork,
+          skeptic: _currentTheme.skeptic,
+          boulder: _currentTheme.boulder,
+          mercury: _currentTheme.mercury,
+          codGray: _currentTheme.codGray,
+          gallery: _currentTheme.gallery,
+          concrete: _currentTheme.concrete,
+          supernova: _currentTheme.supernova,
+          tonysPink: _currentTheme.tonysPink,
+          dustyGray: _currentTheme.dustyGray,
+          greenHaze: _currentTheme.greenHaze,
+          casablanca: _currentTheme.casablanca,
+          frenchPass: _currentTheme.frenchPass,
+          kournikova: _currentTheme.kournikova,
+          ultramarine: _currentTheme.ultramarine,
+          frenchLilac: _currentTheme.frenchLilac,
+          textDisabledColor: _currentTheme.textDisabledColor,
+          energyYellow: _currentTheme.energyYellow,
+          cornflowerBlue: _currentTheme.cornflowerBlue,
+          fuzzyWuzzyBrown: _currentTheme.fuzzyWuzzyBrown,
         ),
       );
   }

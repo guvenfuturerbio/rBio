@@ -23,7 +23,6 @@ class _RbioContextInfoDialogState extends State<RbioContextInfoDialog> {
   @override
   Widget build(BuildContext context) {
     return GuvenAlert(
-      backgroundColor: Colors.white,
       title: GuvenAlert.buildTitle(context, widget.title),
 
       //

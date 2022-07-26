@@ -216,7 +216,7 @@ class UserFacadeImpl extends UserFacade {
     BuildContext context,
   ) async {
     final result = await Atom.show(
-      RbioBaseGreyDialog(
+      RbioBaseDialog(
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,

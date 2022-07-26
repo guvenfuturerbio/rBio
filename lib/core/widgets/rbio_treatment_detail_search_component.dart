@@ -193,7 +193,7 @@ class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
                         horizontal: 20,
                       ),
                       child: GuvenDateRange(
-                        backColor: context.xMyCustomTheme.gallery,
+                        backColor: context.xScaffoldBackgroundColor,
                         startCurrentDate: widget.result.startCurrentDate,
                         endCurrentDate: widget.result.endCurrentDate,
                         onStartDateChange: (date) {
