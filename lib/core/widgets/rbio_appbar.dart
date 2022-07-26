@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../core.dart';
-import '../theme/theme_cubit.dart';
 
 mixin IRbioAppBar on PreferredSize {}
 
@@ -67,18 +65,6 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             //
             actions: actions ??
                 [
-                  // TODO: Daha Sonra Sil
-                  IconButton(
-                    onPressed: () {
-                      context
-                          .read<ThemeCubit>()
-                          .toggle();
-                    },
-                    icon: const Icon(
-                      Icons.refresh,
-                    ),
-                  ),
-
                   //
                   if (title == null) ...[
                     Opacity(
