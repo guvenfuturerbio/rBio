@@ -1264,6 +1264,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_tag": MessageLookupByLibrary.simpleMessage("Select tag"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "send_message": MessageLookupByLibrary.simpleMessage("Send Message"),
+        "sent_code_to_phone": MessageLookupByLibrary.simpleMessage(
+            "A code has sent to your phone"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "show": MessageLookupByLibrary.simpleMessage("Show"),

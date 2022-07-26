@@ -1253,6 +1253,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_tag": MessageLookupByLibrary.simpleMessage("Etiket seçiniz"),
         "send": MessageLookupByLibrary.simpleMessage("Gönder"),
         "send_message": MessageLookupByLibrary.simpleMessage("Mesaj Gönder"),
+        "sent_code_to_phone": MessageLookupByLibrary.simpleMessage(
+            "Telefonunuza bir kod gönderildi"),
         "settings": MessageLookupByLibrary.simpleMessage("Ayarlar"),
         "share": MessageLookupByLibrary.simpleMessage("Paylaş"),
         "show": MessageLookupByLibrary.simpleMessage("Görüntüle"),

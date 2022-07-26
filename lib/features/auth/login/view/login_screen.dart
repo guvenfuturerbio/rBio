@@ -380,9 +380,10 @@ class _LoginScreenState extends State<LoginScreen> {
             onPressed: () => value.showApplicationContestForm(),
             child: Text(
               LocaleProvider.of(context).accept_application_consent_form,
-              maxLines: 2,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
+                color: context.xPrimaryColor,
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -423,10 +424,11 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () => {value.showKvkkInfo()},
               child: Text(
                 LocaleProvider.of(context).read_understood_kvkk,
-                maxLines: 3,
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: context.xHeadline5.copyWith(
                   decoration: TextDecoration.underline,
+                  color: context.xPrimaryColor,
                 ),
               ),
             ),

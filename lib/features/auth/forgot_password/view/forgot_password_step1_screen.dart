@@ -262,6 +262,12 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
                             context
                                 .read<ForgotPasswordStep1Cubit>()
                                 .forgotPassStep1(userRegisterStep1);
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              Utils.instance.showSuccessSnackbar(
+                                context,
+                                LocaleProvider.of(context).sent_code_to_phone,
+                              );
+                            });
                           } else {
                             context.read<ForgotPasswordStep1Cubit>().showDialog(
                                   LocaleProvider.of(context).fill_all_field,
