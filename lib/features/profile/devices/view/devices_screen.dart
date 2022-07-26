@@ -115,7 +115,6 @@ class DevicesScreen extends StatelessWidget {
                       onPressed: () {
                         Atom.show(
                           GuvenAlert(
-                            backgroundColor: context.xCardColor,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 25,
                               vertical: 25,
@@ -226,7 +225,6 @@ class DevicesScreen extends StatelessWidget {
             onPressed: () {
               Atom.show(
                 GuvenAlert(
-                  backgroundColor: context.xCardColor,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 25,
                     vertical: 25,

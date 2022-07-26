@@ -52,7 +52,6 @@ class _AppointmentListViewState extends State<AppointmentListView> {
             barrierDismissible: true,
             builder: (BuildContext context) {
               return GuvenAlert(
-                backgroundColor: Colors.white,
                 title: GuvenAlert.buildTitle(
                   context,
                   LocaleProvider.current.fee_information,

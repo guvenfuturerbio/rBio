@@ -171,7 +171,6 @@ class _PatientRelativeListTile extends StatelessWidget {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return GuvenAlert(
-          backgroundColor: Colors.white,
           title: GuvenAlert.buildTitle(
             context,
             title,

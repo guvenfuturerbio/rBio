@@ -111,6 +111,30 @@ class OneDoseTheme extends IAppTheme {
 
   @override
   Color iconColor = R.colors.black;
+
+  @override
+  AppSelectionTheme get selectionTheme => OneDoseLightSelectionTheme();
+}
+
+class OneDoseLightSelectionTheme extends OneDoseTheme
+    implements AppSelectionTheme {
+  @override
+  Color get unSelectedBackColor => cardBackgroundColor;
+
+  @override
+  Color get unSelectedIconColor => iconColor;
+
+  @override
+  Color get unSelectedTextColor => inverseTextColor;
+
+  @override
+  Color get selectedBackColor => primaryColor;
+
+  @override
+  Color get selectedIconColor => R.colors.white;
+
+  @override
+  Color get selectedTextColor => textColor;
 }
 
 class OneDoseDarkTheme extends IAppTheme {
@@ -224,4 +248,28 @@ class OneDoseDarkTheme extends IAppTheme {
 
   @override
   Color iconColor = R.colors.white;
+
+  @override
+  AppSelectionTheme get selectionTheme => OneDoseDarkSelectionTheme();
+}
+
+class OneDoseDarkSelectionTheme extends OneDoseDarkTheme
+    implements AppSelectionTheme {
+  @override
+  Color get unSelectedBackColor => cardBackgroundColor;
+
+  @override
+  Color get unSelectedIconColor => iconColor;
+
+  @override
+  Color get unSelectedTextColor => inverseTextColor;
+
+  @override
+  Color get selectedBackColor => primaryColor;
+
+  @override
+  Color get selectedIconColor => iconColor;
+
+  @override
+  Color get selectedTextColor => inverseTextColor;
 }

@@ -42,7 +42,7 @@ Future<void> showCompulsoryUpdateDialog({
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      return RbioBaseGreyDialog(
+      return RbioBaseDialog(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -193,7 +193,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               },
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(context, tcNoFNode, nameFNode),
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]')),
+                R.regExp.filterText,
               ],
               onFieldSubmitted: (term) {
                 Utils.instance.fieldFocusChange(context, tcNoFNode, nameFNode);
@@ -210,8 +210,11 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               keyboardType: TextInputType.name,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, nameFNode, surnameFNode),
-                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\t\r]')),
+                  context,
+                  nameFNode,
+                  surnameFNode,
+                ),
+                R.regExp.filterText2,
               ],
               onFieldSubmitted: (term) {
                 Utils.instance
@@ -229,12 +232,18 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               keyboardType: TextInputType.name,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, surnameFNode, phoneFNode),
-                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\t\r]')),
+                  context,
+                  surnameFNode,
+                  phoneFNode,
+                ),
+                R.regExp.filterText2,
               ],
               onFieldSubmitted: (term) {
-                Utils.instance
-                    .fieldFocusChange(context, surnameFNode, phoneFNode);
+                Utils.instance.fieldFocusChange(
+                  context,
+                  surnameFNode,
+                  phoneFNode,
+                );
               },
             ),
 
@@ -256,12 +265,18 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               },
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, phoneFNode, emailFNode),
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]')),
+                  context,
+                  phoneFNode,
+                  emailFNode,
+                ),
+                R.regExp.filterText,
               ],
               onFieldSubmitted: (term) {
-                Utils.instance
-                    .fieldFocusChange(context, phoneFNode, emailFNode);
+                Utils.instance.fieldFocusChange(
+                  context,
+                  phoneFNode,
+                  emailFNode,
+                );
               },
             ),
 

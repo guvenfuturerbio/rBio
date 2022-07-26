@@ -46,7 +46,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
   @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      backgroundColor: context.xPrimaryColor,
+      backgroundColor: context.xAppBarTheme.backgroundColor,
       bodyPadding: EdgeInsets.zero,
       appbar: _buildAppBar(),
       body: _buildBody(),
@@ -181,7 +181,7 @@ class _PatientScaleDetailViewState extends State<PatientScaleDetailView> {
                       .replaceAll(".", ","),
               style: context.xHeadline1.copyWith(
                 fontSize: context.xHeadline1.fontSize! * 1.5,
-                color: context.xTextColor,
+                color: context.xMyCustomTheme.white,
               ),
             ),
           );

@@ -64,6 +64,7 @@ class _ScaleMeasurementResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RbioDarkStatusBar(
       child: Scaffold(
+        backgroundColor: context.xDialogTheme.backgroundColor,
         body: _buildBody(context),
       ),
     );

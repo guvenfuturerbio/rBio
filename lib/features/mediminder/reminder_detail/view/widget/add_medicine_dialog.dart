@@ -33,7 +33,6 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
       elevation: 0,
       insetPadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
-      backgroundColor: Colors.transparent,
       content: SafeArea(
         child: Container(
           width: Atom.width > 350 ? 350 : Atom.width,
@@ -74,7 +73,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                     controller: _valueEditingController,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                      R.regExp.filterText3,
                     ],
                   ),
 

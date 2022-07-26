@@ -47,7 +47,7 @@ class RbioWhiteButton extends StatelessWidget {
       title: title,
       onTap: onTap,
       fontWeight: FontWeight.bold,
-      textColor: context.xTextInverseColor,
+      textColor: context.xMyCustomTheme.black,
       backColor: Colors.white,
       infinityWidth: infinityWidth,
     );

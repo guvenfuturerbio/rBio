@@ -42,7 +42,12 @@ abstract class IAppTheme {
   CupertinoThemeData get cupertinoTheme => CupertinoThemeData(
         primaryColor: primaryColor,
         brightness: brightness,
+        textTheme: CupertinoTextThemeData(
+          dateTimePickerTextStyle: textTheme.headline2,
+        ),
       );
+  // * Selected Theme
+  AppSelectionTheme get selectionTheme;
   // * MyCustomTheme
   Color iron = R.colors.iron;
   Color grey = R.colors.grey;
@@ -76,7 +81,6 @@ abstract class IAppTheme {
 }
 
 abstract class IAppDialogTheme {
-  Color backgroundColor(BuildContext context);
   TextStyle title(BuildContext context);
   TextStyle description(BuildContext context);
   TextStyle subTitle(BuildContext context);
@@ -84,9 +88,6 @@ abstract class IAppDialogTheme {
 }
 
 class AppDialogThemeImpl extends IAppDialogTheme {
-  @override
-  Color backgroundColor(BuildContext context) => context.xCardColor;
-
   @override
   TextStyle button(BuildContext context) => context.xHeadline4;
 
@@ -100,6 +101,15 @@ class AppDialogThemeImpl extends IAppDialogTheme {
   TextStyle title(BuildContext context) => context.xHeadline2.copyWith(
         fontWeight: FontWeight.bold,
       );
+}
+
+abstract class AppSelectionTheme {
+  Color get unSelectedBackColor;
+  Color get unSelectedIconColor;
+  Color get unSelectedTextColor;
+  Color get selectedBackColor;
+  Color get selectedIconColor;
+  Color get selectedTextColor;
 }
 
 @immutable

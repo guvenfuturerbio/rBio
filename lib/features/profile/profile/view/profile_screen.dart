@@ -138,7 +138,6 @@ class ProfileView extends StatelessWidget {
                             child: Builder(
                               builder: (context) {
                                 return GuvenAlert(
-                                  backgroundColor: Colors.white,
                                   title: GuvenAlert.buildTitle(
                                     context,
                                     LocaleProvider.of(context).warning,

@@ -145,6 +145,7 @@ class RbioTreatmentCard extends StatelessWidget {
                       width: R.sizes.iconSize2,
                       child: SvgPicture.asset(
                         R.image.arrowRightIcon,
+                        color: context.xIconColor,
                       ),
                     ),
                   ],

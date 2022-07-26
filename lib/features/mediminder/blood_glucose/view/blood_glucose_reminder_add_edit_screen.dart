@@ -350,7 +350,7 @@ class __BloodGlucoseReminderAddEditViewState
         obscureText: false,
         hintText: LocaleProvider.current.medicine_daily_count,
         inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+          R.regExp.filterText,
         ],
         onChanged: (text) async {
           if (text.isNotEmpty) {

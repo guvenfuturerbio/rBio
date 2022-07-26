@@ -102,7 +102,7 @@ class PermissionManagerImpl extends PermissionManager {
     await showDialog(
       context: context,
       builder: (context) {
-        return RbioBaseGreyDialog(
+        return RbioBaseDialog(
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

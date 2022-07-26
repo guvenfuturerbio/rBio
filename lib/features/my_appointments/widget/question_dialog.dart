@@ -9,7 +9,7 @@ class QuestionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RbioBaseGreyDialog(
+    return RbioBaseDialog(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,

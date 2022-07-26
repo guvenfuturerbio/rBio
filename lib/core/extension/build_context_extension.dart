@@ -45,6 +45,10 @@ extension BuildContextThemeExtensions on BuildContext {
       xAppTheme.bottomNavigationBarTheme;
   // #endregion
 
+  // #region DialogTheme
+  DialogTheme get xDialogTheme => xAppTheme.dialogTheme;
+  // #endregion
+
   // #region MyCustomTheme
   MyCustomTheme get xMyCustomTheme => MyCustomTheme.of(this);
   IAppTheme get xCurrentTheme => read<ThemeCubit>().state;
@@ -78,4 +82,15 @@ extension BuildContextThemeExtensions on BuildContext {
   // #endregion
 
   MaterialColor get xRandomColor => Colors.primaries[Random().nextInt(17)];
+}
+
+extension BuildContextScrollPhysicsExtensions on BuildContext {
+  ScrollPhysics get xNeverScroll => const NeverScrollableScrollPhysics();
+  ScrollPhysics get xBouncingScroll => const BouncingScrollPhysics();
+  ScrollPhysics get xClampingScroll => const ClampingScrollPhysics();
+  ScrollPhysics get xFixedExtentScroll => const FixedExtentScrollPhysics();
+  ScrollPhysics get xAlwaysScroll => const AlwaysScrollableScrollPhysics();
+  ScrollPhysics get xBouncingAlwaysScroll => const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      );
 }

@@ -42,7 +42,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
       create: (context) => TwoFaVm(context),
       child: Consumer<TwoFaVm>(
         builder: (context, vm, child) {
-          return RbioBaseGreyDialog(
+          return RbioBaseDialog(
             child: SingleChildScrollView(
               child: RbioKeyboardActions(
                 isDialog: true,
@@ -71,6 +71,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: RbioTextFormField(
+                        backColor: context.xScaffoldBackgroundColor,
                         controller: _textEditingController,
                         focusNode: _focusNode,
                         keyboardType: TextInputType.text,
