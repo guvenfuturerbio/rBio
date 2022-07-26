@@ -68,7 +68,7 @@ class GalleryView extends StatelessWidget {
                     child: Icon(
                       Icons.close,
                       size: context.aspectRatio * 75,
-                      color: context.xCurrentTheme.white,
+                      color: context.xMyCustomTheme.white,
                     ),
                   ),
                 )

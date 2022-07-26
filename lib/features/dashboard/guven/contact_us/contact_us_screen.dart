@@ -94,7 +94,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 children: [
                                   SvgPicture.asset(
                                     R.image.icPhoneGreyCall,
-                                    color: context.xCurrentTheme.white,
+                                    color: context.xMyCustomTheme.white,
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -102,7 +102,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   Text(
                                     LocaleProvider.of(context).call_us,
                                     style: TextStyle(
-                                      color: context.xCurrentTheme.white,
+                                      color: context.xMyCustomTheme.white,
                                     ),
                                   ),
                                 ],

@@ -501,7 +501,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
       onPressed: onPressed,
       icon: SvgPicture.asset(
         R.image.startVideo,
-        color: context.xCurrentTheme.white,
+        color: context.xMyCustomTheme.white,
       ),
     );
   }
@@ -521,7 +521,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
           },
           icon: SvgPicture.asset(
             R.image.rate,
-            color: context.xCurrentTheme.white,
+            color: context.xMyCustomTheme.white,
           ),
         ),
       ),

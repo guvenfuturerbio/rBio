@@ -107,7 +107,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                 LinearPercentIndicator(
                                   animation: true,
                                   progressColor: context.xPrimaryColor,
-                                  backgroundColor: context.xCurrentTheme.grey
+                                  backgroundColor: context.xMyCustomTheme.grey
                                       .withOpacity(0.2),
                                   lineHeight: 20,
                                   barRadius: const Radius.circular(25),
@@ -235,8 +235,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                               LinearPercentIndicator(
                                 animation: true,
                                 progressColor: context.xPrimaryColor,
-                                backgroundColor:
-                                    context.xCurrentTheme.grey.withOpacity(0.2),
+                                backgroundColor: context.xMyCustomTheme.grey
+                                    .withOpacity(0.2),
                                 lineHeight: 20,
                                 animationDuration: 1100,
                                 barRadius: const Radius.circular(25),

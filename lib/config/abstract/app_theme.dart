@@ -26,12 +26,14 @@ abstract class IAppTheme {
   Color get appbarTextColor; // appBarTheme-titleTextStyle-color
   Color get appbarIconColor; // appBarTheme-iconTheme-color
   // * BottomNavigationBarTheme
-  Color get bottomMenuColor; // bottomNavigationBarTheme-backgroundColor
+  BottomNavigationBarThemeData get bottomNavigationBarTheme;
   // * IconTheme
-  Color get iconColor; // iconTheme-color
+  IconThemeData get iconTheme;
   // * FloatingActionButtonTheme
-  Color get fabBackgroundColor =>
-      primaryColor; // floatingActionButtonTheme-backgroundColor
+  FloatingActionButtonThemeData get floatingActionButtonTheme =>
+      FloatingActionButtonThemeData(
+        backgroundColor: primaryColor,
+      );
   // * TextSelectionTheme
   TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
         cursorColor: primaryColor,
@@ -49,36 +51,40 @@ abstract class IAppTheme {
   // * Selected Theme
   AppSelectionTheme get selectionTheme;
   // * MyCustomTheme
-  Color iron = R.colors.iron;
-  Color grey = R.colors.grey;
-  Color white = R.colors.white;
-  Color black = R.colors.black;
-  Color punch = R.colors.punch;
-  Color roman = R.colors.roman;
-  Color malibu = R.colors.malibu;
-  Color deYork = R.colors.deYork;
-  Color skeptic = R.colors.skeptic;
-  Color boulder = R.colors.boulder;
-  Color mercury = R.colors.mercury;
-  Color codGray = R.colors.codGray;
-  Color gallery = R.colors.gallery;
-  Color concrete = R.colors.concrete;
-  Color supernova = R.colors.supernova;
-  Color tonysPink = R.colors.tonysPink;
-  Color dustyGray = R.colors.dustyGray;
-  Color greenHaze = R.colors.greenHaze;
-  Color casablanca = R.colors.casablanca;
-  Color frenchPass = R.colors.frenchPass;
-  Color kournikova = R.colors.kournikova;
-  Color ultramarine = R.colors.ultramarine;
-  Color frenchLilac = R.colors.frenchLilac;
-  Color textDisabledColor = R.colors.silver;
-  Color energyYellow = R.colors.energyYellow;
-  Color cornflowerBlue = R.colors.cornflowerBlue;
-  Color fuzzyWuzzyBrown = R.colors.fuzzyWuzzyBrown;
+  MyCustomTheme xMyCustomTheme = MyCustomTheme(
+    iron: R.colors.iron,
+    grey: R.colors.grey,
+    white: R.colors.white,
+    black: R.colors.black,
+    punch: R.colors.punch,
+    roman: R.colors.roman,
+    malibu: R.colors.malibu,
+    deYork: R.colors.deYork,
+    skeptic: R.colors.skeptic,
+    boulder: R.colors.boulder,
+    mercury: R.colors.mercury,
+    codGray: R.colors.codGray,
+    gallery: R.colors.gallery,
+    concrete: R.colors.concrete,
+    supernova: R.colors.supernova,
+    tonysPink: R.colors.tonysPink,
+    dustyGray: R.colors.dustyGray,
+    greenHaze: R.colors.greenHaze,
+    casablanca: R.colors.casablanca,
+    frenchPass: R.colors.frenchPass,
+    kournikova: R.colors.kournikova,
+    ultramarine: R.colors.ultramarine,
+    frenchLilac: R.colors.frenchLilac,
+    textDisabledColor: R.colors.silver,
+    energyYellow: R.colors.energyYellow,
+    cornflowerBlue: R.colors.cornflowerBlue,
+    fuzzyWuzzyBrown: R.colors.fuzzyWuzzyBrown,
+  );
 
   double convertFontSize(double value) => value / 2.85;
 }
+
+// ! ------------------ ------------------ IAppDialogTheme ------------------ ------------------
 
 abstract class IAppDialogTheme {
   TextStyle title(BuildContext context);
@@ -103,6 +109,8 @@ class AppDialogThemeImpl extends IAppDialogTheme {
       );
 }
 
+// ! ------------------ ------------------ AppSelectionTheme ------------------ ------------------
+
 abstract class AppSelectionTheme {
   Color get unSelectedBackColor;
   Color get unSelectedIconColor;
@@ -111,6 +119,8 @@ abstract class AppSelectionTheme {
   Color get selectedIconColor;
   Color get selectedTextColor;
 }
+
+// ! ------------------ ------------------ MyCustomTheme ------------------ ------------------
 
 @immutable
 class MyCustomTheme {

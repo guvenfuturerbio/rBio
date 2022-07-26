@@ -127,19 +127,13 @@ class AtomApp extends StatelessWidget {
       ),
 
       // * BottomNavigationBarTheme
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: _currentTheme.bottomMenuColor,
-      ),
+      bottomNavigationBarTheme: _currentTheme.bottomNavigationBarTheme,
 
       // * IconTheme
-      iconTheme: IconThemeData(
-        color: _currentTheme.iconColor,
-      ),
+      iconTheme: _currentTheme.iconTheme,
 
       // * FloatingActionButtonTheme
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: _currentTheme.fabBackgroundColor,
-      ),
+      floatingActionButtonTheme: _currentTheme.floatingActionButtonTheme,
 
       // * TextSelectionTheme
       textSelectionTheme: _currentTheme.textSelectionTheme,
@@ -151,36 +145,11 @@ class AtomApp extends StatelessWidget {
       dialogTheme: DialogTheme(
         backgroundColor: _currentTheme.cardBackgroundColor,
       ),
-    )..addCustomTheme(
-        MyCustomTheme(
-          iron: _currentTheme.iron,
-          grey: _currentTheme.grey,
-          white: _currentTheme.white,
-          black: _currentTheme.black,
-          punch: _currentTheme.punch,
-          roman: _currentTheme.roman,
-          malibu: _currentTheme.malibu,
-          deYork: _currentTheme.deYork,
-          skeptic: _currentTheme.skeptic,
-          boulder: _currentTheme.boulder,
-          mercury: _currentTheme.mercury,
-          codGray: _currentTheme.codGray,
-          gallery: _currentTheme.gallery,
-          concrete: _currentTheme.concrete,
-          supernova: _currentTheme.supernova,
-          tonysPink: _currentTheme.tonysPink,
-          dustyGray: _currentTheme.dustyGray,
-          greenHaze: _currentTheme.greenHaze,
-          casablanca: _currentTheme.casablanca,
-          frenchPass: _currentTheme.frenchPass,
-          kournikova: _currentTheme.kournikova,
-          ultramarine: _currentTheme.ultramarine,
-          frenchLilac: _currentTheme.frenchLilac,
-          textDisabledColor: _currentTheme.textDisabledColor,
-          energyYellow: _currentTheme.energyYellow,
-          cornflowerBlue: _currentTheme.cornflowerBlue,
-          fuzzyWuzzyBrown: _currentTheme.fuzzyWuzzyBrown,
-        ),
-      );
+
+      // * TextButtonTheme
+      // * ElevatedButtonTheme
+      // * OutlinedButtonTheme
+      // * InputDecorationTheme
+    )..addCustomTheme(_currentTheme.xMyCustomTheme);
   }
 }

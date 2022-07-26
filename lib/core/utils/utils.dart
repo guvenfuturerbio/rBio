@@ -364,7 +364,7 @@ class Utils {
         textStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: context.xCurrentTheme.white,
+          color: context.xMyCustomTheme.white,
         ),
         callback: onPressed,
         gradient: appGradient(context),

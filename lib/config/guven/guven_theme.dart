@@ -103,13 +103,18 @@ class GuvenTheme extends IAppTheme {
   Color appbarIconColor = R.colors.white;
 
   @override
-  Color bottomMenuColor = R.colors.white;
+  BottomNavigationBarThemeData bottomNavigationBarTheme =
+      BottomNavigationBarThemeData(
+    backgroundColor: R.colors.white,
+  );
 
   @override
   Color secondaryContainerColor = R.colors.coralTree;
 
   @override
-  Color iconColor = R.colors.black;
+  IconThemeData iconTheme = IconThemeData(
+    color: R.colors.black,
+  );
 
   @override
   AppSelectionTheme get selectionTheme => GuvenSelectionTheme();
@@ -120,7 +125,7 @@ class GuvenSelectionTheme extends GuvenTheme implements AppSelectionTheme {
   Color get unSelectedBackColor => cardBackgroundColor;
 
   @override
-  Color get unSelectedIconColor => iconColor;
+  Color get unSelectedIconColor => iconTheme.color ?? Colors.transparent;
 
   @override
   Color get unSelectedTextColor => inverseTextColor;

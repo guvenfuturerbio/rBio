@@ -118,8 +118,8 @@ class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
             ? Utils.instance.appGradient(context)
             : LinearGradient(
                 colors: [
-                  context.xCurrentTheme.white,
-                  context.xCurrentTheme.white
+                  context.xMyCustomTheme.white,
+                  context.xMyCustomTheme.white
                 ],
                 begin: Alignment.bottomLeft,
                 end: Alignment.centerRight,

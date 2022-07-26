@@ -124,7 +124,7 @@ class _HomeSliderState extends State<HomeSlider> {
                                     color: context.xPrimaryColor.withOpacity(
                                         _current == entry.key ? 0.9 : 0.4),
                                     border: Border.all(
-                                      color: context.xCurrentTheme.white,
+                                      color: context.xMyCustomTheme.white,
                                       width: 0.5,
                                     ),
                                   ),

@@ -176,7 +176,7 @@ class _ListBodyState extends State<ListBody>
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.value == value
-                  ? context.xCurrentTheme.white
+                  ? context.xMyCustomTheme.white
                   : context.xTextInverseColor,
               fontWeight: widget.completeNotifier.value?.value == value
                   ? FontWeight.bold
@@ -253,7 +253,7 @@ class _ListBodyState extends State<ListBody>
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.selected?.from == item.from
-                  ? context.xCurrentTheme.white
+                  ? context.xMyCustomTheme.white
                   : context.xTextInverseColor,
               fontWeight:
                   widget.completeNotifier.value?.selected?.from == item.from

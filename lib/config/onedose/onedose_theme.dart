@@ -104,13 +104,18 @@ class OneDoseTheme extends IAppTheme {
   Color appbarIconColor = R.colors.white;
 
   @override
-  Color bottomMenuColor = R.colors.white;
+  BottomNavigationBarThemeData bottomNavigationBarTheme =
+      BottomNavigationBarThemeData(
+    backgroundColor: R.colors.white,
+  );
 
   @override
   Color secondaryContainerColor = R.colors.skeptic;
 
   @override
-  Color iconColor = R.colors.black;
+  IconThemeData iconTheme = IconThemeData(
+    color: R.colors.black,
+  );
 
   @override
   AppSelectionTheme get selectionTheme => OneDoseLightSelectionTheme();
@@ -122,7 +127,7 @@ class OneDoseLightSelectionTheme extends OneDoseTheme
   Color get unSelectedBackColor => cardBackgroundColor;
 
   @override
-  Color get unSelectedIconColor => iconColor;
+  Color get unSelectedIconColor => iconTheme.color ?? Colors.transparent;
 
   @override
   Color get unSelectedTextColor => inverseTextColor;
@@ -241,13 +246,18 @@ class OneDoseDarkTheme extends IAppTheme {
   Color appbarIconColor = R.colors.white;
 
   @override
-  Color bottomMenuColor = R.colors.emperor;
+  BottomNavigationBarThemeData bottomNavigationBarTheme =
+      BottomNavigationBarThemeData(
+    backgroundColor: R.colors.emperor,
+  );
 
   @override
   Color secondaryContainerColor = R.colors.emperor;
 
   @override
-  Color iconColor = R.colors.white;
+  IconThemeData iconTheme = IconThemeData(
+    color: R.colors.white,
+  );
 
   @override
   AppSelectionTheme get selectionTheme => OneDoseDarkSelectionTheme();
@@ -259,7 +269,7 @@ class OneDoseDarkSelectionTheme extends OneDoseDarkTheme
   Color get unSelectedBackColor => cardBackgroundColor;
 
   @override
-  Color get unSelectedIconColor => iconColor;
+  Color get unSelectedIconColor => iconTheme.color ?? Colors.transparent;
 
   @override
   Color get unSelectedTextColor => inverseTextColor;
@@ -268,7 +278,7 @@ class OneDoseDarkSelectionTheme extends OneDoseDarkTheme
   Color get selectedBackColor => primaryColor;
 
   @override
-  Color get selectedIconColor => iconColor;
+  Color get selectedIconColor => iconTheme.color ?? Colors.transparent;
 
   @override
   Color get selectedTextColor => inverseTextColor;

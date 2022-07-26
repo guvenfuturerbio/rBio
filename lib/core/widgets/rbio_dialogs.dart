@@ -160,7 +160,7 @@ class RbioSmallDialogButton extends StatelessWidget {
   }) {
     return RbioSmallDialogButton(
       backgroundColor: context.xPrimaryColor,
-      textColor: context.xCurrentTheme.white,
+      textColor: context.xMyCustomTheme.white,
       title: title,
       onPressed: onPressed,
     );
@@ -173,7 +173,7 @@ class RbioSmallDialogButton extends StatelessWidget {
   }) {
     return RbioSmallDialogButton(
       backgroundColor: context.xMyCustomTheme.punch,
-      textColor: context.xCurrentTheme.white,
+      textColor: context.xMyCustomTheme.white,
       title: title,
       onPressed: onPressed,
     );

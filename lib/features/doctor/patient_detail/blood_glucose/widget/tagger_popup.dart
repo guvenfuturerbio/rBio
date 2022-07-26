@@ -188,7 +188,7 @@ class _TaggerPopUp extends StatelessWidget {
     String title,
   ) {
     return Card(
-      color: isCurrent ? context.xPrimaryColor : context.xCurrentTheme.white,
+      color: isCurrent ? context.xPrimaryColor : context.xMyCustomTheme.white,
       child: Container(
         decoration: getTagElementDeco(context, isCurrent),
         padding:

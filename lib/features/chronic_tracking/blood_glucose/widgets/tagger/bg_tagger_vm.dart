@@ -48,7 +48,7 @@ class BgTaggerVm extends ChangeNotifier {
       LocaleProvider.current.allow_permission_gallery,
       TextButton(
         style: TextButton.styleFrom(
-          primary: context.xCurrentTheme.white,
+          primary: context.xMyCustomTheme.white,
         ),
         child: Text(LocaleProvider.current.confirm),
         onPressed: () async {

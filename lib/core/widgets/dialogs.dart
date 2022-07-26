@@ -86,8 +86,11 @@ class GradientDialog extends StatefulWidget {
   final String? title;
   final String? text;
 
-  const GradientDialog({Key? key, required this.title, required this.text})
-      : super(key: key);
+  const GradientDialog({
+    Key? key,
+    required this.title,
+    required this.text,
+  }) : super(key: key);
 
   @override
   _GradientDialogState createState() => _GradientDialogState();
