@@ -1,4 +1,3 @@
-
 part of 'my_appointments_cubit.dart';
 
 enum MyAppointmentsBodyStatus {
@@ -28,6 +27,7 @@ class MyAppointmentsState {
   int? availabilityId;
   String? fromDate;
   PatientAppointmentsResponse? data;
+
   MyAppointmentsState({
     DateTime? startDate,
     DateTime? endDate,

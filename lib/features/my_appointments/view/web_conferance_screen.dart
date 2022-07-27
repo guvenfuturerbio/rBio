@@ -40,9 +40,7 @@ class _WebConferanceScreenState extends State<WebConferanceScreen> {
     }
 
     return RbioScaffold(
-      appbar: RbioAppBar(
-        context: context,
-      ),
+      appbar: RbioAppBar(context: context),
       body: _buildBody(),
     );
   }
