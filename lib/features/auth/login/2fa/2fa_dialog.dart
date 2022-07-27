@@ -61,7 +61,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     Center(
                       child: Text(
                         LocaleProvider.of(context).sms_verification_code,
-                        style: context.xCurrentTheme.dialogTheme.title(context),
+                        style: context.xDialogTheme.titleTextStyle,
                       ),
                     ),
 
@@ -71,7 +71,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: RbioTextFormField(
-                        backColor: context.xScaffoldBackgroundColor,
+                        backColor: context.xInverseCardColor,
                         controller: _textEditingController,
                         focusNode: _focusNode,
                         keyboardType: TextInputType.text,

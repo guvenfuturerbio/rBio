@@ -28,12 +28,14 @@ class RbioBaseDialog extends StatelessWidget {
 }
 
 class RbioMessageDialog extends StatelessWidget {
+  final String? title;
   final String description;
   final String? buttonTitle;
   final bool? isAtom;
 
   const RbioMessageDialog({
     Key? key,
+    this.title,
     required this.description,
     this.buttonTitle,
     this.isAtom,
@@ -49,8 +51,8 @@ class RbioMessageDialog extends StatelessWidget {
         children: [
           //
           Text(
-            LocaleProvider.current.warning,
-            style: context.xCurrentTheme.dialogTheme.title(context),
+            title ?? LocaleProvider.current.warning,
+            style: context.xDialogTheme.titleTextStyle,
           ),
 
           //
@@ -84,7 +86,7 @@ class RbioMessageDialog extends StatelessWidget {
       builder: (BuildContext context, BoxConstraints constraints) {
         final TextSpan _textSpan = TextSpan(
           text: description,
-          style: context.xCurrentTheme.dialogTheme.description(context),
+          style: context.xDialogTheme.descriptionTextStyle,
         );
 
         final TextPainter _textPainter = TextPainter(
@@ -111,8 +113,7 @@ class RbioMessageDialog extends StatelessWidget {
                     Text(
                       description,
                       textAlign: TextAlign.center,
-                      style: context.xCurrentTheme.dialogTheme
-                          .description(context),
+                      style: context.xDialogTheme.descriptionTextStyle,
                     ),
                   ],
                 ),
@@ -129,7 +130,7 @@ class RbioMessageDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
                 maxLines: 10,
                 overflow: TextOverflow.ellipsis,
-                style: context.xCurrentTheme.dialogTheme.description(context),
+                style: context.xDialogTheme.descriptionTextStyle,
               ),
             ],
           );
@@ -185,7 +186,7 @@ class RbioSmallDialogButton extends StatelessWidget {
     required void Function()? onPressed,
   }) {
     return RbioSmallDialogButton(
-      backgroundColor: context.xCardColor,
+      backgroundColor: context.xInverseCardColor,
       textColor: context.xTextInverseColor,
       title: title,
       onPressed: onPressed,

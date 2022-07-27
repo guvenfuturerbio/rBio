@@ -53,7 +53,7 @@ Future<void> showCompulsoryUpdateDialog({
               Center(
                 child: Text(
                   LocaleProvider.current.app_update_available,
-                  style: context.xCurrentTheme.dialogTheme.title(context),
+                  style: context.xDialogTheme.titleTextStyle,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -65,7 +65,7 @@ Future<void> showCompulsoryUpdateDialog({
               Center(
                 child: Text(
                   LocaleProvider.current.force_update_message,
-                  style: context.xCurrentTheme.dialogTheme.description(context),
+                  style: context.xDialogTheme.descriptionTextStyle,
                   textAlign: TextAlign.center,
                 ),
               ),

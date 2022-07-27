@@ -34,7 +34,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
             Center(
               child: Text(
                 LocaleProvider.current.approve_consent_form,
-                style: context.xCurrentTheme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -61,9 +61,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                           child: Text(
                             LocaleProvider
                                 .current.application_consent_form_text,
-                            style: context.xCurrentTheme
-                                .dialogTheme
-                                .description(context),
+                            style: context.xDialogTheme.descriptionTextStyle,
                             textAlign: TextAlign.center,
                           ),
                         ),

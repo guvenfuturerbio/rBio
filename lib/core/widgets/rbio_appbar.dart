@@ -33,7 +33,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             leading: leading ??
                 Align(
                   alignment: Alignment.center,
-                  child: InkWell(
+                  child: GestureDetector(
                     child: Container(
                       color: Colors.transparent,
                       padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),

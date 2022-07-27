@@ -39,7 +39,7 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
             Center(
               child: Text(
                 LocaleProvider.of(context).get_translator,
-                style: context.xCurrentTheme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
               ),
             ),
 

@@ -33,6 +33,7 @@ extension BuildContextThemeExtensions on BuildContext {
   // #region CardTheme
   CardTheme get xCardTheme => xAppTheme.cardTheme;
   Color get xCardColor => xCardTheme.color ?? Colors.transparent;
+  Color get xInverseCardColor => xScaffoldBackgroundColor;
   // #endregion
 
   // #region IconThemeData
@@ -46,7 +47,7 @@ extension BuildContextThemeExtensions on BuildContext {
   // #endregion
 
   // #region DialogTheme
-  DialogTheme get xDialogTheme => xAppTheme.dialogTheme;
+  AppDialogTheme get xDialogTheme => read<ThemeCubit>().state.dialogTheme;
   // #endregion
 
   // #region MyCustomTheme

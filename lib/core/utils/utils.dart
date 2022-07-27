@@ -10,7 +10,7 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import '../../config/config.dart';
 import '../../features/auth/shared/shared.dart';
 import '../core.dart';
-import '../widgets/rbio_height_info_dialog.dart';
+import '../widgets/rbio_height_required_info_dialog.dart';
 
 class Utils {
   Utils._();
@@ -39,7 +39,7 @@ class Utils {
     if (height != null) {
       return true;
     } else {
-      Atom.show(RbioHeightInfoDialog(backRoute: backRoute));
+      Atom.show(RbioHeightRequiredInfoDialog(backRoute: backRoute));
       return false;
     }
   }

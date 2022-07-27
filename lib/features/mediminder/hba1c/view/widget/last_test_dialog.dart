@@ -51,7 +51,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
               Center(
                 child: Text(
                   LocaleProvider.current.test_result,
-                  style: context.xCurrentTheme.dialogTheme.title(context),
+                  style: context.xDialogTheme.titleTextStyle,
                 ),
               ),
 
@@ -61,7 +61,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
               Center(
                 child: Text(
                   getIt<UserFacade>().getNameAndSurname(),
-                  style: context.xCurrentTheme.dialogTheme.description(context),
+                  style: context.xDialogTheme.descriptionTextStyle,
                 ),
               ),
 

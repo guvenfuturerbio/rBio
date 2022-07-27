@@ -19,7 +19,7 @@ class __ExpandablePostponeComponentState
     return AnimatedContainer(
       duration: kTabScrollDuration,
       decoration: BoxDecoration(
-        color: context.xCardColor,
+        color: context.xInverseCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -45,7 +45,7 @@ class __ExpandablePostponeComponentState
               child: Text(
                 LocaleProvider.current.postpone,
                 textAlign: TextAlign.center,
-                style: context.xCurrentTheme.dialogTheme.description(context),
+                style: context.xDialogTheme.descriptionTextStyle,
               ),
             ),
           ),

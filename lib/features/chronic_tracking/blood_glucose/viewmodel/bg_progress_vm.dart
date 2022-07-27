@@ -1201,9 +1201,7 @@ class BgProgressVm
 
   void showBleReadingTagger() {
     Atom.show(
-      const BgTaggerPopUp(
-        isEdit: false,
-      ),
+      const BgTaggerPopUp(isEdit: false),
       barrierColor: Colors.transparent,
       barrierDismissible: false,
     );

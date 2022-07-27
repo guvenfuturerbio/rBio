@@ -336,7 +336,7 @@ class VRouterRoutes {
               beforeEnter: (vRedirector) async {
                 Future<void> showAlert() async {
                   await Atom.show(
-                    DeviceRegisterDialog(
+                    RbioDeviceRegisterDialog(
                       vRedirector: vRedirector,
                     ),
                   );
@@ -687,7 +687,7 @@ class VRouterRoutes {
 
   static void _stopRedirectionShowNotChronicDialog(VRedirector vRedirector) {
     vRedirector.stopRedirection();
-    Atom.show(const NotChronicWarning());
+    Atom.show(const RbioNotChronicWarningDialog());
   }
 }
 
@@ -848,37 +848,4 @@ class PagePaths {
 
 void openDefaultScreen(VRedirector vRedirector) {
   vRedirector.to(PagePaths.main);
-}
-
-class DeviceRegisterDialog extends StatelessWidget {
-  final VRedirector vRedirector;
-  const DeviceRegisterDialog({
-    Key? key,
-    required this.vRedirector,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GuvenAlert(
-      title: GuvenAlert.buildTitle(
-        context,
-        LocaleProvider.current.info,
-      ),
-      content: GuvenAlert.buildDescription(
-        context,
-        LocaleProvider.current.device_register,
-      ),
-      actions: [
-        //
-        GuvenAlert.buildMaterialAction(
-          context,
-          LocaleProvider.current.Ok,
-          () {
-            Atom.dismiss();
-            vRedirector.to(PagePaths.allDevices);
-          },
-        ),
-      ],
-    );
-  }
 }

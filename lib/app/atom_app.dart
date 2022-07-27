@@ -150,6 +150,9 @@ class AtomApp extends StatelessWidget {
       // * ElevatedButtonTheme
       // * OutlinedButtonTheme
       // * InputDecorationTheme
-    )..addCustomTheme(_currentTheme.xMyCustomTheme);
+      // * BottomSheetTheme
+      // * CheckboxTheme
+      // * DividerTheme
+    )..addCustomTheme(_currentTheme.myCustomTheme);
   }
 }

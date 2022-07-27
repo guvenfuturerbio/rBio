@@ -7,8 +7,8 @@ import 'package:simple_animations/simple_animations.dart';
 import '../../../../../../../core/core.dart';
 import '../../../../../bluetooth_v2/bluetooth_v2.dart';
 
-class ScaleMeasurementPopup extends StatelessWidget {
-  const ScaleMeasurementPopup({
+class ScaleMeasurementDialog extends StatelessWidget {
+  const ScaleMeasurementDialog({
     Key? key,
   }) : super(key: key);
 
@@ -110,9 +110,7 @@ class ScaleMeasurementPopup extends StatelessWidget {
         Flexible(
           child: Text(
             LocaleProvider.current.weighing,
-            style: context.xHeadline3.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: context.xDialogTheme.titleTextStyle,
           ),
         ),
 
@@ -145,9 +143,7 @@ class ScaleMeasurementPopup extends StatelessWidget {
       child: Text(
         LocaleProvider.current.weighing_completed,
         textAlign: TextAlign.center,
-        style: context.xHeadline4.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
+        style: context.xDialogTheme.descriptionTextStyle,
       ),
     );
   }

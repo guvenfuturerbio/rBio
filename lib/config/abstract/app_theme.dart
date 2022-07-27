@@ -6,7 +6,6 @@ abstract class IAppTheme {
   String get appLogo;
   String get successAppointmentImage;
   double get appBarLogoHeight;
-  IAppDialogTheme dialogTheme = AppDialogThemeImpl();
 
   // ! ThemeData
   // * Main
@@ -45,13 +44,17 @@ abstract class IAppTheme {
         primaryColor: primaryColor,
         brightness: brightness,
         textTheme: CupertinoTextThemeData(
-          dateTimePickerTextStyle: textTheme.headline2,
+          dateTimePickerTextStyle: textTheme.headline2?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       );
+  // * AppDialogTheme
+  AppDialogTheme get dialogTheme => AppDialogThemeImpl(this);
   // * Selected Theme
   AppSelectionTheme get selectionTheme;
   // * MyCustomTheme
-  MyCustomTheme xMyCustomTheme = MyCustomTheme(
+  MyCustomTheme myCustomTheme = MyCustomTheme(
     iron: R.colors.iron,
     grey: R.colors.grey,
     white: R.colors.white,
@@ -84,27 +87,39 @@ abstract class IAppTheme {
   double convertFontSize(double value) => value / 2.85;
 }
 
-// ! ------------------ ------------------ IAppDialogTheme ------------------ ------------------
+// ! ------------------ ------------------ AppDialogTheme ------------------ ------------------
 
-abstract class IAppDialogTheme {
-  TextStyle title(BuildContext context);
-  TextStyle description(BuildContext context);
-  TextStyle subTitle(BuildContext context);
-  TextStyle button(BuildContext context);
+abstract class AppDialogTheme {
+  Color get backgroundColor;
+  TextStyle get buttonTextStyle;
+  TextStyle get titleTextStyle;
+  TextStyle get descriptionTextStyle;
+  TextStyle get subTitleTextStyle;
 }
 
-class AppDialogThemeImpl extends IAppDialogTheme {
-  @override
-  TextStyle button(BuildContext context) => context.xHeadline4;
+class AppDialogThemeImpl extends AppDialogTheme {
+  final IAppTheme theme;
+  AppDialogThemeImpl(this.theme);
 
   @override
-  TextStyle description(BuildContext context) => context.xHeadline3;
+  Color get backgroundColor => theme.cardBackgroundColor;
 
   @override
-  TextStyle subTitle(BuildContext context) => context.xHeadline4;
+  TextStyle get buttonTextStyle =>
+      theme.textTheme.headline4 ?? const TextStyle();
 
   @override
-  TextStyle title(BuildContext context) => context.xHeadline2.copyWith(
+  TextStyle get descriptionTextStyle =>
+      theme.textTheme.headline3 ?? const TextStyle();
+
+  @override
+  TextStyle get subTitleTextStyle =>
+      theme.textTheme.headline4 ?? const TextStyle();
+
+  @override
+  TextStyle get titleTextStyle =>
+      (theme.textTheme.headline1 ?? const TextStyle()).copyWith(
+        fontSize: (theme.textTheme.headline1!.fontSize! * 1.10),
         fontWeight: FontWeight.bold,
       );
 }
@@ -198,6 +213,8 @@ extension MyCustomThemeExtensions on ThemeData {
     return _customTheme;
   }
 }
+
+// ! ------------------ ------------------ AppThemeTypes ------------------ ------------------
 
 enum AppThemeTypes {
   oneDoseLight,

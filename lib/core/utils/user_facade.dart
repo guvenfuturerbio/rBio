@@ -215,71 +215,7 @@ class UserFacadeImpl extends UserFacade {
   Future<bool?> logOutConfirmationDialog(
     BuildContext context,
   ) async {
-    final result = await Atom.show(
-      RbioBaseDialog(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                LocaleProvider.current.warning,
-                style: context.xCurrentTheme.dialogTheme.title(context),
-              ),
-
-              //
-              R.widgets.hSizer32,
-
-              //
-              Center(
-                child: Text(
-                  LocaleProvider.current.logout_confirmation_description,
-                  textAlign: TextAlign.center,
-                  style: context.xCurrentTheme.dialogTheme.description(context),
-                ),
-              ),
-
-              //
-              R.widgets.hSizer32,
-
-              //
-              Row(
-                children: [
-                  //
-                  R.widgets.wSizer12,
-
-                  //
-                  Expanded(
-                    child: RbioSmallDialogButton.red(
-                      context,
-                      title: LocaleProvider.current.btn_cancel,
-                      onPressed: () {
-                        Atom.dismiss(false);
-                      },
-                    ),
-                  ),
-
-                  //
-                  R.widgets.wSizer8,
-
-                  //
-                  Expanded(
-                    child: RbioSmallDialogButton.main(
-                      context: context,
-                      title: LocaleProvider.current.Ok,
-                      onPressed: () {
-                        Atom.dismiss(true);
-                      },
-                    ),
-                  ),
-                  R.widgets.wSizer12,
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-
+    final result = await Atom.show(const RbioLogOutConfirmationDialog());
     return result ?? false;
   }
 

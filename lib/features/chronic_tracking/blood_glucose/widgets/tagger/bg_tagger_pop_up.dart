@@ -78,8 +78,8 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
   late FocusNode focusNode;
   late FocusNode noteFocusNode;
 
-  late TextEditingController controller = TextEditingController();
-  late TextEditingController noteController = TextEditingController();
+  late TextEditingController controller;
+  late TextEditingController noteController;
 
   @override
   void initState() {
