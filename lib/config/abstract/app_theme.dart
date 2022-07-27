@@ -6,7 +6,6 @@ abstract class IAppTheme {
   String get appLogo;
   String get successAppointmentImage;
   double get appBarLogoHeight;
-  IAppDialogTheme dialogTheme = AppDialogThemeImpl();
 
   // ! ThemeData
   // * Main
@@ -26,12 +25,14 @@ abstract class IAppTheme {
   Color get appbarTextColor; // appBarTheme-titleTextStyle-color
   Color get appbarIconColor; // appBarTheme-iconTheme-color
   // * BottomNavigationBarTheme
-  Color get bottomMenuColor; // bottomNavigationBarTheme-backgroundColor
+  BottomNavigationBarThemeData get bottomNavigationBarTheme;
   // * IconTheme
-  Color get iconColor; // iconTheme-color
+  IconThemeData get iconTheme;
   // * FloatingActionButtonTheme
-  Color get fabBackgroundColor =>
-      primaryColor; // floatingActionButtonTheme-backgroundColor
+  FloatingActionButtonThemeData get floatingActionButtonTheme =>
+      FloatingActionButtonThemeData(
+        backgroundColor: primaryColor,
+      );
   // * TextSelectionTheme
   TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
         cursorColor: primaryColor,
@@ -43,65 +44,87 @@ abstract class IAppTheme {
         primaryColor: primaryColor,
         brightness: brightness,
         textTheme: CupertinoTextThemeData(
-          dateTimePickerTextStyle: textTheme.headline2,
+          dateTimePickerTextStyle: textTheme.headline2?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       );
+  // * AppDialogTheme
+  AppDialogTheme get dialogTheme => AppDialogThemeImpl(this);
   // * Selected Theme
   AppSelectionTheme get selectionTheme;
   // * MyCustomTheme
-  Color iron = R.colors.iron;
-  Color grey = R.colors.grey;
-  Color white = R.colors.white;
-  Color black = R.colors.black;
-  Color punch = R.colors.punch;
-  Color roman = R.colors.roman;
-  Color malibu = R.colors.malibu;
-  Color deYork = R.colors.deYork;
-  Color skeptic = R.colors.skeptic;
-  Color boulder = R.colors.boulder;
-  Color mercury = R.colors.mercury;
-  Color codGray = R.colors.codGray;
-  Color gallery = R.colors.gallery;
-  Color concrete = R.colors.concrete;
-  Color supernova = R.colors.supernova;
-  Color tonysPink = R.colors.tonysPink;
-  Color dustyGray = R.colors.dustyGray;
-  Color greenHaze = R.colors.greenHaze;
-  Color casablanca = R.colors.casablanca;
-  Color frenchPass = R.colors.frenchPass;
-  Color kournikova = R.colors.kournikova;
-  Color ultramarine = R.colors.ultramarine;
-  Color frenchLilac = R.colors.frenchLilac;
-  Color textDisabledColor = R.colors.silver;
-  Color energyYellow = R.colors.energyYellow;
-  Color cornflowerBlue = R.colors.cornflowerBlue;
-  Color fuzzyWuzzyBrown = R.colors.fuzzyWuzzyBrown;
+  MyCustomTheme myCustomTheme = MyCustomTheme(
+    iron: R.colors.iron,
+    grey: R.colors.grey,
+    white: R.colors.white,
+    black: R.colors.black,
+    punch: R.colors.punch,
+    roman: R.colors.roman,
+    malibu: R.colors.malibu,
+    deYork: R.colors.deYork,
+    skeptic: R.colors.skeptic,
+    boulder: R.colors.boulder,
+    mercury: R.colors.mercury,
+    codGray: R.colors.codGray,
+    gallery: R.colors.gallery,
+    concrete: R.colors.concrete,
+    supernova: R.colors.supernova,
+    tonysPink: R.colors.tonysPink,
+    dustyGray: R.colors.dustyGray,
+    greenHaze: R.colors.greenHaze,
+    casablanca: R.colors.casablanca,
+    frenchPass: R.colors.frenchPass,
+    kournikova: R.colors.kournikova,
+    ultramarine: R.colors.ultramarine,
+    frenchLilac: R.colors.frenchLilac,
+    textDisabledColor: R.colors.silver,
+    energyYellow: R.colors.energyYellow,
+    cornflowerBlue: R.colors.cornflowerBlue,
+    fuzzyWuzzyBrown: R.colors.fuzzyWuzzyBrown,
+  );
 
   double convertFontSize(double value) => value / 2.85;
 }
 
-abstract class IAppDialogTheme {
-  TextStyle title(BuildContext context);
-  TextStyle description(BuildContext context);
-  TextStyle subTitle(BuildContext context);
-  TextStyle button(BuildContext context);
+// ! ------------------ ------------------ AppDialogTheme ------------------ ------------------
+
+abstract class AppDialogTheme {
+  Color get backgroundColor;
+  TextStyle get buttonTextStyle;
+  TextStyle get titleTextStyle;
+  TextStyle get descriptionTextStyle;
+  TextStyle get subTitleTextStyle;
 }
 
-class AppDialogThemeImpl extends IAppDialogTheme {
-  @override
-  TextStyle button(BuildContext context) => context.xHeadline4;
+class AppDialogThemeImpl extends AppDialogTheme {
+  final IAppTheme theme;
+  AppDialogThemeImpl(this.theme);
 
   @override
-  TextStyle description(BuildContext context) => context.xHeadline3;
+  Color get backgroundColor => theme.cardBackgroundColor;
 
   @override
-  TextStyle subTitle(BuildContext context) => context.xHeadline4;
+  TextStyle get buttonTextStyle =>
+      theme.textTheme.headline4 ?? const TextStyle();
 
   @override
-  TextStyle title(BuildContext context) => context.xHeadline2.copyWith(
+  TextStyle get descriptionTextStyle =>
+      theme.textTheme.headline3 ?? const TextStyle();
+
+  @override
+  TextStyle get subTitleTextStyle =>
+      theme.textTheme.headline4 ?? const TextStyle();
+
+  @override
+  TextStyle get titleTextStyle =>
+      (theme.textTheme.headline1 ?? const TextStyle()).copyWith(
+        fontSize: (theme.textTheme.headline1!.fontSize! * 1.10),
         fontWeight: FontWeight.bold,
       );
 }
+
+// ! ------------------ ------------------ AppSelectionTheme ------------------ ------------------
 
 abstract class AppSelectionTheme {
   Color get unSelectedBackColor;
@@ -111,6 +134,8 @@ abstract class AppSelectionTheme {
   Color get selectedIconColor;
   Color get selectedTextColor;
 }
+
+// ! ------------------ ------------------ MyCustomTheme ------------------ ------------------
 
 @immutable
 class MyCustomTheme {
@@ -188,6 +213,8 @@ extension MyCustomThemeExtensions on ThemeData {
     return _customTheme;
   }
 }
+
+// ! ------------------ ------------------ AppThemeTypes ------------------ ------------------
 
 enum AppThemeTypes {
   oneDoseLight,

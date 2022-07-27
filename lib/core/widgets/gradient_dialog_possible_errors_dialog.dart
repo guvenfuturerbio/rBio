@@ -32,7 +32,7 @@ class _DialogForPossibleErrorDialogState
             Center(
               child: Text(
                 LocaleProvider.current.warning,
-                style: context.xCurrentTheme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -44,7 +44,7 @@ class _DialogForPossibleErrorDialogState
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part1,
-                style: context.xCurrentTheme.dialogTheme.description(context),
+                style: context.xDialogTheme.descriptionTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -53,7 +53,7 @@ class _DialogForPossibleErrorDialogState
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part2,
-                style: context.xCurrentTheme.dialogTheme.description(context),
+                style: context.xDialogTheme.descriptionTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -62,7 +62,7 @@ class _DialogForPossibleErrorDialogState
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part3,
-                style: context.xCurrentTheme.dialogTheme.description(context),
+                style: context.xDialogTheme.descriptionTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),

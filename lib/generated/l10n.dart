@@ -3220,16 +3220,6 @@ class LocaleProvider {
     );
   }
 
-  /// `Onam Formu`
-  String get should_accept_application_consent_form {
-    return Intl.message(
-      'Onam Formu',
-      name: 'should_accept_application_consent_form',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `You have to confirm the application consent form.`
   String get approve_consent_form {
     return Intl.message(

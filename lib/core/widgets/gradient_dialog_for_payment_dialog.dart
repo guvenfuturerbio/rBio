@@ -36,7 +36,7 @@ class _GradientDialogForPaymentDialogState
                 widget.code == "13"
                     ? LocaleProvider.of(context).info
                     : LocaleProvider.of(context).warning,
-                style: context.xCurrentTheme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
               ),
             ),
 
@@ -55,7 +55,7 @@ class _GradientDialogForPaymentDialogState
                               " " +
                               widget.errorText
                           : LocaleProvider.of(context).sorry_dont_transaction,
-              style: context.xCurrentTheme.dialogTheme.description(context),
+              style: context.xDialogTheme.descriptionTextStyle,
               textAlign: TextAlign.center,
             ),
 

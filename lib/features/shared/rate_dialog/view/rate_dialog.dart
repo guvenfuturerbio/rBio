@@ -56,7 +56,7 @@ class _RateDialogState extends State<RateDialog> {
                   child: Center(
                     child: Text(
                       LocaleProvider.of(context).rate_appointment,
-                      style: context.xCurrentTheme.dialogTheme.title(context),
+                      style: context.xDialogTheme.titleTextStyle,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -100,8 +100,8 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.how_video_quality,
-                                  style: context.xCurrentTheme.dialogTheme
-                                      .description(context),
+                                  style:
+                                      context.xDialogTheme.descriptionTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
 
@@ -130,8 +130,7 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.video_call_legand,
-                                  style: context.xCurrentTheme.dialogTheme
-                                      .subTitle(context),
+                                  style: context.xDialogTheme.subTitleTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
 
@@ -143,8 +142,8 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.how_video_doctor,
-                                  style: context.xCurrentTheme.dialogTheme
-                                      .description(context),
+                                  style:
+                                      context.xDialogTheme.descriptionTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
 
@@ -173,9 +172,7 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.doctor_legand,
-                                  style: context.xCurrentTheme
-                                      .dialogTheme
-                                      .subTitle(context),
+                                  style: context.xDialogTheme.subTitleTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
 

@@ -18,7 +18,7 @@ class QuestionDialog extends StatelessWidget {
           //
           Text(
             LocaleProvider.current.warning,
-            style: context.xCurrentTheme.dialogTheme.title(context),
+            style: context.xDialogTheme.titleTextStyle,
           ),
 
           //
@@ -28,7 +28,7 @@ class QuestionDialog extends StatelessWidget {
           Center(
             child: Text(
               LocaleProvider.current.cancel_appo_question,
-              style: context.xCurrentTheme.dialogTheme.description(context),
+              style: context.xDialogTheme.descriptionTextStyle,
               textAlign: TextAlign.center,
             ),
           ),

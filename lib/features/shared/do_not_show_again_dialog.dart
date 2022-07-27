@@ -36,7 +36,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
             Center(
               child: Text(
                 LocaleProvider.current.app_update_available,
-                style: context.xCurrentTheme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -51,7 +51,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                 child: Text(
                   LocaleProvider.current.optional_update_message,
                   textAlign: TextAlign.center,
-                  style: context.xCurrentTheme.dialogTheme.description(context),
+                  style: context.xDialogTheme.descriptionTextStyle,
                 ),
               ),
             ),
@@ -87,9 +87,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                       child: Text(
                         widget.doNotAskAgainText,
                         textAlign: TextAlign.start,
-                        style: context.xCurrentTheme
-                            .dialogTheme
-                            .description(context),
+                        style: context.xDialogTheme.descriptionTextStyle,
                       ),
                     ),
                   ),

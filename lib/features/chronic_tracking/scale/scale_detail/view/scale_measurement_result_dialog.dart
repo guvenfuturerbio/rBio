@@ -5,10 +5,10 @@ import '../../../../../../core/core.dart';
 import '../../../../bluetooth_v2/bluetooth_v2.dart';
 import '../scale_detail.dart';
 
-class ScaleMeasurementResultScreen extends StatelessWidget {
+class ScaleMeasurementResultDialog extends StatelessWidget {
   final ScaleEntity scaleEntity;
 
-  const ScaleMeasurementResultScreen({
+  const ScaleMeasurementResultDialog({
     Key? key,
     required this.scaleEntity,
   }) : super(key: key);
@@ -114,9 +114,7 @@ class _ScaleMeasurementResultView extends StatelessWidget {
   Widget _buildTitle(BuildContext context) {
     return Text(
       LocaleProvider.current.weighing_results,
-      style: context.xHeadline3.copyWith(
-        fontWeight: FontWeight.bold,
-      ),
+      style: context.xDialogTheme.titleTextStyle,
     );
   }
 

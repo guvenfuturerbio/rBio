@@ -68,19 +68,19 @@ class MeasurementListState extends State<MeasurementList> {
                 );
               },
               itemBuilder: (_, PatientScaleMeasurement scaleMeasurement) {
-                return measurementList(scaleMeasurement, context);
+                return _measurementList(context, scaleMeasurement);
               },
             ),
     );
   }
 
-  Widget measurementList(
-      PatientScaleMeasurement scaleMeasurement, BuildContext context) {
+  Widget _measurementList(
+    BuildContext context,
+    PatientScaleMeasurement scaleMeasurement,
+  ) {
     return GestureDetector(
       onTap: () {
-        Atom.show(ScaleTagger(
-          scaleModel: scaleMeasurement,
-        ));
+        Atom.show(ScaleTagger(scaleModel: scaleMeasurement));
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

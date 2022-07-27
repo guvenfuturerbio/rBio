@@ -217,7 +217,7 @@ class BpTaggerPopUp extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16, top: 20),
         child: Card(
-          color: context.xCurrentTheme.white,
+          color: context.xMyCustomTheme.white,
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.only(

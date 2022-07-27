@@ -316,7 +316,6 @@
   "accept_application_consent_form": "I have read, understood and approve the application consent form.",
   "application_consent_form_text": "Within the scope of this application, no medical procedure (such as examination, diagnosis, diagnosis, treatment) is offered or promised to you. In addition to using the application, you should be examined by a physician before making any health-related decision. All responsibility for the use of the application belongs to you, the application is provided \"as is\" and no guarantee is given to you. The service provided to you within the scope of the application is by no means the equivalent of being examined by a physician or following your health condition one-to-one by a physician. You should consult your physician for medical diagnosis and treatment, do not delay your controls, and apply to the nearest emergency room without wasting time in any emergency. Otherwise, we will not accept any responsibility.",
   "application_consent_form": "Application Consent Form",
-  "should_accept_application_consent_form": "Onam Formu",
   "approve_consent_form": "You have to confirm the application consent form.",
   "suggestion_thanks_message": "Thank you for your interest and contribution",
   "awards": "Awards",
@@ -922,7 +921,7 @@
   "council_appointment": "Council Appointment",
   "expected_inspection": "Expected Inspection",
   "council_connection_link": "Council Connection Link",
-  "copied":"Copied",
+  "copied": "Copied",
   "please_select_your_diagnosis": "Please Select Your Diagnosis",
   "inlavid_diagnosis": "Invalid Diagnosis",
   "create_request": "Create request",
@@ -937,7 +936,6 @@
   "requested_inspections": "Requested Inspections",
   "file_name": "File name",
   "delelete_account": "Delete Account",
-
   "delete_account_informations": "Your personal health data will be deleted upon your request, within the scope of the provisions of the Law on Protection of Personal Data No. 6698 dated 24/3/2016. \n \n Please send an e-mail to the {email} adress with your T.C. Identification or Passport Serial No information.",
   "@delete_account_informations": {
     "placeholders": {
@@ -946,8 +944,6 @@
       }
     }
   },
-
-
   "not_now": "Not Now",
   "permission_camera_message_ios": "{appName} does not have access to your camera. To enable access, tap Settings and turn on Camera.",
   "@permission_camera_message_ios": {

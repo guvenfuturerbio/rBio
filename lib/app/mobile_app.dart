@@ -130,7 +130,7 @@ class MobileMyApp extends StatelessWidget with MyApp {
       },
       showLoading: (ScaleEntity scaleEntity) {
         if (!Atom.isDialogShow) {
-          Atom.show(const ScaleMeasurementPopup());
+          Atom.show(const ScaleMeasurementDialog());
         }
       },
       dismissLoading: () {
@@ -138,7 +138,7 @@ class MobileMyApp extends StatelessWidget with MyApp {
       },
       showScalePopup: (scaleEntity) {
         Atom.show(
-          ScaleMeasurementResultScreen(scaleEntity: scaleEntity),
+          ScaleMeasurementResultDialog(scaleEntity: scaleEntity),
           barrierDismissible: false,
         );
       },

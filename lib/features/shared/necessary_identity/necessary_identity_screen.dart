@@ -48,7 +48,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                   Center(
                     child: Text(
                       LocaleProvider.current.warning,
-                      style: context.xCurrentTheme.dialogTheme.title(context),
+                      style: context.xDialogTheme.titleTextStyle,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -60,8 +60,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                   Center(
                     child: Text(
                       LocaleProvider.current.necessary_identity_message,
-                      style: context.xCurrentTheme.dialogTheme
-                          .description(context),
+                      style: context.xDialogTheme.descriptionTextStyle,
                       textAlign: TextAlign.center,
                     ),
                   ),

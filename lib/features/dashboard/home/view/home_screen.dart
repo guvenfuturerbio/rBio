@@ -90,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       actions: [
+        //
         Visibility(
           visible: vm.status.isShaken,
           replacement: SizedBox.fromSize(

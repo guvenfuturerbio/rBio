@@ -1258,8 +1258,6 @@ class MessageLookup extends MessageLookupByLibrary {
             "Telefonunuza bir kod gönderildi"),
         "settings": MessageLookupByLibrary.simpleMessage("Ayarlar"),
         "share": MessageLookupByLibrary.simpleMessage("Paylaş"),
-        "should_accept_application_consent_form":
-            MessageLookupByLibrary.simpleMessage("Onam Formu"),
         "show": MessageLookupByLibrary.simpleMessage("Görüntüle"),
         "show_report": MessageLookupByLibrary.simpleMessage("RAPOR GÖRÜNTÜLE"),
         "show_result": MessageLookupByLibrary.simpleMessage("SONUÇ GÖRÜNTÜLE"),

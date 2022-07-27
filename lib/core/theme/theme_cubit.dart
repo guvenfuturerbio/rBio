@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../config/abstract/app_config.dart';
@@ -21,12 +22,12 @@ class ThemeCubit extends Cubit<IAppTheme> {
     );
   }
 
-  // void toggle() {
-  //   final brightness = state.brightness;
-  //   updateTheme(
-  //     brightness == Brightness.dark
-  //         ? AppThemeTypes.oneDoseLight
-  //         : AppThemeTypes.oneDoseDark,
-  //   );
-  // }
+  void toggle() {
+    final brightness = state.brightness;
+    updateTheme(
+      brightness == Brightness.dark
+          ? AppThemeTypes.oneDoseLight
+          : AppThemeTypes.oneDoseDark,
+    );
+  }
 }

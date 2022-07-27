@@ -134,7 +134,7 @@ class DateRangePicker extends StatelessWidget {
         width: context.width / items.length,
         decoration: BoxDecoration(
           borderRadius: R.sizes.borderRadiusCircular,
-          color: context.xCurrentTheme.white,
+          color: context.xMyCustomTheme.white,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withAlpha(50),

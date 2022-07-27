@@ -98,7 +98,7 @@ class RbioElevatedButton extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: context.xHeadline3.copyWith(
-                color: textColor ?? context.xCurrentTheme.white,
+                color: textColor ?? context.xMyCustomTheme.white,
                 fontWeight: fontWeight,
                 fontSize: R.utils.textScaleHandler<double>(
                   context,

@@ -319,7 +319,7 @@ class ScaleTagger extends StatelessWidget {
                   width: 13,
                 ),
                 shape: BoxShape.circle,
-                color: context.xCurrentTheme.white,
+                color: context.xMyCustomTheme.white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -387,7 +387,7 @@ class ScaleTagger extends StatelessWidget {
                   color: color ?? context.xMyCustomTheme.grey.withOpacity(.2),
                 ),
                 shape: BoxShape.rectangle,
-                color: context.xCurrentTheme.white,
+                color: context.xMyCustomTheme.white,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

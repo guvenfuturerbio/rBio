@@ -34,12 +34,10 @@ class RegisterStep3ScreenVm extends RbioVm {
       if (response?.isSuccessful == true) {
         Atom.to(PagePaths.login, isReplacement: true);
         Atom.show(
-          RbioBaseDialog(
-            child: RbioMessageDialog(
-              description: LocaleProvider.current.succefully_created_account,
-              buttonTitle: LocaleProvider.current.ok,
-              isAtom: true,
-            ),
+          RbioMessageDialog(
+            description: LocaleProvider.current.succefully_created_account,
+            buttonTitle: LocaleProvider.current.ok,
+            isAtom: true,
           ),
         );
       } else {

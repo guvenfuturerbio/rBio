@@ -1270,8 +1270,6 @@ class MessageLookup extends MessageLookupByLibrary {
             "A code has sent to your phone"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
-        "should_accept_application_consent_form":
-            MessageLookupByLibrary.simpleMessage("Onam Formu"),
         "show": MessageLookupByLibrary.simpleMessage("Show"),
         "show_report": MessageLookupByLibrary.simpleMessage("Show Report"),
         "show_result": MessageLookupByLibrary.simpleMessage("Show Result"),

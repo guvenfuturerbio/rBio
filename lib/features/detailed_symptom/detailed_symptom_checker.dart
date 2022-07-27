@@ -25,7 +25,7 @@ class _DetailedSymptomCheckerState extends State<DetailedSymptomChecker> {
         context: context,
         title: Text(
           LocaleProvider.current.detailed_check,
-          style: TextStyle(color: context.xCurrentTheme.white),
+          style: TextStyle(color: context.xMyCustomTheme.white),
         ),
       ),
       body: SafeArea(
