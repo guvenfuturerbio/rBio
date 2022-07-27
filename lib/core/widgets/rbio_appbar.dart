@@ -67,15 +67,15 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             //
             actions: actions ??
                 [
-                  //
-                  IconButton(
-                    onPressed: () {
-                      context.read<ThemeCubit>().toggle();
-                    },
-                    icon: const Icon(
-                      Icons.read_more,
-                    ),
-                  ),
+                  // //
+                  // IconButton(
+                  //   onPressed: () {
+                  //     context.read<ThemeCubit>().toggle();
+                  //   },
+                  //   icon: const Icon(
+                  //     Icons.read_more,
+                  //   ),
+                  // ),
 
                   //
                   if (title == null) ...[
