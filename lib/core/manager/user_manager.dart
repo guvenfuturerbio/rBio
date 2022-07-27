@@ -234,6 +234,9 @@ class UserManagerImpl extends UserManager {
         isAudioOnly: false,
         isAudioMuted: false,
         isVideoMuted: false,
+        featureFlags: {
+          FeatureFlag.isChatEnabled: false,
+        },
       );
 
       showDialog(

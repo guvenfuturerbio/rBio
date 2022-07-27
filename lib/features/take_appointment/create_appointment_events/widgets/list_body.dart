@@ -247,7 +247,7 @@ class _ListBodyState extends State<ListBody>
           ),
           child: Text(
             '${item.from}+03:00'.xGetUTCLocalTime() +
-                ":" +
+                " - " +
                 '${item.to}+03:00'.xGetUTCLocalTime(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
