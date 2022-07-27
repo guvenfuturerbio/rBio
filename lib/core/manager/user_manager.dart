@@ -195,40 +195,17 @@ class UserManagerImpl extends UserManager {
     const String streamType = "Jitsi";
 
     if (streamType == "Zoom") {
-      // ZoomOptions zoomOptions = new ZoomOptions(
-      //   domain: "zoom.us",
-      //   appKey: R.strings.zoom_app_key,
-      //   appSecret: R.strings.zoom_app_secret,
-      // );
-
-      // // Setting Zoom meeting options (default to false if not set)
-      // ZoomMeetingOptions meetingOptions = new ZoomMeetingOptions(
-      //     userId: parseJwtPayLoad(token)['name'] != null
-      //         ? parseJwtPayLoad(token)['name']
-      //         : parseJwtPayLoad(token)['fullname'],
-      //     meetingId: webConsultantId,
-      //     meetingPassword: R.strings.zoomMeetingRoomPass,
-      //     disableDialIn: "true",
-      //     disableDrive: "true",
-      //     disableInvite: "true",
-      //     disableShare: "true",
-      //     noAudio: "false",
-      //     noDisconnectAudio: "false");
-      // Get.rootDelegate
-      //     .toNamed('MeetingPage', arguments: {meetingOptions, zoomOptions});
+      //
     } else {
-      final String name =
-          Utils.instance.parseJwtPayLoad(token as String)['name'] != null
-              ? Utils.instance.parseJwtPayLoad(token)['name'] as String
-              : Utils.instance.parseJwtPayLoad(token)['fullname'] as String;
-
-      LoggerUtils.instance.i("Toplantı Başlıyor : $webConsultantId");
+      final payload = Utils.instance.parseJwtPayLoad(token);
+      final name = payload['name']; // "HAYDAR DEMİR"
+      final preferredUsername = payload['preferred_username']; // TC
 
       final options = JitsiMeetingOptions(
         roomNameOrUrl: webConsultantId,
         serverUrl: "https://stream.guven.com.tr/",
         subject: " ",
-        userDisplayName: name,
+        userDisplayName: name + ' - ' + preferredUsername,
         userEmail: " ",
         isAudioOnly: false,
         isAudioMuted: false,
