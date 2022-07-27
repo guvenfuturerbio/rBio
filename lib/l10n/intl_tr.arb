@@ -127,7 +127,6 @@
   "credit_card_cvv": "CVV",
   "credit_card_holder": "Kart Sahibi",
   "payment": "Ödeme",
-  
   "change_password": "Şifremi Değiştir",
   "birth_date": "Doğum Tarihi",
   "payment_successfull": "Ödeme işlemi başarılı. Randevunuz başarıyla oluşturulmuştur",
@@ -894,7 +893,7 @@
   "description": "Açıklama",
   "rate_thank_you": "Değerlendirmeniz için teşekkürler",
   "city": "Şehir",
-  "where_will_you_attend_the_meeting": "Toplantıya nereden katılacaksınız ?",
+  "where_will_you_attend_the_meeting": "Randevuya nereden katılacaksınız ?",
   "magazines": "Dergiler",
   "your_data_is_synchronizing": "Verileriniz senkronize ediliyor",
   "onedosehealth_jailbreak_warning": "OneDoseHealth, güvenlik standartları gereği Root yada Jailbreak'li cihazlarda kullanılamaz.",
@@ -916,7 +915,7 @@
   "council_appointment": "Konsey Randevusu",
   "expected_inspection": "Beklenen Tetkik",
   "council_connection_link": "Konsey Bağlantı Linki",
-  "copied":"Kopyalandı",
+  "copied": "Kopyalandı",
   "please_select_your_diagnosis": "Lütfen teşhisinizi seçiniz",
   "inlavid_diagnosis": "Geçersiz Teşhis",
   "create_request": "Talep Oluştur",
@@ -931,7 +930,6 @@
   "requested_inspections": "İstenilen Tetkikler",
   "file_name": "Dosya adı",
   "delelete_account": "Hesabımı Sil",
-
   "delete_account_informations": "24/3/2016 tarihli ve 6698 sayılı Kişisel Verilerin Korunması Kanunu hükümleri kapsamında, kişisel sağlık verileriniz talebinizle silinecektir.\n \n Bunun için T.C. Kimlik veya Pasaport Seri No bilgisi ile birlikte {email} adresine e-posta göndermeniz gerekmektedir.",
   "@delete_account_informations": {
     "placeholders": {
@@ -940,7 +938,6 @@
       }
     }
   },
-
   "not_now": "Şimdi Değil",
   "permission_camera_message_ios": "{appName} kameranıza erişimi yok. Erişime izin vermek için, Ayarlar'a dokunun ve Kamera'yı etkinleştirin.",
   "@permission_camera_message_ios": {

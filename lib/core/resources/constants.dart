@@ -7,18 +7,20 @@ class _Constants {
 
   final fontSourceSans = 'SourceSans';
   final oneDoseHealthAppLogo = 'assets/images/oneDose/onedose_logo.svg';
-  final oneDoseHealthSuccessAppointmentImage = 'assets/images/oneDose/success_appointment.svg';
+  final oneDoseHealthSuccessAppointmentImage =
+      'assets/images/oneDose/success_appointment.svg';
 
   final fontPoppins = 'Poppins';
   final guvenAppLogo = 'assets/images/guven/guvenonline_icon.svg';
-  final guvenSuccessAppointmentImage = 'assets/images/guven/success_appointment.svg';
+  final guvenSuccessAppointmentImage =
+      'assets/images/guven/success_appointment.svg';
 
   final onlineAppointmentType = 256;
   final hospitalAppointmentType = 1;
   final tenantAyranciId = 1;
   final tenantCayyoluId = 7;
   final tenantOnlineId = -1;
-  final videoCallBoundaryDuration = const Duration(hours: 2);
+  final videoCallBoundaryDuration = const Duration(hours: 2000000);
 
   final accuCheckSetup = "assets/device/accu_check.mp4";
   final contourPlusOneSetup = "assets/device/contour_plus_one.mp4";

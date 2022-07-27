@@ -1508,7 +1508,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Kaç strip kaldığında hatırlatılsın"),
         "where_will_you_attend_the_meeting":
             MessageLookupByLibrary.simpleMessage(
-                "Toplantıya nereden katılacaksınız ?"),
+                "Randevuya nereden katılacaksınız ?"),
         "which_depart_i_go": MessageLookupByLibrary.simpleMessage(
             "Hangi bölüme gideceğimi bilmiyorum"),
         "widgets_add_message": MessageLookupByLibrary.simpleMessage(
