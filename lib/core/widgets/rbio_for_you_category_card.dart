@@ -46,8 +46,8 @@ class RbioForYouCategoryCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        context.xPrimaryColor.withOpacity(0.8),
-                        context.xPrimaryColor.withOpacity(0.3),
+                        context.xAppBarTheme.backgroundColor!.withOpacity(0.8),
+                        context.xAppBarTheme.backgroundColor!.withOpacity(0.3),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.topRight,
@@ -71,6 +71,7 @@ class RbioForYouCategoryCard extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline5.copyWith(
+                            color: context.xMyCustomTheme.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

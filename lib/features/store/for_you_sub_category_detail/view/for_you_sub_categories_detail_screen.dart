@@ -243,12 +243,8 @@ class _ForYouSubCategoriesDetailViewState
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
-      child: InkWell(
-        child: _itemTakeCovid(
-          context: context,
-          title: title,
-          image: R.image.test,
-        ),
+      child: RbioElevatedButton(
+        title: title,
         onTap: onTap,
       ),
     );
@@ -325,66 +321,3 @@ class ListCard extends StatelessWidget {
     );
   }
 }
-
-Widget _itemTakeCovid({
-  String? title,
-  String? image,
-  EdgeInsets? margin,
-  required BuildContext context,
-}) =>
-    Container(
-      margin: margin,
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: R.sizes.borderRadiusCircular,
-        gradient: LinearGradient(
-          colors: [
-            context.xPrimaryColor,
-            context.xPrimaryColor,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.topRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: context.xTextInverseColor.withAlpha(50),
-            blurRadius: 15,
-            spreadRadius: 0,
-            offset: const Offset(5, 10),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: <Widget>[
-          Center(
-            child: title == null
-                ? Container()
-                : Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Text(
-                      title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.xHeadline3.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-          ),
-
-          //
-          Positioned(
-            child: Container(
-              child: Transform.rotate(
-                angle: -math.pi / 1.0,
-                child: SvgPicture.asset(R.image.backWhite),
-              ),
-              margin: const EdgeInsets.only(left: 15, right: 5),
-            ),
-            right: 0,
-          ),
-        ],
-      ),
-    );
