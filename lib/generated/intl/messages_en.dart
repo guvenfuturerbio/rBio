@@ -729,6 +729,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There may be a problem with your bank. Please try again after contacting your bank."),
         "join": MessageLookupByLibrary.simpleMessage("join"),
         "kids": MessageLookupByLibrary.simpleMessage("My Children"),
+        "kvkk_text":
+            MessageLookupByLibrary.simpleMessage("Personal Data Protection"),
         "kvkk_title": MessageLookupByLibrary.simpleMessage(
             "ONLINE DOCTOR AND E-CONSULTATION INFORMATIONAL TEXT ON PERSONAL DATA PROTECTION"),
         "laboratory_result":
@@ -1264,8 +1266,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_tag": MessageLookupByLibrary.simpleMessage("Select tag"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "send_message": MessageLookupByLibrary.simpleMessage("Send Message"),
+        "sent_code_to_phone": MessageLookupByLibrary.simpleMessage(
+            "A code has sent to your phone"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
+        "should_accept_application_consent_form":
+            MessageLookupByLibrary.simpleMessage("Onam Formu"),
         "show": MessageLookupByLibrary.simpleMessage("Show"),
         "show_report": MessageLookupByLibrary.simpleMessage("Show Report"),
         "show_result": MessageLookupByLibrary.simpleMessage("Show Result"),

@@ -72,6 +72,17 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
               },
             );
           }
+        } else if (state.isSuccess) {
+          Utils.instance.showSuccessSnackbar(
+            context,
+            LocaleProvider.of(context).sent_code_to_phone,
+          );
+          Atom.to(
+            PagePaths.forgotPasswordStep2,
+            queryParameters: {
+              'identityNumber': _tcIdentityEditingController.text,
+            },
+          );
         }
       },
       builder: (context, state) {
