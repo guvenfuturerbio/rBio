@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 import '../../../../core/core.dart';
-import '../../../../core/widgets/rbio_height_required_info_dialog.dart';
 import '../../../bluetooth_v2/bluetooth_v2.dart';
 import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
