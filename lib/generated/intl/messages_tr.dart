@@ -719,6 +719,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Bankanızla ilgili bir sorun olabilir. Lütfen bankanızla iletişime geçtikten sonra tekrar deneyin."),
         "join": MessageLookupByLibrary.simpleMessage("Katıl"),
         "kids": MessageLookupByLibrary.simpleMessage("Çocuklarım"),
+        "kvkk_text": MessageLookupByLibrary.simpleMessage("KVKK Metni"),
         "kvkk_title": MessageLookupByLibrary.simpleMessage(
             "ONLINE DOKTOR VE E-KONSÜLTASYON KİŞİSEL VERİLERİN KORUNMASI HUKUKU AYDINLATMA METNİ"),
         "laboratory_result":
@@ -1253,6 +1254,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_tag": MessageLookupByLibrary.simpleMessage("Etiket seçiniz"),
         "send": MessageLookupByLibrary.simpleMessage("Gönder"),
         "send_message": MessageLookupByLibrary.simpleMessage("Mesaj Gönder"),
+        "sent_code_to_phone": MessageLookupByLibrary.simpleMessage(
+            "Telefonunuza bir kod gönderildi"),
         "settings": MessageLookupByLibrary.simpleMessage("Ayarlar"),
         "share": MessageLookupByLibrary.simpleMessage("Paylaş"),
         "show": MessageLookupByLibrary.simpleMessage("Görüntüle"),

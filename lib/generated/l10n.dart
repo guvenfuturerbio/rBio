@@ -180,6 +180,16 @@ class LocaleProvider {
     );
   }
 
+  /// `A code has sent to your phone`
+  String get sent_code_to_phone {
+    return Intl.message(
+      'A code has sent to your phone',
+      name: 'sent_code_to_phone',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `To follow up your health monitoring 7/24 with expert doctors, you can check our health packages at www.onedosehealth.io or you can reach us from 444 94 94`
   String get chronic_track_error {
     return Intl.message(
@@ -3495,6 +3505,16 @@ class LocaleProvider {
     return Intl.message(
       'Password Must contain at least 1 special character.',
       name: 'must_contain_special',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal Data Protection`
+  String get kvkk_text {
+    return Intl.message(
+      'Personal Data Protection',
+      name: 'kvkk_text',
       desc: '',
       args: [],
     );

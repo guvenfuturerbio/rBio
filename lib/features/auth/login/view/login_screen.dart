@@ -353,38 +353,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildApplicationContest(LoginScreenVm value) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
       children: [
         //
-        Container(
-          alignment: Alignment.bottomLeft,
-          child: SizedBox(
-            width: 35,
-            height: 35,
-            child: RbioCheckbox(
-              value: value.clickedGeneralForm,
-              onChanged: (newValue) {
-                if (newValue != null) {
-                  value.clickedGeneralForm = newValue;
-                }
-              },
-            ),
+        SizedBox(
+          width: 35,
+          height: 35,
+          child: RbioCheckbox(
+            value: value.clickedGeneralForm,
+            onChanged: (newValue) {
+              if (newValue != null) {
+                value.clickedGeneralForm = newValue;
+              }
+            },
           ),
         ),
 
         //
-        Expanded(
-          child: TextButton(
-            onPressed: () => value.showApplicationContestForm(),
-            child: Text(
-              LocaleProvider.of(context).accept_application_consent_form,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: context.xHeadline5.copyWith(
-                decoration: TextDecoration.underline,
-              ),
+        TextButton(
+          style: TextButton.styleFrom(
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+          onPressed: () => value.showApplicationContestForm(),
+          child: Text(
+            LocaleProvider.of(context).application_consent_form,
+            style: context.xHeadline5.copyWith(
+              color: context.xPrimaryColor,
             ),
           ),
         ),
@@ -394,41 +386,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildKVKK(LoginScreenVm value) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
       children: [
         //
-        Container(
-          alignment: Alignment.bottomLeft,
-          child: SizedBox(
-            width: 35,
-            height: 35,
-            child: RbioCheckbox(
-              value: value.checkedKvkkForm,
-              onChanged: (newValue) {
-                if (newValue != null) {
-                  value.checkedKvkkForm = newValue;
-                }
-              },
-            ),
+        SizedBox(
+          width: 35,
+          height: 35,
+          child: RbioCheckbox(
+            value: value.checkedKvkkForm,
+            onChanged: (newValue) {
+              if (newValue != null) {
+                value.checkedKvkkForm = newValue;
+              }
+            },
           ),
         ),
 
         //
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(3.0),
-            child: TextButton(
-              onPressed: () => {value.showKvkkInfo()},
-              child: Text(
-                LocaleProvider.of(context).read_understood_kvkk,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: context.xHeadline5.copyWith(
-                  decoration: TextDecoration.underline,
-                ),
-              ),
+        TextButton(
+          style: TextButton.styleFrom(
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+          onPressed: () => {value.showKvkkInfo()},
+          child: Text(
+            LocaleProvider.of(context).kvkk_text,
+            style: context.xHeadline5.copyWith(
+              color: context.xPrimaryColor,
             ),
           ),
         ),
