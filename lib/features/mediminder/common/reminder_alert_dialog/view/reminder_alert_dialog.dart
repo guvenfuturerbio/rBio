@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../core/utils/tz_helper.dart';
+import '../../../../../core/utils/helper/tz_helper.dart';
 import '../../../mediminder.dart';
 
 part '../model/reminder_postpone_type.dart';
@@ -76,103 +76,110 @@ class _ReminderAlertView extends StatelessWidget {
 
   // #region _buildSuccess
   Widget _buildSuccess(BuildContext context, ReminderListModel model) {
-    return RbioBaseGreyDialog(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //
-          Center(
-            child: Text(
-              _getTitle(model),
-              style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+    return RbioBaseDialog(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.zero,
+        physics: context.xBouncingScroll,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //
+            Center(
+              child: Text(
+                _getTitle(model),
+                style: context.xDialogTheme.titleTextStyle,
+              ),
             ),
-          ),
-          R.sizes.hSizer24,
 
-          Center(
-            child: Text(
-              getIt<UserNotifier>().getCurrentUserNameAndSurname(),
-              style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+            //
+            R.widgets.hSizer24,
+
+            //
+            Center(
+              child: Text(
+                getIt<UserFacade>().getNameAndSurname(),
+                style: context.xDialogTheme.descriptionTextStyle,
+              ),
             ),
-          ),
-          R.sizes.hSizer8,
-          //
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                model.title,
-                style: getIt<IAppConfig>()
-                    .theme
-                    .dialogTheme
-                    .description(context)
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
 
-              Text(
-                "  -  ",
-                style: getIt<IAppConfig>()
-                    .theme
-                    .dialogTheme
-                    .description(context)
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-              //
-              Text(
-                model.scheduledDate.xHourFormat,
-                style: getIt<IAppConfig>()
-                    .theme
-                    .dialogTheme
-                    .description(context)
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          //
-          R.sizes.hSizer12,
+            //
+            R.widgets.hSizer8,
 
-          //
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //
-              if (notificationModel.baseNotificationId == null) ...[
+            //
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 //
-                const Expanded(
-                  child: _ExpandablePostponeComponent(),
+                Text(
+                  model.title,
+                  style: context.xDialogTheme.descriptionTextStyle
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
 
                 //
-                R.sizes.wSizer8,
+                Text(
+                  "  -  ",
+                  style: context.xDialogTheme.descriptionTextStyle
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+
+                //
+                Text(
+                  model.scheduledDate.xHourFormat,
+                  style: context.xDialogTheme.descriptionTextStyle
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
               ],
+            ),
 
-              //
-              Expanded(
-                child: RbioSmallDialogButton.green(
-                  onPressed: () {
-                    Atom.dismiss();
-                  },
-                  title: LocaleProvider.current.Ok,
+            //
+            R.widgets.hSizer12,
+
+            //
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //
+                if (notificationModel.baseNotificationId == null) ...[
+                  //
+                  const Expanded(
+                    child: _ExpandablePostponeComponent(),
+                  ),
+
+                  //
+                  R.widgets.wSizer8,
+                ],
+
+                //
+                Expanded(
+                  child: RbioSmallDialogButton.main(
+                    context: context,
+                    onPressed: () {
+                      Atom.dismiss();
+                    },
+                    title: LocaleProvider.current.Ok,
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
-          //
-          R.sizes.hSizer8,
+            //
+            R.widgets.hSizer8,
 
-          //
-          RbioSmallDialogButton.red(
-            title: LocaleProvider.current.discard,
-            onPressed: () {
-              Atom.dismiss(false);
-            },
-          ),
-        ],
+            //
+            RbioSmallDialogButton.red(
+              context,
+              title: LocaleProvider.current.discard,
+              onPressed: () {
+                Atom.dismiss(false);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

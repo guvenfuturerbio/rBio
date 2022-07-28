@@ -283,7 +283,9 @@ class GlucoseStorageImpl extends ChronicStorageService<GlucoseData> {
 
   @override
   Future<void> deleteFromServer(
-      int timeKey, Map<String, dynamic> deleteMeasurementRequest) async {
+    int timeKey,
+    Map<String, dynamic> deleteMeasurementRequest,
+  ) async {
     try {
       getIt<ChronicTrackingRepository>().deleteBloodGlucoseValue(
           DeleteBloodGlucoseMeasurementRequest.fromJson(

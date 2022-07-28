@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../viewmodel/symptoms_home_vm.dart';
 
@@ -48,6 +49,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
   // #region _buildAppBar
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).my_symptoms,
@@ -146,10 +148,6 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Card(
-                        elevation: R.sizes.defaultElevation,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
@@ -185,7 +183,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                         },
                         textStyle: context.xHeadline3,
                         selectedTextStyle: context.xHeadline1.copyWith(
-                          color: getIt<IAppConfig>().theme.mainColor,
+                          color: context.xPrimaryColor,
                         ),
                       ),
                     ),
@@ -207,7 +205,10 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         //
         RbioElevatedButton(
           onTap: () async {
-            getIt<IAppConfig>().platform.adjustManager?.trackEvent(MySymptomsPage1Event());
+            getIt<IAppConfig>()
+                .platform
+                .adjustManager
+                ?.trackEvent(MySymptomsPage1Event());
             getIt<FirebaseAnalyticsManager>().logEvent(
               SikayetlerimSayfa1DevamEvent(
                 getIt<UserNotifier>().firebaseEmail.toString(),
@@ -229,7 +230,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }
@@ -267,13 +268,9 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Card(
-            elevation: R.sizes.defaultElevation,
             color: value.genderIdHolder == index
-                ? getIt<IAppConfig>().theme.mainColor
-                : getIt<IAppConfig>().theme.cardBackgroundColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: R.sizes.borderRadiusCircular,
-            ),
+                ? context.xPrimaryColor
+                : context.xCardColor,
             child: Row(
               children: [
                 Padding(
@@ -282,7 +279,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                     iconPath,
                     height: R.sizes.iconSize,
                     color: value.genderIdHolder == index
-                        ? getIt<IAppConfig>().theme.white
+                        ? context.xMyCustomTheme.white
                         : null,
                   ),
                 ),
@@ -294,7 +291,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
                     textAlign: TextAlign.center,
                     style: context.xHeadline4.copyWith(
                       color: value.genderIdHolder == index
-                          ? getIt<IAppConfig>().theme.white
+                          ? context.xMyCustomTheme.white
                           : null,
                     ),
                   ),
@@ -316,7 +313,7 @@ class _SymptomsHomeScreenState extends State<SymptomsHomeScreen> {
         child: Text(
           title,
           style: context.xHeadline2.copyWith(
-            color: getIt<IAppConfig>().theme.textColorPassive,
+            color: context.xMyCustomTheme.textDisabledColor,
           ),
         ),
       ),

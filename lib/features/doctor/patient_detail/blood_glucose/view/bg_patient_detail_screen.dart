@@ -13,13 +13,15 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
-import '../../../../../model/model.dart';
 import '../../../../chronic_tracking/bottom_actions_of_graph.dart';
 import '../../../../chronic_tracking/home/view/widgets/widgets.dart';
 import '../../../notifiers/bg_measurements_notifiers.dart';
 import '../../../notifiers/patient_notifiers.dart';
+import '../../../shared/shared.dart';
 import '../../../treatment_process/view/treatment_process_screen.dart';
+import '../model/model.dart';
 
 part '../viewmodel/bg_patient_detail_vm.dart';
 part '../viewmodel/bg_patient_picker_vm.dart';
@@ -119,6 +121,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.bg_measurement_tracking,
@@ -139,7 +142,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
 
             //
             if (vm.stateProcessPatientDetail == LoadingProgress.loading) ...[
-              const SizedBox(height: 12),
+              R.widgets.hSizer12,
               Shimmer.fromColors(
                 child: _UserDetailCard(
                   patientDetail: DoctorPatientDetailModel(),
@@ -172,7 +175,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
             ],
 
             //
-            const SizedBox(height: 12),
+            R.widgets.hSizer12,
 
             //
             if (!vm.isDataLoading) ...[
@@ -245,16 +248,15 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    RbioCircleAvatar(
                       foregroundImage: NetworkImage(R.image.circlevatar),
-                      backgroundColor:
-                          getIt<IAppConfig>().theme.cardBackgroundColor,
+                      backgroundColor: context.xCardColor,
                     ),
 
                     //
@@ -284,7 +286,7 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
           ),
 
           //
-          const SizedBox(width: 6),
+          R.widgets.wSizer8,
 
           //
           GestureDetector(
@@ -314,8 +316,9 @@ class _BgPatientDetailScreenState extends State<BgPatientDetailScreen>
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
-                  borderRadius: R.sizes.borderRadiusCircular),
+                color: context.xCardColor,
+                borderRadius: R.sizes.borderRadiusCircular,
+              ),
               child: Text(
                 LocaleProvider.current.treatment,
                 style: context.xHeadline5.copyWith(

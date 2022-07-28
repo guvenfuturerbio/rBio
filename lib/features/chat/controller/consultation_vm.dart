@@ -3,6 +3,7 @@ import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../config/config.dart';
 import '../../../core/core.dart';
 import '../model/chat_person.dart';
 import '../model/get_chat_contacts_response.dart';

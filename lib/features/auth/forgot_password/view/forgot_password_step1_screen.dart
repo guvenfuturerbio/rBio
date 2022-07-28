@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/features/auth/forgot_password/cubit/forgot_password_step1_cubit/forgot_password_step1_cubit.dart';
 
 import '../../../../core/core.dart';
 import '../../auth.dart';
+import '../cubit/forgot_password_step1_cubit/forgot_password_step1_cubit.dart';
 
 class ForgotPasswordStep1Screen extends StatelessWidget {
   const ForgotPasswordStep1Screen({Key? key}) : super(key: key);
@@ -58,7 +58,7 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
   Widget build(BuildContext context) {
     return BlocConsumer<ForgotPasswordStep1Cubit, ForgotPasswordStep1State>(
       listener: (context, state) {
-        if (state.isError ) {
+        if (state.isError) {
           if (state.dialogMessage != null) {
             showDialog(
               context: context,
@@ -72,6 +72,17 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
               },
             );
           }
+        } else if (state.isSuccess) {
+          Utils.instance.showSuccessSnackbar(
+            context,
+            LocaleProvider.of(context).sent_code_to_phone,
+          );
+          Atom.to(
+            PagePaths.forgotPasswordStep2,
+            queryParameters: {
+              'identityNumber': _tcIdentityEditingController.text,
+            },
+          );
         }
       },
       builder: (context, state) {
@@ -79,7 +90,9 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
           child: RbioStackedScaffold(
             isLoading: state.isLoading,
             resizeToAvoidBottomInset: true,
-            appbar: RbioAppBar(),
+            appbar: RbioAppBar(
+              context: context,
+            ),
             body: _buildBody(context, state),
           ),
         );
@@ -103,7 +116,8 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            R.sizes.stackedTopPadding(context),
+            R.widgets.stackedTopPadding(context),
+
             //
             const SizedBox(
               height: 20,
@@ -115,8 +129,9 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
               child: Text(
                 LocaleProvider.current.recover_your_password,
                 style: context.xHeadline1.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: context.textScale * 30),
+                  fontWeight: FontWeight.bold,
+                  fontSize: context.textScale * 30,
+                ),
               ),
             ),
 
@@ -277,7 +292,7 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
                         Text(
                           LocaleProvider.of(context).lbl_dont_have_account,
                           style: context.xHeadline3.copyWith(
-                            color: getIt<IAppConfig>().theme.grey,
+                            color: context.xMyCustomTheme.grey,
                           ),
                         ),
 
@@ -286,7 +301,7 @@ class _ForgotPasswordStep1ViewState extends State<ForgotPasswordStep1View> {
                           child: Text(
                             LocaleProvider.of(context).btn_sign_up,
                             style: context.xHeadline3.copyWith(
-                              color: getIt<IAppConfig>().theme.mainColor,
+                              color: context.xPrimaryColor,
                             ),
                           ),
                           onTap: () {

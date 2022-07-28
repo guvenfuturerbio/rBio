@@ -4,7 +4,12 @@ import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../app/bluetooth_v2/bluetooth_v2.dart';
+import '../config/config.dart';
+import '../features/auth/shared/shared.dart';
+import '../features/bluetooth/bluetooth.dart';
+import '../features/bluetooth_v2/bluetooth_v2.dart';
+import '../features/chronic_tracking/blood_glucose/model/model.dart';
+import '../features/chronic_tracking/blood_pressure/model/model.dart';
 import '../features/chronic_tracking/treatment/treatment_detail/model/treatment_model.dart';
 import '../features/mediminder/mediminder.dart';
 import 'core.dart';
@@ -14,13 +19,15 @@ GetIt getIt = GetIt.instance;
 
 Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerSingleton<KeyManager>(KeyManager());
-  await getIt<KeyManager>().setup(appConfig.endpoints.envPath);
+  await getIt<KeyManager>().setup(appConfig.constants.envPath);
+  appConfig.setEndpoints();
 
   getIt.registerSingleton<IAppConfig>(appConfig);
   getIt.registerSingleton<PermissionManager>(PermissionManagerImpl());
   getIt.registerSingleton<CacheClient>(CacheClient());
   getIt.registerSingleton<UrlLauncherManager>(UrlLauncherManagerImpl());
   getIt.registerSingleton<FirebaseAnalyticsManager>(FirebaseAnalyticsManager());
+  getIt.registerSingleton<ImageManager>(ImageManagerImpl());
 
   getIt.registerSingleton<DeviceLocalDataSource>(
       BluetoothDeviceLocalDataSourceImpl());
@@ -130,7 +137,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
     () => BloodPressureStorageImpl(),
   );
   getIt.registerLazySingleton<ApiService>(
-    () => ApiServiceImpl(getIt<IDioHelper>()),
+    () => ApiServiceImpl(getIt<IDioHelper>(), appConfig.endpoints),
   );
   getIt.registerLazySingleton<ChronicTrackingApiService>(
     () => ChronicTrackingApiServiceImpl(
@@ -145,8 +152,8 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerLazySingleton<FirestoreManager>(
     () => FirestoreManager(),
   );
-  getIt.registerLazySingleton<LocalCacheService>(
-    () => LocalCacheServiceImpl(),
+  getIt.registerLazySingleton<LocalCacheManager>(
+    () => LocalCacheManagerImpl(),
   );
   getIt.registerLazySingleton<SymptomApiService>(
     () => SymptomApiServiceImpl(
@@ -159,19 +166,19 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerLazySingleton(
     () => ChronicTrackingRepository(
       apiService: getIt<ChronicTrackingApiService>(),
-      localCacheService: getIt<LocalCacheService>(),
+      localCacheService: getIt<LocalCacheManager>(),
     ),
   );
   getIt.registerSingleton<DoctorRepository>(
     DoctorRepository(
       apiService: getIt<DoctorApiService>(),
-      localCacheService: getIt<LocalCacheService>(),
+      localCacheService: getIt<LocalCacheManager>(),
     ),
   );
   getIt.registerSingleton<Repository>(
     Repository(
       apiService: getIt<ApiService>(),
-      localCacheService: getIt<LocalCacheService>(),
+      localCacheService: getIt<LocalCacheManager>(),
     ),
   );
   getIt.registerSingleton<SymptomRepository>(
@@ -185,8 +192,23 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   getIt.registerLazySingleton<LocaleNotifier>(
     () => LocaleNotifier(),
   );
+  getIt.registerLazySingleton<UserFacade>(
+    () => UserFacadeImpl(
+      appConfig: appConfig,
+      firebaseAnalyticsManager: getIt(),
+      bluetoothLocalManager: getIt(),
+      localNotificationManager: getIt(),
+      firebaseMessagingManager: getIt(),
+      sharedPreferencesManager: getIt(),
+      profileStorageImpl: getIt(),
+      glucoseStorageImpl: getIt(),
+      bloodPressureStorageImpl: getIt(),
+      repository: getIt(),
+      scaleRepository: getIt(),
+    ),
+  );
   getIt.registerLazySingleton<UserNotifier>(
-    () => UserNotifier(),
+    () => UserNotifier(getIt<UserFacade>()),
   );
   // #endregion
 
@@ -223,7 +245,7 @@ Future<void> initializeLocator(IAppConfig appConfig) async {
   // #region Init
   await getIt<ScaleRepository>().init("hive_scale");
   await getIt<ISharedPreferencesManager>().init();
-  await getIt<LocalCacheService>().init();
+  await getIt<LocalCacheManager>().init();
   await getIt<LocaleNotifier>().init();
   await getIt<LocalNotificationManager>().init();
   await getIt<FirebaseMessagingManager>().init();

@@ -40,10 +40,6 @@ class _ChartFilter extends StatelessWidget {
       child: SizedBox(
         width: width,
         child: Card(
-          elevation: R.sizes.defaultElevation,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: SingleChildScrollView(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
@@ -57,17 +53,21 @@ class _ChartFilter extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Column(
-                    children: value.colorInfo.keys
+                    children: value
+                        .colorInfo(context)
+                        .keys
                         .map(
                           (color) => _colorFilterItem(
                               context: context,
-                              text: value.colorInfo[color]!.toShortString(),
-                              status: value
-                                  .isFilterSelected(value.colorInfo[color]!),
+                              text: value
+                                  .colorInfo(context)[color]!
+                                  .toShortString(),
+                              status: value.isFilterSelected(
+                                  value.colorInfo(context)[color]!),
                               color: color,
                               size: 15,
-                              statCallback: (_) =>
-                                  value.setFilterState(value.colorInfo[color]!),
+                              statCallback: (_) => value.setFilterState(
+                                  value.colorInfo(context)[color]!),
                               isHungry: false),
                         )
                         .toList(),
@@ -84,7 +84,7 @@ class _ChartFilter extends StatelessWidget {
                             context: context,
                             text: state.toShortString(),
                             status: value.isFilterSelected(state),
-                            color: getIt<IAppConfig>().theme.stateColor,
+                            color: context.xMyCustomTheme.boulder,
                             size: 15,
                             style: state == GlucoseMarginsFilter.full ||
                                     state == GlucoseMarginsFilter.hungry
@@ -111,9 +111,8 @@ class _ChartFilter extends StatelessWidget {
                         onTap: () {
                           Atom.dismiss();
                         },
-                        backColor:
-                            getIt<IAppConfig>().theme.cardBackgroundColor,
-                        textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                        backColor: context.xCardColor,
+                        textColor: context.xTextInverseColor,
                       ),
 
                       //
@@ -192,10 +191,9 @@ class _ChartFilter extends StatelessWidget {
             child: SizedBox(
               height: size,
               width: size,
-              child: Checkbox(
+              child: RbioCheckbox(
                 value: status,
                 onChanged: statCallback,
-                activeColor: getIt<IAppConfig>().theme.mainColor,
               ),
             ),
           ),

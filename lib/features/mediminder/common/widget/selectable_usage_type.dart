@@ -36,7 +36,11 @@ class SelectableUsageType extends StatelessWidget {
                 UsageType.hungry,
               ),
             ),
-            R.sizes.wSizer12,
+
+            //
+            R.widgets.wSizer12,
+
+            //
             Expanded(
               child: _buildUsageTypeCard(
                 context,
@@ -62,8 +66,8 @@ class SelectableUsageType extends StatelessWidget {
       textAlign: TextAlign.start,
       style: context.xHeadline4.copyWith(
         color: isActive
-            ? getIt<IAppConfig>().theme.textColor
-            : getIt<IAppConfig>().theme.textColorPassive,
+            ? context.xCurrentTheme.selectionTheme.selectedTextColor
+            : context.xCurrentTheme.selectionTheme.unSelectedTextColor,
       ),
     );
 
@@ -74,7 +78,9 @@ class SelectableUsageType extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isActive ? getIt<IAppConfig>().theme.mainColor : Colors.white,
+          color: isActive
+              ? context.xCurrentTheme.selectionTheme.selectedBackColor
+              : context.xCurrentTheme.selectionTheme.unSelectedBackColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: _text,

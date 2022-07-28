@@ -2,12 +2,16 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
 import '../../create_appointment/model/voucher_price_request.dart';
+import '../../create_appointment_events/model/resources_request.dart';
+import '../../do_mobile_payment/appointment_request.dart';
 import '../../do_mobile_payment/do_mobile_payment_screen.dart';
+import '../model/country_list_response.dart';
 import '../model/get_video_call_price_request.dart';
 import '../model/get_video_call_price_response.dart';
+import '../model/save_appointment_request.dart';
 import '../model/synchronize_onedose_user_req.dart';
 
 enum SummaryButtons {
@@ -159,7 +163,7 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     showOverlayLoading = true;
     try {
       final patientDetail = await getIt<Repository>().getPatientDetail();
-      final oneDoseAccount = getIt<UserNotifier>().getUserAccount();
+      final oneDoseAccount = getIt<UserFacade>().getUserAccount();
       if (patientDetail?.id == null) {
         SynchronizeOneDoseUserRequest synchronizeOneDoseUserRequest =
             SynchronizeOneDoseUserRequest(

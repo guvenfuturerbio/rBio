@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../../shared/consent_form/consent_form_dialog.dart';
 import '../../auth.dart';
@@ -259,7 +260,7 @@ class RegisterStep2ScreenVm extends RbioVm {
   }
 
   bool checkPasswordCapabilityForAll(String password) {
-    return PasswordAdvisor().validateStructureByPattern(password);
+    return PasswordHelper().validateStructureByPattern(password);
   }
 
   void toggleCitizen() {

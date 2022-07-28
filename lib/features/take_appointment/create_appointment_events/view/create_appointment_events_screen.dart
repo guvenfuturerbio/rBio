@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/resources_request.dart';
 import '../viewmodel/create_appointment_events_vm.dart';
 
 part '../model/event.dart';
@@ -67,6 +67,7 @@ class _CreateAppointmentEventsScreenState
           return RbioStackedScaffold(
             isLoading: val.centerLoading,
             appbar: RbioAppBar(
+              context: context,
               title: RbioAppBar.textTitle(
                 context,
                 LocaleProvider.of(context).create_appointment_events,
@@ -87,12 +88,8 @@ class _CreateAppointmentEventsScreenState
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        R.sizes.stackedTopPadding(context),
-        R.sizes.hSizer8,
-        //
-        // _buildHeaderInfo(),
-
-        // const SizedBox(height: 15),
+        R.widgets.stackedTopPadding(context),
+        R.widgets.hSizer8,
 
         //
         if (val.availableDatesProgress == LoadingProgress.loading) ...[
@@ -115,7 +112,7 @@ class _CreateAppointmentEventsScreenState
         ],
 
         //
-        const SizedBox(height: 8.0),
+        R.widgets.hSizer8,
 
         //
         if (val.slotsProgress == LoadingProgress.loading) ...[
@@ -150,7 +147,9 @@ class _CreateAppointmentEventsScreenState
               },
             ),
           ),
-          R.sizes.defaultBottomPadding,
+
+          //
+          R.widgets.defaultBottomPadding,
         ],
       ],
     );

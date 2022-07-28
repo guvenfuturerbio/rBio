@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/core.dart';
 import '../../../take_appointment/create_appointment/model/patient_relative_info_response.dart';
@@ -12,91 +11,94 @@ class PatientRelativesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          PatientRelativesCubit(getIt(), getIt(), getIt(), getIt())
-            ..fetchPatientReletives(),
+      create: (context) => PatientRelativesCubit(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      )..fetchPatientReletives(),
       child: const PatientRelativesView(),
     );
   }
 }
 
-class PatientRelativesView extends StatefulWidget {
+class PatientRelativesView extends StatelessWidget {
   const PatientRelativesView({Key? key}) : super(key: key);
 
   @override
-  _PatientRelativesViewState createState() => _PatientRelativesViewState();
-}
-
-class _PatientRelativesViewState extends State<PatientRelativesView> {
-  @override
   Widget build(BuildContext context) {
     return RbioScaffold(
-      appbar: RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          LocaleProvider.current.relatives,
-        ),
-      ),
+      appbar: _buildAppBar(context),
       body: _buildBody(),
-      floatingActionButton: _buildFab(),
+      floatingActionButton: _buildFab(context),
+    );
+  }
+
+  RbioAppBar _buildAppBar(BuildContext context) {
+    return RbioAppBar(
+      context: context,
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.relatives,
+      ),
     );
   }
 
   Widget _buildBody() {
     return BlocConsumer<PatientRelativesCubit, PatientRelativesState>(
-        listener: (BuildContext context, PatientRelativesState state) {
-      state.when(
-        initial: () {},
-        loadInProgress: () {},
-        success: (PatientRelativeInfoResponse value) {},
-        failure: () {
-          Utils.instance.showErrorSnackbar(
-              context, LocaleProvider.of(context).something_went_wrong);
-        },
-      );
-    }, builder: (BuildContext context, PatientRelativesState state) {
-      return state.when(
-        initial: () => const SizedBox(),
-        loadInProgress: () => const RbioLoading(),
-        success: (PatientRelativeInfoResponse response) => ListView.builder(
-          padding: EdgeInsets.zero,
-          scrollDirection: Axis.vertical,
-          physics: const BouncingScrollPhysics(),
-          itemCount: response.patientRelatives.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //
-                _PatientRelativeListTile(
-                  patientRelative: response.patientRelatives[index],
-                ),
-
-                //
-                _buildVerticalGap(),
-              ],
+      listener: (BuildContext context, PatientRelativesState state) {
+        state.when(
+          initial: () {},
+          loadInProgress: () {},
+          success: (PatientRelativeInfoResponse value) {},
+          failure: () {
+            Utils.instance.showErrorSnackbar(
+              context,
+              LocaleProvider.of(context).something_went_wrong,
             );
           },
-        ),
-        failure: () => const RbioBodyError(),
-      );
-    });
+        );
+      },
+      builder: (BuildContext context, PatientRelativesState state) {
+        return state.when(
+          initial: () => const SizedBox(),
+          loadInProgress: () => const RbioLoading(),
+          success: (PatientRelativeInfoResponse response) => ListView.builder(
+            padding: EdgeInsets.zero,
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+            itemCount: response.patientRelatives.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  //
+                  _PatientRelativeListTile(
+                    patientRelative: response.patientRelatives[index],
+                  ),
+
+                  //
+                  _buildVerticalGap(),
+                ],
+              );
+            },
+          ),
+          failure: () => const RbioBodyError(),
+        );
+      },
+    );
   }
 
-  Widget _buildFab() {
-    return FloatingActionButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+  Widget _buildFab(BuildContext context) {
+    return RbioSVGFAB.primaryColor(
+      context,
+      imagePath: R.image.add,
       onPressed: () {
         Atom.to(PagePaths.addPatientRelatives);
       },
-      child: Center(
-        child: SvgPicture.asset(
-          R.image.add,
-          width: R.sizes.iconSize2,
-        ),
-      ),
     );
   }
 
@@ -124,11 +126,17 @@ class _PatientRelativeListTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${patientRelative.name} ${patientRelative.surname}',
-                  style: context.xTextTheme.headline3),
+              Text(
+                '${patientRelative.name} ${patientRelative.surname}',
+                style: context.xHeadline3,
+              ),
             ],
           ),
-          const SizedBox(height: 10),
+
+          //
+          R.widgets.hSizer12,
+
+          //
           RbioElevatedButton(
             title: 'Geçiş Yap',
             onTap: () {
@@ -163,10 +171,13 @@ class _PatientRelativeListTile extends StatelessWidget {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return GuvenAlert(
-          backgroundColor: Colors.white,
-          title: GuvenAlert.buildTitle(title),
+          title: GuvenAlert.buildTitle(
+            context,
+            title,
+          ),
           actions: [
             GuvenAlert.buildMaterialAction(
+              context,
               LocaleProvider.of(context).btn_cancel,
               () {
                 Navigator.of(context).pop();
@@ -174,7 +185,11 @@ class _PatientRelativeListTile extends StatelessWidget {
             ),
 
             //
-            GuvenAlert.buildMaterialAction(okButtonText, okButtonFunc),
+            GuvenAlert.buildMaterialAction(
+              context,
+              okButtonText,
+              okButtonFunc,
+            ),
           ],
 
           //
@@ -185,7 +200,7 @@ class _PatientRelativeListTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                GuvenAlert.buildDescription(text),
+                GuvenAlert.buildDescription(context, text),
               ],
             ),
           ),

@@ -16,11 +16,10 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      backgroundColor: context.xCardColor,
+      shape: R.sizes.defaultShape,
       title: GuvenAlert.buildTitle(
+        context,
         LocaleProvider.current.warning,
       ),
       content: Column(
@@ -29,25 +28,30 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           //
-          R.sizes.hSizer12,
+          R.widgets.hSizer12,
 
           //
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: GuvenAlert.buildDescription(
+              context,
               description,
             ),
           ),
 
           //
-          R.sizes.hSizer16,
+          R.widgets.hSizer16,
 
           //
           Row(
             children: [
-              R.sizes.wSizer12,
+              //
+              R.widgets.wSizer12,
+
+              //
               Expanded(
                 child: GuvenAlert.buildMaterialRedAction(
+                  context,
                   LocaleProvider.current.delete,
                   () {
                     Atom.dismiss();
@@ -55,16 +59,21 @@ class RbioDeleteConfirmationDialog extends StatelessWidget {
                   },
                 ),
               ),
-              R.sizes.wSizer8,
+
+              //
+              R.widgets.wSizer8,
+
+              //
               Expanded(
                 child: GuvenAlert.buildMaterialWhiteAction(
+                  context,
                   LocaleProvider.current.btn_cancel,
                   () {
                     Atom.dismiss();
                   },
                 ),
               ),
-              R.sizes.wSizer12,
+              R.widgets.wSizer12,
             ],
           ),
         ],

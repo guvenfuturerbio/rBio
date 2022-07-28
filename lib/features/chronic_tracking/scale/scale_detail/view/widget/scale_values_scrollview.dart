@@ -375,8 +375,8 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
                       title,
                       style: context.xHeadline4.copyWith(
                         color: isRedTheme
-                            ? getIt<IAppConfig>().theme.darkRed
-                            : getIt<IAppConfig>().theme.mainColor,
+                            ? context.xMyCustomTheme.punch
+                            : context.xPrimaryColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -384,7 +384,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
                 ),
 
                 //
-                R.sizes.wSizer4,
+                R.widgets.wSizer4,
 
                 //
                 Container(
@@ -392,13 +392,13 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: isRedTheme
-                        ? getIt<IAppConfig>().theme.darkRed
-                        : getIt<IAppConfig>().theme.mainColor,
+                        ? context.xMyCustomTheme.punch
+                        : context.xPrimaryColor,
                   ),
                   child: Text(
                     list.length.toString(),
                     style: context.xHeadline3.copyWith(
-                      color: getIt<IAppConfig>().theme.textColor,
+                      color: context.xTextColor,
                     ),
                   ),
                 ),
@@ -427,7 +427,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       padding: const EdgeInsets.only(
@@ -472,7 +472,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
           ),
 
           //
-          R.sizes.hSizer4,
+          R.widgets.hSizer4,
 
           //
           _DynamicColorfulRange(
@@ -485,7 +485,7 @@ class ScaleDetailExpansionComponent extends StatelessWidget {
             Text(
               model.description,
               style: context.xHeadline4.copyWith(
-                color: getIt<IAppConfig>().theme.textColorPassive,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
         ],
@@ -627,7 +627,7 @@ class _DynamicColorfulRange extends StatelessWidget {
               maxFontSize: 12,
               textAlign: TextAlign.center,
               style: context.xHeadline3.copyWith(
-                color: getIt<IAppConfig>().theme.textColorPassive,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           );
@@ -655,7 +655,7 @@ class _DynamicColorfulRange extends StatelessWidget {
               maxFontSize: 13,
               style: context.xHeadline3.copyWith(
                 fontWeight: FontWeight.bold,
-                color: getIt<IAppConfig>().theme.textColorPassive,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           );

@@ -29,6 +29,7 @@ class _DoctorTreatmentProcessScreenState
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.treatment_process,
@@ -71,7 +72,6 @@ class _DoctorTreatmentProcessScreenState
         );
       },
       child: Card(
-        elevation: R.sizes.defaultElevation,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 8,
@@ -102,7 +102,7 @@ class _DoctorTreatmentProcessScreenState
                       item.description ?? "",
                       maxLines: 3,
                       style: context.xHeadline5.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorPassive,
+                        color: context.xMyCustomTheme.textDisabledColor,
                       ),
                     ),
                   ],

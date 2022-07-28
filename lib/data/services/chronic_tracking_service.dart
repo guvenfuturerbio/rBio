@@ -4,15 +4,11 @@ import 'package:intl/intl.dart';
 
 import '../../../features/chronic_tracking/scale/scale.dart';
 import '../../../features/mediminder/mediminder.dart';
-import '../../../model/bg_measurement/blood_glucose_report_body.dart';
-import '../../../model/bg_measurement/blood_glucose_value_model.dart';
-import '../../../model/bg_measurement/delete_bg_measurement_request.dart';
-import '../../../model/bg_measurement/get_blood_glucose_data_of_person.dart';
-import '../../../model/bg_measurement/get_hba1c_measurement_list.dart';
-import '../../../model/bg_measurement/hospital_hba1c_measurement.dart';
-import '../../../model/bg_measurement/update_bg_measurement_request.dart';
-import '../../../model/model.dart';
+import '../../config/config.dart';
 import '../../core/core.dart';
+import '../../features/auth/shared/shared.dart';
+import '../../features/chronic_tracking/blood_glucose/model/model.dart';
+import '../../features/chronic_tracking/blood_pressure/model/model.dart';
 
 part 'chronic_tracking_service_impl.dart';
 
@@ -36,16 +32,11 @@ abstract class ChronicTrackingApiService {
     int entegrationId,
     int measurementId,
   );
-  Future<GuvenResponseModel> getBloodGlucoseReport(
-    BloodGlucoseReportBody bloodGlucoseReportBody,
-  );
   Future<GuvenResponseModel> getBloodGlucoseDataOfPerson(
     GetBloodGlucoseDataOfPerson getBloodGlucoseDataOfPerson,
   );
   Future<List<Person>> getAllProfiles();
   Future<GuvenResponseModel> addProfile(Person person);
-  Future<GuvenResponseModel> changeProfile(int userId);
-  Future<GuvenResponseModel> deleteProfile(int userId);
   Future<GuvenResponseModel> updateProfile(Person person, int id);
   Future<GuvenResponseModel> setDefaultProfile(Person person);
   Future<GuvenResponseModel> updateUserStrip(StripDetailModel stripDetailModel);
@@ -54,16 +45,6 @@ abstract class ChronicTrackingApiService {
     String deviceId,
     int entegrationId,
   );
-  Future<GuvenResponseModel> addHospitalHba1cMeasurement(
-    HospitalHba1cMeasurementModel hospitalHba1cMeasurementModel,
-    int entegrationId,
-  );
-  Future<GuvenResponseModel> getHba1cMeasurementList(
-    GetHba1cMeasurementListModel getHba1cMeasurementListModel,
-    int entegrationId,
-  );
-  Future<GuvenResponseModel> getMedicineByFilter(String text);
-
   Future<GuvenResponseModel> insertNewBpValue(AddBpWithDetail addBpWithDetail);
 
   Future<GuvenResponseModel> deleteBpMeasurement(

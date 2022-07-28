@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/model/model.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../../doctor/patient_detail/blood_glucose/model/model.dart';
 import '../../viewmodel/bg_progress_vm.dart';
 
 class BgLineChart extends StatefulWidget {
@@ -72,19 +72,25 @@ class _BgLineChartState extends State<BgLineChart> {
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
-              labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
+              labelStyle: TextStyle(
+                color: context.xMyCustomTheme.codGray,
+              ),
               interval: 6)
           : _selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                   dateFormat: DateFormat("EEE"),
                   intervalType: DateTimeIntervalType.days,
-                  majorGridLines: const MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(
+                    color: Colors.black12,
+                  ),
                   interval: 1,
                 )
               : DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: const MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(
+                    color: Colors.black12,
+                  ),
                 ),
       primaryYAxis: NumericAxis(
         majorGridLines: const MajorGridLines(color: Colors.black12),
@@ -92,18 +98,27 @@ class _BgLineChartState extends State<BgLineChart> {
         axisLine: const AxisLine(width: 0),
         labelFormat: '{value}',
         title: AxisTitle(
-            text: "mg/dL",
-            textStyle:
-                TextStyle(fontSize: 10, color: getIt<IAppConfig>().theme.graphPlotRange)),
-        labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
+          text: "mg/dL",
+          textStyle: TextStyle(
+            fontSize: 10,
+            color: context.xMyCustomTheme.skeptic,
+          ),
+        ),
+        labelStyle: TextStyle(
+          color: context.xMyCustomTheme.codGray,
+        ),
         plotBands: [
           PlotBand(
-              isVisible: true,
-              start: _targetMax,
-              end: _targetMin,
-              shouldRenderAboveSeries: false,
-              textStyle: const TextStyle(color: Colors.black, fontSize: 13),
-              color: getIt<IAppConfig>().theme.graphPlotRange),
+            isVisible: true,
+            start: _targetMax,
+            end: _targetMin,
+            shouldRenderAboveSeries: false,
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontSize: 13,
+            ),
+            color: context.xMyCustomTheme.skeptic,
+          ),
         ],
         minimum: _minValue.toDouble(),
         maximum: _maxValue.toDouble(),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/call_rate_request.dart';
 import '../model/get_availability_rate_request.dart';
 import '../model/get_availability_rate_response.dart';
 
@@ -94,7 +95,8 @@ class RateDialogVm extends ChangeNotifier {
         );
       },
     ).then((value) {
-      Atom.to(PagePaths.main, isReplacement: true);
+      // Atom.to(PagePaths.main, isReplacement: true);
+      Navigator.pop(mContext!);
     });
   }
 

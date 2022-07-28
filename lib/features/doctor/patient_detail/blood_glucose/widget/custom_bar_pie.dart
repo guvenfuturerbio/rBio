@@ -16,11 +16,11 @@ class _CustomBarPie extends StatelessWidget {
       BgPatientDetailVm value,
       Widget? child,
     ) {
-      return _buildContainer(value);
+      return _buildContainer(context, value);
     });
   }
 
-  Widget _buildContainer(BgPatientDetailVm value) {
+  Widget _buildContainer(BuildContext context, BgPatientDetailVm value) {
     return SizedBox(
       width: width,
       child: value.totalValuableCount == 0
@@ -43,9 +43,13 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [getIt<IAppConfig>().theme.veryLow, getIt<IAppConfig>().theme.veryLow],
-                        begin: Alignment.topLeft,
-                        end: Alignment.topRight),
+                      colors: [
+                        context.xMyCustomTheme.roman,
+                        context.xMyCustomTheme.roman,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
                   ),
                   child: _animatedCount(value.totalValuableCount == 0
                       ? 0
@@ -64,9 +68,13 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [getIt<IAppConfig>().theme.low, getIt<IAppConfig>().theme.low],
-                        begin: Alignment.topLeft,
-                        end: Alignment.topRight),
+                      colors: [
+                        context.xMyCustomTheme.tonysPink,
+                        context.xMyCustomTheme.tonysPink,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
                   ),
                   child: _animatedCount(value.totalValuableCount == 0
                       ? 0
@@ -85,9 +93,13 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [getIt<IAppConfig>().theme.target, getIt<IAppConfig>().theme.target],
-                        begin: Alignment.topLeft,
-                        end: Alignment.topRight),
+                      colors: [
+                        context.xMyCustomTheme.deYork,
+                        context.xMyCustomTheme.deYork,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
                   ),
                   child: _animatedCount(value.totalValuableCount == 0
                       ? 0
@@ -106,9 +118,13 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [getIt<IAppConfig>().theme.high, getIt<IAppConfig>().theme.high],
-                        begin: Alignment.topLeft,
-                        end: Alignment.topRight),
+                      colors: [
+                        context.xMyCustomTheme.energyYellow,
+                        context.xMyCustomTheme.energyYellow,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
                   ),
                   child: _animatedCount(value.totalValuableCount == 0
                       ? 0
@@ -127,9 +143,13 @@ class _CustomBarPie extends StatelessWidget {
                           value.totalValuableCount,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [getIt<IAppConfig>().theme.veryHigh, getIt<IAppConfig>().theme.veryHigh],
-                        begin: Alignment.topLeft,
-                        end: Alignment.topRight),
+                      colors: [
+                        context.xMyCustomTheme.casablanca,
+                        context.xMyCustomTheme.casablanca,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
                   ),
                   child: _animatedCount(value.totalValuableCount == 0
                       ? 0

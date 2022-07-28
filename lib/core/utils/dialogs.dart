@@ -42,36 +42,44 @@ Future<void> showCompulsoryUpdateDialog({
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      return RbioBaseGreyDialog(
+      return RbioBaseDialog(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              //
               Center(
                 child: Text(
                   LocaleProvider.current.app_update_available,
-                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  style: context.xDialogTheme.titleTextStyle,
                   textAlign: TextAlign.center,
                 ),
               ),
-              R.sizes.hSizer32,
+
+              //
+              R.widgets.hSizer32,
+
+              //
               Center(
                 child: Text(
                   LocaleProvider.current.force_update_message,
-                  style: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
-                      .description(context),
+                  style: context.xDialogTheme.descriptionTextStyle,
                   textAlign: TextAlign.center,
                 ),
               ),
-              R.sizes.hSizer32,
+
+              //
+              R.widgets.hSizer32,
+
+              //
               Center(
-                child: RbioSmallDialogButton.green(
-                    title: LocaleProvider.current.update_now,
-                    onPressed: onPressed),
+                child: RbioSmallDialogButton.main(
+                  context: context,
+                  title: LocaleProvider.current.update_now,
+                  onPressed: onPressed,
+                ),
               ),
             ],
           ),

@@ -1,8 +1,9 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../../../config/config.dart';
 import '../cubit/cubit.dart';
 
 class ForYouOrderSummaryScreen extends StatelessWidget {
@@ -64,6 +65,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         widget.categoryName ?? "-",
@@ -90,9 +92,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
                       //
                       Material(
                         elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -191,9 +191,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
                       //
                       Material(
                         elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -231,9 +229,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
                       //
                       Material(
                         elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: R.sizes.borderRadiusCircular,
-                        ),
+                        shape: R.sizes.defaultShape,
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
@@ -299,6 +295,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryView> {
                       Container(
                         margin: const EdgeInsets.only(top: 20, bottom: 20),
                         child: Utils.instance.button(
+                          context: context,
                           width: 260,
                           text: LocaleProvider.current.payment,
                           onPressed: () {

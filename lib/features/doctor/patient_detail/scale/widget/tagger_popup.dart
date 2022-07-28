@@ -53,11 +53,7 @@ class ScaleTagger extends StatelessWidget {
             child: GestureDetector(
                 onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                 child: Card(
-                  elevation: R.sizes.defaultElevation,
-                  color: context.scaffoldBackgroundColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: R.sizes.borderRadiusCircular,
-                  ),
+                  color: context.xScaffoldBackgroundColor,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -96,37 +92,44 @@ class ScaleTagger extends StatelessWidget {
     // Don't Touch this show dialog this workin fine!!!!
     return GestureDetector(
       onTap: () => showDialog(
-          context: context,
-          barrierColor: Colors.transparent,
-          builder: (_) => BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                child: Dialog(
-                    child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    _itemOfColorInfoDialog(
-                        context,
-                        getIt<IAppConfig>().theme.veryLow,
-                        LocaleProvider.current.very_low),
-                    _itemOfColorInfoDialog(
-                        context,
-                        getIt<IAppConfig>().theme.low,
-                        LocaleProvider.current.low),
-                    _itemOfColorInfoDialog(
-                        context,
-                        getIt<IAppConfig>().theme.target,
-                        LocaleProvider.current.target),
-                    _itemOfColorInfoDialog(
-                        context,
-                        getIt<IAppConfig>().theme.high,
-                        LocaleProvider.current.high),
-                    _itemOfColorInfoDialog(
-                        context,
-                        getIt<IAppConfig>().theme.veryHigh,
-                        LocaleProvider.current.very_high),
-                  ],
-                )),
-              )),
+        context: context,
+        barrierColor: Colors.transparent,
+        builder: (_) => BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Dialog(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                _itemOfColorInfoDialog(
+                  context,
+                  context.xMyCustomTheme.roman,
+                  LocaleProvider.current.very_low,
+                ),
+                _itemOfColorInfoDialog(
+                  context,
+                  context.xMyCustomTheme.tonysPink,
+                  LocaleProvider.current.low,
+                ),
+                _itemOfColorInfoDialog(
+                  context,
+                  context.xMyCustomTheme.deYork,
+                  LocaleProvider.current.target,
+                ),
+                _itemOfColorInfoDialog(
+                  context,
+                  context.xMyCustomTheme.energyYellow,
+                  LocaleProvider.current.high,
+                ),
+                _itemOfColorInfoDialog(
+                  context,
+                  context.xMyCustomTheme.casablanca,
+                  LocaleProvider.current.very_high,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       child: Icon(
         Icons.info,
         size: 40 * context.textScale,
@@ -161,14 +164,11 @@ class ScaleTagger extends StatelessWidget {
 
   Widget actionButton(bool isSave, BuildContext context) {
     return Card(
-      elevation: R.sizes.defaultElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: R.sizes.borderRadiusCircular,
-            color: getIt<IAppConfig>().theme.mainColor),
+          borderRadius: R.sizes.borderRadiusCircular,
+          color: context.xPrimaryColor,
+        ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Text(
           LocaleProvider.current.done,
@@ -178,20 +178,19 @@ class ScaleTagger extends StatelessWidget {
     );
   }
 
-  Container _noteSection(BuildContext context) {
+  Widget _noteSection(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 16),
       child: Card(
-          elevation: R.sizes.defaultElevation,
-          color: getIt<IAppConfig>().theme.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child:
-                SizedBox(width: double.infinity, child: Text(scaleModel.note!)),
-          )),
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          width: double.infinity,
+          child: Text(
+            scaleModel.note!,
+          ),
+        ),
+      )),
     );
   }
 
@@ -199,11 +198,6 @@ class ScaleTagger extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        color: getIt<IAppConfig>().theme.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: Container(
           width: double.infinity,
           padding:
@@ -315,16 +309,17 @@ class ScaleTagger extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withAlpha(50),
-                      blurRadius: 5,
-                      spreadRadius: 0,
-                      offset: const Offset(3, 3))
+                    color: Colors.black.withAlpha(50),
+                    blurRadius: 5,
+                    spreadRadius: 0,
+                    offset: const Offset(3, 3),
+                  ),
                 ],
                 border: Border.all(
                   width: 13,
                 ),
                 shape: BoxShape.circle,
-                color: getIt<IAppConfig>().theme.white,
+                color: context.xMyCustomTheme.white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -372,33 +367,46 @@ class ScaleTagger extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Expanded(
-              child: Center(
-            child: Text(
-              name,
+            child: Center(
+              child: Text(
+                name,
+              ),
             ),
-          )),
+          ),
+
+          //
           Expanded(
             flex: 3,
             child: Container(
               width: width * .24,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  borderRadius: R.sizes.borderRadiusCircular,
-                  border: Border.all(
-                      width: 6,
-                      color: color ??
-                          getIt<IAppConfig>().theme.grey.withOpacity(.2)),
-                  shape: BoxShape.rectangle,
-                  color: getIt<IAppConfig>().theme.white),
+                borderRadius: R.sizes.borderRadiusCircular,
+                border: Border.all(
+                  width: 6,
+                  color: color ?? context.xMyCustomTheme.grey.withOpacity(.2),
+                ),
+                shape: BoxShape.rectangle,
+                color: context.xMyCustomTheme.white,
+              ),
               child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _inputSection(
-                    context: context,
-                    measurement: measurement,
-                  )),
+                padding: const EdgeInsets.all(8.0),
+                child: _inputSection(
+                  context: context,
+                  measurement: measurement,
+                ),
+              ),
             ),
           ),
-          Expanded(child: Center(child: Text(type)))
+
+          //
+          Expanded(
+            child: Center(
+              child: Text(
+                type,
+              ),
+            ),
+          ),
         ],
       ),
     );

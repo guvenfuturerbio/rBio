@@ -75,6 +75,7 @@ class _PatientScaleDietDetailViewState
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.of(context).diet_list,
@@ -134,20 +135,20 @@ class _PatientScaleDietDetailViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildTitle(
             context,
             LocaleProvider.of(context).refreshment,
           ),
+
           _buildTextFormField(
             _breakfastRefreshmentEditingController,
             R.image.clockRefreshment,
           ),
 
-          //
-          R.sizes.hSizer8,
+          //widgets.hSizer8,
 
           //
           _buildTitle(
@@ -160,7 +161,7 @@ class _PatientScaleDietDetailViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildTitle(
@@ -173,7 +174,7 @@ class _PatientScaleDietDetailViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildTitle(
@@ -186,7 +187,7 @@ class _PatientScaleDietDetailViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildTitle(

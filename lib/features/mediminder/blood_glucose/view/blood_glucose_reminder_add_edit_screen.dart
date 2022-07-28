@@ -104,6 +104,7 @@ class __BloodGlucoseReminderAddEditViewState
   // #region _buildAppBar
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         Remindable.bloodGlucose.toShortTitle(),
@@ -184,7 +185,7 @@ class __BloodGlucoseReminderAddEditViewState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //
-              R.sizes.stackedTopPadding(context),
+              R.widgets.stackedTopPadding(context),
               _buildGap(),
 
               // Almanız gereken durumu seçiniz
@@ -271,8 +272,8 @@ class __BloodGlucoseReminderAddEditViewState
             //
             Expanded(
               child: RbioElevatedButton(
-                backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-                textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                backColor: context.xCardColor,
+                textColor: context.xTextInverseColor,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {
                   Atom.historyBack();
@@ -281,7 +282,7 @@ class __BloodGlucoseReminderAddEditViewState
             ),
 
             //
-            R.sizes.wSizer8,
+            R.widgets.wSizer8,
 
             //
             Expanded(
@@ -300,7 +301,7 @@ class __BloodGlucoseReminderAddEditViewState
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ];
     } else {
       return [const SizedBox()];
@@ -349,7 +350,7 @@ class __BloodGlucoseReminderAddEditViewState
         obscureText: false,
         hintText: LocaleProvider.current.medicine_daily_count,
         inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+          R.regExp.filterText,
         ],
         onChanged: (text) async {
           if (text.isNotEmpty) {
@@ -402,7 +403,7 @@ class __BloodGlucoseReminderAddEditViewState
       padding: const EdgeInsets.symmetric(vertical: 6),
       margin: EdgeInsets.only(top: index == 0 ? 0 : 8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -481,5 +482,5 @@ class __BloodGlucoseReminderAddEditViewState
   }
   // #endregion
 
-  Widget _buildGap() => R.sizes.hSizer16;
+  Widget _buildGap() => R.widgets.hSizer16;
 }

@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
 import '../../scale.dart';
 
-part 'patient_scale_treatment_detail_state.dart';
 part 'patient_scale_treatment_detail_cubit.freezed.dart';
+part 'patient_scale_treatment_detail_state.dart';
 
 class PatientScaleTreatmentDetailCubit
     extends Cubit<PatientScaleTreatmentDetailState> {

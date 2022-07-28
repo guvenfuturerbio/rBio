@@ -19,11 +19,9 @@ class _HyperPicker extends StatelessWidget {
     );
   }
 
-  Dialog _buildDialog(BgPatientPickerVm value, BuildContext context) {
+  Widget _buildDialog(BgPatientPickerVm value, BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -55,7 +53,7 @@ class _HyperPicker extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: R.sizes.radiusCircular,
                   bottomRight: R.sizes.radiusCircular,
@@ -65,7 +63,7 @@ class _HyperPicker extends StatelessWidget {
                 LocaleProvider.current.save,
                 textAlign: TextAlign.center,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColor,
+                  color: context.xTextColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),

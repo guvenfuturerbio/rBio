@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:onedosehealth/app/bluetooth_v2/bluetooth_v2.dart';
+import 'package:equatable/equatable.dart';
 
 class RecordModel extends Equatable {
   final FileSystemEntity file;

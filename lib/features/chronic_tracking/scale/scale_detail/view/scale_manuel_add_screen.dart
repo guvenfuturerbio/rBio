@@ -91,7 +91,9 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
       children: [
         //
         RbioStackedScaffold(
-          appbar: RbioAppBar(),
+          appbar: RbioAppBar(
+            context: context,
+          ),
           body: _buildBody(context),
         ),
 
@@ -142,8 +144,8 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   //
-                                  R.sizes.stackedTopPadding(context),
-                                  R.sizes.hSizer8,
+                                  R.widgets.stackedTopPadding(context),
+                                  R.widgets.hSizer8,
 
                                   //
                                   Padding(
@@ -178,7 +180,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                                       ),
 
                                       //
-                                      R.sizes.wSizer8,
+                                      R.widgets.wSizer8,
 
                                       //
                                       Expanded(
@@ -204,7 +206,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                           _buildButtons(result),
 
                           //
-                          R.sizes.defaultBottomPadding,
+                          R.widgets.defaultBottomPadding,
                         ],
                       ),
                     ),
@@ -234,7 +236,10 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                     '$e ${result.scaleUnit.toStr}',
                     style: CupertinoTheme.of(context)
                         .textTheme
-                        .dateTimePickerTextStyle,
+                        .dateTimePickerTextStyle
+                        .copyWith(
+                          color: context.xTextInverseColor,
+                        ),
                   ),
                 ),
               )
@@ -249,7 +254,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -279,7 +284,10 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
                     e.toStr,
                     style: CupertinoTheme.of(context)
                         .textTheme
-                        .dateTimePickerTextStyle,
+                        .dateTimePickerTextStyle
+                        .copyWith(
+                          color: context.xTextInverseColor,
+                        ),
                   ),
                 ),
               )
@@ -297,7 +305,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -332,7 +340,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         padding: const EdgeInsets.symmetric(
@@ -386,7 +394,7 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
         ),
 
         //
-        R.sizes.wSizer12,
+        R.widgets.wSizer12,
 
         //
         Expanded(
@@ -404,5 +412,5 @@ class _ScaleManuelAddViewState extends State<_ScaleManuelAddView> {
   }
 
   // #endregion
-  Widget _buildGap() => R.sizes.hSizer8;
+  Widget _buildGap() => R.widgets.hSizer8;
 }

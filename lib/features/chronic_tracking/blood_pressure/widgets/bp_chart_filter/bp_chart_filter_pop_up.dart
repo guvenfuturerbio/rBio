@@ -21,14 +21,15 @@ class BpChartFilterPopUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       elevation: R.sizes.defaultElevation,
-      backgroundColor: context.scaffoldBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      backgroundColor: context.xScaffoldBackgroundColor,
+      shape: R.sizes.defaultShape,
       child: ChangeNotifierProvider(
         create: (_) => BpChartFilterPopUpVm(
           measurements: measurements ??
-              Provider.of<BpProgressVm>(context, listen: false).measurements,
+              Provider.of<BpProgressVm>(
+                context,
+                listen: false,
+              ).measurements,
         ),
         child: _buildConsumer(),
       ),
@@ -43,7 +44,7 @@ class BpChartFilterPopUp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
             ListView(
@@ -56,7 +57,7 @@ class BpChartFilterPopUp extends StatelessWidget {
                   (key) => CheckboxListTile(
                     title: Text(key, style: context.xHeadline5),
                     value: vm.measurements[key],
-                    activeColor: getIt<IAppConfig>().theme.mainColor,
+                    activeColor: context.xPrimaryColor,
                     dense: true,
                     onChanged: (_) => vm.changeFilter(key),
                   ),
@@ -74,12 +75,12 @@ class BpChartFilterPopUp extends StatelessWidget {
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
-                  backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                  backColor: context.xCardColor,
+                  textColor: context.xTextInverseColor,
                 ),
 
                 //
-                R.sizes.wSizer8,
+                R.widgets.wSizer8,
 
                 //
                 RbioElevatedButton(
@@ -99,7 +100,7 @@ class BpChartFilterPopUp extends StatelessWidget {
             ),
 
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
           ],
         );
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 
 class JailbrokenScreen extends StatefulWidget {
@@ -32,6 +33,7 @@ class _JailbrokenScreenState extends State<JailbrokenScreen> {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         leading: const SizedBox(width: 0, height: 0),
         leadingWidth: 0,
       ),

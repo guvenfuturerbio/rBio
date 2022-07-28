@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../../../config/config.dart';
 import '../cubit/for_you_categories_cubit.dart';
 
 class ForYouCategoriesScreen extends StatelessWidget {
@@ -31,6 +32,7 @@ class ForYouCategoriesView extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).for_you,

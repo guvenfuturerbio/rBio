@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/core.dart';
-import '../../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../../config/config.dart';
 import '../cubit/results_cubit.dart';
 import '../model/model.dart';
 
@@ -11,7 +12,11 @@ class EResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ResultsCubit(getIt())..fetchVisits(),
+      create: (context) => ResultsCubit(
+        repository: getIt<Repository>(),
+        userFacade: getIt<UserFacade>(),
+        sentryManager: getIt<IAppConfig>().platform.sentryManager,
+      )..fetchVisits(),
       child: const EResultView(),
     );
   }
@@ -30,6 +35,7 @@ class EResultView extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.results,
@@ -77,7 +83,7 @@ class EResultView extends StatelessWidget {
             ),
 
             //
-            const SizedBox(height: 12.0),
+            R.widgets.hSizer12,
 
             //
             Expanded(
@@ -124,7 +130,7 @@ class EResultView extends StatelessWidget {
           date: visits[index].openingDate?.xGetUTCLocalDateTime() ?? '',
           departmentName: visits[index].department ?? '',
           doctorName: visits[index].physician ?? '',
-          tenantName: getTenantName(item.tenantId),
+          tenantName: getTenantName(context, item.tenantId),
           openDetailTap: (item.hasLaboratoryResults ?? false) ||
                   (item.hasRadiologyResults ?? false) ||
                   (item.hasPathologyResults ?? false)
@@ -149,13 +155,6 @@ class EResultView extends StatelessWidget {
     );
   }
 
-  String getTenantName(int? tenantId) {
-    if (tenantId == 1) {
-      return LocaleProvider.current.guven_hospital_ayranci;
-    } else if (tenantId == 7) {
-      return LocaleProvider.current.guven_cayyolu_campus;
-    }
-
-    return LocaleProvider.current.online_hospital;
-  }
+  String getTenantName(BuildContext context, int? tenantId) =>
+      tenantId.xGetTenantTitle(context);
 }

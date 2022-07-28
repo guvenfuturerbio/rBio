@@ -86,8 +86,11 @@ class GradientDialog extends StatefulWidget {
   final String? title;
   final String? text;
 
-  const GradientDialog({Key? key, required this.title, required this.text})
-      : super(key: key);
+  const GradientDialog({
+    Key? key,
+    required this.title,
+    required this.text,
+  }) : super(key: key);
 
   @override
   _GradientDialogState createState() => _GradientDialogState();
@@ -97,7 +100,7 @@ class _GradientDialogState extends State<GradientDialog> {
   @override
   Widget build(BuildContext context) {
     Widget okButton = TextButton(
-      style: TextButton.styleFrom(primary: getIt<IAppConfig>().theme.textColor),
+      style: TextButton.styleFrom(primary: context.xTextColor),
       child: Text(LocaleProvider.current.ok),
       onPressed: () {
         Navigator.of(context).pop();
@@ -105,17 +108,16 @@ class _GradientDialogState extends State<GradientDialog> {
     );
 
     return AlertDialog(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: context.xPrimaryColor,
       contentPadding: EdgeInsets.zero,
       title: Text(
         widget.title ?? '',
         style: context.xHeadline1.copyWith(
-            fontWeight: FontWeight.w700,
-            color: getIt<IAppConfig>().theme.textColor),
+          fontWeight: FontWeight.w700,
+          color: context.xTextColor,
+        ),
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      shape: R.sizes.defaultShape,
       actions: [
         okButton,
       ],
@@ -129,7 +131,7 @@ class _GradientDialogState extends State<GradientDialog> {
             Text(
               widget.text ?? '',
               style: context.xHeadline3.copyWith(
-                color: getIt<IAppConfig>().theme.textColor,
+                color: context.xTextColor,
               ),
             ),
           ],

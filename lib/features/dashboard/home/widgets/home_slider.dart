@@ -42,14 +42,16 @@ class _HomeSliderState extends State<HomeSlider> {
                     Positioned.fill(
                       child: CarouselSlider.builder(
                         itemCount: vm.bannerTabsModel.length,
-                        itemBuilder: (BuildContext context, int itemIndex,
-                            int pageViewIndex) {
+                        itemBuilder: (
+                          BuildContext context,
+                          int itemIndex,
+                          int pageViewIndex,
+                        ) {
                           return Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color:
-                                  getIt<IAppConfig>().theme.cardBackgroundColor,
+                              color: context.xCardColor,
                               borderRadius: R.sizes.borderRadiusCircular,
                             ),
                             child: GestureDetector(
@@ -119,13 +121,10 @@ class _HomeSliderState extends State<HomeSlider> {
                                   ),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: getIt<IAppConfig>()
-                                        .theme
-                                        .mainColor
-                                        .withOpacity(
-                                            _current == entry.key ? 0.9 : 0.4),
+                                    color: context.xPrimaryColor.withOpacity(
+                                        _current == entry.key ? 0.9 : 0.4),
                                     border: Border.all(
-                                      color: getIt<IAppConfig>().theme.white,
+                                      color: context.xMyCustomTheme.white,
                                       width: 0.5,
                                     ),
                                   ),

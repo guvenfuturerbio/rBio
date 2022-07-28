@@ -17,6 +17,7 @@ class SelectReminderScreen extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.create_reminder,
@@ -95,11 +96,7 @@ class SelectReminderScreen extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        elevation: R.sizes.defaultElevation,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Stack(
@@ -122,7 +119,7 @@ class SelectReminderScreen extends StatelessWidget {
                   maxLines: 5,
                   textAlign: TextAlign.left,
                   overflow: TextOverflow.ellipsis,
-                  style: getIt<IAppConfig>().theme.textTheme.headline4,
+                  style: context.xCurrentTheme.textTheme.headline4,
                 ),
               ),
             ],

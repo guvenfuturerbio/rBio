@@ -5,9 +5,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onedosehealth/core/core.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:scan/scan.dart';
+
+import '../../config/config.dart';
+import '../../core/core.dart';
 
 class QrCodeScanScreen extends StatefulWidget {
   const QrCodeScanScreen({Key? key}) : super(key: key);
@@ -20,7 +22,7 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
   String? text = 'Unknown';
 
   Future<void> initPlatformState() async {
-    late String platformVersion;
+    var platformVersion = '';
     try {
       platformVersion = await Scan.platformVersion;
     } on PlatformException {
@@ -40,8 +42,6 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
   // String? result;
   void getPhotoFromSource(ImageSource imageSource) async {
     late PermissionStatus photoPerm;
-    final picker = ImagePicker();
-
     try {
       try {
         if (imageSource == ImageSource.gallery) {
@@ -66,7 +66,8 @@ class _QrCodeScanScreenState extends State<QrCodeScanScreen> {
       }
 
       // ignore: deprecated_member_use
-      final PickedFile? pickedFile = await picker.getImage(source: imageSource);
+      final PickedFile? pickedFile =
+          await getIt<ImageManager>().getImage(source: imageSource);
 
       if (pickedFile != null) {
         String? result = await Scan.parse(pickedFile.path);

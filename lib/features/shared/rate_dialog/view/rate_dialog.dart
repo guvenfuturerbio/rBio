@@ -56,15 +56,14 @@ class _RateDialogState extends State<RateDialog> {
                   child: Center(
                     child: Text(
                       LocaleProvider.of(context).rate_appointment,
-                      style:
-                          getIt<IAppConfig>().theme.dialogTheme.title(context),
+                      style: context.xDialogTheme.titleTextStyle,
                       textAlign: TextAlign.center,
                     ),
                   ),
                 ),
 
                 //
-                R.sizes.hSizer32,
+                R.widgets.hSizer32,
 
                 //
                 ChangeNotifierProvider(
@@ -98,12 +97,11 @@ class _RateDialogState extends State<RateDialog> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
+                                //
                                 Text(
                                   LocaleProvider.current.how_video_quality,
-                                  style: getIt<IAppConfig>()
-                                      .theme
-                                      .dialogTheme
-                                      .description(context),
+                                  style:
+                                      context.xDialogTheme.descriptionTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
 
@@ -122,7 +120,7 @@ class _RateDialogState extends State<RateDialog> {
                                       horizontal: 4.0),
                                   itemBuilder: (context, _) => Icon(
                                     Icons.star,
-                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    color: context.xPrimaryColor,
                                   ),
                                   onRatingUpdate: (rating) {
                                     value.setVideoQuality(rating.toInt());
@@ -132,10 +130,7 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.video_call_legand,
-                                  style: getIt<IAppConfig>()
-                                      .theme
-                                      .dialogTheme
-                                      .subTitle(context),
+                                  style: context.xDialogTheme.subTitleTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
 
@@ -147,10 +142,8 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.how_video_doctor,
-                                  style: getIt<IAppConfig>()
-                                      .theme
-                                      .dialogTheme
-                                      .description(context),
+                                  style:
+                                      context.xDialogTheme.descriptionTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
 
@@ -169,7 +162,7 @@ class _RateDialogState extends State<RateDialog> {
                                       horizontal: 4.0),
                                   itemBuilder: (context, _) => Icon(
                                     Icons.star,
-                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    color: context.xPrimaryColor,
                                   ),
                                   onRatingUpdate: (rating) {
                                     value.setDoctorQuality(rating.toInt());
@@ -179,10 +172,7 @@ class _RateDialogState extends State<RateDialog> {
                                 //
                                 Text(
                                   LocaleProvider.current.doctor_legand,
-                                  style: getIt<IAppConfig>()
-                                      .theme
-                                      .dialogTheme
-                                      .subTitle(context),
+                                  style: context.xDialogTheme.subTitleTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
 
@@ -201,15 +191,15 @@ class _RateDialogState extends State<RateDialog> {
                                   maxLength: 256,
                                   hintText: LocaleProvider.of(context)
                                       .comments_and_suggestion,
-                                  backColor:
-                                      getIt<IAppConfig>().theme.grayColor,
+                                  backColor: context.xMyCustomTheme.gallery,
                                 ),
 
                                 //
-                                const SizedBox(height: 10),
+                                R.widgets.hSizer12,
 
                                 //
-                                RbioSmallDialogButton.green(
+                                RbioSmallDialogButton.main(
+                                  context: context,
                                   title: LocaleProvider.current.save,
                                   onPressed: () {
                                     value.rateAppointment(

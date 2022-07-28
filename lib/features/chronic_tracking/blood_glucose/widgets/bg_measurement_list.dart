@@ -10,7 +10,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../../model/bg_measurement/bg_measurement_view_model.dart';
+import '../model/bg_measurement_view_model.dart';
 import '../viewmodel/bg_progress_vm.dart';
 import 'tagger/bg_tagger_pop_up.dart';
 
@@ -58,7 +58,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
           height: (context.height * .07) * context.textScale,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.xCardColor,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withAlpha(50),
@@ -77,6 +77,7 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
               child: Text(
                 DateFormat.yMMMMEEEEd(Intl.getCurrentLocale())
                     .format(bgMeasurementViewModel.date),
+                style: context.xHeadline5,
               ),
             ),
           ),
@@ -89,8 +90,10 @@ class _BgMeasurementListWidgetState extends State<BgMeasurementListWidget> {
           measurementList(context, bgMeasurementViewModel),
       callback: (BgMeasurementGlucoseViewModel data) {
         if (Provider.of<BgProgressVm>(context, listen: false).isChartShow) {
-          Provider.of<BgProgressVm>(context, listen: false)
-              .fetchScrolledData(data.date);
+          Provider.of<BgProgressVm>(context, listen: false).fetchScrolledData(
+            context,
+            data.date,
+          );
         }
       },
     );
@@ -107,27 +110,25 @@ Widget measurementList(
     child: GestureDetector(
       onTap: () {
         Atom.show(
-            BgTaggerPopUp(
-              data: bgMeasurementViewModel.bgMeasurement,
-              isEdit: true,
-            ),
-            barrierColor: Colors.transparent,
-            barrierDismissible: false);
+          BgTaggerPopUp(
+            data: bgMeasurementViewModel.bgMeasurement,
+            isEdit: true,
+          ),
+          barrierColor: Colors.transparent,
+          barrierDismissible: false,
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
         decoration: BoxDecoration(
-          color: Colors.green,
-          gradient: const LinearGradient(
-              colors: [Colors.white, Colors.white],
-              begin: Alignment.bottomLeft,
-              end: Alignment.centerRight),
+          color: context.xCardColor,
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withAlpha(50),
-                blurRadius: 5,
-                spreadRadius: 0,
-                offset: const Offset(5, 5))
+              color: Colors.black.withAlpha(50),
+              blurRadius: 5,
+              spreadRadius: 0,
+              offset: const Offset(5, 5),
+            ),
           ],
           borderRadius: R.sizes.borderRadiusCircular,
         ),
@@ -137,15 +138,19 @@ Widget measurementList(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            //
             Expanded(
               child: Row(
                 children: [
+                  //
                   Container(
                     alignment: Alignment.center,
                     width: (context.height * .1) * context.textScale,
                     height: (context.height * .1) * context.textScale,
                     decoration: measurementListBoxDecoration(
-                        bgMeasurementViewModel), //             <--- BoxDecoration here
+                      context,
+                      bgMeasurementViewModel,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -161,6 +166,8 @@ Widget measurementList(
                       ],
                     ),
                   ),
+
+                  //
                   Expanded(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,8 +183,11 @@ Widget measurementList(
                                 : bgMeasurementViewModel.tag == 2
                                     ? R.image.aftermealIconBlack
                                     : R.image.otherIcon,
+                            color: context.xIconColor,
                           ),
                         ),
+
+                        //
                         Expanded(
                           child: Text(
                             (bgMeasurementViewModel.note.length > 10
@@ -199,10 +209,6 @@ Widget measurementList(
                         width: 60,
                         height: 60,
                         child: Card(
-                          elevation: R.sizes.defaultElevation,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: R.sizes.borderRadiusCircular,
-                          ),
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             height: 25,
@@ -267,17 +273,18 @@ Widget measurementList(
 }
 
 BoxDecoration measurementListBoxDecoration(
-    BgMeasurementGlucoseViewModel bgMeasurementViewModel) {
+  BuildContext context,
+  BgMeasurementGlucoseViewModel bgMeasurementViewModel,
+) {
   return BoxDecoration(
     shape: bgMeasurementViewModel.tag == 1 || bgMeasurementViewModel.tag == 2
         ? BoxShape.circle
         : BoxShape.rectangle,
     color: bgMeasurementViewModel.tag == 1
         ? Colors.transparent
-        : bgMeasurementViewModel.resultColor,
+        : bgMeasurementViewModel.resultColor(context),
     border: Border.all(
-      color: bgMeasurementViewModel
-          .resultColor, //                   <--- border color
+      color: bgMeasurementViewModel.resultColor(context),
       width: 5.0,
     ),
   );

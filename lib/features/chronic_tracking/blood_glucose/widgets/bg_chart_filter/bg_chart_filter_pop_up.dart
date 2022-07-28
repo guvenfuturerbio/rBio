@@ -19,14 +19,15 @@ class BgChartFilterPopUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       elevation: R.sizes.defaultElevation,
-      backgroundColor: context.scaffoldBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      backgroundColor: context.xScaffoldBackgroundColor,
+      shape: R.sizes.defaultShape,
       child: ChangeNotifierProvider(
         create: (_) => BgChartFilterPopUpVm(
-            filters:
-                Provider.of<BgProgressVm>(context, listen: false).filterState),
+          filters: Provider.of<BgProgressVm>(
+            context,
+            listen: false,
+          ).filterState,
+        ),
         child: _buildConsumer(),
       ),
     );
@@ -41,17 +42,20 @@ class BgChartFilterPopUp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
-            ...vm.colorInfo.keys
+            ...vm
+                .colorInfo(context)
+                .keys
                 .map(
                   (color) => _colorFilterItem(
                     context: context,
-                    text: vm.colorInfo[color]!.toShortString(),
-                    status: vm.isFilterSelected(vm.colorInfo[color]!),
+                    text: vm.colorInfo(context)[color]!.toShortString(),
+                    status: vm.isFilterSelected(vm.colorInfo(context)[color]!),
                     color: color,
-                    statCallback: (_) => vm.changeFilter(vm.colorInfo[color]!),
+                    statCallback: (_) =>
+                        vm.changeFilter(vm.colorInfo(context)[color]!),
                     isHungry: false,
                   ),
                 )
@@ -64,7 +68,7 @@ class BgChartFilterPopUp extends StatelessWidget {
                     context: context,
                     text: state.toShortString(),
                     status: vm.isFilterSelected(state),
-                    color: getIt<IAppConfig>().theme.stateColor,
+                    color: context.xMyCustomTheme.boulder,
                     style: state == GlucoseMarginsFilter.full ||
                             state == GlucoseMarginsFilter.hungry
                         ? BoxShape.circle
@@ -87,19 +91,19 @@ class BgChartFilterPopUp extends StatelessWidget {
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
-                  backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                  backColor: context.xCardColor,
+                  textColor: context.xTextInverseColor,
                 ),
 
                 //
-                R.sizes.wSizer8,
+                R.widgets.wSizer8,
 
                 //
                 RbioElevatedButton(
                   title: LocaleProvider.current.save,
                   onTap: () {
                     Provider.of<BgProgressVm>(context, listen: false)
-                        .updateFilterState();
+                        .updateFilterState(context);
                     Atom.dismiss();
                   },
                   padding: EdgeInsets.zero,
@@ -111,7 +115,7 @@ class BgChartFilterPopUp extends StatelessWidget {
             RbioTextButton(
               onPressed: () {
                 Provider.of<BgProgressVm>(context, listen: false)
-                    .resetFilterValues();
+                    .resetFilterValues(context);
                 vm.resetFilterValues();
               },
               child: Text(
@@ -173,10 +177,9 @@ class BgChartFilterPopUp extends StatelessWidget {
             child: SizedBox(
               height: 16,
               width: 16,
-              child: Checkbox(
+              child: RbioCheckbox(
                 value: status,
                 onChanged: statCallback,
-                activeColor: getIt<IAppConfig>().theme.mainColor,
               ),
             ),
           ),

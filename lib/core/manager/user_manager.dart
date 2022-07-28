@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet_wrapper/jitsi_meet_wrapper.dart';
 
+import '../../config/config.dart';
 import '../../features/auth/login/model/login_exception.dart';
+import '../../features/auth/shared/shared.dart';
 import '../../features/shared/consent_form/consent_form_dialog.dart';
 import '../../features/shared/rate_dialog/view/rate_dialog.dart';
-import '../../model/model.dart';
 import '../core.dart';
 
 abstract class UserManager {
@@ -57,7 +58,7 @@ class UserManagerImpl extends UserManager {
 
             _loginToFirebase(loginResponse);
             //Update user notifier depending on roles
-            getIt<UserNotifier>().userTypeFetcher(loginResponse);
+            getIt<UserNotifier>().handleUserType(loginResponse.roles);
             return loginResponse;
           }
         }
@@ -71,8 +72,8 @@ class UserManagerImpl extends UserManager {
   }
 
   Future<void> _loginToFirebase(RbioLoginResponse? response) async {
-    getIt<UserNotifier>().firebaseEmail = response?.firebaseUserEmail;
-    getIt<UserNotifier>().firebasePassword = response?.firebaseUserSalt;
+    getIt<UserNotifier>().setFirebaseEmail(response?.firebaseUserEmail);
+    getIt<UserNotifier>().setFirebasePassword(response?.firebaseUserSalt);
     await getIt<FirestoreManager>().loginFirebase();
   }
 
@@ -180,7 +181,7 @@ class UserManagerImpl extends UserManager {
   @override
   Future<UserAccount> getUserProfile() async {
     final response = await _repository.getUserProfile();
-    await getIt<UserNotifier>().setUserAccount(response);
+    await getIt<UserFacade>().setUserAccount(response);
     return response;
   }
 
@@ -195,44 +196,24 @@ class UserManagerImpl extends UserManager {
     const String streamType = "Jitsi";
 
     if (streamType == "Zoom") {
-      // ZoomOptions zoomOptions = new ZoomOptions(
-      //   domain: "zoom.us",
-      //   appKey: R.strings.zoom_app_key,
-      //   appSecret: R.strings.zoom_app_secret,
-      // );
-
-      // // Setting Zoom meeting options (default to false if not set)
-      // ZoomMeetingOptions meetingOptions = new ZoomMeetingOptions(
-      //     userId: parseJwtPayLoad(token)['name'] != null
-      //         ? parseJwtPayLoad(token)['name']
-      //         : parseJwtPayLoad(token)['fullname'],
-      //     meetingId: webConsultantId,
-      //     meetingPassword: R.strings.zoomMeetingRoomPass,
-      //     disableDialIn: "true",
-      //     disableDrive: "true",
-      //     disableInvite: "true",
-      //     disableShare: "true",
-      //     noAudio: "false",
-      //     noDisconnectAudio: "false");
-      // Get.rootDelegate
-      //     .toNamed('MeetingPage', arguments: {meetingOptions, zoomOptions});
+      //
     } else {
-      final String name =
-          Utils.instance.parseJwtPayLoad(token as String)['name'] != null
-              ? Utils.instance.parseJwtPayLoad(token)['name'] as String
-              : Utils.instance.parseJwtPayLoad(token)['fullname'] as String;
-
-      LoggerUtils.instance.i("Toplantı Başlıyor : $webConsultantId");
+      final payload = Utils.instance.parseJwtPayLoad(token);
+      final name = payload['name']; // "HAYDAR DEMİR"
+      final preferredUsername = payload['preferred_username']; // TC
 
       final options = JitsiMeetingOptions(
         roomNameOrUrl: webConsultantId,
         serverUrl: "https://stream.guven.com.tr/",
         subject: " ",
-        userDisplayName: name,
+        userDisplayName: name + ' - ' + preferredUsername,
         userEmail: " ",
         isAudioOnly: false,
         isAudioMuted: false,
         isVideoMuted: false,
+        featureFlags: {
+          FeatureFlag.isChatEnabled: false,
+        },
       );
 
       showDialog(

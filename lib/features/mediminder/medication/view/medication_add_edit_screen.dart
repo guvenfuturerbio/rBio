@@ -132,6 +132,7 @@ class __MedicationReminderAddEditViewState
   // #region _buildAppBar
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.medication_reminders,
@@ -228,7 +229,7 @@ class __MedicationReminderAddEditViewState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //
-              R.sizes.stackedTopPadding(context),
+              R.widgets.stackedTopPadding(context),
 
               // İlaç Kutusu & Manuel
               // _buildGap(),
@@ -361,8 +362,8 @@ class __MedicationReminderAddEditViewState
             //
             Expanded(
               child: RbioElevatedButton(
-                backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-                textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                backColor: context.xCardColor,
+                textColor: context.xTextInverseColor,
                 title: LocaleProvider.current.btn_cancel,
                 onTap: () {
                   Atom.historyBack();
@@ -371,7 +372,7 @@ class __MedicationReminderAddEditViewState
             ),
 
             //
-            R.sizes.wSizer8,
+            R.widgets.wSizer8,
 
             //
             Expanded(
@@ -390,7 +391,7 @@ class __MedicationReminderAddEditViewState
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ];
     } else {
       return [const SizedBox()];
@@ -421,7 +422,7 @@ class __MedicationReminderAddEditViewState
                 DrugTracking.pillarSmall,
               ),
             ),
-            R.sizes.wSizer12,
+            R.widgets.wSizer12,
             Expanded(
               child: _buildMedicineTypeCard(
                 result,
@@ -447,8 +448,8 @@ class __MedicationReminderAddEditViewState
       textAlign: TextAlign.start,
       style: context.xHeadline4.copyWith(
         color: type == result.drugTracking
-            ? getIt<IAppConfig>().theme.textColor
-            : getIt<IAppConfig>().theme.textColorPassive,
+            ? context.xTextColor
+            : context.xMyCustomTheme.textDisabledColor,
       ),
     );
 
@@ -460,7 +461,7 @@ class __MedicationReminderAddEditViewState
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: type == result.drugTracking
-              ? getIt<IAppConfig>().theme.mainColor
+              ? context.xPrimaryColor
               : Colors.white,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
@@ -501,7 +502,7 @@ class __MedicationReminderAddEditViewState
         Expanded(
           child: _buildDrugCount(),
         ),
-        R.sizes.wSizer12,
+        R.widgets.wSizer12,
         Expanded(
           child: _buildRemainingCountNotification(),
         ),
@@ -529,7 +530,7 @@ class __MedicationReminderAddEditViewState
           obscureText: false,
           hintText: "",
           inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+            R.regExp.filterText,
           ],
           onChanged: (text) {
             context
@@ -561,7 +562,7 @@ class __MedicationReminderAddEditViewState
           obscureText: false,
           hintText: "",
           inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+            R.regExp.filterText4,
           ],
           onChanged: (text) {
             context
@@ -615,7 +616,7 @@ class __MedicationReminderAddEditViewState
         keyboardType: TextInputType.number,
         obscureText: false,
         inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]'))
+          R.regExp.filterText,
         ],
         onChanged: (text) async {
           if (text.isNotEmpty) {
@@ -694,7 +695,7 @@ class __MedicationReminderAddEditViewState
       padding: const EdgeInsets.symmetric(vertical: 6),
       margin: EdgeInsets.only(top: index == 0 ? 0 : 8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -773,5 +774,5 @@ class __MedicationReminderAddEditViewState
   }
   // #endregion
 
-  Widget _buildGap() => R.sizes.hSizer16;
+  Widget _buildGap() => R.widgets.hSizer16;
 }

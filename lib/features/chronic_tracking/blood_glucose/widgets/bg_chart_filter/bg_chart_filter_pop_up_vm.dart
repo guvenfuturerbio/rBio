@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../../../config/config.dart';
 
 class BgChartFilterPopUpVm extends ChangeNotifier {
   Map<GlucoseMarginsFilter, bool> filters;
@@ -20,17 +21,28 @@ class BgChartFilterPopUpVm extends ChangeNotifier {
 
   final Map<Color, GlucoseMarginsFilter> _colorInfo =
       <Color, GlucoseMarginsFilter>{};
-  Map<Color, GlucoseMarginsFilter> get colorInfo {
+
+  Map<Color, GlucoseMarginsFilter> colorInfo(BuildContext context) {
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.veryLow, () => GlucoseMarginsFilter.veryLow);
+      context.xMyCustomTheme.roman,
+      () => GlucoseMarginsFilter.veryLow,
+    );
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.low, () => GlucoseMarginsFilter.low);
+      context.xMyCustomTheme.tonysPink,
+      () => GlucoseMarginsFilter.low,
+    );
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.target, () => GlucoseMarginsFilter.target);
+      context.xMyCustomTheme.deYork,
+      () => GlucoseMarginsFilter.target,
+    );
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.high, () => GlucoseMarginsFilter.high);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.veryHigh,
-        () => GlucoseMarginsFilter.veryHigh);
+      context.xMyCustomTheme.energyYellow,
+      () => GlucoseMarginsFilter.high,
+    );
+    _colorInfo.putIfAbsent(
+      context.xMyCustomTheme.casablanca,
+      () => GlucoseMarginsFilter.veryHigh,
+    );
     return _colorInfo;
   }
 

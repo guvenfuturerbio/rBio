@@ -68,6 +68,7 @@ class DoctorCvView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.of(context).title_doctors_profiles,
@@ -98,7 +99,7 @@ class DoctorCvView extends StatelessWidget {
       builder: (context, state) {
         return state.when(
             initial: () => const SizedBox(),
-            success: (result) => result.id == null
+            success: (result, imageUrl) => result.id == null
                 ? RbioEmptyText(
                     title: LocaleProvider.current.empty_cv,
                   )
@@ -108,7 +109,7 @@ class DoctorCvView extends StatelessWidget {
                     tenantId: tenantId,
                     departmentName: departmentName,
                     result: result,
-                  ),
+                    imageUrl: imageUrl),
             loading: () => const RbioLoading(),
             error: (result) => const RbioBodyError());
       },
@@ -121,6 +122,7 @@ class DoctorCvView extends StatelessWidget {
     required int tenantId,
     required String departmentName,
     required DoctorCvResponse result,
+    required String imageUrl,
   }) {
     return SingleChildScrollView(
       padding: EdgeInsets.zero,
@@ -139,7 +141,7 @@ class DoctorCvView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.network(
-                  context.read<DoctorCvCubit>().imageUrl,
+                  imageUrl,
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) {
                     return customCircleAvatar(
@@ -198,7 +200,7 @@ class DoctorCvView extends StatelessWidget {
                         ? LocaleProvider.current.guven_cayyolu_campus
                         : LocaleProvider.current.online_hospital,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.grey,
+                  color: context.xMyCustomTheme.grey,
                 ),
               ),
             ),
@@ -209,7 +211,7 @@ class DoctorCvView extends StatelessWidget {
               child: Text(
                 departmentName,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.grey,
+                  color: context.xMyCustomTheme.grey,
                 ),
               ),
             ),

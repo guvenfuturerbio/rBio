@@ -17,9 +17,9 @@ class _TableCalendar extends StatefulWidget {
 }
 
 class _TableCalendarState extends State<_TableCalendar> {
-  static const Color borderColor = Color.fromARGB(255, 238, 238, 238);
+  Color get borderColor => context.xCurrentTheme.scaffoldBackgroundColor;
 
-  BoxBorder get boxBorder => const Border(
+  BoxBorder get boxBorder => Border(
         right: BorderSide(
           color: borderColor,
         ),
@@ -29,7 +29,7 @@ class _TableCalendarState extends State<_TableCalendar> {
       );
 
   TextStyle get textStyle => context.xHeadline4.copyWith(
-        color: Colors.black,
+        color: context.xTextInverseColor,
       );
 
   late DateTime _focusedDay;
@@ -67,15 +67,15 @@ class _TableCalendarState extends State<_TableCalendar> {
         //
         Positioned.fill(
           child: Container(
-            color: getIt<IAppConfig>().theme.cardBackgroundColor,
+            color: context.xCardColor,
           ),
         ),
 
         //
         TableCalendar<Event>(
           locale: context.watch<LocaleNotifier>().getLocaleStr,
-          daysBackgroundColor: getIt<IAppConfig>().theme.secondaryColor,
-          cellBackgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+          daysBackgroundColor: context.xSecondaryContainerColor,
+          cellBackgroundColor: context.xCardColor,
 
           //
           firstDay: kFirstDay,
@@ -100,7 +100,7 @@ class _TableCalendarState extends State<_TableCalendar> {
             headerMargin: EdgeInsets.zero,
             headerPadding: EdgeInsets.zero,
             decoration: BoxDecoration(
-              color: getIt<IAppConfig>().theme.secondaryColor,
+              color: context.xSecondaryContainerColor,
               borderRadius: BorderRadius.vertical(
                 top: R.sizes.radiusCircular,
               ),
@@ -116,8 +116,8 @@ class _TableCalendarState extends State<_TableCalendar> {
             leftChevronVisible: true,
             leftChevronIcon: SvgPicture.asset(
               R.image.arrowLeft,
-              color: getIt<IAppConfig>().theme.textContrastColor,
               width: R.sizes.iconSize5,
+              color: context.xTextOnPrimaryColor,
             ),
 
             //
@@ -130,8 +130,8 @@ class _TableCalendarState extends State<_TableCalendar> {
             rightChevronVisible: true,
             rightChevronIcon: SvgPicture.asset(
               R.image.arrowRightIcon,
-              color: getIt<IAppConfig>().theme.textContrastColor,
               width: R.sizes.iconSize5,
+              color: context.xTextOnPrimaryColor,
             ),
           ),
 
@@ -169,8 +169,8 @@ class _TableCalendarState extends State<_TableCalendar> {
                   '${day.day}',
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
-                        ? getIt<IAppConfig>().theme.textColorSecondary
-                        : getIt<IAppConfig>().theme.textColorPassive,
+                        ? context.xTextInverseColor
+                        : context.xMyCustomTheme.textDisabledColor,
                   ),
                 ),
               );
@@ -189,8 +189,8 @@ class _TableCalendarState extends State<_TableCalendar> {
                   '${day.day}',
                   style: textStyle.copyWith(
                     color: widget.val.dateContains(day)
-                        ? getIt<IAppConfig>().theme.textContrastColor
-                        : getIt<IAppConfig>().theme.textColorPassive,
+                        ? context.xTextOnPrimaryColor
+                        : context.xMyCustomTheme.textDisabledColor,
                   ),
                 ),
               );
@@ -208,7 +208,7 @@ class _TableCalendarState extends State<_TableCalendar> {
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: getIt<IAppConfig>().theme.mainColor,
+                    color: context.xPrimaryColor,
                     shape: BoxShape.circle,
                   ),
                   child: Text(

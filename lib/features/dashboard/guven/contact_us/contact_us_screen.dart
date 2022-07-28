@@ -38,6 +38,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       leading: const SizedBox(),
     );
   }
@@ -72,15 +73,16 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(200),
                                 gradient: LinearGradient(
-                                    colors: [
-                                      getIt<IAppConfig>().theme.red,
-                                      getIt<IAppConfig>().theme.lightRed
-                                    ],
-                                    begin: Alignment.bottomLeft,
-                                    end: Alignment.centerRight),
+                                  colors: [
+                                    context.xMyCustomTheme.fuzzyWuzzyBrown,
+                                    context.xMyCustomTheme.fuzzyWuzzyBrown,
+                                  ],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.centerRight,
+                                ),
                                 border: Border.all(
                                   width: 1,
-                                  color: getIt<IAppConfig>().theme.red,
+                                  color: context.xMyCustomTheme.fuzzyWuzzyBrown,
                                 ),
                               ),
                               margin: const EdgeInsets.all(20),
@@ -92,7 +94,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 children: [
                                   SvgPicture.asset(
                                     R.image.icPhoneGreyCall,
-                                    color: getIt<IAppConfig>().theme.white,
+                                    color: context.xMyCustomTheme.white,
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -100,7 +102,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   Text(
                                     LocaleProvider.of(context).call_us,
                                     style: TextStyle(
-                                        color: getIt<IAppConfig>().theme.white),
+                                      color: context.xMyCustomTheme.white,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -111,18 +114,20 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             child: Text(
                               LocaleProvider.of(context).we_are_online,
                               style: TextStyle(
-                                  color: getIt<IAppConfig>().theme.red,
-                                  fontSize: 16),
+                                color: context.xMyCustomTheme.fuzzyWuzzyBrown,
+                                fontSize: 16,
+                              ),
                             ),
                           )
                         : Center(
                             child: Text(
                               LocaleProvider.of(context).call_us_message,
                               style: TextStyle(
-                                  color: getIt<IAppConfig>().theme.red,
-                                  fontSize: 16),
+                                color: context.xMyCustomTheme.fuzzyWuzzyBrown,
+                                fontSize: 16,
+                              ),
                             ),
-                          )
+                          ),
                   ],
                 ),
               ),
@@ -130,9 +135,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               //
               (!Platform.isAndroid && !Platform.isIOS)
                   ? Material(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: R.sizes.borderRadiusCircular,
-                      ),
+                      shape: R.sizes.defaultShape,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(

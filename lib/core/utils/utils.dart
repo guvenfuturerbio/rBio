@@ -7,8 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
+import '../../config/config.dart';
+import '../../features/auth/shared/shared.dart';
 import '../core.dart';
-import '../widgets/rbio_height_info_dialog.dart';
+import '../widgets/rbio_height_required_info_dialog.dart';
 
 class Utils {
   Utils._();
@@ -37,7 +39,7 @@ class Utils {
     if (height != null) {
       return true;
     } else {
-      Atom.show(RbioHeightInfoDialog(backRoute: backRoute));
+      Atom.show(RbioHeightRequiredInfoDialog(backRoute: backRoute));
       return false;
     }
   }
@@ -54,10 +56,10 @@ class Utils {
         : 0;
   }
 
-  Gradient appGradient() => LinearGradient(
+  Gradient appGradient(BuildContext context) => LinearGradient(
         colors: [
-          getIt<IAppConfig>().theme.mainColor,
-          getIt<IAppConfig>().theme.mainColor,
+          context.xPrimaryColor,
+          context.xPrimaryColor,
         ],
         begin: Alignment.bottomLeft,
         end: Alignment.centerRight,
@@ -89,7 +91,7 @@ class Utils {
               child: Text(
                 text,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColor,
+                  color: context.xTextColor,
                 ),
               ),
             ),
@@ -107,11 +109,11 @@ class Utils {
     showSnackbar(
       context,
       text,
-      backColor: getIt<IAppConfig>().theme.mainColor,
+      backColor: context.xPrimaryColor,
       trailing: SvgPicture.asset(
         R.image.done,
         height: R.sizes.iconSize2,
-        color: getIt<IAppConfig>().theme.iconSecondaryColor,
+        color: context.xMyCustomTheme.white,
       ),
     );
   }
@@ -122,11 +124,11 @@ class Utils {
     showSnackbar(
       context,
       text,
-      backColor: getIt<IAppConfig>().theme.darkRed,
+      backColor: context.xMyCustomTheme.punch,
       trailing: SvgPicture.asset(
         R.image.error,
         height: R.sizes.iconSize2,
-        color: getIt<IAppConfig>().theme.iconSecondaryColor,
+        color: context.xMyCustomTheme.white,
       ),
     );
   }
@@ -205,7 +207,7 @@ class Utils {
     Future<List<T>> Function() apiCall,
     Duration cacheDuration,
     T model,
-    LocalCacheService localCacheService, {
+    LocalCacheManager localCacheService, {
     bool localeHandle = false,
   }) async {
     final cacheUrl = url +
@@ -247,7 +249,7 @@ class Utils {
     Future<T> Function() apiCall,
     Duration cacheDuration,
     T model,
-    LocalCacheService localCacheService, {
+    LocalCacheManager localCacheService, {
     bool localeHandle = false,
   }) async {
     final cacheUrl = url +
@@ -293,6 +295,7 @@ class Utils {
   }
 
   InputDecoration inputImageDecoration({
+    required BuildContext context,
     String? image,
     String? hintText,
     required Function suffixIconClicked,
@@ -304,11 +307,12 @@ class Utils {
             ? SvgPicture.asset(
                 image,
                 fit: BoxFit.none,
+                color: context.xIconColor,
               )
             : const Icon(Icons.close),
         focusedBorder: _borderTextField(),
         border: _borderTextField(),
-        focusColor: getIt<IAppConfig>().theme.mainColor,
+        focusColor: context.xPrimaryColor,
         suffixIcon: Visibility(
           visible: suffixIcon != null ? true : false,
           child: InkWell(
@@ -323,19 +327,23 @@ class Utils {
         ),
         enabledBorder: _borderTextField(),
         hintText: hintText,
-        hintStyle: hintStyle(),
+        hintStyle: hintStyle(context),
       );
 
-  TextStyle inputTextStyle([Color? textColor]) => TextStyle(
+  TextStyle inputTextStyle(BuildContext context, [Color? textColor]) =>
+      TextStyle(
         fontSize: 16,
-        color: textColor ?? getIt<IAppConfig>().theme.darkBlack,
+        color: textColor ?? context.xTextInverseColor,
       );
 
-  TextStyle hintStyle() =>
-      TextStyle(fontSize: 16, color: getIt<IAppConfig>().theme.gray);
+  TextStyle hintStyle(BuildContext context) => TextStyle(
+        fontSize: 16,
+        color: context.xMyCustomTheme.dustyGray,
+      );
 
   GradientButton button({
-    text: String,
+    required BuildContext context,
+    required String text,
     required Function() onPressed,
     double height = 16,
     double width = 200,
@@ -348,20 +356,23 @@ class Utils {
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: getIt<IAppConfig>().theme.white),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: context.xMyCustomTheme.white,
+          ),
         ),
         textStyle: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: getIt<IAppConfig>().theme.white),
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: context.xMyCustomTheme.white,
+        ),
         callback: onPressed,
-        gradient: appGradient(),
+        gradient: appGradient(context),
         shadowColor: Colors.black,
       );
 
-  InputDecoration inputDecorationForLogin({
+  InputDecoration inputDecorationForLogin(
+    BuildContext context, {
     String? hintText,
     String? labelText,
     EdgeInsetsGeometry? contentPadding,
@@ -378,7 +389,7 @@ class Utils {
         labelText: labelText,
         prefixIcon: prefixIcon,
         hintStyle: Atom.context.xHeadline4.copyWith(
-          color: getIt<IAppConfig>().theme.textColorPassive,
+          color: context.xMyCustomTheme.textDisabledColor,
         ),
       );
 
@@ -399,7 +410,8 @@ class Utils {
     // }
   }
 
-  Color fetchMeasurementColor({
+  Color fetchMeasurementColor(
+    BuildContext context, {
     required int measurement,
     required int criticMin,
     required int criticMax,
@@ -408,15 +420,15 @@ class Utils {
   }) {
     Color color;
     if (measurement <= criticMin) {
-      color = getIt<IAppConfig>().theme.veryLow;
+      color = context.xMyCustomTheme.roman;
     } else if (measurement > criticMin && measurement < targetMin) {
-      color = getIt<IAppConfig>().theme.low;
+      color = context.xMyCustomTheme.tonysPink;
     } else if (measurement >= targetMin && measurement <= targetMax) {
-      color = getIt<IAppConfig>().theme.target;
+      color = context.xMyCustomTheme.deYork;
     } else if (measurement > targetMax && measurement < criticMax) {
-      color = getIt<IAppConfig>().theme.high;
+      color = context.xMyCustomTheme.energyYellow;
     } else if (measurement >= criticMax) {
-      color = getIt<IAppConfig>().theme.veryHigh;
+      color = context.xMyCustomTheme.casablanca;
     } else {
       color = Colors.white;
     }
@@ -425,10 +437,10 @@ class Utils {
 
   InputBorder _borderTextField() => OutlineInputBorder(
         borderRadius: BorderRadius.circular(200),
-        borderSide: BorderSide(
+        borderSide: const BorderSide(
           width: 0,
           style: BorderStyle.solid,
-          color: getIt<IAppConfig>().theme.darkWhite,
+          color: Colors.transparent,
         ),
       );
 
@@ -446,22 +458,25 @@ class Utils {
   }
 
   /// MG14
-  Color getGlucoseMeasurementColor(int result) {
+  Color getGlucoseMeasurementColor(
+    BuildContext context,
+    int result,
+  ) {
     Person activeProfile = getIt<ProfileStorageImpl>().getFirst();
 
     if (result < activeProfile.hypo!) {
-      return getIt<IAppConfig>().theme.veryLow;
+      return context.xMyCustomTheme.roman;
     } else if (result >= activeProfile.hypo! &&
         result < activeProfile.rangeMin!) {
-      return getIt<IAppConfig>().theme.low;
+      return context.xMyCustomTheme.tonysPink;
     } else if (result >= activeProfile.rangeMin! &&
         result < activeProfile.rangeMax!) {
-      return getIt<IAppConfig>().theme.target;
+      return context.xMyCustomTheme.deYork;
     } else if (result >= activeProfile.rangeMax! &&
         result < activeProfile.hyper!) {
-      return getIt<IAppConfig>().theme.high;
+      return context.xMyCustomTheme.energyYellow;
     } else {
-      return getIt<IAppConfig>().theme.veryHigh;
+      return context.xMyCustomTheme.casablanca;
     }
   }
 

@@ -25,10 +25,8 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
     return Dialog(
       elevation: 0,
       insetPadding: EdgeInsets.zero,
-      backgroundColor: getIt<IAppConfig>().theme.grayColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      backgroundColor: context.xMyCustomTheme.gallery,
+      shape: R.sizes.defaultShape,
       child: Container(
         width: context.width - 50,
         padding: const EdgeInsets.all(20),
@@ -41,7 +39,7 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
             Center(
               child: Text(
                 LocaleProvider.of(context).get_translator,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
               ),
             ),
 
@@ -71,8 +69,9 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
                               Text(
                                 widget.translators[index].language ?? '',
                                 style: TextStyle(
-                                    fontSize: context.xHeadline3.fontSize,
-                                    color: getIt<IAppConfig>().theme.black),
+                                  fontSize: context.xHeadline3.fontSize,
+                                  color: context.xMyCustomTheme.codGray,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -85,12 +84,15 @@ class _CustomPopUpDropDownState extends State<CustomPopUpDropDown> {
               ),
             ),
 
+            //
             Center(
-              child: RbioSmallDialogButton.green(
-                  title: LocaleProvider.of(context).btn_cancel,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
+              child: RbioSmallDialogButton.main(
+                context: context,
+                title: LocaleProvider.of(context).btn_cancel,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
             ),
           ],
         ),

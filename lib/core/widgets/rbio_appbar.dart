@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../core.dart';
+import '../theme/theme_cubit.dart';
 
 mixin IRbioAppBar on PreferredSize {}
 
 class RbioAppBar extends PreferredSize with IRbioAppBar {
+  final BuildContext context;
   final Widget? title;
   final Widget? leading;
   final List<Widget>? actions;
@@ -13,6 +16,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
 
   RbioAppBar({
     Key? key,
+    required this.context,
     this.title,
     this.leading,
     this.actions,
@@ -24,20 +28,21 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             toolbarHeight: 64,
             centerTitle: true,
             elevation: 0,
-            backgroundColor: getIt<IAppConfig>().theme.mainColor,
+            backgroundColor: context.xAppBarTheme.backgroundColor,
 
             //
             leadingWidth: leadingWidth,
             leading: leading ??
                 Align(
                   alignment: Alignment.center,
-                  child: InkWell(
+                  child: GestureDetector(
                     child: Container(
                       color: Colors.transparent,
                       padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
                       child: SvgPicture.asset(
                         R.image.back,
                         width: R.sizes.iconSize,
+                        color: context.xAppBarTheme.iconTheme?.color,
                       ),
                     ),
                     onTap: () {
@@ -51,9 +56,9 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
-                    height: getIt<IAppConfig>().theme.appBarLogoHeight,
+                    height: context.xCurrentTheme.appBarLogoHeight,
                     child: SvgPicture.asset(
-                      getIt<IAppConfig>().theme.appLogo,
+                      context.xCurrentTheme.appLogo,
                       fit: BoxFit.fitHeight,
                     ),
                   ),
@@ -62,6 +67,17 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
             //
             actions: actions ??
                 [
+                  // //
+                  // IconButton(
+                  //   onPressed: () {
+                  //     context.read<ThemeCubit>().toggle();
+                  //   },
+                  //   icon: const Icon(
+                  //     Icons.read_more,
+                  //   ),
+                  // ),
+
+                  //
                   if (title == null) ...[
                     Opacity(
                       opacity: 0,
@@ -103,10 +119,7 @@ class RbioAppBar extends PreferredSize with IRbioAppBar {
       text,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: context.xHeadline1.copyWith(
-        color: Colors.white,
-        fontWeight: FontWeight.w400,
-      ),
+      style: context.xAppBarTheme.titleTextStyle,
     );
   }
 }

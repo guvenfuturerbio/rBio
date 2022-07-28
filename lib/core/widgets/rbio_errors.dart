@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../config/config.dart';
 import '../core.dart';
 
 class RbioRouteError extends StatelessWidget {
@@ -21,7 +22,9 @@ class RbioRouteError extends StatelessWidget {
         .captureException(e, stackTrace: stackTrace);
 
     return RbioScaffold(
-      appbar: RbioAppBar(),
+      appbar: RbioAppBar(
+        context: context,
+      ),
       body: const RbioBodyError(),
     );
   }
@@ -84,5 +87,5 @@ class RbioBodyError extends StatelessWidget {
     );
   }
 
-  Widget _buildGap() => const SizedBox(height: 16);
+  Widget _buildGap() => R.widgets.hSizer16;
 }

@@ -78,6 +78,7 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).request_and_suggestions,
@@ -102,8 +103,8 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
           mainAxisSize: MainAxisSize.max,
           children: [
             //
-            R.sizes.stackedTopPadding(context),
-            R.sizes.hSizer16,
+            R.widgets.stackedTopPadding(context),
+            R.widgets.hSizer16,
 
             //
             Padding(
@@ -112,7 +113,7 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
                 LocaleProvider.current.request_and_suggestions_text,
                 textAlign: TextAlign.center,
                 style: context.xHeadline5.copyWith(
-                  color: getIt<IAppConfig>().theme.mainColor,
+                  color: context.xPrimaryColor,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
                 ),
@@ -164,7 +165,7 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
             ),
 
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
             Center(
@@ -183,7 +184,7 @@ class _RequestSuggestionsViewState extends State<RequestSuggestionsView> {
             ),
 
             //
-            R.sizes.defaultBottomPadding,
+            R.widgets.defaultBottomPadding,
           ],
         ),
       ),

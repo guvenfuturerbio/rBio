@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../model/get_body_symptoms_response.dart';
 import '../viewmodel/symptoms_result_page_vm.dart';
@@ -13,6 +14,7 @@ class SymptomsResultPage extends StatefulWidget {
   late bool? isFromVoice;
   late String? bodyPart;
   late int? bodyPartLength;
+
   SymptomsResultPage({
     Key? key,
     this.symptoms,
@@ -63,6 +65,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).results,
@@ -82,16 +85,13 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      elevation: R.sizes.defaultElevation,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: R.sizes.borderRadiusCircular,
-                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            //
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -99,16 +99,15 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                 style: context.xHeadline2,
                               ),
                             ),
+
+                            //
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 LinearPercentIndicator(
                                   animation: true,
-                                  progressColor:
-                                      getIt<IAppConfig>().theme.mainColor,
-                                  backgroundColor: getIt<IAppConfig>()
-                                      .theme
-                                      .grey
+                                  progressColor: context.xPrimaryColor,
+                                  backgroundColor: context.xMyCustomTheme.grey
                                       .withOpacity(0.2),
                                   lineHeight: 20,
                                   barRadius: const Radius.circular(25),
@@ -119,19 +118,19 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                     child: Text(
                                       '% 95.0',
                                       style: context.xHeadline2.copyWith(
-                                          color: getIt<IAppConfig>()
-                                              .theme
-                                              .mainColor,
-                                          fontWeight: FontWeight.bold),
+                                        color: context.xPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
+
+                                //
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color:
-                                          getIt<IAppConfig>().theme.mainColor,
+                                      color: context.xPrimaryColor,
                                       borderRadius:
                                           R.sizes.borderRadiusCircular,
                                     ),
@@ -178,9 +177,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: context.xHeadline4.copyWith(
-                                            color: getIt<IAppConfig>()
-                                                .theme
-                                                .textColor),
+                                          color: context.xTextColor,
+                                        ),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -193,14 +191,14 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                       ),
                     ),
                   ),
+
+                  //
                   Center(
                     child: Text(
                       LocaleProvider.of(context).no_symptom_result,
                       style: context.xHeadline3.copyWith(
-                          color: getIt<IAppConfig>()
-                              .theme
-                              .textColorSecondary
-                              .withOpacity(0.5)),
+                        color: context.xTextInverseColor.withOpacity(0.5),
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   )
@@ -211,10 +209,6 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                 itemCount: value.specialisations.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    elevation: R.sizes.defaultElevation,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -240,11 +234,8 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                             children: [
                               LinearPercentIndicator(
                                 animation: true,
-                                progressColor:
-                                    getIt<IAppConfig>().theme.mainColor,
-                                backgroundColor: getIt<IAppConfig>()
-                                    .theme
-                                    .grey
+                                progressColor: context.xPrimaryColor,
+                                backgroundColor: context.xMyCustomTheme.grey
                                     .withOpacity(0.2),
                                 lineHeight: 20,
                                 animationDuration: 1100,
@@ -257,19 +248,17 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                       value.specialisations[index].accuracy
                                           .toStringAsFixed(1),
                                   style: context.xHeadline1.copyWith(
-                                      color:
-                                          getIt<IAppConfig>().theme.mainColor,
+                                      color: context.xPrimaryColor,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
 
                               //
-
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    color: context.xPrimaryColor,
                                     borderRadius: R.sizes.borderRadiusCircular,
                                   ),
                                   width:
@@ -354,8 +343,7 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
                                       textAlign: TextAlign.center,
                                       overflow: TextOverflow.ellipsis,
                                       style: context.xHeadline4.copyWith(
-                                        color:
-                                            getIt<IAppConfig>().theme.textColor,
+                                        color: context.xTextColor,
                                       ),
                                     ),
                                   ),
@@ -379,12 +367,11 @@ class _SymptomsResultPageState extends State<SymptomsResultPage> {
   }
 }
 
-FloatingActionButton _buildFAB(BuildContext context) {
-  return FloatingActionButton(
-    backgroundColor: getIt<IAppConfig>().theme.mainColor,
+Widget _buildFAB(BuildContext context) {
+  return RbioIconsFAB(
+    icon: Icons.home,
     onPressed: () {
       Atom.to(PagePaths.main);
     },
-    child: const Icon(Icons.home),
   );
 }

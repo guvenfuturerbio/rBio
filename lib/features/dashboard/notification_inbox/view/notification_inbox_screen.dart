@@ -26,6 +26,7 @@ class NotificationInboxStateScreen extends State<NotificationInboxScreen> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       leading: widget.drawerKey != null
           ? RbioLeadingMenu(drawerKey: widget.drawerKey)
           : null,
@@ -34,7 +35,7 @@ class NotificationInboxStateScreen extends State<NotificationInboxScreen> {
 
   Widget _buildBody() => Column(
         children: [
-          R.sizes.stackedTopPadding(context),
+          R.widgets.stackedTopPadding(context),
           RbioEmptyText(title: LocaleProvider.current.notification_inbox_empty),
         ],
       );

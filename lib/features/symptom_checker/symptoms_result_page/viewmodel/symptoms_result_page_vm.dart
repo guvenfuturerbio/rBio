@@ -4,9 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/services.dart';
-import 'package:onedosehealth/features/symptom_checker/symptoms_result_page/model/get_body_symptoms_response.dart';
+
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../model/department_response.dart';
+import '../model/get_body_symptoms_response.dart';
+import '../model/get_specialisations.response.dart';
 
 class SymptomsResultPageVm extends ChangeNotifier {
   BuildContext? mContext;
@@ -100,10 +103,14 @@ class SymptomsResultPageVm extends ChangeNotifier {
   navigateToDoctorsPage(
       {List<GetDepartmentIdResponse>? departments, int? id}) async {
     try {
-      late int resultId;
+      int? resultId;
       departments?.forEach((element) {
-        if (int.parse(element.apimedicId!) == id) {
-          resultId = int.parse(element.id!);
+        if (element.apimedicId != null) {
+          if (int.parse(element.apimedicId!) == id) {
+            if (element.id != null) {
+              resultId = int.parse(element.id!);
+            }
+          }
         }
       });
       return resultId;

@@ -19,7 +19,7 @@ class __ExpandablePostponeComponentState
     return AnimatedContainer(
       duration: kTabScrollDuration,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xInverseCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -45,8 +45,7 @@ class __ExpandablePostponeComponentState
               child: Text(
                 LocaleProvider.current.postpone,
                 textAlign: TextAlign.center,
-                style:
-                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                style: context.xDialogTheme.descriptionTextStyle,
               ),
             ),
           ),
@@ -90,7 +89,7 @@ class __ExpandablePostponeComponentState
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            R.sizes.hSizer4,
+            R.widgets.hSizer4,
 
             //
             Center(
@@ -102,7 +101,7 @@ class __ExpandablePostponeComponentState
             ),
 
             //
-            R.sizes.hSizer4,
+            R.widgets.hSizer4,
 
             //
             Container(
@@ -115,7 +114,7 @@ class __ExpandablePostponeComponentState
             ),
 
             //
-            R.sizes.hSizer4,
+            R.widgets.hSizer4,
           ],
         ),
       );

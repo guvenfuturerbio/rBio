@@ -23,12 +23,12 @@ class _RbioContextInfoDialogState extends State<RbioContextInfoDialog> {
   @override
   Widget build(BuildContext context) {
     return GuvenAlert(
-      backgroundColor: Colors.white,
-      title: GuvenAlert.buildTitle(widget.title),
+      title: GuvenAlert.buildTitle(context, widget.title),
 
       //
       actions: [
         GuvenAlert.buildMaterialAction(
+          context,
           LocaleProvider.of(context).Ok,
           () {
             Navigator.pop(context);
@@ -45,11 +45,11 @@ class _RbioContextInfoDialogState extends State<RbioContextInfoDialog> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  GuvenAlert.buildDescription(widget.text),
+                  GuvenAlert.buildDescription(context, widget.text),
                 ],
               )
             : SingleChildScrollView(
-                child: GuvenAlert.buildDescription(widget.text),
+                child: GuvenAlert.buildDescription(context, widget.text),
               ),
       ),
     );

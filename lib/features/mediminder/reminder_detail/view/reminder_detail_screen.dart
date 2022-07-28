@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../../../core/core.dart';
-import '../../../../core/utils/tz_helper.dart';
+import '../../../../core/utils/helper/tz_helper.dart';
 import '../../mediminder.dart';
 
 part 'widget/add_medicine_dialog.dart';
@@ -92,10 +91,8 @@ class _ReminderDetailView extends StatelessWidget {
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
-        title: RbioAppBar.textTitle(
-          context,
-          title,
-        ),
+        context: context,
+        title: RbioAppBar.textTitle(context, title),
       );
 
   Widget _buildBody() => BlocBuilder<ReminderDetailCubit, ReminderDetailState>(
@@ -128,7 +125,7 @@ class _ReminderDetailView extends StatelessWidget {
         _buildButtons(context, result),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }
@@ -183,7 +180,7 @@ class _ReminderDetailView extends StatelessWidget {
                         ),
 
                         //
-                        R.sizes.hSizer8,
+                        R.widgets.hSizer8,
                       ],
                     );
                   } else {
@@ -226,12 +223,12 @@ class _ReminderDetailView extends StatelessWidget {
             title: LocaleProvider.current.edit,
             infinityWidth: true,
             fontWeight: FontWeight.bold,
-            textColor: getIt<IAppConfig>().theme.textColorSecondary,
-            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            textColor: context.xTextInverseColor,
+            backColor: context.xCardColor,
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           RbioRedButton(
@@ -259,7 +256,7 @@ Widget _buildDetailsTitle(BuildContext context) {
       ),
 
       //
-      R.sizes.hSizer8
+      R.widgets.hSizer8
     ],
   );
 }
@@ -282,7 +279,7 @@ Widget _buildTitleRow(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.xHeadline4.copyWith(
-            color: isActive ? null : getIt<IAppConfig>().theme.textColorPassive,
+            color: isActive ? null : context.xMyCustomTheme.textDisabledColor,
           ),
         ),
       ),
@@ -294,7 +291,7 @@ Widget _buildTitleRow(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.xHeadline4.copyWith(
-            color: isActive ? null : getIt<IAppConfig>().theme.textColorPassive,
+            color: isActive ? null : context.xMyCustomTheme.textDisabledColor,
           ),
         ),
       ),
@@ -302,4 +299,4 @@ Widget _buildTitleRow(
   );
 }
 
-Widget _buildGap() => R.sizes.hSizer8;
+Widget _buildGap() => R.widgets.hSizer8;

@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/features/auth/change_password/cubit/change_password_cubit.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
+import '../cubit/change_password_cubit.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
@@ -14,7 +15,14 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ChangePasswordCubit(getIt()),
+      create: (context) => ChangePasswordCubit(
+        repository: getIt<Repository>(),
+        userManager: getIt<UserManager>(),
+        adjustManager: getIt<IAppConfig>().platform.adjustManager,
+        sentryManager: getIt<IAppConfig>().platform.sentryManager,
+        sharedPreferencesManager: getIt<ISharedPreferencesManager>(),
+        firebaseAnalyticsManager: getIt<FirebaseAnalyticsManager>(),
+      ),
       child: const ChangePasswordView(),
     );
   }
@@ -125,6 +133,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).change_password,
@@ -149,17 +158,17 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               //
-              R.sizes.stackedTopPadding(context),
+              R.widgets.stackedTopPadding(context),
 
               //
-              R.sizes.hSizer16,
+              R.widgets.hSizer16,
 
               //
               Text(
                 LocaleProvider.current.password_security,
                 textAlign: TextAlign.center,
                 style: context.xHeadline4.copyWith(
-                  color: getIt<IAppConfig>().theme.mainColor,
+                  color: context.xPrimaryColor,
                 ),
               ),
 
@@ -361,7 +370,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               ),
 
               //
-              R.sizes.defaultBottomPadding,
+              R.widgets.defaultBottomPadding,
             ],
           ),
         ),
@@ -389,16 +398,15 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<IAppConfig>().theme.textColorSecondary,
+                color: context.xTextInverseColor,
               ),
             ),
           ),
 
           //
-          Checkbox(
+          RbioCheckbox(
             value: checkboxValue,
             onChanged: (value) {},
-            activeColor: getIt<IAppConfig>().theme.mainColor,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
         ],

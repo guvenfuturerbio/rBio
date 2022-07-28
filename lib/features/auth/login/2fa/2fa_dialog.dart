@@ -42,7 +42,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
       create: (context) => TwoFaVm(context),
       child: Consumer<TwoFaVm>(
         builder: (context, vm, child) {
-          return RbioBaseGreyDialog(
+          return RbioBaseDialog(
             child: SingleChildScrollView(
               child: RbioKeyboardActions(
                 isDialog: true,
@@ -55,27 +55,23 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     //
-                    R.sizes.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     Center(
                       child: Text(
                         LocaleProvider.of(context).sms_verification_code,
-                        style: getIt<IAppConfig>()
-                            .theme
-                            .dialogTheme
-                            .title(context),
+                        style: context.xDialogTheme.titleTextStyle,
                       ),
                     ),
 
-                    R.sizes.hSizer32,
-
-                    //
+                    R.widgets.hSizer32,
 
                     //
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: RbioTextFormField(
+                        backColor: context.xInverseCardColor,
                         controller: _textEditingController,
                         focusNode: _focusNode,
                         keyboardType: TextInputType.text,
@@ -88,9 +84,10 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     //
 
                     if (!vm.resendButtonEnabled) ...[
-                      R.sizes.hSizer40,
+                      R.widgets.hSizer40,
                       Center(
-                        child: RbioSmallDialogButton.green(
+                        child: RbioSmallDialogButton.main(
+                          context: context,
                           title: LocaleProvider.current.save,
                           onPressed: () async {
                             await vm.verifyCode(
@@ -103,18 +100,27 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     ],
 
                     if (vm.resendButtonEnabled) ...[
-                      R.sizes.hSizer24,
+                      //
+                      R.widgets.hSizer24,
+
+                      //
                       Center(
                         child: RbioSmallDialogButton.white(
+                          context,
                           title: LocaleProvider.current.resend,
                           onPressed: () async {
                             await vm.resendCode();
                           },
                         ),
                       ),
-                      R.sizes.hSizer8,
+
+                      //
+                      R.widgets.hSizer8,
+
+                      //
                       Center(
-                          child: RbioSmallDialogButton.green(
+                          child: RbioSmallDialogButton.main(
+                        context: context,
                         title: LocaleProvider.current.save,
                         onPressed: () async {
                           await vm.verifyCode(

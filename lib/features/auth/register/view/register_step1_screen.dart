@@ -5,11 +5,12 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:onedosehealth/core/widgets/rbio_error_text.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
+import '../../../../core/widgets/rbio_error_text.dart';
 import '../viewmodel/register_step2_vm.dart';
 
 class RegisterStep1Screen extends StatefulWidget {
@@ -77,6 +78,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
             child: RbioScaffold(
               resizeToAvoidBottomInset: true,
               appbar: RbioAppBar(
+                context: context,
                 leading: isFromIntro ? const SizedBox() : null,
               ),
               body: _buildBody(vm),
@@ -285,86 +287,86 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                     ),
                   ),
                   InkWell(
-                      onTap: () {
-                        setState(() {
-                          isBirthDayNull = false;
-                          vm.selectDate(context);
-                        });
-                      },
-                      child: isBirthDayNull
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    padding: const EdgeInsets.all(13),
-                                    decoration: BoxDecoration(
-                                      color: getIt<IAppConfig>().theme.white,
-                                      border: Border.all(
-                                        color: getIt<IAppConfig>().theme.red,
-                                      ),
-                                      borderRadius:
-                                          R.sizes.borderRadiusCircular,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        if (vm.selectedDate == null)
-                                          Text('DD/MM/YYYY',
-                                              style: context.xHeadline3
-                                                  .copyWith(
-                                                      color: getIt<IAppConfig>()
-                                                          .theme
-                                                          .textColorSecondary
-                                                          .withOpacity(0.5))),
-                                        const Icon(Icons.calendar_today)
-                                      ],
-                                    )),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 22.0),
-                                  child: RbioErrorText(
-                                    title: LocaleProvider.current.validation,
+                    onTap: () {
+                      setState(() {
+                        isBirthDayNull = false;
+                        vm.selectDate(context);
+                      });
+                    },
+                    child: isBirthDayNull
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(13),
+                                decoration: BoxDecoration(
+                                  color: context.xMyCustomTheme.white,
+                                  border: Border.all(
+                                    color:
+                                        context.xMyCustomTheme.fuzzyWuzzyBrown,
                                   ),
-                                )
-                              ],
-                            )
-                          : Container(
-                              padding: const EdgeInsets.all(13),
-                              decoration: BoxDecoration(
-                                color: getIt<IAppConfig>().theme.white,
-                                border: Border.all(
-                                  color: getIt<IAppConfig>().theme.darkWhite,
+                                  borderRadius: R.sizes.borderRadiusCircular,
                                 ),
-                                borderRadius: R.sizes.borderRadiusCircular,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  vm.selectedDate != null
-                                      ? Text(
-                                          DateFormat('dd MMMM yyyy')
-                                              .format(vm.selectedDate!),
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        )
-                                      : Text('DD/MM/YYYY',
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    if (vm.selectedDate == null)
+                                      Text('DD/MM/YYYY',
                                           style: context.xHeadline3.copyWith(
-                                              color: getIt<IAppConfig>()
-                                                  .theme
-                                                  .textColorSecondary
-                                                  .withOpacity(0.5))),
-                                  const Icon(Icons.calendar_today),
-                                ],
+                                            color: context.xTextInverseColor
+                                                .withOpacity(0.5),
+                                          )),
+                                    const Icon(Icons.calendar_today)
+                                  ],
+                                ),
                               ),
-                              margin: const EdgeInsets.only(
-                                bottom: 10,
+                              const SizedBox(
+                                height: 5,
                               ),
-                            )),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 22.0),
+                                child: RbioErrorText(
+                                  title: LocaleProvider.current.validation,
+                                ),
+                              )
+                            ],
+                          )
+                        : Container(
+                            padding: const EdgeInsets.all(13),
+                            decoration: BoxDecoration(
+                              color: context.xMyCustomTheme.white,
+                              border: Border.all(
+                                color: context.xMyCustomTheme.mercury,
+                              ),
+                              borderRadius: R.sizes.borderRadiusCircular,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                vm.selectedDate != null
+                                    ? Text(
+                                        DateFormat('dd MMMM yyyy')
+                                            .format(vm.selectedDate!),
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      )
+                                    : Text(
+                                        'DD/MM/YYYY',
+                                        style: context.xHeadline3.copyWith(
+                                          color: context.xTextInverseColor
+                                              .withOpacity(0.5),
+                                        ),
+                                      ),
+                                const Icon(Icons.calendar_today),
+                              ],
+                            ),
+                            margin: const EdgeInsets.only(
+                              bottom: 10,
+                            ),
+                          ),
+                  ),
                 ],
               ),
 
@@ -423,8 +425,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                                 _phoneNumberFocusNode,
                                 null,
                               ),
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'[0-9\t\r]'))
+                              R.regExp.filterText4,
                             ],
                             onFieldSubmitted: (term) {
                               Utils.instance.fieldFocusChange(
@@ -507,14 +508,16 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
                   Text(
                     LocaleProvider.of(context).lbl_have_account,
                     style: context.xHeadline3.copyWith(
-                      color: getIt<IAppConfig>().theme.textColorSecondary,
+                      color: context.xTextInverseColor,
                     ),
                   ),
+
+                  //
                   InkWell(
                     child: Text(
                       LocaleProvider.of(context).btn_sign_in,
                       style: context.xHeadline3.copyWith(
-                        color: getIt<IAppConfig>().theme.mainColor,
+                        color: context.xPrimaryColor,
                       ),
                     ),
                     onTap: () {
@@ -541,8 +544,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
         Expanded(
           child: Container(
             height: 1,
-            color:
-                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+            color: context.xTextInverseColor.withOpacity(0.4),
           ),
         ),
 
@@ -552,8 +554,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
           child: Text(
             "or",
             style: context.xHeadline3.copyWith(
-              color:
-                  getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+              color: context.xTextInverseColor.withOpacity(0.4),
             ),
           ),
         ),
@@ -562,8 +563,7 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
         Expanded(
           child: Container(
             height: 1,
-            color:
-                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+            color: context.xTextInverseColor.withOpacity(0.4),
           ),
         ),
       ],
@@ -604,12 +604,12 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Card(
-                  elevation: R.sizes.defaultElevation,
                   shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: getIt<IAppConfig>().theme.red,
-                      ),
-                      borderRadius: R.sizes.borderRadiusCircular),
+                    side: BorderSide(
+                      color: context.xMyCustomTheme.fuzzyWuzzyBrown,
+                    ),
+                    borderRadius: R.sizes.borderRadiusCircular,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -651,9 +651,6 @@ class _RegisterStep1ScreenState extends State<RegisterStep1Screen> {
           )
         : Expanded(
             child: Card(
-              elevation: R.sizes.defaultElevation,
-              shape: RoundedRectangleBorder(
-                  borderRadius: R.sizes.borderRadiusCircular),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[

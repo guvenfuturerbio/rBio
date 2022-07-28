@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
-import '../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../config/config.dart';
 import '../../features/auth/auth.dart';
+import '../../features/bluetooth/bluetooth.dart';
+import '../../features/bluetooth_v2/bluetooth_v2.dart';
 import '../../features/chat/controller/chat_vm.dart';
 import '../../features/chat/view/chat_screen.dart';
 import '../../features/chat/view/consultation_screen.dart';
@@ -27,7 +29,22 @@ import '../../features/doctor/treatment/doctor_note_add_edit/doctor_note_add_edi
 import '../../features/doctor/treatment/treatment_add_edit/view/doctor_scale_treatment_add_edit_screen.dart';
 import '../../features/doctor/treatment/treatment_list/view/doctor_scale_treatment_list_screen.dart';
 import '../../features/doctor/treatment_process/view/treatment_process_screen.dart';
-import '../../features/mediminder/mediminder.dart';
+import '../../features/e_council/e_couincil_requests/view/council_requests_screen.dart';
+import '../../features/e_council/e_council_create_council_request/view/e_council_create_council_request_screen.dart';
+import '../../features/e_council/e_council_home/view/e_council_home_screen.dart';
+import '../../features/e_council/e_council_information_pages/view/e_council_information_screen.dart';
+import '../../features/e_council/e_council_inspection_upload/view/e_council_inspection_upload_screen.dart';
+import '../../features/e_council/e_council_payment/view/e_council_payment_screen.dart';
+import '../../features/e_council/e_council_payment_preview/view/e_council_payment_preview_screen.dart';
+import '../../features/e_council/e_council_results/view/couincil_results_screen.dart';
+import '../../features/e_council/e_council_results_detail/view/council_results_detail_screen.dart';
+import '../../features/mediminder/blood_glucose/view/blood_glucose_reminder_add_edit_screen.dart';
+import '../../features/mediminder/hba1c/view/hba1c_reminder_add_edit_screen.dart';
+import '../../features/mediminder/medication/view/medication_add_edit_screen.dart';
+import '../../features/mediminder/reminder_detail/view/reminder_detail_screen.dart';
+import '../../features/mediminder/reminder_list/view/reminder_list_screen.dart';
+import '../../features/mediminder/select_reminder/view/select_reminder_screen.dart';
+import '../../features/mediminder/strip/view/strip_reminder_add_edit_screen.dart';
 import '../../features/my_appointments/my_appointments.dart';
 import '../../features/onboarding/view/onboarding_screen.dart';
 import '../../features/profile/devices/devices.dart';
@@ -75,7 +92,7 @@ class VRouterRoutes {
 
         VWidget(
           path: PagePaths.forgotPasswordStep2,
-          widget: ForgotPasswordStep2Screen(),
+          widget: const ForgotPasswordStep2Screen(),
         ),
 
         VWidget(
@@ -102,11 +119,16 @@ class VRouterRoutes {
         // #region Chat
         VGuard(
           beforeEnter: (vRedirector) async {
+<<<<<<< HEAD
             if (!(getIt<UserNotifier>().isCronic ||
                 getIt<UserNotifier>().isDoctor)) {
               vRedirector.stopRedirection();
               Atom.show(NotChronicWarningDialog(
                   title: LocaleProvider.current.warning));
+=======
+            if (!(getIt<UserNotifier>().user?.chat ?? false)) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
+>>>>>>> master
             }
           },
           stackedRoutes: [
@@ -132,10 +154,15 @@ class VRouterRoutes {
           beforeEnter: (vRedirector) async {
             if (!getIt<IAppConfig>().functionality.chronicTracking) {
               openDefaultScreen(vRedirector);
+<<<<<<< HEAD
             } else if (!getIt<UserNotifier>().isCronic) {
               vRedirector.stopRedirection();
               Atom.show(NotChronicWarningDialog(
                   title: LocaleProvider.current.warning));
+=======
+            } else if (!getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
+>>>>>>> master
             }
           },
           stackedRoutes: [
@@ -151,35 +178,43 @@ class VRouterRoutes {
                   path: PagePaths.bpProgress,
                   widget: const BpProgressScreen(),
                 ),
+
+                //
                 VGuard(
                   stackedRoutes: [
                     VWidget(
                       path: PagePaths.patientScaleDetail,
                       widget: const PatientScaleDetailScreen(),
-                    ),
-                    VWidget(
-                      path: PagePaths.patientScaleTreatmentList,
-                      widget: const PatientScaleTreatmentListScreen(),
-                    ),
-                    VWidget(
-                      path: PagePaths.patientScaleDietDetail,
-                      widget: const PatientScaleDietDetailScreen(),
-                    ),
-                    VWidget(
-                      path: PagePaths.patientScaleTreatmentDetail,
-                      widget: const PatientScaleTreatmentDetailScreen(),
+                      stackedRoutes: [
+                        //
+                        VWidget(
+                          path: PagePaths.patientScaleTreatmentList,
+                          widget: const PatientScaleTreatmentListScreen(),
+                          stackedRoutes: [
+                            VWidget(
+                              path: PagePaths.patientScaleDietDetail,
+                              widget: const PatientScaleDietDetailScreen(),
+                            ),
+                            VWidget(
+                              path: PagePaths.patientScaleTreatmentDetail,
+                              widget: const PatientScaleTreatmentDetailScreen(),
+                            ),
+                          ],
+                        ),
+
+                        //
+                        VWidget(
+                          path: PagePaths.scaleManuelAdd,
+                          widget: const ScaleManuelAddScreen(),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                VWidget(
-                  path: PagePaths.scaleManuelAdd,
-                  widget: const ScaleManuelAddScreen(),
-                ),
               ],
             ),
-          ],
-        ),
 
+<<<<<<< HEAD
         VGuard(
           beforeEnter: (vRedirector) async {
             if (!getIt<UserNotifier>().isCronic) {
@@ -189,13 +224,15 @@ class VRouterRoutes {
             }
           },
           stackedRoutes: [
+=======
+            //
+>>>>>>> master
             VWidget(
               path: PagePaths.treatmentEditProgress,
               widget: const TreatmentEditView(),
             ),
-          ],
-        ),
 
+<<<<<<< HEAD
         VGuard(
           beforeEnter: (vRedirector) async {
             if (!getIt<UserNotifier>().isCronic) {
@@ -205,10 +242,13 @@ class VRouterRoutes {
             }
           },
           stackedRoutes: [
+=======
+            //
+>>>>>>> master
             VWidget(
               path: PagePaths.treatmentProgress,
               widget: const TreatmentProcessScreen(),
-            )
+            ),
           ],
         ),
         // #endregion
@@ -217,7 +257,7 @@ class VRouterRoutes {
         VGuard(
           beforeEnter: (vRedirector) async {
             if (getIt<IAppConfig>().functionality.relatives) {
-              if ((await getIt<UserNotifier>().checkAccessToken()) == false) {
+              if ((await getIt<UserFacade>().checkAccessToken()) == false) {
                 vRedirector.to(PagePaths.login);
               }
             }
@@ -335,23 +375,8 @@ class VRouterRoutes {
               beforeEnter: (vRedirector) async {
                 Future<void> showAlert() async {
                   await Atom.show(
-                    GuvenAlert(
-                      backgroundColor:
-                          getIt<IAppConfig>().theme.cardBackgroundColor,
-                      title: GuvenAlert.buildTitle(LocaleProvider.current.info),
-                      content: GuvenAlert.buildDescription(
-                        LocaleProvider.current.device_register,
-                      ),
-                      actions: [
-                        //
-                        GuvenAlert.buildMaterialAction(
-                          LocaleProvider.current.Ok,
-                          () {
-                            Atom.dismiss();
-                            vRedirector.to(PagePaths.allDevices);
-                          },
-                        ),
-                      ],
+                    RbioDeviceRegisterDialog(
+                      vRedirector: vRedirector,
                     ),
                   );
                 }
@@ -412,10 +437,16 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
+<<<<<<< HEAD
             if (!getIt<UserNotifier>().isCronic) {
               vRedirector.stopRedirection();
               Atom.show(NotChronicWarningDialog(
                   title: LocaleProvider.current.warning));
+=======
+            if (!Atom.isWeb &&
+                !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
+>>>>>>> master
             }
           },
           stackedRoutes: [
@@ -428,10 +459,15 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
+<<<<<<< HEAD
             if (!getIt<UserNotifier>().isCronic) {
               vRedirector.stopRedirection();
               Atom.show(NotChronicWarningDialog(
                   title: LocaleProvider.current.warning));
+=======
+            if (!getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
+              _stopRedirectionShowNotChronicDialog(vRedirector);
+>>>>>>> master
             }
           },
           stackedRoutes: [
@@ -508,7 +544,7 @@ class VRouterRoutes {
 
         VWidget(
           path: PagePaths.visitDetail,
-          widget: VisitDetailScreen(),
+          widget: const VisitDetailScreen(),
         ),
         // #endregion
 
@@ -653,6 +689,46 @@ class VRouterRoutes {
           widget: const JailbrokenScreen(),
         ),
 
+        // #region E-Council
+        VWidget(
+          path: PagePaths.eCouncilInformationPage,
+          widget: const ECouncilInformationScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilHomePage,
+          widget: const ECouncilHomeScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilResultPage,
+          widget: const ECouncilResultScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilRequestPage,
+          widget: const ECouncilRequestsScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilResultDetailPage,
+          widget: const ECouncilResultsDetailScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilCreateCouncilRequestPage,
+          widget: const ECouncilCreateCouncilRequestScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilPaymentPreviewPage,
+          widget: const ECouncilPaymentPreviewScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilPaymentPage,
+          widget: const ECouncilPaymentScreen(),
+        ),
+        VWidget(
+          path: PagePaths.eCouncilInspectionUploadPage,
+          widget: const ECouncilInspectionUploadScreen(),
+        ),
+
+        // #endregion
+
         //
         // :_ is a path parameters named _
         // .+ is a regexp to match any path
@@ -661,6 +737,11 @@ class VRouterRoutes {
           redirectTo: '/home',
         ),
       ];
+
+  static void _stopRedirectionShowNotChronicDialog(VRedirector vRedirector) {
+    vRedirector.stopRedirection();
+    Atom.show(const RbioNotChronicWarningDialog());
+  }
 }
 
 class PagePaths {
@@ -689,7 +770,7 @@ class PagePaths {
   static const treatmentProgress = '/treatment-progress';
   static const treatmentEditProgress = '/tretment-edit-progress';
   static const patientScaleDetail = '/scale-detail';
-  static const scaleManuelAdd = '/scale-manuel-add';
+  static const scaleManuelAdd = '/scale-detail/scale-manuel-add';
 
   static const patientScaleTreatmentList =
       "/scale-detail/patient-scale-treatment-list";
@@ -801,6 +882,21 @@ class PagePaths {
   static const magazinselection = '/magazines';
 
   static const demoAudioRecord = '/demoAudioRecord';
+
+  // #region E-Council
+  static const eCouncilInformationPage = '/e-council-information';
+  static const eCouncilHomePage = '/e-council-home';
+  static const eCouncilResultPage = '/council-result';
+  static const eCouncilRequestPage = '/council-requests';
+  static const eCouncilResultDetailPage = '/council-result-detail';
+  static const eCouncilCreateCouncilRequestPage =
+      '/council-create-council-request';
+  static const eCouncilPaymentPreviewPage = '/council-payment-preview';
+  static const eCouncilPaymentPage = '/council-payment';
+  static const eCouncilInspectionUploadPage = '/council-inspection-upload';
+
+  // #endregion
+
 }
 
 void openDefaultScreen(VRedirector vRedirector) {

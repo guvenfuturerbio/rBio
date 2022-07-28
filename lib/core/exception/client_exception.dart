@@ -1,3 +1,4 @@
+import '../../config/config.dart';
 import '../core.dart';
 
 class RbioClientException implements Exception {

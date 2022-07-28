@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../core/core.dart';
+import '../../model/model.dart';
 import '../cubit/blood_glucose_save_data_dialog_cubit.dart';
 
 class BloodGlucoseSaveDataDialog extends StatelessWidget {
@@ -75,8 +76,8 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
             tileMode: TileMode.clamp,
             stops: const [0.0, 1.0],
             colors: <Color>[
-              getIt<IAppConfig>().theme.mainColor,
-              getIt<IAppConfig>().theme.secondaryColor,
+              context.xPrimaryColor,
+              context.xSecondaryColor,
             ],
           ),
           widgetIndicator: Center(
@@ -84,13 +85,13 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
               height: 20,
               width: 20,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
                 borderRadius: BorderRadius.circular(50),
               ),
               padding: const EdgeInsets.all(5),
               child: Container(
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.mainColor,
+                  color: context.xPrimaryColor,
                   borderRadius: BorderRadius.circular(50),
                 ),
               ),
@@ -100,7 +101,7 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer16,
+        R.widgets.hSizer16,
 
         //
         Row(
@@ -152,7 +153,7 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer16,
+        R.widgets.hSizer16,
 
         //
         Text(
@@ -161,7 +162,7 @@ class BloodGlucoseSaveDataDialogView extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer16,
+        R.widgets.hSizer16,
 
         //
         RbioElevatedButton(

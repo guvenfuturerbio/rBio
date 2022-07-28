@@ -23,6 +23,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
     return RbioScaffold(
       bodyPadding: EdgeInsets.zero,
       appbar: RbioAppBar(
+        context: context,
         leading: RbioAppBar.defaultLeading(
           context,
           () {

@@ -38,7 +38,7 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
           NecessaryIdentityScreenVm value,
           Widget? child,
         ) {
-          return RbioBaseGreyDialog(
+          return RbioBaseDialog(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,21 +48,19 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                   Center(
                     child: Text(
                       LocaleProvider.current.warning,
-                      style:
-                          getIt<IAppConfig>().theme.dialogTheme.title(context),
+                      style: context.xDialogTheme.titleTextStyle,
                       textAlign: TextAlign.center,
                     ),
                   ),
 
-                  R.sizes.hSizer32,
+                  //
+                  R.widgets.hSizer32,
 
+                  //
                   Center(
                     child: Text(
                       LocaleProvider.current.necessary_identity_message,
-                      style: getIt<IAppConfig>()
-                          .theme
-                          .dialogTheme
-                          .description(context),
+                      style: context.xDialogTheme.descriptionTextStyle,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -77,37 +75,46 @@ class _NecessaryIdentityScreenState extends State<NecessaryIdentityScreen> {
                       prefixIcon: SvgPicture.asset(
                         R.image.user,
                         fit: BoxFit.none,
-                        color: getIt<IAppConfig>().theme.mainColor,
+                        color: context.xPrimaryColor,
                       ),
                     ),
                     margin: const EdgeInsets.only(bottom: 10, top: 20),
                   ),
 
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   Row(
                     children: [
-                      R.sizes.wSizer12,
+                      //
+                      R.widgets.wSizer12,
+
+                      //
                       Expanded(
                         child: RbioSmallDialogButton.red(
+                          context,
                           title: LocaleProvider.current.btn_cancel,
                           onPressed: () {
                             Atom.dismiss();
                           },
                         ),
                       ),
-                      R.sizes.wSizer8,
+
+                      //
+                      R.widgets.wSizer8,
+
+                      //
                       Expanded(
-                        child: RbioSmallDialogButton.green(
+                        child: RbioSmallDialogButton.main(
+                          context: context,
                           title: LocaleProvider.current.Ok,
                           onPressed: () {
                             value.updateIdentity(_identityController.text);
                           },
                         ),
                       ),
-                      R.sizes.wSizer12,
+                      R.widgets.wSizer12,
                     ],
                   ),
                 ],

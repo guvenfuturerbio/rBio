@@ -2,8 +2,9 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../symptoms_body_location/model/get_bodylocations_response.dart';
 import '../viewmodel/symptoms_body_sublocations_vm.dart';
 
 class BodySubLocationsPage extends StatefulWidget {
@@ -80,6 +81,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).my_symptoms,
@@ -134,11 +136,7 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                 itemCount: value.bodySubLocations.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    elevation: R.sizes.defaultElevation,
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: R.sizes.borderRadiusCircular,
-                    ),
                     child: ExpandablePanel(
                       controller: value.expControllerList[index],
                       //iconColor: R.color.online_appointment,
@@ -186,28 +184,29 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
                                                         .width *
                                                     0.70,
                                                 child: Text(
-                                                    value
-                                                        .allBodySymptoms[index]![
-                                                            indx]
-                                                        .name!,
-                                                    softWrap: true,
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow
-                                                        .ellipsis,
-                                                    style: context.xHeadline3.copyWith(
-                                                        color: value
-                                                                .selectedSymptoms!
-                                                                .contains(value
-                                                                            .allBodySymptoms[
-                                                                        index]![
-                                                                    indx])
-                                                            ? getIt<IAppConfig>()
-                                                                .theme
-                                                                .mainColor
-                                                            : getIt<IAppConfig>()
-                                                                .theme
-                                                                .textColorSecondary)),
+                                                  value
+                                                      .allBodySymptoms[index]![
+                                                          indx]
+                                                      .name!,
+                                                  softWrap: true,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: context.xHeadline3
+                                                      .copyWith(
+                                                    color: value
+                                                            .selectedSymptoms!
+                                                            .contains(value
+                                                                    .allBodySymptoms[
+                                                                index]![indx])
+                                                        ? context.xPrimaryColor
+                                                        : context
+                                                            .xTextInverseColor,
+                                                  ),
+                                                ),
                                               ),
+
+                                              //
                                               GestureDetector(
                                                 onTap: () {
                                                   value.removeSemptomFromList(
@@ -279,7 +278,9 @@ class _BodySubLocationsPageState extends State<BodySubLocationsPage> {
               title: LocaleProvider.of(context).continue_lbl,
               infinityWidth: true,
             ),
-            R.sizes.defaultBottomPadding,
+
+            //
+            R.widgets.defaultBottomPadding,
           ],
         );
 

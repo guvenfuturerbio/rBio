@@ -26,31 +26,38 @@ class LocationInfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: _buildBody(context),
     );
   }
 
-  Column _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context) {
     return Column(
       children: [
+        //
         Text(
           LocaleProvider.of(context).where_will_you_attend_the_meeting,
-          style: context.xTextTheme.headline4!
-              .copyWith(fontWeight: FontWeight.bold),
+          style: context.xHeadline4.copyWith(fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 15),
+
+        //
+        R.widgets.hSizer16,
+
+        //
         RbioTextFormField(
           controller: _countryController,
           readOnly: true,
           hintText: LocaleProvider.of(context).country,
-          prefixIcon:
-              Icon(Icons.language, color: getIt<IAppConfig>().theme.mainColor),
+          prefixIcon: Icon(Icons.language, color: context.xPrimaryColor),
           onTap: countryOnTap,
         ),
-        const SizedBox(height: 10),
+
+        //
+        R.widgets.hSizer12,
+
+        //
         Visibility(
           visible: isCityVisible,
           child: RbioTextFormField(
@@ -61,7 +68,7 @@ class LocationInfoCard extends StatelessWidget {
               Icons.location_city,
               color: _cityController.text.isEmpty
                   ? Colors.grey
-                  : getIt<IAppConfig>().theme.mainColor,
+                  : context.xPrimaryColor,
             ),
             onTap: cityOnTap,
           ),

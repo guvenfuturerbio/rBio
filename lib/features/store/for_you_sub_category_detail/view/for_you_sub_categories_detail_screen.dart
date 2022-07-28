@@ -1,13 +1,12 @@
 import 'dart:convert';
-import 'dart:math' as math;
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../../../config/config.dart';
 import '../cubit/cubit.dart';
 import '../model/for_you_sub_category_detail_response.dart';
 
@@ -78,6 +77,7 @@ class _ForYouSubCategoriesDetailViewState
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         widget.title,
@@ -173,7 +173,6 @@ class _ForYouSubCategoriesDetailViewState
                             height: MediaQuery.of(context).size.height * 0.30,
                             width: MediaQuery.of(context).size.width,
                             child: Card(
-                              elevation: R.sizes.defaultElevation,
                               child: ListCard(
                                 image: card.image!,
                                 title: card.title!,
@@ -201,11 +200,8 @@ class _ForYouSubCategoriesDetailViewState
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _currentIndex == index
-                              ? getIt<IAppConfig>().theme.mainColor
-                              : getIt<IAppConfig>()
-                                  .theme
-                                  .textColorSecondary
-                                  .withOpacity(0.5),
+                              ? context.xPrimaryColor
+                              : context.xTextInverseColor.withOpacity(0.5),
                         ),
                       );
                     },
@@ -245,12 +241,8 @@ class _ForYouSubCategoriesDetailViewState
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
-      child: InkWell(
-        child: _itemTakeCovid(
-          context: context,
-          title: title,
-          image: R.image.test,
-        ),
+      child: RbioElevatedButton(
+        title: title,
         onTap: onTap,
       ),
     );
@@ -288,13 +280,18 @@ class ListCard extends StatelessWidget {
             //
             Container(
               margin: const EdgeInsets.only(
-                  left: 30, right: 30, top: 10, bottom: 8),
+                left: 30,
+                right: 30,
+                top: 10,
+                bottom: 8,
+              ),
               child: Text(
                 title,
                 style: context.xHeadline3.copyWith(
-                    color: getIt<IAppConfig>().theme.textColorSecondary,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold),
+                  color: context.xTextInverseColor,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -310,7 +307,7 @@ class ListCard extends StatelessWidget {
               child: Text(
                 text,
                 style: context.xHeadline3.copyWith(
-                  color: getIt<IAppConfig>().theme.textColorSecondary,
+                  color: context.xTextInverseColor,
                   fontStyle: FontStyle.italic,
                 ),
                 textAlign: TextAlign.center,
@@ -322,66 +319,3 @@ class ListCard extends StatelessWidget {
     );
   }
 }
-
-Widget _itemTakeCovid({
-  String? title,
-  String? image,
-  EdgeInsets? margin,
-  required BuildContext context,
-}) =>
-    Container(
-      margin: margin,
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: R.sizes.borderRadiusCircular,
-        gradient: LinearGradient(
-          colors: [
-            getIt<IAppConfig>().theme.mainColor,
-            getIt<IAppConfig>().theme.mainColor,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.topRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: getIt<IAppConfig>().theme.textColorSecondary.withAlpha(50),
-            blurRadius: 15,
-            spreadRadius: 0,
-            offset: const Offset(5, 10),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: <Widget>[
-          Center(
-            child: title == null
-                ? Container()
-                : Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Text(
-                      title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.xHeadline3.copyWith(
-                          color: getIt<IAppConfig>().theme.textColor,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-          ),
-
-          //
-          Positioned(
-            child: Container(
-              child: Transform.rotate(
-                angle: -math.pi / 1.0,
-                child: SvgPicture.asset(R.image.backWhite),
-              ),
-              margin: const EdgeInsets.only(left: 15, right: 5),
-            ),
-            right: 0,
-          ),
-        ],
-      ),
-    );

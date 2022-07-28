@@ -19,7 +19,7 @@ class _UserDetailCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Padding(
@@ -173,7 +173,7 @@ class _UserDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<IAppConfig>().theme.textColorPassive,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),
@@ -185,7 +185,7 @@ class _UserDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<IAppConfig>().theme.textColorPassive,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),
@@ -267,7 +267,7 @@ class _UserDetailCard extends StatelessWidget {
                 onTap: onTap,
                 child: SvgPicture.asset(
                   R.image.other,
-                  color: getIt<IAppConfig>().theme.mainColor,
+                  color: context.xPrimaryColor,
                   width: 20,
                   height: 20,
                 ),

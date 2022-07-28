@@ -2,8 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
-import '../../../../../core/utils/tz_helper.dart';
+import '../../../../../core/utils/helper/tz_helper.dart';
 import '../../../mediminder.dart';
 
 part 'reminder_alert_dialog_cubit.freezed.dart';

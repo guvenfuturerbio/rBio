@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../../../../core/core.dart';
+import '../../model/model.dart';
 
 class BgTaggerVm extends ChangeNotifier {
   BgTaggerVm({
@@ -46,7 +47,9 @@ class BgTaggerVm extends ChangeNotifier {
       LocaleProvider.current.warning,
       LocaleProvider.current.allow_permission_gallery,
       TextButton(
-        style: TextButton.styleFrom(primary: getIt<IAppConfig>().theme.white),
+        style: TextButton.styleFrom(
+          primary: context.xMyCustomTheme.white,
+        ),
         child: Text(LocaleProvider.current.confirm),
         onPressed: () async {
           Navigator.pop(context, 'dialog');

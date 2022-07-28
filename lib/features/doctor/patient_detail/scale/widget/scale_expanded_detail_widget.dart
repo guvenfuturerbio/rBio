@@ -13,7 +13,7 @@ class _UserScaleDetailCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Padding(
@@ -118,7 +118,7 @@ class _UserScaleDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<IAppConfig>().theme.textColorPassive,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),
@@ -130,7 +130,7 @@ class _UserScaleDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<IAppConfig>().theme.textColorPassive,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),

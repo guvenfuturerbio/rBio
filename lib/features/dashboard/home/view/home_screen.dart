@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
-import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../core/core.dart';
+import '../../../bluetooth_v2/bluetooth_v2.dart';
 import '../utils/home_sizer.dart';
 import '../viewmodel/home_vm.dart';
 
@@ -42,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
         kAutoConnect = false;
       }
     } else {
-      final allUsersModel = getIt<UserNotifier>().getHomeWidgets(getIt<UserNotifier>().firebaseEmail ?? "");
+      final allUsersModel = getIt<UserFacade>()
+          .getHomeWidgets(getIt<UserNotifier>().firebaseEmail ?? "");
       context.read<HomeVm>().init(allUsersModel);
     }
     super.initState();
@@ -67,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   RbioAppBar _buildAppBar(HomeVm vm) {
     return RbioAppBar(
+      context: context,
       leading: RbioSwitcher(
         showFirstChild: vm.status.isShaken,
         child1: IconButton(
@@ -77,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icon(
             Icons.add,
             size: R.sizes.iconSize,
-            color: Colors.white,
+            color: context.xAppBarTheme.iconTheme?.color,
           ),
         ),
         child2: SizedBox(
@@ -88,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       actions: [
+        //
         Visibility(
           visible: vm.status.isShaken,
           replacement: SizedBox.fromSize(
@@ -108,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(
                 Icons.done,
                 size: R.sizes.iconSize,
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xAppBarTheme.iconTheme?.color,
               ),
             ),
           ),
@@ -124,23 +127,27 @@ class _HomeScreenState extends State<HomeScreen> {
           vm.changeStatus();
         }
       },
-      child: ReorderableWrap(
-        alignment: WrapAlignment.center,
-        buildDraggableFeedback: (_, __, children) {
-          return children;
-        },
-        spacing: HomeSizer.instance.getRunSpacing(),
-        runSpacing: HomeSizer.instance.getBodyGapHeight(),
-        needsLongPressDraggable: true,
-        children: vm.widgetsInUse,
-        onReorder: vm.onReorder,
-        scrollDirection: Axis.vertical,
-        maxMainAxisCount: 2,
-        minMainAxisCount: 1,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        padding: EdgeInsets.only(
-          bottom: R.sizes.bottomNavigationBarHeight + 16,
-        ),
+      child: Column(
+        children: [
+          ReorderableWrap(
+            alignment: WrapAlignment.center,
+            buildDraggableFeedback: (_, __, children) {
+              return children;
+            },
+            spacing: HomeSizer.instance.getRunSpacing(),
+            runSpacing: HomeSizer.instance.getBodyGapHeight(),
+            needsLongPressDraggable: true,
+            children: vm.widgetsInUse,
+            onReorder: vm.onReorder,
+            scrollDirection: Axis.vertical,
+            maxMainAxisCount: 2,
+            minMainAxisCount: 1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            padding: EdgeInsets.only(
+              bottom: R.sizes.bottomNavigationBarHeight + 16,
+            ),
+          ),
+        ],
       ),
     );
   }

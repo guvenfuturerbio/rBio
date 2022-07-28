@@ -36,8 +36,9 @@ class BgPatientListModel extends PatientListModel<DoctorGlucosePatientModel> {
   @override
   Color getBackColor(String? text, DoctorGlucosePatientModel model) {
     return text == '' || text == null
-        ? getIt<IAppConfig>().theme.cardBackgroundColor
+        ? context.xCardColor
         : Utils.instance.fetchMeasurementColor(
+            context,
             measurement: _textToInt(text),
             criticMin: model.alertMin?.toInt() ?? 0,
             criticMax: model.alertMax?.toInt() ?? 0,
@@ -109,7 +110,9 @@ class BgPatientListModel extends PatientListModel<DoctorGlucosePatientModel> {
   }
 
   int criticalMetricsSort(
-      DoctorGlucosePatientModel a, DoctorGlucosePatientModel b) {
+    DoctorGlucosePatientModel a,
+    DoctorGlucosePatientModel b,
+  ) {
     final aMeasurements = a.measurements ?? [];
     final bMeasurements = b.measurements ?? [];
 

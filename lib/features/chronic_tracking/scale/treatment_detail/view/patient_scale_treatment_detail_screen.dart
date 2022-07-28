@@ -100,6 +100,7 @@ class _PatientScaleTreatmentDetailViewState
 
   RbioAppBar _buildAppBar(PatientScaleTreatmentDetailState state) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         state.whenOrNull(
@@ -132,8 +133,8 @@ class _PatientScaleTreatmentDetailViewState
         mainAxisSize: MainAxisSize.max,
         children: [
           //
-          R.sizes.stackedTopPadding(context),
-          R.sizes.hSizer8,
+          R.widgets.stackedTopPadding(context),
+          R.widgets.hSizer8,
 
           //
           Expanded(
@@ -153,7 +154,7 @@ class _PatientScaleTreatmentDetailViewState
                     bottom: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                    color: context.xCardColor,
                     borderRadius: R.sizes.borderRadiusCircular,
                   ),
                   child: Column(
@@ -162,7 +163,7 @@ class _PatientScaleTreatmentDetailViewState
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       //
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
 
                       //
                       if (result.editMode ==
@@ -239,7 +240,7 @@ class _PatientScaleTreatmentDetailViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           KeyboardVisibilityBuilder(
@@ -249,7 +250,7 @@ class _PatientScaleTreatmentDetailViewState
           ),
 
           //
-          R.sizes.defaultBottomPadding,
+          R.widgets.defaultBottomPadding,
         ],
       ),
     );
@@ -290,7 +291,7 @@ class _PatientScaleTreatmentDetailViewState
                 ),
 
                 //
-                R.sizes.wSizer8,
+                R.widgets.wSizer8,
 
                 //
                 Expanded(

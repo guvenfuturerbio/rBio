@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../config/config.dart';
 import '../../../core/core.dart';
 import 'kvkk_form_vm.dart';
 
@@ -34,13 +35,15 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
             Center(
               child: Text(
                 LocaleProvider.current.kvkk_title,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
 
-            R.sizes.hSizer24,
+            //
+            R.widgets.hSizer24,
 
+            //
             SingleChildScrollView(
               child: ChangeNotifierProvider<KvkkFormScreenVm>(
                 create: (context) => KvkkFormScreenVm(
@@ -56,10 +59,7 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                         Center(
                           child: Text(
                             getIt<IAppConfig>().constants.kvkkUrl(context),
-                            style: getIt<IAppConfig>()
-                                .theme
-                                .dialogTheme
-                                .description(context),
+                            style: context.xDialogTheme.descriptionTextStyle,
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -72,15 +72,11 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                           children: [
                             Container(
                               alignment: Alignment.bottomLeft,
-                              child: Checkbox(
+                              child: RbioCheckbox(
                                 value: value.clickedConsentForm,
-                                checkColor: Colors.white,
                                 onChanged: (newValue) {
                                   value.toggleConsentFormState();
                                 },
-                                activeColor: getIt<IAppConfig>()
-                                    .theme
-                                    .mainColor, //  <-- leading Checkbox
                               ),
                             ),
                             Expanded(
@@ -89,6 +85,7 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                                   value.toggleConsentFormState();
                                 },
                                 child: GuvenAlert.buildSmallDescription(
+                                  context,
                                   LocaleProvider.of(context)
                                       .read_understood_kvkk,
                                   textAlign: TextAlign.start,
@@ -104,6 +101,7 @@ class _KvkkFormScreenState extends State<KvkkFormScreen> {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Center(
                             child: GuvenAlert.buildBigMaterialAction(
+                              context,
                               LocaleProvider.current.Ok.toUpperCase(),
                               () {
                                 value.saveFormState();

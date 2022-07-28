@@ -26,7 +26,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return RbioBaseGreyDialog(
+    return RbioBaseDialog(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,29 +36,28 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
             Center(
               child: Text(
                 LocaleProvider.current.app_update_available,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
-            //
-            R.sizes.hSizer24,
 
+            //
+            R.widgets.hSizer24,
+
+            //
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Center(
                 child: Text(
                   LocaleProvider.current.optional_update_message,
                   textAlign: TextAlign.center,
-                  style: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
-                      .description(context),
+                  style: context.xDialogTheme.descriptionTextStyle,
                 ),
               ),
             ),
 
             //
-            R.sizes.hSizer16,
+            R.widgets.hSizer16,
 
             //
             Center(
@@ -70,14 +69,13 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                   Padding(
                     padding: const EdgeInsets.only(left: 32.0),
                     child: SizedBox(
-                      child: Checkbox(
+                      child: RbioCheckbox(
                         value: doNotAskAgain,
                         onChanged: (val) {
                           setState(() {
                             doNotAskAgain = val!;
                           });
                         },
-                        activeColor: getIt<IAppConfig>().theme.mainColor,
                       ),
                     ),
                   ),
@@ -89,10 +87,7 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
                       child: Text(
                         widget.doNotAskAgainText,
                         textAlign: TextAlign.start,
-                        style: getIt<IAppConfig>()
-                            .theme
-                            .dialogTheme
-                            .description(context),
+                        style: context.xDialogTheme.descriptionTextStyle,
                       ),
                     ),
                   ),
@@ -100,12 +95,16 @@ class _DoNotAskAgainDialogState extends State<DoNotAskAgainDialog> {
               ),
             ),
 
-            R.sizes.hSizer16,
+            //
+            R.widgets.hSizer16,
 
+            //
             Center(
-              child: RbioSmallDialogButton.green(
-                  title: LocaleProvider.current.update_now,
-                  onPressed: widget.onPositiveButtonClicked),
+              child: RbioSmallDialogButton.main(
+                context: context,
+                title: LocaleProvider.current.update_now,
+                onPressed: widget.onPositiveButtonClicked,
+              ),
             ),
           ],
         ),

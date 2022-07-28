@@ -4,11 +4,11 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'app/app.dart';
-import 'app/bluetooth_v2/bluetooth_v2.dart';
+import 'config/config.dart';
 import 'core/core.dart';
 
 Future<void> bootstrap(IAppConfig appConfig) async {
@@ -17,11 +17,12 @@ Future<void> bootstrap(IAppConfig appConfig) async {
   await initializeLocator(appConfig);
   appConfig.platform.adjustManager?.initializeAdjust();
   timeago.setLocaleMessages('tr', timeago.TrMessages());
-  RegisterViews.instance.initialize();
+  RegisterPlatformViews.instance.initialize();
   await appConfig.platform.sendFirstOpenFirebaseEvent(
-      getIt<ISharedPreferencesManager>(),
-      getIt<FirebaseAnalyticsManager>(),
-      appConfig.platform.adjustManager);
+    getIt<ISharedPreferencesManager>(),
+    getIt<FirebaseAnalyticsManager>(),
+    appConfig.platform.adjustManager,
+  );
   await appConfig.platform.recaptchaManager?.init();
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -57,10 +58,9 @@ Future<void> bootstrap(IAppConfig appConfig) async {
                 AppInheritedWidget(
                   localNotificationManager: getIt(),
                   child: appConfig.platform.runApp(
-                    appConfig.platform.getInitialRoute(
-                      getIt<ISharedPreferencesManager>(),
-                    ),
-                    jailbroken,
+                    initialRoute: appConfig.utils.getInitialRoute(getIt()),
+                    jailbroken: jailbroken,
+                    initialTheme: appConfig.utils.getInitialTheme(getIt()),
                   ),
                 ),
               ),
@@ -80,83 +80,4 @@ Future<void> bootstrap(IAppConfig appConfig) async {
       );
     },
   );
-}
-
-class WebApp extends StatelessWidget {
-  final MyApp myApp;
-
-  const WebApp({
-    Key? key,
-    required this.myApp,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    myApp.setJailbroken(false);
-    return myApp.build(context);
-  }
-}
-
-class MobileApp extends StatelessWidget {
-  final MyApp myApp;
-  final bool jailbroken;
-
-  const MobileApp({
-    Key? key,
-    required this.myApp,
-    required this.jailbroken,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    myApp.setJailbroken(jailbroken);
-    return BlocProvider<BluetoothBloc>(
-      lazy: false,
-      create: (context) => BluetoothBloc(
-        getIt<BleScanner>(),
-        getIt<BleConnector>(),
-        getIt<BleDeviceManager>(),
-      )..add(const BluetoothEvent.init()),
-      child: BlocProvider<MiScaleStatusCubit>(
-        lazy: false,
-        create: (context) => MiScaleStatusCubit(getIt()),
-        child: Builder(
-          builder: (context) {
-            return MultiBlocProvider(
-              providers: [
-                BlocProvider<BluetoothStatusCubit>(
-                  lazy: false,
-                  create: (context) =>
-                      BluetoothStatusCubit(getIt())..listenStateOfBluetooth(),
-                ),
-
-                //
-                BlocProvider<DeviceSearchCubit>(
-                  create: (context) => DeviceSearchCubit(getIt(), getIt()),
-                ),
-
-                //
-                BlocProvider<DeviceSelectedCubit>(
-                  create: (context) => DeviceSelectedCubit(
-                    context.read<MiScaleStatusCubit>(),
-                    getIt(),
-                    getIt(),
-                    getIt(),
-                    getIt(),
-                    getIt(),
-                  ),
-                ),
-
-                //
-                BlocProvider<MiScaleOpsCubit>(
-                  create: (context) => MiScaleOpsCubit(getIt(), getIt()),
-                ),
-              ],
-              child: myApp.build(context),
-            );
-          },
-        ),
-      ),
-    );
-  }
 }

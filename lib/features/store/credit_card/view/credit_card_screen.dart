@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../take_appointment/do_mobile_payment/iyzico_response_sms_payment_page.dart';
 import '../credit_card.dart';
 
@@ -30,7 +30,11 @@ class CreditCardScreen extends StatelessWidget {
     }
 
     return BlocProvider<CreditCardCubit>(
-      create: (context) => CreditCardCubit(getIt(), getIt()),
+      create: (context) => CreditCardCubit(
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
       child: CreditCardView(
         paymentObjectCode: paymentObjectCode,
         paymentType: paymentType,
@@ -106,6 +110,7 @@ class _CreditCardViewState extends State<CreditCardView> {
       child: RbioScaffold(
         resizeToAvoidBottomInset: true,
         appbar: RbioAppBar(
+          context: context,
           title: RbioAppBar.textTitle(
             context,
             LocaleProvider.current.payment,
@@ -187,13 +192,15 @@ class _CreditCardViewState extends State<CreditCardView> {
                     keyboardType: TextInputType.text,
                     decoration: Utils.instance
                         .inputImageDecoration(
+                          context: context,
                           suffixIconClicked: () {},
                           hintText: LocaleProvider.current.credit_card_holder,
                           image: R.image.user,
                         )
                         .copyWith(
-                            fillColor: getIt<IAppConfig>().theme.white,
-                            filled: true),
+                          fillColor: context.xMyCustomTheme.white,
+                          filled: true,
+                        ),
                     focusNode: cardHolderNameFNode,
                     inputFormatters: <TextInputFormatter>[
                       TabToNextFieldTextInputFormatter(
@@ -230,12 +237,13 @@ class _CreditCardViewState extends State<CreditCardView> {
                     keyboardType: TextInputType.number,
                     decoration: Utils.instance
                         .inputImageDecoration(
+                          context: context,
                           suffixIconClicked: () {},
                           hintText: LocaleProvider.current.credit_card_number,
                           image: R.image.creditCardNumber,
                         )
                         .copyWith(
-                          fillColor: getIt<IAppConfig>().theme.white,
+                          fillColor: context.xMyCustomTheme.white,
                           filled: true,
                         ),
                     focusNode: cardNumberFNode,
@@ -272,12 +280,13 @@ class _CreditCardViewState extends State<CreditCardView> {
                     keyboardType: TextInputType.number,
                     decoration: Utils.instance
                         .inputImageDecoration(
+                          context: context,
                           suffixIconClicked: () {},
                           hintText: LocaleProvider.current.credit_card_cvv,
                           image: R.image.password,
                         )
                         .copyWith(
-                          fillColor: getIt<IAppConfig>().theme.white,
+                          fillColor: context.xMyCustomTheme.white,
                           filled: true,
                         ),
                     focusNode: cardCcvFNode,
@@ -315,13 +324,14 @@ class _CreditCardViewState extends State<CreditCardView> {
                     keyboardType: TextInputType.number,
                     decoration: Utils.instance
                         .inputImageDecoration(
+                          context: context,
                           suffixIconClicked: () {},
                           hintText:
                               LocaleProvider.current.credit_card_expired_date,
                           image: R.image.creditCalendar,
                         )
                         .copyWith(
-                          fillColor: getIt<IAppConfig>().theme.white,
+                          fillColor: context.xMyCustomTheme.white,
                           filled: true,
                         ),
                     focusNode: cardExpirityDateFNode,
@@ -348,14 +358,13 @@ class _CreditCardViewState extends State<CreditCardView> {
                   children: [
                     Container(
                       alignment: Alignment.bottomLeft,
-                      child: Checkbox(
+                      child: RbioCheckbox(
                         value: state.result.isDistanceContractSelected,
                         onChanged: (newValue) {
                           context
                               .read<CreditCardCubit>()
                               .toggleDistanceContract();
                         },
-                        activeColor: getIt<IAppConfig>().theme.mainColor,
                       ),
                     ),
                     Expanded(
@@ -373,7 +382,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline3.copyWith(
-                            color: getIt<IAppConfig>().theme.textColorSecondary,
+                            color: context.xTextInverseColor,
                             decoration: TextDecoration.underline,
                           ),
                         ),
@@ -387,14 +396,13 @@ class _CreditCardViewState extends State<CreditCardView> {
                   children: [
                     Container(
                       alignment: Alignment.bottomLeft,
-                      child: Checkbox(
+                      child: RbioCheckbox(
                         value: state.result.isInformationFormAccepted,
                         onChanged: (newValue) {
                           context
                               .read<CreditCardCubit>()
                               .toggleInformationForm();
                         },
-                        activeColor: getIt<IAppConfig>().theme.mainColor,
                       ),
                     ),
                     Expanded(
@@ -412,7 +420,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline3.copyWith(
-                            color: getIt<IAppConfig>().theme.textColorSecondary,
+                            color: context.xTextInverseColor,
                             decoration: TextDecoration.underline,
                           ),
                         ),
@@ -426,6 +434,7 @@ class _CreditCardViewState extends State<CreditCardView> {
                   child: state.status == CreditCardStatus.loadingInProgress
                       ? const RbioLoading()
                       : Utils.instance.button(
+                          context: context,
                           text: LocaleProvider.current.confirm.toUpperCase(),
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {

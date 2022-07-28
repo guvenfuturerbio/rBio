@@ -8,15 +8,20 @@ import '../model/visit_response.dart';
 part 'results_state.dart';
 
 class ResultsCubit extends Cubit<ResultsState> {
-  ResultsCubit(this.repository) : super(ResultsState()) {
-    if (getIt<UserNotifier>().canAccessHospital()) {
+  ResultsCubit({
+    required this.repository,
+    required this.userFacade,
+    required this.sentryManager,
+  }) : super(ResultsState()) {
+    if (userFacade.canAccessHospital()) {
       fetchVisits();
     } else {
       showNecessary();
     }
   }
-
   late final Repository repository;
+  late final UserFacade userFacade;
+  late final SentryManager sentryManager;
 
   Future<void> fetchVisits() async {
     final currentState = state;
@@ -42,10 +47,7 @@ class ResultsCubit extends Cubit<ResultsState> {
         ),
       );
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
+      sentryManager.captureException(e, stackTrace: stackTrace);
       emit(currentState.copyWith(status: RbioLoadingProgress.failure));
     }
   }
@@ -76,17 +78,16 @@ class ResultsCubit extends Cubit<ResultsState> {
   }
 
   final bool _hasResult = true;
-  VisitRequest _visitRequestBody(DateTime startDate, DateTime endDate) =>
-      VisitRequest(
-        from: startDate.toString(),
-        to: endDate.toString(),
-        isForeignPatient:
-            getIt<UserNotifier>().getPatient().nationalityId == 213
-                ? 0
-                : 1, // 213 - Türk
-        hasResults: _hasResult == false ? 0 : 1,
-        identityNumber: getIt<UserNotifier>().getPatient().nationalityId == 213
-            ? getIt<UserNotifier>().getPatient().identityNumber
-            : getIt<UserNotifier>().getPatient().passportNumber,
-      );
+  VisitRequest _visitRequestBody(DateTime startDate, DateTime endDate) {
+    final patient = userFacade.getPatient();
+    return VisitRequest(
+      from: startDate.toString(),
+      to: endDate.toString(),
+      isForeignPatient: patient.nationalityId == 213 ? 0 : 1, // 213 - Türk
+      hasResults: _hasResult == false ? 0 : 1,
+      identityNumber: patient.nationalityId == 213
+          ? patient.identityNumber
+          : patient.passportNumber,
+    );
+  }
 }

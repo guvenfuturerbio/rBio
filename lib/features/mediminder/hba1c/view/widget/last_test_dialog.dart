@@ -18,11 +18,11 @@ class _LastTestDialogState extends State<_LastTestDialog> {
 
   @override
   void initState() {
+    super.initState();
+
     _valueEditingController = TextEditingController();
     _valueFocusNode = FocusNode();
     _valueEditingController.text = widget.initValue.replaceAll(".", ",");
-
-    super.initState();
   }
 
   @override
@@ -35,7 +35,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return RbioBaseGreyDialog(
+    return RbioBaseDialog(
       child: SingleChildScrollView(
         child: RbioKeyboardActions(
           isDialog: true,
@@ -51,43 +51,40 @@ class _LastTestDialogState extends State<_LastTestDialog> {
               Center(
                 child: Text(
                   LocaleProvider.current.test_result,
-                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  style: context.xDialogTheme.titleTextStyle,
                 ),
               ),
 
               //
-              R.sizes.hSizer40,
+              R.widgets.hSizer40,
 
               Center(
                 child: Text(
-                  getIt<UserNotifier>().getCurrentUserNameAndSurname(),
-                  style: getIt<IAppConfig>()
-                      .theme
-                      .dialogTheme
-                      .description(context),
+                  getIt<UserFacade>().getNameAndSurname(),
+                  style: context.xDialogTheme.descriptionTextStyle,
                 ),
               ),
 
-              R.sizes.hSizer8,
+              //
+              R.widgets.hSizer8,
 
               //
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: RbioTextFormField(
                   focusNode: _valueFocusNode,
-                  backColor:
-                      getIt<IAppConfig>().theme.dialogTheme.backgroundColor,
+                  backColor: context.xDialogTheme.backgroundColor,
                   controller: _valueEditingController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                    R.regExp.filterText,
                   ],
                 ),
               ),
 
               //
-              R.sizes.hSizer40,
+              R.widgets.hSizer40,
 
               //
               if (context.xTextScaleType == TextScaleType.small) ...[
@@ -99,6 +96,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                     //
                     Expanded(
                       child: RbioSmallDialogButton.red(
+                        context,
                         title: LocaleProvider.current.btn_cancel,
                         onPressed: () {
                           Atom.dismiss(false);
@@ -107,11 +105,12 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                     ),
 
                     //
-                    R.sizes.wSizer8,
+                    R.widgets.wSizer8,
 
                     //
                     Expanded(
-                      child: RbioSmallDialogButton.green(
+                      child: RbioSmallDialogButton.main(
+                        context: context,
                         title: LocaleProvider.current.save,
                         onPressed: () {
                           final inputValue =
@@ -126,7 +125,7 @@ class _LastTestDialogState extends State<_LastTestDialog> {
                 ),
               ] else ...[
                 _buildCancelButton(infinityWidth: true),
-                R.sizes.hSizer12,
+                R.widgets.hSizer12,
                 _buildConfirmButton(infinityWidth: true),
               ],
 
@@ -158,8 +157,8 @@ class _LastTestDialogState extends State<_LastTestDialog> {
     required bool infinityWidth,
   }) {
     return RbioElevatedButton(
-      backColor: getIt<IAppConfig>().theme.grayColor,
-      textColor: getIt<IAppConfig>().theme.textColorSecondary,
+      backColor: context.xMyCustomTheme.gallery,
+      textColor: context.xTextInverseColor,
       title: LocaleProvider.current.btn_cancel,
       onTap: () {
         Atom.dismiss();

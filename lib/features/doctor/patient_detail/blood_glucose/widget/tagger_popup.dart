@@ -26,9 +26,9 @@ class _TaggerPopUp extends StatelessWidget {
                       ? getSquareBg(context)
                       : getCircleBg(context),
                   getDateTimePicker(context, data.date),
-                  getTagState(data.tag!),
+                  getTagState(context, data.tag!),
                   getNote(data.note!),
-                  getAction(() => Navigator.of(context).pop())
+                  getAction(context, () => Navigator.of(context).pop())
                 ],
               ),
             ),
@@ -48,9 +48,9 @@ class _TaggerPopUp extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        color: Utils.instance.getGlucoseMeasurementColor(level),
+        color: Utils.instance.getGlucoseMeasurementColor(context, level),
         border: Border.all(
-          color: Utils.instance.getGlucoseMeasurementColor(level),
+          color: Utils.instance.getGlucoseMeasurementColor(context, level),
           width: 5.0,
         ),
       ),
@@ -67,9 +67,11 @@ class _TaggerPopUp extends StatelessWidget {
       height: 130 * context.textScale,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: data.tag == 2 ? Utils.instance.getGlucoseMeasurementColor(level) : Colors.white,
+        color: data.tag == 2
+            ? Utils.instance.getGlucoseMeasurementColor(context, level)
+            : Colors.white,
         border: Border.all(
-          color: Utils.instance.getGlucoseMeasurementColor(level),
+          color: Utils.instance.getGlucoseMeasurementColor(context, level),
           width: 10.0,
         ),
       ),
@@ -117,11 +119,6 @@ class _TaggerPopUp extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16, top: 16),
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        color: getIt<IAppConfig>().theme.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: Container(
           padding: const EdgeInsets.only(
             left: 16,
@@ -155,21 +152,27 @@ class _TaggerPopUp extends StatelessWidget {
   // DateTimePickerSection #end
 
   // TagSection #begin
-  Widget getTagState(int currentTag) {
+  Widget getTagState(
+    BuildContext context,
+    int currentTag,
+  ) {
     return Wrap(
       alignment: WrapAlignment.center,
       children: <Widget>[
         getTagElement(
+          context,
           currentTag == 1,
           R.image.beforeMealIconBlack,
           LocaleProvider.current.hungry,
         ),
         getTagElement(
+          context,
           currentTag == 2,
           R.image.aftermealIconBlack,
           LocaleProvider.current.full,
         ),
         getTagElement(
+          context,
           currentTag == 3,
           R.image.otherIcon,
           LocaleProvider.current.other,
@@ -178,17 +181,16 @@ class _TaggerPopUp extends StatelessWidget {
     );
   }
 
-  Widget getTagElement(bool isCurrent, String icon, String title) {
+  Widget getTagElement(
+    BuildContext context,
+    bool isCurrent,
+    String icon,
+    String title,
+  ) {
     return Card(
-      elevation: R.sizes.defaultElevation,
-      color: isCurrent
-          ? getIt<IAppConfig>().theme.mainColor
-          : getIt<IAppConfig>().theme.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+      color: isCurrent ? context.xPrimaryColor : context.xMyCustomTheme.white,
       child: Container(
-        decoration: getTagElementDeco(isCurrent),
+        decoration: getTagElementDeco(context, isCurrent),
         padding:
             const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
         child: Row(
@@ -213,10 +215,10 @@ class _TaggerPopUp extends StatelessWidget {
     );
   }
 
-  BoxDecoration getTagElementDeco(bool isCurrent) {
+  BoxDecoration getTagElementDeco(BuildContext context, bool isCurrent) {
     return BoxDecoration(
       borderRadius: R.sizes.borderRadiusCircular,
-      color: isCurrent ? getIt<IAppConfig>().theme.mainColor : Colors.white,
+      color: isCurrent ? context.xPrimaryColor : Colors.white,
     );
   }
   // TagSection #end
@@ -227,11 +229,6 @@ class _TaggerPopUp extends StatelessWidget {
       height: 120,
       width: double.infinity,
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        color: getIt<IAppConfig>().theme.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: Center(
           child: Text(
             note,
@@ -241,24 +238,20 @@ class _TaggerPopUp extends StatelessWidget {
     );
   }
 
-  Widget getAction(VoidCallback action) {
+  Widget getAction(BuildContext context, VoidCallback action) {
     return Wrap(
       children: [
-        GestureDetector(onTap: action, child: actionButton()),
+        GestureDetector(onTap: action, child: actionButton(context)),
       ],
     );
   }
 
-  Widget actionButton() {
+  Widget actionButton(BuildContext context) {
     return Card(
-      elevation: R.sizes.defaultElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: R.sizes.borderRadiusCircular,
-          color: getIt<IAppConfig>().theme.mainColor,
+          color: context.xPrimaryColor,
         ),
         padding: const EdgeInsets.symmetric(
           vertical: 10,

@@ -16,12 +16,10 @@ abstract class IBaseBottomActionsOfGraph {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: Colors.white,
+        primary: context.xAppTheme.buttonTheme.colorScheme?.primary,
         shadowColor: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
+        shape: R.sizes.defaultShape,
       ),
       child: AutoSizeText(
         title ?? LocaleProvider.current.filter_graphs,

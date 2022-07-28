@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../config/config.dart';
 import '../core.dart';
 
 abstract class PermissionManager {
@@ -101,7 +102,7 @@ class PermissionManagerImpl extends PermissionManager {
     await showDialog(
       context: context,
       builder: (context) {
-        return RbioBaseGreyDialog(
+        return RbioBaseDialog(
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -109,36 +110,34 @@ class PermissionManagerImpl extends PermissionManager {
                 //
                 Text(
                   LocaleProvider.current.warning,
-                  style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                  style: context.xDialogTheme.titleTextStyle,
                 ),
 
                 //
-                R.sizes.hSizer32,
+                R.widgets.hSizer32,
 
                 //
                 Center(
                   child: Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: getIt<IAppConfig>()
-                        .theme
-                        .dialogTheme
-                        .description(context),
+                    style: context.xDialogTheme.descriptionTextStyle,
                   ),
                 ),
 
                 //
-                R.sizes.hSizer32,
+                R.widgets.hSizer32,
 
                 //
                 Row(
                   children: [
                     //
-                    R.sizes.wSizer12,
+                    R.widgets.wSizer12,
 
                     //
                     Expanded(
                       child: RbioSmallDialogButton.red(
+                        context,
                         title: LocaleProvider.current.not_now,
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -147,11 +146,12 @@ class PermissionManagerImpl extends PermissionManager {
                     ),
 
                     //
-                    R.sizes.wSizer8,
+                    R.widgets.wSizer8,
 
                     //
                     Expanded(
-                      child: RbioSmallDialogButton.green(
+                      child: RbioSmallDialogButton.main(
+                        context: context,
                         title: LocaleProvider.current.settings,
                         onPressed: () async {
                           Navigator.of(context).pop();
@@ -166,7 +166,7 @@ class PermissionManagerImpl extends PermissionManager {
                     ),
 
                     //
-                    R.sizes.wSizer12,
+                    R.widgets.wSizer12,
                   ],
                 ),
               ],

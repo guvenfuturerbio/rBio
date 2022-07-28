@@ -20,6 +20,7 @@ class NotChronicScreen extends StatelessWidget {
     var linkText = TextStyle(color: getIt<IAppConfig>().theme.mainColor);
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         leading:
             drawerKey != null ? RbioLeadingMenu(drawerKey: drawerKey) : null,
         title: RbioAppBar.textTitle(context, title),

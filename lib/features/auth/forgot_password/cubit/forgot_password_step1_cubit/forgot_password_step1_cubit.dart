@@ -16,13 +16,7 @@ class ForgotPasswordStep1Cubit extends Cubit<ForgotPasswordStep1State> {
     await either.fold(
       (response) async {
         await Future.delayed(const Duration(milliseconds: 500));
-        emit(state.copyWith(isLoading: false));
-        Atom.to(
-          PagePaths.forgotPasswordStep2,
-          queryParameters: {
-            'identityNumber': userRegistrationStep1.identificationNumber ?? '',
-          },
-        );
+        emit(state.copyWith(isLoading: false, isSuccess: true));
       },
       (error) {
         error.when(

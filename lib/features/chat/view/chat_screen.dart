@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../config/config.dart';
 import '../../../core/core.dart';
 import '../controller/chat_vm.dart';
 import '../model/chat_person.dart';
@@ -37,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
   String getCurrentUserId = getIt<UserNotifier>().firebaseID!;
   ChatPerson get getCurrentPerson => ChatPerson(
         id: getIt<UserNotifier>().firebaseID,
-        name: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+        name: getIt<UserFacade>().getNameAndSurname(),
         url: R.image.avatarUrl,
         firebaseToken: getIt<FirebaseMessagingManager>().getToken,
       );
@@ -98,6 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(context, otherPerson.name ?? ''),
     );
   }
@@ -150,7 +152,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     return !value
                         ? Positioned.fill(
                             child: Container(
-                              color: context.scaffoldBackgroundColor,
+                              color: context.xScaffoldBackgroundColor,
                               child: const RbioLoading(),
                             ),
                           )
@@ -202,7 +204,7 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               icon: SvgPicture.asset(
                 R.image.photo,
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
                 width: 25,
               ),
               onPressed: () async {
@@ -229,7 +231,7 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               icon: Icon(
                 Icons.image_outlined,
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
               ),
               onPressed: () async {
                 if (!await getIt<PermissionManager>().request(
@@ -276,7 +278,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
-                      color: getIt<IAppConfig>().theme.mainColor,
+                      color: context.xPrimaryColor,
                       icon: SvgPicture.asset(R.image.send, width: 25),
                       onPressed: () {
                         _sendMessage(chatVm);
@@ -288,7 +290,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
 
             //
-            const SizedBox(width: 6),
+            R.widgets.wSizer8,
           ],
         ),
       ),
@@ -408,12 +410,12 @@ class _ChatScreenState extends State<ChatScreen> {
               chatVm,
             );
 
-  Align _buildDateTitle(DateTime time) {
+  Widget _buildDateTitle(DateTime time) {
     return Align(
       alignment: Alignment.center,
       child: Container(
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.cardBackgroundColor,
+          color: context.xCardColor,
           borderRadius: R.sizes.borderRadiusCircular,
           boxShadow: [
             BoxShadow(
@@ -479,7 +481,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
 
             //
-            const SizedBox(width: 6),
+            R.widgets.wSizer8,
 
             //
             Column(
@@ -557,8 +559,8 @@ class _ChatScreenState extends State<ChatScreen> {
             Flexible(
               child: _buildSelectableText(
                 message.message!,
-                getIt<IAppConfig>().theme.textColorSecondary,
-                getIt<IAppConfig>().theme.secondaryColor,
+                context.xTextInverseColor,
+                context.xSecondaryColor,
               ),
             ),
 
@@ -589,8 +591,8 @@ class _ChatScreenState extends State<ChatScreen> {
             Flexible(
               child: _buildSelectableText(
                 message.message!,
-                getIt<IAppConfig>().theme.textColorSecondary,
-                getIt<IAppConfig>().theme.cardBackgroundColor,
+                context.xTextInverseColor,
+                context.xCardColor,
               ),
             ),
 

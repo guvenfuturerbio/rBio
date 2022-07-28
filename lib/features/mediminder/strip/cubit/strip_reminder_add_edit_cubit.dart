@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
+import '../../../auth/shared/shared.dart';
 import '../../mediminder.dart';
 
-part 'strip_reminder_add_edit_state.dart';
 part 'strip_reminder_add_edit_cubit.freezed.dart';
+part 'strip_reminder_add_edit_state.dart';
 
 class StripReminderAddEditCubitCubit
     extends Cubit<StripReminderAddEditCubitState> {

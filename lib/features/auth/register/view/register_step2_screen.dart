@@ -95,7 +95,9 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
         return KeyboardDismissOnTap(
           child: RbioScaffold(
             resizeToAvoidBottomInset: true,
-            appbar: RbioAppBar(),
+            appbar: RbioAppBar(
+              context: context,
+            ),
             body: _buildBody(vm),
           ),
         );
@@ -147,8 +149,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                   //
                   Row(
                     children: [
-                      Checkbox(
-                        activeColor: getIt<IAppConfig>().theme.mainColor,
+                      RbioCheckbox(
                         value: vm.isTcCitizen,
                         onChanged: (val) {
                           vm.toggleCitizen();
@@ -366,12 +367,11 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                   //
                   Container(
                     alignment: Alignment.bottomLeft,
-                    child: Checkbox(
+                    child: RbioCheckbox(
                       value: vm.clickedGeneralForm,
                       onChanged: (newValue) {
                         vm.showApplicationContestForm();
                       },
-                      activeColor: getIt<IAppConfig>().theme.mainColor,
                     ),
                   ),
 
@@ -399,6 +399,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
               Container(
                 margin: const EdgeInsets.only(top: 5, bottom: 10),
                 child: Utils.instance.button(
+                  context: context,
                   text: LocaleProvider.of(context).btn_next.toUpperCase(),
                   onPressed: () {
                     if (vm.formKey?.currentState?.validate() ?? false) {
@@ -460,14 +461,16 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
                   Text(
                     LocaleProvider.of(context).lbl_dont_have_account,
                     style: context.xHeadline3.copyWith(
-                      color: getIt<IAppConfig>().theme.textColorSecondary,
+                      color: context.xTextInverseColor,
                     ),
                   ),
+
+                  //
                   InkWell(
                     child: Text(
                       LocaleProvider.of(context).btn_sign_in,
                       style: context.xHeadline3.copyWith(
-                        color: getIt<IAppConfig>().theme.mainColor,
+                        color: context.xPrimaryColor,
                       ),
                     ),
                     onTap: () {
@@ -509,31 +512,33 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen> {
     );
   }
 
-  Row buildSeperator() {
+  Widget buildSeperator() {
     return Row(
       children: [
+        //
         Expanded(
           child: Container(
             height: 1,
-            color:
-                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+            color: context.xTextInverseColor.withOpacity(0.4),
           ),
         ),
+
+        //
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
           child: Text(
             "or",
             style: context.xHeadline3.copyWith(
-              color:
-                  getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+              color: context.xTextInverseColor.withOpacity(0.4),
             ),
           ),
         ),
+
+        //
         Expanded(
           child: Container(
             height: 1,
-            color:
-                getIt<IAppConfig>().theme.textColorSecondary.withOpacity(0.4),
+            color: context.xTextInverseColor.withOpacity(0.4),
           ),
         ),
       ],

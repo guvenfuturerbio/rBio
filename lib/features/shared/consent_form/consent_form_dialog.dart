@@ -34,13 +34,15 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
             Center(
               child: Text(
                 LocaleProvider.current.approve_consent_form,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
 
-            R.sizes.hSizer32,
+            //
+            R.widgets.hSizer32,
 
+            //
             SingleChildScrollView(
               child: ChangeNotifierProvider<ConsentFormDialogVm>(
                 create: (context) => ConsentFormDialogVm(
@@ -59,15 +61,13 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                           child: Text(
                             LocaleProvider
                                 .current.application_consent_form_text,
-                            style: getIt<IAppConfig>()
-                                .theme
-                                .dialogTheme
-                                .description(context),
+                            style: context.xDialogTheme.descriptionTextStyle,
                             textAlign: TextAlign.center,
                           ),
                         ),
 
-                        R.sizes.hSizer8,
+                        //
+                        R.widgets.hSizer8,
 
                         //
                         Row(
@@ -75,14 +75,11 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                             //
                             Container(
                               alignment: Alignment.bottomLeft,
-                              child: Checkbox(
+                              child: RbioCheckbox(
                                 value: value.clickedConsentForm,
-                                checkColor: Colors.white,
                                 onChanged: (newValue) {
                                   value.toggleConsentFormState();
                                 },
-                                activeColor:
-                                    getIt<IAppConfig>().theme.mainColor,
                               ),
                             ),
 
@@ -93,6 +90,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                                   value.toggleConsentFormState();
                                 },
                                 child: GuvenAlert.buildSmallDescription(
+                                  context,
                                   LocaleProvider.of(context)
                                       .accept_application_consent_form,
                                   textAlign: TextAlign.start,
@@ -108,6 +106,7 @@ class _ConsentFormDialogState extends State<ConsentFormDialog> {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Center(
                             child: GuvenAlert.buildBigMaterialAction(
+                              context,
                               LocaleProvider.current.Ok.toUpperCase(),
                               () {
                                 value.saveConsentFormState();

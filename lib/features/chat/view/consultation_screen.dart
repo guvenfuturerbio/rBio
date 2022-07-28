@@ -20,7 +20,7 @@ class ConsultationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !(getIt<UserNotifier>().isCronic || getIt<UserNotifier>().isDoctor)
+    return !(getIt<UserNotifier>().user?.chat ?? false)
         ? NotChronicScreen(
             title: LocaleProvider.current.consultation,
             drawerKey: drawerKey,
@@ -43,6 +43,7 @@ class ConsultationScreen extends StatelessWidget {
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
+        context: context,
         leading:
             drawerKey != null ? RbioLeadingMenu(drawerKey: drawerKey) : null,
         title: RbioAppBar.textTitle(
@@ -132,7 +133,7 @@ class ConsultationScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //
-            const SizedBox(height: 4),
+            R.widgets.hSizer4,
 
             //
             Row(
@@ -141,15 +142,14 @@ class ConsultationScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 //
-                CircleAvatar(
-                  backgroundColor:
-                      getIt<IAppConfig>().theme.cardBackgroundColor,
+                RbioCircleAvatar(
+                  backgroundColor: context.xCardColor,
                   backgroundImage: NetworkImage(item.url!),
                   radius: 25,
                 ),
 
                 //
-                const SizedBox(width: 12),
+                R.widgets.wSizer12,
 
                 //
                 Expanded(
@@ -183,7 +183,7 @@ class ConsultationScreen extends StatelessWidget {
                                   margin: const EdgeInsets.only(right: 4),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: getIt<IAppConfig>().theme.mainColor,
+                                    color: context.xPrimaryColor,
                                   ),
                                   child: const SizedBox(
                                     height: 10,
@@ -194,7 +194,7 @@ class ConsultationScreen extends StatelessWidget {
                       ),
 
                       //
-                      const SizedBox(height: 4),
+                      R.widgets.hSizer4,
 
                       //
                       Row(
@@ -250,7 +250,7 @@ class ConsultationScreen extends StatelessWidget {
             ),
 
             //
-            const SizedBox(height: 4),
+            R.widgets.hSizer4,
 
             //
             const Divider(),

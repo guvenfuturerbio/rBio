@@ -23,7 +23,7 @@ class _QuantityDropdownState extends State<QuantityDropdown> {
             style: const TextStyle(color: Colors.black),
             underline: Container(
               height: 2,
-              color: getIt<IAppConfig>().theme.mainColor,
+              color: context.xPrimaryColor,
             ),
             onChanged: (String? newValue) {
               setState(() {
@@ -42,28 +42,37 @@ class _QuantityDropdownState extends State<QuantityDropdown> {
           )
         : Row(
             children: [
+              //
               const Text("Adet: "),
+
+              //
               Container(
                 constraints: const BoxConstraints(maxHeight: 50, maxWidth: 50),
                 child: TextFormField(
                   controller: quantity,
-                  style: Utils.instance.inputTextStyle(),
+                  style: Utils.instance.inputTextStyle(context),
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(),
                 ),
                 margin: const EdgeInsets.only(bottom: 20),
               ),
+
+              //
               const SizedBox(
                 width: 5,
               ),
+
+              //
               Utils.instance.button(
-                  text: "Update",
-                  width: 30,
-                  height: 12,
-                  onPressed: () {
-                    LoggerUtils.instance.i("Update worked!");
-                  })
+                context: context,
+                text: "Update",
+                width: 30,
+                height: 12,
+                onPressed: () {
+                  LoggerUtils.instance.i("Update worked!");
+                },
+              ),
             ],
           );
   }

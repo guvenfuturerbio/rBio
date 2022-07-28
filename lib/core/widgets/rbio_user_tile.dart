@@ -39,38 +39,29 @@ class RbioUserTile extends StatelessWidget {
         ),
         child: Column(
           children: [
+            //
             Container(
               width: width,
               alignment: Alignment.center,
               child: ListTile(
                 dense: true,
-                shape: RoundedRectangleBorder(
-                  borderRadius: R.sizes.borderRadiusCircular,
-                ),
+                shape: R.sizes.defaultShape,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
                   vertical: 6.0,
                 ),
-
-                leading: _getLeadingImage(leadingImage),
+                leading: _getLeadingImage(context, leadingImage),
                 title: Text(
                   name ?? '',
                   style: context.xHeadline3.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                // subtitle: Text(
-                //   'Hangi doktordan randevu almak istiyorsunuz?',
-                //   maxLines: 2,
-                //   overflow: TextOverflow.ellipsis,
-                //   style: context.xHeadline5.copyWith(
-                //     fontWeight: FontWeight.w600,
-                //     color: Colors.grey,
-                //   ),
-                // ),
                 trailing: _getTrailingIcon(trailingIcon),
               ),
             ),
+
+            //
             if (bottomChild != null) bottomChild!,
           ],
         ),
@@ -78,11 +69,11 @@ class RbioUserTile extends StatelessWidget {
     );
   }
 
-  Widget _getLeadingImage(UserLeadingImage type) {
+  Widget _getLeadingImage(BuildContext context, UserLeadingImage type) {
     switch (type) {
       case UserLeadingImage.circle:
-        return CircleAvatar(
-          backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+        return RbioCircleAvatar(
+          backgroundColor: context.xCardColor,
           backgroundImage: imageBytes != null
               ? MemoryImage(base64.decode(imageBytes!))
               : imageUrl == null

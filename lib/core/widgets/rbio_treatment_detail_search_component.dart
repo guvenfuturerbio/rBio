@@ -19,7 +19,8 @@ class RbioDetailSearchComponent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _RbioDetailSearchComponentState createState() => _RbioDetailSearchComponentState();
+  _RbioDetailSearchComponentState createState() =>
+      _RbioDetailSearchComponentState();
 }
 
 class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
@@ -55,7 +56,7 @@ class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -155,7 +156,7 @@ class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
                             LocaleProvider.of(context).current_treatments,
                             style: context.xHeadline3.copyWith(
                               color: val == TreatmentFilterType.current
-                                  ? getIt<IAppConfig>().theme.mainColor
+                                  ? context.xPrimaryColor
                                   : null,
                             ),
                           ),
@@ -175,7 +176,7 @@ class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
                             LocaleProvider.of(context).past_treatments,
                             style: context.xHeadline3.copyWith(
                               color: val == TreatmentFilterType.past
-                                  ? getIt<IAppConfig>().theme.mainColor
+                                  ? context.xPrimaryColor
                                   : null,
                             ),
                           ),
@@ -192,7 +193,7 @@ class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
                         horizontal: 20,
                       ),
                       child: GuvenDateRange(
-                        backColor: getIt<IAppConfig>().theme.grayColor,
+                        backColor: context.xScaffoldBackgroundColor,
                         startCurrentDate: widget.result.startCurrentDate,
                         endCurrentDate: widget.result.endCurrentDate,
                         onStartDateChange: (date) {
@@ -216,7 +217,7 @@ class _RbioDetailSearchComponentState extends State<RbioDetailSearchComponent>
                     ),
 
                     //
-                    R.sizes.hSizer20,
+                    R.widgets.hSizer20,
                   ],
                 ],
               ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
@@ -42,6 +41,7 @@ class BpProgressScreen extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.bp_tracking,
@@ -60,8 +60,8 @@ class BpProgressScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           //
-          R.sizes.hSizer8,
-          R.sizes.stackedTopPadding(context),
+          R.widgets.hSizer8,
+          R.widgets.stackedTopPadding(context),
 
           //
           if (vm.isChartShow) ...[
@@ -76,7 +76,7 @@ class BpProgressScreen extends StatelessWidget {
             ),
 
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
             Wrap(
@@ -121,16 +121,10 @@ class BpProgressScreen extends StatelessWidget {
   }
 
   Widget _buildFAB(BpProgressVm vm, BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+    return RbioSVGFAB.primaryColor(
+      context,
+      imagePath: R.image.add,
       onPressed: () => vm.manuelEntry(context),
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SvgPicture.asset(
-          R.image.add,
-          color: getIt<IAppConfig>().theme.white,
-        ),
-      ),
     );
   }
 

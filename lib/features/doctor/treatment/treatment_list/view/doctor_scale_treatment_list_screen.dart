@@ -64,6 +64,7 @@ class _DoctorScaleTreatmentListViewState
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.of(context).treatment,
@@ -94,8 +95,8 @@ class _DoctorScaleTreatmentListViewState
       mainAxisSize: MainAxisSize.max,
       children: [
         //
-        R.sizes.stackedTopPadding(context),
-        R.sizes.hSizer8,
+        R.widgets.stackedTopPadding(context),
+        R.widgets.hSizer8,
 
         //
         RbioDetailSearchComponent(
@@ -164,7 +165,7 @@ class _DoctorScaleTreatmentListViewState
       children: [
         //
         _ColorfulExpandedFab(
-          backColor: getIt<IAppConfig>().theme.yellow,
+          backColor: context.xMyCustomTheme.kournikova,
           title: LocaleProvider.of(context).diet_list,
           imagePath: R.image.fabDietList,
           onTap: _openDietAddEdit,
@@ -172,7 +173,7 @@ class _DoctorScaleTreatmentListViewState
 
         //
         _ColorfulExpandedFab(
-          backColor: getIt<IAppConfig>().theme.blue,
+          backColor: context.xMyCustomTheme.frenchPass,
           title: LocaleProvider.of(context).treatment_note,
           imagePath: R.image.fabTreatmentNote,
           onTap: _openTreatmentAddEdit,
@@ -180,7 +181,7 @@ class _DoctorScaleTreatmentListViewState
 
         //
         _ColorfulExpandedFab(
-          backColor: getIt<IAppConfig>().theme.pink,
+          backColor: context.xMyCustomTheme.frenchLilac,
           title: LocaleProvider.of(context).special_note,
           imagePath: R.image.fabSpecialNote,
           onTap: _openDoctorNoteAddEdit,

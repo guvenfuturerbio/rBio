@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
-import '../../../model/model.dart';
+import '../patient_detail/blood_glucose/model/model.dart';
+import '../shared/shared.dart';
 
 class PatientNotifiers extends ChangeNotifier {
   late DoctorPatientDetailModel _patientDetail;
@@ -33,8 +34,10 @@ class PatientNotifiers extends ChangeNotifier {
     required int patientId,
     required UpdateMyPatientLimit updateMyPatientLimit,
   }) async {
-    await getIt<DoctorRepository>()
-        .updateMyPatientLimit(patientId, updateMyPatientLimit);
+    await getIt<DoctorRepository>().updateMyPatientLimit(
+      patientId,
+      updateMyPatientLimit,
+    );
     notifyListeners();
   }
 }

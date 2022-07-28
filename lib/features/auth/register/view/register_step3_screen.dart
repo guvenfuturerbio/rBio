@@ -59,7 +59,9 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
             ) {
               return RbioScaffold(
                 resizeToAvoidBottomInset: true,
-                appbar: RbioAppBar(),
+                appbar: RbioAppBar(
+                  context: context,
+                ),
                 body: _buildBody(context, vm),
               );
             },
@@ -130,6 +132,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
               Container(
                 margin: const EdgeInsets.only(top: 20, bottom: 20),
                 child: Utils.instance.button(
+                    context: context,
                     text: LocaleProvider.of(context).btn_done.toUpperCase(),
                     onPressed: () {
                       if (vm.formKey?.currentState?.validate() ?? false) {

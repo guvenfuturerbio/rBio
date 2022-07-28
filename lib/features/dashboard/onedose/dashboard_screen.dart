@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../config/config.dart';
 import '../../../core/core.dart';
 import '../home/model/drawer_model.dart';
 import 'bottom_navbar_painter.dart';
@@ -43,7 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Drawer _buildDrawer() {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: context.xBottomNavigationBarTheme.backgroundColor,
       child: SafeArea(
         top: true,
         child: Column(
@@ -52,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           mainAxisSize: MainAxisSize.max,
           children: [
             //
-            R.sizes.hSizer8,
+            R.widgets.hSizer8,
 
             //
             Row(
@@ -83,7 +84,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         right: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: getIt<IAppConfig>().theme.mainColor,
+                        color: context.xPrimaryColor,
                         borderRadius: R.sizes.borderRadiusCircular,
                       ),
                       child: Row(
@@ -94,27 +95,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           //
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0),
-                            child: CircleAvatar(
+                            child: RbioCircleAvatar(
                               backgroundImage:
                                   Utils.instance.getCacheProfileImage,
                               radius: R.sizes.iconSize2,
-                              backgroundColor:
-                                  getIt<IAppConfig>().theme.cardBackgroundColor,
+                              backgroundColor: context.xCardColor,
                             ),
                           ),
 
                           //
-                          R.sizes.wSizer12,
+                          R.widgets.wSizer12,
 
                           //
                           Expanded(
                             child: Text(
-                              getIt<UserNotifier>()
-                                  .getCurrentUserNameAndSurname(),
+                              getIt<UserFacade>().getNameAndSurname(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: context.xHeadline4.copyWith(
-                                  color: getIt<IAppConfig>().theme.textColor),
+                                color: context.xTextColor,
+                              ),
                             ),
                           ),
                         ],
@@ -129,7 +129,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     color: Colors.transparent,
                     child: SvgPicture.asset(
                       R.image.cancel,
-                      color: Colors.black,
+                      color: context.xIconColor,
                       width: R.sizes.iconSize2,
                     ),
                   ),
@@ -147,7 +147,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
 
                 //
-                R.sizes.wSizer4,
+                R.widgets.wSizer4,
               ],
             ),
 
@@ -167,8 +167,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
 
-            R.sizes.hSizer12,
+            //
+            R.widgets.hSizer12,
 
+            //
             _buildDrawerListTile(
               DrawerModel(
                 title: LocaleProvider.current.log_out,
@@ -202,8 +204,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         widget.drawerKey.currentState?.openDrawer();
         model.onTap();
       },
-      overlayColor:
-          MaterialStateProperty.all(getIt<IAppConfig>().theme.mainColor),
+      overlayColor: MaterialStateProperty.all(context.xPrimaryColor),
       child: Container(
         color: Colors.transparent,
         child: Padding(
@@ -214,7 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             mainAxisSize: MainAxisSize.max,
             children: [
               //
-              R.sizes.hSizer16,
+              R.widgets.hSizer16,
 
               //
               Row(
@@ -222,20 +223,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  R.sizes.wSizer4,
+                  R.widgets.wSizer4,
                   SizedBox(
                     width: 25,
                     height: 25,
                     child: SvgPicture.asset(
                       model.svgPath,
+                      color: context.xIconColor,
                     ),
                   ),
-                  R.sizes.wSizer16,
+                  R.widgets.wSizer16,
                   Expanded(
                     child: Text(
                       model.title,
                       style: context.xHeadline4.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorSecondary,
+                        color: context.xTextInverseColor,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -244,7 +246,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
 
               //
-              R.sizes.hSizer16,
+              R.widgets.hSizer16,
 
               // //
               Divider(
@@ -270,9 +272,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Text(
         "v" + getIt<GuvenSettings>().version,
         textAlign: TextAlign.left,
-        style: context.xHeadline5.copyWith(
-          color: Colors.black,
-        ),
+        style: context.xHeadline5,
       ),
     );
   }
@@ -295,7 +295,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             CustomPaint(
               size: Size(size.width, R.sizes.bottomNavigationBarHeight),
               painter: BottomNavbarCustomPainter(
-                getIt<IAppConfig>().theme.cardBackgroundColor,
+                context.xBottomNavigationBarTheme.backgroundColor!,
               ),
             ),
 
@@ -305,12 +305,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: SizedBox(
                 height: 60,
                 width: 60,
-                child: FloatingActionButton(
-                  backgroundColor: getIt<IAppConfig>().theme.mainColor,
-                  child: SvgPicture.asset(
-                    R.image.bottomNavigationHome,
-                    width: R.sizes.iconSize,
-                  ),
+                child: RbioSVGFAB(
+                  iconColor: null,
+                  imagePath: R.image.bottomNavigationHome,
                   elevation: 0,
                   onPressed: () {
                     getIt<IAppConfig>()
@@ -337,6 +334,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       0,
@@ -354,6 +352,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     },
                     splashColor: Colors.white,
                   ),
+
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       1,
@@ -370,9 +370,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       DashboardNavigation.toChat(context);
                     },
                   ),
+
+                  //
                   Container(
                     width: size.width * 0.20,
                   ),
+
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       3,
@@ -389,6 +393,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       DashboardNavigation.toGraph(context);
                     },
                   ),
+
+                  //
                   IconButton(
                     icon: _getSvgChild(
                       4,
@@ -420,8 +426,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String activeImage,
   ) =>
       widget.currentIndex != iconIndex
-          ? SvgPicture.asset(passiveImage, width: R.sizes.iconSize2)
-          : SvgPicture.asset(activeImage, width: R.sizes.iconSize2);
+          ? SvgPicture.asset(
+              passiveImage,
+              width: R.sizes.iconSize2,
+              color: context.xIconColor,
+            )
+          : SvgPicture.asset(
+              activeImage,
+              width: R.sizes.iconSize2,
+            );
 
   List<DrawerModel> get drawerList => <DrawerModel>[
         DrawerModel(
@@ -437,6 +450,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.profile);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.lbl_find_hospital,
           svgPath: R.image.drawerLblFindHospital,
@@ -457,6 +472,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             );
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.take_video_appointment,
           svgPath: R.image.drawerTakeVideoAppointment,
@@ -477,6 +494,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             );
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.chronic_track_home,
           svgPath: R.image.drawerChronicTrackHome,
@@ -490,6 +509,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.measurementTrackingHome);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.my_appointments,
           svgPath: R.image.drawerMyAppointments,
@@ -503,6 +524,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.appointment);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.results,
           svgPath: R.image.drawerResults,
@@ -516,6 +539,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.eResult);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.for_you,
           svgPath: R.image.drawerForYou,
@@ -529,6 +554,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.forYouCategories);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.symptom_checker,
           svgPath: R.image.drawerSymptomChecker,
@@ -542,7 +569,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.symptomMainMenu);
           },
         ),
-        if (getIt<IAppConfig>().platform.checkDevices())
+
+        //
+        if (!Atom.isWeb && getIt<IAppConfig>().platform.checkDevices())
           DrawerModel(
             title: LocaleProvider.current.devices,
             svgPath: R.image.drawerDevices,
@@ -556,6 +585,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Atom.to(PagePaths.devices);
             },
           ),
+
+        //
         if (getIt<IAppConfig>().platform.checkMedimender())
           DrawerModel(
             title: LocaleProvider.current.reminders,
@@ -570,6 +601,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Atom.to(PagePaths.reminderList);
             },
           ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.request_and_suggestions,
           svgPath: R.image.drawerRequestAndSuggestions,
@@ -583,6 +616,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Atom.to(PagePaths.suggestResult);
           },
         ),
+
+        //
         DrawerModel(
           title: LocaleProvider.current.detailed_symptom,
           svgPath: R.image.drawerDetailedSymptom,

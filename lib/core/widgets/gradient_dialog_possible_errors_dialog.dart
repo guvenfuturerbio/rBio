@@ -21,48 +21,59 @@ class _DialogForPossibleErrorDialogState
     extends State<DialogForPossibleErrorDialog> {
   @override
   Widget build(BuildContext context) {
-    return RbioBaseGreyDialog(
+    return RbioBaseDialog(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            //
             Center(
               child: Text(
                 LocaleProvider.current.warning,
-                style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+                style: context.xDialogTheme.titleTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
-            R.sizes.hSizer32,
+
+            //
+            R.widgets.hSizer32,
+
+            //
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part1,
-                style:
-                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                style: context.xDialogTheme.descriptionTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
+
+            //
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part2,
-                style:
-                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                style: context.xDialogTheme.descriptionTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
+
+            //
             Center(
               child: Text(
                 LocaleProvider.current.detailed_error_dialog_part3,
-                style:
-                    getIt<IAppConfig>().theme.dialogTheme.description(context),
+                style: context.xDialogTheme.descriptionTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),
-            R.sizes.hSizer32,
+
+            //
+            R.widgets.hSizer32,
+
+            //
             Center(
-              child: RbioSmallDialogButton.green(
+              child: RbioSmallDialogButton.main(
+                context: context,
                 title: LocaleProvider.current.Ok,
                 onPressed: () {
                   Navigator.of(context).pop();

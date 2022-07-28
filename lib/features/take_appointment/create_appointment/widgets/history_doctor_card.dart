@@ -31,8 +31,9 @@ Widget _buildHistoryDoctorCard(
               maxLines: 3,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              style: context.xHeadline5
-                  .copyWith(color: getIt<IAppConfig>().theme.grey),
+              style: context.xHeadline5.copyWith(
+                color: context.xMyCustomTheme.grey,
+              ),
             )
           ],
         ),

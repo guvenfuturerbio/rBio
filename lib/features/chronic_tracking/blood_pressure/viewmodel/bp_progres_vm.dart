@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../config/config.dart';
 import '../../bottom_actions_of_graph.dart';
 import '../../home/view/widgets/widgets.dart';
-import '../widgets/chart/bp_pulse_chart.dart';
-import '../widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
-import '../widgets/tagger/bp_tagger_pop_up.dart';
+import '../model/model.dart';
 import '../view/bp_progres_screen.dart';
+import '../widgets/bp_chart_filter/bp_chart_filter_pop_up.dart';
+import '../widgets/chart/bp_pulse_chart.dart';
+import '../widgets/tagger/bp_tagger_pop_up.dart';
 import 'bp_measurement_vm.dart';
 
 class BpProgressVm

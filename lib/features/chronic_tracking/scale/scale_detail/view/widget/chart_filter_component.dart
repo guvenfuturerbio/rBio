@@ -111,11 +111,13 @@ class ChartFilterComponent extends StatelessWidget {
             ),
 
             //
-            R.sizes.hSizer4,
+            R.widgets.hSizer4,
 
             //
             Container(
-              color: currentType == type ? Colors.black26 : Colors.transparent,
+              color: currentType == type
+                  ? context.xTextInverseColor
+                  : Colors.transparent,
               height: 1.0,
               width: double.infinity,
             ),

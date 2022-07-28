@@ -166,8 +166,8 @@ class _ListBodyState extends State<ListBody>
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: widget.completeNotifier.value?.value == value
-                ? getIt<IAppConfig>().theme.mainColor
-                : getIt<IAppConfig>().theme.cardBackgroundColor,
+                ? context.xPrimaryColor
+                : context.xCardColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(
@@ -176,8 +176,11 @@ class _ListBodyState extends State<ListBody>
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.value == value
-                  ? getIt<IAppConfig>().theme.textColor
-                  : getIt<IAppConfig>().theme.textColorSecondary,
+                  ? context.xMyCustomTheme.white
+                  : context.xTextInverseColor,
+              fontWeight: widget.completeNotifier.value?.value == value
+                  ? FontWeight.bold
+                  : FontWeight.w500,
             ),
           ),
         ),
@@ -238,20 +241,24 @@ class _ListBodyState extends State<ListBody>
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: widget.completeNotifier.value?.selected?.from == item.from
-                ? getIt<IAppConfig>().theme.mainColor
-                : getIt<IAppConfig>().theme.cardBackgroundColor,
+                ? context.xPrimaryColor
+                : context.xCardColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Text(
             '${item.from}+03:00'.xGetUTCLocalTime() +
-                ":" +
+                " - " +
                 '${item.to}+03:00'.xGetUTCLocalTime(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.xHeadline2.copyWith(
               color: widget.completeNotifier.value?.selected?.from == item.from
-                  ? getIt<IAppConfig>().theme.textColor
-                  : getIt<IAppConfig>().theme.textColorSecondary,
+                  ? context.xMyCustomTheme.white
+                  : context.xTextInverseColor,
+              fontWeight:
+                  widget.completeNotifier.value?.selected?.from == item.from
+                      ? FontWeight.bold
+                      : FontWeight.w500,
             ),
           ),
         ),

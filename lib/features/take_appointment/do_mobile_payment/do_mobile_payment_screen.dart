@@ -4,8 +4,9 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import 'appointment_request.dart';
 import 'do_mobile_payment_vm.dart';
+import 'e_randevu_cc_response.dart';
 
 class DoMobilePaymentScreen extends StatefulWidget {
   final AppointmentRequest appointment;
@@ -97,6 +98,7 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
           child: RbioScaffold(
             resizeToAvoidBottomInset: true,
             appbar: RbioAppBar(
+              context: context,
               leading: RbioAppBar.defaultLeading(
                 context,
                 () {
@@ -153,13 +155,15 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       },
                       decoration: Utils.instance
                           .inputImageDecoration(
+                            context: context,
                             suffixIconClicked: () {},
                             hintText: LocaleProvider.current.credit_card_holder,
                             image: R.image.user,
                           )
                           .copyWith(
-                              fillColor: getIt<IAppConfig>().theme.white,
-                              filled: true),
+                            fillColor: context.xCardColor,
+                            filled: true,
+                          ),
                       autocorrect: false,
                       enableSuggestions: false,
                       focusNode: _cardHolderNameFNode,
@@ -196,13 +200,15 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       },
                       decoration: Utils.instance
                           .inputImageDecoration(
+                            context: context,
                             suffixIconClicked: () {},
                             hintText: LocaleProvider.current.credit_card_number,
                             image: R.image.creditCardNumber,
                           )
                           .copyWith(
-                              fillColor: getIt<IAppConfig>().theme.white,
-                              filled: true),
+                            fillColor: context.xCardColor,
+                            filled: true,
+                          ),
                       focusNode: _cardNumberFNode,
                       controller: _cardNumberController,
                       enableSuggestions: false,
@@ -238,13 +244,15 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       },
                       decoration: Utils.instance
                           .inputImageDecoration(
+                            context: context,
                             suffixIconClicked: () {},
                             hintText: LocaleProvider.current.credit_card_cvv,
                             image: R.image.password,
                           )
                           .copyWith(
-                              fillColor: getIt<IAppConfig>().theme.white,
-                              filled: true),
+                            fillColor: context.xCardColor,
+                            filled: true,
+                          ),
                       focusNode: _cardCcvFNode,
                       controller: _cvvCodeController,
                       enableSuggestions: false,
@@ -281,14 +289,16 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       },
                       decoration: Utils.instance
                           .inputImageDecoration(
+                            context: context,
                             suffixIconClicked: () {},
                             hintText:
                                 LocaleProvider.current.credit_card_expired_date,
                             image: R.image.creditCalendar,
                           )
                           .copyWith(
-                              fillColor: getIt<IAppConfig>().theme.white,
-                              filled: true),
+                            fillColor: context.xCardColor,
+                            filled: true,
+                          ),
                       focusNode: _cardExpirityDateFNode,
                       controller: _expiryDateController,
                       enableSuggestions: false,
@@ -334,12 +344,11 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                       //
                       Container(
                         alignment: Alignment.bottomLeft,
-                        child: Checkbox(
+                        child: RbioCheckbox(
                           value: value.isSalesContractConfirmed,
                           onChanged: (newValue) {
                             value.toggleSalesContract();
                           },
-                          activeColor: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                       Expanded(
@@ -372,12 +381,11 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
                     children: [
                       Container(
                         alignment: Alignment.bottomLeft,
-                        child: Checkbox(
+                        child: RbioCheckbox(
                           value: value.cancellationFormConfirmed,
                           onChanged: (newValue) {
                             value.toggleCancellationForm();
                           },
-                          activeColor: getIt<IAppConfig>().theme.mainColor,
                         ),
                       ),
                       Expanded(
@@ -431,12 +439,12 @@ class _DoMobilePaymentScreenState extends State<DoMobilePaymentScreen> {
             ),
 
             //
-            R.sizes.defaultBottomPadding,
+            R.widgets.defaultBottomPadding,
           ],
         ),
       ),
     );
   }
 
-  Widget _buildVerticalGap() => const SizedBox(height: 8);
+  Widget _buildVerticalGap() => R.widgets.hSizer8;
 }

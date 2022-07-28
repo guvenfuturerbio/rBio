@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:path_drawing/path_drawing.dart';
 
 import '../../../core/core.dart';
-import '../../../model/model.dart';
+import 'model/get_bodylocations_response.dart';
 
 class Shape {
   Shape(strPath, this.label, this.id, this.tmpOffset)
@@ -20,12 +20,14 @@ class Shape {
 }
 
 class BodyPartsPainter extends CustomPainter {
-  BodyPartsPainter(
-      {this.notifier,
-      this.clickedPathFunc,
-      this.bodyLocations,
-      this.isGenderMale})
-      : super(repaint: notifier);
+  BodyPartsPainter({
+    required this.context,
+    this.notifier,
+    this.clickedPathFunc,
+    this.bodyLocations,
+    this.isGenderMale,
+  }) : super(repaint: notifier);
+  BuildContext context;
   Function? clickedPathFunc;
   List<GetBodyLocationResponse>? bodyLocations;
   bool? isGenderMale;
@@ -116,7 +118,7 @@ class BodyPartsPainter extends CustomPainter {
       final selected = path!.contains(notifier!.value);
       if (selected) {
         _paint
-          ..color = getIt<IAppConfig>().theme.mainColor.withOpacity(0.7)
+          ..color = context.xPrimaryColor.withOpacity(0.7)
           ..style = PaintingStyle.fill;
         clickedPathFunc!(shape.id);
         if (shape.label == myList[1].label || shape.label == myList[2].label) {

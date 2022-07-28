@@ -62,7 +62,7 @@ class RbioTreatmentCard extends StatelessWidget {
                   horizontal: 19,
                 ),
                 decoration: BoxDecoration(
-                  color: item.type!.xBackColor,
+                  color: item.type!.xBackColor(context),
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(12),
                   ),
@@ -102,7 +102,7 @@ class RbioTreatmentCard extends StatelessWidget {
                   horizontal: 19,
                 ),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: const BorderRadius.vertical(
                     bottom: Radius.circular(12),
                   ),
@@ -121,12 +121,12 @@ class RbioTreatmentCard extends StatelessWidget {
                           Text(
                             subTitle,
                             style: context.xHeadline3.copyWith(
-                              color: getIt<IAppConfig>().theme.textColorPassive,
+                              color: context.xMyCustomTheme.textDisabledColor,
                             ),
                           ),
 
                           //
-                          R.sizes.hSizer4,
+                          R.widgets.hSizer4,
 
                           //
                           Text(
@@ -145,6 +145,7 @@ class RbioTreatmentCard extends StatelessWidget {
                       width: R.sizes.iconSize2,
                       child: SvgPicture.asset(
                         R.image.arrowRightIcon,
+                        color: context.xIconColor,
                       ),
                     ),
                   ],

@@ -9,7 +9,7 @@ class QuestionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RbioBaseGreyDialog(
+    return RbioBaseDialog(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -18,23 +18,23 @@ class QuestionDialog extends StatelessWidget {
           //
           Text(
             LocaleProvider.current.warning,
-            style: getIt<IAppConfig>().theme.dialogTheme.title(context),
+            style: context.xDialogTheme.titleTextStyle,
           ),
 
           //
-          R.sizes.hSizer32,
+          R.widgets.hSizer32,
 
           //
           Center(
             child: Text(
               LocaleProvider.current.cancel_appo_question,
-              style: getIt<IAppConfig>().theme.dialogTheme.description(context),
+              style: context.xDialogTheme.descriptionTextStyle,
               textAlign: TextAlign.center,
             ),
           ),
 
           //
-          R.sizes.hSizer32,
+          R.widgets.hSizer32,
 
           //
           Row(
@@ -42,6 +42,7 @@ class QuestionDialog extends StatelessWidget {
               //
               Expanded(
                 child: RbioSmallDialogButton.red(
+                  context,
                   title: LocaleProvider.current.no,
                   onPressed: () {
                     Navigator.of(context).pop(false);
@@ -50,11 +51,12 @@ class QuestionDialog extends StatelessWidget {
               ),
 
               //
-              R.sizes.wSizer8,
+              R.widgets.wSizer8,
 
               //
               Expanded(
-                child: RbioSmallDialogButton.green(
+                child: RbioSmallDialogButton.main(
+                  context: context,
                   title: LocaleProvider.current.yes,
                   onPressed: () {
                     Navigator.of(context).pop(true);

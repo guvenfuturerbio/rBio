@@ -1,4 +1,4 @@
-import '../../../../model/model.dart';
+import '../../create_appointment_events/model/resources_request.dart';
 
 class SaveAppointmentsRequest {
   int? tenantId;

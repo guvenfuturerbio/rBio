@@ -25,10 +25,9 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     _patientId = patientId;
     isChartShow = false;
     update();
-
     controller.addListener(() {
       if (controller.position.atEdge && controller.position.pixels != 0) {
-        getNewItems();
+        getNewItems(context);
       }
     });
 
@@ -61,10 +60,15 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     // });
   }
 
-  getNewItems() async {
-    await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
-        .getMoreData(
-            patientId: patientDetail.id!, date: bgMeasurements.last.date);
+  Future<void> getNewItems(BuildContext context) async {
+    await Provider.of<BgMeasurementsNotifierDoc>(
+      mContext,
+      listen: false,
+    ).getMoreData(
+      context,
+      patientId: patientDetail.id!,
+      date: bgMeasurements.last.date,
+    );
     filterDatas();
   }
 
@@ -215,17 +219,27 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   final Map<Color, GlucoseMarginsFilter> _colorInfo =
       <Color, GlucoseMarginsFilter>{};
 
-  Map<Color, GlucoseMarginsFilter> get colorInfo {
+  Map<Color, GlucoseMarginsFilter> colorInfo(BuildContext context) {
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.veryLow, () => GlucoseMarginsFilter.veryLow);
+      context.xMyCustomTheme.roman,
+      () => GlucoseMarginsFilter.veryLow,
+    );
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.low, () => GlucoseMarginsFilter.low);
+      context.xMyCustomTheme.tonysPink,
+      () => GlucoseMarginsFilter.low,
+    );
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.target, () => GlucoseMarginsFilter.target);
+      context.xMyCustomTheme.deYork,
+      () => GlucoseMarginsFilter.target,
+    );
     _colorInfo.putIfAbsent(
-        getIt<IAppConfig>().theme.high, () => GlucoseMarginsFilter.high);
-    _colorInfo.putIfAbsent(getIt<IAppConfig>().theme.veryHigh,
-        () => GlucoseMarginsFilter.veryHigh);
+      context.xMyCustomTheme.energyYellow,
+      () => GlucoseMarginsFilter.high,
+    );
+    _colorInfo.putIfAbsent(
+      context.xMyCustomTheme.casablanca,
+      () => GlucoseMarginsFilter.veryHigh,
+    );
     return _colorInfo;
   }
 
@@ -468,7 +482,12 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     _currentDateIndex = 0;
     await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurementsInDateRange(
-            startDate, endDate.add(const Duration(days: 1)));
+      mContext,
+      startDate,
+      endDate.add(
+        const Duration(days: 1),
+      ),
+    );
     bgMeasurements =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
@@ -489,7 +508,12 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     _currentDateIndex = 0;
     await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
         .fetchBgMeasurementsInDateRange(
-            startDate, endDate.add(const Duration(days: 1)));
+      mContext,
+      startDate,
+      endDate.add(
+        const Duration(days: 1),
+      ),
+    );
     bgMeasurements =
         Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
             .bgMeasurements;
@@ -585,7 +609,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.veryLow) {
+      if (data.resultColor == mContext.xMyCustomTheme.roman) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -616,7 +640,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.low) {
+      if (data.resultColor == mContext.xMyCustomTheme.tonysPink) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -647,7 +671,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.target) {
+      if (data.resultColor == mContext.xMyCustomTheme.deYork) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -678,7 +702,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.high) {
+      if (data.resultColor == mContext.xMyCustomTheme.energyYellow) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -709,7 +733,7 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
     List<ChartData> chartDataUnTagged = [];
 
     for (var data in bgMeasurementsDailyData) {
-      if (data.resultColor == getIt<IAppConfig>().theme.veryHigh) {
+      if (data.resultColor == mContext.xMyCustomTheme.casablanca) {
         chartData.add(ChartData(
             data.date, double.parse(data.result!).toInt(), data.resultColor!));
         if (data.tag == 1) {
@@ -734,11 +758,17 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   getNewDatas(DateTime oldestDate) {}
 
   Future<void> fetchBgMeasurements() async {
-    await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
-        .fetchBgMeasurements(patientId: _patientId);
-    bgMeasurements =
-        Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
-            .bgMeasurements;
+    await Provider.of<BgMeasurementsNotifierDoc>(
+      mContext,
+      listen: false,
+    ).fetchBgMeasurements(
+      mContext,
+      patientId: _patientId,
+    );
+    bgMeasurements = Provider.of<BgMeasurementsNotifierDoc>(
+      mContext,
+      listen: false,
+    ).bgMeasurements;
     notifyListeners();
   }
 
@@ -781,12 +811,24 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
   Future<void> updateBgMeasurement() async {
     if (selected == LocaleProvider.current.daily ||
         selected == LocaleProvider.current.specific) {
-      await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
-          .fetchBgMeasurements(patientId: _patientId);
+      await Provider.of<BgMeasurementsNotifierDoc>(
+        mContext,
+        listen: false,
+      ).fetchBgMeasurements(
+        mContext,
+        patientId: _patientId,
+      );
     } else {
-      await Provider.of<BgMeasurementsNotifierDoc>(mContext, listen: false)
-          .fetchBgMeasurementsInDateRange(
-              startDate, endDate.add(const Duration(days: 1)));
+      await Provider.of<BgMeasurementsNotifierDoc>(
+        mContext,
+        listen: false,
+      ).fetchBgMeasurementsInDateRange(
+        mContext,
+        startDate,
+        endDate.add(
+          const Duration(days: 1),
+        ),
+      );
     }
     filterDatas();
   }
@@ -797,15 +839,15 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
             .bgMeasurements;
     bgMeasurements.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
-            element.resultColor == getIt<IAppConfig>().theme.veryHigh) ||
+            element.resultColor == mContext.xMyCustomTheme.casablanca) ||
         (!isFilterSelected(GlucoseMarginsFilter.high) &&
-            element.resultColor == getIt<IAppConfig>().theme.high) ||
+            element.resultColor == mContext.xMyCustomTheme.energyYellow) ||
         (!isFilterSelected(GlucoseMarginsFilter.target) &&
-            element.resultColor == getIt<IAppConfig>().theme.target) ||
+            element.resultColor == mContext.xMyCustomTheme.deYork) ||
         (!isFilterSelected(GlucoseMarginsFilter.low) &&
-            element.resultColor == getIt<IAppConfig>().theme.low) ||
+            element.resultColor == mContext.xMyCustomTheme.tonysPink) ||
         (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
-            element.resultColor == getIt<IAppConfig>().theme.veryLow) ||
+            element.resultColor == mContext.xMyCustomTheme.roman) ||
         (!isFilterSelected(GlucoseMarginsFilter.hungry) && element.tag == 1) ||
         (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
         (!isFilterSelected(GlucoseMarginsFilter.other) &&
@@ -815,15 +857,15 @@ class BgPatientDetailVm extends RbioVm with IBaseBottomActionsOfGraph {
         .fetchBgMeasurementsDateList(bgMeasurements);
     bgMeasurementsDailyData.removeWhere((element) =>
         (!isFilterSelected(GlucoseMarginsFilter.veryHigh) &&
-            element.resultColor == getIt<IAppConfig>().theme.veryHigh) ||
+            element.resultColor == mContext.xMyCustomTheme.casablanca) ||
         (!isFilterSelected(GlucoseMarginsFilter.high) &&
-            element.resultColor == getIt<IAppConfig>().theme.high) ||
+            element.resultColor == mContext.xMyCustomTheme.energyYellow) ||
         (!isFilterSelected(GlucoseMarginsFilter.target) &&
-            element.resultColor == getIt<IAppConfig>().theme.target) ||
+            element.resultColor == mContext.xMyCustomTheme.deYork) ||
         (!isFilterSelected(GlucoseMarginsFilter.low) &&
-            element.resultColor == getIt<IAppConfig>().theme.low) ||
+            element.resultColor == mContext.xMyCustomTheme.tonysPink) ||
         (!isFilterSelected(GlucoseMarginsFilter.veryLow) &&
-            element.resultColor == getIt<IAppConfig>().theme.veryLow) ||
+            element.resultColor == mContext.xMyCustomTheme.roman) ||
         (!isFilterSelected(GlucoseMarginsFilter.hungry) && element.tag == 1) ||
         (!isFilterSelected(GlucoseMarginsFilter.full) && element.tag == 2) ||
         (!isFilterSelected(GlucoseMarginsFilter.other) &&

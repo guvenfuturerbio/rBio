@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/core.dart';
-import '../../../../app/bluetooth_v2/bluetooth_v2.dart';
+import '../../../../config/config.dart';
 import '../cubit/for_you_sub_categories_cubit.dart';
 
 class ForYouSubCategoriesScreen extends StatelessWidget {
@@ -38,6 +39,7 @@ class ForYouSubCategoriesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(context, title!),
       ),
       body: _buildBody(),

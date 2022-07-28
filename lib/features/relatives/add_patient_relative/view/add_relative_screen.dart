@@ -1,13 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:onedosehealth/core/core.dart';
 
-import '../../../../model/model.dart';
+import '../../../../core/core.dart';
+import '../../patient_relatives/model/user_relative_patient_model.dart';
 import '../cubit/add_patient_relatives_cubit.dart';
 
 part 'widget/add_pr_text_field.dart';
@@ -107,6 +105,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
   Widget build(BuildContext context) {
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
             context, LocaleProvider.of(context).add_new_relative),
       ),
@@ -194,7 +193,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               },
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(context, tcNoFNode, nameFNode),
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]')),
+                R.regExp.filterText,
               ],
               onFieldSubmitted: (term) {
                 Utils.instance.fieldFocusChange(context, tcNoFNode, nameFNode);
@@ -211,11 +210,15 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               keyboardType: TextInputType.name,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, nameFNode, surnameFNode),
-                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\t\r]')),
+                  context,
+                  nameFNode,
+                  surnameFNode,
+                ),
+                R.regExp.filterText2,
               ],
               onFieldSubmitted: (term) {
-                Utils.instance.fieldFocusChange(context, nameFNode, surnameFNode);
+                Utils.instance
+                    .fieldFocusChange(context, nameFNode, surnameFNode);
               },
             ),
 
@@ -229,11 +232,18 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               keyboardType: TextInputType.name,
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, surnameFNode, phoneFNode),
-                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\t\r]')),
+                  context,
+                  surnameFNode,
+                  phoneFNode,
+                ),
+                R.regExp.filterText2,
               ],
               onFieldSubmitted: (term) {
-                Utils.instance.fieldFocusChange(context, surnameFNode, phoneFNode);
+                Utils.instance.fieldFocusChange(
+                  context,
+                  surnameFNode,
+                  phoneFNode,
+                );
               },
             ),
 
@@ -255,11 +265,18 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               },
               inputFormatters: <TextInputFormatter>[
                 TabToNextFieldTextInputFormatter(
-                    context, phoneFNode, emailFNode),
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9\t\r]')),
+                  context,
+                  phoneFNode,
+                  emailFNode,
+                ),
+                R.regExp.filterText,
               ],
               onFieldSubmitted: (term) {
-                Utils.instance.fieldFocusChange(context, phoneFNode, emailFNode);
+                Utils.instance.fieldFocusChange(
+                  context,
+                  phoneFNode,
+                  emailFNode,
+                );
               },
             ),
 
@@ -271,10 +288,7 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               focusNode: emailFNode,
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
-                RegExp mailReg = RegExp(
-                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-
-                if (!mailReg.hasMatch(value!)) {
+                if (!R.regExp.email.hasMatch(value!)) {
                   return LocaleProvider.of(context).invalid_mail;
                 } else {
                   return null;
@@ -357,18 +371,19 @@ class _AddPatientRelativeViewState extends State<AddPatientRelativeView> {
               },
             ),
 
-            const SizedBox(height: 30),
+            //
+            R.widgets.hSizer32,
 
             //
             Center(
               child: Text(
                 LocaleProvider.of(context).relatives_only_children_warning,
-                style: context.xTextTheme.headline5,
+                style: context.xHeadline5,
               ),
             ),
 
             //
-            const SizedBox(height: 10),
+            R.widgets.hSizer12,
 
             //
             RbioElevatedButton(

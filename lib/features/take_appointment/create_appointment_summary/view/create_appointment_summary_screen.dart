@@ -3,6 +3,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../model/country_list_response.dart';
 import '../viewmodel/create_appointment_summary_vm.dart';
@@ -109,6 +110,7 @@ class _CreateAppointmentSummaryScreenState
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.appointment_details,
@@ -137,7 +139,7 @@ class _CreateAppointmentSummaryScreenState
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       //
-                      R.sizes.stackedTopPadding(context),
+                      R.widgets.stackedTopPadding(context),
 
                       //
                       if (vm.appointmentSuccess) ...[
@@ -146,38 +148,36 @@ class _CreateAppointmentSummaryScreenState
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               //
-                              R.sizes.hSizer8,
+                              R.widgets.hSizer8,
 
                               //
                               SvgPicture.asset(
-                                getIt<IAppConfig>()
-                                    .theme
-                                    .successAppointmentImage,
+                                context.xCurrentTheme.successAppointmentImage,
                                 width: Atom.width * 0.2,
                                 height: Atom.height * .2,
                               ),
 
                               //
-                              R.sizes.hSizer4,
+                              R.widgets.hSizer4,
 
                               //
                               Text(
                                 LocaleProvider.current.appo_created,
                                 textAlign: TextAlign.center,
                                 style: context.xHeadline3.copyWith(
-                                  color: getIt<IAppConfig>().theme.mainColor,
+                                  color: context.xPrimaryColor,
                                 ),
                               ),
 
                               //
-                              R.sizes.hSizer12,
+                              R.widgets.hSizer12,
                             ],
                           ),
                         ),
                       ],
 
                       //
-                      R.sizes.hSizer16,
+                      R.widgets.hSizer16,
 
                       //
                       Text(
@@ -194,8 +194,10 @@ class _CreateAppointmentSummaryScreenState
                       //
                       _buildInfoCard(vm),
 
-                      const SizedBox(height: 15),
+                      //
+                      R.widgets.hSizer16,
 
+                      //
                       if (forOnline &&
                           getIt<IAppConfig>()
                               .functionality
@@ -273,7 +275,7 @@ class _CreateAppointmentSummaryScreenState
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: isKeyboardVisible ? 5 : 0),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
@@ -349,7 +351,7 @@ class _CreateAppointmentSummaryScreenState
                 height: 55,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
@@ -472,7 +474,7 @@ class _CreateAppointmentSummaryScreenState
                               ),
 
                               //
-                              R.sizes.wSizer4,
+                              R.widgets.wSizer4,
 
                               //
                               Expanded(
@@ -541,7 +543,7 @@ class _CreateAppointmentSummaryScreenState
           ],
 
           //
-          R.sizes.defaultBottomPadding,
+          R.widgets.defaultBottomPadding,
         ],
       ),
     );
@@ -570,17 +572,21 @@ class _CreateAppointmentSummaryScreenState
                     decoration: TextDecoration.lineThrough,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.normal,
-                    color: getIt<IAppConfig>().theme.textColorPassive,
+                    color: context.xMyCustomTheme.textDisabledColor,
                   ),
                 ),
+
+                //
                 _buildHorizontalGap(),
+
+                //
                 Text(
                   _newPrice,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: context.xHeadline1.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: getIt<IAppConfig>().theme.mainColor,
+                    color: context.xPrimaryColor,
                   ),
                 )
               ],
@@ -591,7 +597,7 @@ class _CreateAppointmentSummaryScreenState
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline1.copyWith(
                 fontWeight: FontWeight.bold,
-                color: getIt<IAppConfig>().theme.mainColor,
+                color: context.xPrimaryColor,
               ),
             );
     } else {
@@ -644,11 +650,11 @@ class _CreateAppointmentSummaryScreenState
       onTap: onTap,
       title: title,
       backColor: vm.summaryButton == SummaryButtons.add
-          ? getIt<IAppConfig>().theme.cardBackgroundColor
-          : getIt<IAppConfig>().theme.mainColor,
+          ? context.xCardColor
+          : context.xPrimaryColor,
       textColor: vm.summaryButton == SummaryButtons.add
-          ? getIt<IAppConfig>().theme.textColorSecondary
-          : getIt<IAppConfig>().theme.textColor,
+          ? context.xTextInverseColor
+          : null,
       fontWeight: FontWeight.w600,
     );
   }
@@ -658,7 +664,7 @@ class _CreateAppointmentSummaryScreenState
       width: double.infinity,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -756,9 +762,9 @@ class _CreateAppointmentSummaryScreenState
     );
   }
 
-  Widget _buildVerticalGap() => const SizedBox(height: 8);
+  Widget _buildVerticalGap() => R.widgets.hSizer8;
 
-  Widget _buildHorizontalGap() => const SizedBox(width: 12);
+  Widget _buildHorizontalGap() => R.widgets.wSizer12;
 
   Widget _buildActiveText(String text) => Text(
         text,
@@ -772,7 +778,7 @@ class _CreateAppointmentSummaryScreenState
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: context.xHeadline4.copyWith(
-          color: getIt<IAppConfig>().theme.textColorPassive,
+          color: context.xMyCustomTheme.textDisabledColor,
         ),
       );
 }

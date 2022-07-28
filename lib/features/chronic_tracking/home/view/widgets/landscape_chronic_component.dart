@@ -44,7 +44,7 @@ class LandScapeChronicComponent extends StatelessWidget {
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: R.sizes.borderRadiusCircular,
-              color: getIt<IAppConfig>().theme.chartGray,
+              color: context.xMyCustomTheme.iron,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withAlpha(50),

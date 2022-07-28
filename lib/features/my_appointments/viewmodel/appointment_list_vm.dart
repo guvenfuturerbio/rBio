@@ -22,11 +22,11 @@ class AppointmentListVm extends RbioVm {
   CancelAppointmentRequest? cancelAppointmentRequest;
 
   AppointmentListVm(this.mContext, {String? jitsiRoomId}) {
-    _patientId = getIt<UserNotifier>().getPatient().id ?? 0;
+    _patientId = getIt<UserFacade>().getPatient().id ?? 0;
     showProgressOverlay = false;
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (getIt<UserNotifier>().canAccessHospital()) {
+      if (getIt<UserFacade>().canAccessHospital()) {
         await fetchAllTranslator();
         await fetchPatientAppointments();
       } else {
@@ -331,15 +331,17 @@ class AppointmentListVm extends RbioVm {
             barrierDismissible: true,
             builder: (BuildContext context) {
               return GuvenAlert(
-                backgroundColor: Colors.white,
                 title: GuvenAlert.buildTitle(
+                  context,
                   LocaleProvider.current.fee_information,
                 ),
                 content: GuvenAlert.buildDescription(
+                  context,
                   LocaleProvider.current.payment_question_tag,
                 ),
                 actions: [
                   GuvenAlert.buildMaterialAction(
+                    context,
                     LocaleProvider.of(mContext).btn_cancel,
                     () {
                       Navigator.pop(mContext);
@@ -353,6 +355,7 @@ class AppointmentListVm extends RbioVm {
 
                   //
                   GuvenAlert.buildMaterialAction(
+                    context,
                     LocaleProvider.of(mContext).confirm,
                     () {
                       Navigator.pop(mContext);

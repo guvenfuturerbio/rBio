@@ -20,7 +20,7 @@ class __ExpandableHoursState extends State<_ExpandableHours> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -107,7 +107,7 @@ class __ExpandableHoursState extends State<_ExpandableHours> {
       width: double.infinity,
       margin: EdgeInsets.only(top: index == 0 ? 0 : 4),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -138,7 +138,7 @@ class __ExpandableHoursState extends State<_ExpandableHours> {
                     ),
                   );
             },
-            activeColor: getIt<IAppConfig>().theme.mainColor,
+            activeColor: context.xPrimaryColor,
           ),
         ],
       ),

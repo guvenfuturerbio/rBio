@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import '../../../../../app/bluetooth_v2/bluetooth_v2.dart';
 import '../../../../../core/core.dart';
-import '../../../../../core/utils/tz_helper.dart';
+import '../../../../core/utils/helper/tz_helper.dart';
 import '../../mediminder.dart';
 
 part 'widget/filter_dialog.dart';
@@ -39,6 +38,7 @@ class _ReminderListView extends StatelessWidget {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.reminders,
@@ -60,18 +60,12 @@ class _ReminderListView extends StatelessWidget {
   }
 
   Widget _buildFAB(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: getIt<IAppConfig>().theme.mainColor,
+    return RbioSVGFAB.primaryColor(
+      context,
+      imagePath: R.image.add,
       onPressed: () {
         Atom.to(PagePaths.selectReminder);
       },
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: SvgPicture.asset(
-          R.image.add,
-          color: getIt<IAppConfig>().theme.white,
-        ),
-      ),
     );
   }
 
@@ -94,14 +88,14 @@ class _ReminderListView extends StatelessWidget {
               );
             },
             title: LocaleProvider.current.filter,
-            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-            textColor: getIt<IAppConfig>().theme.textColorSecondary,
+            backColor: context.xCardColor,
+            textColor: context.xTextInverseColor,
             fontWeight: FontWeight.bold,
           ),
         ),
 
         //
-        R.sizes.hSizer8,
+        R.widgets.hSizer8,
 
         //
         list.isEmpty

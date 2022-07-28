@@ -17,7 +17,7 @@ class ForYouInformationDialog extends StatelessWidget {
             vertical: 10,
           ),
           decoration: BoxDecoration(
-            color: getIt<IAppConfig>().theme.mainColor,
+            color: context.xPrimaryColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Column(
@@ -40,7 +40,7 @@ class ForYouInformationDialog extends StatelessWidget {
               const Divider(),
 
               //
-              const SizedBox(height: 10),
+              R.widgets.hSizer12,
 
               //
               Text(
@@ -54,7 +54,7 @@ class ForYouInformationDialog extends StatelessWidget {
               ),
 
               //
-              const SizedBox(height: 10),
+              R.widgets.hSizer12,
 
               //
               Row(

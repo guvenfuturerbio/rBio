@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
 import '../model/filter_resources_request.dart';
 import '../model/filter_resources_response.dart';
 import '../model/search_social_type.dart';
+import '../model/social_posts_response.dart';
 
 part 'search_bloc.freezed.dart';
 part 'search_event.dart';

@@ -9,19 +9,21 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../../../config/config.dart';
 import '../../../../../core/core.dart';
-import '../../../../../model/model.dart';
 import '../../../../chronic_tracking/blood_pressure/blood_pressure.dart';
+import '../../../../chronic_tracking/blood_pressure/model/model.dart';
 import '../../../../chronic_tracking/bottom_actions_of_graph.dart';
 import '../../../../chronic_tracking/home/view/widgets/widgets.dart';
 import '../../../notifiers/patient_notifiers.dart';
+import '../../../shared/shared.dart';
 import '../../../treatment_process/view/treatment_process_screen.dart';
 
 part '../viewmodel/bp_patient_detail_vm.dart';
+part '../widget/blood_pressure_detail_card.dart';
 part '../widget/charts/bp_line_chart.dart';
 part '../widget/graph_header_section.dart';
 part '../widget/measurement_list.dart';
-part '../widget/blood_pressure_detail_card.dart';
 
 class BpPatientDetailScreen extends StatefulWidget {
   const BpPatientDetailScreen({Key? key}) : super(key: key);
@@ -108,6 +110,7 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.bp_tracking,
@@ -155,7 +158,7 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
                   //
                   if (MediaQuery.of(context).orientation ==
                       Orientation.portrait)
-                    const SizedBox(height: 12),
+                    R.widgets.hSizer12,
 
                   if (!vm.isDataLoading! &&
                       MediaQuery.of(context).orientation ==
@@ -223,16 +226,15 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                  color: context.xCardColor,
                   borderRadius: R.sizes.borderRadiusCircular,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    RbioCircleAvatar(
                       foregroundImage: NetworkImage(R.image.circlevatar),
-                      backgroundColor:
-                          getIt<IAppConfig>().theme.cardBackgroundColor,
+                      backgroundColor: context.xCardColor,
                     ),
 
                     //
@@ -262,7 +264,7 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
           ),
 
           //
-          const SizedBox(width: 6),
+          R.widgets.wSizer8,
 
           //
           GestureDetector(
@@ -292,7 +294,7 @@ class _BpPatientDetailScreenState extends State<BpPatientDetailScreen>
               padding: const EdgeInsets.symmetric(horizontal: 32),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: Text(

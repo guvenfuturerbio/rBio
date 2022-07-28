@@ -54,7 +54,9 @@ class _IyzicoResponseSmsPaymentScreenState
       child: Consumer<IyzicoResponseVm>(
         builder: (context, vm, child) {
           return RbioScaffold(
-            appbar: RbioAppBar(),
+            appbar: RbioAppBar(
+              context: context,
+            ),
             body: WebView(
               initialUrl: Uri.dataFromString(
                 html,

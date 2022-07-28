@@ -124,6 +124,7 @@ class _DoctorScaleTreatmentAddEditViewState
 
   RbioAppBar _buildAppBar(DoctorScaleTreatmentAddEditState state) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         widget.isCreated
@@ -158,8 +159,8 @@ class _DoctorScaleTreatmentAddEditViewState
         mainAxisSize: MainAxisSize.max,
         children: [
           //
-          R.sizes.stackedTopPadding(context),
-          R.sizes.hSizer8,
+          R.widgets.stackedTopPadding(context),
+          R.widgets.hSizer8,
 
           //
           Expanded(
@@ -179,7 +180,7 @@ class _DoctorScaleTreatmentAddEditViewState
                     bottom: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                    color: context.xCardColor,
                     borderRadius: R.sizes.borderRadiusCircular,
                   ),
                   child: Column(
@@ -188,9 +189,8 @@ class _DoctorScaleTreatmentAddEditViewState
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       //
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
 
-                      //
                       //
                       if (result.editMode ==
                           ScaleTreatmentScreenEditMode.readOnly) ...[
@@ -266,7 +266,7 @@ class _DoctorScaleTreatmentAddEditViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           KeyboardVisibilityBuilder(
@@ -276,7 +276,7 @@ class _DoctorScaleTreatmentAddEditViewState
           ),
 
           //
-          R.sizes.defaultBottomPadding,
+          R.widgets.defaultBottomPadding,
         ],
       ),
     );
@@ -310,7 +310,7 @@ class _DoctorScaleTreatmentAddEditViewState
             ),
 
             //
-            R.sizes.wSizer8,
+            R.widgets.wSizer8,
 
             //
             Expanded(
@@ -346,7 +346,7 @@ class _DoctorScaleTreatmentAddEditViewState
                   ),
 
                   //
-                  R.sizes.wSizer8,
+                  R.widgets.wSizer8,
 
                   //
                   Expanded(
@@ -388,7 +388,7 @@ class _DoctorScaleTreatmentAddEditViewState
                   ),
 
                   //
-                  R.sizes.wSizer8,
+                  R.widgets.wSizer8,
 
                   //
                   Expanded(

@@ -40,6 +40,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
   }
 
   RbioAppBar _buildAppBar() => RbioAppBar(
+        context: context,
         title: RbioAppBar.textTitle(
           context,
           LocaleProvider.current.treatment_process,
@@ -90,7 +91,7 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                color: context.xCardColor,
                 borderRadius: R.sizes.borderRadiusCircular,
               ),
               child: RbioTextFormField(
@@ -131,8 +132,8 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
               Expanded(
                 child: RbioElevatedButton(
                   title: LocaleProvider.current.back,
-                  backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-                  textColor: getIt<IAppConfig>().theme.textColorSecondary,
+                  backColor: context.xCardColor,
+                  textColor: context.xTextInverseColor,
                   onTap: () {},
                   fontWeight: FontWeight.bold,
                 ),
@@ -164,15 +165,15 @@ class _DoctorVideoCallEditScreenState extends State<DoctorVideoCallEditScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
+          RbioCircleAvatar(
             foregroundImage: NetworkImage(R.image.circlevatar),
-            backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+            backgroundColor: context.xCardColor,
           ),
 
           //

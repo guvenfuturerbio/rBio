@@ -5,13 +5,16 @@ import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
+import '../../../../core/widgets/rbio_error_screen.dart';
 import '../../../dashboard/onedose/not_chronic_screen.dart';
 import '../../../doctor/treatment_process/view/treatment_process_screen.dart';
 import '../../blood_glucose/blood_glucose.dart';
+import '../../blood_glucose/model/model.dart';
 import '../../blood_pressure/blood_pressure.dart';
+import '../../blood_pressure/model/model.dart';
 import '../model/home_page_model.dart';
-import '../../../../core/widgets/rbio_error_screen.dart';
 import '../viewmodel/scale_progress_vm.dart';
 
 part '../viewmodel/mt_home_vm.dart';
@@ -40,7 +43,7 @@ class _MeasurementTrackingHomeScreenState
 
   @override
   Widget build(BuildContext context) {
-    return !getIt<UserNotifier>().isCronic
+    return !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse
         ? NotChronicScreen(
             title: LocaleProvider.current.chronic_track_home,
             drawerKey: widget.drawerKey,
@@ -70,6 +73,7 @@ class _MeasurementTrackingHomeScreenState
     return isLandscape
         ? null
         : RbioAppBar(
+            context: context,
             leading: widget.drawerKey != null
                 ? RbioLeadingMenu(drawerKey: widget.drawerKey)
                 : null,
@@ -118,35 +122,24 @@ class _MeasurementTrackingHomeScreenState
           _buildExpandedUser(),
 
         //
-        R.sizes.hSizer12,
+        R.widgets.hSizer12,
 
         //
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: R.sizes.borderRadiusCircular,
-            color: vm.activeItem != null ? Colors.transparent : Colors.white,
-            boxShadow: vm.activeItem != null
-                ? [
-                    const BoxShadow(color: Colors.transparent),
-                  ]
-                : null,
-          ),
-          child: ClipRRect(
-            borderRadius: R.sizes.borderRadiusCircular,
-            child: Column(
-              children: vm.items
-                  .map(
-                    (parentElement) => _SectionCard(
-                      isVisible: vm.activeItem == null,
-                      smallChild: parentElement.smallChild ?? const SizedBox(),
-                      hasDivider: vm.activeItem == null &&
-                          vm.items.indexWhere((element) =>
-                                  element.key == parentElement.key) <
-                              vm.items.length - 1,
-                    ),
-                  )
-                  .toList(),
-            ),
+        Card(
+          margin: EdgeInsets.zero,
+          child: Column(
+            children: vm.items
+                .map(
+                  (parentElement) => _SectionCard(
+                    isVisible: vm.activeItem == null,
+                    smallChild: parentElement.smallChild ?? const SizedBox(),
+                    hasDivider: vm.activeItem == null &&
+                        vm.items.indexWhere(
+                                (element) => element.key == parentElement.key) <
+                            vm.items.length - 1,
+                  ),
+                )
+                .toList(),
           ),
         ),
       ],

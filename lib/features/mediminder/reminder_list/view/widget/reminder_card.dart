@@ -48,7 +48,7 @@ class ReminderCard extends StatelessWidget {
                     horizontal: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: getIt<IAppConfig>().theme.mainColor,
+                    color: context.xPrimaryColor,
                     borderRadius: BorderRadius.vertical(
                       top: R.sizes.radiusCircular,
                     ),
@@ -65,7 +65,7 @@ class ReminderCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: context.xHeadline4.copyWith(
-                            color: getIt<IAppConfig>().theme.textColor,
+                            color: context.xTextColor,
                           ),
                         ),
                       ),
@@ -74,7 +74,7 @@ class ReminderCard extends StatelessWidget {
                       Text(
                         model.subTitle ?? '',
                         style: context.xHeadline4.copyWith(
-                          color: getIt<IAppConfig>().theme.textColor,
+                          color: context.xTextColor,
                         ),
                       ),
                     ],
@@ -84,7 +84,7 @@ class ReminderCard extends StatelessWidget {
                 //
                 Container(
                   decoration: BoxDecoration(
-                    color: getIt<IAppConfig>().theme.cardBackgroundColor,
+                    color: context.xCardColor,
                     borderRadius: BorderRadius.vertical(
                       bottom: R.sizes.radiusCircular,
                     ),
@@ -110,7 +110,7 @@ class ReminderCard extends StatelessWidget {
                                 : '',
                             style: context.xHeadline3.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: getIt<IAppConfig>().theme.mainColor,
+                              color: context.xPrimaryColor,
                             ),
                           ),
                         ),
@@ -139,12 +139,11 @@ class ReminderCard extends StatelessWidget {
                               ),
 
                               //
-                              R.sizes.hSizer8,
+                              R.widgets.hSizer8,
 
                               //
                               Text(
-                                getIt<UserNotifier>()
-                                    .getCurrentUserNameAndSurname(),
+                                getIt<UserFacade>().getNameAndSurname(),
                                 style: context.xHeadline4.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),

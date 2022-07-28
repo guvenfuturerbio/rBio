@@ -2,6 +2,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../../config/config.dart';
 import '../../../../../../core/core.dart';
 
 part 'home_screen_cubit.freezed.dart';
@@ -28,5 +29,3 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     }
   }
 }
-/*isDefault = await getIt<ISharedPreferencesManager>()
-          .getBool(SharedPreferencesKeys.IS_DEFAULT_USER); */

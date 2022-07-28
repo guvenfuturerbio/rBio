@@ -8,13 +8,15 @@ import 'package:provider/provider.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../../bluetooth/bluetooth.dart';
 import '../../../dashboard/home/viewmodel/home_vm.dart';
 import '../../../shared/consent_form/consent_form_dialog.dart';
 import '../../../shared/kvkk_form/kvkk_form_screen.dart';
 import '../../../take_appointment/create_appointment_summary/model/synchronize_onedose_user_req.dart';
 import '../../auth.dart';
+import '../../shared/shared.dart';
 
 enum VersionCheckProgress { done, loading, error }
 
@@ -29,8 +31,8 @@ class LoginScreenVm extends ChangeNotifier {
           SharedPreferencesKeys.consentId, consentForm.id.toString());
       fetchConsentFormState();
       await getSavedLoginInfo();
-      getIt<UserNotifier>().isDefaultUser = getIt<ISharedPreferencesManager>()
-          .getBool(SharedPreferencesKeys.isDefaultUser);
+      getIt<UserNotifier>().setDefaultUser(getIt<ISharedPreferencesManager>()
+          .getBool(SharedPreferencesKeys.isDefaultUser));
     });
   }
 
@@ -214,7 +216,8 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> login(String username, String password, String consentId) async {
-    if (checkFields(username, password)) {
+    if (checkFields(username, password) &&
+        checkKVKKFields(username, password)) {
       _autovalidateMode = AutovalidateMode.always;
 
       notifyListeners();
@@ -417,7 +420,7 @@ class LoginScreenVm extends ChangeNotifier {
     }
     if (pusulaPatientDetail == null) {
       pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
-      await getIt<UserNotifier>().setPatient(pusulaPatientDetail!);
+      await getIt<UserFacade>().setPatient(pusulaPatientDetail!);
     }
     _checkedKvkk = results[2];
 
@@ -454,7 +457,7 @@ class LoginScreenVm extends ChangeNotifier {
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }
-    final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
+    final allUsersModel = getIt<UserFacade>().getHomeWidgets(username);
     mContext.read<HomeVm>().init(allUsersModel);
     await Future.delayed(const Duration(milliseconds: 100));
     hideDialog(mContext);
@@ -575,11 +578,11 @@ class LoginScreenVm extends ChangeNotifier {
     }
     if (pusulaPatientDetail == null) {
       pusulaPatientDetail = await getIt<Repository>().getPatientDetail();
-      await getIt<UserNotifier>().setPatient(pusulaPatientDetail!);
+      await getIt<UserFacade>().setPatient(pusulaPatientDetail!);
     }
     _checkedKvkk = results[2];
 
-    if (getIt<UserNotifier>().isCronic) {
+    if (getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
       var profiles = await getIt<ChronicTrackingRepository>().getAllProfiles();
       if (profiles.isNotEmpty) {
         await getIt<ProfileStorageImpl>().write(
@@ -599,7 +602,7 @@ class LoginScreenVm extends ChangeNotifier {
       }
     }
 
-    if (!Atom.isWeb && getIt<UserNotifier>().isCronic) {
+    if (!Atom.isWeb && getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
       try {
         List<PairedDevice>? devices =
             getIt<BleDeviceManager>().getPairedDevices();
@@ -637,7 +640,7 @@ class LoginScreenVm extends ChangeNotifier {
       //
     }
 
-    if (getIt<UserNotifier>().isCronic) {
+    if (getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
       getIt<ScaleRepository>().fetchScaleData(
         getIt<ProfileStorageImpl>().getFirst().id ?? 0,
       );
@@ -659,12 +662,25 @@ class LoginScreenVm extends ChangeNotifier {
     if (term != null && term != '') {
       Atom.to(term, isReplacement: true);
     }
-    final allUsersModel = getIt<UserNotifier>().getHomeWidgets(username);
+    final allUsersModel = getIt<UserFacade>().getHomeWidgets(username);
     mContext.read<HomeVm>().init(allUsersModel);
     await Future.delayed(const Duration(milliseconds: 100));
     hideDialog(mContext);
     notifyListeners();
-    Atom.to(PagePaths.main, isReplacement: true);
+
+    /// Kullanici mail adresi boş ise, oturum açma esnasında Ana sayfa yerine
+    /// kişisel bilgilerim sayfası açılır ve kullanıcıdan mail girmesi istenilir.
+    if (getIt<UserFacade>().getUserAccount().electronicMail != null) {
+      Atom.to(PagePaths.main, isReplacement: true);
+    } else {
+      Atom.to(
+        PagePaths.personalInformation,
+        isReplacement: true,
+        queryParameters: {
+          'emailRequired': 'true',
+        },
+      );
+    }
   }
 
   bool checkFields(String username, String password) {
@@ -684,6 +700,28 @@ class LoginScreenVm extends ChangeNotifier {
         mContext,
         LocaleProvider.current.warning,
         LocaleProvider.current.approve_consent_form,
+      );
+      return false;
+    }
+  }
+
+  bool checkKVKKFields(String username, String password) {
+    if (checkedKvkkForm) {
+      if (username.isNotEmpty && password.isNotEmpty) {
+        return true;
+      } else {
+        // showGradientDialog(
+        //   mContext,
+        //   LocaleProvider.current.warning,
+        //   LocaleProvider.current.tc_or_pass_cannot_empty,
+        // );
+        return false;
+      }
+    } else {
+      showGradientDialog(
+        mContext,
+        LocaleProvider.current.warning,
+        LocaleProvider.current.must_clicked_kvkk,
       );
       return false;
     }
@@ -733,7 +771,7 @@ class LoginScreenVm extends ChangeNotifier {
       (value) {
         if (text == LocaleProvider.current.approve_consent_form) {
           showApplicationContestForm();
-        } else if ((text == LocaleProvider.current.must_clicked_kvkk)) {
+        } else if (text == LocaleProvider.current.must_clicked_kvkk) {
           showKvkkInfo();
         }
       },

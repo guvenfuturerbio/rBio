@@ -33,12 +33,11 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
       elevation: 0,
       insetPadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
-      backgroundColor: Colors.transparent,
       content: SafeArea(
         child: Container(
           width: Atom.width > 350 ? 350 : Atom.width,
           decoration: BoxDecoration(
-            color: getIt<IAppConfig>().theme.cardBackgroundColor,
+            color: context.xCardColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: SingleChildScrollView(
@@ -54,7 +53,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   Text(
@@ -65,21 +64,21 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                   ),
 
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   RbioTextFormField(
                     focusNode: _valueFocusNode,
-                    backColor: getIt<IAppConfig>().theme.grayColor,
+                    backColor: context.xMyCustomTheme.gallery,
                     controller: _valueEditingController,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                      R.regExp.filterText3,
                     ],
                   ),
 
                   //
-                  R.sizes.hSizer16,
+                  R.widgets.hSizer16,
 
                   //
                   if (context.xTextScaleType == TextScaleType.small) ...[
@@ -94,7 +93,7 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                         ),
 
                         //
-                        R.sizes.wSizer8,
+                        R.widgets.wSizer8,
 
                         //
                         Expanded(
@@ -104,12 +103,12 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
                     ),
                   ] else ...[
                     _buildCancelButton(infinityWidth: true),
-                    R.sizes.hSizer12,
+                    R.widgets.hSizer12,
                     _buildConfirmButton(infinityWidth: true),
                   ],
 
                   //
-                  R.sizes.hSizer4,
+                  R.widgets.hSizer4,
                 ],
               ),
             ),
@@ -139,8 +138,8 @@ class __AddMedicineDialogState extends State<_AddMedicineDialog> {
     required bool infinityWidth,
   }) {
     return RbioElevatedButton(
-      backColor: getIt<IAppConfig>().theme.grayColor,
-      textColor: getIt<IAppConfig>().theme.textColorSecondary,
+      backColor: context.xMyCustomTheme.gallery,
+      textColor: context.xTextInverseColor,
       title: LocaleProvider.current.btn_cancel,
       onTap: () {
         Atom.dismiss();

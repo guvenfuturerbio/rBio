@@ -6,6 +6,7 @@ import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart' as encrypt_pac;
 import 'package:tuple/tuple.dart';
 
+import '../../config/config.dart';
 import '../core.dart';
 
 abstract class EncryptManager {

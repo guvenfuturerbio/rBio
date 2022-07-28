@@ -4,11 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
 import '../bloc/search_bloc.dart';
 import '../model/filter_resources_response.dart';
 import '../model/search_social_type.dart';
+import '../model/social_posts_response.dart';
 import '../utils/debouncer.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -62,6 +63,7 @@ class SearchView extends StatelessWidget {
     // adds delay
     final _debouncer = Debouncer(milliseconds: 500);
     return RbioAppBar(
+      context: context,
       leading: drawerKey != null
           ? RbioLeadingMenu(drawerKey: drawerKey)
           : const SizedBox(width: 0, height: 0),
@@ -135,16 +137,24 @@ class RbioFilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilterChip(
-      backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
       selected: isSelected,
-      checkmarkColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-      selectedColor: getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: isSelected
+          ? context.xCurrentTheme.selectionTheme.selectedBackColor
+          : context.xCurrentTheme.selectionTheme.unSelectedBackColor,
+      checkmarkColor: isSelected
+          ? context.xCurrentTheme.selectionTheme.selectedIconColor
+          : context.xCurrentTheme.selectionTheme.unSelectedIconColor,
+      selectedColor: context.xPrimaryColor,
       label: Text(
         type.xGetTitle,
         style: isSelected
-            ? context.xHeadline3
-                .copyWith(color: getIt<IAppConfig>().theme.cardBackgroundColor)
-            : context.xHeadline3,
+            ? context.xHeadline3.copyWith(
+                color: context.xCurrentTheme.selectionTheme.selectedTextColor,
+                fontWeight: FontWeight.bold,
+              )
+            : context.xHeadline3.copyWith(
+                color: context.xCurrentTheme.selectionTheme.unSelectedTextColor,
+              ),
       ),
       onSelected: (val) {
         context.read<SearchBloc>().add(SearchEvent.platformFilter(type));
@@ -205,10 +215,6 @@ class _SocialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: R.sizes.defaultElevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
       child: ListTile(
         leading: SizedBox(
           width: kIsWeb
@@ -260,45 +266,41 @@ class _ResourceCard extends StatelessWidget {
     final departmentTitle = item.departments?.first.title ?? '';
 
     return Card(
-        elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: ListTile(
-          title: Text(
-            item.title ?? '',
-            style: context.xHeadline3,
-          ),
-          leading: SizedBox(
-            width: kIsWeb
-                ? MediaQuery.of(context).size.width < 1000
-                    ? MediaQuery.of(context).size.width * 0.10
-                    : MediaQuery.of(context).size.width * 0.03
-                : MediaQuery.of(context).size.width * 0.12,
-            child: SvgPicture.asset(
-              tenantsFirstId == 1
-                  ? getIt<IAppConfig>().theme.appLogo
-                  : getIt<IAppConfig>().theme.appLogo,
-            ),
-          ),
-          subtitle: Text((tenantsFirstId == 1
-                  ? LocaleProvider.current.guven_hospital_ayranci
-                  : LocaleProvider.current.guven_cayyolu_campus) +
-              "\n" +
-              departmentTitle),
-          onTap: () {
-            Atom.to(
-              PagePaths.doctorCv,
-              queryParameters: {
-                'tenantId': tenantsFirstId.toString(),
-                'departmentId': departmentId.toString(),
-                'resourceId': item.id.toString(),
-                'doctorName': Uri.encodeFull(filterResourceTitle),
-                'departmentName': Uri.encodeFull(departmentTitle),
-                'doctorNameNoTitle': Uri.encodeFull(filterResourceTitle),
-              },
-            );
+      title: Text(
+        item.title ?? '',
+        style: context.xHeadline3,
+      ),
+      leading: SizedBox(
+        width: kIsWeb
+            ? MediaQuery.of(context).size.width < 1000
+                ? MediaQuery.of(context).size.width * 0.10
+                : MediaQuery.of(context).size.width * 0.03
+            : MediaQuery.of(context).size.width * 0.12,
+        child: SvgPicture.asset(
+          tenantsFirstId == 1
+              ? context.xCurrentTheme.appLogo
+              : context.xCurrentTheme.appLogo,
+        ),
+      ),
+      subtitle: Text((tenantsFirstId == 1
+              ? LocaleProvider.current.guven_hospital_ayranci
+              : LocaleProvider.current.guven_cayyolu_campus) +
+          "\n" +
+          departmentTitle),
+      onTap: () {
+        Atom.to(
+          PagePaths.doctorCv,
+          queryParameters: {
+            'tenantId': tenantsFirstId.toString(),
+            'departmentId': departmentId.toString(),
+            'resourceId': item.id.toString(),
+            'doctorName': Uri.encodeFull(filterResourceTitle),
+            'departmentName': Uri.encodeFull(departmentTitle),
+            'doctorNameNoTitle': Uri.encodeFull(filterResourceTitle),
           },
-        ));
+        );
+      },
+    ));
   }
 }

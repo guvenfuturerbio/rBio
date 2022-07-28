@@ -20,22 +20,25 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(appName) =>
-      "To capture photos and videos, allow ${appName} access to your camera. Tap Settings > Permissions, and turn Camera on.";
+  static String m0(email) =>
+      "Your personal health data will be deleted upon your request, within the scope of the provisions of the Law on Protection of Personal Data No. 6698 dated 24/3/2016. \n \n Please send an e-mail to the ${email} adress with your T.C. Identification or Passport Serial No information.";
 
   static String m1(appName) =>
-      "${appName} does not have access to your camera. To enable access, tap Settings and turn on Camera.";
+      "To capture photos and videos, allow ${appName} access to your camera. Tap Settings > Permissions, and turn Camera on.";
 
   static String m2(appName) =>
-      "To capture photos and videos, allow ${appName} access to your device\'s photos, media, and files. Tap Settings > Permissions, and turn \"Files and media\" on.";
+      "${appName} does not have access to your camera. To enable access, tap Settings and turn on Camera.";
 
   static String m3(appName) =>
-      "${appName} does not have access to your photos or videos. To enable access, tap Settings and turn on Photos.";
+      "To capture photos and videos, allow ${appName} access to your device\'s photos, media, and files. Tap Settings > Permissions, and turn \"Files and media\" on.";
 
   static String m4(appName) =>
-      "Want to record videos with sound? Allow ${appName} access to your microphone. Tap Settings > Permissions and turn Microphone on.";
+      "${appName} does not have access to your photos or videos. To enable access, tap Settings and turn on Photos.";
 
   static String m5(appName) =>
+      "Want to record videos with sound? Allow ${appName} access to your microphone. Tap Settings > Permissions and turn Microphone on.";
+
+  static String m6(appName) =>
       "To record videos with sound, ${appName} needs microphone access. To enable access, tap Settings and turn on Microphone.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -87,6 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "aft": MessageLookupByLibrary.simpleMessage("Aft."),
         "after": MessageLookupByLibrary.simpleMessage("After"),
         "after_meal": MessageLookupByLibrary.simpleMessage("Full"),
+        "after_payment_you_can_reach_the_details_of_your_council_appointment_and_the_council_connection_link_in_your_council_requests":
+            MessageLookupByLibrary.simpleMessage(
+                "After payment, you can reach the details of your council appointment and the council connection link from your Council Requests."),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "alert": MessageLookupByLibrary.simpleMessage("Alert"),
         "all_appointment_file":
@@ -135,6 +141,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Appointment Files"),
         "appointment_files":
             MessageLookupByLibrary.simpleMessage("Appointment Files"),
+        "appointment_ready":
+            MessageLookupByLibrary.simpleMessage("Appointment Ready"),
         "appointments": MessageLookupByLibrary.simpleMessage("Appointments"),
         "approve_consent_form": MessageLookupByLibrary.simpleMessage(
             "You have to confirm the application consent form."),
@@ -228,8 +236,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure you want to cancel your appointment ?"),
         "cancel_call_appo": MessageLookupByLibrary.simpleMessage(
             "Please call 444 94 94 to cancel the appointment"),
-        "cancel_discount":
-            MessageLookupByLibrary.simpleMessage("Cancel discount"),
+        "cancel_discount": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancellation_refund_conditions": MessageLookupByLibrary.simpleMessage(
             "Cancellation and refund conditions"),
         "cannot_retrieve_token": MessageLookupByLibrary.simpleMessage(
@@ -309,6 +316,17 @@ class MessageLookup extends MessageLookupByLibrary {
             "Kan şekeri sonucunu görüntüleyin."),
         "contour_plus_blood_sugar":
             MessageLookupByLibrary.simpleMessage("Contour Plus Blood Glucose"),
+        "copied": MessageLookupByLibrary.simpleMessage("Copied"),
+        "council_appointment":
+            MessageLookupByLibrary.simpleMessage("Council Appointment"),
+        "council_connection_link":
+            MessageLookupByLibrary.simpleMessage("Council Connection Link"),
+        "council_report":
+            MessageLookupByLibrary.simpleMessage("Council Report"),
+        "council_requests":
+            MessageLookupByLibrary.simpleMessage("Council Requests"),
+        "council_results":
+            MessageLookupByLibrary.simpleMessage("Council Results"),
         "country": MessageLookupByLibrary.simpleMessage("Countries"),
         "covid_text_1": MessageLookupByLibrary.simpleMessage(
             "Viruses that can cause disease in humans and animals and have many types are called \"Coronavirus\". These viruses, which usually cause colds in humans, can also cause loss of life. The SARS-CoV virus epidemic that started in Guangdong Province of China in 2002 has spread to 17 countries worldwide. In this epidemic, 8098 people got the disease and 774 people died. The MERS-CoV virus epidemic, which started in Saudi Arabia in 2012, affected 27 countries worldwide, 861 out of 2499 people caught in the epidemic died."),
@@ -342,10 +360,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search Appointment"),
         "create_appointment_events":
             MessageLookupByLibrary.simpleMessage("Create Appointment"),
+        "create_new_council_request":
+            MessageLookupByLibrary.simpleMessage("Create new council request"),
         "create_password":
             MessageLookupByLibrary.simpleMessage("Create Password"),
         "create_reminder":
             MessageLookupByLibrary.simpleMessage("Create Reminder"),
+        "create_request":
+            MessageLookupByLibrary.simpleMessage("Create request"),
         "created_by": MessageLookupByLibrary.simpleMessage("Created By"),
         "credential_already_exist": MessageLookupByLibrary.simpleMessage(
             "Credentials already exist linked to an account. First of all, it must be deleted from the account it is linked to"),
@@ -367,11 +389,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "Cvv code must be at least 3 digits"),
         "daily": MessageLookupByLibrary.simpleMessage("Daily"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
+        "date_and_hour": MessageLookupByLibrary.simpleMessage("Date and Hour"),
         "date_filter": MessageLookupByLibrary.simpleMessage("Date Filter : "),
         "date_of_birth": MessageLookupByLibrary.simpleMessage("Date of birth"),
         "day": MessageLookupByLibrary.simpleMessage("Day"),
         "days": MessageLookupByLibrary.simpleMessage("Days"),
+        "delelete_account":
+            MessageLookupByLibrary.simpleMessage("Delete Account"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "delete_account_informations": m0,
         "delete_diet_list": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete the diet list?"),
         "delete_file_question": MessageLookupByLibrary.simpleMessage(
@@ -402,6 +428,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "depart_selection":
             MessageLookupByLibrary.simpleMessage("Department selection :"),
         "department": MessageLookupByLibrary.simpleMessage("Deparment"),
+        "department_manager":
+            MessageLookupByLibrary.simpleMessage("Department Manager"),
         "des_forgot_password": MessageLookupByLibrary.simpleMessage(
             "We just need your registered Email to  send you password reset intruction"),
         "des_forgot_password_other": MessageLookupByLibrary.simpleMessage(
@@ -457,6 +485,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "diabetes_type": MessageLookupByLibrary.simpleMessage("Diabetes Type"),
         "diabetes_type_1": MessageLookupByLibrary.simpleMessage("Type 1"),
         "diabetes_type_2": MessageLookupByLibrary.simpleMessage("Type 2"),
+        "diagnosis": MessageLookupByLibrary.simpleMessage("Diagnosis"),
         "diagnosisDate": MessageLookupByLibrary.simpleMessage("Diagnosis Date"),
         "didnt_reach_goals":
             MessageLookupByLibrary.simpleMessage("Alert values"),
@@ -493,6 +522,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dose_interval": MessageLookupByLibrary.simpleMessage("Dose Interval"),
         "drug_count": MessageLookupByLibrary.simpleMessage("Drug Count"),
         "drug_search": MessageLookupByLibrary.simpleMessage("Drug search"),
+        "e_council": MessageLookupByLibrary.simpleMessage("E-Council"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "edit_profile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "educations": MessageLookupByLibrary.simpleMessage("Educations"),
@@ -514,6 +544,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter the code"),
         "enter_weight":
             MessageLookupByLibrary.simpleMessage("Enter the weight"),
+        "enter_your_illness_history":
+            MessageLookupByLibrary.simpleMessage("Enter your illness history"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "error_empty_dosage_name": MessageLookupByLibrary.simpleMessage(
             "Please enter the dosage required"),
@@ -542,6 +574,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("MyBloodGlucoseReport.xlsx"),
         "existing_relative_add": MessageLookupByLibrary.simpleMessage(
             "Existing User Saved Into Relatives."),
+        "expected_inspection":
+            MessageLookupByLibrary.simpleMessage("Expected Inspection"),
         "experiences": MessageLookupByLibrary.simpleMessage("Experiences"),
         "expiration_date_should_be": MessageLookupByLibrary.simpleMessage(
             "Expiration date should be written in mm/yy format"),
@@ -553,6 +587,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "female": MessageLookupByLibrary.simpleMessage("Female"),
         "file_deleted": MessageLookupByLibrary.simpleMessage(
             "File has been successfully deleted"),
+        "file_description":
+            MessageLookupByLibrary.simpleMessage("File Description"),
+        "file_name": MessageLookupByLibrary.simpleMessage("File name"),
         "file_uploaded": MessageLookupByLibrary.simpleMessage(
             "File has been successfully uploaded"),
         "files": MessageLookupByLibrary.simpleMessage("Files"),
@@ -637,6 +674,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "how_often": MessageLookupByLibrary.simpleMessage("How often"),
         "how_to_get_photo":
             MessageLookupByLibrary.simpleMessage("How to get the photo?"),
+        "how_to_use_the_e_council":
+            MessageLookupByLibrary.simpleMessage("How to use the E-Council?"),
         "how_video_doctor": MessageLookupByLibrary.simpleMessage(
             "Are you satisfied with your specialist?"),
         "how_video_quality": MessageLookupByLibrary.simpleMessage(
@@ -665,6 +704,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Informed consent forṁ"),
         "informed_consent_form_url": MessageLookupByLibrary.simpleMessage(
             "https://app.guven.com.tr/assets/static/onam_en.html"),
+        "inlavid_diagnosis":
+            MessageLookupByLibrary.simpleMessage("Invalid Diagnosis"),
         "insufficient": MessageLookupByLibrary.simpleMessage("Insufficient"),
         "intermittent_days":
             MessageLookupByLibrary.simpleMessage("Intermittent Days"),
@@ -688,6 +729,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There may be a problem with your bank. Please try again after contacting your bank."),
         "join": MessageLookupByLibrary.simpleMessage("join"),
         "kids": MessageLookupByLibrary.simpleMessage("My Children"),
+        "kvkk_text":
+            MessageLookupByLibrary.simpleMessage("Personal Data Protection"),
         "kvkk_title": MessageLookupByLibrary.simpleMessage(
             "ONLINE DOCTOR AND E-CONSULTATION INFORMATIONAL TEXT ON PERSONAL DATA PROTECTION"),
         "laboratory_result":
@@ -927,10 +970,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_found": MessageLookupByLibrary.simpleMessage("Not Found"),
         "not_now": MessageLookupByLibrary.simpleMessage("Not Now"),
         "not_specified": MessageLookupByLibrary.simpleMessage("Not Specified"),
+        "note": MessageLookupByLibrary.simpleMessage(" Note"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "notification": MessageLookupByLibrary.simpleMessage("Notification"),
         "notification_inbox_empty": MessageLookupByLibrary.simpleMessage(
             "You don\'t have any notifications yet"),
+        "number_of_doctors_to_attend":
+            MessageLookupByLibrary.simpleMessage("Number of doctors to attend"),
         "oauth_credential_error":
             MessageLookupByLibrary.simpleMessage("OAuth credential error"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
@@ -1044,6 +1090,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "patient_name_2": MessageLookupByLibrary.simpleMessage("Patient Name"),
         "patients": MessageLookupByLibrary.simpleMessage("Patients"),
         "pay": MessageLookupByLibrary.simpleMessage("Make Payment"),
+        "pay2": MessageLookupByLibrary.simpleMessage("Pay"),
         "payment": MessageLookupByLibrary.simpleMessage("Payment"),
         "payment_not_successful": MessageLookupByLibrary.simpleMessage(
             "Your payment is not successful.\nPlease call 444 25 25"),
@@ -1055,12 +1102,18 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment transaction is successful. Your appointment has been created successfully"),
         "pdf_filename":
             MessageLookupByLibrary.simpleMessage("MyBloodGlucoseReport.pdf"),
-        "permission_camera_message_android": m0,
-        "permission_camera_message_ios": m1,
-        "permission_gallery_message_android": m2,
-        "permission_gallery_message_ios": m3,
-        "permission_microphone_message_android": m4,
-        "permission_microphone_message_ios": m5,
+        "pending_approval":
+            MessageLookupByLibrary.simpleMessage("Pending approval"),
+        "pending_inspection":
+            MessageLookupByLibrary.simpleMessage("Pending Inspection"),
+        "pending_payment":
+            MessageLookupByLibrary.simpleMessage("Pending Payment"),
+        "permission_camera_message_android": m1,
+        "permission_camera_message_ios": m2,
+        "permission_gallery_message_android": m3,
+        "permission_gallery_message_ios": m4,
+        "permission_microphone_message_android": m5,
+        "permission_microphone_message_ios": m6,
         "person": MessageLookupByLibrary.simpleMessage("Person"),
         "personal_data_policy": MessageLookupByLibrary.simpleMessage(
             "Privacy Statement and Personal Data Protection Policy"),
@@ -1076,6 +1129,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "pick_time": MessageLookupByLibrary.simpleMessage("Pick Time"),
         "piece": MessageLookupByLibrary.simpleMessage("piece"),
         "pillar_small": MessageLookupByLibrary.simpleMessage("Pillar small"),
+        "please_select_the_file_you_want_to_upload":
+            MessageLookupByLibrary.simpleMessage(
+                "Please select the file you want to upload"),
+        "please_select_your_diagnosis": MessageLookupByLibrary.simpleMessage(
+            "Please Select Your Diagnosis"),
         "pls_select": MessageLookupByLibrary.simpleMessage("Choose"),
         "pls_select_depart":
             MessageLookupByLibrary.simpleMessage("Please select department"),
@@ -1094,6 +1152,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "premium": MessageLookupByLibrary.simpleMessage("Premium"),
         "preselection":
             MessageLookupByLibrary.simpleMessage("Choose your preselection:"),
+        "press_and_hold_the_microphone": MessageLookupByLibrary.simpleMessage(
+            "Press and hold the microphone"),
         "press_plus_to_add_medicine":
             MessageLookupByLibrary.simpleMessage("Press + to add a Reminder"),
         "price": MessageLookupByLibrary.simpleMessage("Fee"),
@@ -1126,6 +1186,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "recover_your_password":
             MessageLookupByLibrary.simpleMessage("Recover your password"),
         "refreshment": MessageLookupByLibrary.simpleMessage("Refreshment"),
+        "rejected": MessageLookupByLibrary.simpleMessage("Rejected"),
         "relative_change_message": MessageLookupByLibrary.simpleMessage(
             "Further operations will be completed by the selected user, do you confirm?"),
         "relative_identity_number":
@@ -1155,6 +1216,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Requests and Suggestions"),
         "request_and_suggestions_text": MessageLookupByLibrary.simpleMessage(
             "This Form; In order to provide you with a better service, it has been prepared for you to report the problems / suggestions you have experienced and observed in application and your thanks. Your notification will be examined by the Hospital Management as soon as possible, and you will be informed about the measures taken and the arrangements to be made. Thank you for your interest and contribution."),
+        "requested_inspections":
+            MessageLookupByLibrary.simpleMessage("Requested Inspections"),
         "required_area": MessageLookupByLibrary.simpleMessage("are required"),
         "required_user_height_info_message":
             MessageLookupByLibrary.simpleMessage(
@@ -1207,6 +1270,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "select_tag": MessageLookupByLibrary.simpleMessage("Select tag"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "send_message": MessageLookupByLibrary.simpleMessage("Send Message"),
+        "sent_code_to_phone": MessageLookupByLibrary.simpleMessage(
+            "A code has sent to your phone"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "show": MessageLookupByLibrary.simpleMessage("Show"),
@@ -1228,6 +1293,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sign in with Google"),
         "single_day": MessageLookupByLibrary.simpleMessage("Single Day"),
         "six_months": MessageLookupByLibrary.simpleMessage("6 months"),
+        "slide_to_cancel":
+            MessageLookupByLibrary.simpleMessage("Slide to cancel"),
         "smoker": MessageLookupByLibrary.simpleMessage("Smoker"),
         "smoker_type": MessageLookupByLibrary.simpleMessage("Smoker Type"),
         "smokes_occasionally":
@@ -1457,6 +1524,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "weight_text": MessageLookupByLibrary.simpleMessage("Weight"),
         "weight_tracking":
             MessageLookupByLibrary.simpleMessage("Weight Tracking"),
+        "what_is_the_e_council":
+            MessageLookupByLibrary.simpleMessage("What is the E-Council?"),
         "whats_covid": MessageLookupByLibrary.simpleMessage("COVID-19"),
         "when_to_be_notified": MessageLookupByLibrary.simpleMessage(
             "When would you like to be notified?"),
@@ -1485,6 +1554,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "You have <stripCount> strips left"),
         "your_complaints":
             MessageLookupByLibrary.simpleMessage("Your complaints:"),
+        "your_council_request_has_been_accepted_by_our_doctors_below_are_the_details":
+            MessageLookupByLibrary.simpleMessage(
+                "Your council request has been accepted by our doctors. Below are the details."),
         "your_data_is_synchronizing":
             MessageLookupByLibrary.simpleMessage("Your data is synchronizing"),
         "youtube_stream": MessageLookupByLibrary.simpleMessage("Youtube Stream")

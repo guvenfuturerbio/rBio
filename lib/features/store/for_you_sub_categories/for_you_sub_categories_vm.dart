@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../../config/config.dart';
+import '../for_you_categories/model/model.dart';
 
 class ForUSubCategoriesScreenVm extends ChangeNotifier {
   BuildContext? mContext;

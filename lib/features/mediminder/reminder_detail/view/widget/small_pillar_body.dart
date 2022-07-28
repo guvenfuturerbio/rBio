@@ -23,7 +23,7 @@ class _SmallPillarBody extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: getIt<IAppConfig>().theme.cardBackgroundColor,
+            color: context.xCardColor,
             borderRadius: R.sizes.borderRadiusCircular,
           ),
           child: Column(
@@ -115,7 +115,7 @@ class _SmallPillarBody extends StatelessWidget {
         ),
 
         //
-        R.sizes.hSizer8,
+        R.widgets.hSizer8,
 
         //
         if (model.reminderPeriod != ReminderPeriod.oneTime) ...[

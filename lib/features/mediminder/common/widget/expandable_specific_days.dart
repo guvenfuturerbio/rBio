@@ -26,7 +26,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Column(
@@ -149,18 +149,17 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
                 SizedBox(
                   height: R.sizes.iconSize,
                   width: R.sizes.iconSize,
-                  child: Checkbox(
+                  child: RbioCheckbox(
                     value: widget.days[index].selected,
                     onChanged: (value) {
                       widget.onChanged(index);
                     },
-                    activeColor: getIt<IAppConfig>().theme.mainColor,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
 
                 //
-                R.sizes.wSizer12,
+                R.widgets.wSizer12,
               ],
             ),
           ),
@@ -168,7 +167,7 @@ class _ExpandableSpecificDaysState extends State<ExpandableSpecificDays> {
           //
           if (isBottomLine)
             Container(
-              color: getIt<IAppConfig>().theme.textColorPassive,
+              color: context.xMyCustomTheme.textDisabledColor,
               height: 0.25,
             )
           else

@@ -1,13 +1,27 @@
 import 'package:bloc/bloc.dart';
+
 import '../../../../core/core.dart';
-import '../../../../model/shared/user_login_info.dart';
+import '../../shared/shared.dart';
+
 part 'change_password_state.dart';
 
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
-  ChangePasswordCubit(this.repository) : super(ChangePasswordState());
+  ChangePasswordCubit({
+    required this.repository,
+    required this.userManager,
+    required this.adjustManager,
+    required this.sentryManager,
+    required this.sharedPreferencesManager,
+    required this.firebaseAnalyticsManager,
+  }) : super(ChangePasswordState());
   late final Repository repository;
+  late final UserManager userManager;
+  late final AdjustManager? adjustManager;
+  late final SentryManager sentryManager;
+  late final ISharedPreferencesManager sharedPreferencesManager;
+  late final FirebaseAnalyticsManager firebaseAnalyticsManager;
 
-  final PasswordAdvisor passwordAdvisor = PasswordAdvisor();
+  final PasswordHelper passwordHelper = PasswordHelper();
 
   void toggleOldPasswordVisibility(bool value) {
     emit(state.copyWith(oldPasswordVisibility: !value));
@@ -22,14 +36,14 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   }
 
   void checkPasswordCapability(String newPassword) {
-    passwordAdvisor.checkPassword(newPassword);
+    passwordHelper.checkPassword(newPassword);
     emit(
       state.copyWith(
-        checkLength: passwordAdvisor.lengthValue,
-        checkLowerCase: passwordAdvisor.lowerCaseValue,
-        checkNumeric: passwordAdvisor.numericValue,
-        checkSpecial: passwordAdvisor.specialValue,
-        checkUpperCase: passwordAdvisor.upperCaseValue,
+        checkLength: passwordHelper.lengthValue,
+        checkLowerCase: passwordHelper.lowerCaseValue,
+        checkNumeric: passwordHelper.numericValue,
+        checkSpecial: passwordHelper.specialValue,
+        checkUpperCase: passwordHelper.upperCaseValue,
       ),
     );
   }
@@ -57,31 +71,29 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       return;
     }
 
-    if (passwordAdvisor.validateStructure()) {
+    if (passwordHelper.validateStructure()) {
       emit(state.copyWith(showProgressOverlay: true));
+
       try {
         final response =
             await repository.changeUserPasswordUi(oldPassword, password);
         if (response.isSuccessful == true) {
-          UserLoginInfo userLoginInfo =
-              getIt<UserManager>().getSavedLoginInfo();
-          await getIt<ISharedPreferencesManager>()
-              .setString(SharedPreferencesKeys.loginPassword, password);
+          UserLoginInfo userLoginInfo = userManager.getSavedLoginInfo();
+          await sharedPreferencesManager.setString(
+            SharedPreferencesKeys.loginPassword,
+            password,
+          );
           bool rememberChecked = userLoginInfo.password != "" ? true : false;
-          await getIt<UserManager>().saveLoginInfo(
+          await userManager.saveLoginInfo(
             userLoginInfo.username ?? '',
             userLoginInfo.password ?? '',
             rememberChecked,
-            getIt<ISharedPreferencesManager>()
+            sharedPreferencesManager
                     .getString(SharedPreferencesKeys.jwtToken) ??
                 '',
           );
-          getIt<IAppConfig>()
-              .platform
-              .adjustManager
-              ?.trackEvent(SuccessfulPasswordChangeEvent());
-          getIt<FirebaseAnalyticsManager>()
-              .logEvent(SifreDegistirBasariliEvent());
+          adjustManager?.trackEvent(SuccessfulPasswordChangeEvent());
+          firebaseAnalyticsManager.logEvent(SifreDegistirBasariliEvent());
           showDialog(
             LocaleProvider.current.success_message_title,
             LocaleProvider.current.succefully_created_pass,
@@ -101,17 +113,15 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
           errorParse(response);
         }
       } catch (error, stackTrace) {
-        getIt<IAppConfig>()
-            .platform
-            .sentryManager
-            .captureException(error, stackTrace: stackTrace);
-        getIt<IAppConfig>()
-            .platform
-            .adjustManager
-            ?.trackEvent(UnsuccessfulPasswordChangeEvent());
-        getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
-        emit(state.copyWith(
-            showProgressOverlay: false, status: ChangePasswordStatus.failure));
+        sentryManager.captureException(error, stackTrace: stackTrace);
+        adjustManager?.trackEvent(UnsuccessfulPasswordChangeEvent());
+        firebaseAnalyticsManager.logEvent(SifreDegistirmeHataEvent());
+        emit(
+          state.copyWith(
+            showProgressOverlay: false,
+            status: ChangePasswordStatus.failure,
+          ),
+        );
       }
     }
   }
@@ -119,11 +129,9 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   void errorParse(GuvenResponseModel response) {
     var errorCode = response.datum;
     if (errorCode is int) {
-      getIt<IAppConfig>()
-          .platform
-          .adjustManager
-          ?.trackEvent(UnsuccessfulPasswordChangeEvent());
-      getIt<FirebaseAnalyticsManager>().logEvent(SifreDegistirmeHataEvent());
+      adjustManager?.trackEvent(UnsuccessfulPasswordChangeEvent());
+      firebaseAnalyticsManager.logEvent(SifreDegistirmeHataEvent());
+
       switch (errorCode) {
         case 1:
           {
@@ -165,12 +173,14 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   }
 
   void showDialog(String title, String description) {
-    emit(state.copyWith(
-      status: ChangePasswordStatus.showDialog,
-      dialogMessage: description,
-      dialogTitle: title,
-      showProgressOverlay: false,
-    ));
+    emit(
+      state.copyWith(
+        status: ChangePasswordStatus.showDialog,
+        dialogMessage: description,
+        dialogTitle: title,
+        showProgressOverlay: false,
+      ),
+    );
     Future.delayed(
       const Duration(milliseconds: 250),
       () {

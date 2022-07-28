@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../config/config.dart';
 import '../viewmodel/bp_measurement_vm.dart';
 import '../viewmodel/bp_progres_vm.dart';
 import 'tagger/bp_tagger_pop_up.dart';
@@ -156,7 +157,7 @@ class BpMeasurementList extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(

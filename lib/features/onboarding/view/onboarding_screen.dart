@@ -126,7 +126,7 @@ class _OnboardingViewState extends State<OnboardingView> {
   Widget build(BuildContext context) {
     return RbioDarkStatusBar(
       child: Scaffold(
-        backgroundColor: getIt<IAppConfig>().theme.cardBackgroundColor,
+        backgroundColor: context.xCardColor,
         body: SafeArea(
           child: Stack(
             fit: StackFit.expand,
@@ -164,8 +164,8 @@ class _OnboardingViewState extends State<OnboardingView> {
                   effect: ExpandingDotsEffect(
                     dotHeight: 10,
                     dotWidth: 16,
-                    activeDotColor: getIt<IAppConfig>().theme.mainColor,
-                    dotColor: getIt<IAppConfig>().theme.grey.withOpacity(0.5),
+                    activeDotColor: context.xPrimaryColor,
+                    dotColor: context.xMyCustomTheme.grey.withOpacity(0.5),
                   ),
                 ),
               ),
@@ -197,10 +197,8 @@ class _OnboardingViewState extends State<OnboardingView> {
                                     curve: Curves.ease,
                                   );
                                 },
-                                backColor: getIt<IAppConfig>()
-                                    .theme
-                                    .cardBackgroundColor,
-                                textColor: getIt<IAppConfig>().theme.mainColor,
+                                backColor: context.xCardColor,
+                                textColor: context.xPrimaryColor,
                               ),
                             ),
 
@@ -291,14 +289,16 @@ class AnimatedIntroCard extends StatelessWidget {
                     children: [
                       //
                       const Spacer(),
-                      R.sizes.hSizer8,
+
+                      //
+                      R.widgets.hSizer8,
 
                       //
                       Text(
                         item.title,
                         textAlign: TextAlign.center,
                         style: context.xHeadline1.copyWith(
-                          color: getIt<IAppConfig>().theme.mainColor,
+                          color: context.xPrimaryColor,
                           fontSize: context.xHeadline1.fontSize! * 1.5,
                           fontWeight: FontWeight.bold,
                           height: 1.35,
@@ -306,7 +306,7 @@ class AnimatedIntroCard extends StatelessWidget {
                       ),
 
                       //
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
 
                       //
                       Text(
@@ -336,9 +336,8 @@ class AnimatedIntroCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 32),
                         child: RbioElevatedButton(
-                          backColor:
-                              getIt<IAppConfig>().theme.cardBackgroundColor,
-                          textColor: getIt<IAppConfig>().theme.mainColor,
+                          backColor: context.xCardColor,
+                          textColor: context.xPrimaryColor,
                           fontWeight: FontWeight.bold,
                           title: LocaleProvider.current.login,
                           onTap: () async {
@@ -348,7 +347,7 @@ class AnimatedIntroCard extends StatelessWidget {
                       ),
 
                       //
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
                     ],
                   ),
                 );
@@ -384,7 +383,7 @@ class IntroCard extends StatelessWidget {
           SizedBox(
             height: Atom.height * 0.4,
             child: item.isLast
-                ? Container(color: getIt<IAppConfig>().theme.mainColor)
+                ? Container(color: context.xPrimaryColor)
                 : RiveAnimation.asset(
                     item.animationPath,
                     fit: BoxFit.scaleDown,
@@ -406,7 +405,7 @@ class IntroCard extends StatelessWidget {
           ),
 
           //
-          R.sizes.hSizer16,
+          R.widgets.hSizer16,
 
           //
           Text(

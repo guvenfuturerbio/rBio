@@ -13,7 +13,7 @@ class _UserBloodPressureDetailCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: patientDetail == null
@@ -22,7 +22,10 @@ class _UserBloodPressureDetailCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   LocaleProvider.current.not_found,
-                  style: TextStyle(color: getIt<IAppConfig>().theme.grey, fontSize: 18),
+                  style: TextStyle(
+                    color: context.xMyCustomTheme.grey,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             )
@@ -112,7 +115,7 @@ class _UserBloodPressureDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<IAppConfig>().theme.textColorPassive,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),
@@ -124,7 +127,7 @@ class _UserBloodPressureDetailCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.xHeadline5.copyWith(
-                color: getIt<IAppConfig>().theme.textColorPassive,
+                color: context.xMyCustomTheme.textDisabledColor,
               ),
             ),
           ),

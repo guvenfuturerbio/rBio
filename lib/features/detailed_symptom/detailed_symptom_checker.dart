@@ -22,9 +22,10 @@ class _DetailedSymptomCheckerState extends State<DetailedSymptomChecker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RbioAppBar(
+        context: context,
         title: Text(
           LocaleProvider.current.detailed_check,
-          style: TextStyle(color: getIt<IAppConfig>().theme.white),
+          style: TextStyle(color: context.xMyCustomTheme.white),
         ),
       ),
       body: SafeArea(

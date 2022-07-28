@@ -19,16 +19,35 @@ import '../../../features/take_appointment/create_appointment_summary/model/get_
 import '../../../features/take_appointment/create_appointment_summary/model/get_video_call_price_response.dart';
 import '../../../features/take_appointment/create_appointment_summary/model/synchronize_onedose_user_req.dart';
 import '../../../features/take_appointment/do_mobile_payment/do_mobil_payment_voucher.dart';
-import '../../../model/model.dart';
+import '../../config/config.dart';
 import '../../core/core.dart';
+import '../../features/auth/shared/shared.dart';
+import '../../features/dashboard/search/doctor_cv/doctor_cv_response.dart';
 import '../../features/dashboard/search/model/filter_resources_request.dart';
 import '../../features/dashboard/search/model/filter_resources_response.dart';
+import '../../features/dashboard/search/model/social_posts_response.dart';
+import '../../features/profile/personal_information/model/change_contact_info_request.dart';
+import '../../features/profile/request_suggestions/model/suggestion_request.dart';
+import '../../features/relatives/patient_relatives/model/user_relative_patient_model.dart';
+import '../../features/shared/rate_dialog/model/call_rate_request.dart';
 import '../../features/shared/rate_dialog/model/get_availability_rate_request.dart';
 import '../../features/shared/rate_dialog/model/get_availability_rate_response.dart';
+import '../../features/store/credit_card/model/model.dart';
+import '../../features/store/for_you_categories/model/model.dart';
+import '../../features/store/for_you_order_summary/model/model.dart';
+import '../../features/store/for_you_sub_category_detail/model/model.dart';
+import '../../features/take_appointment/create_appointment/model/filter_departments_request.dart';
+import '../../features/take_appointment/create_appointment/model/filter_departments_response.dart';
+import '../../features/take_appointment/create_appointment/model/filter_online_departments_request.dart';
+import '../../features/take_appointment/create_appointment/model/filter_tenants_request.dart';
+import '../../features/take_appointment/create_appointment/model/get_all_relatives_request.dart';
+import '../../features/take_appointment/create_appointment/model/get_events_request.dart';
+import '../../features/take_appointment/create_appointment/model/patient_relative_info_response.dart';
+import '../../features/take_appointment/do_mobile_payment/appointment_request.dart';
 
 class Repository {
   final ApiService apiService;
-  final LocalCacheService localCacheService;
+  final LocalCacheManager localCacheService;
 
   Repository({
     required this.apiService,
@@ -81,7 +100,7 @@ class Repository {
   }
 
   Future<List<ForYouCategoryResponse>> getAllPackage() async {
-    final url = getIt<IAppConfig>().endpoints.base.getAllPackagePath;
+    final url = getIt<IAppConfig>().endpoints.package.getAllPackagePath;
     return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllPackage(url),
@@ -92,7 +111,8 @@ class Repository {
   }
 
   Future<List<ForYouCategoryResponse>> getAllSubCategories(int id) async {
-    final url = getIt<IAppConfig>().endpoints.base.getAllSubCategoriesPath(id);
+    final url =
+        getIt<IAppConfig>().endpoints.package.getAllSubCategoriesPath(id);
     return Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getAllSubCategories(url),
@@ -120,7 +140,8 @@ class Repository {
 
   Future<List<ForYouSubCategoryDetailResponse>> getSubCategoryDetail(
       int id) async {
-    final url = getIt<IAppConfig>().endpoints.base.getSubCategoryDetailPath(id);
+    final url =
+        getIt<IAppConfig>().endpoints.package.getSubCategoryDetailPath(id);
     return await Utils.instance.getCacheApiCallList(
       url,
       () => apiService.getSubCategoryDetail(url),
@@ -167,20 +188,22 @@ class Repository {
       apiService.getCurrentApplicationVersion();
 
   Future<PatientResponse?> getPatientDetail() async {
-    final url = getIt<IAppConfig>().endpoints.base.getPatientDetailPath;
+    final url = getIt<IAppConfig>().endpoints.pusula.getPatientDetailPath;
     final response = await apiService.getPatientDetail(url);
     return response;
   }
 
   Future<GuvenResponseModel> sendNotification(
-      ChatNotificationModel model) async {
+    ChatNotificationModel model,
+  ) async {
     final response = await apiService.sendNotification(model);
     return response;
   }
 
   Future<List<FilterTenantsResponse>> filterTenants(
-      FilterTenantsRequest filterTenantsRequest) async {
-    final url = getIt<IAppConfig>().endpoints.base.filterTenantsPath;
+    FilterTenantsRequest filterTenantsRequest,
+  ) async {
+    final url = getIt<IAppConfig>().endpoints.pusula.filterTenantsPath;
     return await Utils.instance.getCacheApiCallList<FilterTenantsResponse>(
       url,
       () => apiService.filterTenants(url, filterTenantsRequest),
@@ -191,8 +214,9 @@ class Repository {
   }
 
   Future<List<FilterDepartmentsResponse>> filterDepartments(
-      FilterDepartmentsRequest filterDepartmentsRequest) async {
-    final url = getIt<IAppConfig>().endpoints.base.filterDepartmentsPath;
+    FilterDepartmentsRequest filterDepartmentsRequest,
+  ) async {
+    final url = getIt<IAppConfig>().endpoints.pusula.filterDepartmentsPath;
     final bodyString = json.encode(filterDepartmentsRequest.toJson());
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url + bodyString,
@@ -205,8 +229,9 @@ class Repository {
   }
 
   Future<List<FilterResourcesResponse>> filterResources(
-      FilterResourcesRequest filterResourcesRequest) async {
-    final url = getIt<IAppConfig>().endpoints.base.filterResourcesPath;
+    FilterResourcesRequest filterResourcesRequest,
+  ) async {
+    final url = getIt<IAppConfig>().endpoints.pusula.filterResourcesPath;
     final bodyString = json.encode(filterResourcesRequest.toJson());
     return await Utils.instance.getCacheApiCallList<FilterResourcesResponse>(
       url + bodyString,
@@ -220,7 +245,7 @@ class Repository {
   Future<DoctorCvResponse> getDoctorCvDetails(String doctorWebID) async {
     final url = getIt<IAppConfig>()
         .endpoints
-        .common
+        .single
         .getDoctorCvDetailsPath(doctorWebID);
     return await Utils.instance.getCacheApiCallModel<DoctorCvResponse>(
       url,
@@ -320,8 +345,8 @@ class Repository {
     }
   }
 
-  Either<GuvenResponseModel, ChangePasswordExceptions>
-      _checkChangePassword(GuvenResponseModel response) {
+  Either<GuvenResponseModel, ChangePasswordExceptions> _checkChangePassword(
+      GuvenResponseModel response) {
     if (response.datum == R.apiEnums.changePassword.success) {
       return left(response);
     } else if (response.datum == R.apiEnums.changePassword.oldError) {
@@ -349,9 +374,6 @@ class Repository {
           AddFirebaseTokenRequest addFirebaseToken) =>
       apiService.addFirebaseTokenUi(addFirebaseToken);
 
-  Future<GuvenResponseModel> getRoomStatusUi(String roomId) =>
-      apiService.getRoomStatusUi(roomId);
-
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId) =>
       apiService.getOnlineAppoFiles(roomId);
 
@@ -378,8 +400,6 @@ class Repository {
   Future<GuvenResponseModel> addSuggestion(
           SuggestionRequest suggestionRequest) =>
       apiService.addSuggestion(suggestionRequest);
-
-  Future<GuvenResponseModel> getCourseId() => apiService.getCourseId();
 
   Future<GuvenResponseModel> setJitsiWebConsultantId(String id) =>
       apiService.setJitsiWebConsultantId(id);
@@ -474,8 +494,9 @@ class Repository {
       apiService.doMobilePayment(doMobilePaymentWithVoucherRequest);
 
   Future<List<FilterDepartmentsResponse>> fetchOnlineDepartments(
-      FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest) async {
-    final url = getIt<IAppConfig>().endpoints.base.fetchOnlineDepartmentsPath;
+    FilterOnlineDepartmentsRequest filterOnlineDepartmentsRequest,
+  ) async {
+    final url = getIt<IAppConfig>().endpoints.pusula.fetchOnlineDepartmentsPath;
     return await Utils.instance.getCacheApiCallList<FilterDepartmentsResponse>(
       url,
       () => apiService.fetchOnlineDepartments(filterOnlineDepartmentsRequest),
@@ -504,7 +525,7 @@ class Repository {
 
   // #region Search
   Future<List<SocialPostsResponse>> getAllSocialResources() async {
-    final url = getIt<IAppConfig>().endpoints.search.getAllPosts;
+    final url = getIt<IAppConfig>().endpoints.socialPost.getAllPosts;
     final response =
         await Utils.instance.getCacheApiCallModel<GuvenResponseModel>(
       url,

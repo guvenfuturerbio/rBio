@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../../symptoms_body_sublocations_page/viewmodel/symptoms_body_sublocations_vm.dart';
 import '../../symptoms_result_page/model/get_body_symptoms_response.dart';

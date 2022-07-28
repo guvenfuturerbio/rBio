@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../../../../model/model.dart';
+import '../../../../doctor/patient_detail/blood_glucose/model/model.dart';
 import '../../viewmodel/bg_progress_vm.dart';
 
 class BgBubbleChart extends StatefulWidget {
@@ -50,7 +50,7 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
       _targetMax = value.targetMax;
       _startDate = value.startDate;
       _endDate = value.endDate;
-      _defaultScatterDataList = value.getDataScatterSeries();
+      _defaultScatterDataList = value.getDataScatterSeries(context);
       return _getAnimationScatterChart();
     });
   }
@@ -58,6 +58,7 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
   /// Get the Scatter chart sample with dynamically updated data points.
   SfCartesianChart _getAnimationScatterChart() {
     return SfCartesianChart(
+      backgroundColor: context.xCardColor,
       primaryXAxis: _selected == TimePeriodFilter.daily
           ? DateTimeAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
@@ -65,43 +66,58 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
-              labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
+              labelStyle: context.xHeadline3,
               interval: 6)
           : _selected == TimePeriodFilter.weekly
               ? DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
                   dateFormat: DateFormat("EEE"),
-                  majorGridLines: const MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(
+                    color: Colors.white,
+                  ),
                   intervalType: DateTimeIntervalType.days,
                   interval: 1,
                 )
               : DateTimeAxis(
                   edgeLabelPlacement: EdgeLabelPlacement.shift,
-                  majorGridLines: const MajorGridLines(color: Colors.black12),
+                  majorGridLines: const MajorGridLines(
+                    color: Colors.black12,
+                  ),
                 ),
       primaryYAxis: NumericAxis(
-          labelFormat: '{value}',
-          title: AxisTitle(
-              text: "mg/dL",
-              textStyle: TextStyle(fontSize: 10, color: getIt<IAppConfig>().theme.black)),
-          minimum: _minimum.toDouble(),
-          maximum: _maximum.toDouble(),
-          interval: 30,
-          labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
-          plotBands: [
-            PlotBand(
-                isVisible: true,
-                start: _targetMax,
-                end: _targetMin,
-                shouldRenderAboveSeries: false,
-                color: getIt<IAppConfig>().theme.graphPlotRange),
-          ],
-          majorGridLines: const MajorGridLines(color: Colors.black12)),
+        labelFormat: '{value}',
+        title: AxisTitle(
+          text: "mg/dL",
+          textStyle: TextStyle(
+            fontSize: 10,
+            color: context.xMyCustomTheme.codGray,
+          ),
+        ),
+        minimum: _minimum.toDouble(),
+        maximum: _maximum.toDouble(),
+        interval: 30,
+        labelStyle: context.xHeadline5,
+        plotBands: [
+          PlotBand(
+            isVisible: true,
+            start: _targetMax,
+            end: _targetMin,
+            shouldRenderAboveSeries: false,
+            color: context.xMyCustomTheme.skeptic,
+          ),
+        ],
+        majorGridLines: const MajorGridLines(
+          color: Colors.black12,
+        ),
+      ),
       enableAxisAnimation: true,
       zoomPanBehavior: _zoomingBehavior,
       series: getDefaultScatterSeries(),
-      tooltipBehavior:
-          TooltipBehavior(enable: true, header: '', canShowMarker: true),
+      tooltipBehavior: TooltipBehavior(
+        enable: true,
+        header: '',
+        canShowMarker: true,
+      ),
     );
   }
 
@@ -112,43 +128,63 @@ class _BgBubbleChartState extends State<BgBubbleChart> {
     list.addAll(<ScatterSeries<ChartData, DateTime>>[]);
     _selected == TimePeriodFilter.daily ||
             _selected == TimePeriodFilter.spesific
-        ? list.add(ScatterSeries<ChartData, DateTime>(
-            dataSource: (_chartData != null && _chartData!.isNotEmpty)
-                ? [
-                    ChartData(
-                        DateTime(_chartData![0].x.year, _chartData![0].x.month,
-                            _chartData![0].x.day, 24, 00),
-                        -50,
-                        Colors.transparent),
-                    ChartData(
-                        DateTime(_chartData![0].x.year, _chartData![0].x.month,
-                            _chartData![0].x.day, 00, 00),
-                        -50,
-                        Colors.transparent),
-                  ]
-                : [
-                    ChartData(DateTime(1995, 20, 02, 24, 00), -50,
-                        Colors.transparent),
-                    ChartData(DateTime(1995, 20, 02, 00, 00), -50,
-                        Colors.transparent),
-                  ],
-            xValueMapper: (ChartData sales, _) => sales.x,
-            yValueMapper: (ChartData sales, _) => sales.y,
-            color: Colors.red,
-            xAxisName: "Time",
-            markerSettings:
-                const MarkerSettings(height: 15, width: 15, isVisible: true)))
-        : list.add(ScatterSeries<ChartData, DateTime>(
-            dataSource: [
+        ? list.add(
+            ScatterSeries<ChartData, DateTime>(
+              dataSource: (_chartData != null && _chartData!.isNotEmpty)
+                  ? [
+                      ChartData(
+                          DateTime(
+                              _chartData![0].x.year,
+                              _chartData![0].x.month,
+                              _chartData![0].x.day,
+                              24,
+                              00),
+                          -50,
+                          Colors.transparent),
+                      ChartData(
+                          DateTime(
+                              _chartData![0].x.year,
+                              _chartData![0].x.month,
+                              _chartData![0].x.day,
+                              00,
+                              00),
+                          -50,
+                          Colors.transparent),
+                    ]
+                  : [
+                      ChartData(DateTime(1995, 20, 02, 24, 00), -50,
+                          Colors.transparent),
+                      ChartData(DateTime(1995, 20, 02, 00, 00), -50,
+                          Colors.transparent),
+                    ],
+              xValueMapper: (ChartData sales, _) => sales.x,
+              yValueMapper: (ChartData sales, _) => sales.y,
+              color: Colors.red,
+              xAxisName: "Time",
+              markerSettings: const MarkerSettings(
+                height: 15,
+                width: 15,
+                isVisible: true,
+              ),
+            ),
+          )
+        : list.add(
+            ScatterSeries<ChartData, DateTime>(
+              dataSource: [
                 ChartData(_startDate, -50, Colors.transparent),
                 ChartData(_endDate, -50, Colors.transparent),
               ],
-            xValueMapper: (ChartData sales, _) => sales.x,
-            yValueMapper: (ChartData sales, _) => sales.y,
-            color: Colors.red,
-            xAxisName: "Time",
-            markerSettings: MarkerSettings(
-                height: markerSize, width: markerSize, isVisible: true)));
+              xValueMapper: (ChartData sales, _) => sales.x,
+              yValueMapper: (ChartData sales, _) => sales.y,
+              color: Colors.red,
+              xAxisName: "Time",
+              markerSettings: MarkerSettings(
+                height: markerSize,
+                width: markerSize,
+                isVisible: true,
+              ),
+            ),
+          );
     return list;
   }
 }

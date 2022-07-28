@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../core/core.dart';
+import '../../model/model.dart';
 import 'bg_tagger_vm.dart';
 
 class BgTaggerPopUp extends StatelessWidget {
@@ -77,11 +78,13 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
   late FocusNode focusNode;
   late FocusNode noteFocusNode;
 
-  late TextEditingController controller = TextEditingController();
-  late TextEditingController noteController = TextEditingController();
+  late TextEditingController controller;
+  late TextEditingController noteController;
 
   @override
   void initState() {
+    super.initState();
+
     focusNode = FocusNode();
     noteFocusNode = FocusNode();
     controller = TextEditingController();
@@ -94,8 +97,6 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
         controller.clear();
       }
     });
-
-    super.initState();
   }
 
   @override
@@ -117,7 +118,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
     return Consumer<BgTaggerVm>(
       builder: (BuildContext context, BgTaggerVm vm, Widget? child) {
         return Container(
-          color: context.scaffoldBackgroundColor,
+          color: context.xScaffoldBackgroundColor,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -159,13 +160,13 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
               ),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
 
               //
               _buildActions(vm),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
               SizedBox(height: Atom.safeBottom),
             ],
           ),
@@ -182,13 +183,14 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        color: Utils.instance
-            .getGlucoseMeasurementColor(double.parse(value.data.level).toInt()),
+        color: Utils.instance.getGlucoseMeasurementColor(
+          context,
+          double.parse(value.data.level).toInt(),
+        ),
         border: Border.all(
           color: Utils.instance.getGlucoseMeasurementColor(
-            double.parse(
-              value.data.level,
-            ).toInt(),
+            context,
+            double.parse(value.data.level).toInt(),
           ),
           width: 5.0,
         ),
@@ -207,10 +209,13 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
         shape: BoxShape.circle,
         color: value.data.tag == 2
             ? Utils.instance.getGlucoseMeasurementColor(
-                double.parse(value.data.level).toInt())
+                context,
+                double.parse(value.data.level).toInt(),
+              )
             : Colors.white,
         border: Border.all(
           color: Utils.instance.getGlucoseMeasurementColor(
+            context,
             double.parse(value.data.level).toInt(),
           ),
           width: 10.0,
@@ -260,7 +265,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
           ),
 
           //
-          R.sizes.hSizer12,
+          R.widgets.hSizer12,
 
           //
           Text(
@@ -295,11 +300,6 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16, top: 16),
         child: Card(
-          elevation: R.sizes.defaultElevation,
-          color: getIt<IAppConfig>().theme.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.only(
@@ -371,15 +371,15 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
 
   // #endregion
   Widget _buildTagItem(
-      BuildContext context, bool isCurrent, String icon, String title) {
+    BuildContext context,
+    bool isCurrent,
+    String icon,
+    String title,
+  ) {
     return Card(
-      elevation: R.sizes.defaultElevation,
       color: isCurrent
-          ? getIt<IAppConfig>().theme.mainColor
-          : getIt<IAppConfig>().theme.cardBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: R.sizes.borderRadiusCircular,
-      ),
+          ? context.xCurrentTheme.selectionTheme.selectedBackColor
+          : context.xCurrentTheme.selectionTheme.unSelectedBackColor,
       child: Padding(
         padding: const EdgeInsets.only(
           left: 16,
@@ -396,7 +396,9 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
               width: 20,
               child: SvgPicture.asset(
                 icon,
-                color: isCurrent ? Colors.white : Colors.black,
+                color: isCurrent
+                    ? context.xCurrentTheme.selectionTheme.selectedIconColor
+                    : context.xCurrentTheme.selectionTheme.unSelectedIconColor,
               ),
             ),
 
@@ -405,7 +407,9 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
               title,
               textAlign: TextAlign.left,
               style: context.xHeadline5.copyWith(
-                color: isCurrent ? Colors.white : Colors.black,
+                color: isCurrent
+                    ? context.xCurrentTheme.selectionTheme.selectedTextColor
+                    : context.xCurrentTheme.selectionTheme.unSelectedTextColor,
               ),
             )
           ],
@@ -414,123 +418,11 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
     );
   }
 
-/*
-  // #endregion
-  Widget _buildImageSection(BuildContext context, BgTaggerVm value) {
-    return GestureDetector(
-      onTap: () {
-        takeImage(value.context, value);
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8, top: 16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            //
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: Card(
-                elevation: R.sizes.defaultElevation,
-                shape: RoundedRectangleBorder(
-                  borderRadius: R.sizes.borderRadiusCircular,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  height: 25,
-                  width: 25,
-                  child: (value.data.imageURL != null &&
-                              value.data.imageURL == "") ||
-                          Atom.isWeb
-                      ? SvgPicture.asset(
-                          R.image.addphotoIcon,
-                        )
-                      : PhotoView(
-                          imageProvider: FileImage(
-                            File(
-                              getIt<GlucoseStorageImpl>()
-                                  .getImagePathOfImageURL(value.data.imageURL!),
-                            ),
-                          ),
-                        ),
-                ),
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    );
-  }
-
-  // #endregion
-  Future<void> takeImage(BuildContext context, BgTaggerVm value) async {
-    String title = LocaleProvider.current.how_to_get_photo;
-
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-       return Platform.isIOS
-            ? CupertinoAlertDialog(
-                title: Text(title),
-                content: Text(LocaleProvider.current.pick_a_photo_option),
-                actions: <Widget>[
-                  CupertinoDialogAction(
-                    child: Text(
-                      LocaleProvider.current.camera,
-                    ),
-                    isDefaultAction: true,
-                    onPressed: () {
-                      value.getPhotoFromSource(ImageSource.camera);
-                    },
-                  ),
-                  CupertinoDialogAction(
-                    child: Text(
-                      LocaleProvider.current.gallery,
-                    ),
-                    isDefaultAction: true,
-                    onPressed: () {
-                      value.getPhotoFromSource(ImageSource.gallery);
-                    },
-                  ),
-                ],
-              )
-            : AlertDialog(
-                title: Text(
-                  title,
-                  style: const TextStyle(fontSize: 22),
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: Text(LocaleProvider.current.camera),
-                    onPressed: () {
-                      value.getPhotoFromSource(ImageSource.camera);
-                    },
-                  ),
-                  TextButton(
-                    child: Text(LocaleProvider.current.gallery),
-                    onPressed: () {
-                      value.getPhotoFromSource(ImageSource.gallery);
-                    },
-                  )
-                ],
-              );
-      },
-    );
-  }
-*/
   // #endregion
   Widget _buildNoteSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Card(
-        elevation: R.sizes.defaultElevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: R.sizes.borderRadiusCircular,
-        ),
         child: TextField(
           focusNode: noteFocusNode,
           controller: noteController,
@@ -567,7 +459,7 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
         ),
 
         //
-        R.sizes.wSizer8,
+        R.widgets.wSizer8,
 
         //
         _buildActionButton(
@@ -591,8 +483,8 @@ class __BgTaggerViewState extends State<_BgTaggerView> {
       title:
           isSave ? LocaleProvider.current.save : LocaleProvider.current.cancel,
       onTap: onTap,
-      backColor: isSave ? null : getIt<IAppConfig>().theme.cardBackgroundColor,
-      textColor: isSave ? null : getIt<IAppConfig>().theme.textColorSecondary,
+      backColor: isSave ? null : context.xCardColor,
+      textColor: isSave ? null : context.xTextInverseColor,
     );
   }
 }

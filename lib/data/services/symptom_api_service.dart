@@ -1,8 +1,12 @@
 import 'package:dio/dio.dart';
 
-import '../../../model/model.dart';
+import '../../config/config.dart';
 import '../../core/core.dart';
+import '../../features/symptom_checker/home/model/symptoms_auth_response.dart';
+import '../../features/symptom_checker/symptoms_body_location/model/get_bodylocations_response.dart';
+import '../../features/symptom_checker/symptoms_body_sublocations_page/model/get_bodysublocation_response.dart';
 import '../../features/symptom_checker/symptoms_result_page/model/get_body_symptoms_response.dart';
+import '../../features/symptom_checker/symptoms_result_page/model/get_specialisations.response.dart';
 
 part 'symptom_api_service_impl.dart';
 

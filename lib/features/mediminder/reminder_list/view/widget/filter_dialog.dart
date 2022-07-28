@@ -49,7 +49,7 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
         ),
         margin: const EdgeInsets.all(36),
         decoration: BoxDecoration(
-          color: context.scaffoldBackgroundColor,
+          color: context.xScaffoldBackgroundColor,
           borderRadius: R.sizes.borderRadiusCircular,
         ),
         child: SingleChildScrollView(
@@ -70,19 +70,19 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
               ..._buildPersonalList(),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
 
               //
               ..._buildStatusList(),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
 
               //
               ..._buildTypeList(),
 
               //
-              R.sizes.hSizer8,
+              R.widgets.hSizer8,
 
               //
               _buildButtons(),
@@ -214,14 +214,14 @@ class __FilterDialogViewState extends State<_FilterDialogView> {
             },
             title: LocaleProvider.current.btn_cancel,
             padding: EdgeInsets.zero,
-            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-            textColor: getIt<IAppConfig>().theme.textColorSecondary,
+            backColor: context.xCardColor,
+            textColor: context.xTextInverseColor,
             fontWeight: FontWeight.bold,
           ),
         ),
 
         //
-        R.sizes.wSizer8,
+        R.widgets.wSizer8,
 
         //
         Expanded(
@@ -280,7 +280,7 @@ class _FilterRowState extends State<FilterRow> {
           Flexible(
             child: SizedBox.fromSize(
               size: const Size(20, 20),
-              child: Checkbox(
+              child: RbioCheckbox(
                 value: currentValue,
                 onChanged: (newValue) {
                   if (newValue == null) return;
@@ -289,14 +289,13 @@ class _FilterRowState extends State<FilterRow> {
                   });
                   widget.onChanged(newValue);
                 },
-                activeColor: getIt<IAppConfig>().theme.mainColor,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             ),
           ),
 
           //
-          R.sizes.wSizer8,
+          R.widgets.wSizer8,
 
           //
           Text(

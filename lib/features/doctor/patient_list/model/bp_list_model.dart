@@ -36,7 +36,7 @@ class BpPatientListModel
 
   @override
   Color getBackColor(String text, DoctorBloodPressurePatientModel model) {
-    return getIt<IAppConfig>().theme.textColorPassive;
+    return context.xMyCustomTheme.textDisabledColor;
   }
 
   @override

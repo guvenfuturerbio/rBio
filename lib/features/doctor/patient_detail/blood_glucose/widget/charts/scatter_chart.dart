@@ -47,8 +47,7 @@ class BloodGlucosePatientScatterState
       enableMouseWheelZooming: Atom.isWeb ? true : false,
     );
 
-    return Consumer<BgPatientDetailVm>(
-        builder: (context, value, child) {
+    return Consumer<BgPatientDetailVm>(builder: (context, value, child) {
       _selected = value.selected;
       _startDate = value.startDate;
       _endDate = value.endDate;
@@ -87,7 +86,9 @@ class BloodGlucosePatientScatterState
               dateFormat: DateFormat.Hm(),
               intervalType: DateTimeIntervalType.hours,
               enableAutoIntervalOnZooming: true,
-              labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
+              labelStyle: TextStyle(
+                color: context.xMyCustomTheme.codGray,
+              ),
               interval: 6)
           : _selected == LocaleProvider.current.weekly
               ? DateTimeAxis(
@@ -104,20 +105,30 @@ class BloodGlucosePatientScatterState
       primaryYAxis: NumericAxis(
           labelFormat: '{value}',
           title: AxisTitle(
-              text: "mg/dL",
-              textStyle: TextStyle(fontSize: 10, color: getIt<IAppConfig>().theme.black)),
+            text: "mg/dL",
+            textStyle: TextStyle(
+              fontSize: 10,
+              color: context.xMyCustomTheme.codGray,
+            ),
+          ),
           minimum: _minimum.toDouble(),
           maximum: _maximum.toDouble(),
           interval: 30,
-          labelStyle: TextStyle(color: getIt<IAppConfig>().theme.black),
+          labelStyle: TextStyle(
+            color: context.xMyCustomTheme.codGray,
+          ),
           plotBands: [
             PlotBand(
-                isVisible: true,
-                start: _targetMax,
-                end: _targetMin,
-                shouldRenderAboveSeries: false,
-                textStyle: const TextStyle(color: Colors.black, fontSize: 13),
-                color: getIt<IAppConfig>().theme.graphRangeColor),
+              isVisible: true,
+              start: _targetMax,
+              end: _targetMin,
+              shouldRenderAboveSeries: false,
+              textStyle: const TextStyle(
+                color: Colors.black,
+                fontSize: 13,
+              ),
+              color: context.xMyCustomTheme.skeptic,
+            ),
           ],
           majorGridLines: const MajorGridLines(color: Colors.black12)),
       enableAxisAnimation: true,
@@ -132,175 +143,245 @@ class BloodGlucosePatientScatterState
   List<ScatterSeries<ChartData, DateTime>> getDefaultScatterSeries() {
     return <ScatterSeries<ChartData, DateTime>>[
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[1]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderWidth: 5,
-              borderColor: getIt<IAppConfig>().theme.veryHigh,
-              isVisible: true)),
+        dataSource: _chartVeryHighTagged[1]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderWidth: 5,
+          borderColor: context.xMyCustomTheme.casablanca,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[2]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryHigh,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize, width: markerSize, isVisible: true)),
+        dataSource: _chartVeryHighTagged[2]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.casablanca,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryHighTagged[3]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryHigh,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderColor: getIt<IAppConfig>().theme.veryHigh,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartVeryHighTagged[3]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.casablanca,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderColor: context.xMyCustomTheme.casablanca,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[1]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderWidth: 2,
-              borderColor: getIt<IAppConfig>().theme.high,
-              isVisible: true)),
+        dataSource: _chartHighTagged[1]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderWidth: 2,
+          borderColor: context.xMyCustomTheme.energyYellow,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[2]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.high,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize, width: markerSize, isVisible: true)),
+        dataSource: _chartHighTagged[2]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.energyYellow,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartHighTagged[3]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.high,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderColor: getIt<IAppConfig>().theme.high,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartHighTagged[3]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.energyYellow,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderColor: context.xMyCustomTheme.energyYellow,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[1]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderWidth: 2,
-              borderColor: getIt<IAppConfig>().theme.target,
-              isVisible: true)),
+        dataSource: _chartTargetTagged[1]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderWidth: 2,
+          borderColor: context.xMyCustomTheme.deYork,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[2]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.target,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize, width: markerSize, isVisible: true)),
+        dataSource: _chartTargetTagged[2]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.deYork,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartTargetTagged[3]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.target,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderColor: getIt<IAppConfig>().theme.target,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartTargetTagged[3]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.deYork,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderColor: context.xMyCustomTheme.deYork,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[1]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderWidth: 2,
-              borderColor: getIt<IAppConfig>().theme.low,
-              isVisible: true)),
+        dataSource: _chartLowTagged[1]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderWidth: 2,
+          borderColor: context.xMyCustomTheme.tonysPink,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[2]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.low,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize, width: markerSize, isVisible: true)),
+        dataSource: _chartLowTagged[2]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.tonysPink,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartLowTagged[3]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.low,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderColor: getIt<IAppConfig>().theme.low,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartLowTagged[3]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.tonysPink,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderColor: context.xMyCustomTheme.tonysPink,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[1]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: Colors.white,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderWidth: 2,
-              borderColor: getIt<IAppConfig>().theme.veryLow,
-              isVisible: true)),
+        dataSource: _chartVeryLowTagged[1]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: Colors.white,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderWidth: 2,
+          borderColor: context.xMyCustomTheme.roman,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[2]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryLow,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize, width: markerSize, isVisible: true)),
+        dataSource: _chartVeryLowTagged[2]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.roman,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          isVisible: true,
+        ),
+      ),
+
+      //
       ScatterSeries<ChartData, DateTime>(
-          dataSource: _chartVeryLowTagged[3]!,
-          xValueMapper: (ChartData sales, _) => sales.x,
-          yValueMapper: (ChartData sales, _) => sales.y,
-          color: getIt<IAppConfig>().theme.veryLow,
-          borderWidth: 3,
-          xAxisName: "Time",
-          markerSettings: MarkerSettings(
-              height: markerSize,
-              width: markerSize,
-              borderColor: getIt<IAppConfig>().theme.veryLow,
-              shape: DataMarkerType.rectangle,
-              isVisible: true)),
+        dataSource: _chartVeryLowTagged[3]!,
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.y,
+        color: context.xMyCustomTheme.roman,
+        borderWidth: 3,
+        xAxisName: "Time",
+        markerSettings: MarkerSettings(
+          height: markerSize,
+          width: markerSize,
+          borderColor: context.xMyCustomTheme.roman,
+          shape: DataMarkerType.rectangle,
+          isVisible: true,
+        ),
+      ),
+
+      //
       _selected == LocaleProvider.current.daily ||
               _selected == LocaleProvider.current.specific
           ? ScatterSeries<ChartData, DateTime>(
@@ -327,19 +408,27 @@ class BloodGlucosePatientScatterState
               yValueMapper: (ChartData sales, _) => sales.y,
               color: Colors.red,
               xAxisName: "Time",
-              markerSettings:
-                  const MarkerSettings(height: 15, width: 15, isVisible: true))
+              markerSettings: const MarkerSettings(
+                height: 15,
+                width: 15,
+                isVisible: true,
+              ),
+            )
           : ScatterSeries<ChartData, DateTime>(
               dataSource: [
-                  ChartData(_startDate!, -50, Colors.transparent),
-                  ChartData(_endDate!, -50, Colors.transparent),
-                ],
+                ChartData(_startDate!, -50, Colors.transparent),
+                ChartData(_endDate!, -50, Colors.transparent),
+              ],
               xValueMapper: (ChartData sales, _) => sales.x,
               yValueMapper: (ChartData sales, _) => sales.y,
               color: Colors.red,
               xAxisName: "Time",
               markerSettings: MarkerSettings(
-                  height: markerSize, width: markerSize, isVisible: true)),
+                height: markerSize,
+                width: markerSize,
+                isVisible: true,
+              ),
+            ),
     ];
   }
 

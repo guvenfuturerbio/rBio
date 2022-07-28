@@ -6,6 +6,7 @@ import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../viewmodel/login_vm.dart';
 
@@ -88,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   RbioAppBar _buildAppBar() {
     return RbioAppBar(
+      context: context,
       leading: const SizedBox(),
     );
   }
@@ -312,12 +314,11 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 width: 35,
                 height: 35,
-                child: Checkbox(
+                child: RbioCheckbox(
                   value: value.rememberMeChecked,
                   onChanged: (newValue) {
                     value.toggleRememberMeChecked();
                   },
-                  activeColor: getIt<IAppConfig>().theme.mainColor,
                 ),
               ),
               Expanded(
@@ -326,7 +327,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: context.xHeadline5.copyWith(
-                    color: getIt<IAppConfig>().theme.textColorSecondary,
+                    color: context.xTextInverseColor,
                   ),
                 ),
               )
@@ -339,7 +340,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Text(
             LocaleProvider.of(context).lbl_forgot_password,
             style: context.xHeadline5.copyWith(
-              color: getIt<IAppConfig>().theme.mainColor,
+              color: context.xPrimaryColor,
             ),
           ),
           onPressed: () {
@@ -352,39 +353,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildApplicationContest(LoginScreenVm value) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
       children: [
         //
-        Container(
-          alignment: Alignment.bottomLeft,
-          child: SizedBox(
-            width: 35,
-            height: 35,
-            child: Checkbox(
-              value: value.clickedGeneralForm,
-              onChanged: (newValue) {
-                if (newValue != null) {
-                  value.clickedGeneralForm = newValue;
-                }
-              },
-              activeColor: getIt<IAppConfig>().theme.mainColor,
-            ),
+        SizedBox(
+          width: 35,
+          height: 35,
+          child: RbioCheckbox(
+            value: value.clickedGeneralForm,
+            onChanged: (newValue) {
+              if (newValue != null) {
+                value.clickedGeneralForm = newValue;
+              }
+            },
           ),
         ),
 
         //
-        Expanded(
-          child: TextButton(
-            onPressed: () => value.showApplicationContestForm(),
-            child: Text(
-              LocaleProvider.of(context).accept_application_consent_form,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: context.xHeadline5.copyWith(
-                decoration: TextDecoration.underline,
-              ),
+        TextButton(
+          style: TextButton.styleFrom(
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+          onPressed: () => value.showApplicationContestForm(),
+          child: Text(
+            LocaleProvider.of(context).application_consent_form,
+            style: context.xHeadline5.copyWith(
+              color: context.xPrimaryColor,
             ),
           ),
         ),
@@ -394,42 +386,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildKVKK(LoginScreenVm value) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
       children: [
         //
-        Container(
-          alignment: Alignment.bottomLeft,
-          child: SizedBox(
-            width: 35,
-            height: 35,
-            child: Checkbox(
-              value: value.checkedKvkkForm,
-              onChanged: (newValue) {
-                if (newValue != null) {
-                  value.checkedKvkkForm = newValue;
-                }
-              },
-              activeColor: getIt<IAppConfig>().theme.mainColor,
-            ),
+        SizedBox(
+          width: 35,
+          height: 35,
+          child: RbioCheckbox(
+            value: value.checkedKvkkForm,
+            onChanged: (newValue) {
+              if (newValue != null) {
+                value.checkedKvkkForm = newValue;
+              }
+            },
           ),
         ),
 
         //
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(3.0),
-            child: TextButton(
-              onPressed: () => {value.showKvkkInfo()},
-              child: Text(
-                LocaleProvider.of(context).read_understood_kvkk,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: context.xHeadline5.copyWith(
-                  decoration: TextDecoration.underline,
-                ),
-              ),
+        TextButton(
+          style: TextButton.styleFrom(
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+          onPressed: () => {value.showKvkkInfo()},
+          child: Text(
+            LocaleProvider.of(context).kvkk_text,
+            style: context.xHeadline5.copyWith(
+              color: context.xPrimaryColor,
             ),
           ),
         ),
@@ -456,6 +436,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         )
                       : Utils.instance.button(
+                          context: context,
                           text: LocaleProvider.of(context).btn_sign_in,
                           onPressed: () {
                             value.login(
@@ -475,14 +456,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       LocaleProvider.of(context).lbl_dont_have_account,
                       style: context.xHeadline3.copyWith(
-                        color: getIt<IAppConfig>().theme.textColorSecondary,
+                        color: context.xTextInverseColor,
                       ),
                     ),
                     InkWell(
                       child: Text(
                         LocaleProvider.of(context).btn_sign_up,
                         style: context.xHeadline3.copyWith(
-                          color: getIt<IAppConfig>().theme.mainColor,
+                          color: context.xPrimaryColor,
                         ),
                       ),
                       onTap: () {
@@ -514,6 +495,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   VersionCheckProgress.done &&
                               value.needForceUpdate == false
                           ? Utils.instance.button(
+                              context: context,
                               text: LocaleProvider.of(context).btn_sign_in,
                               onPressed: () {
                                 if (value.formKey?.currentState?.validate() ??
@@ -532,12 +514,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   value.versionCheckProgress !=
                                       VersionCheckProgress.error
                               ? Utils.instance.button(
+                                  context: context,
                                   onPressed: () {
                                     value.startAppVersionOperation();
                                   },
                                   text: LocaleProvider.of(context).update_now,
                                 )
                               : Utils.instance.button(
+                                  context: context,
                                   text: LocaleProvider.of(context).try_again,
                                   onPressed: () {
                                     value.startAppVersionOperation();
@@ -555,7 +539,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.xHeadline5.copyWith(
-                          color: getIt<IAppConfig>().theme.textColorSecondary,
+                          color: context.xTextInverseColor,
                         ),
                       ),
                     ),
@@ -563,7 +547,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         LocaleProvider.of(context).btn_sign_up,
                         style: context.xHeadline5.copyWith(
-                          color: getIt<IAppConfig>().theme.mainColor,
+                          color: context.xPrimaryColor,
                         ),
                       ),
                       onTap: () {

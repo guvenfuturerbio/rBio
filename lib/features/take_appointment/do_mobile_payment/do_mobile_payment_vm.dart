@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../../config/config.dart';
+import '../../auth/shared/shared.dart';
+import 'appointment_request.dart';
 import 'do_mobil_payment_voucher.dart';
+import 'e_randevu_cc_response.dart';
 import 'iyzico_response_sms_payment_page.dart';
 
 class DoMobilePaymentScreenVm extends ChangeNotifier {
@@ -65,7 +68,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
 
         final html = Map.from(_paymentResponse.datum)['do_result'];
         final transId = _paymentResponse.datum['trans_id'];
-        RegisterViews.instance.doMobilePayment(html);
+        RegisterPlatformViews.instance.doMobilePayment(html);
         Navigator.push(
           mContext,
           MaterialPageRoute(
@@ -96,7 +99,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
     required String packageName,
     required String price,
   }) async {
-    UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
+    UserAccount userAccount = getIt<UserFacade>().getUserAccount();
     String filledForm = await fillAllFormFields(
       LocaleProvider.current.distance_sales_contract_context,
       (userAccount.name! + ' ' + userAccount.surname!),
@@ -112,7 +115,7 @@ class DoMobilePaymentScreenVm extends ChangeNotifier {
     required String packageName,
     required String price,
   }) async {
-    UserAccount userAccount = getIt<UserNotifier>().getUserAccount();
+    UserAccount userAccount = getIt<UserFacade>().getUserAccount();
     String filledForm = await fillAllFormFields(
       LocaleProvider.current.preinformation_form_context,
       (userAccount.name! + ' ' + userAccount.surname!),

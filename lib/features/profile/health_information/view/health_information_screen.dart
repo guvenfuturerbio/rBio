@@ -103,6 +103,7 @@ class _HealthInformationViewState extends State<HealthInformationView> {
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.health_information,
@@ -131,8 +132,8 @@ class _HealthInformationViewState extends State<HealthInformationView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //
-                    R.sizes.stackedTopPadding(context),
-                    R.sizes.hSizer16,
+                    R.widgets.stackedTopPadding(context),
+                    R.widgets.hSizer16,
 
                     // Diabet Type
                     _buildTitle(LocaleProvider.current.diabet_type),
@@ -233,12 +234,12 @@ class _HealthInformationViewState extends State<HealthInformationView> {
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }
 
-  Widget _buildSpacer() => const SizedBox(height: 8);
+  Widget _buildSpacer() => R.widgets.hSizer8;
 
   Widget _buildTitle(String title) => Padding(
         padding: const EdgeInsets.only(bottom: 4),

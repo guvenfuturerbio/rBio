@@ -1,91 +1,182 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/core.dart';
+import '../../../config/config.dart';
+import '../../shared/rate_dialog/view/rate_dialog.dart';
+import '../cubit/my_appointments_cubit.dart';
 import '../my_appointments.dart';
 
-class AppointmentListScreen extends StatefulWidget {
+class AppointmentListScreen extends StatelessWidget {
   final bool isFromDashboard;
-
   const AppointmentListScreen({
     Key? key,
     this.isFromDashboard = false,
   }) : super(key: key);
 
   @override
-  _AppointmentListScreenState createState() => _AppointmentListScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => MyAppointmentsCubit(
+        repository: getIt<Repository>(),
+        userFacade: getIt<UserFacade>(),
+        sentryManager: getIt<IAppConfig>().platform.sentryManager,
+        jitsiRoomId: '',
+      ),
+      child: AppointmentListView(isFromDashboard: isFromDashboard),
+    );
+  }
 }
 
-class _AppointmentListScreenState extends State<AppointmentListScreen> {
+class AppointmentListView extends StatefulWidget {
+  final bool isFromDashboard;
+
+  const AppointmentListView({
+    Key? key,
+    this.isFromDashboard = false,
+  }) : super(key: key);
+
+  @override
+  _AppointmentListViewState createState() => _AppointmentListViewState();
+}
+
+class _AppointmentListViewState extends State<AppointmentListView> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppointmentListVm>(
-      create: (context) => AppointmentListVm(context),
-      child: Consumer<AppointmentListVm>(
-        builder: (
-          BuildContext context,
-          AppointmentListVm vm,
-          Widget? child,
-        ) {
-          return RbioStackedScaffold(
-            isLoading: vm.showProgressOverlay,
-            appbar: _buildAppBar(context),
-            body: _buildBody(vm),
+    return BlocConsumer<MyAppointmentsCubit, MyAppointmentsState>(
+      listener: (context, state) {
+        if (state.overlayStatus == MyAppointmentsOverlayStatus.doPayment) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return GuvenAlert(
+                title: GuvenAlert.buildTitle(
+                  context,
+                  LocaleProvider.current.fee_information,
+                ),
+                content: GuvenAlert.buildDescription(
+                  context,
+                  LocaleProvider.current.payment_question_tag,
+                ),
+                actions: [
+                  GuvenAlert.buildMaterialAction(
+                    context,
+                    LocaleProvider.current.btn_cancel,
+                    () {
+                      Navigator.pop(context);
+                    },
+                  ),
+
+                  //
+                  const SizedBox(
+                    width: 20,
+                  ),
+
+                  //
+                  GuvenAlert.buildMaterialAction(
+                    context,
+                    LocaleProvider.current.confirm,
+                    () {
+                      Navigator.pop(context);
+                      if (state.data != null) {
+                        Atom.to(
+                          PagePaths.appointmentSummary,
+                          queryParameters: {
+                            'tenantId': state.data!.tenantId.toString(),
+                            'departmentId': state
+                                .data!.resources![0].departmentId
+                                .toString(),
+                            'resourceId':
+                                state.data!.resources![0].resourceId.toString(),
+                            'doctorName': Uri.encodeFull(
+                                state.data!.resources![0].resource ?? ''),
+                            'departmentName': Uri.encodeFull(
+                                state.data!.resources![0].department ?? ''),
+                            'from': state.data!.from ?? '',
+                            'to': state.data!.to ?? '',
+                            'forOnline': true.toString(),
+                            'imageUrl': state.data!.id.toString(),
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ],
+              );
+            },
           );
-        },
-      ),
+        } else if (state.overlayStatus ==
+            MyAppointmentsOverlayStatus.joinMeeting) {
+          getIt<UserManager>().startMeeting(
+            context,
+            state.webConsultantId!,
+            state.availabilityId!,
+            state.fromDate!,
+          );
+        } else if (state.overlayStatus ==
+            MyAppointmentsOverlayStatus.showErrorDialog) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) => RbioMessageDialog(
+              description: LocaleProvider.current.sorry_dont_transaction,
+              buttonTitle: LocaleProvider.current.ok,
+            ),
+          );
+        } else if (state.overlayStatus ==
+            MyAppointmentsOverlayStatus.questionDialog) {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return const QuestionDialog();
+              }).then((value) async {
+            if (value) {
+              await context.read<MyAppointmentsCubit>().cancelAppointment();
+            } else {}
+          });
+        } else if (state.overlayStatus ==
+            MyAppointmentsOverlayStatus.showRateDialog) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return RateDialog(
+                availabilityId: state.availabilityId!,
+              );
+            },
+          );
+        }
+      },
+      builder: (context, state) {
+        return RbioStackedScaffold(
+          isLoading: state.overlayStatus ==
+                  MyAppointmentsOverlayStatus.showProgressOverlay
+              ? true
+              : false,
+          appbar: _buildAppBar(context),
+          body: _buildBody(state),
+        );
+      },
     );
   }
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       leading: widget.isFromDashboard ? const SizedBox() : null,
       leadingWidth: widget.isFromDashboard ? 0 : null,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).my_appointments,
       ),
-      actions: getActions(context),
     );
   }
 
-  List<Widget> getActions(BuildContext context) {
-    return [
-      // InkWell(
-      //   child: SvgPicture.asset(
-      //     R.image.allFilesGrey,
-      //     color: getIt<IAppConfig>().theme.white,
-      //   ),
-      //   onTap: () {
-      //     Atom.to(PagePaths.allFiles);
-      //   },
-      // ),
-      // const SizedBox(
-      //   width: 12,
-      // ),
-    ];
-  }
-
-  Widget _buildBody(AppointmentListVm vm) {
-    switch (vm.progress) {
-      case LoadingProgress.loading:
-        return const RbioLoading();
-
-      case LoadingProgress.done:
-        return _buildPosts(vm.patientAppointments ?? [], vm);
-
-      case LoadingProgress.error:
-        return const RbioBodyError();
-
-      default:
-        return const SizedBox();
-    }
-  }
-
-  Widget _buildPosts(
-    List<PatientAppointmentsResponse> posts,
-    AppointmentListVm vm,
+  Widget _buildBody(
+    MyAppointmentsState state,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,8 +184,8 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
       mainAxisSize: MainAxisSize.min,
       children: [
         //
-        R.sizes.stackedTopPadding(context),
-        R.sizes.hSizer8,
+        R.widgets.stackedTopPadding(context),
+        R.widgets.hSizer8,
 
         //
         Text(
@@ -106,16 +197,16 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
         Container(
           margin: const EdgeInsets.only(top: 8, right: 8),
           child: GuvenDateRange(
-            startCurrentDate: vm.startDate,
+            startCurrentDate: state.startDate ?? DateTime.now(),
             onStartDateChange: (date) {
-              if (!vm.startDate.xIsSameDate(date)) {
-                vm.setStartDate(date);
+              if (!state.startDate!.xIsSameDate(date)) {
+                context.read<MyAppointmentsCubit>().setStartDate(date);
               }
             },
-            endCurrentDate: vm.endDate,
+            endCurrentDate: state.endDate ?? DateTime.now(),
             onEndDateChange: (date) {
-              if (!vm.endDate.xIsSameDate(date)) {
-                vm.setEndDate(date);
+              if (!state.endDate!.xIsSameDate(date)) {
+                context.read<MyAppointmentsCubit>().setEndDate(date);
               }
             },
             startMinDate: DateTime(1900).getStartOfTheDay,
@@ -127,38 +218,51 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
         ),
 
         //
-        const SizedBox(height: 12.0),
+        R.widgets.hSizer12,
 
         //
-        Expanded(
-          child: (vm.patientAppointments?.isNotEmpty ?? false)
-              ? ListView.builder(
-                  padding: EdgeInsets.only(
-                    bottom: R.sizes.defaultBottomValue,
-                  ),
-                  scrollDirection: Axis.vertical,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: posts.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _buildCard(vm, posts[index]);
-                  },
-                )
-              : Center(
-                  child: Text(
-                    LocaleProvider.current.no_result_selected_date,
-                    textAlign: TextAlign.center,
-                    style: context.xHeadline1.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-        ),
+        Expanded(child: _buildExpandedChild(state))
       ],
     );
   }
 
+  Widget _buildExpandedChild(MyAppointmentsState state) {
+    switch (state.bodyStatus) {
+      case MyAppointmentsBodyStatus.loadingProgress:
+        return const RbioLoading();
+
+      case MyAppointmentsBodyStatus.success:
+        return (state.patientAppointments?.isNotEmpty ?? false)
+            ? ListView.builder(
+                padding: EdgeInsets.only(
+                  bottom: R.sizes.defaultBottomValue,
+                ),
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                itemCount: state.patientAppointments?.length ?? 0,
+                itemBuilder: (BuildContext context, int index) {
+                  return _buildCard(state.patientAppointments![index]);
+                },
+              )
+            : Center(
+                child: Text(
+                  LocaleProvider.current.no_result_selected_date,
+                  textAlign: TextAlign.center,
+                  style: context.xHeadline1.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+
+      case MyAppointmentsBodyStatus.error:
+        return const RbioBodyError();
+
+      default:
+        return const SizedBox();
+    }
+  }
+
   Widget _buildCard(
-    AppointmentListVm vm,
     PatientAppointmentsResponse data,
   ) {
     return RbioCardAppoCard.appointment(
@@ -178,7 +282,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
               DateTime.parse(data.from ?? '').isAfter(DateTime.now())
           ? InkWell(
               onTap: () {
-                vm.handleAppointment(data);
+                context.read<MyAppointmentsCubit>().handleAppointment(data);
               },
               child: Container(
                 color: Colors.red,
@@ -187,7 +291,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                 child: Text(
                   LocaleProvider.current.btn_cancel,
                   style: context.xHeadline3.copyWith(
-                    color: getIt<IAppConfig>().theme.textColor,
+                    color: context.xTextColor,
                   ),
                 ),
               ),
@@ -195,12 +299,11 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
           : const SizedBox(),
 
       //
-      footer: _buildCardFooter(vm, data) ?? const SizedBox(),
+      footer: _buildCardFooter(data) ?? const SizedBox(),
     );
   }
 
   Widget? _buildCardFooter(
-    AppointmentListVm value,
     PatientAppointmentsResponse data,
   ) {
     if (data.type == R.constants.onlineAppointmentType) {
@@ -220,10 +323,10 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
                 //
                 _build40Gap(),
 
-                //
+                //GREEN
                 _buildStartVideoButton(
                   onPressed: () {
-                    value.handleAppointment(data);
+                    context.read<MyAppointmentsCubit>().handleAppointment(data);
                   },
                 ),
               ],
@@ -234,16 +337,18 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //
-              _buildRateButton(data, value),
+              _buildRateButton(
+                data,
+              ),
 
               //
               _build40Gap(),
 
-              //
+              //GREEN
               Center(
                 child: _buildStartVideoButton(
                   onPressed: () {
-                    value.handleAppointment(data);
+                    context.read<MyAppointmentsCubit>().handleAppointment(data);
                   },
                 ),
               ),
@@ -269,7 +374,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
 
                 //
                 _buildStartVideoButton(
-                  backColor: getIt<IAppConfig>().theme.red,
+                  backColor: context.xMyCustomTheme.grey,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -292,7 +397,9 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //
-              _buildRateButton(data, value),
+              _buildRateButton(
+                data,
+              ),
 
               //
               _build40Gap(),
@@ -300,7 +407,7 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
               //
               Center(
                 child: _buildStartVideoButton(
-                  backColor: getIt<IAppConfig>().theme.gray,
+                  backColor: context.xMyCustomTheme.dustyGray,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -376,14 +483,14 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
       child: Text(
         LocaleProvider.current.rate_thank_you,
         style: context.xHeadline4.copyWith(
-          color: getIt<IAppConfig>().theme.mainColor,
+          color: context.xPrimaryColor,
           fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  Widget _build40Gap() => R.sizes.wSizer40;
+  Widget _build40Gap() => R.widgets.wSizer40;
 
   Widget _buildStartVideoButton({
     Color? backColor,
@@ -394,14 +501,13 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
       onPressed: onPressed,
       icon: SvgPicture.asset(
         R.image.startVideo,
-        color: getIt<IAppConfig>().theme.white,
+        color: context.xMyCustomTheme.white,
       ),
     );
   }
 
   Widget _buildRateButton(
     PatientAppointmentsResponse data,
-    AppointmentListVm value,
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -410,12 +516,12 @@ class _AppointmentListScreenState extends State<AppointmentListScreen> {
           onPressed: () {
             final itemId = data.id;
             if (itemId != null) {
-              value.showRateDialog(itemId);
+              context.read<MyAppointmentsCubit>().showRateDialog(itemId);
             }
           },
           icon: SvgPicture.asset(
             R.image.rate,
-            color: getIt<IAppConfig>().theme.white,
+            color: context.xMyCustomTheme.white,
           ),
         ),
       ),

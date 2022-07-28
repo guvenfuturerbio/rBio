@@ -18,12 +18,30 @@ import '../../../features/take_appointment/create_appointment_summary/model/get_
 import '../../../features/take_appointment/create_appointment_summary/model/get_video_call_price_response.dart';
 import '../../../features/take_appointment/create_appointment_summary/model/synchronize_onedose_user_req.dart';
 import '../../../features/take_appointment/do_mobile_payment/do_mobil_payment_voucher.dart';
-import '../../../model/model.dart';
+import '../../config/config.dart';
 import '../../core/core.dart';
+import '../../features/auth/shared/shared.dart';
+import '../../features/dashboard/search/doctor_cv/doctor_cv_response.dart';
 import '../../features/dashboard/search/model/filter_resources_request.dart';
 import '../../features/dashboard/search/model/filter_resources_response.dart';
+import '../../features/profile/personal_information/model/change_contact_info_request.dart';
+import '../../features/profile/request_suggestions/model/suggestion_request.dart';
+import '../../features/relatives/patient_relatives/model/user_relative_patient_model.dart';
+import '../../features/shared/rate_dialog/model/call_rate_request.dart';
 import '../../features/shared/rate_dialog/model/get_availability_rate_request.dart';
 import '../../features/shared/rate_dialog/model/get_availability_rate_response.dart';
+import '../../features/store/credit_card/model/model.dart';
+import '../../features/store/for_you_categories/model/model.dart';
+import '../../features/store/for_you_order_summary/model/model.dart';
+import '../../features/store/for_you_sub_category_detail/model/model.dart';
+import '../../features/take_appointment/create_appointment/model/filter_departments_request.dart';
+import '../../features/take_appointment/create_appointment/model/filter_departments_response.dart';
+import '../../features/take_appointment/create_appointment/model/filter_online_departments_request.dart';
+import '../../features/take_appointment/create_appointment/model/filter_tenants_request.dart';
+import '../../features/take_appointment/create_appointment/model/get_all_relatives_request.dart';
+import '../../features/take_appointment/create_appointment/model/get_events_request.dart';
+import '../../features/take_appointment/create_appointment/model/patient_relative_info_response.dart';
+import '../../features/take_appointment/do_mobile_payment/appointment_request.dart';
 
 part 'api_service_impl.dart';
 
@@ -98,7 +116,6 @@ abstract class ApiService {
       AddFirebaseTokenRequest addFirebaseToken);
   Future<GuvenResponseModel> sendNotification(ChatNotificationModel model);
 
-  Future<GuvenResponseModel> getRoomStatusUi(String roomId);
   Future<GuvenResponseModel> getOnlineAppoFiles(String roomId);
   Future<GuvenResponseModel> deleteOnlineAppoFile(
       String webAppoId, String fileName);
@@ -106,7 +123,6 @@ abstract class ApiService {
   Future<GuvenResponseModel> getUserKvkkInfo();
   Future<GuvenResponseModel> updateUserKvkkInfo();
   Future<GuvenResponseModel> addSuggestion(SuggestionRequest suggestionRequest);
-  Future<GuvenResponseModel> getCourseId();
   Future<GuvenResponseModel> setJitsiWebConsultantId(String webConsultantId);
   Future<GuvenResponseModel> deleteProfilePicture();
   Future<GuvenResponseModel> uploadProfilePicture(File file);

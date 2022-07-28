@@ -2,9 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../../../core/core.dart';
+import '../../../../../../config/config.dart';
 
-part 'scale_measurement_result_state.dart';
 part 'scale_measurement_result_cubit.freezed.dart';
+part 'scale_measurement_result_state.dart';
 
 class ScaleMeasurementResultCubit extends Cubit<ScaleMeasurementResultState> {
   ScaleMeasurementResultCubit(

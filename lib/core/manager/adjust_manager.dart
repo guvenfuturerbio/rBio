@@ -3,6 +3,7 @@ import 'package:adjust_sdk/adjust_config.dart';
 import 'package:adjust_sdk/adjust_event.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../config/config.dart';
 import '../core.dart';
 
 class AdjustBaseEvent {

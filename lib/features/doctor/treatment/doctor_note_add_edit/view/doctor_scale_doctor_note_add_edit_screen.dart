@@ -134,6 +134,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
 
   RbioAppBar _buildAppBar(DoctorScaleDoctorNoteAddEditState state) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         widget.isCreated
@@ -168,8 +169,8 @@ class _DoctorScaleDoctorNoteAddEditViewState
         mainAxisSize: MainAxisSize.max,
         children: [
           //
-          R.sizes.stackedTopPadding(context),
-          R.sizes.hSizer8,
+          R.widgets.stackedTopPadding(context),
+          R.widgets.hSizer8,
 
           //
           Expanded(
@@ -188,7 +189,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     //
-                    R.sizes.hSizer8,
+                    R.widgets.hSizer8,
 
                     //
                     if (result.editMode ==
@@ -205,7 +206,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
                       ),
 
                       //
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
 
                       //
                       AbsorbPointer(
@@ -239,7 +240,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
                       ),
 
                       //
-                      R.sizes.hSizer8,
+                      R.widgets.hSizer8,
 
                       //
                       RbioTextFormField(
@@ -268,7 +269,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           KeyboardVisibilityBuilder(
@@ -278,7 +279,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
           ),
 
           //
-          R.sizes.defaultBottomPadding,
+          R.widgets.defaultBottomPadding,
         ],
       ),
     );
@@ -312,7 +313,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
             ),
 
             //
-            R.sizes.wSizer8,
+            R.widgets.wSizer8,
 
             //
             Expanded(
@@ -348,7 +349,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
                   ),
 
                   //
-                  R.sizes.wSizer8,
+                  R.widgets.wSizer8,
 
                   //
                   Expanded(
@@ -390,7 +391,7 @@ class _DoctorScaleDoctorNoteAddEditViewState
                   ),
 
                   //
-                  R.sizes.wSizer8,
+                  R.widgets.wSizer8,
 
                   //
                   Expanded(

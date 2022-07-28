@@ -12,6 +12,7 @@ import '../../../features/chat/model/chat_person.dart';
 import '../../../features/chat/model/message.dart';
 import '../../../features/chat/model/notification_data.dart';
 import '../../../features/chat/model/notification_model.dart';
+import '../../config/config.dart';
 import '../../core/core.dart';
 
 class FirestoreManager {
@@ -37,7 +38,7 @@ class FirestoreManager {
       );
       final User? user = userCredential.user;
       if (user != null) {
-        getIt<UserNotifier>().firebaseID = user.uid;
+        getIt<UserNotifier>().setFirebaseID(user.uid);
       }
     } else {
       if (getIt<IAppConfig>().productType == ProductType.oneDose) {
@@ -176,10 +177,9 @@ class FirestoreManager {
     ChatPerson currentPerson,
     String otherNotiToken,
   ) async {
-    final ImagePicker imagePicker = ImagePicker();
     imageFile = index == 0
-        ? await imagePicker.pickImage(source: ImageSource.gallery)
-        : await imagePicker.pickImage(source: ImageSource.camera);
+        ? await getIt<ImageManager>().pickImage(source: ImageSource.gallery)
+        : await getIt<ImageManager>().pickImage(source: ImageSource.camera);
 
     if (imageFile != null) {
       Atom.show(const RbioLoading(), barrierDismissible: false);
@@ -228,11 +228,11 @@ class FirestoreManager {
         contentAvailable: true,
         notification: NotificationModel(
           body: message.type == 0 ? message.message : "Media",
-          title: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+          title: getIt<UserFacade>().getNameAndSurname(),
         ),
         data: NotificationData(
           body: message.type == 0 ? message.message : "Media",
-          title: getIt<UserNotifier>().getCurrentUserNameAndSurname(),
+          title: getIt<UserFacade>().getNameAndSurname(),
           chatPerson: currentUser,
           type: 'chat',
         ),

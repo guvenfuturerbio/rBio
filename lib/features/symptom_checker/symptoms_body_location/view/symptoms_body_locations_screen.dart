@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 import '../body_parts_paint.dart';
 import '../viewmodel/symptoms_body_locations_page_vm.dart';
@@ -59,6 +60,7 @@ class _SymptomsBodyLocationsScreenState
 
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.of(context).my_symptoms,
@@ -99,8 +101,9 @@ class _SymptomsBodyLocationsScreenState
                                     ? LocaleProvider.of(context).boy
                                     : LocaleProvider.of(context).girl,
                         style: context.xHeadline1.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: getIt<IAppConfig>().theme.mainColor),
+                          fontWeight: FontWeight.bold,
+                          color: context.xPrimaryColor,
+                        ),
                         textAlign: TextAlign.start,
                       ),
                     ),
@@ -140,6 +143,7 @@ class _SymptomsBodyLocationsScreenState
                           },
                           child: CustomPaint(
                             painter: BodyPartsPainter(
+                              context: context,
                               isGenderMale:
                                   selectedGenderId == 0 || selectedGenderId == 2
                                       ? true
@@ -207,7 +211,9 @@ class _SymptomsBodyLocationsScreenState
                 infinityWidth: true,
               ),
             ),
-            R.sizes.defaultBottomPadding,
+
+            //
+            R.widgets.defaultBottomPadding,
           ],
         );
 

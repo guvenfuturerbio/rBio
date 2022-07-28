@@ -14,7 +14,7 @@ class TermsAndPrivacyScreen extends StatelessWidget {
       child: Consumer<TermsAndPrivacyVm>(
         builder: (BuildContext context, TermsAndPrivacyVm vm, Widget? child) {
           return RbioStackedScaffold(
-            appbar: _buildAppBar(),
+            appbar: _buildAppBar(context),
             body: _buildBody(context, vm),
           );
         },
@@ -22,9 +22,13 @@ class TermsAndPrivacyScreen extends StatelessWidget {
     );
   }
 
-  RbioAppBar _buildAppBar() {
+  RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
-      title: Text(LocaleProvider.current.terms_and_privacy),
+      context: context,
+      title: RbioAppBar.textTitle(
+        context,
+        LocaleProvider.current.terms_and_privacy,
+      ),
     );
   }
 
@@ -53,10 +57,9 @@ class TermsAndPrivacyScreen extends StatelessWidget {
           child: SizedBox(
             width: 35,
             height: 35,
-            child: Checkbox(
+            child: RbioCheckbox(
               value: true,
               onChanged: (newValue) {},
-              activeColor: getIt<IAppConfig>().theme.mainColor,
             ),
           ),
         ),
@@ -91,14 +94,13 @@ class TermsAndPrivacyScreen extends StatelessWidget {
           child: SizedBox(
             width: 35,
             height: 35,
-            child: Checkbox(
+            child: RbioCheckbox(
               value: value.checkedKvkk,
               onChanged: (newValue) {
                 if (newValue != null) {
                   value.setCheckedKvkk(newValue);
                 }
               },
-              activeColor: getIt<IAppConfig>().theme.mainColor,
             ),
           ),
         ),

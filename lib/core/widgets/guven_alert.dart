@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 
 import '../core.dart';
 
 class GuvenAlert extends StatelessWidget {
-  final Color? backgroundColor;
   final EdgeInsets? insetPadding;
   final EdgeInsetsGeometry? contentPadding;
   final Widget? title;
@@ -15,7 +13,6 @@ class GuvenAlert extends StatelessWidget {
 
   const GuvenAlert({
     Key? key,
-    this.backgroundColor,
     this.insetPadding,
     this.contentPadding,
     this.title,
@@ -32,7 +29,7 @@ class GuvenAlert extends StatelessWidget {
       elevation: elevation,
       insetPadding: insetPadding ??
           const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
-      backgroundColor: backgroundColor ?? getIt<IAppConfig>().theme.mainColor,
+      backgroundColor: context.xDialogTheme.backgroundColor,
       contentPadding: contentPadding ?? const EdgeInsets.all(0.0),
       title: context.xTextScaleType == TextScaleType.large
           ? Container(
@@ -44,10 +41,7 @@ class GuvenAlert extends StatelessWidget {
               ),
             )
           : title,
-      shape: shape ??
-          RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
+      shape: shape ?? R.sizes.defaultShape,
       actions: actions,
       content: !Atom.isWeb
           ? content
@@ -60,31 +54,36 @@ class GuvenAlert extends StatelessWidget {
     );
   }
 
-  static Widget buildTitle(String text) {
+  static Widget buildTitle(BuildContext context, String text) {
     return Text(
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 26,
         fontWeight: FontWeight.w700,
-        color: getIt<IAppConfig>().theme.textColorSecondary,
+        color: context.xTextInverseColor,
       ),
     );
   }
 
-  static Widget buildDescription(String text, {Color? color}) {
+  static Widget buildDescription(
+    BuildContext context,
+    String text, {
+    Color? color,
+  }) {
     return Text(
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 20.0,
         fontFamily: 'Roboto',
-        color: color ?? getIt<IAppConfig>().theme.textColorSecondary,
+        color: color ?? context.xTextInverseColor,
       ),
     );
   }
 
   static Widget buildSmallDescription(
+    BuildContext context,
     String text, {
     TextAlign? textAlign,
     TextDecoration? decoration,
@@ -95,41 +94,19 @@ class GuvenAlert extends StatelessWidget {
       style: TextStyle(
         fontSize: 16.0,
         fontFamily: 'Roboto',
-        color: getIt<IAppConfig>().theme.textColorSecondary,
+        color: context.xTextInverseColor,
         decoration: decoration,
       ),
     );
   }
 
-  static GradientButton buildWhiteAction({
-    required String text,
-    required void Function() onPressed,
-    double? height,
-    double? width,
-  }) =>
-      GradientButton(
-        increaseHeightBy: height ?? 16,
-        increaseWidthBy: width ?? 50,
-        shapeRadius: const BorderRadius.all(Radius.zero),
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: getIt<IAppConfig>().theme.mainColor),
-        ),
-        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        callback: onPressed,
-        gradient: LinearGradient(colors: [
-          getIt<IAppConfig>().theme.textColor,
-          getIt<IAppConfig>().theme.textColor
-        ], begin: Alignment.bottomLeft, end: Alignment.centerRight),
-        shadowColor: getIt<IAppConfig>().theme.textColorSecondary,
-      );
-
   static Widget buildBigMaterialAction(
+    BuildContext context,
     String title,
     void Function() onPressed,
   ) {
     return buildMaterialAction(
+      context,
       title,
       onPressed,
       padding: const EdgeInsets.symmetric(
@@ -140,42 +117,45 @@ class GuvenAlert extends StatelessWidget {
   }
 
   static Widget buildMaterialAction(
+    BuildContext context,
     String title,
     void Function() onPressed, {
     EdgeInsetsGeometry? padding,
   }) {
     return _actionButton(
       title,
-      getIt<IAppConfig>().theme.mainColor,
-      getIt<IAppConfig>().theme.textColor,
+      context.xPrimaryColor,
+      context.xTextColor,
       onPressed,
       padding: padding,
     );
   }
 
   static Widget buildMaterialRedAction(
+    BuildContext context,
     String title,
     void Function() onPressed, {
     EdgeInsetsGeometry? padding,
   }) {
     return _actionButton(
       title,
-      getIt<IAppConfig>().theme.darkRed,
-      getIt<IAppConfig>().theme.textColor,
+      context.xMyCustomTheme.punch,
+      context.xTextColor,
       onPressed,
       padding: padding,
     );
   }
 
   static Widget buildMaterialWhiteAction(
+    BuildContext context,
     String title,
     void Function() onPressed, {
     EdgeInsetsGeometry? padding,
   }) {
     return _actionButton(
       title,
-      getIt<IAppConfig>().theme.cardBackgroundColor,
-      getIt<IAppConfig>().theme.textColorSecondary,
+      context.xCardColor,
+      context.xTextInverseColor,
       onPressed,
       padding: padding,
     );
@@ -196,8 +176,7 @@ class GuvenAlert extends StatelessWidget {
       child: RbioTextButton(
         backgroundColor: Colors.transparent,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        shape:
-            RoundedRectangleBorder(borderRadius: R.sizes.borderRadiusCircular),
+        shape: R.sizes.defaultShape,
         padding: padding ?? const EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           title,

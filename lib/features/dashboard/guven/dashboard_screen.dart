@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+
 import '../../../core/core.dart';
 import 'dashboard_navigation.dart';
 
@@ -46,64 +47,57 @@ class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
   }
 
   Widget _builBottomNavigationBar(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.white,
-        border: Border(
-          top: BorderSide(color: getIt<IAppConfig>().theme.darkWhite),
+    return BottomNavigationBar(
+      backgroundColor: context.xBottomNavigationBarTheme.backgroundColor,
+      currentIndex: widget.currentIndex,
+      onTap: (index) {
+        if (pageQueryHolder.last != index) {
+          pageQueryHolder.add(index);
+        }
+
+        sendTabClickEvent(index);
+
+        if (index == 0) {
+          GuvenDashboardNavigation.toSearch(context);
+        } else if (index == 1) {
+          GuvenDashboardNavigation.toAppointment(context);
+        } else if (index == 2) {
+          GuvenDashboardNavigation.toHome(context);
+        } else if (index == 3) {
+          GuvenDashboardNavigation.toSupport(context);
+        } else if (index == 4) {
+          GuvenDashboardNavigation.toAccount(context);
+        }
+      },
+      type: BottomNavigationBarType.fixed,
+      items: [
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(R.image.searchGrey),
+          activeIcon: SvgPicture.asset(R.image.searchRed),
+          label: "",
         ),
-      ),
-      child: BottomNavigationBar(
-        currentIndex: widget.currentIndex,
-        onTap: (index) {
-          if (pageQueryHolder.last != index) {
-            pageQueryHolder.add(index);
-          }
-
-          sendTabClickEvent(index);
-
-          if (index == 0) {
-            GuvenDashboardNavigation.toSearch(context);
-          } else if (index == 1) {
-            GuvenDashboardNavigation.toAppointment(context);
-          } else if (index == 2) {
-            GuvenDashboardNavigation.toHome(context);
-          } else if (index == 3) {
-            GuvenDashboardNavigation.toSupport(context);
-          } else if (index == 4) {
-            GuvenDashboardNavigation.toAccount(context);
-          }
-        },
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(R.image.searchGrey),
-            activeIcon: SvgPicture.asset(R.image.searchRed),
-            label: "",
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(R.image.appointmentsGrey),
+          activeIcon: SvgPicture.asset(
+            R.image.appointmentsRed,
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(R.image.appointmentsGrey),
-            activeIcon: SvgPicture.asset(
-              R.image.appointmentsRed,
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Container(),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(R.image.icPhoneGrey),
-            activeIcon: SvgPicture.asset(R.image.icPhoneRed),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(R.image.myProfileGrey),
-            activeIcon: SvgPicture.asset(R.image.myProfileRed),
-            label: "",
-          ),
-        ],
-      ),
+          label: "",
+        ),
+        BottomNavigationBarItem(
+          icon: Container(),
+          label: "",
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(R.image.icPhoneGrey),
+          activeIcon: SvgPicture.asset(R.image.icPhoneRed),
+          label: "",
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(R.image.myProfileGrey),
+          activeIcon: SvgPicture.asset(R.image.myProfileRed),
+          label: "",
+        ),
+      ],
     );
   }
 
@@ -121,11 +115,15 @@ class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
                 GuvenDashboardNavigation.toHome(context);
               },
         gradient: widget.currentIndex == 2
-            ? Utils.instance.appGradient()
-            : LinearGradient(colors: [
-                getIt<IAppConfig>().theme.white,
-                getIt<IAppConfig>().theme.white
-              ], begin: Alignment.bottomLeft, end: Alignment.centerRight),
+            ? Utils.instance.appGradient(context)
+            : LinearGradient(
+                colors: [
+                  context.xMyCustomTheme.white,
+                  context.xMyCustomTheme.white
+                ],
+                begin: Alignment.bottomLeft,
+                end: Alignment.centerRight,
+              ),
         shadowColor: Gradients.rainbowBlue.colors.last.withOpacity(0.5),
       ),
       onPressed: null,
@@ -135,19 +133,27 @@ class _GuvenDashboardScreenState extends State<GuvenDashboardScreen> {
   Widget getTitle(BuildContext context) {
     switch (widget.currentIndex) {
       case 0:
-        return RbioAppBar();
+        return RbioAppBar(
+          context: context,
+        );
 
       case 1:
-        return RbioAppBar();
+        return RbioAppBar(
+          context: context,
+        );
 
       case 2:
         return SvgPicture.asset(R.image.guvenLogoWhite);
 
       case 3:
-        return RbioAppBar();
+        return RbioAppBar(
+          context: context,
+        );
 
       case 4:
-        return RbioAppBar();
+        return RbioAppBar(
+          context: context,
+        );
 
       default:
         return const SizedBox();

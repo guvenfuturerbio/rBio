@@ -27,13 +27,13 @@ Future<DateTime?> showRbioDatePicker(
         builder: (context, widget) {
           return Theme(
             data: ThemeData.light().copyWith(
-              primaryColor: getIt<IAppConfig>().theme.mainColor,
+              primaryColor: context.xPrimaryColor,
               buttonTheme:
                   const ButtonThemeData(textTheme: ButtonTextTheme.primary),
               colorScheme: ColorScheme.light(
-                      primary: getIt<IAppConfig>().theme.mainColor)
-                  .copyWith(
-                secondary: getIt<IAppConfig>().theme.mainColor,
+                primary: context.xPrimaryColor,
+              ).copyWith(
+                secondary: context.xPrimaryColor,
               ),
             ),
             child: widget!,
@@ -135,7 +135,7 @@ class _RbioDatePickerState extends State<RbioDatePicker> {
         ),
 
         //
-        R.sizes.hSizer8,
+        R.widgets.hSizer8,
 
         //
         if (widget.mode != CupertinoDatePickerMode.time)
@@ -190,7 +190,7 @@ class _RbioDatePickerState extends State<RbioDatePicker> {
         ),
 
         //
-        R.sizes.defaultBottomPadding,
+        R.widgets.defaultBottomPadding,
       ],
     );
   }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spring/spring.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
+import '../model/all_users_model.dart';
 import '../model/banner_model.dart';
 import '../utils/appointments_painter.dart';
 import '../utils/chronic_tracking_painter.dart';
@@ -19,15 +21,26 @@ import '../widgets/vertical_card_widget.dart';
 
 class HomeVm extends ChangeNotifier {
   final BuildContext mContext;
-  HomeVm(this.mContext);
+  final IAppConfig appConfig;
+  final Repository repository;
+  final UserFacade userFacade;
+  final UserNotifier userNotifier;
+  final ISharedPreferencesManager sharedPreferencesManager;
+  HomeVm({
+    required this.mContext,
+    required this.appConfig,
+    required this.repository,
+    required this.userFacade,
+    required this.userNotifier,
+    required this.sharedPreferencesManager,
+  });
 
   // #region Variables
-  final sharedPreferencesManager = getIt<ISharedPreferencesManager>();
   List<String>? get getUserWidgets {
     final currentUserName =
         sharedPreferencesManager.getString(SharedPreferencesKeys.loginUserName);
     if (currentUserName == null) return null;
-    final allUsersModel = getIt<UserNotifier>().getHomeWidgets(currentUserName);
+    final allUsersModel = userFacade.getHomeWidgets(currentUserName);
     if (allUsersModel == null) {
       return null;
     } else {
@@ -98,7 +111,7 @@ class HomeVm extends ChangeNotifier {
   Future<void> init(AllUsersModel? allUsersModel) async {
     springController = SpringController(initialAnim: Motion.mirror);
     await fetchWidgets(allUsersModel);
-    if (getIt<IAppConfig>().productType == ProductType.oneDose) {
+    if (appConfig.productType == ProductType.oneDose) {
       await fetchBanners();
     }
     if (bannerTabsModel.isEmpty) {
@@ -111,8 +124,7 @@ class HomeVm extends ChangeNotifier {
 
   // #region fetchBanners
   Future<void> fetchBanners() async {
-    bannerTabsModel =
-        await getIt<Repository>().getBannerTab('rBio', 'anaSayfa');
+    bannerTabsModel = await repository.getBannerTab('rBio', 'anaSayfa');
   }
   // #endregion
 
@@ -247,18 +259,17 @@ class HomeVm extends ChangeNotifier {
       }
       await saveWidgetList(newList);
     } catch (e, stackTrace) {
-      getIt<IAppConfig>()
-          .platform
-          .sentryManager
-          .captureException(e, stackTrace: stackTrace);
-      LoggerUtils.instance.e(e);
+      appConfig.platform.sentryManager.captureException(
+        e,
+        stackTrace: stackTrace,
+      );
     }
   }
   // #endregion
 
   // #region saveWidgetList
   Future<void> saveWidgetList(List<String> list) async {
-    await getIt<UserNotifier>().saveHomeWidgets(list);
+    await userFacade.saveHomeWidgets(list);
   }
   // #endregion
 
@@ -305,7 +316,7 @@ class HomeVm extends ChangeNotifier {
                   ),
 
                   //
-                  R.sizes.hSizer8,
+                  R.widgets.hSizer8,
 
                   //
                   RbioElevatedButton(
@@ -340,7 +351,7 @@ class HomeVm extends ChangeNotifier {
 
   // #region _getAllCases
   List<HomeWidgets> _getAllCases([bool isDoctorRemove = false]) {
-    final isDoctor = getIt<UserNotifier>().isDoctor;
+    final isDoctor = userNotifier.user.xGetHealthcareEmployeeOrFalse;
     List<HomeWidgets> values = [];
     if (isDoctor) {
       values = doctorDefaultValues;
@@ -375,7 +386,7 @@ class HomeVm extends ChangeNotifier {
     switch (widgetType) {
       case HomeWidgets.hospitalAppointment:
         {
-          if (getIt<IAppConfig>().functionality.takeHospitalAppointment) {
+          if (appConfig.functionality.takeHospitalAppointment) {
             return MyReorderableWidget(
               key: keys[HomeWidgets.hospitalAppointment]!,
               type: HomeWidgets.hospitalAppointment,
@@ -406,7 +417,7 @@ class HomeVm extends ChangeNotifier {
 
       case HomeWidgets.onlineAppointment:
         {
-          if (getIt<IAppConfig>().functionality.takeOnlineAppointment) {
+          if (appConfig.functionality.takeOnlineAppointment) {
             return MyReorderableWidget(
               key: keys[HomeWidgets.onlineAppointment]!,
               type: HomeWidgets.onlineAppointment,
@@ -437,7 +448,7 @@ class HomeVm extends ChangeNotifier {
 
       case HomeWidgets.chronicTracking:
         {
-          if (getIt<IAppConfig>().functionality.chronicTracking) {
+          if (appConfig.functionality.chronicTracking) {
             return MyReorderableWidget(
               key: keys[HomeWidgets.chronicTracking]!,
               type: HomeWidgets.chronicTracking,
@@ -513,7 +524,7 @@ class HomeVm extends ChangeNotifier {
 
       case HomeWidgets.symptomChecker:
         {
-          if (getIt<IAppConfig>().functionality.symptomChecker) {
+          if (appConfig.functionality.symptomChecker) {
             return MyReorderableWidget(
               key: keys[HomeWidgets.symptomChecker],
               type: HomeWidgets.symptomChecker,

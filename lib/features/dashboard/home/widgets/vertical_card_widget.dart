@@ -25,11 +25,7 @@ class VerticalCard extends StatelessWidget {
                 ? HomeSizer.instance.getBodyCardHeightMedium()
                 : HomeSizer.instance.getBodyCardHeight(),
         child: Card(
-          elevation: R.sizes.defaultElevation,
           margin: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: R.sizes.borderRadiusCircular,
-          ),
           child: Stack(
             children: [
               //
@@ -51,7 +47,7 @@ class VerticalCard extends StatelessWidget {
                     maxLines: 3,
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
-                    style: getIt<IAppConfig>().theme.textTheme.headline3,
+                    style: context.xCurrentTheme.textTheme.headline3,
                   ),
                 ),
               ),

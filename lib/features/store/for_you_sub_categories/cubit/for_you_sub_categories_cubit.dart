@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
-import '../../../../model/model.dart';
+import '../../for_you_categories/model/for_you_category_response.dart';
 
-part 'for_you_sub_categories_state.dart';
 part 'for_you_sub_categories_cubit.freezed.dart';
+part 'for_you_sub_categories_state.dart';
 
 class ForYouSubCategoriesCubit extends Cubit<ForYouSubCategoriesState> {
   ForYouSubCategoriesCubit(this.repository)

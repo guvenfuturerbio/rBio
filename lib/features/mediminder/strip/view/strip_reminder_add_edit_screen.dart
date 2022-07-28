@@ -68,6 +68,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
   // #region _buildAppBar
   RbioAppBar _buildAppBar(BuildContext context) {
     return RbioAppBar(
+      context: context,
       title: RbioAppBar.textTitle(
         context,
         LocaleProvider.current.strip_tracker,
@@ -185,13 +186,13 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
           ),
 
           //
-          R.sizes.hSizer8,
+          R.widgets.hSizer8,
 
           //
           _buildAlarmTextField(),
 
           //
-          R.sizes.hSizer4,
+          R.widgets.hSizer4,
         ],
       ),
     );
@@ -208,8 +209,8 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         //
         Expanded(
           child: RbioElevatedButton(
-            backColor: getIt<IAppConfig>().theme.cardBackgroundColor,
-            textColor: getIt<IAppConfig>().theme.textColorSecondary,
+            backColor: context.xCardColor,
+            textColor: context.xTextInverseColor,
             title: LocaleProvider.current.btn_cancel,
             onTap: () {
               Atom.historyBack();
@@ -218,7 +219,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         ),
 
         //
-        R.sizes.wSizer12,
+        R.widgets.wSizer12,
 
         //
         Expanded(
@@ -241,7 +242,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: getIt<IAppConfig>().theme.cardBackgroundColor,
+        color: context.xCardColor,
         borderRadius: R.sizes.borderRadiusCircular,
       ),
       child: Row(
@@ -259,7 +260,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
           ),
 
           //
-          R.sizes.wSizer8,
+          R.widgets.wSizer8,
 
           //
           Expanded(
@@ -281,10 +282,10 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
   // #region _buildCircleCount
   Widget _buildCircleCount(StripReminderAddEditResult result) {
     return Center(
-      child: CircleAvatar(
+      child: RbioCircleAvatar(
         radius: 90,
-        backgroundColor: getIt<IAppConfig>().theme.mainColor,
-        child: CircleAvatar(
+        backgroundColor: context.xPrimaryColor,
+        child: RbioCircleAvatar(
           backgroundColor: Colors.white,
           radius: 70,
           child: Column(
@@ -338,7 +339,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
                 style: context.xHeadline3.copyWith(
                   height: 1,
                   fontSize: 35,
-                  color: getIt<IAppConfig>().theme.textColorSecondary,
+                  color: context.xTextInverseColor,
                 ),
               ),
             ],
@@ -404,7 +405,7 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         padding: const EdgeInsets.all(10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: getIt<IAppConfig>().theme.mainColor,
+          color: context.xPrimaryColor,
           shape: BoxShape.circle,
         ),
         child: SvgPicture.asset(
@@ -427,8 +428,9 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
         child: Text(
           LocaleProvider.current.strip_page_info_message,
           style: context.xHeadline4.copyWith(
-              fontWeight: FontWeight.w100,
-              color: getIt<IAppConfig>().theme.textColorPassive),
+            fontWeight: FontWeight.w100,
+            color: context.xMyCustomTheme.textDisabledColor,
+          ),
           textAlign: TextAlign.center,
         ),
       ),
@@ -467,5 +469,5 @@ class _StripReminderAddEditViewState extends State<StripReminderAddEditView> {
   }
   // #endregion
 
-  Widget _buildGap() => R.sizes.hSizer24;
+  Widget _buildGap() => R.widgets.hSizer24;
 }
