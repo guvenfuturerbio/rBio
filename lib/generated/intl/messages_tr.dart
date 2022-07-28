@@ -946,6 +946,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "normal": MessageLookupByLibrary.simpleMessage("Normal"),
         "normal_range": MessageLookupByLibrary.simpleMessage("Normal Aralık"),
         "not": MessageLookupByLibrary.simpleMessage("Açıklama"),
+        "not_chronic_warning": MessageLookupByLibrary.simpleMessage(
+            "Sağlık Takibi özelliğini kullanmak için lütfen 4449494 numaralı telefondan bize ulaşın"),
         "not_chronic_warning_1": MessageLookupByLibrary.simpleMessage(
             "Sağlık Takibi özelliğini kullanmak için lütfen "),
         "not_chronic_warning_2": MessageLookupByLibrary.simpleMessage(

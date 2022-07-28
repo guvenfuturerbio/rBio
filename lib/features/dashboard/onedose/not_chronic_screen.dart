@@ -29,21 +29,22 @@ class NotChronicScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(bottom: R.sizes.bottomNavigationBarHeight),
           child: RichText(
+              textAlign: TextAlign.center,
               text: TextSpan(children: [
-            TextSpan(
-                style: context.xHeadline3,
-                text: LocaleProvider.current.not_chronic_warning_1),
-            TextSpan(
-                style: linkText,
-                text: LocaleProvider.current.not_chronic_warning_url,
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    _callHealthTracker();
-                  }),
-            TextSpan(
-                style: context.xHeadline3,
-                text: LocaleProvider.current.not_chronic_warning_2),
-          ])),
+                TextSpan(
+                    style: context.xHeadline3,
+                    text: LocaleProvider.current.not_chronic_warning_1),
+                TextSpan(
+                    style: linkText,
+                    text: LocaleProvider.current.not_chronic_warning_url,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        _callHealthTracker();
+                      }),
+                TextSpan(
+                    style: context.xHeadline3,
+                    text: LocaleProvider.current.not_chronic_warning_2),
+              ])),
         ),
       ),
     );
