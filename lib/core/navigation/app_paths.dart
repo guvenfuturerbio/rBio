@@ -119,16 +119,8 @@ class VRouterRoutes {
         // #region Chat
         VGuard(
           beforeEnter: (vRedirector) async {
-<<<<<<< HEAD
-            if (!(getIt<UserNotifier>().isCronic ||
-                getIt<UserNotifier>().isDoctor)) {
-              vRedirector.stopRedirection();
-              Atom.show(NotChronicWarningDialog(
-                  title: LocaleProvider.current.warning));
-=======
             if (!(getIt<UserNotifier>().user?.chat ?? false)) {
               _stopRedirectionShowNotChronicDialog(vRedirector);
->>>>>>> master
             }
           },
           stackedRoutes: [
@@ -154,15 +146,8 @@ class VRouterRoutes {
           beforeEnter: (vRedirector) async {
             if (!getIt<IAppConfig>().functionality.chronicTracking) {
               openDefaultScreen(vRedirector);
-<<<<<<< HEAD
-            } else if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(NotChronicWarningDialog(
-                  title: LocaleProvider.current.warning));
-=======
             } else if (!getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
               _stopRedirectionShowNotChronicDialog(vRedirector);
->>>>>>> master
             }
           },
           stackedRoutes: [
@@ -214,37 +199,13 @@ class VRouterRoutes {
               ],
             ),
 
-<<<<<<< HEAD
-        VGuard(
-          beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(NotChronicWarningDialog(
-                  title: LocaleProvider.current.warning));
-            }
-          },
-          stackedRoutes: [
-=======
             //
->>>>>>> master
             VWidget(
               path: PagePaths.treatmentEditProgress,
               widget: const TreatmentEditView(),
             ),
 
-<<<<<<< HEAD
-        VGuard(
-          beforeEnter: (vRedirector) async {
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(NotChronicWarningDialog(
-                  title: LocaleProvider.current.warning));
-            }
-          },
-          stackedRoutes: [
-=======
             //
->>>>>>> master
             VWidget(
               path: PagePaths.treatmentProgress,
               widget: const TreatmentProcessScreen(),
@@ -437,16 +398,9 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
-<<<<<<< HEAD
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(NotChronicWarningDialog(
-                  title: LocaleProvider.current.warning));
-=======
             if (!Atom.isWeb &&
                 !getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
               _stopRedirectionShowNotChronicDialog(vRedirector);
->>>>>>> master
             }
           },
           stackedRoutes: [
@@ -459,15 +413,8 @@ class VRouterRoutes {
 
         VGuard(
           beforeEnter: (vRedirector) async {
-<<<<<<< HEAD
-            if (!getIt<UserNotifier>().isCronic) {
-              vRedirector.stopRedirection();
-              Atom.show(NotChronicWarningDialog(
-                  title: LocaleProvider.current.warning));
-=======
             if (!getIt<UserNotifier>().user.xGetChronicTrackingOrFalse) {
               _stopRedirectionShowNotChronicDialog(vRedirector);
->>>>>>> master
             }
           },
           stackedRoutes: [
