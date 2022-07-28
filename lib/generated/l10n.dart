@@ -344,7 +344,7 @@ class LocaleProvider {
   String get not_chronic_warning_1 {
     return Intl.message(
       ' Please contact us from ',
-      name: ' not_chronic_warning_1 ',
+      name: 'not_chronic_warning_1',
       desc: '',
       args: [],
     );
@@ -353,18 +353,18 @@ class LocaleProvider {
   /// `444 94 94`
   String get not_chronic_warning_url {
     return Intl.message(
-      ' 444 94 94 ',
-      name: 'not_chronic_warning_url ',
+      '444 94 94',
+      name: 'not_chronic_warning_url',
       desc: '',
       args: [],
     );
   }
 
-  /// `for Health Tracker services`
+  /// ` for Health Tracker services`
   String get not_chronic_warning_2 {
     return Intl.message(
-      ' for Health Tracker services ',
-      name: 'not_chronic_warning_2 ',
+      ' for Health Tracker services',
+      name: 'not_chronic_warning_2',
       desc: '',
       args: [],
     );
