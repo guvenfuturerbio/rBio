@@ -350,6 +350,16 @@ class LocaleProvider {
     );
   }
 
+  /// ` Please contact us from 444 94 94 for Health Tracker services`
+  String get not_chronic_warning {
+    return Intl.message(
+      ' Please contact us from 444 94 94 for Health Tracker services',
+      name: 'not_chronic_warning',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// ` Please contact us from `
   String get not_chronic_warning_1 {
     return Intl.message(

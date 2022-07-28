@@ -960,6 +960,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "normal": MessageLookupByLibrary.simpleMessage("Normal"),
         "normal_range": MessageLookupByLibrary.simpleMessage("Normal range"),
         "not": MessageLookupByLibrary.simpleMessage("Note"),
+        "not_chronic_warning": MessageLookupByLibrary.simpleMessage(
+            " Please contact us from 444 94 94 for Health Tracker services"),
         "not_chronic_warning_1":
             MessageLookupByLibrary.simpleMessage(" Please contact us from "),
         "not_chronic_warning_2": MessageLookupByLibrary.simpleMessage(
