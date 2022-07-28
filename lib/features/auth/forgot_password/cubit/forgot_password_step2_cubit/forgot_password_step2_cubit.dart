@@ -13,8 +13,16 @@ class ForgotPasswordStep2Cubit extends Cubit<ForgotPasswordStep2State> {
 
   final PasswordHelper passwordHelper = PasswordHelper();
 
+  void toggleTemporaryPasswordVisibility(bool value) {
+    emit(state.copyWith(temporaryPasswordVisibility: !value));
+  }
+
   void togglePasswordVisibility(bool value) {
     emit(state.copyWith(passwordVisibility: !value));
+  }
+
+  void toggleNewPasswordAgainVisibility(bool value) {
+    emit(state.copyWith(newPasswordAgainVisibility: !value));
   }
 
   void checkPasswordCapability(String newPassword) {

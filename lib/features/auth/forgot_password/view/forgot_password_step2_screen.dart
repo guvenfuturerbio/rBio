@@ -149,8 +149,17 @@ class _ForgotPasswordStep2ViewState extends State<ForgotPasswordStep2View> {
                   focusNode: _temporaryFocusNode,
                   controller: _temporaryController,
                   textInputAction: TextInputAction.next,
-                  obscureText: state.passwordVisibility ? false : true,
+                  obscureText: state.temporaryPasswordVisibility ? false : true,
                   hintText: LocaleProvider.of(context).temporary_pass,
+                  suffixIcon: RbioVisibilitySuffixIcon(
+                    onTap: () {
+                      context
+                          .read<ForgotPasswordStep2Cubit>()
+                          .toggleTemporaryPasswordVisibility(
+                              state.temporaryPasswordVisibility);
+                    },
+                    eyesOpen: state.temporaryPasswordVisibility,
+                  ),
                   onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
                   onChanged: (val) {
                     _temporaryController.text = val;
@@ -167,6 +176,14 @@ class _ForgotPasswordStep2ViewState extends State<ForgotPasswordStep2View> {
                   textInputAction: TextInputAction.next,
                   obscureText: state.passwordVisibility ? false : true,
                   hintText: LocaleProvider.of(context).new_password,
+                  suffixIcon: RbioVisibilitySuffixIcon(
+                    onTap: () {
+                      context
+                          .read<ForgotPasswordStep2Cubit>()
+                          .togglePasswordVisibility(state.passwordVisibility);
+                    },
+                    eyesOpen: state.passwordVisibility,
+                  ),
                   onChanged: (text) {
                     context
                         .read<ForgotPasswordStep2Cubit>()
@@ -183,8 +200,17 @@ class _ForgotPasswordStep2ViewState extends State<ForgotPasswordStep2View> {
                   focusNode: _passwordAgainFocusNode,
                   controller: _passwordAgainController,
                   textInputAction: TextInputAction.done,
-                  obscureText: state.passwordVisibility ? false : true,
+                  obscureText: state.newPasswordAgainVisibility ? false : true,
                   hintText: LocaleProvider.of(context).new_password_again,
+                  suffixIcon: RbioVisibilitySuffixIcon(
+                    onTap: () {
+                      context
+                          .read<ForgotPasswordStep2Cubit>()
+                          .toggleNewPasswordAgainVisibility(
+                              state.newPasswordAgainVisibility);
+                    },
+                    eyesOpen: state.newPasswordAgainVisibility,
+                  ),
                   onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
                 ),
               ),
