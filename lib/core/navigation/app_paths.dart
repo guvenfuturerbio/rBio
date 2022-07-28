@@ -687,7 +687,9 @@ class VRouterRoutes {
 
   static void _stopRedirectionShowNotChronicDialog(VRedirector vRedirector) {
     vRedirector.stopRedirection();
-    Atom.show(const RbioNotChronicWarningDialog());
+    Atom.show(NotChronicWarningDialog(
+      title: LocaleProvider.current.warning,
+    ));
   }
 }
 

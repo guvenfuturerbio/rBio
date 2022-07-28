@@ -17,7 +17,7 @@ class NotChronicScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var linkText = TextStyle(color: getIt<IAppConfig>().theme.mainColor);
+    var linkText = TextStyle(color: context.xPrimaryColor);
     return RbioScaffold(
       appbar: RbioAppBar(
         context: context,

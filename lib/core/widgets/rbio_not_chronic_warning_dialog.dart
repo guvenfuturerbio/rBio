@@ -1,10 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../core.dart';
 
-<<<<<<< HEAD:lib/core/widgets/chronic_error_alert.dart
 class NotChronicWarningDialog extends StatelessWidget {
   final String title;
   final GlobalKey<ScaffoldState>? drawerKey;
@@ -17,9 +15,10 @@ class NotChronicWarningDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var linkText = TextStyle(color: getIt<IAppConfig>().theme.mainColor);
+    var linkText = TextStyle(color: context.xPrimaryColor);
     return RbioScaffold(
       appbar: RbioAppBar(
+        context: context,
         leading:
             drawerKey != null ? RbioLeadingMenu(drawerKey: drawerKey) : null,
         title: RbioAppBar.textTitle(context, title),
@@ -35,36 +34,13 @@ class NotChronicWarningDialog extends StatelessWidget {
             TextSpan(
                 style: linkText,
                 text: LocaleProvider.current.not_chronic_warning_url,
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    _callHealthTracker();
-                  }),
+                recognizer: TapGestureRecognizer()..onTap = () {}),
             TextSpan(
                 style: context.xHeadline3,
                 text: LocaleProvider.current.not_chronic_warning_2),
           ])),
         ),
       ),
-=======
-class RbioNotChronicWarningDialog extends StatelessWidget {
-  const RbioNotChronicWarningDialog({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return RbioMessageDialog(
-      description: LocaleProvider.current.not_chronic_warning,
-      buttonTitle: LocaleProvider.current.Ok,
-      isAtom: true,
->>>>>>> master:lib/core/widgets/rbio_not_chronic_warning_dialog.dart
     );
-  }
-
-  _callHealthTracker() async {
-    var url = Uri.parse("tel:4449494");
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw "Could not launch $url";
-    }
   }
 }
