@@ -422,7 +422,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () => {value.showKvkkInfo()},
               child: Text(
                 LocaleProvider.of(context).read_understood_kvkk,
-                maxLines: 3,
+                maxLines: 5,
                 overflow: TextOverflow.ellipsis,
                 style: context.xHeadline5.copyWith(
                   decoration: TextDecoration.underline,

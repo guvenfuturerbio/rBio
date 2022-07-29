@@ -1,11 +1,12 @@
+import 'package:animated_widgets/animated_widgets.dart';
 import 'package:cache/cache.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:onedosehealth/core/widgets/rbio_error_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
+import '../../../core/widgets/rbio_error_screen.dart';
 import '../../dashboard/onedose/not_chronic_screen.dart';
 import '../controller/consultation_vm.dart';
 import '../model/chat_person.dart';
@@ -25,21 +26,69 @@ class ConsultationScreen extends StatelessWidget {
             title: LocaleProvider.current.consultation,
             drawerKey: drawerKey,
           )
-        : ChangeNotifierProvider<DoctorConsultationVm>(
-            create: (context) => DoctorConsultationVm(context),
-            child: Consumer<DoctorConsultationVm>(
-              builder: (
-                BuildContext context,
-                DoctorConsultationVm vm,
-                Widget? child,
-              ) {
-                return RbioScaffold(
-                  appbar: _buildAppBar(context),
-                  body: _buildBody(context, vm),
-                );
-              },
+        : _builtEmptyText(context);
+  }
+
+  Widget _builtEmptyText(BuildContext context) {
+    return RbioScaffold(
+      appbar: _buildAppBar(context),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //
+            Container(
+              color: Colors.transparent,
+              child: Center(
+                child: ShakeAnimatedWidget(
+                  enabled: true,
+                  duration: const Duration(milliseconds: 1500),
+                  shakeAngle: Rotation.deg(z: 10),
+                  curve: Curves.linear,
+                  child: SizedBox(
+                    width: 75,
+                    height: 75,
+                    child: SvgPicture.asset(R.image.stethoscope),
+                  ),
+                ),
+              ),
             ),
+
+            //
+            R.widgets.hSizer16,
+
+            //
+            Padding(
+              padding:
+                  EdgeInsets.only(bottom: R.sizes.bottomNavigationBarHeight),
+              child: Text(
+                "7/24 sağlık uzmanlarımıza ulaşabilmeniz için çalışmalarımız devam etmektedir.",
+                style: context.xHeadline3,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChangeNotifierProvider() {
+    return ChangeNotifierProvider<DoctorConsultationVm>(
+      create: (context) => DoctorConsultationVm(context),
+      child: Consumer<DoctorConsultationVm>(
+        builder: (
+          BuildContext context,
+          DoctorConsultationVm vm,
+          Widget? child,
+        ) {
+          return RbioScaffold(
+            appbar: _buildAppBar(context),
+            body: _buildBody(context, vm),
           );
+        },
+      ),
+    );
   }
 
   RbioAppBar _buildAppBar(BuildContext context) => RbioAppBar(
