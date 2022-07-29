@@ -1160,7 +1160,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "reach_goal": MessageLookupByLibrary.simpleMessage(
             "Normal değer aralığında olanlar"),
         "read_understood_kvkk": MessageLookupByLibrary.simpleMessage(
-            "Kişisel verilerin korunması ve işlenmesi politikalarına ilişkin aydınlatma metnini okudum ve anladım."),
+            "Kişisel verilerin korunması ve işlenmesi politikalarına ilişkin aydınlatma metnini okudum."),
         "recent_appointments":
             MessageLookupByLibrary.simpleMessage("Son Randevularım"),
         "recover_your_password":
