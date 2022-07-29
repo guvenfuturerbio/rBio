@@ -948,6 +948,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "not": MessageLookupByLibrary.simpleMessage("Açıklama"),
         "not_chronic_warning": MessageLookupByLibrary.simpleMessage(
             "Sağlık Takibi özelliğini kullanmak için lütfen 4449494 numaralı telefondan bize ulaşın"),
+        "not_chronic_warning_1": MessageLookupByLibrary.simpleMessage(
+            "Sağlık Takibi özelliğini kullanmak için lütfen "),
+        "not_chronic_warning_2": MessageLookupByLibrary.simpleMessage(
+            " numaralı telefondan bize ulaşın"),
+        "not_chronic_warning_url":
+            MessageLookupByLibrary.simpleMessage("4449494"),
         "not_done": MessageLookupByLibrary.simpleMessage("Yapılmayan"),
         "not_found": MessageLookupByLibrary.simpleMessage("Bulunamadı"),
         "not_now": MessageLookupByLibrary.simpleMessage("Şimdi Değil"),

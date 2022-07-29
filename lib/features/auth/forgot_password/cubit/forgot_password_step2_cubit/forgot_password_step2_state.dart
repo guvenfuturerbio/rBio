@@ -2,6 +2,8 @@
 part of 'forgot_password_step2_cubit.dart';
 
 class ForgotPasswordStep2State {
+  bool temporaryPasswordVisibility;
+  bool newPasswordAgainVisibility;
   bool passwordVisibility;
   bool checkLowerCase;
   bool checkUpperCase;
@@ -14,6 +16,8 @@ class ForgotPasswordStep2State {
   bool isLoginWithSuccessChangePassword;
 
   ForgotPasswordStep2State({
+    this.temporaryPasswordVisibility = false,
+    this.newPasswordAgainVisibility = false,
     this.passwordVisibility = false,
     this.checkLowerCase = false,
     this.checkUpperCase = false,
@@ -27,6 +31,8 @@ class ForgotPasswordStep2State {
   });
 
   ForgotPasswordStep2State copyWith({
+    bool? temporaryPasswordVisibility,
+    bool? newPasswordAgainVisibility,
     bool? passwordVisibility,
     bool? checkLowerCase,
     bool? checkUpperCase,
@@ -39,6 +45,10 @@ class ForgotPasswordStep2State {
     bool? isLoginWithSuccessChangePassword,
   }) {
     return ForgotPasswordStep2State(
+        temporaryPasswordVisibility:
+            temporaryPasswordVisibility ?? this.temporaryPasswordVisibility,
+        newPasswordAgainVisibility:
+            newPasswordAgainVisibility ?? this.newPasswordAgainVisibility,
         passwordVisibility: passwordVisibility ?? this.passwordVisibility,
         checkLowerCase: checkLowerCase ?? this.checkLowerCase,
         checkUpperCase: checkUpperCase ?? this.checkUpperCase,
