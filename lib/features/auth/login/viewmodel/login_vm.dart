@@ -214,8 +214,7 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> login(String username, String password, String consentId) async {
-    if (checkFields(username, password) &&
-        checkKVKKFields(username, password)) {
+    if (checkFields(username, password)) {
       _autovalidateMode = AutovalidateMode.always;
 
       notifyListeners();
@@ -703,27 +702,27 @@ class LoginScreenVm extends ChangeNotifier {
     }
   }
 
-  bool checkKVKKFields(String username, String password) {
-    if (checkedKvkkForm) {
-      if (username.isNotEmpty && password.isNotEmpty) {
-        return true;
-      } else {
-        // showGradientDialog(
-        //   mContext,
-        //   LocaleProvider.current.warning,
-        //   LocaleProvider.current.tc_or_pass_cannot_empty,
-        // );
-        return false;
-      }
-    } else {
-      showGradientDialog(
-        mContext,
-        LocaleProvider.current.warning,
-        LocaleProvider.current.must_clicked_kvkk,
-      );
-      return false;
-    }
-  }
+  // bool checkKVKKFields(String username, String password) {
+  //   if (checkedKvkkForm) {
+  //     if (username.isNotEmpty && password.isNotEmpty) {
+  //       return true;
+  //     } else {
+  //       // showGradientDialog(
+  //       //   mContext,
+  //       //   LocaleProvider.current.warning,
+  //       //   LocaleProvider.current.tc_or_pass_cannot_empty,
+  //       // );
+  //       return false;
+  //     }
+  //   } else {
+  //     showGradientDialog(
+  //       mContext,
+  //       LocaleProvider.current.warning,
+  //       LocaleProvider.current.must_clicked_kvkk,
+  //     );
+  //     return false;
+  //   }
+  // }
 
   Future<void> saveLoginInfo(
       String userName, String password, String token) async {
