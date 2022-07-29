@@ -335,7 +335,7 @@
   "detailed_error_dialog_part1": "Aynı tarih ya da saatte",
   "detailed_error_dialog_part2": "randevu almak istediğiniz uzman için zaten bir randevunuz olabilir,",
   "detailed_error_dialog_part3": "Farklı bir sorun olduğunu düşünüyorsanız 444 94 94'ü arayarak bize ulaşabilirsiniz.",
-  "read_understood_kvkk": "Kişisel verilerin korunması ve işlenmesi politikalarına ilişkin aydınlatma metnini okudum ve anladım.",
+  "read_understood_kvkk": "Kişisel verilerin korunması ve işlenmesi politikalarına ilişkin aydınlatma metnini okudum.",
   "must_clicked_kvkk": "Kişisel verilerin korunması ve işlenmesi politikalarına ilişkin aydınlatma metnini okumanız ve onaylamanız gerekmektedir.",
   "must_contain_lowercase": "Şifre en az 1 adet küçük harf içermeli",
   "must_contain_uppercase": "Şifre en az 1 adet büyük harf içermeli",
