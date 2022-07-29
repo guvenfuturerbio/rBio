@@ -214,8 +214,7 @@ class LoginScreenVm extends ChangeNotifier {
   }
 
   Future<void> login(String username, String password, String consentId) async {
-    if (checkFields(username, password) &&
-        checkKVKKFields(username, password)) {
+    if (checkFields(username, password)) {
       _autovalidateMode = AutovalidateMode.always;
 
       notifyListeners();
