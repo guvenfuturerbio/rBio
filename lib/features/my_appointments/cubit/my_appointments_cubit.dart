@@ -113,9 +113,9 @@ class MyAppointmentsCubit extends Cubit<MyAppointmentsState> {
   Future<void> handleAppointment(PatientAppointmentsResponse data) async {
     if (data.type == R.constants.onlineAppointmentType) {
       try {
-        late bool result;
+        bool result = true;
         if (data.id != null) {
-          result = await _isOnlineAppointmentPaid(data.id!);
+          // result = await _isOnlineAppointmentPaid(data.id!);
         }
 
         if (result) {

@@ -20,7 +20,7 @@ class _Sizes {
 
   double stackedTopPaddingValue(BuildContext context) =>
       54 + MediaQuery.of(context).viewPadding.top;
-  final double defaultBottomValue = Atom.safeBottom + 12;
+  double get defaultBottomValue => Atom.safeBottom + 12;
   double get bottomNavigationBarHeight => Atom.safeBottom + 65;
   final double defaultElevation = 0.0;
 }
