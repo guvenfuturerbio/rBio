@@ -121,13 +121,20 @@ class CreateAppointmentSummaryVm extends ChangeNotifier {
     notifyListeners();
 
     try {
-      orgVideoCallPriceResponse =
-          await getIt<Repository>().getResourceVideoCallPrice(
-        GetVideoCallPriceRequest(
-          resourceId: resourceId,
-          departmentId: departmentId,
-          tenantId: tenantId,
-        ),
+      // orgVideoCallPriceResponse =
+      //     await getIt<Repository>().getResourceVideoCallPrice(
+      //   GetVideoCallPriceRequest(
+      //     resourceId: resourceId,
+      //     departmentId: departmentId,
+      //     tenantId: tenantId,
+      //   ),
+      // );
+
+      await Future.delayed(const Duration(seconds: 1));
+      orgVideoCallPriceResponse = GetVideoCallPriceResponse(
+        patientPrice: 0.0,
+        resource: '',
+        service: '',
       );
 
       _priceLoading = false;

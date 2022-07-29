@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>647411760545-m07uth1ugne0nh7hcsgofvji4pb7ci9a.apps.googleusercontent.com</string>
+	<string>265636530937-4v13vf75i5e2uklo7fbo061noouqk65g.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.647411760545-m07uth1ugne0nh7hcsgofvji4pb7ci9a</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>647411760545-9i3m23g4ta815uflvoohefqjqrsrer22.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.265636530937-4v13vf75i5e2uklo7fbo061noouqk65g</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCybMoLsAelca4XrswE_GTgdeMcTryeYVs</string>
+	<string>AIzaSyDH__Bawh2D4b332Z7iVB0L__Rsd9mTPnw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>647411760545</string>
+	<string>265636530937</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.guvenfuture.mobile</string>
+	<string>com.onedose.onedosehealth</string>
 	<key>PROJECT_ID</key>
-	<string>guven-mobile-7c512</string>
+	<string>rbio-ec8b1</string>
 	<key>STORAGE_BUCKET</key>
-	<string>guven-mobile-7c512.appspot.com</string>
+	<string>rbio-ec8b1.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:647411760545:ios:e802d6bae2c1e565259fe0</string>
-	<key>DATABASE_URL</key>
-	<string>https://guven-mobile-7c512.firebaseio.com</string>
+	<string>1:265636530937:ios:70354a202f69b54a263028</string>
 </dict>
 </plist>

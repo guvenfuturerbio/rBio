@@ -178,6 +178,7 @@ class CreateAppointmentVm extends ChangeNotifier {
   }
 
   Future<void> fillFromFavorites(int index) async {
+    print(tenantsFilterResponse);
     try {
       if (!forOnline) {
         for (var tenant in tenantsFilterResponse!) {
@@ -398,28 +399,41 @@ class CreateAppointmentVm extends ChangeNotifier {
       filterResourceResponse =
           await getIt<Repository>().filterResources(filterResourcesRequest);
 
-      filterResourceResponse!
-          .sort((FilterResourcesResponse a, FilterResourcesResponse b) {
-        return (a.title ?? '').compareTo((b.title ?? ''));
-      });
+      if (filterResourceResponse != null) {
+        filterResourceResponse!
+            .sort((FilterResourcesResponse a, FilterResourcesResponse b) {
+          return (a.title ?? '').compareTo((b.title ?? ''));
+        });
 
-      filterResourceResponse!.insert(
-        0,
-        FilterResourcesResponse(
-          departments: [],
-          enabled: false,
-          gender: "male",
-          id: -2,
-          isOnline: false,
-          isOnlineForWeb: false,
-          isSSIContractor: true,
-          isTSSContractor: true,
-          tenants: [],
-          title: LocaleProvider.current.pls_select,
-        ),
-      );
-      doctorProgress = LoadingProgress.done;
-      notifyListeners();
+        filterResourceResponse!.insert(
+          0,
+          FilterResourcesResponse(
+            departments: [],
+            enabled: false,
+            gender: "male",
+            id: -2,
+            isOnline: false,
+            isOnlineForWeb: false,
+            isSSIContractor: true,
+            isTSSContractor: true,
+            tenants: [],
+            title: LocaleProvider.current.pls_select,
+          ),
+        );
+        doctorProgress = LoadingProgress.done;
+        notifyListeners();
+      } else {
+        filterResourceResponse = [
+          FilterResourcesResponse(
+            isOnline: true,
+            isOnlineForWeb: true,
+            departments: [
+              
+            ],
+            title: "Dr. Emrah Yurtçu",
+          ),
+        ];
+      }
     } catch (e, stackTrace) {
       getIt<IAppConfig>()
           .platform

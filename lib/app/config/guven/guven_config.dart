@@ -1,9 +1,9 @@
 part of '../abstract/app_config.dart';
 
-class GuvenConfig extends IAppConfig<IGuvenPlatformConfig> {
+class GuvenConfig extends IAppConfig<IOneDosePlatformConfig> {
   GuvenConfig()
       : super(
-          title: 'One Dose Healt',
+          title: 'One Dose Health',
           productType: ProductType.oneDose,
           theme: OneDoseTheme(),
           functionality: GuvenFunctionality(),
@@ -15,15 +15,15 @@ class GuvenConfig extends IAppConfig<IGuvenPlatformConfig> {
   @override
   void setDeviceConfig() {
     if (kIsWeb) {
-      super.platform = GuvenWebPlatformConfig();
+      super.platform = OneDoseWebPlatformConfig();
     } else {
-      super.platform = GuvenMobilePlatformConfig();
+      super.platform = OneDoseMobilePlatformConfig();
     }
   }
 
   @override
   IProductDashboard getDashboard() {
-    return GuvenDashboardNavigation();
+    return DashboardNavigation();
   }
 
   @override

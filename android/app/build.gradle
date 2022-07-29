@@ -43,11 +43,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.guvenfuture.mobile"
+        applicationId "com.guvenfuture.onedosehealth"
         minSdkVersion 23 //Required for Jitsi
         targetSdkVersion 31
-        versionCode 122
-        versionName "3.3.32"
+        versionCode 55
+        versionName "1.0.38"
     }
 
     compileOptions {

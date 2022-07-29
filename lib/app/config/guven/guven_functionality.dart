@@ -2,10 +2,10 @@ part of '../abstract/app_config.dart';
 
 class GuvenFunctionality extends IAppFunctionality {
   @override
-  bool get chronicTracking => false;
+  bool get chronicTracking => true;
 
   @override
-  bool get symptomChecker => false;
+  bool get symptomChecker => true;
 
   @override
   bool get takeOnlineAppointment => true;
@@ -14,19 +14,19 @@ class GuvenFunctionality extends IAppFunctionality {
   bool get takeHospitalAppointment => true;
 
   @override
-  bool get mediminder => false;
+  bool get mediminder => true;
 
   @override
   bool get relatives => true;
 
   @override
-  bool get createOnlineAppointmentWithCountrySelection => true;
+  bool get createOnlineAppointmentWithCountrySelection => false;
 
   @override
   bool get magazines => true;
 
   @override
-  bool get recaptcha => true;
+  bool get recaptcha => false;
 
   @override
   bool get bluetooth => true;

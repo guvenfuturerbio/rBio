@@ -206,9 +206,9 @@ flutter_intl:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo/guvenonline/guvenonline_applogo.png"
+  image_path: "assets/logo/onedosehealth/onedosehealth_applogo.png"
   remove_alpha_ios: true
 
 flutter_native_splash:
-  color: "#FFFFFF"
-  image: "assets/logo/guvenonline/guvenonline_splash.png"
+  color: "#00A147"
+  image: "assets/logo/onedosehealth/onedosehealth_splash.png"
