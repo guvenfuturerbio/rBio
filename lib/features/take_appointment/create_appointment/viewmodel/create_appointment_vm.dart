@@ -427,9 +427,7 @@ class CreateAppointmentVm extends ChangeNotifier {
           FilterResourcesResponse(
             isOnline: true,
             isOnlineForWeb: true,
-            departments: [
-              
-            ],
+            departments: [],
             title: "Dr. Emrah Yurtçu",
           ),
         ];
@@ -542,17 +540,19 @@ class CreateAppointmentVm extends ChangeNotifier {
       var removedTenants = <FilterTenantsResponse>[];
       for (var data in tenantsResponse) {
         if (data.id == 1 || data.id == 7) {
-          data.id == 1
-              ? data.title = "Güven Hastanesi Ayrancı"
-              : data.title = "Güven Hastanesi Çayyolu";
+          // data.id == 1
+          //     ? data.title = "Güven Hastanesi Ayrancı"
+          //     : data.title = "Güven Hastanesi Çayyolu";
           removedTenants.add(data);
         }
       }
+
       FilterTenantsResponse tmp = FilterTenantsResponse(
         enabled: false,
         id: -2,
         title: LocaleProvider.current.pls_select,
       );
+
       removedTenants.insert(0, tmp);
       dropdownValueTenant = removedTenants.first;
       notifyListeners();

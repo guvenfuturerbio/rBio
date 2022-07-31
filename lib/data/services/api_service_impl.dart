@@ -369,7 +369,8 @@ class ApiServiceImpl extends ApiService {
       options: authOptions,
     );
     if (response.xIsSuccessful) {
-      final result = response.xGetMapList
+      final responseData = List.from(response.datum['data']);
+      final result = responseData
           .map((item) => FilterTenantsResponse.fromJson(item))
           .cast<FilterTenantsResponse>()
           .toList();
