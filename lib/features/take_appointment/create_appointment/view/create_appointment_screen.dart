@@ -294,17 +294,17 @@ class CreateAppointmentScreen extends StatelessWidget {
                                       },
                                       child: Column(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, top: 35, right: 10),
-                                            child: SvgPicture.asset(
-                                              R.image.info,
-                                              width: R.sizes.iconSize2,
-                                              color: getIt<IAppConfig>()
-                                                  .theme
-                                                  .iconColor,
-                                            ),
-                                          ),
+                                          // Padding(
+                                          //   padding: const EdgeInsets.only(
+                                          //       left: 10, top: 35, right: 10),
+                                          //   child: SvgPicture.asset(
+                                          //     R.image.info,
+                                          //     width: R.sizes.iconSize2,
+                                          //     color: getIt<IAppConfig>()
+                                          //         .theme
+                                          //         .iconColor,
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     )
