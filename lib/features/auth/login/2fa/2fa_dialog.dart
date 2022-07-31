@@ -74,6 +74,7 @@ class _TwoFaDialogState extends State<TwoFaDialog> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: RbioTextFormField(
+                        backColor: R.colors.grey.withOpacity(0.2),
                         controller: _textEditingController,
                         focusNode: _focusNode,
                         keyboardType: TextInputType.text,

@@ -6,6 +6,8 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../core.dart';
 
+// İlk native dialog açılmadan kendin dialog (widgets) göster.
+
 abstract class PermissionManager {
   Future<bool> request({
     required RbioPermissionStrategy permission,
