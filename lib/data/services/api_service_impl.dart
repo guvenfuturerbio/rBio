@@ -958,23 +958,73 @@ class ApiServiceImpl extends ApiService {
     String applicationName,
     String groupName,
   ) async {
-    final response = await helper.getGuven(
-      endpoints.single.getBannerTab(applicationName, groupName),
-      options: authOptions,
+    final bannerTabs = <BannerTabsModel>[];
+    bannerTabs.add(
+      BannerTabsModel(
+        name: "COVID-19 Sonrası Uygulanacak Nefes Egzersizleri",
+        index: 2,
+        imageUrl:
+            "https://static.wixstatic.com/media/bac967_14c8af47da914a59aeb31bd35665a795~mv2.png",
+        destinationUrl:
+            "https://www.youtube.com/watch?v=nYhkfy3shGM&list=PLNjCXmjuq3oR9BYpq_StRyJJ1vaaerqGS&index=6",
+        applicationName: "rBio",
+        groupName: "anaSayfa",
+        id: 1,
+      ),
     );
-    if (response.xIsSuccessful) {
-      final bannerTabs = <BannerTabsModel>[];
-      final datum = response.xGetMapList;
-      for (final data in datum) {
-        bannerTabs.add(BannerTabsModel.fromJson(data));
-      }
-      return bannerTabs;
-    } else {
-      throw RbioNotSuccessfulException<GuvenResponseModel>(
-        endpoints.single.getBannerTab(applicationName, groupName),
-        response,
-      );
-    }
+    bannerTabs.add(
+      BannerTabsModel(
+        name: "Zerdeçalın Sağlığa 5 Faydası",
+        index: 3,
+        imageUrl:
+            "https://static.wixstatic.com/media/bac967_4d212bd310a14edf962302e9461d1c77~mv2.png",
+        destinationUrl:
+            "https://www.guven.com.tr/saglik-rehberi/zerdecalin-sagliga-5-faydasi",
+        applicationName: "rBio",
+        groupName: "anaSayfa",
+        id: 2,
+      ),
+    );
+    bannerTabs.add(
+      BannerTabsModel(
+        name: "Metabolik Sendrom Nedir?",
+        index: 1,
+        imageUrl:
+            "https://static.wixstatic.com/media/bac967_6c1d7ce0780d4d1498375b7f7a5deeb7~mv2.png",
+        destinationUrl:
+            "https://www.youtube.com/watch?v=3wIbUfBcTBU&list=PLNjCXmjuq3oR9BYpq_StRyJJ1vaaerqGS&index=24",
+        applicationName: "rBio",
+        groupName: "anaSayfa",
+        id: 3,
+      ),
+    );
+    bannerTabs.add(
+      BannerTabsModel(
+        name: "Uyku Apnesi Nedir?",
+        index: 4,
+        imageUrl:
+            "https://static.wixstatic.com/media/bac967_18046d595f7c4c3489ae7b8490a4087f~mv2.png",
+        destinationUrl:
+            "https://www.guven.com.tr/saglik-rehberi/uyku-apnesi-nedir",
+        applicationName: "rBio",
+        groupName: "anaSayfa",
+        id: 4,
+      ),
+    );
+    bannerTabs.add(
+      BannerTabsModel(
+        name: "Çölyak Hastalığı Nedir?",
+        index: 5,
+        imageUrl:
+            "https://static.wixstatic.com/media/bac967_f38d232927cb44eb807830a1011d9e97~mv2.png",
+        destinationUrl:
+            "https://www.guven.com.tr/saglik-rehberi/colyak-hastaligi-nedir",
+        applicationName: "rBio",
+        groupName: "anaSayfa",
+        id: 7,
+      ),
+    );
+    return bannerTabs;
   }
 
   @override
