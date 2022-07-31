@@ -132,33 +132,33 @@ class CreateAppointmentScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                //
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    LocaleProvider.current.recent_appointments,
-                    style: context.xHeadline3,
-                  ),
-                ),
+                // //
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: Text(
+                //     LocaleProvider.current.recent_appointments,
+                //     style: context.xHeadline3,
+                //   ),
+                // ),
 
-                //
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: vm.holderForFavorites
-                        .map(
-                          (item) => _buildHistoryDoctorCard(
-                            context,
-                            item.resources?.first.resource,
-                            vm,
-                            vm.holderForFavorites.indexOf(item),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
+                // //
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: vm.holderForFavorites
+                //         .map(
+                //           (item) => _buildHistoryDoctorCard(
+                //             context,
+                //             item.resources?.first.resource,
+                //             vm,
+                //             vm.holderForFavorites.indexOf(item),
+                //           ),
+                //         )
+                //         .toList(),
+                //   ),
+                // ),
 
                 //
                 vm.relativeProgress == LoadingProgress.loading

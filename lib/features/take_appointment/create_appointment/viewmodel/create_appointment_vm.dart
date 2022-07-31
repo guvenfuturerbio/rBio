@@ -602,7 +602,7 @@ class CreateAppointmentVm extends ChangeNotifier {
         }
       }
 
-      await holderListFillFunc();
+      // await holderListFillFunc();
       for (var element in holderForFavorites) {
         final doctorId = slugify(Utils.instance.clearDoctorTitle(element
             .resources!.first.resource!
