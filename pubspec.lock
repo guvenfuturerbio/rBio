@@ -675,6 +675,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.2"
+  flutter_facebook_sdk:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "31f01e80d340e005dee0ba05d255e1f0d28aceb4"
+      url: "https://github.com/abdoosaed/flutter_facebook_sdk.git"
+    source: git
+    version: "1.0.0"
   flutter_jailbreak_detection:
     dependency: "direct main"
     description:

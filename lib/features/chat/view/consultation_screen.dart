@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
 import '../../../core/widgets/rbio_error_screen.dart';
-import '../../dashboard/onedose/not_chronic_screen.dart';
 import '../controller/consultation_vm.dart';
 import '../model/chat_person.dart';
 
@@ -21,12 +20,7 @@ class ConsultationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !(getIt<UserNotifier>().user?.chat ?? false)
-        ? NotChronicScreen(
-            title: LocaleProvider.current.consultation,
-            drawerKey: drawerKey,
-          )
-        : _builtEmptyText(context);
+    return _builtEmptyText(context);
   }
 
   Widget _builtEmptyText(BuildContext context) {
